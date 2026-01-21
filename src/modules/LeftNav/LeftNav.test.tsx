@@ -4,7 +4,8 @@ import config from "@/config/config";
 import { RouteName } from "@/consts/routeName";
 import { fireEvent, render, within } from "@/utils/testUtils";
 import LeftNav from "./LeftNav";
-
+import { TrendingUpTwoTone } from "@mui/icons-material";
+import useMediaQuery from '@mui/material/useMediaQuery';
 jest.mock("js-cookie", () => ({
     set: jest.fn(),
 }));
@@ -15,7 +16,7 @@ describe("LeftNav", () => {
             <LeftNav
                 permissions={{ "cohort.read": false }}
                 initialLeftNavOpen={true}
-                initialExpandLeftNav={true}
+                initialExpandLeftNavOnMobile={true}
             />
         );
 
@@ -28,9 +29,9 @@ describe("LeftNav", () => {
 
         const { getByText, getAllByRole } = render(
             <LeftNav
-                permissions={{ "cohort.read": txrue }}
+                permissions={{ "cohort.read": true }}
                 initialLeftNavOpen={true}
-                initialExpandLeftNav={true}
+                initialExpandLeftNavOnMobile={true}
             />
         );
 
@@ -54,7 +55,7 @@ describe("LeftNav", () => {
                     "integrations.dar": true,
                 }}
                 initialLeftNavOpen={true}
-                initialExpandLeftNav={true}
+                initialExpandLeftNavOnMobile={true}
             />
         );
 
@@ -72,11 +73,12 @@ describe("LeftNav", () => {
     });
 
     it("renders can expand", () => {
+        jest.mock('@mui/material/useMediaQuery', () => () => true);
         const { getByText } = render(
             <LeftNav
                 permissions={{ "cohort.read": false }}
                 initialLeftNavOpen={true}
-                initialExpandLeftNav={true}
+                initialExpandLeftNavOnMobile={true}
             />
         );
 
@@ -85,11 +87,12 @@ describe("LeftNav", () => {
     });
 
     it("renders can collapse", () => {
+        jest.mock('@mui/material/useMediaQuery', () => () => true);
         const { getByText } = render(
             <LeftNav
                 permissions={{ "cohort.read": false }}
                 initialLeftNavOpen={true}
-                initialExpandLeftNav={false}
+                initialExpandLeftNavOnMobile={false}
             />
         );
 
@@ -102,7 +105,7 @@ describe("LeftNav", () => {
             <LeftNav
                 permissions={{ "cohort.read": false }}
                 initialLeftNavOpen={true}
-                initialExpandLeftNav={true}
+                initialExpandLeftNavOnMobile={true}
                 navHeading="Team"
             />
         );
@@ -123,7 +126,7 @@ describe("LeftNav", () => {
             <LeftNav
                 permissions={{ "cohort.read": false }}
                 initialLeftNavOpen={false}
-                initialExpandLeftNav={true}
+                initialExpandLeftNavOnMobile={true}
                 navHeading="Team"
             />
         );

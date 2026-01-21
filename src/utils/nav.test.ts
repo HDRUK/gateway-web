@@ -7,7 +7,7 @@ describe("Nav utils", () => {
 
         it("should include Team Management item with href", () => {
             const navItems = getTeamNav({ "roles.read": true }, teamId, {});
-            const teamManagementItem = navItems.items.find(
+            const teamManagementItem = navItems.find(
                 item => item.label === "Team members"
             );
 
@@ -19,7 +19,7 @@ describe("Nav utils", () => {
 
         it("should include Datasets item", () => {
             const navItems = getTeamNav({ "datasets.read": true }, teamId, {});
-            const datasetsItem = navItems.items.find(
+            const datasetsItem = navItems.find(
                 item => item.label === "Datasets"
             );
 
@@ -73,7 +73,7 @@ describe("Nav utils", () => {
 
         it("should include Data Uses item", () => {
             const navItems = getTeamNav({ "dur.update": true }, teamId, {});
-            const dataUsesItem = navItems.items.find(
+            const dataUsesItem = navItems.find(
                 item => item.label === "Data Uses"
             );
 
@@ -89,7 +89,7 @@ describe("Nav utils", () => {
                 teamId,
                 {}
             );
-            const integrationsItem = navItems.items.find(
+            const integrationsItem = navItems.find(
                 item => item.label === "Integrations"
             );
 
@@ -112,7 +112,7 @@ describe("Nav utils", () => {
                 teamId,
                 {}
             );
-            const integrationsItem = navItems.items.find(
+            const integrationsItem = navItems.find(
                 item => item.label === "Integrations"
             );
 
@@ -131,7 +131,7 @@ describe("Nav utils", () => {
 
         it("should include Help item", () => {
             const navItems = getTeamNav({}, teamId, {});
-            const helpItem = navItems.items.find(item => item.label === "Help");
+            const helpItem = navItems.find(item => item.label === "Help");
 
             expect(helpItem).toBeDefined();
             expect(helpItem?.href).toBe(RouteName.DATA_CUSTODIAN_SUPPORT);
