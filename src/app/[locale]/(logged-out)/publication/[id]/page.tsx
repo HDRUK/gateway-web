@@ -1,7 +1,6 @@
 import { get, isEmpty } from "lodash";
 import { getTranslations } from "next-intl/server";
 import { notFound } from "next/navigation";
-import { SearchCategory } from "@/interfaces/Search";
 import Box from "@/components/Box";
 import CollectionsContent from "@/components/CollectionsContent";
 import DataUsesContent from "@/components/DataUsesContent";
@@ -12,7 +11,6 @@ import ToolsContent from "@/components/ToolsContent";
 import Typography from "@/components/Typography";
 import ActiveListSidebar from "@/modules/ActiveListSidebar";
 import { DataStatus } from "@/consts/application";
-import { RouteName } from "@/consts/routeName";
 import { getPublication } from "@/utils/api";
 import metaData from "@/utils/metadata";
 import PublicationContent from "./components/PublicationContent";
@@ -92,7 +90,7 @@ export default async function PublicationItemPage({
                         />
                         <ToolsContent
                             tools={data.tools}
-                            anchorIndex={populatedSections.length + 4}
+                            anchorIndex={populatedSections.length + 3}
                             translationPath={TRANSLATION_PATH}
                         />
                         <CollectionsContent

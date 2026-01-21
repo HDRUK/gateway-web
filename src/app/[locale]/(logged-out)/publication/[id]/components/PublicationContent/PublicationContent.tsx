@@ -3,7 +3,6 @@
 import { get } from "lodash";
 import { useTranslations } from "next-intl";
 import Link from "next/link";
-import { DatasetWithTitle } from "@/interfaces/DataUse";
 import { Publication } from "@/interfaces/Publication";
 import Box from "@/components/Box";
 import BoxContainer from "@/components/BoxContainer";
@@ -28,10 +27,7 @@ const PublicationContent = ({
 }) => {
     const t = useTranslations(TRANSLATION_PATH);
 
-    const renderDataUseField = (
-        type: FieldType,
-        value: string | string[] | DatasetWithTitle[]
-    ) => {
+    const renderPublicationField = (type: FieldType, value: string) => {
         const val = value as string;
 
         switch (type) {
@@ -73,7 +69,7 @@ const PublicationContent = ({
                         .map((section, index) => (
                             <Box
                                 key={`${section.sectionName}_wrap`}
-                                id={`anchor${index + 2}`}
+                                id={`anchor${index + 1}`}
                                 sx={{
                                     "&:not(:last-of-type)": {
                                         borderBottom: 1,
@@ -136,7 +132,7 @@ const PublicationContent = ({
                                                     display: "flex",
                                                     alignItems: "center",
                                                 }}>
-                                                {renderDataUseField(
+                                                {renderPublicationField(
                                                     field.type,
                                                     value
                                                 )}
