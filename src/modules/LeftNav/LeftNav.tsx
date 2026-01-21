@@ -1,7 +1,6 @@
 "use client";
 
 import { Fragment, useId, useMemo, useState } from "react";
-import { itemsEqual } from "@dnd-kit/sortable/dist/utilities";
 import {
     Box,
     Collapse,
@@ -314,7 +313,7 @@ const LeftNav = ({
                     </ListItemButton>
                 </Tooltip>
 
-                {navOpen && (isMobile && navExpandedOnMobile) && (
+                {navOpen && (!isMobile || (isMobile && navExpandedOnMobile)) && (
                     <Collapse
                         in={expanded}
                         timeout="auto"
