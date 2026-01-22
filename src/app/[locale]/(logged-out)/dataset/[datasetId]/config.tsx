@@ -1,11 +1,4 @@
-export enum FieldType {
-    TEXT = "text",
-    LIST = "list",
-    DATE = "date",
-    TAG_LIST = "tag-list",
-    LINK_LIST = "link-list",
-    DATASETTYPE_LIST = "dataset-type-list",
-}
+import { FieldType } from "@/interfaces/FieldType";
 
 export interface DatasetType {
     name: string;
@@ -49,14 +42,14 @@ const datasetFields: DatasetSection[] = [
             },
             {
                 path: "metadata.metadata.provenance.origin.datasetType",
-                type: FieldType.DATASETTYPE_LIST,
+                type: FieldType.LIST_DATASETTYPE,
                 label: "Dataset type",
                 tooltip:
                     "The topic areas to which the dataset content relates.",
             },
             {
                 path: "metadata.metadata.provenance.origin.datasetSubType",
-                type: FieldType.LIST,
+                type: FieldType.LIST_TEXT,
                 label: "Dataset sub-type",
                 tooltip:
                     "The sub-types of topic areas to which the dataset content relates.",
@@ -70,14 +63,14 @@ const datasetFields: DatasetSection[] = [
             },
             {
                 path: "metadata.metadata.documentation.associatedMedia",
-                type: FieldType.LINK_LIST,
+                type: FieldType.LIST_LINK,
                 label: "Associated media",
                 tooltip:
                     "Media that might provide additional context for researchers wanting to understand more about the dataset and its relevance to their research question.",
             },
             {
                 path: "metadata.metadata.structuralMetadata.syntheticDataWebLink",
-                type: FieldType.LINK_LIST,
+                type: FieldType.LIST_LINK,
                 label: "Synthetic data web link",
                 tooltip:
                     "Website with information on your synthetic dataset creation, or the location where a synthetic version of the dataset can be accessed.",
@@ -89,7 +82,7 @@ const datasetFields: DatasetSection[] = [
         fields: [
             {
                 path: "metadata.metadata.summary.keywords",
-                type: FieldType.TAG_LIST,
+                type: FieldType.LIST_TAG,
             },
         ],
     },
@@ -107,26 +100,26 @@ const datasetFields: DatasetSection[] = [
         fields: [
             {
                 path: "metadata.metadata.provenance.origin.purpose",
-                type: FieldType.LIST,
+                type: FieldType.LIST_TEXT,
                 label: "Purpose of dataset collection",
                 tooltip: "The purpose for which the dataset was collected.",
             },
             {
                 path: "metadata.metadata.provenance.origin.source",
-                type: FieldType.LIST,
+                type: FieldType.LIST_TEXT,
                 label: "Source of data extraction",
                 tooltip: "The source from which the data was extracted.",
             },
             {
                 path: "metadata.metadata.provenance.origin.collectionSource",
-                type: FieldType.LIST,
+                type: FieldType.LIST_TEXT,
                 label: "Collection source setting",
                 tooltip:
                     "The setting(s) where data was collected. Multiple settings may be provided.",
             },
             {
                 path: "metadata.metadata.coverage.pathway",
-                type: FieldType.LIST,
+                type: FieldType.LIST_TEXT,
                 label: "Patient pathway description",
                 tooltip:
                     "Description of the patient pathway and any limitations the dataset may have with respect to pathway coverage. This could include if the dataset is from a single speciality or area, a single tier of care, linked across two tiers (e.g. primary and secondary care), or an integrated care record covering the whole patient pathway.",
@@ -152,7 +145,7 @@ const datasetFields: DatasetSection[] = [
         fields: [
             {
                 path: "metadata.metadata.structuralMetadata.tables",
-                type: FieldType.TAG_LIST,
+                type: FieldType.LIST_TAG,
             },
         ],
     },
@@ -221,7 +214,7 @@ const datasetFields: DatasetSection[] = [
             },
             {
                 path: "metadata.metadata.coverage.spatial",
-                type: FieldType.LIST,
+                type: FieldType.LIST_TEXT,
                 label: "Geographic coverage",
                 tooltip:
                     "The geographical area covered by the dataset population or data.",
@@ -275,28 +268,28 @@ const datasetFields: DatasetSection[] = [
         fields: [
             {
                 path: "metadata.metadata.accessibility.formatAndStandards.language",
-                type: FieldType.LIST,
+                type: FieldType.LIST_TEXT,
                 label: "Language",
                 tooltip:
                     "All the languages in which the dataset metadata and underlying data are made available.",
             },
             {
                 path: "metadata.metadata.accessibility.formatAndStandards.conformsTo",
-                type: FieldType.LIST,
+                type: FieldType.LIST_TEXT,
                 label: "Alignment with standardised data models",
                 tooltip:
                     "Standardised data models that the dataset has been stored in or transformed to (e.g. OMOP, FHIR), or if the data is only available in a local format.",
             },
             {
                 path: "metadata.metadata.accessibility.formatAndStandards.vocabularyEncodingScheme",
-                type: FieldType.LIST,
+                type: FieldType.LIST_TEXT,
                 label: "Controlled vocabulary",
                 tooltip:
                     "Relevant terminologies/ontologies/controlled vocabularies that are being used in the dataset. (e.g. ICD-10 codes, NHS Data Dictionary national codes, SNOMED CT International)",
             },
             {
                 path: "metadata.metadata.accessibility.formatAndStandards.format",
-                type: FieldType.LIST,
+                type: FieldType.LIST_TEXT,
                 label: "Format",
                 tooltip:
                     "Format(s) in which the dataset is available. (e.g. application, audio, image, message, model, multipart, text, video)",
@@ -315,7 +308,7 @@ const datasetFields: DatasetSection[] = [
             },
             {
                 path: "metadata.metadata.accessibility.access.accessRights",
-                type: FieldType.LIST,
+                type: FieldType.LIST_TEXT,
                 label: "Access rights",
                 tooltip:
                     "The webpage where the data access request process and/or guidance is provided.",
@@ -329,7 +322,7 @@ const datasetFields: DatasetSection[] = [
             },
             {
                 path: "metadata.metadata.accessibility.access.accessRequestCost",
-                type: FieldType.LIST,
+                type: FieldType.LIST_TEXT,
                 label: "Access request cost",
                 tooltip:
                     "Webpage or description detailing the service or cost model for processing data access requests.",
@@ -358,7 +351,7 @@ const datasetFields: DatasetSection[] = [
             },
             {
                 path: "metadata.metadata.accessibility.access.jurisdiction",
-                type: FieldType.LIST,
+                type: FieldType.LIST_TEXT,
                 label: "Jurisdiction",
                 tooltip:
                     "ISO 3166-1 country codes and the associated SO 3166-2 for regions, cities, states, etc. for the country/state under whose laws the data subject's data is collected, processed and stored. Multiple jurisdictions might be provided.",
@@ -379,21 +372,21 @@ const datasetFields: DatasetSection[] = [
             },
             {
                 path: "metadata.metadata.accessibility.access.dataController",
-                type: FieldType.LIST,
+                type: FieldType.LIST_TEXT,
                 label: "Data Controller",
                 tooltip:
                     "The person/entity who (either alone or jointly or in common with other persons/entities) determines the purposes for which and the way any Data Subject data, specifically personal data or are to be processed.",
             },
             {
                 path: "metadata.metadata.accessibility.access.dataProcessor",
-                type: FieldType.LIST,
+                type: FieldType.LIST_TEXT,
                 label: "Data Processor",
                 tooltip:
                     "The person(s)/entity (other than an employee of the Data Controller) who process the data on behalf of the Data Controller.",
             },
             {
                 path: "metadata.metadata.enrichmentAndLinkage.investigations",
-                type: FieldType.LIST,
+                type: FieldType.LIST_TEXT,
                 label: "Investigations",
                 tooltip: "Weblink to any active projects using the dataset.",
             },
@@ -414,14 +407,14 @@ const datasetFields: DatasetSection[] = [
             {
                 label: "Investigations",
                 path: "metadata.metadata.enrichmentAndLinkage.investigations",
-                type: FieldType.LIST,
+                type: FieldType.LIST_TEXT,
                 tooltip:
                     "Website address(es) which document information related to active projects utilising the Dataset and or BioSample(s).",
             },
             {
                 label: "Tools",
                 path: "metadata.metadata.enrichmentAndLinkage.tools",
-                type: FieldType.LIST,
+                type: FieldType.LIST_TEXT,
                 tooltip:
                     "URL(s) of any analysis tool(s) or models that have been created for this Dataset & BioSample and are available for further use.",
             },

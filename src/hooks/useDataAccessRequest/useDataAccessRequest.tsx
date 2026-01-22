@@ -28,6 +28,7 @@ interface ShowDARApplicationModalProps {
     url: string;
     modalHeader: string | null;
     modalContent: string | null;
+    modalFooter: string | null;
     datasetIds: number[];
     teamIds: number[];
     redirectPath?: string | null;
@@ -94,6 +95,7 @@ const useDataAccessRequest = () => {
             hasPublishedDarTemplate,
             modalHeader,
             modalContent,
+            modalFooter,
             url,
             datasetIds,
             teamIds,
@@ -107,6 +109,7 @@ const useDataAccessRequest = () => {
                     hasPublishedDarTemplate,
                     modalHeader,
                     modalContent,
+                    modalFooter,
                     url,
                     datasetIds,
                     teamIds,
@@ -133,6 +136,7 @@ const useDataAccessRequest = () => {
                 hasPublishedDarTemplate,
                 modalHeader,
                 modalContent,
+                modalFooter,
                 url,
                 datasetIds,
                 teamIds,
