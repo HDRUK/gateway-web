@@ -62,15 +62,10 @@ const LeftNav = ({
 }: LeftNavProps) => {
     const isMobile = useMediaQuery(theme.breakpoints.only("mobile"));
     const features = useFeatures();
-
-    //const tempPositions =  {"cohort.read": false};
     const tempPositions = permissions;
-    const tempTeamId = null;
-    const navItems = tempTeamId
+    const navItems = teamId
         ? getTeamNav(tempPositions, teamId, features)
         : getProfileNav(tempPositions);
-
-    console.log(navItems);
 
     const params = useParams<{ locale: string }>();
     const pathname = usePathname() || "";
@@ -101,8 +96,9 @@ const LeftNav = ({
         Cookies.set(config.LEFT_NAV_COOKIE, open.toString());
     };
 
-    const [navExpandedOnMobile, setNavExpandedOnMobile] =
-        useState<boolean>(initialExpandLeftNavOnMobile);
+    const [navExpandedOnMobile, setNavExpandedOnMobile] = useState<boolean>(
+        initialExpandLeftNavOnMobile
+    );
 
     const setLeftNavExpandedOnMobile = (expanded: boolean) => {
         setNavExpandedOnMobile(expanded);
@@ -146,33 +142,37 @@ const LeftNav = ({
         firstNavIdx === -1 ? navItems[subIndexIdx] : navItems[firstNavIdx];
     const firstNavSectionId = itemIds[firstNavItem.label];
 
-    const renderLeftNavItem = (item : LeftNavItem) => {
+    const renderLeftNavItem = (item: LeftNavItem) => {
         const sectionId = itemIds[item.label];
         const expanded = isExpanded(item, expandedSection, trimmedPathname);
         const isFirstItem = firstNavItem === item;
-        const componentType = (isMobile && isFirstItem) ? "button" : Link;
-        const onClick = firstNavItem ? () => {
-                                        setLeftNavExpandedOnMobile(!navExpandedOnMobile);
-                                    } : undefined;
+        const componentType = isMobile && isFirstItem ? "button" : Link;
+        const onClick = firstNavItem
+            ? () => {
+                  setLeftNavExpandedOnMobile(!navExpandedOnMobile);
+              }
+            : undefined;
 
-        const expanders = (isFirstItem && isMobile &&
-                        (navExpandedOnMobile ? (
-                            <ExpandLessIcon
-                                color="primary"
-                                sx={{
-                                    width: ICON_SIZE,
-                                    height: ICON_SIZE,
-                                }}
-                            />
-                        ) : (
-                            <ExpandMoreIcon
-                                color="primary"
-                                sx={{
-                                    width: ICON_SIZE,
-                                    height: ICON_SIZE,
-                                }}
-                            />
-                    )));
+        const expanders =
+            isFirstItem &&
+            isMobile &&
+            (navExpandedOnMobile ? (
+                <ExpandLessIcon
+                    color="primary"
+                    sx={{
+                        width: ICON_SIZE,
+                        height: ICON_SIZE,
+                    }}
+                />
+            ) : (
+                <ExpandMoreIcon
+                    color="primary"
+                    sx={{
+                        width: ICON_SIZE,
+                        height: ICON_SIZE,
+                    }}
+                />
+            ));
 
         return !item.subItems ? (
             <Tooltip
@@ -193,7 +193,7 @@ const LeftNav = ({
                 <ListItemButton
                     component={componentType}
                     key={item.label}
-                    href={isFirstItem ? "" : item.href || ""}
+                    href={componentType === "button" ? "" : item.href || ""}
                     passHref
                     selected={item.href === trimmedPathname}
                     aria-current={
@@ -203,14 +203,18 @@ const LeftNav = ({
                         paddingLeft: 1,
                         width: "100%",
                     }}
-                    onClick ={onClick}
-                    aria-expanded={isFirstItem ? navExpandedOnMobile : undefined}
+                    onClick={onClick}
+                    aria-expanded={
+                        isFirstItem ? navExpandedOnMobile : undefined
+                    }
                     aria-controls={
                         isFirstItem && navExpandedOnMobile
                             ? firstNavSectionId
                             : undefined
                     }
-                    id={isFirstItem ? `toggle-${firstNavSectionId}` : undefined}>
+                    id={
+                        isFirstItem ? `toggle-${firstNavSectionId}` : undefined
+                    }>
                     <ListItemIcon
                         sx={{
                             minWidth: 32,
@@ -250,23 +254,27 @@ const LeftNav = ({
                         },
                     }}>
                     <ListItemButton
-                        onClick={isFirstItem ? onClick : () => {
-                            if (!navOpen) {
-                                setLeftNav(true);
+                        onClick={
+                            isFirstItem
+                                ? onClick
+                                : () => {
+                                      if (!navOpen) {
+                                          setLeftNav(true);
 
-                                if (
-                                    !isExpanded(
-                                        item,
-                                        expandedSection,
-                                        trimmedPathname
-                                    )
-                                ) {
-                                    toggleMenu(item);
-                                }
-                            } else {
-                                toggleMenu(item);
-                            }
-                        }}
+                                          if (
+                                              !isExpanded(
+                                                  item,
+                                                  expandedSection,
+                                                  trimmedPathname
+                                              )
+                                          ) {
+                                              toggleMenu(item);
+                                          }
+                                      } else {
+                                          toggleMenu(item);
+                                      }
+                                  }
+                        }
                         component="button"
                         sx={{
                             width: "100%",
@@ -294,7 +302,9 @@ const LeftNav = ({
                                 ...opacityFadeStyles,
                             }}
                         />
-                        {isMobile && isFirstItem ? expanders : (expanded ? (
+                        {isMobile && isFirstItem ? (
+                            expanders
+                        ) : expanded ? (
                             <ExpandLessIcon
                                 color="primary"
                                 sx={{
@@ -310,42 +320,43 @@ const LeftNav = ({
                                     height: ICON_SIZE,
                                 }}
                             />
-                        ))}
+                        )}
                     </ListItemButton>
                 </Tooltip>
 
-                {navOpen && (!isMobile || (isMobile && navExpandedOnMobile)) && (
-                    <Collapse
-                        in={expanded}
-                        timeout="auto"
-                        unmountOnExit
-                        id={sectionId}
-                        role="region"
-                        aria-labelledby={`toggle-${sectionId}`}>
-                        <List component="div" disablePadding>
-                            {item.subItems.map(subItem => (
-                                <ListItemButton
-                                    component={Link}
-                                    key={subItem.label}
-                                    href={subItem.href}
-                                    passHref
-                                    sx={{
-                                        p: 0,
-                                        color: colors.grey700,
-                                    }}
-                                    aria-current={
-                                        subNavItemSelected(subItem.href)
-                                            ? "page"
-                                            : undefined
-                                    }>
-                                    <ListItemText
+                {navOpen &&
+                    (!isMobile || (isMobile && navExpandedOnMobile)) && (
+                        <Collapse
+                            in={expanded}
+                            timeout="auto"
+                            unmountOnExit
+                            id={sectionId}
+                            role="region"
+                            aria-labelledby={`toggle-${sectionId}`}>
+                            <List component="div" disablePadding>
+                                {item.subItems.map(subItem => (
+                                    <ListItemButton
+                                        component={Link}
+                                        key={subItem.label}
+                                        href={subItem.href}
+                                        passHref
                                         sx={{
-                                            paddingLeft: "17px",
-                                            m: 0,
-                                            ml: 6,
-                                            py: 1.5,
-                                            px: 1,
-                                            borderLeft: `1px solid 
+                                            p: 0,
+                                            color: colors.grey700,
+                                        }}
+                                        aria-current={
+                                            subNavItemSelected(subItem.href)
+                                                ? "page"
+                                                : undefined
+                                        }>
+                                        <ListItemText
+                                            sx={{
+                                                paddingLeft: "17px",
+                                                m: 0,
+                                                ml: 6,
+                                                py: 1.5,
+                                                px: 1,
+                                                borderLeft: `1px solid 
                                                                 ${
                                                                     subNavItemSelected(
                                                                         subItem.href
@@ -353,14 +364,14 @@ const LeftNav = ({
                                                                         ? colors.green400
                                                                         : colors.grey200
                                                                 }`,
-                                        }}
-                                        primary={subItem.label}
-                                    />
-                                </ListItemButton>
-                            ))}
-                        </List>
-                    </Collapse>
-                )}
+                                            }}
+                                            primary={subItem.label}
+                                        />
+                                    </ListItemButton>
+                                ))}
+                            </List>
+                        </Collapse>
+                    )}
             </Fragment>
         );
     };
@@ -371,8 +382,8 @@ const LeftNav = ({
         if (item === firstNavItem) {
             return;
         }
-        
-        return renderLeftNavItem(item)
+
+        return renderLeftNavItem(item);
     });
 
     return (
@@ -461,7 +472,7 @@ const LeftNav = ({
 
                 <List component="nav" sx={{ color: colors.grey800 }}>
                     <Fragment key={firstNavItem.label}>
-                    {firstNavItem && renderedfirstNavItem}
+                        {firstNavItem && renderedfirstNavItem}
                     </Fragment>
                     {isMobile ? (
                         <Collapse

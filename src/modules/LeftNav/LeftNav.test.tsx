@@ -1,15 +1,44 @@
+import { createTheme } from "@mui/material";
+import mediaQuery from "css-mediaquery";
 import Cookies from "js-cookie";
 import mockRouter from "next-router-mock";
 import config from "@/config/config";
 import { RouteName } from "@/consts/routeName";
-import { fireEvent, render, within } from "@/utils/testUtils";
+import { fireEvent, render, waitFor, within } from "@/utils/testUtils";
 import LeftNav from "./LeftNav";
 
 jest.mock("js-cookie", () => ({
     set: jest.fn(),
 }));
 
+type MatchMedia = (query: string) => MediaQueryList;
+
+function createMatchMedia(width: number): MatchMedia {
+    return (query: string): MediaQueryList => ({
+        matches: mediaQuery.match(query, { width }),
+        media: query,
+        onchange: null,
+        addListener: () => {},
+        removeListener: () => {},
+        addEventListener: () => {},
+        removeEventListener: () => {},
+        dispatchEvent: () => false,
+    });
+}
+
+function setScreenWidth(width: number) {
+    Object.defineProperty(window, "matchMedia", {
+        writable: true,
+        configurable: true,
+        value: createMatchMedia(width),
+    });
+}
+
 describe("LeftNav", () => {
+    beforeEach(() => {
+        // Default desktop width
+        setScreenWidth(1200);
+    });
     it("renders the profile navigation item", () => {
         const { getByText, getAllByRole } = render(
             <LeftNav
@@ -19,9 +48,7 @@ describe("LeftNav", () => {
             />
         );
 
-        const links = getAllByRole("link");
-        console.log(links);
-        expect(links).toHaveLength(6);
+        expect(getAllByRole("link")).toHaveLength(6);
         expect(getByText("Your Profile")).toBeInTheDocument();
     });
 
@@ -73,8 +100,7 @@ describe("LeftNav", () => {
         expect(within(links[3]).getByText("Help")).toBeInTheDocument();
     });
 
-    it("renders can expand", () => {
-        jest.mock('@mui/material/useMediaQuery', () => () => true);
+    it("mobile horizontal nav can be opened by default", () => {
         const { getByText } = render(
             <LeftNav
                 permissions={{ "cohort.read": false }}
@@ -87,18 +113,43 @@ describe("LeftNav", () => {
         expect(getByText("Library")).toBeInTheDocument();
     });
 
-    it("renders can collapse", () => {
-        jest.mock('@mui/material/useMediaQuery', () => () => true);
-        const { getByText } = render(
+    it("mobile horizontal nav can be collapsed by default", () => {
+        setScreenWidth(200);
+        const { getByText, queryByText } = render(
             <LeftNav
                 permissions={{ "cohort.read": false }}
                 initialLeftNavOpen={true}
                 initialExpandLeftNavOnMobile={false}
             />
         );
-
         expect(getByText("Your Profile")).toBeInTheDocument();
-        expect(getByText("Library")).not.toBeInTheDocument();
+        expect(queryByText("Library")).not.toBeInTheDocument();
+    });
+
+    it("mobile horizontal nav can be collapsed with button", async () => {
+        setScreenWidth(200);
+        const { getByRole, queryByText } = render(
+            <LeftNav
+                permissions={{ "cohort.read": false }}
+                initialLeftNavOpen={true}
+                initialExpandLeftNavOnMobile={true}
+                navHeading="Team"
+            />
+        );
+        expect(queryByText("Library")).toBeInTheDocument();
+
+        const toggle = getByRole("button", {
+            name: "Your Profile",
+        });
+        fireEvent.click(toggle);
+
+        await waitFor(() => {
+            expect(queryByText("Library")).not.toBeInTheDocument();
+        });
+        expect(Cookies.set).toHaveBeenCalledWith(
+            config.EXPAND_LEFT_NAV_ON_MOBILE,
+            "false"
+        );
     });
 
     it("closes the profile navigation and creates cookie", () => {
