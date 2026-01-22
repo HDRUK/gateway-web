@@ -1,4 +1,3 @@
-import { createTheme } from "@mui/material";
 import mediaQuery from "css-mediaquery";
 import Cookies from "js-cookie";
 import mockRouter from "next-router-mock";
