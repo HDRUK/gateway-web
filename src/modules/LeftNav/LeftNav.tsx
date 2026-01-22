@@ -60,10 +60,9 @@ const LeftNav = ({
 }: LeftNavProps) => {
     const isMobile = useMediaQuery(theme.breakpoints.only("mobile"));
     const features = useFeatures();
-    const tempPositions = permissions;
     const navItems = teamId
-        ? getTeamNav(tempPositions, teamId, features)
-        : getProfileNav(tempPositions);
+        ? getTeamNav(permissions, teamId, features)
+        : getProfileNav(permissions);
 
     const params = useParams<{ locale: string }>();
     const pathname = usePathname() || "";
