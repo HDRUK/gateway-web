@@ -189,8 +189,7 @@ const LeftNav = ({
                 }}>
                 <ListItemButton
                     component={componentType}
-                    href={componentType === "button" ? "" : item.href || ""}
-                    passHref
+                    href={componentType === "button" ? "#" : item.href || ""}
                     selected={item.href === trimmedPathname}
                     aria-current={
                         item.href === trimmedPathname ? "page" : undefined
@@ -337,7 +336,6 @@ const LeftNav = ({
                                         component={Link}
                                         key={subItem.label}
                                         href={subItem.href}
-                                        passHref
                                         sx={{
                                             p: 0,
                                             color: colors.grey700,
