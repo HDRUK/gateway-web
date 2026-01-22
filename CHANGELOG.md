@@ -1,3 +1,24 @@
+## [2.29.0](https://github.com/HDRUK/gateway-web/compare/v2.28.1...v2.29.0) (2026-01-16)
+
+### ✨ Features
+
+* **GAT-7136:** DAR Document Application (#1411) ([c36a935](https://github.com/HDRUK/gateway-web/commit/c36a935f9926ef615ec3ed9711a2073056e5846b)), closes [GAT-7136](GAT-7136)
+* **GAT-7247:** Dar web/form initiation logic (#1413) ([91ed598](https://github.com/HDRUK/gateway-web/commit/91ed59812d38ffff53a7d76e763eb184b72205c2)), closes [GAT-7247](GAT-7247)
+* **GAT-8186:** Collapsable left nav (#1416) ([47bf604](https://github.com/HDRUK/gateway-web/commit/47bf6048e8249c7f26960c06f956b14f9a40fa89)), closes [GAT-8186](GAT-8186)
+* **GAT-8186:** Fix display of long team names in nav (#1424) ([1feb3a1](https://github.com/HDRUK/gateway-web/commit/1feb3a10118947144fe586febc997f58add5936f))
+* **GAT-8186:** Fix mobile nav (#1422) ([2efea93](https://github.com/HDRUK/gateway-web/commit/2efea9337ac6f840ace120865b90ac7912a6bbe9))
+* **GAT-8186:** Open left nav initially (#1425) ([6a3a269](https://github.com/HDRUK/gateway-web/commit/6a3a2696140ef5748a2172fe51b6647a5781d926)), closes [GAT-8186](GAT-8186)
+
+### 🐛 Bug Fixes
+
+* **GAT-0000:** package tweaks (#1412) ([756d14a](https://github.com/HDRUK/gateway-web/commit/756d14a93bf6efe0d53f93a406ebceec94fbb12a)), closes [GAT-0000](GAT-0000)
+* **GAT-5235:** Add sign in link to mobile nav (#1421) ([0774db0](https://github.com/HDRUK/gateway-web/commit/0774db097224d6c1d8ffad0f210fdbdccb00ec9f)), closes [GAT-5235](GAT-5235)
+* **GAT-5323:** Remove unused tooltips (#1420) ([d0ec03b](https://github.com/HDRUK/gateway-web/commit/d0ec03ba1f4c67bc51c78a5e08ba097999041623)), closes [GAT-5323](GAT-5323)
+* **GAT-5323:** Update tooltips (#1429) ([dbae8d3](https://github.com/HDRUK/gateway-web/commit/dbae8d37c62b587bcbd71295601bfc5a3a8809b1)), closes [GAT-5323](GAT-5323)
+* **GAT-7825:** Ensure html chars are decoded correctly (#1418) ([17a6aeb](https://github.com/HDRUK/gateway-web/commit/17a6aebd356bfcf91f3e5a6170df78a09e5e30d7)), closes [GAT-7825](GAT-7825)
+* **GAT-7839:** Escaping > in markdown (#1427) ([7da72fe](https://github.com/HDRUK/gateway-web/commit/7da72fe9927aca7dfcfb4f6f27587f74d1c7e0cc)), closes [GAT-7839](GAT-7839)
+* **GAT-8409:** Resolve issues around searching publications (#1414) ([c08ca26](https://github.com/HDRUK/gateway-web/commit/c08ca267cae3074a42ccb98427717d2c460ca9ad))
+
 ## [2.28.1](https://github.com/HDRUK/gateway-web/compare/v2.28.0...v2.28.1) (2025-12-12)
 
 ### 🐛 Bug Fixes
