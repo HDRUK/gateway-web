@@ -43,7 +43,7 @@ const PublicationContent = ({
                 );
             }
             default:
-                return <MarkDownSanitizedWithHtml content={val} />;
+                return <MarkDownSanitizedWithHtml content={value} />;
         }
     };
 
