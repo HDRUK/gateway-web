@@ -27,6 +27,7 @@ import { FormHydrationSchema } from "@/interfaces/FormHydration";
 import { Keyword } from "@/interfaces/Keyword";
 import { NetworkSummary } from "@/interfaces/NetworkSummary";
 import { PaginationType } from "@/interfaces/Pagination";
+import { Publication } from "@/interfaces/Publication";
 import { QuestionBankSection } from "@/interfaces/QuestionBankSection";
 import { GetOptions, Cache } from "@/interfaces/Response";
 import { Team, TeamNames } from "@/interfaces/Team";
@@ -791,6 +792,18 @@ async function getTeamNames(options?: GetOptions): Promise<TeamNames[]> {
     return names;
 }
 
+async function getPublication(
+    id: string,
+    options?: GetOptions
+): Promise<Publication> {
+    const publication = await get<Publication>(
+        `${apis.publicationsV1UrlIP}/${id}`,
+        options
+    );
+
+    return publication;
+}
+
 export {
     getApplication,
     getCohort,
@@ -833,4 +846,5 @@ export {
     getDarTemplatesCount,
     getWidget,
     getTeamNames,
+    getPublication,
 };

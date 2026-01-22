@@ -5,6 +5,7 @@ import { get, isArray } from "lodash";
 import { useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
 import { VersionItem } from "@/interfaces/Dataset";
+import { FieldType } from "@/interfaces/FieldType";
 import { SearchCategory } from "@/interfaces/Search";
 import Box from "@/components/Box";
 import BoxContainer from "@/components/BoxContainer";
@@ -25,7 +26,6 @@ import { decodeHtmlEntity } from "@/utils/general";
 import {
     DatasetSection,
     DatasetType,
-    FieldType,
     Observation,
     observationTableColumns,
 } from "../../config";
@@ -102,7 +102,7 @@ const DatasetContent = ({
                     <Typography>{formatDate(value, DATE_FORMAT)}</Typography>
                 );
             }
-            case FieldType.TAG_LIST: {
+            case FieldType.LIST_TAG: {
                 let tagList: string[] | string = value;
 
                 if (typeof tagList === "string") {
@@ -130,7 +130,7 @@ const DatasetContent = ({
                     </DatasetFieldWrapper>
                 );
             }
-            case FieldType.LIST: {
+            case FieldType.LIST_TEXT: {
                 const list = isArray(value)
                     ? value
                     : Array.from(new Set(splitStringList(value)));
@@ -140,7 +140,7 @@ const DatasetContent = ({
                     formatTextWithLinks(item),
                 ]);
             }
-            case FieldType.LINK_LIST: {
+            case FieldType.LIST_LINK: {
                 const list = isArray(value)
                     ? value
                     : Array.from(new Set(splitStringList(value)));
@@ -159,7 +159,7 @@ const DatasetContent = ({
                 );
             }
 
-            case FieldType.DATASETTYPE_LIST: {
+            case FieldType.LIST_DATASETTYPE: {
                 return value.map((item, i) => [i > 0 && ", ", item.name]);
             }
 

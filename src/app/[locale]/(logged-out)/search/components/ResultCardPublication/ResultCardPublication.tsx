@@ -5,7 +5,7 @@ import EllipsisLineLimit from "@/components/EllipsisLineLimit";
 import ShowMore from "@/components/ShowMore";
 import Typography from "@/components/Typography";
 import { colors } from "@/config/theme";
-import { OpenInNewIcon } from "@/consts/icons";
+import { RouteName } from "@/consts/routeName";
 import {
     PublicationAbstract,
     PublicationText,
@@ -32,8 +32,7 @@ const ResultCardPublication = ({ result }: ResultCardPublicationProps) => {
         journal_name,
         paper_title,
         year_of_publication,
-        full_text_url,
-        url,
+        _id,
     } = result;
 
     return (
@@ -57,15 +56,11 @@ const ResultCardPublication = ({ result }: ResultCardPublicationProps) => {
                                 marginBottom: theme.spacing(1),
                             }}>
                             <PublicationTitle
-                                href={full_text_url || url || ""}
-                                target="_blank">
+                                href={`${RouteName.PUBLICATION}/${_id}`}>
                                 <EllipsisLineLimit
                                     text={paper_title || ""}
                                     showToolTip
                                     maxLine={isMobileOrTablet ? 2 : 1}
-                                />
-                                <OpenInNewIcon
-                                    sx={{ ml: isMobileOrTablet ? 1 : 2 }}
                                 />
                             </PublicationTitle>
                             <PublicationYear>

@@ -1,18 +1,17 @@
 "use client";
 
-import { Box, Button } from "@mui/material";
+import { Button } from "@mui/material";
 import { useTranslations } from "next-intl";
-import { usePathname, useRouter } from "next/navigation";
+import { usePathname } from "next/navigation";
 import { PageTemplatePromo } from "@/interfaces/Cms";
 import { SearchCategory } from "@/interfaces/Search";
 import { Team } from "@/interfaces/Team";
-import BackButton from "@/components/BackButton";
 import CohortDiscoveryButton from "@/components/CohortDiscoveryButton";
+import HeaderActionBar from "@/components/HeaderActionBar";
 import useAuth from "@/hooks/useAuth";
 import useGeneralEnquiry from "@/hooks/useGeneralEnquiry";
 import { SpeechBubbleIcon } from "@/consts/customIcons";
 import { RouteName } from "@/consts/routeName";
-import { ActionBarWrapper } from "./ActionBar.styles";
 
 const TRANSLATION_PATH = "pages.dataCustodian.components.ActionBar";
 interface ActionBarProps {
@@ -26,7 +25,6 @@ const ActionBar = ({
     cohortDiscovery,
     cohortDiscoveryEnabled,
 }: ActionBarProps) => {
-    const router = useRouter();
     const path = usePathname();
     const { isLoggedIn } = useAuth();
     const showGeneralEnquiry = useGeneralEnquiry();
@@ -51,41 +49,35 @@ const ActionBar = ({
     };
 
     return (
-        <ActionBarWrapper>
-            <BackButton
-                label={t("label")}
-                style={{ margin: 0 }}
-                onClick={() =>
-                    router.push(
-                        `/${RouteName.SEARCH}?type=${SearchCategory.DATA_CUSTODIANS}`
-                    )
-                }
-            />
-
-            <Box sx={{ display: "flex", gap: 1, p: 0 }}>
-                <Button
-                    color="primary"
-                    variant="contained"
-                    onClick={handleGeneralEnquiryClick}
-                    startIcon={<SpeechBubbleIcon />}>
-                    {t("enquire")}
-                </Button>
-                {cohortDiscovery?.template?.promofields?.ctaLink && (
-                    <CohortDiscoveryButton
-                        ctaLink={
-                            cohortDiscovery?.template?.promofields?.ctaLink
-                        }
-                        disabledOuter={!cohortDiscoveryEnabled}
-                        tooltipOverride={
-                            cohortDiscoveryEnabled
-                                ? ""
-                                : t("cohortDiscoveryDisabled")
-                        }
-                        showDatasetExplanatoryTooltip
-                    />
-                )}
-            </Box>
-        </ActionBarWrapper>
+        <HeaderActionBar
+            backButtonText={t("backLabel")}
+            backButtonHref={`/${RouteName.SEARCH}?type=${SearchCategory.DATA_CUSTODIANS}`}
+            additionalContent={
+                <>
+                    <Button
+                        color="primary"
+                        variant="contained"
+                        onClick={handleGeneralEnquiryClick}
+                        startIcon={<SpeechBubbleIcon />}>
+                        {t("enquire")}
+                    </Button>
+                    {cohortDiscovery?.template?.promofields?.ctaLink && (
+                        <CohortDiscoveryButton
+                            ctaLink={
+                                cohortDiscovery?.template?.promofields?.ctaLink
+                            }
+                            disabledOuter={!cohortDiscoveryEnabled}
+                            tooltipOverride={
+                                cohortDiscoveryEnabled
+                                    ? ""
+                                    : t("cohortDiscoveryDisabled")
+                            }
+                            showDatasetExplanatoryTooltip
+                        />
+                    )}
+                </>
+            }
+        />
     );
 };
 
