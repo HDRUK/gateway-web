@@ -147,7 +147,7 @@ const LeftNav = ({
         const expanded = isExpanded(item, expandedSection, trimmedPathname);
         const isFirstItem = firstNavItem === item;
         const componentType = isMobile && isFirstItem ? "button" : Link;
-        const onClick = firstNavItem
+        const onClick = isFirstItem
             ? () => {
                   setLeftNavExpandedOnMobile(!navExpandedOnMobile);
               }
