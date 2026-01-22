@@ -46,7 +46,6 @@ interface LeftNavProps {
     navHeading?: string;
     permissions: { [key: string]: boolean };
     initialLeftNavOpen: boolean;
-    initialExpandLeftNavOnMobile: boolean;
 }
 
 const ICON_SIZE = "18px";
@@ -58,7 +57,6 @@ const LeftNav = ({
     teamId,
     navHeading,
     initialLeftNavOpen,
-    initialExpandLeftNavOnMobile,
 }: LeftNavProps) => {
     const isMobile = useMediaQuery(theme.breakpoints.only("mobile"));
     const features = useFeatures();
@@ -97,12 +95,11 @@ const LeftNav = ({
     };
 
     const [navExpandedOnMobile, setNavExpandedOnMobile] = useState<boolean>(
-        initialExpandLeftNavOnMobile
+        true
     );
 
     const setLeftNavExpandedOnMobile = (expanded: boolean) => {
         setNavExpandedOnMobile(expanded);
-        Cookies.set(config.EXPAND_LEFT_NAV_ON_MOBILE, expanded.toString());
     };
 
     const easing = theme.transitions.easing[navOpen ? "easeOut" : "easeIn"];

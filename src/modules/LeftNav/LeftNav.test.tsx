@@ -43,7 +43,6 @@ describe("LeftNav", () => {
             <LeftNav
                 permissions={{ "cohort.read": false }}
                 initialLeftNavOpen={true}
-                initialExpandLeftNavOnMobile={true}
             />
         );
 
@@ -58,7 +57,6 @@ describe("LeftNav", () => {
             <LeftNav
                 permissions={{ "cohort.read": true }}
                 initialLeftNavOpen={true}
-                initialExpandLeftNavOnMobile={true}
             />
         );
 
@@ -82,7 +80,6 @@ describe("LeftNav", () => {
                     "integrations.dar": true,
                 }}
                 initialLeftNavOpen={true}
-                initialExpandLeftNavOnMobile={true}
             />
         );
 
@@ -104,7 +101,6 @@ describe("LeftNav", () => {
             <LeftNav
                 permissions={{ "cohort.read": false }}
                 initialLeftNavOpen={true}
-                initialExpandLeftNavOnMobile={true}
             />
         );
 
@@ -112,26 +108,12 @@ describe("LeftNav", () => {
         expect(getByText("Library")).toBeInTheDocument();
     });
 
-    it("mobile horizontal nav can be collapsed by default", () => {
-        setScreenWidth(200);
-        const { getByText, queryByText } = render(
-            <LeftNav
-                permissions={{ "cohort.read": false }}
-                initialLeftNavOpen={true}
-                initialExpandLeftNavOnMobile={false}
-            />
-        );
-        expect(getByText("Your Profile")).toBeInTheDocument();
-        expect(queryByText("Library")).not.toBeInTheDocument();
-    });
-
-    it("mobile horizontal nav can be collapsed with button", async () => {
+    it("mobile horizontal nav can be collapsed with button click", async () => {
         setScreenWidth(200);
         const { getByRole, queryByText } = render(
             <LeftNav
                 permissions={{ "cohort.read": false }}
                 initialLeftNavOpen={true}
-                initialExpandLeftNavOnMobile={true}
                 navHeading="Team"
             />
         );
@@ -156,7 +138,6 @@ describe("LeftNav", () => {
             <LeftNav
                 permissions={{ "cohort.read": false }}
                 initialLeftNavOpen={true}
-                initialExpandLeftNavOnMobile={true}
                 navHeading="Team"
             />
         );
@@ -177,7 +158,6 @@ describe("LeftNav", () => {
             <LeftNav
                 permissions={{ "cohort.read": false }}
                 initialLeftNavOpen={false}
-                initialExpandLeftNavOnMobile={true}
                 navHeading="Team"
             />
         );

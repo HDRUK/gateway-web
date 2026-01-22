@@ -27,10 +27,6 @@ export default async function AccountProfileLayout({
                             cookieStore.get(config.LEFT_NAV_COOKIE)?.value ===
                             "true"
                         }
-                        initialExpandLeftNavOnMobile={
-                            cookieStore.get(config.EXPAND_LEFT_NAV_ON_MOBILE)?.value ===
-                            "true"
-                        }
                     />
                 }
                 rightContent={children}
