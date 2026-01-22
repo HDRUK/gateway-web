@@ -1,11 +1,5 @@
-export enum FieldType {
-    TEXT = "text",
-    LIST_TEXT = "list",
-    LIST_LINK = "list-link",
-    DATE = "date",
-    TAG = "tag",
-    LINK = "link",
-}
+import { FieldType } from "@/interfaces/FieldType";
+
 interface PublicationField {
     path: string;
     type: FieldType;

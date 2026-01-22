@@ -3,6 +3,7 @@
 import { get } from "lodash";
 import { useTranslations } from "next-intl";
 import Link from "next/link";
+import { FieldType } from "@/interfaces/FieldType";
 import { Publication } from "@/interfaces/Publication";
 import Box from "@/components/Box";
 import BoxContainer from "@/components/BoxContainer";
@@ -12,7 +13,7 @@ import TooltipText from "@/components/TooltipText";
 import Typography from "@/components/Typography";
 import { formatDate } from "@/utils/date";
 import { convertToCamelCase } from "@/utils/general";
-import { PublicationSection, FieldType } from "../../config";
+import { PublicationSection } from "../../config";
 
 const TRANSLATION_PATH = "pages.publication";
 const DATE_FORMAT = "DD/MM/YYYY";
