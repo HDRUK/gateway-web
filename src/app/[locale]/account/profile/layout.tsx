@@ -23,10 +23,9 @@ export default async function AccountProfileLayout({
                     <LeftNav
                         permissions={permissions}
                         navHeading={user.name}
-                        initialLeftNavOpen={
-                            cookieStore.get(config.LEFT_NAV_COOKIE)?.value ===
-                            "true"
-                        }
+                        initialLeftNavOpen={checkLeftNavCookie(
+                            cookieStore.get(config.LEFT_NAV_COOKIE)?.value
+                        )}
                     />
                 }
                 rightContent={children}
