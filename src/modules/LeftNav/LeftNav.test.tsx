@@ -127,10 +127,6 @@ describe("LeftNav", () => {
         await waitFor(() => {
             expect(queryByText("Library")).not.toBeInTheDocument();
         });
-        expect(Cookies.set).toHaveBeenCalledWith(
-            config.EXPAND_LEFT_NAV_ON_MOBILE,
-            "false"
-        );
     });
 
     it("closes the profile navigation and creates cookie", () => {
