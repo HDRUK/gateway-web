@@ -174,6 +174,7 @@ const LeftNav = ({
             <Tooltip
                 title={!navOpen ? item.label : ""}
                 placement="right"
+                key={item.label}
                 slotProps={{
                     popper: {
                         modifiers: [
@@ -188,7 +189,6 @@ const LeftNav = ({
                 }}>
                 <ListItemButton
                     component={componentType}
-                    key={item.label}
                     href={componentType === "button" ? "" : item.href || ""}
                     passHref
                     selected={item.href === trimmedPathname}
@@ -248,7 +248,9 @@ const LeftNav = ({
                                 },
                             ],
                         },
-                    }}>
+                    }}
+                    key={item.label}
+                    >
                     <ListItemButton
                         onClick={
                             isFirstItem
