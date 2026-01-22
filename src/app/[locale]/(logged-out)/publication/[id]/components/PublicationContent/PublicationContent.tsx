@@ -90,6 +90,10 @@ const PublicationContent = ({
                                         field.path
                                     );
 
+                                    if (!value) {
+                                        return;
+                                    }
+
                                     return (
                                         <BoxContainer
                                             sx={{
