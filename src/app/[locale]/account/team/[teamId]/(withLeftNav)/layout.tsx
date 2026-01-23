@@ -21,10 +21,6 @@ export default async function AccountTeamLayout({
     const foundUser = getTeamUser(team?.users, user?.id);
     const permissions = await getPermissions(user.roles, foundUser?.roles);
 
-    //console.log(foundUser?.roles);
-    //console.log(user.roles);
-    //console.log(permissions);
-
     return (
         <div>
             <TwoColumn

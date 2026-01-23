@@ -3,7 +3,6 @@ const ROLE_CUSTODIAN_TEAM_ADMIN = "custodian.team.admin";
 const ROLE_CUSTODIAN_METADATA_MANAGER = "custodian.metadata.manager";
 const ROLE_CUSTODIAN_METADATA_EDITOR = "metadata.editor";
 const ROLE_CUSTODIAN_DAR_MANAGER = "custodian.dar.manager";
-const ROLE_CUSTODIAN_COHORT_MANAGER = "custodian.team.cohortAdmin";
 const ROLE_CUSTODIAN_DAR_REVIEWER = "dar.reviewer";
 
 const ROLE_HDRUK_ADMIN = "hdruk.admin";
@@ -61,12 +60,6 @@ const rolesMeta: {
         tooltipDescription:
             " can; review applications that are assigned to them.",
     },
-    [ROLE_CUSTODIAN_COHORT_MANAGER]: {
-        label: "Manager",
-        permissions: [],
-        tooltipLabel: "Managers",
-        tooltipDescription: " can; create collections on cohort discovery",
-    },
 };
 
 export {
@@ -82,5 +75,4 @@ export {
     ROLE_HDRUK_METADATA,
     ROLE_HDRUK_DAR,
     ROLE_HDRUK_CUSTODIAN,
-    ROLE_CUSTODIAN_COHORT_MANAGER,
 };

@@ -17,6 +17,7 @@ import {
     CloudUploadIcon,
 } from "@/consts/icons";
 import { RouteName } from "@/consts/routeName";
+import { isCohortDiscoveryServiceEnabled } from "@/flags";
 
 const getProfileNav = (
     permissions: {
@@ -24,7 +25,8 @@ const getProfileNav = (
     },
     features: { [key: string]: boolean }
 ): LeftNavItem[] => {
-    const { isCohortDiscoveryServiceEnabled } = features;
+    const { isCohortDiscoveryServiceEnabled, isRQuestEnabled } = features;
+
     return [
         {
             icon: <PersonOutlineOutlinedIcon />,
@@ -50,11 +52,23 @@ const getProfileNav = (
                   },
               ]
             : []),
+        ...(permissions["cohort.read"] &&
+        isRQuestEnabled &&
+        !isCohortDiscoveryServiceEnabled
+            ? [
+                  {
+                      icon: <CohortIcon />,
+                      label: "Cohort Discovery Admin",
+                      href: `/${RouteName.ACCOUNT}/${RouteName.PROFILE}/${RouteName.COHORT_DISCOVERY_ADMIN}`,
+                  },
+              ]
+            : []),
         {
             icon: <CohortIcon />,
             label: "Cohort Discovery",
             subItems: [
-                ...(permissions["cohort.read"]
+                ...(permissions["cohort.read"] &&
+                isCohortDiscoveryServiceEnabled
                     ? [
                           {
                               label: "User Admin",
@@ -128,7 +142,7 @@ const getTeamNav = (
     teamId: string | undefined,
     features: { [key: string]: boolean }
 ): LeftNavItem[] => {
-    const { isWidgetsEnabled } = features;
+    const { isWidgetsEnabled, isCohortDiscoveryServiceEnabled } = features;
 
     return [
         ...(permissions["roles.read"]
@@ -263,7 +277,8 @@ const getTeamNav = (
                   },
               ]
             : []),
-        ...([
+        ...(isCohortDiscoveryServiceEnabled &&
+        [
             permissions["cohort.team.read"],
             permissions["cohort.team.create"],
         ].every(isTrue => isTrue)

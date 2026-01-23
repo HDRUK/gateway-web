@@ -19,7 +19,6 @@ const apis = {
     logoutInternalUrl: "/api/logout",
     signInInternalUrl: "/api/signIn",
     authInternalUrl: "/api/auth",
-    oauth2: `${apiBase}/oauth2/authorize`,
     signInV1UrlIP: `${apiV1IPUrl}/auth`,
     usersV1Url: `${apiV1Url}/users`,
     usersV1UrlIP: `${apiV1IPUrl}/users`,

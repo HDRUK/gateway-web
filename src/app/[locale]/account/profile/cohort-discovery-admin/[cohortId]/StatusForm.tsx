@@ -15,6 +15,7 @@ import usePut from "@/hooks/usePut";
 import { useUnsavedChanges } from "@/hooks/useUnsavedChanges";
 import apis from "@/config/apis";
 import { RouteName } from "@/consts/routeName";
+import { useFeatures } from "@/providers/FeatureProvider";
 import {
     defaultValues,
     requestStatusField,
@@ -31,7 +32,7 @@ interface EditCohortRequestProps {
 export default function StatusForm({ cohortRequest }: EditCohortRequestProps) {
     const { push } = useRouter();
     const { showBar, hideBar, store, updateStoreProps } = useActionBar();
-
+    const { isCohortDiscoveryServiceEnabled } = useFeatures();
     const { control, handleSubmit, formState, reset } =
         useForm<CohortRequestForm>({
             resolver: yupResolver(validationSchema),
@@ -39,12 +40,15 @@ export default function StatusForm({ cohortRequest }: EditCohortRequestProps) {
                 ...defaultValues,
                 request_status: cohortRequest.request_status,
                 nhse_sde_request_status: cohortRequest.nhse_sde_request_status,
-                workgroup_ids:
-                    cohortRequest.user?.workgroups?.map(wg => wg.id) ?? [],
+                workgroup_ids: isCohortDiscoveryServiceEnabled
+                    ? cohortRequest.user?.workgroups?.map(wg => wg.id) ?? []
+                    : [],
             },
         });
 
-    const { data: workgroupData } = useGet<Workgroup[]>(apis.workgroupsV1Url);
+    const { data: workgroupData } = useGet<Workgroup[]>(apis.workgroupsV1Url, {
+        shouldFetch: isCohortDiscoveryServiceEnabled,
+    });
 
     useUnsavedChanges({
         shouldConfirmLeave: formState.isDirty && !formState.isSubmitSuccessful,
@@ -69,14 +73,18 @@ export default function StatusForm({ cohortRequest }: EditCohortRequestProps) {
                     ],
                 }),
             },
-            {
-                ...workgroupField,
-                options: workgroupData?.map(wg => ({
-                    id: wg.id,
-                    value: wg.id,
-                    label: wg.name,
-                })),
-            },
+            ...(isCohortDiscoveryServiceEnabled
+                ? [
+                      {
+                          ...workgroupField,
+                          options: workgroupData?.map(wg => ({
+                              id: wg.id,
+                              value: wg.id,
+                              label: wg.name,
+                          })),
+                      },
+                  ]
+                : []),
             {
                 ...nhseSdeRequestStatusField,
                 /* only add "EXPIRED" to dropdown if that is the current status */
@@ -90,7 +98,8 @@ export default function StatusForm({ cohortRequest }: EditCohortRequestProps) {
             /* only display "details" field if "request_status", "nhs_sde_request_status" or 'workgroups' has changed */
             ...(formState.dirtyFields.request_status ||
             formState.dirtyFields.nhse_sde_request_status ||
-            formState.dirtyFields.workgroup_ids
+            (isCohortDiscoveryServiceEnabled &&
+                formState.dirtyFields.workgroup_ids)
                 ? [detailsField]
                 : []),
         ],
@@ -100,6 +109,7 @@ export default function StatusForm({ cohortRequest }: EditCohortRequestProps) {
             formState.dirtyFields.nhse_sde_request_status,
             cohortRequest,
             workgroupData,
+            isCohortDiscoveryServiceEnabled,
         ]
     );
 

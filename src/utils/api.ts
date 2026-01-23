@@ -350,6 +350,7 @@ export async function getCohortAccessRedirect(): Promise<CohortRequestAccess> {
 
 async function getTeam(teamId: string): Promise<Team> {
     const team = await get<Team>(`${apis.teamsV1UrlIP}/${teamId}`);
+
     return {
         ...team,
         users: team?.users.map(user => ({

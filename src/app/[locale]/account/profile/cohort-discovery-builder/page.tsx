@@ -9,20 +9,17 @@ const CohortDiscoveryPage = async () => {
     const allowed = await isCohortDiscoveryServiceEnabled();
     if (!allowed) redirect(RouteName.ERROR_403);
     return (
-        <>
-            hi{" "}
-            <Box
-                component="iframe"
-                src={EXTERNAL_URL}
-                title="Cohort discovery"
-                sx={{
-                    border: 0,
-                    width: "100%",
-                    flex: 1,
-                    height: "calc(100vh - 200px)",
-                }}
-            />
-        </>
+        <Box
+            component="iframe"
+            src={EXTERNAL_URL}
+            title="Cohort discovery"
+            sx={{
+                border: 0,
+                width: "100%",
+                flex: 1,
+                height: "calc(100vh - 200px)",
+            }}
+        />
     );
 };
 
