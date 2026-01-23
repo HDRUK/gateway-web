@@ -63,8 +63,7 @@ const ResultCardPublication = ({ result }: ResultCardPublicationProps) => {
                                     _id
                                         ? `${RouteName.PUBLICATION}/${_id}`
                                         : full_text_url || url || ""
-                                }
-                                target={_id ? "_blank" : "self"}>
+                                }>
                                 <EllipsisLineLimit
                                     text={paper_title || ""}
                                     showToolTip
