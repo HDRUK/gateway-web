@@ -26,6 +26,7 @@ interface getColumnsProps {
     setRequestStatus: (status: string) => void;
     requestStatus?: CohortRequestStatus;
     translations: { [id: string]: string };
+    features: { [id: string]: string };
 }
 
 const updateSort =
@@ -82,7 +83,10 @@ const getColumns = ({
     setRequestStatus,
     requestStatus,
     translations,
+    features,
 }: getColumnsProps): ColumnDef<CohortRequest>[] => {
+    const { isCohortDiscoveryServiceEnabled } = features;
+
     return [
         {
             id: "name",
@@ -234,38 +238,47 @@ const getColumns = ({
                     </div>
                 ),
         },
-        {
-            id: "workgroups",
-            header: () => (
-                <Box
-                    sx={{
-                        p: 0,
-                        justifyContent: "space-between",
-                        display: "flex",
-                        alignItems: "center",
-                    }}
-                    textAlign="left">
-                    Workgroups
-                    <SortIcon
-                        setSort={setSort}
-                        sort={sort}
-                        sortKey="workgroups"
-                        ariaLabel="Workgroups"
-                    />
-                </Box>
-            ),
-            accessorFn: row => row.user.workgroups,
-            cell: ({ cell }) => {
-                const workgroups = cell.getValue<Workgroup[]>();
-                return (
-                    <Box sx={{ display: "flex", flexWrap: "wrap", gap: 1 }}>
-                        {workgroups.map(wg => (
-                            <Chip key={wg.name} label={wg.name} />
-                        ))}
-                    </Box>
-                );
-            },
-        },
+        ...(isCohortDiscoveryServiceEnabled
+            ? [
+                  {
+                      id: "workgroups",
+                      header: () => (
+                          <Box
+                              sx={{
+                                  p: 0,
+                                  justifyContent: "space-between",
+                                  display: "flex",
+                                  alignItems: "center",
+                              }}
+                              textAlign="left">
+                              Workgroups
+                              <SortIcon
+                                  setSort={setSort}
+                                  sort={sort}
+                                  sortKey="workgroups"
+                                  ariaLabel="Workgroups"
+                              />
+                          </Box>
+                      ),
+                      accessorFn: row => row.user.workgroups,
+                      cell: ({ cell }) => {
+                          const workgroups = cell.getValue<Workgroup[]>();
+                          return (
+                              <Box
+                                  sx={{
+                                      display: "flex",
+                                      flexWrap: "wrap",
+                                      gap: 1,
+                                  }}>
+                                  {workgroups.map(wg => (
+                                      <Chip key={wg.name} label={wg.name} />
+                                  ))}
+                              </Box>
+                          );
+                      },
+                  } as ColumnDef<CohortRequest>,
+              ]
+            : []),
         {
             id: "accessToEnv",
             header: () => (

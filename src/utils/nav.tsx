@@ -18,9 +18,13 @@ import {
 } from "@/consts/icons";
 import { RouteName } from "@/consts/routeName";
 
-const getProfileNav = (permissions: {
-    [key: string]: boolean;
-}): LeftNavItem[] => {
+const getProfileNav = (
+    permissions: {
+        [key: string]: boolean;
+    },
+    features: { [key: string]: boolean }
+): LeftNavItem[] => {
+    const { isCohortDiscoveryServiceEnabled } = features;
     return [
         {
             icon: <PersonOutlineOutlinedIcon />,
@@ -56,10 +60,18 @@ const getProfileNav = (permissions: {
                               label: "User Admin",
                               href: `/${RouteName.ACCOUNT}/${RouteName.PROFILE}/${RouteName.COHORT_DISCOVERY_ADMIN}`,
                           },
-                          {
-                              label: "Collection & Workgroup Admin",
-                              href: `/${RouteName.ACCOUNT}/${RouteName.PROFILE}/${RouteName.COHORT_DISCOVERY_ADMIN_COLLECTIONS}`,
-                          },
+                          ...(isCohortDiscoveryServiceEnabled
+                              ? [
+                                    {
+                                        label: "Collection & Workgroup Admin",
+                                        href: `/${RouteName.ACCOUNT}/${RouteName.PROFILE}/${RouteName.COHORT_DISCOVERY_ADMIN_COLLECTIONS}`,
+                                    },
+                                    {
+                                        label: "Cohort Builder",
+                                        href: `/${RouteName.ACCOUNT}/${RouteName.PROFILE}/cohort-discovery-builder`,
+                                    },
+                                ]
+                              : []),
                       ]
                     : []),
                 {
@@ -69,10 +81,6 @@ const getProfileNav = (permissions: {
                 {
                     label: "About this service",
                     href: `/${RouteName.ACCOUNT}/${RouteName.PROFILE}/${RouteName.COHORT_DISCOVERY_ABOUT}`,
-                },
-                {
-                    label: "Cohort Builder",
-                    href: `/${RouteName.ACCOUNT}/${RouteName.PROFILE}/cohort-discovery-builder`,
                 },
             ],
         },

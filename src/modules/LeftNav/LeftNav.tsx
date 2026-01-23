@@ -38,7 +38,7 @@ const LeftNav = ({ permissions, teamId }: LeftNavProps) => {
 
     const navItems = teamId
         ? getTeamNav(permissions, teamId, features)
-        : getProfileNav(permissions);
+        : getProfileNav(permissions, features);
 
     const params = useParams<{ locale: string }>();
     const pathname = usePathname() || "";

@@ -22,3 +22,13 @@ export const isWidgetsEnabled = flag({
     key: "Widgets",
     adapter: await gatewayAdapter(),
 });
+
+export const isCohortDiscoveryServiceEnabled = flag({
+    key: "CohortDiscoveryService",
+    adapter: await gatewayAdapter(),
+});
+
+export const isRQuestEnabled = flag({
+    key: "RQuest",
+    adapter: await gatewayAdapter(),
+});
