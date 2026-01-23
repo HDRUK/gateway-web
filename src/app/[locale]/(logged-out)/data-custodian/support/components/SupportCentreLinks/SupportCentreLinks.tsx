@@ -23,11 +23,14 @@ import ContactSupport from "@/app/[locale]/(logged-out)/support/components/Conta
 
 const TRANSLATIONS_NAMESPACE_SUPPORT = "pages.dataCustodianSupport";
 
-const { NEXT_PUBLIC_CONFLUENCE_URL } = process.env;
-const WIDGET_URL = `${NEXT_PUBLIC_CONFLUENCE_URL}/3778117633/Widgets+User+Guide`;
-
-export default function MeetTheTeam() {
+export default function MeetTheTeam({
+    confluenceUrl,
+}: {
+    confluenceUrl?: string;
+}) {
     const t = useTranslations(TRANSLATIONS_NAMESPACE_SUPPORT);
+
+    const WIDGET_URL = `${confluenceUrl}/3778117633/Widgets+User+Guide`;
 
     const data = [
         {
