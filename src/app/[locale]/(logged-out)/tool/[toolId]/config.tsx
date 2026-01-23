@@ -1,3 +1,5 @@
+import { FieldType } from "@/interfaces/FieldType";
+
 interface ToolField {
     path: string;
     type: FieldType;
