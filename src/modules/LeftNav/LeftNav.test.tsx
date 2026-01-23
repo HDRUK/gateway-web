@@ -1,10 +1,10 @@
+import mediaQuery from "css-mediaquery";
 import Cookies from "js-cookie";
 import mockRouter from "next-router-mock";
 import config from "@/config/config";
 import { RouteName } from "@/consts/routeName";
 import { fireEvent, render, waitFor, within } from "@/utils/testUtils";
 import LeftNav from "./LeftNav";
-import mediaQuery from "css-mediaquery";
 
 jest.mock("js-cookie", () => ({
     set: jest.fn(),
@@ -156,7 +156,6 @@ describe("LeftNav", () => {
         );
     });
 
-
     it("mobile horizontal nav can be opened with button click", async () => {
         setScreenWidth(200);
         const { getByRole, queryByText } = render(
@@ -166,7 +165,6 @@ describe("LeftNav", () => {
                 navHeading="Team"
             />
         );
-        //expect(queryByText("Library")).toBeInTheDocument();
 
         const toggle = getByRole("button", {
             name: "Your Profile",

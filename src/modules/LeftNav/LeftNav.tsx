@@ -137,6 +137,15 @@ const LeftNav = ({
         const sectionId = itemIds[item.label];
         const expanded = isExpanded(item, expandedSection, trimmedPathname);
 
+        const calculateLeftBorder = (subItemHref: string) => `1px solid 
+                                                                ${
+                                                                    subNavItemSelected(
+                                                                        subItemHref
+                                                                    )
+                                                                        ? colors.green400
+                                                                        : colors.grey200
+                                                                }`;
+
         return !item.subItems ? (
             <Tooltip
                 title={!navOpen ? item.label : ""}
@@ -300,19 +309,13 @@ const LeftNav = ({
                                     }}>
                                     <ListItemText
                                         sx={{
-                                            paddingLeft: "17px",
                                             m: 0,
                                             ml: 6,
                                             py: 1.5,
                                             px: 1,
-                                            borderLeft: `1px solid 
-                                                                ${
-                                                                    subNavItemSelected(
-                                                                        subItem.href
-                                                                    )
-                                                                        ? colors.green400
-                                                                        : colors.grey200
-                                                                }`,
+                                            borderLeft: calculateLeftBorder(
+                                                subItem.href
+                                            ),
                                         }}
                                         primary={subItem.label}
                                     />
