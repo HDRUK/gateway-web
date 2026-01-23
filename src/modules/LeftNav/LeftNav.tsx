@@ -137,14 +137,15 @@ const LeftNav = ({
         const sectionId = itemIds[item.label];
         const expanded = isExpanded(item, expandedSection, trimmedPathname);
 
-        const calculateLeftBorder = (subItemHref: string) => `1px solid 
-                                                                ${
-                                                                    subNavItemSelected(
-                                                                        subItemHref
-                                                                    )
-                                                                        ? colors.green400
-                                                                        : colors.grey200
-                                                                }`;
+        const calculateLeftBorder = (subItemHref: string) => 
+            `1px solid 
+                ${
+                    subNavItemSelected(
+                        subItemHref
+                    )
+                        ? colors.green400
+                        : colors.grey200
+                }`;
 
         return !item.subItems ? (
             <Tooltip
