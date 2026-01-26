@@ -31,7 +31,7 @@ export default async function Widget({ params }: WidgetProps) {
         return (
             <html lang="en">
                 <body>
-                    <>This widget cannot be viewed in a browser tab, please view this in iframe script provided on your website.</>
+                    <>This widget cannot be viewed in a browser tab, please view this in the iframe script provided on your website.</>
                 </body>
             </html>
         );
