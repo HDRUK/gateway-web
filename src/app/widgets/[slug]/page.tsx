@@ -27,29 +27,15 @@ export default async function Widget({ params }: WidgetProps) {
     const widgetId = popped[1];
     const headersList = await headers();
     const referer = headersList.get("referer");
-    const host =
-    headersList.get("x-forwarded-host") ??
-    headersList.get("host");
-
-    let sameDomain = false;
+    
     console.log(referer, 'referer')
     console.log(widgetId, 'widgetId')
     console.log(teamId, 'teamId')
 
-    if (referer && host) {
-        try {
-            const refererUrl = new URL(referer);
-            console.log(refererUrl.host, 'refererUrl.host')
-            sameDomain = refererUrl.host === host;
-        } catch {
-            sameDomain = false;
-        }
-    }
-  
-    console.log(sameDomain, 'sameDomain')
 
 
-    // if (sameDomain) {
+
+    // if (!referer) {
     //     return (
     //         <html lang="en">
     //             <body>
