@@ -33,6 +33,8 @@ export default async function Widget({ params }: WidgetProps) {
 
     let sameDomain = false;
     console.log(referer, 'referer')
+    console.log(widgetId, 'widgetId')
+    console.log(teamId, 'teamId')
 
     if (referer && host) {
         try {
