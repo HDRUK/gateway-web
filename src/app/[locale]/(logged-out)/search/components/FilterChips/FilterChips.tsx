@@ -72,7 +72,7 @@ const FilterChips = ({
                                                     marginBottom: "4px",
                                                     "&:focus-visible": {
                                                         borderColor:
-                                                            colors.orange200,
+                                                            colors.orange,
                                                         borderWidth: 2,
                                                         backgroundColor:
                                                             colors.green400,
