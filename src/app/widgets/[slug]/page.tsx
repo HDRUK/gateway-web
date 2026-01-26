@@ -33,9 +33,7 @@ export default async function Widget({ params }: WidgetProps) {
     console.log(teamId, 'teamId')
 
 
-
-
-    // if (!referer) {
+     // if (!referer) {
     //     return (
     //         <html lang="en">
     //             <body>
@@ -47,10 +45,10 @@ export default async function Widget({ params }: WidgetProps) {
 
     const response = await fetch(
         `${apis.apiV1IPUrl}/teams/${teamId}/widgets/${widgetId}/data?domain_origin=${referer}`,
-        {
-            next: { revalidate: 180, tags: ["all", `widget-${widgetId}`] },
-            cache: "force-cache",
-        }
+        // {
+        //     next: { revalidate: 180, tags: ["all", `widget-${widgetId}`] },
+        //     cache: "force-cache",
+        // }
     );
 
     if (!response.ok) {
