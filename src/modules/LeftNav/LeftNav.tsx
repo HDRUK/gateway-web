@@ -12,6 +12,8 @@ import {
 import Link from "next/link";
 import { usePathname, useParams } from "next/navigation";
 import { LeftNavItem } from "@/interfaces/Ui";
+import useAuth from "@/hooks/useAuth";
+import { useCohortStatus } from "@/hooks/useCohortStatus";
 import { colors } from "@/config/theme";
 import { ExpandLessIcon, ExpandMoreIcon } from "@/consts/icons";
 import { getTrimmedpathname } from "@/utils/general";
@@ -36,9 +38,17 @@ interface LeftNavProps {
 const LeftNav = ({ permissions, teamId }: LeftNavProps) => {
     const features = useFeatures();
 
+    const { user } = useAuth();
+    const { requestStatus } = useCohortStatus(user?.id);
+
     const navItems = teamId
-        ? getTeamNav(permissions, teamId, features)
-        : getProfileNav(permissions, features);
+        ? getTeamNav(
+              permissions,
+              teamId,
+              features,
+              requestStatus === "APPROVED"
+          )
+        : getProfileNav(permissions, features, requestStatus === "APPROVED");
 
     const params = useParams<{ locale: string }>();
     const pathname = usePathname() || "";

@@ -270,7 +270,7 @@ const getColumns = ({
                                       flexWrap: "wrap",
                                       gap: 1,
                                   }}>
-                                  {workgroups.map(wg => (
+                                  {workgroups?.map(wg => (
                                       <Chip key={wg.name} label={wg.name} />
                                   ))}
                               </Box>

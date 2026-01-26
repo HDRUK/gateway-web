@@ -17,13 +17,13 @@ import {
     CloudUploadIcon,
 } from "@/consts/icons";
 import { RouteName } from "@/consts/routeName";
-import { isCohortDiscoveryServiceEnabled } from "@/flags";
 
 const getProfileNav = (
     permissions: {
         [key: string]: boolean;
     },
-    features: { [key: string]: boolean }
+    features: { [key: string]: boolean },
+    cohortDiscoveryApproved: boolean = false
 ): LeftNavItem[] => {
     const { isCohortDiscoveryServiceEnabled, isRQuestEnabled } = features;
 
@@ -74,7 +74,8 @@ const getProfileNav = (
                               label: "User Admin",
                               href: `/${RouteName.ACCOUNT}/${RouteName.PROFILE}/${RouteName.COHORT_DISCOVERY_ADMIN}`,
                           },
-                          ...(isCohortDiscoveryServiceEnabled
+                          ...(isCohortDiscoveryServiceEnabled &&
+                          cohortDiscoveryApproved
                               ? [
                                     {
                                         label: "Collection & Workgroup Admin",
@@ -140,7 +141,8 @@ const getTeamNav = (
         [key: string]: boolean;
     },
     teamId: string | undefined,
-    features: { [key: string]: boolean }
+    features: { [key: string]: boolean },
+    cohortDiscoveryApproved: boolean = false
 ): LeftNavItem[] => {
     const { isWidgetsEnabled, isCohortDiscoveryServiceEnabled } = features;
 
@@ -278,6 +280,7 @@ const getTeamNav = (
               ]
             : []),
         ...(isCohortDiscoveryServiceEnabled &&
+        cohortDiscoveryApproved &&
         [
             permissions["cohort.team.read"],
             permissions["cohort.team.create"],
