@@ -13,7 +13,7 @@ const generateDatasetWithTitleV1 = (
         user_id: faker.datatype.number(),
         status: faker.helpers.arrayElement(["ARCHIVED", "ACTIVE", "DRAFT"]),
         create_origin: faker.helpers.arrayElement(["GMI", "API", "MANUAL"]),
-        pid: faker.datatype.uuid(),
+        pid: faker.string.numeric(6),
         versions: Array.from({ length: 3 }).map(() =>
             generateDatasetVersionV1(version)
         ),
@@ -43,7 +43,7 @@ const generateDataUse = (data = {}): DataUse => {
         team: generateTeam(),
         project_title: faker.lorem.sentence(5),
         non_gateway_applicants: Array.from({ length: 3 }).map(() =>
-            faker.name.fullName()
+            faker.person.fullName()
         ),
         non_gateway_datasets: [],
         ...data,

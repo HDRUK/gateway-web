@@ -80,13 +80,13 @@ export const Default: Story = {
             { id: 1, firstname: userV1.firstname, lastname: userV1.lastname },
             {
                 id: 2,
-                firstname: faker.name.firstName(),
-                lastname: faker.name.lastName(),
+                firstname: faker.person.firstName(),
+                lastname: faker.person.lastName(),
             },
             {
                 id: 3,
-                firstname: faker.name.firstName(),
-                lastname: faker.name.lastName(),
+                firstname: faker.person.firstName(),
+                lastname: faker.person.lastName(),
             },
         ],
     },

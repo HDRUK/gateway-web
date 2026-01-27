@@ -4,7 +4,7 @@ import { Collection, ReducedCollection } from "@/interfaces/Collection";
 const generateCollectionV1 = (data = {}): Collection | ReducedCollection => {
     return {
         name: faker.lorem.words(2),
-        _id: faker.datatype.uuid(),
+        _id: faker.string.numeric(6),
         ...data,
     };
 };

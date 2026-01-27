@@ -14,7 +14,7 @@ const generateTool = (data = {}): Tool => {
         team: generateTeamV1(),
         project_title: faker.lorem.sentence(5),
         non_gateway_applicants: Array.from({ length: 3 }).map(() =>
-            faker.name.fullName()
+            faker.person.fullName()
         ),
         non_gateway_datasets: [],
         ...data,
