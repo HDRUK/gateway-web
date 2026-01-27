@@ -7,13 +7,17 @@ import { logger } from "@/utils/logger";
 
 export const getCohortStatusAndRedirect = async (
     userId: number,
-    redirect = false
+    redirect = false,
+    useRQuest = true
 ): Promise<CohortResponse | null> => {
     try {
         const [userRequest, accessRedirect] = await Promise.all([
             getUserCohortRequest(userId.toString()),
-            redirect ? getCohortAccessRedirect() : { redirect_url: "" },
+            redirect
+                ? getCohortAccessRedirect(useRQuest)
+                : { redirect_url: "" },
         ]);
+
         return {
             requestStatus: userRequest?.request_status ?? null,
             nhseSdeRequestStatus: userRequest?.nhse_sde_request_status ?? null,
@@ -21,6 +25,7 @@ export const getCohortStatusAndRedirect = async (
             redirectUrl: accessRedirect?.redirect_url ?? null,
         };
     } catch (error) {
+        console.log("got error");
         const session = await getSessionCookie();
         const err = error as {
             response?: {

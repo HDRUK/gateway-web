@@ -102,7 +102,7 @@ const ActiveListSidebar = ({
                         sx={{
                             width: "100%",
                             p: 0,
-                            boxShadow: "1px 1px 3px 0px rgba(0, 0, 0, 0.09)",
+                            boxShadow: theme.customShadows.subtle,
                             borderTop: "1px solid rgba(238, 238, 238, 1)",
                         }}>
                         <Button

@@ -26,12 +26,12 @@ export default function CohortDiscoveryCoverPage({
     const t = useTranslations("pages.account.profile.cohortDiscovery");
     const { isNhsSdeApplicationsEnabled } = useFeatures();
     const { user } = useAuth();
+
     const { requestExpiry, requestStatus } = useCohortStatus(user?.id);
 
     const daysRemaining =
         requestStatus === "APPROVED" && requestExpiry
-            ? // eslint-disable-next-line react-hooks/purity
-              differenceInDays(requestExpiry, Date.now())
+            ? differenceInDays(requestExpiry, Date.now())
             : null;
 
     return (

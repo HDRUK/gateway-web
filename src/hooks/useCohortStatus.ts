@@ -4,7 +4,11 @@ import { useEffect, useState } from "react";
 import { CohortResponse } from "@/interfaces/CohortRequest";
 import { getCohortStatusAndRedirect } from "@/app/actions/getCohortStatusAndRedirectAction";
 
-export const useCohortStatus = (userId?: number, redirect = false) => {
+export const useCohortStatus = (
+    userId?: number,
+    redirect = false,
+    useRQuest = true
+) => {
     const [data, setData] = useState<CohortResponse | null>(null);
     const [isLoading, setIsLoading] = useState(true);
 
@@ -20,7 +24,8 @@ export const useCohortStatus = (userId?: number, redirect = false) => {
             try {
                 const result = await getCohortStatusAndRedirect(
                     userId,
-                    redirect
+                    redirect,
+                    useRQuest
                 );
                 setData(result);
             } catch (err) {

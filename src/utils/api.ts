@@ -27,6 +27,7 @@ import { FormHydrationSchema } from "@/interfaces/FormHydration";
 import { Keyword } from "@/interfaces/Keyword";
 import { NetworkSummary } from "@/interfaces/NetworkSummary";
 import { PaginationType } from "@/interfaces/Pagination";
+import { Publication } from "@/interfaces/Publication";
 import { QuestionBankSection } from "@/interfaces/QuestionBankSection";
 import { GetOptions, Cache } from "@/interfaces/Response";
 import { Team, TeamNames } from "@/interfaces/Team";
@@ -333,14 +334,18 @@ export async function getUserCohortRequest(
     );
 }
 
-export async function getCohortAccessRedirect(): Promise<CohortRequestAccess> {
+export async function getCohortAccessRedirect(
+    useRQuest = true
+): Promise<CohortRequestAccess> {
     const cookieStore = await cookies();
     const cookieHeader = cookieStore
         .getAll()
         .map(cookie => `${cookie.name}=${cookie.value}`)
         .join("; ");
     return get<CohortRequestAccess>(
-        `${apis.cohortRequestsV1UrlIP}/access`,
+        `${apis.cohortRequestsV1UrlIP}/access/${
+            useRQuest ? "rquest" : "cohort-discovery"
+        }`,
         undefined,
         {
             Cookie: cookieHeader,
@@ -791,6 +796,18 @@ async function getTeamNames(options?: GetOptions): Promise<TeamNames[]> {
     return names;
 }
 
+async function getPublication(
+    id: string,
+    options?: GetOptions
+): Promise<Publication> {
+    const publication = await get<Publication>(
+        `${apis.publicationsV1UrlIP}/${id}`,
+        options
+    );
+
+    return publication;
+}
+
 export {
     getApplication,
     getCohort,
@@ -833,4 +850,5 @@ export {
     getDarTemplatesCount,
     getWidget,
     getTeamNames,
+    getPublication,
 };
