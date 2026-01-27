@@ -215,6 +215,8 @@ const theme = createTheme({
                         "&.Mui-focusVisible": {
                             outline: `2px solid ${colors.orange}`,
                             borderRadius: "50%",
+                            outlineOffset: 0,
+                            background: colors.grey400,
                         },
                     };
                 },
