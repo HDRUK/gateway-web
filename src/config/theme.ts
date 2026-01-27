@@ -347,6 +347,9 @@ const theme = createTheme({
                         "&:hover": {
                             background: palette.greyCustom.main,
                         },
+                        "&.Mui-focusVisible": {
+                            background: palette.greyCustom.main,
+                        }
                     },
                 },
                 {
