@@ -1,3 +1,10 @@
+## [2.29.1](https://github.com/HDRUK/gateway-web/compare/v2.29.0...v2.29.1) (2026-01-26)
+
+### 🐛 Bug Fixes
+
+* **GAT-0000:** Add in logs to prod for widgets ([6d7356c](https://github.com/HDRUK/gateway-web/commit/6d7356c657c8b59b5b81b55ec530dafacf899953)), closes [GAT-0000](GAT-0000)
+* **GAT-0000:** Add in logs to prod for widgets (#1443) ([c3b16e0](https://github.com/HDRUK/gateway-web/commit/c3b16e09bf50962b3ba8708a27512d16ac1c6e53)), closes [GAT-0000](GAT-0000)
+
 ## [2.29.0](https://github.com/HDRUK/gateway-web/compare/v2.28.1...v2.29.0) (2026-01-16)
 
 ### ✨ Features
