@@ -106,7 +106,8 @@ jobs:
         env:
           MYSQL_DATABASE: hdrgatewaydev
           MYSQL_ROOT_PASSWORD: root
-          ports: 3306:3306
+          ports:
+            - 3306:3306
         options: >-
           --health-cmd="mysqladmin ping -h localhost"
           --health-interval=5s
@@ -166,7 +167,7 @@ jobs:
       - name: Configure Laravel .env + run migrations/seed
         run: |
           cd gateway-api
-          cp .env.local.example .env
+          cp .env.example .env
           sed -i 's/DB_HOST=.*/DB_HOST=127.0.0.1/' .env
           sed -i 's/DB_PASSWORD=.*/DB_PASSWORD=root/' .env
           php artisan key:generate
