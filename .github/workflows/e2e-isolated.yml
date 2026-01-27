@@ -166,7 +166,7 @@ jobs:
       - name: Configure Laravel .env + run migrations/seed
         run: |
           cd gateway-api
-          cp .env.example .env
+          cp .env.local.example .env
           sed -i 's/DB_HOST=.*/DB_HOST=127.0.0.1/' .env
           sed -i 's/DB_PASSWORD=.*/DB_PASSWORD=root/' .env
           php artisan key:generate
