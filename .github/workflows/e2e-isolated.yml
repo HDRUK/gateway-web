@@ -8,12 +8,12 @@ on:
         description: "Branch of gateway-api to check out"
         required: false
         default: "dev"
-        
+
 env:
   APP_ENV: "dev"
   APP_DEBUG: "true"
   APP_NAME: "gateway-api-2"
-  AUDIT_LOG_ENABLED: "true" 
+  AUDIT_LOG_ENABLED: "true"
   APP_URL: "http://localhost:8000"
   ZURE_PROXY: "false"
   AZURE_REDIRECT_URL: "http://localhost:8000/api/v1/auth/azure/callback"
@@ -26,10 +26,10 @@ env:
   DB_PORT: "3306"
   DB_USERNAME: "root"
   DB_PASSWORD: "root"
-  ELASTICSEARCH_VERIFY_SSL: "false" 
-  ELASTIC_SERVICE_URL: ${{ secrets.ELASTIC_SERVICE_URL }} 
-  ELASTICSEARCH_USER: ${{ secrets.ELASTICSEARCH_USER }} 
-  ELASTICSEARCH_PASS: ${{ secrets.ELASTICSEARCH_PASS }}  
+  ELASTICSEARCH_VERIFY_SSL: "false"
+  ELASTIC_SERVICE_URL: ${{ secrets.ELASTIC_SERVICE_URL }}
+  ELASTICSEARCH_USER: ${{ secrets.ELASTICSEARCH_USER }}
+  ELASTICSEARCH_PASS: ${{ secrets.ELASTICSEARCH_PASS }}
   FILESYSTEM_DISK: "local" # public
   FORM_HYDRATION_SCHEMA_URL: "https://raw.githubusercontent.com/HDRUK/schemata-2/master/docs/%s/%s.form.json"
   FORM_HYDRATION_SCHEMA_MODEL: "HDRUK"
@@ -48,8 +48,8 @@ env:
   GWDM_TRASER_IDENT: "gdmv1"
   GWDM_CURRENT_VERSION: "2.0"
   APP_KEY: ${{ secrets.APP_KEY }}
-  JWT_KID: ${{ secrets.JWT_KID }} 
-  JWT_SECRET: ${{ secrets.JWT_SECRET }} 
+  JWT_KID: ${{ secrets.JWT_KID }}
+  JWT_SECRET: ${{ secrets.JWT_SECRET }}
   LINKEDIN_REDIRECT_URL: "http://localhost:8000/api/v1/auth/linkedin/callback"
   MAIL_MAILER: "smtp"
   MAIL_HOST: "127.0.0.1"
@@ -59,11 +59,11 @@ env:
   MAIL_ENCRYPTION: null
   MAIL_FROM_ADDRESS: "noreply@healthdatagateway.org"
   MAIL_FROM_NAME: "gateway-api-2"
-  MEMCACHED_HOST: "127.0.0.1" d 
+  MEMCACHED_HOST: "127.0.0.1"
   MJML_RENDER_URL: "https://europe-west1-hdrukshareddev.cloudfunctions.net/hdr-shared-mjml-dev"
   OPENATHENS_ISSUER_URL: "https://connect.openathens.net"
   OPENATHENS_REDIRECT_URL: "http://localhost:8000/api/v1/auth/openathens/callback"
-  QUEUE_CONNECTION: "database" 
+  QUEUE_CONNECTION: "database"
   REDIS_CLIENT: "phpredis"
   REDIS_HOST: "localhost"
   REDIS_PASSWORD: "mypassword"
@@ -77,52 +77,51 @@ env:
   MEDIA_URL: "https://media.dev.hdruk.cloud"
   COHORT_DISCOVERY_ACCESS_URL: "https://web.dev.hdruk.cloud/en/about/cohort-discovery"
   COHORT_DISCOVERY_RENEW_URL: "https://web.dev.hdruk.cloud/en/about/cohort-discovery"
-  AZURE_CLIENT_ID: ${{ secrets.AZURE_CLIENT_ID }} 
-  AZURE_CLIENT_SECRET: ${{ secrets.AZURE_CLIENT_SECRET }}  
-  AZURE_TENANT_ID: ${{ secrets.AZURE_TENANT_ID }}  
+  AZURE_CLIENT_ID: ${{ secrets.AZURE_CLIENT_ID }}
+  AZURE_CLIENT_SECRET: ${{ secrets.AZURE_CLIENT_SECRET }}
+  AZURE_TENANT_ID: ${{ secrets.AZURE_TENANT_ID }}
   AZURE_PROXY: "false"
-  LINKEDIN_CLIENT_ID: ${{ secrets.LINKEDIN_CLIENT_ID }} 
-  LINKEDIN_CLIENT_SECRET: ${{ secrets.LINKEDIN_CLIENT_SECRET }} 
-  GOOGLE_CLIENT_ID: ${{ secrets.GOOGLE_CLIENT_ID }} 
-  GOOGLE_CLIENT_SECRET: ${{ secrets.GOOGLE_CLIENT_SECRET }} 
-  OPENATHENS_CLIENT_ID: ${{ secrets.OPENATHENS_CLIENT_ID }}  
-  OPENATHENS_CLIENT_SECRET: ${{ secrets.OPENATHENS_CLIENT_SECRET }}  
+  LINKEDIN_CLIENT_ID: ${{ secrets.LINKEDIN_CLIENT_ID }}
+  LINKEDIN_CLIENT_SECRET: ${{ secrets.LINKEDIN_CLIENT_SECRET }}
+  GOOGLE_CLIENT_ID: ${{ secrets.GOOGLE_CLIENT_ID }}
+  GOOGLE_CLIENT_SECRET: ${{ secrets.GOOGLE_CLIENT_SECRET }}
+  OPENATHENS_CLIENT_ID: ${{ secrets.OPENATHENS_CLIENT_ID }}
+  OPENATHENS_CLIENT_SECRET: ${{ secrets.OPENATHENS_CLIENT_SECRET }}
   CYPRESS_BASE_URL: "http://localhost:3000/en"
-  DEV_EMAIL: ${{ secrets.DEV_EMAIL }}  
-  DEV_PASSWORD: ${{ secrets.DEV_PASSWORD }}  
-  isTest: 'true'
+  DEV_EMAIL: ${{ secrets.DEV_EMAIL }}
+  DEV_PASSWORD: ${{ secrets.DEV_PASSWORD }}
+  isTest: "true"
 
 jobs:
-  e2e-tests:    
+  e2e-tests:
     if: github.event_name != 'pull_request' || github.event.pull_request.state == 'open' && github.event.pull_request.draft == false
     runs-on: ubuntu-latest
     environment: cypress_dev
 
     services:
-        mysql:
-          image: mysql:8.0
-          env:
-            MYSQL_DATABASE: hdrgatewaydev
-            MYSQL_ROOT_PASSWORD: root
-            ports:
-            - 3306:3306
-          options: >-
-            --health-cmd="mysqladmin ping -h localhost"
-            --health-interval=5s
-            --health-timeout=2s
-            --health-retries=5
+      mysql:
+        image: mysql:8.0
+        env:
+          MYSQL_DATABASE: hdrgatewaydev
+          MYSQL_ROOT_PASSWORD: root
+          ports: 3306:3306
+        options: >-
+          --health-cmd="mysqladmin ping -h localhost"
+          --health-interval=5s
+          --health-timeout=2s
+          --health-retries=5
 
-        redis:
-          image: redis:7
-          ports:
-            - 6379:6379
-          options: >-
-            --health-cmd="redis-cli -a mypassword ping"
-            --health-interval=5s
-            --health-timeout=2s
-            --health-retries=5
-          env:
-            REDIS_PASSWORD: mypassword
+      redis:
+        image: redis:7
+        ports:
+          - 6379:6379
+        options: >-
+          --health-cmd="redis-cli -a mypassword ping"
+          --health-interval=5s
+          --health-timeout=2s
+          --health-retries=5
+        env:
+          REDIS_PASSWORD: mypassword
 
     steps:
       - name: Install MailDev
@@ -148,7 +147,7 @@ jobs:
         uses: shivammathur/setup-php@v2
         with:
           php-version: 8.4
-          
+
       - name: Cache Composer deps
         uses: actions/cache@v4
         with:
@@ -161,7 +160,7 @@ jobs:
         run: |
           cd gateway-api
           composer install --no-interaction --prefer-dist
-    
+
       - name: Configure Laravel .env + run migrations/seed
         run: |
           cd gateway-api
