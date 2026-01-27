@@ -46,6 +46,7 @@ export enum RouteName {
     PUBLICATIONS = "publications",
     NEWSLETTER_SIGNUP = "newsletter-signup",
     SAVED_SEARCHES = "saved-searches",
+    FEATURES = "features",
     MEET_THE_TEAM = "/about/meet-the-team",
     SUPPORT_TEAM_MANAGEMENT = "/support/team-management",
     SUPPORT_COHORT_DISCOVERY = "/support/cohort-discovery",

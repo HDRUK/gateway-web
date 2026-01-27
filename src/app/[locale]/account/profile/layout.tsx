@@ -19,6 +19,7 @@ export default async function AccountProfileLayout({
     return (
         <>
             <TwoColumn
+<<<<<<< HEAD
                 leftContent={
                     <LeftNav
                         permissions={permissions}
@@ -28,6 +29,15 @@ export default async function AccountProfileLayout({
                         )}
                     />
                 }
+=======
+                leftContent={<LeftNav permissions={permissions} 
+                navHeading={user.name}
+                roles={user.roles}
+                initialLeftNavOpen={
+                    cookieStore.get(config.LEFT_NAV_COOKIE)?.value ===
+                    "true"
+                }/>}
+>>>>>>> origin/feat/feature-panel
                 rightContent={children}
             />
             <ActionBar />

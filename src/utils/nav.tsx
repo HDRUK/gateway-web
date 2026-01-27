@@ -1,4 +1,5 @@
 import PersonSearchIcon from "@mui/icons-material/PersonSearch";
+import { Role } from "@/interfaces/Role";
 import { LeftNavItem } from "@/interfaces/Ui";
 import {
     ControlPointIcon,
@@ -16,6 +17,7 @@ import {
     TeamMembersIcon,
     DarIcon,
 } from "@/consts/icons";
+import { ROLE_HDRUK_SUPERADMIN } from "@/consts/roles";
 import { RouteName } from "@/consts/routeName";
 
 const navIcon = (Icon: React.ElementType) => <Icon fontSize="inherit" />;
@@ -24,6 +26,7 @@ const getProfileNav = (
     permissions: {
         [key: string]: boolean;
     },
+    roles: Role[],
     features: { [key: string]: boolean },
     cohortDiscoveryApproved: boolean = false
 ): LeftNavItem[] => {
@@ -45,6 +48,15 @@ const getProfileNav = (
             label: "Saved searches",
             href: `/${RouteName.ACCOUNT}/${RouteName.PROFILE}/${RouteName.SAVED_SEARCHES}`,
         },
+        ...(roles?.some(role => role.name === ROLE_HDRUK_SUPERADMIN)
+            ? [
+                  {
+                      icon: navIcon(DataUseIcon),
+                      label: "Feature Flags",
+                      href: `/${RouteName.ACCOUNT}/${RouteName.PROFILE}/${RouteName.FEATURES}`,
+                  },
+              ]
+            : []),
         ...(permissions["custodians.read"]
             ? [
                   {

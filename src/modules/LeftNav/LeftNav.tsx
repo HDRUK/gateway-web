@@ -17,6 +17,7 @@ import {
 import Cookies from "js-cookie";
 import Link from "next/link";
 import { usePathname, useParams } from "next/navigation";
+import { Role } from "@/interfaces/Role";
 import { LeftNavItem } from "@/interfaces/Ui";
 import EllipsisCharacterLimit from "@/components/EllipsisCharacterLimit";
 import Typography from "@/components/Typography";
@@ -48,6 +49,7 @@ interface LeftNavProps {
     navHeading?: string;
     permissions: { [key: string]: boolean };
     initialLeftNavOpen: boolean;
+    roles?: Role[];
 }
 
 const ICON_SIZE = "18px";
@@ -59,6 +61,7 @@ const LeftNav = ({
     teamId,
     navHeading,
     initialLeftNavOpen,
+    roles,
 }: LeftNavProps) => {
     const isMobile = useMediaQuery(theme.breakpoints.only("mobile"));
     const features = useFeatures();
@@ -73,7 +76,12 @@ const LeftNav = ({
               features,
               requestStatus === "APPROVED"
           )
-        : getProfileNav(permissions, features, requestStatus === "APPROVED");
+        : getProfileNav(
+              permissions,
+              roles,
+              features,
+              requestStatus === "APPROVED"
+          );
 
     const params = useParams<{ locale: string }>();
     const pathname = usePathname() || "";
