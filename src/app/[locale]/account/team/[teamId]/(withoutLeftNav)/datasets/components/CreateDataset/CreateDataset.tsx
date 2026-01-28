@@ -817,6 +817,8 @@ const CreateDataset = ({
         setSearchName(value);
     };
 
+    const guidanceOffset = parseInt(navbarHeight) + theme.spacing(4);
+
     return (
         <>
             <Link
@@ -974,10 +976,12 @@ const CreateDataset = ({
                         {currentSectionIndex > 0 && (
                             <Box sx={{
                                 position: "sticky",
-                                top: navbarHeight,
+                                top: guidanceOffset,
                                 padding: 0,
                                 flex: 1,
                                 alignSelf: "flex-start",
+                                maxHeight: `calc(100vh - ${guidanceOffset})`,
+                                overflow: 'auto'
                             }}>
                                 <Paper
                                     sx={{                                    
