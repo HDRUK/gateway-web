@@ -225,7 +225,7 @@ jobs:
       - name: Install deps (force clean)
         run: |
           rm -rf node_modules
-          npm install
+          npm install --include=optional
 
       - name: Check watcher binary
         run: |
