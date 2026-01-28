@@ -42,7 +42,7 @@ interface Ratings {
 
 const cookieName = "surveySession";
 const cookieLife = 90; // days
-const cookieLifeShort = 1; // days
+const cookieLifeClosed = 5; // days
 
 const ratings: Ratings[] = [
     { icon: MoodBadIcon, rating: 1, colour: colors.red700 },
@@ -164,10 +164,11 @@ export default function CustomerSurvey({
     };
 
     const handleClose = () => {
-        // Create a short lifetime cookie to avoid survey reappearing
-        Cookies.set(cookieName, JSON.stringify({ id }), {
-            expires: cookieLifeShort,
-        });
+        Cookies.set(
+            cookieName,
+            JSON.stringify({ closed: true }),
+            { expires: cookieLifeClosed }
+        );
 
         setAnimateOut(true);
         setTimeout(() => {
@@ -175,11 +176,25 @@ export default function CustomerSurvey({
             setSubmitted(false);
         }, 500);
     };
+
     const checkToShowSurvey = useCallback(() => {
-        if (!Cookies.get(cookieName)) {
+        const cookie = Cookies.get(cookieName);
+
+        if (!cookie) {
             setAnimateOut(false);
             setHideComponent(false);
+            return;
         }
+
+        try {
+            const parsed = JSON.parse(cookie);
+            if (parsed?.closed) return;
+        } catch {
+            // ignore invalid cookie
+        }
+
+        setAnimateOut(false);
+        setHideComponent(false);
     }, []);
 
     useEffect(() => {
@@ -198,7 +213,6 @@ export default function CustomerSurvey({
 
     const isValidMonth = () => {
         const currentMonth = formatDate(getToday(), "MM");
-
         if (!currentMonth) {
             return false;
         }
@@ -207,7 +221,6 @@ export default function CustomerSurvey({
     };
 
     if (hideComponent || submitted) return null;
-
     if (!isValidMonth()) return null;
 
     return (
@@ -223,10 +236,12 @@ export default function CustomerSurvey({
                 width: boxSize,
                 zIndex: 1400,
                 animation: `${animateOut ? slideOut : slideIn} 0.5s ease-out`,
-            }}>
+            }}
+        >
             <IconButton
                 sx={{ position: "absolute", top: 10, right: 10 }}
-                onClick={handleClose}>
+                onClick={handleClose}
+            >
                 <CloseIcon />
             </IconButton>
 
@@ -234,7 +249,8 @@ export default function CustomerSurvey({
                 variant="h6"
                 gutterBottom
                 id={id}
-                width={isMobile ? "90%" : "100%"}>
+                width={isMobile ? "90%" : "100%"}
+            >
                 {t("title")}
             </Typography>
 
@@ -252,7 +268,8 @@ export default function CustomerSurvey({
                                                 selectedScore === rating
                                                     ? `2px solid ${colour}`
                                                     : "",
-                                        }}>
+                                        }}
+                                    >
                                         <Icon
                                             aria-label={`Rating ${rating}`}
                                             sx={{
@@ -287,13 +304,16 @@ export default function CustomerSurvey({
                         variant="contained"
                         sx={{ mt: 2 }}
                         type="submit"
-                        disabled={!watch("reason")?.trim()}>
+                        disabled={!watch("reason")?.trim()}
+                    >
                         {t("submit")}
                     </Button>
                 </Box>
             )}
 
-            {step === "complete" && <Typography>{t("success")}</Typography>}
+            {step === "complete" && (
+                <Typography>{t("success")}</Typography>
+            )}
         </Box>
     );
 }
