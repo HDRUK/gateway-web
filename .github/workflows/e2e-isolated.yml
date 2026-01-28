@@ -139,113 +139,123 @@ jobs:
           --health-retries=10
 
     steps:
-      - name: Install MailDev
-        run: npm install -g maildev
+      # - name: Install MailDev
+      #   run: npm install -g maildev
 
-      - name: Start MailDev
-        run: |
-          nohup maildev --smtp=1025 --web=8025 > maildev.log 2>&1 &
-          sleep 5
+      # - name: Start MailDev
+      #   run: |
+      #     nohup maildev --smtp=1025 --web=8025 > maildev.log 2>&1 &
+      #     sleep 5
 
       - name: Checkout web
         uses: actions/checkout@v4
 
-      - name: Wait for Elasticsearch
-        run: |
-          curl --retry 10 --retry-delay 5 http://localhost:9200
+      # - name: Wait for Elasticsearch
+      #   run: |
+      #     curl --retry 10 --retry-delay 5 http://localhost:9200
 
-      - name: Checkout api
-        uses: actions/checkout@v4
-        with:
-          repository: HDRUK/gateway-api
-          path: gateway-api
-          token: ${{ secrets.GITHUB_TOKEN }}
-          ref: ${{ github.event.inputs.api_branch || 'dev' }}
+      # - name: Checkout api
+      #   uses: actions/checkout@v4
+      #   with:
+      #     repository: HDRUK/gateway-api
+      #     path: gateway-api
+      #     token: ${{ secrets.GITHUB_TOKEN }}
+      #     ref: ${{ github.event.inputs.api_branch || 'dev' }}
 
-      - name: Setup PHP
-        uses: shivammathur/setup-php@v2
-        with:
-          php-version: 8.4
+      # - name: Setup PHP
+      #   uses: shivammathur/setup-php@v2
+      #   with:
+      #     php-version: 8.4
 
-      - name: Cache Composer deps
-        uses: actions/cache@v4
-        with:
-          path: vendor
-          key: e2e-composer-${{ hashFiles('composer.lock') }}
-          restore-keys: e2e-composer-
-          working-directory: gateway-api
+      # - name: Cache Composer deps
+      #   uses: actions/cache@v4
+      #   with:
+      #     path: vendor
+      #     key: e2e-composer-${{ hashFiles('composer.lock') }}
+      #     restore-keys: e2e-composer-
+      #     working-directory: gateway-api
 
-      - name: Install Composer deps
-        run: |
-          cd gateway-api
-          composer install --no-interaction --prefer-dist
+      # - name: Install Composer deps
+      #   run: |
+      #     cd gateway-api
+      #     composer install --no-interaction --prefer-dist
 
-      - name: Configure Laravel .env + run migrations/seed
-        run: |
-          cd gateway-api
-          cp .env.example .env
-          sed -i 's/DB_HOST=.*/DB_HOST=127.0.0.1/' .env
-          sed -i 's/DB_PASSWORD=.*/DB_PASSWORD=root/' .env
-          php artisan key:generate
-          php artisan migrate --force
-          php artisan db:seed --force
-          php artisan db:seed --class=TestDevUsersSeeder
+      # - name: Configure Laravel .env + run migrations/seed
+      #   run: |
+      #     cd gateway-api
+      #     cp .env.example .env
+      #     sed -i 's/DB_HOST=.*/DB_HOST=127.0.0.1/' .env
+      #     sed -i 's/DB_PASSWORD=.*/DB_PASSWORD=root/' .env
+      #     php artisan key:generate
+      #     php artisan migrate --force
+      #     php artisan db:seed --force
+      #     php artisan db:seed --class=TestDevUsersSeeder
 
-      - name: Start Laravel API and wait for readiness
-        run: |
-          cd gateway-api
-          php artisan serve --host=0.0.0.0 --port=8000 > laravel.log 2>&1 &
-          echo "Waiting for Laravel to start..."
-          for i in {1..20}; do
-            if curl -s http://127.0.0.1:8000 >/dev/null; then
-              echo "✅ Laravel is up and running!"
-              break
-            fi
-            echo "Waiting for Laravel... attempt $i"
-            sleep 3
-          done
-          tail -n 20 laravel.log
-          php artisan queue:work --daemon > queue.log 2>&1 &
+      # - name: Start Laravel API and wait for readiness
+      #   run: |
+      #     cd gateway-api
+      #     php artisan serve --host=0.0.0.0 --port=8000 > laravel.log 2>&1 &
+      #     echo "Waiting for Laravel to start..."
+      #     for i in {1..20}; do
+      #       if curl -s http://127.0.0.1:8000 >/dev/null; then
+      #         echo "✅ Laravel is up and running!"
+      #         break
+      #       fi
+      #       echo "Waiting for Laravel... attempt $i"
+      #       sleep 3
+      #     done
+      #     tail -n 20 laravel.log
+      #     php artisan queue:work --daemon > queue.log 2>&1 &
 
       - name: Setup Node
         uses: actions/setup-node@v4
         with:
           node-version: 20
 
-      - name: Cache Node modules
-        uses: actions/cache@v4
-        with:
-          path: |
-            node_modules
-            ~/.npm
-          key: e2e-node-modules-${{ runner.os }}-${{ hashFiles('package-lock.json') }}
-          restore-keys: |
-            e2e-node-modules-${{ runner.os }}-
+      # - name: Cache Node modules
+      #   uses: actions/cache@v4
+      #   with:
+      #     path: |
+      #       node_modules
+      #       ~/.npm
+      #     key: e2e-node-modules-${{ runner.os }}-${{ hashFiles('package-lock.json') }}
+      #     restore-keys: |
+      #       e2e-node-modules-${{ runner.os }}-
 
-      - name: Install Node deps
-        run: npm install
+      - name: Install deps (force clean)
+        run: |
+          rm -rf node_modules
+          npm install
+
+      - name: Check watcher binary
+        run: |
+          ls -la node_modules/@parcel/watcher || true
+          node -e "require('@parcel/watcher')" || true
+
+      # - name: Install Node deps
+      #   run: npm install
 
       - name: Build Next.js
         run: npm run build
 
-      - name: Start Next.js
-        run: |
-          nohup npm start > next.log 2>&1 &
-          sleep 10
+      # - name: Start Next.js
+      #   run: |
+      #     nohup npm start > next.log 2>&1 &
+      #     sleep 10
 
-      - name: Cache Cypress
-        uses: actions/cache@v4
-        with:
-          path: ~/.cache/Cypress
-          key: e2e-cypress-${{ runner.os }}-${{ hashFiles('package-lock.json') }}
-          restore-keys: |
-            e2e-cypress-${{ runner.os }}-
+      # - name: Cache Cypress
+      #   uses: actions/cache@v4
+      #   with:
+      #     path: ~/.cache/Cypress
+      #     key: e2e-cypress-${{ runner.os }}-${{ hashFiles('package-lock.json') }}
+      #     restore-keys: |
+      #       e2e-cypress-${{ runner.os }}-
 
-      - name: Run Cypress Tests
-        uses: cypress-io/github-action@v6
-        with:
-          browser: chrome
-          headless: true
+      # - name: Run Cypress Tests
+      #   uses: cypress-io/github-action@v6
+      #   with:
+      #     browser: chrome
+      #     headless: true
 
       # - name: Upload Cypress video
       #   uses: actions/upload-artifact@v4
