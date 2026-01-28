@@ -1,6 +1,6 @@
 {
   "name": "gateway-web-2",
-  "version": "2.29.1",
+  "version": "2.30.0",
   "private": true,
   "scripts": {
     "dev": "next dev",
@@ -40,6 +40,7 @@
     "@mui/lab": "7.0.0",
     "@mui/material": "^7.3.5",
     "@mui/material-nextjs": "7.3.5",
+    "@mui/x-data-grid": "8.26.0",
     "@mui/utils": "^7.3.5",
     "@mui/x-date-pickers": "^8.18.0",
     "@next/third-parties": "16.0.3",
