@@ -1,4 +1,5 @@
 import { Role } from "@/interfaces/Role";
+import { Workgroup } from "./Workgroup";
 
 interface User {
     id: number;
@@ -12,6 +13,7 @@ interface User {
     providerId: number;
     roles: Role[];
     organisation: string;
+    workgroups?: Workgroup[];
 }
 
 export type { User };

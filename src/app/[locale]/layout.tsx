@@ -20,6 +20,8 @@ import {
     isSDEConciergeServiceEnquiryEnabled,
     isNhsSdeApplicationsEnabled,
     isWidgetsEnabled,
+    isCohortDiscoveryServiceEnabled,
+    isRQuestEnabled,
 } from "@/flags";
 import ActionBarProvider from "@/providers/ActionBarProvider";
 import CohortRedirectProvider from "@/providers/CohortRedirectProvider";
@@ -65,6 +67,9 @@ export default async function RootLayout(props: {
         isNhsSdeApplicationsEnabled:
             (await isNhsSdeApplicationsEnabled()) as boolean,
         isWidgetsEnabled: (await isWidgetsEnabled()) as boolean,
+        isCohortDiscoveryServiceEnabled:
+            (await isCohortDiscoveryServiceEnabled()) as boolean,
+        isRQuestEnabled: (await isRQuestEnabled()) as boolean,
     };
 
     if (includeBanners) {

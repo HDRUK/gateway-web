@@ -43,10 +43,17 @@ const CohortDiscoveryRequestForm = ({
         }
     );
 
-    const { data: accessData, isLoading: isAccessLoading } =
-        useGet<accessRequestType>(`${apis.cohortRequestsV1Url}/access`, {
+    const { data: rQuestAccessData, isLoading: isAccessLoading } =
+        useGet<accessRequestType>(`${apis.cohortRequestsV1Url}/access/rquest`, {
             errorNotificationsOn: false,
         });
+
+    const {
+        data: cohortDiscoveryAccessData,
+        isLoading: isCohortAccessLoading,
+    } = useGet<accessRequestType>(`${apis.cohortRequestsV1Url}/access/rquest`, {
+        errorNotificationsOn: false,
+    });
 
     const handleSubmit = () => {
         showDialog(CohortRequestTermsDialog, { cmsContent });
@@ -59,17 +66,18 @@ const CohortDiscoveryRequestForm = ({
     const [termsAccepted, setTermsAccepted] = useState<boolean>(false);
 
     useEffect(() => {
-        if (!isUserLoading && !isAccessLoading) {
-            if (accessData?.redirect_url) {
-                push(accessData.redirect_url);
+        /*if (!isUserLoading && !isAccessLoading) {
+            if (rQuestAccessData?.redirect_url) {
+                console.log(accessData.redirect_url);
+                //push(accessData.redirect_url);
             } else if (
                 userData?.request_status &&
                 userData.request_status === "APPROVED"
             ) {
                 push(`/${RouteName.ABOUT}/${RouteName.COHORT_DISCOVERY}`);
             }
-        }
-    }, [isUserLoading, isAccessLoading, accessData, userData, push]);
+        }*/
+    }, [isUserLoading, isAccessLoading, rQuestAccessData, userData, push]);
 
     return !isUserLoading && !isAccessLoading ? (
         <BoxContainer

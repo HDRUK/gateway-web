@@ -17,6 +17,7 @@ import {
     cohortSearchDefaultValues,
     cohortSearchFilter,
 } from "@/config/forms/cohortAccountSearch";
+import { useFeatures } from "@/providers/FeatureProvider";
 import { getColumns } from "./CohortTable.utils";
 
 const TRANSLATION_PATH = `pages.account.profile.cohortDiscoveryAdmin`;
@@ -50,6 +51,7 @@ const CohortTable = () => {
         `${apis.cohortRequestsV1Url}?${queryParams}`,
         { withPagination: true, keepPreviousData: true }
     );
+    const features = useFeatures();
 
     const translations = {
         accountExpired: t("accountExpired"),
@@ -64,6 +66,7 @@ const CohortTable = () => {
         setRequestStatus,
         requestStatus,
         translations,
+        features,
     });
     const tableStyle = {
         height: "500px",

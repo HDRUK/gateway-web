@@ -170,6 +170,7 @@ const TeamMembers = ({
                 teamHeader: t("columns.team"),
                 darHeader: t("columns.dar"),
                 metaDataHeader: t("columns.metadata"),
+                cohortDiscoveryHeader: "Cohort Discovery",
             },
         });
     }, [actions, permissions, t]);
