@@ -14,7 +14,7 @@ export default defineConfig({
             return config;
         },
 
-        video: true,
-        videosFolder: "cypress/videos",
+        // video: true,
+        // videosFolder: "cypress/videos",
     },
 });
