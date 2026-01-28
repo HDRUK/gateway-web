@@ -1,3 +1,25 @@
+## [2.30.0](https://github.com/HDRUK/gateway-web/compare/v2.29.1...v2.30.0) (2026-01-28)
+
+### ✨ Features
+
+* **GAT-7892:** Add some horizontal padding (#1423) ([e7b239b](https://github.com/HDRUK/gateway-web/commit/e7b239b6f6beded159e7f2d8e54ffbce77ecd6d7)), closes [GAT-7892](GAT-7892)
+* **GAT-7893:** Created collapsible navigation for mobile (#1438) ([1b7972d](https://github.com/HDRUK/gateway-web/commit/1b7972d6fda943a05b05b44e47ac9135a09da5f9)), closes [GAT-7893](GAT-7893) [navigation](gation)
+* **GAT-7895:** Filter chips now have orange background when selected (#1441) ([b210ce9](https://github.com/HDRUK/gateway-web/commit/b210ce9f5c7ea77f10bf6295bca0292e3346eed0)), closes [GAT-7895](GAT-7895)
+* **GAT-8265:** Add publication landing page (#1431) ([05826bc](https://github.com/HDRUK/gateway-web/commit/05826bcd07c7dcdd8062b7538455adc1571f24f7)), closes [GAT-8265](GAT-8265)
+* **GAT-8265:** Tweak to publication page content (#1433) ([2abc19e](https://github.com/HDRUK/gateway-web/commit/2abc19ec63f77fbe2c87662f31ea932bcf60d532)), closes [GAT-8265](GAT-8265)
+* **GAT-8453:** Add dar modal header and footer (#1432) ([05925bf](https://github.com/HDRUK/gateway-web/commit/05925bfb0b1d36a1a6dd929f568b912b06ff8426)), closes [GAT-8453](GAT-8453)
+* **GAT-8456:** Add docker envs (#1435) ([21d21dd](https://github.com/HDRUK/gateway-web/commit/21d21ddae0d8880f6d23ec6a2a87d100b1718b60)), closes [GAT-8456](GAT-8456)
+* **GAT-8456:** Add widget support page (#1434) ([a705a70](https://github.com/HDRUK/gateway-web/commit/a705a70789a543414391fcc4b01ed2f05a40a7d1)), closes [GAT-8456](GAT-8456)
+* **GAT-8456:** Fix publication link for online publications (#1436) ([778829a](https://github.com/HDRUK/gateway-web/commit/778829a4e8a83d6792321b76963de9040978a504))
+* **GAT-8456:** widget link tweak (#1439) ([8b0e963](https://github.com/HDRUK/gateway-web/commit/8b0e963bed5691b05d603c0659a469880ac1138a)), closes [GAT-8456](GAT-8456)
+
+## [2.29.1](https://github.com/HDRUK/gateway-web/compare/v2.29.0...v2.29.1) (2026-01-26)
+
+### 🐛 Bug Fixes
+
+* **GAT-0000:** Add in logs to prod for widgets ([6d7356c](https://github.com/HDRUK/gateway-web/commit/6d7356c657c8b59b5b81b55ec530dafacf899953)), closes [GAT-0000](GAT-0000)
+* **GAT-0000:** Add in logs to prod for widgets (#1443) ([c3b16e0](https://github.com/HDRUK/gateway-web/commit/c3b16e09bf50962b3ba8708a27512d16ac1c6e53)), closes [GAT-0000](GAT-0000)
+
 ## [2.29.0](https://github.com/HDRUK/gateway-web/compare/v2.28.1...v2.29.0) (2026-01-16)
 
 ### ✨ Features
