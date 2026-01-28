@@ -13,7 +13,6 @@ exports[`CheckboxRow should render component 1`] = `
     <span
       class="MuiButtonBase-root MuiCheckbox-root MuiCheckbox-colorPrimary MuiCheckbox-sizeMedium PrivateSwitchBase-root MuiCheckbox-root MuiCheckbox-colorPrimary MuiCheckbox-sizeMedium MuiCheckbox-root MuiCheckbox-colorPrimary MuiCheckbox-sizeMedium mui-style-13gtttw-MuiButtonBase-root-MuiSwitchBase-root-MuiCheckbox-root"
       control="[object Object]"
-      formcontrolsx="[object Object]"
       label="checkbox label"
     >
       <input

@@ -25,7 +25,7 @@ exports[`DatasetStatCard should match snapshot 1`] = `
         <button
           aria-label="helper"
           aria-labelledby=":r0:"
-          class="MuiButtonBase-root MuiIconButton-root MuiIconButton-sizeMedium mui-style-1lsi98i-MuiButtonBase-root-MuiIconButton-root"
+          class="MuiButtonBase-root MuiIconButton-root MuiIconButton-sizeMedium mui-style-mk8whb-MuiButtonBase-root-MuiIconButton-root"
           data-mui-internal-clone-element="true"
           tabindex="0"
           type="button"
