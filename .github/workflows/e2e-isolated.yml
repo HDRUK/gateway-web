@@ -132,8 +132,7 @@ jobs:
           - 9200:9200
         options: >-
           --env discovery.type=single-node
-          --env ELASTIC_PASSWORD=elastic
-          --env xpack.security.enabled=true
+          --env xpack.security.enabled=false
           --health-cmd="curl -s http://localhost:9200 >/dev/null"
           --health-interval=10s
           --health-timeout=5s
@@ -190,7 +189,7 @@ jobs:
           php artisan key:generate
           php artisan migrate --force
           php artisan db:seed --force
-          # php artisan db:seed --class=TestSeeder
+          php artisan db:seed --class=TestDevUsersSeeder
 
       - name: Start Laravel API and wait for readiness
         run: |
