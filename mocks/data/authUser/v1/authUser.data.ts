@@ -5,8 +5,8 @@ import { generateRoleV1 } from "../../user";
 const generateAuthUserV1 = (data = {}): AuthUser => {
     return {
         id: faker.datatype.number(),
-        firstname: faker.person.firstName(),
-        lastname: faker.person.lastName(),
+        firstname: faker.name.firstName(),
+        lastname: faker.name.lastName(),
         name: faker.datatype.string(),
         email: faker.internet.email(),
         secondary_email: faker.internet.email(),

@@ -11,11 +11,11 @@ import { SearchResultDataset } from "@/interfaces/Search";
 const generatePageDataSetV1 = (): Dataset => {
     return {
         id: faker.datatype.number(),
-        mongo_object_id: faker.string.numeric(6),
-        mongo_id: faker.string.numeric(6),
-        mongo_pid: faker.string.numeric(6),
-        datasetid: faker.string.numeric(6),
-        pid: faker.string.numeric(6),
+        mongo_object_id: faker.datatype.uuid(),
+        mongo_id: faker.datatype.uuid(),
+        mongo_pid: faker.datatype.uuid(),
+        datasetid: faker.datatype.uuid(),
+        pid: faker.datatype.uuid(),
         source: null,
         discourse_topic_id: 0,
         is_cohort_discovery: false,
@@ -43,7 +43,7 @@ const generatePageDataSetV1 = (): Dataset => {
         collections_count: 0,
         spatialCoverage: [
             {
-                id: faker.string.numeric(6),
+                id: faker.datatype.uuid(),
                 created_at: "2024-08-19T13:18:01.000000Z",
                 updated_at: "2024-08-19T13:18:01.000000Z",
                 region: "England",
@@ -57,11 +57,11 @@ const generatePageDataSetV1 = (): Dataset => {
         collections: [],
         versions: [
             {
-                id: faker.string.numeric(6),
+                id: faker.datatype.uuid(),
                 created_at: "2024-08-21T10:56:31.000000Z",
                 updated_at: "2024-08-21T10:56:31.000000Z",
                 deleted_at: null,
-                dataset_id: faker.string.numeric(6),
+                dataset_id: faker.datatype.uuid(),
                 metadata: {
                     metadata: {
                         identifier: faker.datatype.uuid(),

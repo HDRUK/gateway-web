@@ -1,7 +1,7 @@
 import { faker } from "@faker-js/faker";
-import { Permission } from "@/interfaces/Permission";
-import { Role } from "@/interfaces/Role";
 import { User } from "@/interfaces/User";
+import { Role } from "@/interfaces/Role";
+import { Permission } from "@/interfaces/Permission";
 import { ROLE_CUSTODIAN_TEAM_ADMIN } from "@/consts/roles";
 
 const generatePermissionV1 = (data = {}): Permission => {
@@ -45,8 +45,8 @@ const generateUserV1 = (data = {}): User => {
         id: faker.datatype.number(),
         email: faker.internet.email(),
         secondary_email: faker.internet.email(),
-        firstname: faker.person.firstName(),
-        lastname: faker.person.lastName(),
+        firstname: faker.name.firstName(),
+        lastname: faker.name.lastName(),
         name: faker.datatype.string(),
         organisation: faker.datatype.string(),
         provider: faker.datatype.string(),
