@@ -2,16 +2,18 @@ import { Suspense } from "react";
 import { getTranslations } from "next-intl/server";
 import Image from "next/image";
 import { notFound } from "next/navigation";
+import { SearchCategory } from "@/interfaces/Search";
 import Box from "@/components/Box";
+import HeaderActionBar from "@/components/HeaderActionBar";
 import LayoutDataItemPage from "@/components/LayoutDataItemPage";
 import { NetworkSkeleton, SectionSkeleton } from "@/components/Skeletons";
 import Typography from "@/components/Typography";
 import ActiveListSidebar from "@/modules/ActiveListSidebar";
 import { StaticImages } from "@/config/images";
 import { AspectRatioImage } from "@/consts/image";
+import { RouteName } from "@/consts/routeName";
 import { getNetworkInfo } from "@/utils/api";
 import metaData from "@/utils/metadata";
-import ActionBar from "./components/ActionBar";
 import DataCustodianOuter from "./components/DataCustodianOuter";
 import DatasetsOuter from "./components/DatasetsOuter";
 import IntroductionContent from "./components/IntroductionContent";
@@ -66,7 +68,11 @@ export default async function DataCustodianNetworkPage({
                             style={AspectRatioImage}
                         />
                     </Box>
-                    <ActionBar />
+                    <HeaderActionBar
+                        backButtonText={t("backLabel")}
+                        backButtonHref={`/${RouteName.SEARCH}?type=${SearchCategory.COLLECTIONS}`}
+                        wrapperSx={{ boxShadow: 0 }}
+                    />
                     <Box
                         sx={{
                             display: "flex",

@@ -5,49 +5,52 @@ import { SearchCategory } from "@/interfaces/Search";
 import Box from "@/components/Box";
 import CollectionsContent from "@/components/CollectionsContent";
 import DataUsesContent from "@/components/DataUsesContent";
+import DatasetsContent from "@/components/DatasetsContent";
 import HeaderActionBar from "@/components/HeaderActionBar";
 import LayoutDataItemPage from "@/components/LayoutDataItemPage";
-import PublicationsContent from "@/components/PublicationsContent";
+import { MarkDownSanitizedWithHtml } from "@/components/MarkDownSanitizedWithHTML";
+import ToolsContent from "@/components/ToolsContent";
 import Typography from "@/components/Typography";
 import ActiveListSidebar from "@/modules/ActiveListSidebar";
 import { DataStatus } from "@/consts/application";
 import { RouteName } from "@/consts/routeName";
-import { getReducedTool } from "@/utils/api";
+import { getPublication } from "@/utils/api";
 import metaData from "@/utils/metadata";
-import DatasetsContent from "./components/DatasetsContent";
-import ToolContent from "./components/ToolContent";
-import { toolFields, accordions } from "./config";
+import PublicationContent from "./components/PublicationContent";
+import { publicationFields, relatedContentAccordions } from "./config";
 
-const TRANSLATION_PATH = "pages.tool";
+const TRANSLATION_PATH = "pages.publication";
+
 export const metadata = metaData({
-    title: "Tool",
+    title: "Publication",
     description: "",
 });
-export default async function ToolPage({
+
+export default async function PublicationItemPage({
     params,
 }: {
-    params: Promise<{ toolId: string }>;
+    params: Promise<{ id: string }>;
 }) {
     const t = await getTranslations(TRANSLATION_PATH);
 
-    const { toolId } = await params;
-    const data = await getReducedTool(toolId, {
+    const { id } = await params;
+    const data = await getPublication(id, {
         suppressError: true,
     });
 
-    // Note that the status check is only required under v1 - under v2, we can use
-    // an endpoint that will not show the data if not active
     if (!data || data?.status !== DataStatus.ACTIVE) notFound();
 
-    const populatedSections = toolFields.filter(section =>
+    const populatedSections = publicationFields.filter(section =>
         section.fields.some(field => !isEmpty(get(data, field.path)))
     );
 
-    const activeLinkList = populatedSections.concat(accordions).map(section => {
-        return {
-            label: t(section.sectionName),
-        };
-    });
+    const activeLinkList = populatedSections
+        .concat(relatedContentAccordions)
+        .map(section => {
+            return {
+                label: t(section.sectionName),
+            };
+        });
 
     return (
         <LayoutDataItemPage
@@ -58,25 +61,40 @@ export default async function ToolPage({
                         backButtonText={t("backLabel")}
                         backButtonHref={`/${RouteName.SEARCH}?type=${SearchCategory.TOOLS}`}
                     />
-                    <Box sx={{ px: 3, py: 3 }}>
-                        <Typography variant="h2" sx={{ pt: 0.5, pb: 0.5 }}>
-                            {data.name}
+                    <Box
+                        sx={{
+                            display: "flex",
+                            flexDirection: "column",
+                            gap: 2,
+                            px: 3,
+                            py: 3,
+                        }}>
+                        <Typography
+                            variant="h2"
+                            sx={{ pt: 0.5, pb: 0.5, m: 0 }}>
+                            <MarkDownSanitizedWithHtml
+                                content={data.paper_title}
+                                wrapper="span"
+                            />
                         </Typography>
-                        <ToolContent
+
+                        <PublicationContent
                             data={data}
                             populatedSections={populatedSections}
                         />
+
                         <DatasetsContent
-                            dataset_versions={data.versions}
+                            datasets={data.datasets}
                             anchorIndex={populatedSections.length + 1}
+                            translationPath={TRANSLATION_PATH}
                         />
                         <DataUsesContent
                             datauses={data.durs}
                             anchorIndex={populatedSections.length + 2}
                             translationPath={TRANSLATION_PATH}
                         />
-                        <PublicationsContent
-                            publications={data.publications}
+                        <ToolsContent
+                            tools={data.tools}
                             anchorIndex={populatedSections.length + 3}
                             translationPath={TRANSLATION_PATH}
                         />

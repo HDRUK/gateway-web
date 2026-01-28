@@ -28,7 +28,7 @@ export default function SignupNewsletter() {
                 title="Newsletter signup"
                 description="Newsletter signup"
             />
-            <Box sx={{ m: "0 auto", py: 5, maxWidth: "900px" }}>
+            <Box sx={{ m: "0 auto", py: 5, px: 2, maxWidth: "900px" }}>
                 <div id="newsletterSignupForm" />
             </Box>
         </>

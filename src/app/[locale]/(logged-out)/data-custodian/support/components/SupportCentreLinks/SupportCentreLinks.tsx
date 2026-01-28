@@ -1,5 +1,6 @@
 "use client";
 
+import { WebAssetOutlined } from "@mui/icons-material";
 import QuizOutlinedIcon from "@mui/icons-material/QuizOutlined";
 import { Box, Grid } from "@mui/material";
 import { useTranslations } from "next-intl";
@@ -22,8 +23,14 @@ import ContactSupport from "@/app/[locale]/(logged-out)/support/components/Conta
 
 const TRANSLATIONS_NAMESPACE_SUPPORT = "pages.dataCustodianSupport";
 
-export default function MeetTheTeam() {
+export default function MeetTheTeam({
+    confluenceUrl,
+}: {
+    confluenceUrl?: string;
+}) {
     const t = useTranslations(TRANSLATIONS_NAMESPACE_SUPPORT);
+
+    const WIDGET_URL = `${confluenceUrl}/3778117633/Widgets+User+Guide`;
 
     const data = [
         {
@@ -37,6 +44,11 @@ export default function MeetTheTeam() {
             icon: (
                 <MetadataOnboardingIcon aria-hidden="true" focusable="false" />
             ),
+        },
+        {
+            heading: t("widgetTitle"),
+            link: WIDGET_URL,
+            icon: <WebAssetOutlined aria-hidden="true" focusable="false" />,
         },
         {
             heading: t("uploadingDataUsesProjectsTitle"),
