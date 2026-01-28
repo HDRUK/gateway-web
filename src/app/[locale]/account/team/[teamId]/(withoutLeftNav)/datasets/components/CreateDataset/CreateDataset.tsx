@@ -988,8 +988,9 @@ const CreateDataset = ({
                                         padding: theme.spacing(2),
                                         margin: theme.spacing(1.25),
                                         wordBreak: "break-word",
-                                        height: "100%"
-                                    }}>
+                                        height: "100%",
+                                        minHeight: '20vh',
+                                      }}>
                                     <Typography variant="h2">
                                         {t("guidance")}
                                     </Typography>
