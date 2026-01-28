@@ -222,25 +222,8 @@ jobs:
           restore-keys: |
             e2e-node-modules-v2-${{ runner.os }}-
 
-      - name: Install deps (force clean)
-        run: |
-          rm -rf node_modules
-          npm ci --include=optional
-
-      - name: Check watcher binary
-        run: |
-          ls -la node_modules/@parcel/watcher || true
-          node -e "require('@parcel/watcher')" || true
-
-      - name: Check npm optional settings
-        run: |
-          npm config get optional
-          npm config get omit
-          echo "NPM_CONFIG_OPTIONAL=$NPM_CONFIG_OPTIONAL"
-          echo "NPM_CONFIG_OMIT=$NPM_CONFIG_OMIT"
-
-      # - name: Install Node deps
-      #   run: npm install
+      - name: Install Node deps
+        run: npm install
 
       - name: Build Next.js
         run: npm run build
