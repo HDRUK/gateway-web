@@ -843,7 +843,7 @@ const CreateDataset = ({
                 actionButtonsEnabled={!isSaving}
             />
 
-            <Box sx={{ display: "flex", flexDirection: "row", p: 0, position: "relative"}}>
+            <Box sx={{ display: "flex", flexDirection: "row", p: 0, }}>
                 <Box
                     sx={{
                         flex: 1,
@@ -875,9 +875,7 @@ const CreateDataset = ({
                 {currentSectionIndex < formSections.length - 1 &&
                 currentSectionIndex > 0 ? (
                     <>
-                        <Box sx={{ flex: 2, p: 0,
-                        left: 0,
-                        pl: 2 }}>
+                        <Box sx={{ flex: 2, p: 0, }}>
                             <FormProvider {...methods}>
                                 <Form>
                                     <Paper
