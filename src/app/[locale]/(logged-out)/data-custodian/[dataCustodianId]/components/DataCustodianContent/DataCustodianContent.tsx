@@ -2,6 +2,7 @@ import { ReactElement } from "react";
 import { get } from "lodash";
 import { getTranslations } from "next-intl/server";
 import { DataProvider } from "@/interfaces/DataProvider";
+import { FieldType } from "@/interfaces/FieldType";
 import Box from "@/components/Box";
 import BoxContainer from "@/components/BoxContainer";
 import DataCustodianLinks from "@/components/DataCustodianLinks";
@@ -12,11 +13,7 @@ import TooltipIcon from "@/components/TooltipIcon";
 import Typography from "@/components/Typography";
 import apis from "@/config/apis";
 import { formatDate } from "@/utils/date";
-import {
-    DataCustodianField,
-    DataCustodianSection,
-    FieldType,
-} from "../../config";
+import { DataCustodianField, DataCustodianSection } from "../../config";
 
 const TRANSLATION_PATH = "pages.dataCustodian";
 const DATE_FORMAT = "DD/MM/YYYY";

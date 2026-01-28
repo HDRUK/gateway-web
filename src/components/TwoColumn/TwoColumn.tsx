@@ -13,6 +13,7 @@ const TwoColumn = ({ leftContent, rightContent }: TwoColumnProps) => {
             sx={{
                 display: "flex",
                 flexGrow: 1,
+                flexDirection: { mobile: "column", tablet: "row" },
             }}>
             <Box
                 sx={{

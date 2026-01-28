@@ -1,3 +1,46 @@
+## [2.30.0](https://github.com/HDRUK/gateway-web/compare/v2.29.1...v2.30.0) (2026-01-28)
+
+### ✨ Features
+
+* **GAT-7892:** Add some horizontal padding (#1423) ([e7b239b](https://github.com/HDRUK/gateway-web/commit/e7b239b6f6beded159e7f2d8e54ffbce77ecd6d7)), closes [GAT-7892](GAT-7892)
+* **GAT-7893:** Created collapsible navigation for mobile (#1438) ([1b7972d](https://github.com/HDRUK/gateway-web/commit/1b7972d6fda943a05b05b44e47ac9135a09da5f9)), closes [GAT-7893](GAT-7893) [navigation](gation)
+* **GAT-7895:** Filter chips now have orange background when selected (#1441) ([b210ce9](https://github.com/HDRUK/gateway-web/commit/b210ce9f5c7ea77f10bf6295bca0292e3346eed0)), closes [GAT-7895](GAT-7895)
+* **GAT-8265:** Add publication landing page (#1431) ([05826bc](https://github.com/HDRUK/gateway-web/commit/05826bcd07c7dcdd8062b7538455adc1571f24f7)), closes [GAT-8265](GAT-8265)
+* **GAT-8265:** Tweak to publication page content (#1433) ([2abc19e](https://github.com/HDRUK/gateway-web/commit/2abc19ec63f77fbe2c87662f31ea932bcf60d532)), closes [GAT-8265](GAT-8265)
+* **GAT-8453:** Add dar modal header and footer (#1432) ([05925bf](https://github.com/HDRUK/gateway-web/commit/05925bfb0b1d36a1a6dd929f568b912b06ff8426)), closes [GAT-8453](GAT-8453)
+* **GAT-8456:** Add docker envs (#1435) ([21d21dd](https://github.com/HDRUK/gateway-web/commit/21d21ddae0d8880f6d23ec6a2a87d100b1718b60)), closes [GAT-8456](GAT-8456)
+* **GAT-8456:** Add widget support page (#1434) ([a705a70](https://github.com/HDRUK/gateway-web/commit/a705a70789a543414391fcc4b01ed2f05a40a7d1)), closes [GAT-8456](GAT-8456)
+* **GAT-8456:** Fix publication link for online publications (#1436) ([778829a](https://github.com/HDRUK/gateway-web/commit/778829a4e8a83d6792321b76963de9040978a504))
+* **GAT-8456:** widget link tweak (#1439) ([8b0e963](https://github.com/HDRUK/gateway-web/commit/8b0e963bed5691b05d603c0659a469880ac1138a)), closes [GAT-8456](GAT-8456)
+
+## [2.29.1](https://github.com/HDRUK/gateway-web/compare/v2.29.0...v2.29.1) (2026-01-26)
+
+### 🐛 Bug Fixes
+
+* **GAT-0000:** Add in logs to prod for widgets ([6d7356c](https://github.com/HDRUK/gateway-web/commit/6d7356c657c8b59b5b81b55ec530dafacf899953)), closes [GAT-0000](GAT-0000)
+* **GAT-0000:** Add in logs to prod for widgets (#1443) ([c3b16e0](https://github.com/HDRUK/gateway-web/commit/c3b16e09bf50962b3ba8708a27512d16ac1c6e53)), closes [GAT-0000](GAT-0000)
+
+## [2.29.0](https://github.com/HDRUK/gateway-web/compare/v2.28.1...v2.29.0) (2026-01-16)
+
+### ✨ Features
+
+* **GAT-7136:** DAR Document Application (#1411) ([c36a935](https://github.com/HDRUK/gateway-web/commit/c36a935f9926ef615ec3ed9711a2073056e5846b)), closes [GAT-7136](GAT-7136)
+* **GAT-7247:** Dar web/form initiation logic (#1413) ([91ed598](https://github.com/HDRUK/gateway-web/commit/91ed59812d38ffff53a7d76e763eb184b72205c2)), closes [GAT-7247](GAT-7247)
+* **GAT-8186:** Collapsable left nav (#1416) ([47bf604](https://github.com/HDRUK/gateway-web/commit/47bf6048e8249c7f26960c06f956b14f9a40fa89)), closes [GAT-8186](GAT-8186)
+* **GAT-8186:** Fix display of long team names in nav (#1424) ([1feb3a1](https://github.com/HDRUK/gateway-web/commit/1feb3a10118947144fe586febc997f58add5936f))
+* **GAT-8186:** Fix mobile nav (#1422) ([2efea93](https://github.com/HDRUK/gateway-web/commit/2efea9337ac6f840ace120865b90ac7912a6bbe9))
+* **GAT-8186:** Open left nav initially (#1425) ([6a3a269](https://github.com/HDRUK/gateway-web/commit/6a3a2696140ef5748a2172fe51b6647a5781d926)), closes [GAT-8186](GAT-8186)
+
+### 🐛 Bug Fixes
+
+* **GAT-0000:** package tweaks (#1412) ([756d14a](https://github.com/HDRUK/gateway-web/commit/756d14a93bf6efe0d53f93a406ebceec94fbb12a)), closes [GAT-0000](GAT-0000)
+* **GAT-5235:** Add sign in link to mobile nav (#1421) ([0774db0](https://github.com/HDRUK/gateway-web/commit/0774db097224d6c1d8ffad0f210fdbdccb00ec9f)), closes [GAT-5235](GAT-5235)
+* **GAT-5323:** Remove unused tooltips (#1420) ([d0ec03b](https://github.com/HDRUK/gateway-web/commit/d0ec03ba1f4c67bc51c78a5e08ba097999041623)), closes [GAT-5323](GAT-5323)
+* **GAT-5323:** Update tooltips (#1429) ([dbae8d3](https://github.com/HDRUK/gateway-web/commit/dbae8d37c62b587bcbd71295601bfc5a3a8809b1)), closes [GAT-5323](GAT-5323)
+* **GAT-7825:** Ensure html chars are decoded correctly (#1418) ([17a6aeb](https://github.com/HDRUK/gateway-web/commit/17a6aebd356bfcf91f3e5a6170df78a09e5e30d7)), closes [GAT-7825](GAT-7825)
+* **GAT-7839:** Escaping > in markdown (#1427) ([7da72fe](https://github.com/HDRUK/gateway-web/commit/7da72fe9927aca7dfcfb4f6f27587f74d1c7e0cc)), closes [GAT-7839](GAT-7839)
+* **GAT-8409:** Resolve issues around searching publications (#1414) ([c08ca26](https://github.com/HDRUK/gateway-web/commit/c08ca267cae3074a42ccb98427717d2c460ca9ad))
+
 ## [2.28.1](https://github.com/HDRUK/gateway-web/compare/v2.28.0...v2.28.1) (2025-12-12)
 
 ### 🐛 Bug Fixes

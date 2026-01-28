@@ -172,6 +172,7 @@
             "theAllianceTitle": "The Alliance",
             "faqsTitle": "FAQs",
             "onboardingCohortDiscoveryTitle": "Onboarding to Cohort Discovery",
+            "widgetTitle": "Creating and Managing Widgets",
             "documentation": {
                 "title": "Documentation"
             },
@@ -342,7 +343,8 @@
                         "text": "Add details of the data publisher team you want to create on the Gateway",
                         "aspectRatioInfo": "Please note the aspect ratio of the image should be approximately 2:1 (width:height)",
                         "addImageSuccess": "Image Uploaded",
-                        "fileSelectButtonText": "Choose logo"
+                        "fileSelectButtonText": "Choose logo",
+                        "darModal": "Data Access Request modal"
                     },
                     "edit": {
                         "title": "Edit Team details",
@@ -1283,10 +1285,8 @@
         },
         "collection": {
             "introTitle": "Description",
+            "backLabel": "Back to Collections search results",
             "components": {
-                "ActionBar": {
-                    "label": "Back to Collections search results"
-                },
                 "DatasetsContent": {
                     "heading": "Datasets & BioSamples ({ length })",
                     "populationSize": "Dataset population size: { length }",
@@ -1317,7 +1317,7 @@
                     "usefulLinks": "Useful links:"
                 },
                 "ActionBar": {
-                    "label": "Back",
+                    "backLabel": "Back",
                     "enquire": "Make a general enquiry",
                     "cohortDiscoveryEnabled": "Start a Cohort Discovery query",
                     "cohortDiscoveryDisabled": "This data custodian does not support Cohort Discovery"
@@ -1353,9 +1353,9 @@
             "publications": "Publication",
             "tools": "Analysis Scripts & Software",
             "serviceOfferings": "Service offerings",
+            "backLabel": "Back to Collections search results",
             "components": {
                 "ActionBar": {
-                    "label": "Back to Collections search results",
                     "enquire": "Make an enquiry"
                 },
                 "IntroductionContent": {
@@ -1455,7 +1455,7 @@
             "safeSetting": "Safe Setting",
             "safeOutput": "Safe Outputs",
             "projectIdText": "Project ID",
-            "projectIdTextTooltip": "A unique identifier for the project assigned by the data custodian",
+            "projectIdTextTooltip": "A unique identifier for the project assigned by the Data Custodian",
             "organisationName": "Organisation name",
             "organisationNameTooltip": "The name of the legal entity that signs the contract to access the data",
             "organisationId": "Organisation ID",
@@ -1471,7 +1471,6 @@
             "sublicenceArrangements": "Sub-licence arrangements (if any)?",
             "sublicenceArrangementsTooltip": "Whether there are any permissions for the applicant to share the data beyond the named parties",
             "projectTitle": "Project title",
-            "projectTitleTooltip": "The title of the project/research study/request",
             "laySummary": "Lay summary",
             "laySummaryTooltip": "A concise and clear description of the project in language that is understandable to the general public",
             "publicBenefitStatement": "Public benefit statement",
@@ -1535,7 +1534,6 @@
             "url": "URL",
             "urlTooltip": "URL to access the resource",
             "license": "License",
-            "licenseTooltip": "The type of software licence for this entity, if applicable",
             "toolCategory": "Tool Category",
             "keywords": "Keywords",
             "domain": "Domain",
@@ -1546,10 +1544,8 @@
             "collections": "Related Collections",
             "authors": "Associated Authors",
             "authorsTooltip": "People who authored this analysis script, tool or software.",
+            "backLabel": "Back to Tools search results",
             "components": {
-                "ActionBar": {
-                    "label": "Back to Tools search results"
-                },
                 "DatasetsContent": {
                     "heading": "Datasets that the analysis, tool or software can be applied to ({ length })",
                     "populationSize": "Dataset population size: { length }",
@@ -1565,6 +1561,41 @@
                     "heading": "Collections which include this analysis, tool or software ({ length })"
                 }
             }
+        },
+        "publication": {
+            "abstract": "Abstract",
+            "details": "Details",
+            "journalName": "Journal name",
+            "journalNameTooltip": "Name of the journal which the article belongs to, e.g. PloS One",
+            "authors": "Author(s)",
+            "authorsTooltip": "List of author details which contains full name, initials and last name",
+            "publicationType": "Publication type",
+            "publicationTypeTooltip": "The type of publication: research article, review article, preprint or book and document",
+            "paperDoi": "DOI",
+            "paperDoiTooltip": "Digital Object Identifier of the article, e.g. 10.1073/pnas.0401194101",
+            "yearOfPublication": "Publication year",
+            "yearOfPublicationTooltip": "Year of the publication",
+            "url": "Web link",
+            "urlTooltip": "Weblink for the publication text or site from which the text is available",
+            "components": {
+                "DatasetsContent": {
+                    "heading": "Datasets related to this Publication ({ length })"
+                },
+                "DatausesContent": {
+                    "heading": "Data Uses / Research Projects which are related to this Publication ({ length })"
+                },
+                "ToolsContent": {
+                    "heading": "Analysis Scripts & Software related to this Publication ({ length })"
+                },
+                "CollectionsContent": {
+                    "heading": "Collections which include this Publication ({ length })"
+                }
+            },
+            "datasets": "Related Datasets",
+            "dataUses": "Related Data Uses",
+            "tools": "Related Analysis Scripts & Software",
+            "collections": "Related Collections",
+            "backLabel": "Back to Publications search results"
         }
     },
     "components": {

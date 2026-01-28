@@ -32,10 +32,10 @@ export default function DatasetContent({
             })}
             defaultExpanded={datasets.length > 0}
             contents={datasets.map(
-                ({ id, title, populationSize, datasetType }) => (
+                ({ id, title, name, populationSize, datasetType }) => (
                     <Fragment key={`dataset_${id}`}>
                         <Link href={`/${RouteName.DATASET_ITEM}/${id}`}>
-                            {title}
+                            {title || name}
                         </Link>
                         {populationSize && (
                             <div>

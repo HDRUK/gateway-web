@@ -4,6 +4,7 @@ import TwoColumn from "@/components/TwoColumn";
 import LeftNav from "@/modules/LeftNav";
 import config from "@/config/config";
 import { getUser } from "@/utils/api";
+import { checkLeftNavCookie } from "@/utils/cookies";
 import { getPermissions } from "@/utils/permissions";
 
 export default async function AccountProfileLayout({
@@ -18,13 +19,15 @@ export default async function AccountProfileLayout({
     return (
         <>
             <TwoColumn
-                leftContent={<LeftNav permissions={permissions} 
-                navHeading={user.name}
-                roles={user.roles}
-                initialLeftNavOpen={
-                    cookieStore.get(config.LEFT_NAV_COOKIE)?.value ===
-                    "true"
-                }/>}
+                leftContent={
+                    <LeftNav
+                        permissions={permissions}
+                        navHeading={user.name}
+                        initialLeftNavOpen={checkLeftNavCookie(
+                            cookieStore.get(config.LEFT_NAV_COOKIE)?.value
+                        )}
+                    />
+                }
                 rightContent={children}
             />
             <ActionBar />
