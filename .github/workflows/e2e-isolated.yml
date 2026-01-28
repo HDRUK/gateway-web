@@ -212,15 +212,15 @@ jobs:
         with:
           node-version: 20
 
-      # - name: Cache Node modules
-      #   uses: actions/cache@v4
-      #   with:
-      #     path: |
-      #       node_modules
-      #       ~/.npm
-      #     key: e2e-node-modules-${{ runner.os }}-${{ hashFiles('package-lock.json') }}
-      #     restore-keys: |
-      #       e2e-node-modules-${{ runner.os }}-
+      - name: Cache Node modules
+        uses: actions/cache@v4
+        with:
+          path: |
+            node_modules
+            ~/.npm
+          key: e2e-node-modules-v2-${{ runner.os }}-${{ hashFiles('package-lock.json') }}
+          restore-keys: |
+            e2e-node-modules-v2-${{ runner.os }}-
 
       - name: Install deps (force clean)
         run: |
@@ -231,6 +231,13 @@ jobs:
         run: |
           ls -la node_modules/@parcel/watcher || true
           node -e "require('@parcel/watcher')" || true
+
+      - name: Check npm optional settings
+        run: |
+          npm config get optional
+          npm config get omit
+          echo "NPM_CONFIG_OPTIONAL=$NPM_CONFIG_OPTIONAL"
+          echo "NPM_CONFIG_OMIT=$NPM_CONFIG_OMIT"
 
       # - name: Install Node deps
       #   run: npm install
