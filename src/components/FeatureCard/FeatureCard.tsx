@@ -1,6 +1,6 @@
 import { ReactNode } from "react";
 import { Box, Card, CardProps, useTheme } from "@mui/material";
-import Link from "next/link";
+import Link from "../Link";
 
 export interface FeatureCardProps extends CardProps {
     icon: ReactNode;

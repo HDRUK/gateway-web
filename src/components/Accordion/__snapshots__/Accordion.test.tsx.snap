@@ -3,7 +3,7 @@
 exports[`Accordion displays accordion arrow icon on left 1`] = `
 <div>
   <div
-    class="MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation1 MuiAccordion-root MuiAccordion-rounded MuiAccordion-gutters mui-style-22nfl0-MuiPaper-root-MuiAccordion-root"
+    class="MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation1 MuiAccordion-root MuiAccordion-rounded MuiAccordion-gutters mui-style-b1tdb0-MuiPaper-root-MuiAccordion-root"
     style="--Paper-shadow: 0px 2px 1px -1px rgba(0,0,0,0.2),0px 1px 1px 0px rgba(0,0,0,0.14),0px 1px 3px 0px rgba(0,0,0,0.12);"
   >
     <h3
@@ -75,7 +75,7 @@ exports[`Accordion displays accordion arrow icon on left 1`] = `
 exports[`Accordion should render component 1`] = `
 <div>
   <div
-    class="MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation1 MuiAccordion-root MuiAccordion-rounded MuiAccordion-gutters mui-style-1e12nxm-MuiPaper-root-MuiAccordion-root"
+    class="MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation1 MuiAccordion-root MuiAccordion-rounded MuiAccordion-gutters mui-style-4nesdj-MuiPaper-root-MuiAccordion-root"
     style="--Paper-shadow: 0px 2px 1px -1px rgba(0,0,0,0.2),0px 1px 1px 0px rgba(0,0,0,0.14),0px 1px 3px 0px rgba(0,0,0,0.12);"
   >
     <h3

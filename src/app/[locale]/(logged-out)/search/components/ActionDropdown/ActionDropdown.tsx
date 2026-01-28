@@ -106,6 +106,7 @@ const ActionDropdown = ({
             url: `/${RouteName.DATASET_ITEM}/${datasetId}`,
             modalHeader: team.dar_modal_header,
             modalContent: team.dar_modal_content,
+            modalFooter: team.dar_modal_footer,
             datasetIds: [+datasetId],
             teamIds: [team.id],
             redirectPath: pathname,

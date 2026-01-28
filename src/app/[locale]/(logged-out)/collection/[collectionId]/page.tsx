@@ -1,9 +1,11 @@
 import { getTranslations } from "next-intl/server";
 import Image from "next/image";
 import { notFound } from "next/navigation";
+import { SearchCategory } from "@/interfaces/Search";
 import Box from "@/components/Box";
 import DataUsesContent from "@/components/DataUsesContent";
 import HTMLContent from "@/components/HTMLContent";
+import HeaderActionBar from "@/components/HeaderActionBar";
 import LayoutDataItemPage from "@/components/LayoutDataItemPage";
 import { MarkDownSanitizedWithHtml } from "@/components/MarkDownSanitizedWithHTML";
 import PublicationsContent from "@/components/PublicationsContent";
@@ -13,10 +15,10 @@ import ActiveListSidebar from "@/modules/ActiveListSidebar";
 import { StaticImages } from "@/config/images";
 import { DataStatus } from "@/consts/application";
 import { AspectRatioImage } from "@/consts/image";
+import { RouteName } from "@/consts/routeName";
 import { getReducedCollection } from "@/utils/api";
 import metaData from "@/utils/metadata";
 import { toTitleCase } from "@/utils/string";
-import ActionBar from "./components/ActionBar";
 import DatasetsContent from "./components/DatasetsContent";
 import { collectionSections } from "./config";
 
@@ -75,7 +77,11 @@ export default async function CollectionItemPage({
                     </Box>
 
                     <Box>
-                        <ActionBar />
+                        <HeaderActionBar
+                            backButtonText={t("backLabel")}
+                            backButtonHref={`/${RouteName.SEARCH}?type=${SearchCategory.COLLECTIONS}`}
+                            wrapperSx={{ p: 0, boxShadow: 0 }}
+                        />
                     </Box>
                     <Box sx={{ mb: 3 }}>
                         <Typography variant="h3" sx={{ mb: 1 }}>

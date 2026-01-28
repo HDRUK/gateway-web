@@ -4,6 +4,7 @@ import { get, isEmpty } from "lodash";
 import { useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
 import { DataUse, DatasetWithTitle } from "@/interfaces/DataUse";
+import { FieldType } from "@/interfaces/FieldType";
 import Box from "@/components/Box";
 import BoxContainer from "@/components/BoxContainer";
 import EllipsisCharacterLimit from "@/components/EllipsisCharacterLimit";
@@ -14,7 +15,7 @@ import Typography from "@/components/Typography";
 import { RouteName } from "@/consts/routeName";
 import { formatDate } from "@/utils/date";
 import { convertToCamelCase } from "@/utils/general";
-import { DataUseSection, FieldType } from "../../config";
+import { DataUseSection } from "../../config";
 import { DatasetFieldWrapper, ListContainer } from "./DataUseContent.styles";
 
 const TRANSLATION_PATH = "pages.dataUse";
