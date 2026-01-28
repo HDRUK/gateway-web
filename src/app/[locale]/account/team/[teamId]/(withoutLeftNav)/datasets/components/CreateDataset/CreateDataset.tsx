@@ -86,7 +86,6 @@ import StructuralMetadataSection from "../StructuralMetadata";
 import SubmissionScreen from "../SubmissionScreen";
 import { FormFooter, FormFooterItem } from "./CreateDataset.styles";
 import FormFieldArray from "./FormFieldArray";
-import { Wrapper } from "@/components/FormLegend/FormLegend.styles";
 
 interface CreateDatasetProps {
     formJSON: FormHydrationSchema;
