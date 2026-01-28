@@ -27,9 +27,9 @@ env:
   DB_USERNAME: "root"
   DB_PASSWORD: "root"
   ELASTICSEARCH_VERIFY_SSL: "false"
-  ELASTIC_SERVICE_URL: ${{ secrets.ELASTIC_SERVICE_URL }}
-  ELASTICSEARCH_USER: ${{ secrets.ELASTICSEARCH_USER }}
-  ELASTICSEARCH_PASS: ${{ secrets.ELASTICSEARCH_PASS }}
+  ELASTIC_SERVICE_URL: "http://localhost:9200"
+  ELASTICSEARCH_USER: "elastic"
+  ELASTICSEARCH_PASS: "elastic"
   FILESYSTEM_DISK: "local" # public
   FORM_HYDRATION_SCHEMA_URL: "https://raw.githubusercontent.com/HDRUK/schemata-2/master/docs/%s/%s.form.json"
   FORM_HYDRATION_SCHEMA_MODEL: "HDRUK"
@@ -126,6 +126,19 @@ jobs:
         env:
           REDIS_PASSWORD: mypassword
 
+      elasticsearch:
+        image: docker.elastic.co/elasticsearch/elasticsearch:8.11.1
+        ports:
+          - 9200:9200
+        options: >-
+          --env discovery.type=single-node
+          --env ELASTIC_PASSWORD=elastic
+          --env xpack.security.enabled=true
+          --health-cmd="curl -s http://localhost:9200 >/dev/null"
+          --health-interval=10s
+          --health-timeout=5s
+          --health-retries=10
+
     steps:
       - name: Install MailDev
         run: npm install -g maildev
@@ -137,6 +150,10 @@ jobs:
 
       - name: Checkout web
         uses: actions/checkout@v4
+
+      - name: Wait for Elasticsearch
+        run: |
+          curl --retry 10 --retry-delay 5 http://localhost:9200
 
       - name: Checkout api
         uses: actions/checkout@v4
@@ -170,11 +187,10 @@ jobs:
           cp .env.example .env
           sed -i 's/DB_HOST=.*/DB_HOST=127.0.0.1/' .env
           sed -i 's/DB_PASSWORD=.*/DB_PASSWORD=root/' .env
-          sed -i "s|^ELASTIC_SERVICE_URL=.*|ELASTIC_SERVICE_URL=${ELASTIC_SERVICE_URL}|" .env
           php artisan key:generate
           php artisan migrate --force
           php artisan db:seed --force
-          php artisan db:seed --class=TestSeeder
+          # php artisan db:seed --class=TestSeeder
 
       - name: Start Laravel API and wait for readiness
         run: |
