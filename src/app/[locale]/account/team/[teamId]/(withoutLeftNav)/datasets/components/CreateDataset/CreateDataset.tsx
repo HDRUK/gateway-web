@@ -86,6 +86,7 @@ import StructuralMetadataSection from "../StructuralMetadata";
 import SubmissionScreen from "../SubmissionScreen";
 import { FormFooter, FormFooterItem } from "./CreateDataset.styles";
 import FormFieldArray from "./FormFieldArray";
+import { Wrapper } from "@/components/FormLegend/FormLegend.styles";
 
 interface CreateDatasetProps {
     formJSON: FormHydrationSchema;
@@ -973,40 +974,33 @@ const CreateDataset = ({
                                 </Form>
                             </FormProvider>
                         </Box>
-                        {currentSectionIndex > 0 && (<>
-                            <Box
-                                sx={{
-                                    width: "25%",
-                                    flexShrink: 0,
-                                    flex: 1,
-                                    display: "flex",
-                                    marginTop: "10px",
-                                }}
-                            />
-                            <Paper
-                                sx={{
-                                    position: "fixed",
-                                    top: 56*4,
-                                    marginTop: "10px",
-                                    right: 0,              
-                                    width: "25%",
-                                    overflowY: "auto",
-                                    p: 2,
-                                    flex: 1,
-                                    maxHeight: "75vh",
-                                    zIndex: 0,
-                                }}>
-                                <Typography variant="h2">
-                                    {t("guidance")}
-                                </Typography>
+                        {currentSectionIndex > 0 && (
+                            <Box sx={{
+                                position: "sticky",
+                                top: navbarHeight,
+                                padding: 0,
+                                flex: 1,
+                                alignSelf: "flex-start",
+                            }}>
+                                <Paper
+                                    sx={{                                    
+                                        alignItems: "center",
+                                        padding: theme.spacing(2),
+                                        margin: theme.spacing(1.25),
+                                        wordBreak: "break-word",
+                                        height: "100%"
+                                    }}>
+                                    <Typography variant="h2">
+                                        {t("guidance")}
+                                    </Typography>
 
-                                {guidanceText && (
-                                    <MarkDownSanitizedWithHtml
-                                        content={guidanceText}
-                                    />
-                                )}
-                            </Paper>
-                            </>
+                                    {guidanceText && (
+                                        <MarkDownSanitizedWithHtml
+                                            content={guidanceText}
+                                        />
+                                    )}
+                                </Paper>
+                            </Box>
                         )}
                     </>
                 ) : (
