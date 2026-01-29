@@ -20,13 +20,10 @@ export default async function Widget({ params }: WidgetProps) {
 
   const { slug } = await params;
   const [teamId, widgetId] = slug.split("-");
-  console.log(teamId, 'teamId')
-  console.log(widgetId, 'widgetId')
 
 
   const headersList = await headers();
   const referer = headersList.get("referer");
-  console.log(referer, 'referer')
 
   if (!referer) {
     return renderError(
@@ -35,7 +32,6 @@ export default async function Widget({ params }: WidgetProps) {
   }
 
   const referrerOrigin = new URL(referer).origin;
-  console.log(referrerOrigin, 'referrerOrigin')
 
   const response = await fetch(
     `${apis.apiV1IPUrl}/teams/${teamId}/widgets/${widgetId}/data?domain_origin=${referrerOrigin}`,
@@ -46,7 +42,6 @@ export default async function Widget({ params }: WidgetProps) {
   );
 
   if (!response.ok) {
-    console.log(response.status)
     if (response.status === 403) {
       return renderError(
         `${referrerOrigin} is not in the list of permitted domains for this widget, please update your widget configuration.`
