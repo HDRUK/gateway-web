@@ -204,7 +204,7 @@ const WidgetConfigForm = ({
                 {
                     name: "permitted_domains",
                     label: t("permittedDomains"),
-                    info: 'If you have multiple environments, like a dev & preprod, it maybe useful to add these in here too, like: https://web.preprod.hdruk.cloud (without the trailing slash)',
+                    info: t("permittedDomainInfo"),
                     component: inputComponents.Autocomplete,
                     multiple: true,
                     handleHomeEndKeys: true,

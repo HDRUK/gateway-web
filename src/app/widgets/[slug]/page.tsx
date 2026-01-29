@@ -12,10 +12,11 @@ interface WidgetProps {
 }
 
 export default async function Widget({ params }: WidgetProps) {
+    let errorMessage
     const widgetsEnabled = await isWidgetsEnabled();
 
     if (!widgetsEnabled) {
-        return notFound();
+        errorMessage = 'Widgets are not currently enabled for the HDR Gateway.'
     }
 
     const { slug } = await params;
@@ -28,17 +29,13 @@ export default async function Widget({ params }: WidgetProps) {
     
 
      if (!referer) {
-        return (
-            <html lang="en">
-                <body>
-                    <>This widget cannot be viewed in a browser tab, please view this in the iframe script provided on your website.</>
-                </body>
-            </html>
-        );
+       errorMessage = 'This widget cannot be viewed in a browser tab, please view this in the iframe script provided on your website.'
     }
 
+    const referrerOrigin = new URL(referer).origin
+
     const response = await fetch(
-        `${apis.apiV1IPUrl}/teams/${teamId}/widgets/${widgetId}/data?domain_origin=${new URL(referer).origin}`,
+        `${apis.apiV1IPUrl}/teams/${teamId}/widgets/${widgetId}/data?domain_origin=${referrerOrigin}`,
         {
             next: { revalidate: 180, tags: ["all", `widget-${widgetId}`] },
             cache: "force-cache",
@@ -46,7 +43,11 @@ export default async function Widget({ params }: WidgetProps) {
     );
 
     if (!response.ok) {
-        notFound();
+        if (response.status === 400) {
+            errorMessage =  `${referrerOrigin} is not in the list of permitted domains for this widget, please update your widget configuration.`
+        } else {
+            return notFound();
+        }
     }
     const { data } = await response.json();
 
@@ -54,7 +55,8 @@ export default async function Widget({ params }: WidgetProps) {
         <html lang="en">
             <body>
                 <ThemeRegistry isIframe>
-                    <WidgetDisplay data={data} isIframe />
+                    {errorMessage && <>{errorMessage}</>}
+                    {!errorMessage && <WidgetDisplay data={data} isIframe />}
                 </ThemeRegistry>
             </body>
         </html>
