@@ -5,7 +5,7 @@ import "@/styles/wpStyles.css";
 import SupportPage from "../components/SupportPage";
 
 export const metadata = metaData({
-    title: "The Alliance - Data Custodians",
+    title: "Data Custodians",
     description: "",
 });
 
@@ -15,6 +15,8 @@ const FAQsPage = async () => {
         idType: "URI",
         parentId: "/data-custodian-support",
     });
+
+    console.log(cmsPage);
 
     if (!cmsPage) {
         notFound();
