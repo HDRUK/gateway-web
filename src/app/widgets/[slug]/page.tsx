@@ -16,7 +16,7 @@ export default async function Widget({ params }: WidgetProps) {
     const widgetsEnabled = await isWidgetsEnabled();
 
     if (!widgetsEnabled) {
-        errorMessage = 'Widgets are not currently enabled for the HDR Gateway.'
+        errorMessage = 'This feature is temporarily unavailable.'
     }
 
     const { slug } = await params;
@@ -29,7 +29,7 @@ export default async function Widget({ params }: WidgetProps) {
     
 
      if (!referer) {
-       errorMessage = 'This feature is temporarily unavailable.'
+       errorMessage = 'This widget cannot be viewed in a browser tab, please view this in the iframe script provided on your website.'
     }
 
     const referrerOrigin = new URL(referer).origin
