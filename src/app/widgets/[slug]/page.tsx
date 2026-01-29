@@ -13,6 +13,7 @@ interface WidgetProps {
 
 export default async function Widget({ params }: WidgetProps) {
     let errorMessage
+    
     const widgetsEnabled = await isWidgetsEnabled();
 
     if (!widgetsEnabled) {
@@ -27,8 +28,7 @@ export default async function Widget({ params }: WidgetProps) {
     const headersList = await headers();
     const referer = headersList.get("referer");
     
-
-     if (!referer) {
+   if (!referer) {
        errorMessage = 'This widget cannot be viewed in a browser tab, please view this in the iframe script provided on your website.'
     }
 
