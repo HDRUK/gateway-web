@@ -16,8 +16,6 @@ const FAQsPage = async () => {
         parentId: "/data-custodian-support",
     });
 
-    console.log(cmsPage);
-
     if (!cmsPage) {
         notFound();
     }
