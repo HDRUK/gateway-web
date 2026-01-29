@@ -817,6 +817,8 @@ const CreateDataset = ({
         setSearchName(value);
     };
 
+    const guidanceOffset = parseInt(navbarHeight) + theme.spacing(4);
+
     return (
         <>
             <Link
@@ -843,7 +845,7 @@ const CreateDataset = ({
                 actionButtonsEnabled={!isSaving}
             />
 
-            <Box sx={{ display: "flex", flexDirection: "row", p: 0 }}>
+            <Box sx={{ display: "flex", flexDirection: "row", p: 0, }}>
                 <Box
                     sx={{
                         flex: 1,
@@ -875,7 +877,7 @@ const CreateDataset = ({
                 {currentSectionIndex < formSections.length - 1 &&
                 currentSectionIndex > 0 ? (
                     <>
-                        <Box sx={{ flex: 2, p: 0 }}>
+                        <Box sx={{ flex: 2, p: 0, }}>
                             <FormProvider {...methods}>
                                 <Form>
                                     <Paper
@@ -972,24 +974,35 @@ const CreateDataset = ({
                             </FormProvider>
                         </Box>
                         {currentSectionIndex > 0 && (
-                            <Paper
-                                style={{
-                                    flex: 1,
-                                    alignItems: "center",
-                                    padding: theme.spacing(2),
-                                    margin: theme.spacing(1.25),
-                                    wordBreak: "break-word",
-                                }}>
-                                <Typography variant="h2">
-                                    {t("guidance")}
-                                </Typography>
+                            <Box sx={{
+                                position: "sticky",
+                                top: guidanceOffset,
+                                padding: 0,
+                                flex: 1,
+                                alignSelf: "flex-start",
+                                maxHeight: `calc(100vh - ${guidanceOffset})`,
+                                overflow: 'auto'
+                            }}>
+                                <Paper
+                                    sx={{                                    
+                                        alignItems: "center",
+                                        padding: theme.spacing(2),
+                                        margin: theme.spacing(1.25),
+                                        wordBreak: "break-word",
+                                        height: "100%",
+                                        minHeight: '20vh',
+                                      }}>
+                                    <Typography variant="h2">
+                                        {t("guidance")}
+                                    </Typography>
 
-                                {guidanceText && (
-                                    <MarkDownSanitizedWithHtml
-                                        content={guidanceText}
-                                    />
-                                )}
-                            </Paper>
+                                    {guidanceText && (
+                                        <MarkDownSanitizedWithHtml
+                                            content={guidanceText}
+                                        />
+                                    )}
+                                </Paper>
+                            </Box>
                         )}
                     </>
                 ) : (
