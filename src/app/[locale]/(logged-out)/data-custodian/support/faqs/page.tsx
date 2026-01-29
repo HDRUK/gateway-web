@@ -5,7 +5,7 @@ import "@/styles/wpStyles.css";
 import SupportPage from "../components/SupportPage";
 
 export const metadata = metaData({
-    title: "Data Custodians",
+    title: "FAQs - Data Custodians",
     description: "",
 });
 
