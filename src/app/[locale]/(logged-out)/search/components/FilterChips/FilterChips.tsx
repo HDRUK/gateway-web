@@ -58,12 +58,25 @@ const FilterChips = ({
                                             )}`}
                                             placement="top">
                                             <Chip
+                                                variant="outlined"
                                                 sx={{
                                                     textOverflow: "ellipsis",
                                                     maxWidth: 200,
                                                     overflow: "hidden",
                                                     whiteSpace: "nowrap",
+                                                    color: colors.white,
+                                                    backgroundColor:
+                                                        colors.green400,
+                                                    borderColor:
+                                                        colors.green400,
                                                     marginBottom: "4px",
+                                                    "&:focus-visible": {
+                                                        borderColor:
+                                                            colors.orange,
+                                                        borderWidth: 2,
+                                                        backgroundColor:
+                                                            colors.green400,
+                                                    },
                                                 }}
                                                 color={color}
                                                 size={size}

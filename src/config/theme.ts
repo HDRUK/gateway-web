@@ -212,10 +212,11 @@ const theme = createTheme({
             styleOverrides: {
                 root: ({ theme }) => {
                     return {
-                        "&.Mui-focusVisible > .MuiSvgIcon-root": {
-                            outline: `2px solid ${theme.palette.primary.main}`,
-                            outlineOffset: 2,
+                        "&.Mui-focusVisible": {
+                            outline: `2px solid ${colors.orange}`,
                             borderRadius: "50%",
+                            outlineOffset: 0,
+                            background: colors.grey400,
                         },
                     };
                 },
@@ -346,6 +347,9 @@ const theme = createTheme({
                         "&:hover": {
                             background: palette.greyCustom.main,
                         },
+                        "&.Mui-focusVisible": {
+                            background: palette.greyCustom.main,
+                        }
                     },
                 },
                 {
@@ -392,8 +396,8 @@ const theme = createTheme({
                             : _theme.palette[ownerState.color || "primary"]
                                   ?.main,
                     "&.Mui-focusVisible:not(.MuiIconButton-root)": {
-                        outline: `2px solid ${_theme.palette.primary.main}`,
-                        outlineOffset: 2,
+                        outline: `2px solid ${colors.orange}`,
+                        borderWidth: 0,
                     },
                 }),
                 outlined: ({ ownerState, theme: _theme }) => {
