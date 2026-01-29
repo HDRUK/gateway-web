@@ -29,7 +29,7 @@ export default async function Widget({ params }: WidgetProps) {
     
 
      if (!referer) {
-       errorMessage = 'This widget cannot be viewed in a browser tab, please view this in the iframe script provided on your website.'
+       errorMessage = 'This feature is temporarily unavailable.'
     }
 
     const referrerOrigin = new URL(referer).origin
