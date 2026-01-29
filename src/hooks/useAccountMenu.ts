@@ -23,7 +23,7 @@ const useAccountMenu = () => {
 
         return [
             {
-                label: `${user?.firstname} ${user?.lastname}`,
+                label: t("yourProfile"),
                 href: `/${RouteName.ACCOUNT}/${RouteName.PROFILE}`,
             },
             ...teams,
