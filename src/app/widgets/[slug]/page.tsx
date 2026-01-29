@@ -6,59 +6,71 @@ import { isWidgetsEnabled } from "@/flags";
 import WidgetDisplay from "@/widgets/WidgetDisplay";
 
 interface WidgetProps {
-    params: Promise<{
-        slug: string;
-    }>;
+  params: Promise<{
+    slug: string;
+  }>;
 }
 
 export default async function Widget({ params }: WidgetProps) {
-    let errorMessage
-    
-    const widgetsEnabled = await isWidgetsEnabled();
+  const widgetsEnabled = await isWidgetsEnabled();
 
-    if (!widgetsEnabled) {
-        errorMessage = 'This feature is temporarily unavailable.'
-    }
+  if (!widgetsEnabled) {
+    return renderError("This feature is temporarily unavailable.");
+  }
 
-    const { slug } = await params;
+  const { slug } = await params;
+  const [teamId, widgetId] = slug.split("-");
 
-    const popped = slug.split("-");
-    const teamId = popped[0];
-    const widgetId = popped[1];
-    const headersList = await headers();
-    const referer = headersList.get("referer");
-    
-   if (!referer) {
-       errorMessage = 'This widget cannot be viewed in a browser tab, please view this in the iframe script provided on your website.'
-    }
+  const headersList = await headers();
+  const referer = headersList.get("referer");
 
-    const referrerOrigin = new URL(referer).origin
-
-    const response = await fetch(
-        `${apis.apiV1IPUrl}/teams/${teamId}/widgets/${widgetId}/data?domain_origin=${referrerOrigin}`,
-        {
-            next: { revalidate: 180, tags: ["all", `widget-${widgetId}`] },
-            cache: "force-cache",
-        }
+  if (!referer) {
+    return renderError(
+      "This widget cannot be viewed in a browser tab, please view this in the iframe script provided on your website."
     );
+  }
 
-    if (!response.ok) {
-        if (response.status === 400) {
-            errorMessage =  `${referrerOrigin} is not in the list of permitted domains for this widget, please update your widget configuration.`
-        } else {
-            return notFound();
-        }
+  const referrerOrigin = new URL(referer).origin;
+
+  const response = await fetch(
+    `${apis.apiV1IPUrl}/teams/${teamId}/widgets/${widgetId}/data?domain_origin=${referrerOrigin}`,
+    {
+      next: { revalidate: 180, tags: ["all", `widget-${widgetId}`] },
+      cache: "force-cache",
     }
-    const { data } = await response.json();
+  );
 
-    return (
-        <html lang="en">
-            <body>
-                <ThemeRegistry isIframe>
-                    {errorMessage && <>{errorMessage}</>}
-                    {!errorMessage && <WidgetDisplay data={data} isIframe />}
-                </ThemeRegistry>
-            </body>
-        </html>
-    );
+  if (!response.ok) {
+    if (response.status === 400) {
+      return renderError(
+        `${referrerOrigin} is not in the list of permitted domains for this widget, please update your widget configuration.`
+      );
+    }
+
+    return notFound();
+  }
+
+  const { data } = await response.json();
+
+  return (
+    <html lang="en">
+      <body>
+        <ThemeRegistry isIframe>
+          <WidgetDisplay data={data} isIframe />
+        </ThemeRegistry>
+      </body>
+    </html>
+  );
+}
+
+function renderError(message: string) {
+  return (
+    <html lang="en">
+      <body>
+        <ThemeRegistry isIframe>
+          {message}
+        </ThemeRegistry>
+      </body>
+    </html>
+  );
 }
