@@ -47,7 +47,7 @@ export default async function Widget({ params }: WidgetProps) {
 
   if (!response.ok) {
     console.log(response.status)
-    if (response.status === 400) {
+    if (response.status === 403) {
       return renderError(
         `${referrerOrigin} is not in the list of permitted domains for this widget, please update your widget configuration.`
       );
