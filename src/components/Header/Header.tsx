@@ -57,8 +57,7 @@ function Header() {
     ];
 
     const menuItems = [
-                        ...(!isLoggedIn ? signInNav : []),
-                        ...(isLoggedIn ? [accountLinks.myProfile] : []),
+                        ...(!isLoggedIn ? signInNav : [accountLinks.myProfile]),
                         ...navItems,
                         ...(isLoggedIn ? accountLinks.otherItems : []),
                         ]
