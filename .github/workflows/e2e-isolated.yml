@@ -10,7 +10,7 @@ on:
         default: "dev"
 
 env:
-  APP_ENV: "development"
+  APP_ENV: "dev"
   APP_DEBUG: "true"
   APP_NAME: "gateway-api-2"
   AUDIT_LOG_ENABLED: "true"
