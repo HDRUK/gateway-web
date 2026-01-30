@@ -8,7 +8,7 @@ export default defineConfig({
         baseUrl: "http://localhost:3000",
         env: {
             DEV_EMAIL: process.env.DEV_EMAIL,
-            CUST_ADMIN_1_EMAIL: process.env.CUST_ADMIN_1_EMAIL,
+            CUST_ADMIN_1_EMAIL: "CypressTeamAdmin@hdruk.ac.uk",
             CUST_ADMIN_2_EMAIL: process.env.CUST_ADMIN_2_EMAIL,
             DEV_1_EMAIL: process.env.DEV_1_EMAIL,
             CUST_ADMIN_3_EMAIL: process.env.CUST_ADMIN_3_EMAIL,
