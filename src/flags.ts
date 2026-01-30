@@ -5,20 +5,20 @@ const adapter = createAPIFlagAdapter()<boolean, never>();
 
 export const isSDEConciergeServiceEnquiryEnabled = flag({
     key: "SDEConciergeServiceEnquiry",
-   adapter
+    adapter,
 });
 
 export const isAliasesEnabled = flag({
     key: "Aliases",
-    adapter
+    adapter,
 });
 
 export const isNhsSdeApplicationsEnabled = flag({
     key: "NhsSdeApplicationsEnabled",
-    adapter
+    adapter,
 });
 
 export const isWidgetsEnabled = flag({
     key: "Widgets",
-    adapter
+    adapter,
 });

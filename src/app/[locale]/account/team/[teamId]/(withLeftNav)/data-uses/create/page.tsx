@@ -1,9 +1,9 @@
-import CreateDataUse from "./components/CreateDataUse";
 import ProtectedAccountRoute from "@/components/ProtectedAccountRoute";
 import { getTeam, getUser } from "@/utils/api";
 import metaData, { noFollowRobots } from "@/utils/metadata";
 import { getPermissions } from "@/utils/permissions";
 import { getTeamUser } from "@/utils/user";
+import CreateDataUse from "./components/CreateDataUse";
 
 export const metadata = metaData(
     {

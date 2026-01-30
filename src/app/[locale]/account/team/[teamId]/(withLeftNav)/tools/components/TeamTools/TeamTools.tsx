@@ -149,7 +149,7 @@ const TeamTools = ({ permissions, teamId, userId }: TeamToolsProps) => {
     });
 
     useEffect(() => {
-        window.scrollTo({ top: 0 });         
+        window.scrollTo({ top: 0 });
     }, [queryParams.page]);
 
     const showArchiveButton =

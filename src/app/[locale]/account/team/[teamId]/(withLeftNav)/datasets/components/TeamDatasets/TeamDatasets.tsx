@@ -157,7 +157,7 @@ const TeamDatasets = ({ permissions, teamId }: TeamDatasetsProps) => {
     });
 
     useEffect(() => {
-        window.scrollTo({ top: 0 });         
+        window.scrollTo({ top: 0 });
     }, [queryParams.page]);
 
     const showArchiveButton =

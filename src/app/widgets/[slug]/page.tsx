@@ -12,9 +12,9 @@ interface WidgetProps {
 }
 
 export default async function Widget({ params }: WidgetProps) {
-    console.log('hi')
+    console.log("hi");
     const widgetsEnabled = await isWidgetsEnabled();
-    console.log(widgetsEnabled, 'widgetsEnabled')
+    console.log(widgetsEnabled, "widgetsEnabled");
 
     if (!widgetsEnabled) {
         return notFound();
@@ -27,13 +27,12 @@ export default async function Widget({ params }: WidgetProps) {
     const widgetId = popped[1];
     const headersList = await headers();
     const referer = headersList.get("referer");
-    
-    console.log(referer, 'referer')
-    console.log(widgetId, 'widgetId')
-    console.log(teamId, 'teamId')
 
+    console.log(referer, "referer");
+    console.log(widgetId, "widgetId");
+    console.log(teamId, "teamId");
 
-     // if (!referer) {
+    // if (!referer) {
     //     return (
     //         <html lang="en">
     //             <body>
@@ -44,7 +43,7 @@ export default async function Widget({ params }: WidgetProps) {
     // }
 
     const response = await fetch(
-        `${apis.apiV1IPUrl}/teams/${teamId}/widgets/${widgetId}/data?domain_origin=${referer}`,
+        `${apis.apiV1IPUrl}/teams/${teamId}/widgets/${widgetId}/data?domain_origin=${referer}`
         // {
         //     next: { revalidate: 180, tags: ["all", `widget-${widgetId}`] },
         //     cache: "force-cache",
@@ -52,7 +51,7 @@ export default async function Widget({ params }: WidgetProps) {
     );
 
     if (!response.ok) {
-        console.log(response)
+        console.log(response);
         notFound();
     }
     const { data } = await response.json();

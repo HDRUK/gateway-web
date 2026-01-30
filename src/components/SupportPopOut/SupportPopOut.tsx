@@ -36,7 +36,6 @@ const SupportPopOut = () => {
 
     useEffect(() => {
         handleClose();
-         
     }, [pathname]);
 
     const links = [

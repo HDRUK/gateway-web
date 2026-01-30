@@ -22,11 +22,11 @@ const useAccountMenu = () => {
             }));
 
         return {
-            "myProfile" : {
+            myProfile: {
                 label: t("myProfile"),
                 href: `/${RouteName.ACCOUNT}/${RouteName.PROFILE}`,
             },
-            "otherItems": [
+            otherItems: [
                 ...teams,
                 {
                     label: t("logout"),

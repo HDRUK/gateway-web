@@ -349,7 +349,7 @@ const theme = createTheme({
                         },
                         "&.Mui-focusVisible": {
                             background: palette.greyCustom.main,
-                        }
+                        },
                     },
                 },
                 {
