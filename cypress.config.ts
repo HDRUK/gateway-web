@@ -25,7 +25,7 @@ export default defineConfig({
         async setupNodeEvents(on, config) {
             return config;
         },
-        // video: true,
-        // videosFolder: "cypress/videos",
+        video: true,
+        videosFolder: "cypress/videos",
     },
 });
