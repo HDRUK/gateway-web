@@ -34,7 +34,7 @@ const users = {
     },
 };
 
-export const getUserForLogin = user => {
+export const getUserForLogin = (user: string) => {
     let envPrefix = users[user]?.prefix;
 
     if (!envPrefix) {
