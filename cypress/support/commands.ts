@@ -15,7 +15,7 @@ Cypress.Commands.add("login", (user: string) => {
     const prefix = getUserForLogin(user);
 
     const username = Cypress.env(prefix + "EMAIL");
-    const password = Cypress.env(prefix + "PASSWORD");
+    const password = Cypress.env("TEST_USER_PASSWORD");
 
     cy.request({
         method: "POST",

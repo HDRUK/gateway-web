@@ -91,7 +91,7 @@ env:
   DEV_EMAIL: ${{ secrets.DEV_EMAIL }}
   DEV_PASSWORD: ${{ secrets.DEV_PASSWORD }}
   isTest: "true"
-  TEST_PASSWORD: ${{ secrets.TEST_PASSWORD }}
+  TEST_USER_PASSWORD: "3pFOx4a6D464"
   NEXT_PUBLIC_API_V1_URL: "http://localhost:8000/api/v1"
   NEXT_PUBLIC_API_V1_IP_URL: "http://localhost:8000/api/v1"
   NEXT_PUBLIC_API_V2_URL: "http://localhost:8000/api/v2"
@@ -110,7 +110,6 @@ env:
   NEXT_PUBLIC_CMS_LINK_HOSTNAME: "www.healthdatagateway.org"
   NEXT_PUBLIC_CONFLUENCE_URL: ${{ secrets.NEXT_PUBLIC_CONFLUENCE_URL }}
   CUST_ADMIN_1_EMAIL: ${{secrets.CUST_ADMIN_1_EMAIL}}
-  CUST_ADMIN_1_PASSWORD: ${{secrets.CUST_ADMIN_1_PASSWORD}}
 
 jobs:
   e2e-tests:
