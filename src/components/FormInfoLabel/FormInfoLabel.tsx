@@ -46,18 +46,13 @@ const FormInfoLabel = ({
                         fontSize: 13,
                         color: colors.grey700,
                     }}>
-                    <Markdown
-                        options={{
-                            overrides: {
-                                p: {
-                                    component: ({ children }) => (
-                                        <>{children}</>
-                                    ),
-                                },
-                            },
-                        }}>
-                        {info}
-                    </Markdown>
+                    <Markdown options={{
+                        overrides: {
+                        p: {
+                            component: ({ children }) => <>{children}</>, 
+                        },
+                        },
+                    }}>{info}</Markdown>
                 </FormHelperText>
             )}
 

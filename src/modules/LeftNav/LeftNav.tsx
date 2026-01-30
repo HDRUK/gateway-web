@@ -17,7 +17,6 @@ import {
 import Cookies from "js-cookie";
 import Link from "next/link";
 import { usePathname, useParams } from "next/navigation";
-import { Role } from "@/interfaces/Role";
 import { LeftNavItem } from "@/interfaces/Ui";
 import EllipsisCharacterLimit from "@/components/EllipsisCharacterLimit";
 import Typography from "@/components/Typography";
@@ -31,6 +30,7 @@ import {
 import { getTrimmedpathname } from "@/utils/general";
 import { getProfileNav, getTeamNav } from "@/utils/nav";
 import { useFeatures } from "@/providers/FeatureProvider";
+import { Role } from "@/interfaces/Role";
 
 const isExpanded = (
     item: LeftNavItem,
@@ -47,7 +47,8 @@ interface LeftNavProps {
     navHeading?: string;
     permissions: { [key: string]: boolean };
     initialLeftNavOpen: boolean;
-    roles?: Role[];
+    roles? : Role[]
+
 }
 
 const ICON_SIZE = "18px";
@@ -59,7 +60,7 @@ const LeftNav = ({
     teamId,
     navHeading,
     initialLeftNavOpen,
-    roles,
+    roles
 }: LeftNavProps) => {
     const isMobile = useMediaQuery(theme.breakpoints.only("mobile"));
     const features = useFeatures();
@@ -140,10 +141,12 @@ const LeftNav = ({
         const sectionId = itemIds[item.label];
         const expanded = isExpanded(item, expandedSection, trimmedPathname);
 
-        const calculateLeftBorder = (subItemHref: string) =>
+        const calculateLeftBorder = (subItemHref: string) => 
             `1px solid 
                 ${
-                    subNavItemSelected(subItemHref)
+                    subNavItemSelected(
+                        subItemHref
+                    )
                         ? colors.green400
                         : colors.grey200
                 }`;

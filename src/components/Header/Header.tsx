@@ -57,10 +57,10 @@ function Header() {
     ];
 
     const menuItems = [
-        ...(!isLoggedIn ? signInNav : [accountLinks.myProfile]),
-        ...navItems,
-        ...(isLoggedIn ? accountLinks.otherItems : []),
-    ];
+                        ...(!isLoggedIn ? signInNav : [accountLinks.myProfile]),
+                        ...navItems,
+                        ...(isLoggedIn ? accountLinks.otherItems : []),
+                        ]
 
     return (
         <AppBar position="static" color={isHome ? "transparent" : "primary"}>

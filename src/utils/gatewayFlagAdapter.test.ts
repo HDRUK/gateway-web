@@ -9,14 +9,9 @@ jest.mock("@/config/apis", () => ({
 
 describe("createGatewayFlagAdapter", () => {
     const mockResponse = {
-        message: "OK",
+    message: "OK",
         data: [
-            {
-                id: 1,
-                name: "SDEConciergeServiceEnquiry",
-                value: "true",
-                scope: null,
-            },
+            { id: 1, name: "SDEConciergeServiceEnquiry", value: "true", scope: null },
             { id: 2, name: "Aliases", value: "false", scope: null },
         ],
     };
