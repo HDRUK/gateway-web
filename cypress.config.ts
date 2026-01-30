@@ -6,6 +6,7 @@ dotenv.config({ path: ".env" });
 export default defineConfig({
     e2e: {
         baseUrl: "http://localhost:3000",
+        defaultCommandTimeout: 10000,
         env: {
             DEV_EMAIL: process.env.DEV_EMAIL,
             CUST_ADMIN_1_EMAIL: "CypressTeamAdmin@hdruk.ac.uk",
