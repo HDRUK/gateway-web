@@ -5,7 +5,7 @@ import Homepage from "./components/Homepage";
 export default async function HomePage() {
     const cmsContent = await getHomePage();
 
-    const sortedPosts = getSortedNewsEventsByDate(cmsContent.posts.edges);
+    const sortedPosts = await getSortedNewsEventsByDate(cmsContent.posts.edges);
 
     return (
         <Box component="main" sx={{ overflowX: "hidden" }}>

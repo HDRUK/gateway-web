@@ -447,7 +447,7 @@ const getOpenSourceDevelopment = async () => {
     return substituteEnvLinks(data?.page);
 };
 
-const getSortedNewsEventsByDate = (data: (NewsNode | EventNode)[]) =>
+const getSortedNewsEventsByDate = async (data: (NewsNode | EventNode)[]) =>
     [...data].sort((a, b) => {
         return dayjs(b.node.newsFields.date).isBefore(
             dayjs(a.node.newsFields.date)
@@ -456,7 +456,7 @@ const getSortedNewsEventsByDate = (data: (NewsNode | EventNode)[]) =>
             : 1;
     });
 
-const hasCategoryName = (
+const hasCategoryName = async (
     categories: PageTemplateDefault["categories"],
     categoryName: string
 ) => {

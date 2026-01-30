@@ -254,6 +254,7 @@ const Autocomplete = <T extends FieldValues>(props: AutocompleteProps<T>) => {
                             }),
                         }}
                         size="small"
+                        name={name}
                     />
                 )}
                 renderOption={(props, item) => (
