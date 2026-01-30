@@ -6,7 +6,7 @@ import { RouteName } from "@/consts/routeName";
 
 const TRANSLATION_PATH_COMMON = "common";
 
-const useAccountMenu = () => {
+const useAccountMenu = ( ) => {
     const t = useTranslations(TRANSLATION_PATH_COMMON);
     const { user } = useAuth();
 
@@ -21,17 +21,19 @@ const useAccountMenu = () => {
                 href: `/${RouteName.ACCOUNT}/${RouteName.TEAM}/${team.id}/${RouteName.TEAM_MANAGEMENT}`,
             }));
 
-        return [
-            {
-                label: t("yourProfile"),
+        return {
+            "myProfile" : {
+                label: t("myProfile"),
                 href: `/${RouteName.ACCOUNT}/${RouteName.PROFILE}`,
             },
-            ...teams,
-            {
-                label: t("logout"),
-                action: logout,
-            },
-        ];
+            "otherItems": [
+                ...teams,
+                {
+                    label: t("logout"),
+                    action: logout,
+                },
+            ],
+        };
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [logout, user]);
 };

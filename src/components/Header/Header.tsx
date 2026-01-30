@@ -56,6 +56,13 @@ function Header() {
         },
     ];
 
+    const menuItems = [
+                        ...(!isLoggedIn ? signInNav : []),
+                        ...(isLoggedIn ? [accountLinks.myProfile] : []),
+                        ...navItems,
+                        ...(isLoggedIn ? accountLinks.otherItems : []),
+                        ]
+
     return (
         <AppBar position="static" color={isHome ? "transparent" : "primary"}>
             <Container maxWidth="desktop">
@@ -110,11 +117,7 @@ function Header() {
 
                         <MenuDropdown
                             handleClose={() => setAnchorElement(null)}
-                            menuItems={[
-                                ...(!isLoggedIn ? signInNav : []),
-                                ...navItems,
-                                ...(isLoggedIn ? accountLinks : []),
-                            ]}
+                            menuItems={menuItems}
                             anchorElement={anchorElement}
                         />
                     </Box>
