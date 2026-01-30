@@ -44,7 +44,7 @@ export default defineConfig({
             DAR_MANAGER_AND_METADATA_MANAGER_PASSWORD:
                 process.env.DAR_MANAGER_AND_METADATA_MANAGER_PASSWORD,
 
-            API_URL: process.env.API_URL,
+            API_URL: process.env.NEXT_PUBLIC_API_V1_URL,
         },
         async setupNodeEvents(on, config) {
             return config;
