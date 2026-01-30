@@ -10,7 +10,7 @@ on:
         default: "dev"
 
 env:
-  APP_ENV: "dev"
+  APP_ENV: "development"
   APP_DEBUG: "true"
   APP_NAME: "gateway-api-2"
   AUDIT_LOG_ENABLED: "true"
@@ -209,16 +209,6 @@ jobs:
           php artisan migrate --force
           php artisan db:seed --force
           php artisan db:seed --class=TestDevUsersSeeder
-
-      - name: Show users table after seeding
-        run: |
-          mysql \
-            -h 127.0.0.1 \
-            -P 3306 \
-            -u root \
-            -proot \
-            hdrgatewaydev \
-            -e "SELECT id, email, name, created_at FROM users;"
 
       - name: Start Laravel API and wait for readiness
         run: |
