@@ -6,7 +6,7 @@ import { RouteName } from "@/consts/routeName";
 
 const TRANSLATION_PATH_COMMON = "common";
 
-const useAccountMenu = () => {
+const useAccountMenu = ( ) => {
     const t = useTranslations(TRANSLATION_PATH_COMMON);
     const { user } = useAuth();
 
