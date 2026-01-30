@@ -4,7 +4,7 @@ import { RouteName } from "../../src/consts/routeName";
 const PUBLICATION_NAME = "NEW_PUBLICATION";
 
 const createPublication = () => {
-    cy.visit(`/en/${RouteName.ACCOUNT}/${RouteName.PROFILE}`);
+    cy.visit(`/${RouteName.ACCOUNT}/${RouteName.PROFILE}`);
     cy.get('[href="/account/profile/publications"]').click();
     cy.contains("button", "Add publication").click();
     cy.contains("button", "Manually fill form").click();
@@ -22,7 +22,7 @@ const createPublication = () => {
 
 beforeEach(() => {
     cy.session("custodianTeamAdmin1", () => {
-        cy.visit("/en");
+        cy.visit("/");
         cy.login("custodianTeamAdmin1");
     });
 });
@@ -36,7 +36,7 @@ describe("Publication - creation", () => {
 
 describe("Publication - search", () => {
     it("should be able to search for the publication", () => {
-        cy.visit("/en");
+        cy.visit("/");
         cy.get("a").contains("Publication").click();
         cy.get("#query").type(`${PUBLICATION_NAME}{enter}`);
         cy.get("a").contains(PUBLICATION_NAME).click();
