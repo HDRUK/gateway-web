@@ -20,12 +20,14 @@ const createPublication = () => {
     cy.get('[role="listbox"] [role="option"]').first().click();
 };
 
-describe("Publication - creation", () => {
-    beforeEach(() => {
+beforeEach(() => {
+    cy.session("custodianTeamAdmin1", () => {
         cy.visit("/en");
         cy.login("custodianTeamAdmin1");
     });
+});
 
+describe("Publication - creation", () => {
     it("should create a new active publication", () => {
         createPublication();
         cy.contains("button", "Publish").click();
@@ -34,7 +36,7 @@ describe("Publication - creation", () => {
 
 describe("Publication - search", () => {
     it("should be able to search for the publication", () => {
-        cy.visit(`/en`);
+        cy.visit("/en");
         cy.get("a").contains("Publication").click();
         cy.get("#query").type(`${PUBLICATION_NAME}{enter}`);
         cy.get("a").contains(PUBLICATION_NAME).click();
@@ -43,11 +45,6 @@ describe("Publication - search", () => {
 });
 
 describe("Publication - draft", () => {
-    beforeEach(() => {
-        cy.visit("/en");
-        cy.login("custodianTeamAdmin1");
-    });
-
     it("should create a new draft publication", () => {
         cy.intercept(
             "POST",
@@ -60,10 +57,8 @@ describe("Publication - draft", () => {
         cy.wait("@createTool").then(({ response }) => {
             expect(response?.statusCode).to.be.oneOf([200, 201]);
 
-            const body = response?.body;
-            const id = body.data;
-
-            expect(id, "created tool id").to.exist;
+            const id = response?.body?.data;
+            expect(id, "created publication id").to.exist;
 
             cy.location("pathname").should(
                 "eq",
