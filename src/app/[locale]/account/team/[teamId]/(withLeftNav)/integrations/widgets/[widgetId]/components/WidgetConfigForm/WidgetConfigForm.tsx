@@ -204,6 +204,7 @@ const WidgetConfigForm = ({
                 {
                     name: "permitted_domains",
                     label: t("permittedDomains"),
+                    info: t("permittedDomainInfo"),
                     component: inputComponents.Autocomplete,
                     multiple: true,
                     handleHomeEndKeys: true,

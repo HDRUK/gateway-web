@@ -908,6 +908,7 @@
                         "contentInfo": "You might just want to show entities from yourselves for example",
                         "dataCustodians": "Data custodians",
                         "permittedDomains": "Permitted domains",
+                        "permittedDomainInfo": "If you have multiple environments, like a dev & preprod, it may be useful to add these in here too, like: https://web.preprod.hdruk.cloud (without the trailing slash)",
                         "validUrl": "Each item must be a valid URL",
                         "widget": "Widget",
                         "widgetName": "Widget name",
