@@ -238,13 +238,6 @@ jobs:
           done
           tail -n 20 search-service.log
 
-      - name: Upload search-service logs
-        if: always()
-        uses: actions/upload-artifact@v4
-        with:
-          name: search-service-logs
-          path: search-service/search-service.log
-
       - name: Checkout api
         uses: actions/checkout@v4
         with:
