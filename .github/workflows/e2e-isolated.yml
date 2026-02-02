@@ -112,21 +112,6 @@ env:
   NEXT_PUBLIC_API_BASE_URL: "http://localhost:8000/api"
   CUST_ADMIN_1_EMAIL: ${{secrets.CUST_ADMIN_1_EMAIL}}
 
-  # Search service
-  ELASTIC_URL: "http://localhost:9200"
-  ELASTIC_USERNAME: "elastic"
-  ELASTIC_PASSWORD: "supersecretpassword"
-  SEARCHSERVICE_HOST: "http://localhost:8080"
-  SEARCH_EXPLANATION_EXTRACTOR: ${{secrets.SEARCH_EXPLANATION_EXTRACTOR}}
-  SEARCH_EXPLANATION_USER: ${{secrets.SEARCH_EXPLANATION_USER}}
-  SEARCH_EXPLANATION_PASSWORD: ${{secrets.SEARCH_EXPLANATION_PASSWORD}}
-  SEARCH_EXPLANATION_TABLE: ${{secrets.SEARCH_EXPLANATION_TABLE}}
-  PMC_URL: "https://www.ebi.ac.uk/europepmc/webservices/rest"
-  BQ_PROJECT_ID: ${{secrets.BQ_PROJECT_ID}}
-  BQ_DATASET_NAME: ${{secrets.BQ_DATASET_NAME}}
-  BQ_TABLE_NAME: ${{secrets.BQ_TABLE_NAME}}
-  DEBUG_LOGGING: "true"
-
 jobs:
   e2e-tests:
     if:
@@ -208,6 +193,20 @@ jobs:
           go build -o search-service
 
       - name: Start search-service and wait for readiness
+        env:
+          ELASTIC_URL: "http://localhost:9200"
+          ELASTIC_USERNAME: "elastic"
+          ELASTIC_PASSWORD: "supersecretpassword"
+          SEARCHSERVICE_HOST: "http://localhost:8080"
+          SEARCH_EXPLANATION_EXTRACTOR: ${{secrets.SEARCH_EXPLANATION_EXTRACTOR}}
+          SEARCH_EXPLANATION_USER: ${{secrets.SEARCH_EXPLANATION_USER}}
+          SEARCH_EXPLANATION_PASSWORD: ${{secrets.SEARCH_EXPLANATION_PASSWORD}}
+          SEARCH_EXPLANATION_TABLE: ${{secrets.SEARCH_EXPLANATION_TABLE}}
+          PMC_URL: "https://www.ebi.ac.uk/europepmc/webservices/rest"
+          BQ_PROJECT_ID: ${{secrets.BQ_PROJECT_ID}}
+          BQ_DATASET_NAME: ${{secrets.BQ_DATASET_NAME}}
+          BQ_TABLE_NAME: ${{secrets.BQ_TABLE_NAME}}
+          DEBUG_LOGGING: "true"
         run: |
           cd search-service
           nohup ./search-service > search-service.log 2>&1 &
