@@ -4,7 +4,7 @@ import { RouteName } from "../../src/consts/routeName";
 const TOOL_NAME = "NEW_TOOL";
 
 const createTool = () => {
-    cy.visit(`/en/${RouteName.ACCOUNT}/${RouteName.PROFILE}`);
+    cy.visit(`/${RouteName.ACCOUNT}/${RouteName.PROFILE}`);
     cy.get('[href="/account/profile/tools"]').click();
     cy.contains("button", "Add new").click();
 
