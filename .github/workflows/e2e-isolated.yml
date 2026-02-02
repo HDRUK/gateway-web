@@ -207,8 +207,9 @@ jobs:
         run: |
           cat <<EOF > search-service/.env
           ELASTIC_URL="http://localhost:9200"
-          ELASTIC_USERNAME="elastic"
-          ELASTIC_PASSWORD="supersecretpassword"
+          ELASTIC_USERNAME=elastic
+          ELASTIC_PASSWORD=supersecretpassword
+          ELASTICSEARCH_VERIFY_SSL=false
           SEARCHSERVICE_HOST="0.0.0.0:8080"
           SEARCH_EXPLANATION_EXTRACTOR=${{secrets.SEARCH_EXPLANATION_EXTRACTOR}}
           SEARCH_EXPLANATION_USER=${{secrets.SEARCH_EXPLANATION_USER}}
@@ -219,7 +220,7 @@ jobs:
           SEARCH_ANALYTICS_DISABLED="true"
           SEARCH_NO_RECORDS=100
           SEARCH_NO_RECORDS_AGGREGATION=1000
-          EARCH_NO_RECORDS_SIMILAR_SEARCH=3
+          SEARCH_NO_RECORDS_SIMILAR_SEARCH=3
           EOF
 
       - name: Start search-service and wait for readiness
