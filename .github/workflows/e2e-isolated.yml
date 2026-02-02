@@ -348,6 +348,19 @@ jobs:
           name: cypress-video
           path: cypress/videos
 
+      - name: Collect search-service logs
+        if: always()
+        run: |
+          ps aux | grep search-service | grep -v grep || true
+          cat search-service/search-service.log
+
+      - name: Upload search-service logs
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: search-service-logs
+          path: search-service/search-service.log
+
       - name: Collect Elasticsearch logs
         if: always()
         run: |
