@@ -36,6 +36,7 @@ describe("Publication - creation", () => {
 
 describe("Publication - search", () => {
     it("should be able to search for the publication", () => {
+        cy.wait(10000);
         cy.visit("/");
         cy.get("a").contains("Publication").click();
         cy.get("#query").type(`${PUBLICATION_NAME}{enter}`);
