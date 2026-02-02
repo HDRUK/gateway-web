@@ -179,6 +179,7 @@ jobs:
         uses: actions/checkout@v4
         with:
           repository: HDRUK/search-service
+          ref: fix/optional-bigquery
           path: search-service
 
       - name: Setup Go
@@ -220,21 +221,13 @@ jobs:
           EOF
           echo "GOOGLE_APPLICATION_CREDENTIALS=$GITHUB_WORKSPACE/gcp-key.json" >> $GITHUB_ENV
 
-      - name: Start BigQuery Emulator
-        run: |
-          gcloud beta emulators bigquery start --host-port=localhost:9050 &
-          export BIGQUERY_EMULATOR_HOST=localhost:9050
-          echo "BIGQUERY_EMULATOR_HOST=http://localhost:9050" >> $GITHUB_ENV
-          # wait a few seconds to ensure emulator is ready
-          sleep 5
-
       - name: Create search-service .env
         run: |
           cat <<EOF > search-service/.env
           ELASTIC_URL="http://localhost:9200"
           ELASTIC_USERNAME="elastic"
           ELASTIC_PASSWORD="supersecretpassword"
-          SEARCHSERVICE_HOST="http://localhost:8080"
+          SEARCHSERVICE_HOST="0.0.0.0:8080"
           SEARCH_EXPLANATION_EXTRACTOR=${{secrets.SEARCH_EXPLANATION_EXTRACTOR}}
           SEARCH_EXPLANATION_USER=${{secrets.SEARCH_EXPLANATION_USER}}
           SEARCH_EXPLANATION_PASSWORD=${{secrets.SEARCH_EXPLANATION_PASSWORD}}
@@ -245,7 +238,7 @@ jobs:
           BQ_TABLE_NAME=${{secrets.BQ_TABLE_NAME}}
           DEBUG_LOGGING="true"
           GOOGLE_APPLICATION_CREDENTIALS=$GITHUB_WORKSPACE/gcp-key.json
-          BIGQUERY_EMULATOR_HOST=http://localhost:9050
+          SEARCH_ANALYTICS_DISABLED="true"
           EOF
 
       - name: Start search-service and wait for readiness
