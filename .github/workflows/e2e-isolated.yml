@@ -195,7 +195,7 @@ jobs:
       - name: Create search-service .env
         run: |
           cat <<EOF > search-service/.env
-          ELASTIC_URL: "http://loca lhost:9200"
+          ELASTIC_URL: "http://localhost:9200"
           ELASTIC_USERNAME: "elastic"
           ELASTIC_PASSWORD: "supersecretpassword"
           SEARCHSERVICE_HOST: "http://localhost:8080"
