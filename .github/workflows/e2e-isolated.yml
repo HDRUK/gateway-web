@@ -122,6 +122,10 @@ env:
   SEARCH_EXPLANATION_PASSWORD: ${{secrets.SEARCH_EXPLANATION_PASSWORD}}
   SEARCH_EXPLANATION_TABLE: ${{secrets.SEARCH_EXPLANATION_TABLE}}
   PMC_URL: "https://www.ebi.ac.uk/europepmc/webservices/rest"
+  BQ_PROJECT_ID: ${{secrets.BQ_PROJECT_ID}}
+  BQ_DATASET_NAME: ${{secrets.BQ_DATASET_NAME}}
+  BQ_TABLE_NAME: ${{secrets.BQ_TABLE_NAME}}
+  DEBUG_LOGGING: "true"
 
 jobs:
   e2e-tests:
