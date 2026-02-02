@@ -111,6 +111,9 @@ env:
   NEXT_PUBLIC_CONFLUENCE_URL: ${{ secrets.NEXT_PUBLIC_CONFLUENCE_URL }}
   NEXT_PUBLIC_API_BASE_URL: "http://localhost:8000/api"
   CUST_ADMIN_1_EMAIL: ${{secrets.CUST_ADMIN_1_EMAIL}}
+  SEARCH_EXPLANATION_EXTRACTOR: ${{secrets.SEARCH_EXPLANATION_EXTRACTOR}}
+  SEARCH_EXPLANATION_USER: ${{secrets.SEARCH_EXPLANATION_USER}}
+  SEARCH_EXPLANATION_PASSWORD: ${{secrets.SEARCH_EXPLANATION_PASSWORD}}
 
 jobs:
   e2e-tests:
@@ -160,7 +163,6 @@ jobs:
           --health-timeout=5s
           --health-retries=10
 
-
     steps:
       - name: Install MailDev
         run: npm install -g maildev
@@ -177,7 +179,6 @@ jobs:
         run: |
           curl --retry 10 --retry-delay 5 http://localhost:9200
 
-
       - name: Checkout search-service
         uses: actions/checkout@v4
         with:
@@ -187,7 +188,7 @@ jobs:
       - name: Setup Go
         uses: actions/setup-go@v5
         with:
-          go-version: "1.22"  
+          go-version: "1.22"
 
       - name: Build search-service
         run: |
