@@ -63,7 +63,7 @@ env:
   MJML_RENDER_URL: "https://europe-west1-hdrukshareddev.cloudfunctions.net/hdr-shared-mjml-dev"
   OPENATHENS_ISSUER_URL: "https://connect.openathens.net"
   OPENATHENS_REDIRECT_URL: "http://localhost:8000/api/v1/auth/openathens/callback"
-  QUEUE_CONNECTION: "sync"
+  QUEUE_CONNECTION: "database"
   REDIS_CLIENT: "phpredis"
   REDIS_HOST: "localhost"
   REDIS_PASSWORD: "mypassword"
@@ -348,11 +348,11 @@ jobs:
           name: cypress-video
           path: cypress/videos
 
-      # - name: Collect Elasticsearch logs
-      #   if: always()
-      #   run: |
-      #     docker logs $(docker ps -q --filter "ancestor=docker.elastic.co/elasticsearch/elasticsearch:8.11.1") \
-      #       > elasticsearch.log 2>&1 || true
+      - name: Collect Elasticsearch logs
+        if: always()
+        run: |
+          docker logs $(docker ps -q --filter "ancestor=docker.elastic.co/elasticsearch/elasticsearch:8.11.1") \
+            > elasticsearch.log 2>&1 || true
 
       - name: Upload Elasticsearch logs
         if: always()
