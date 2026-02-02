@@ -63,7 +63,7 @@ env:
   MJML_RENDER_URL: "https://europe-west1-hdrukshareddev.cloudfunctions.net/hdr-shared-mjml-dev"
   OPENATHENS_ISSUER_URL: "https://connect.openathens.net"
   OPENATHENS_REDIRECT_URL: "http://localhost:8000/api/v1/auth/openathens/callback"
-  QUEUE_CONNECTION: "database"
+  QUEUE_CONNECTION: "sync"
   REDIS_CLIENT: "phpredis"
   REDIS_HOST: "localhost"
   REDIS_PASSWORD: "mypassword"
@@ -173,7 +173,7 @@ jobs:
 
       - name: Wait for Elasticsearch
         run: |
-          curl --retry 10 --retry-delay 5 http://localhost:9200
+          curl -u elastic:supersecretpassword --retry 10 --retry-delay 5 -sSf http://localhost:9200 >/dev/null
 
       - name: Checkout search-service
         uses: actions/checkout@v4
@@ -202,24 +202,6 @@ jobs:
           cd search-service
           go mod download
           go build -o search-service
-
-      - name: Setup dummy GCP credentials
-        run: |
-          cat <<EOF > $GITHUB_WORKSPACE/gcp-key.json
-          {
-            "type": "service_account",
-            "project_id": "fake-project",
-            "private_key_id": "fake-key-id",
-            "private_key": "-----BEGIN PRIVATE KEY-----\nFAKEKEY\n-----END PRIVATE KEY-----\n",
-            "client_email": "fake@example.com",
-            "client_id": "1234567890",
-            "auth_uri": "https://accounts.google.com/o/oauth2/auth",
-            "token_uri": "https://oauth2.googleapis.com/token",
-            "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
-            "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/fake@example.com"
-          }
-          EOF
-          echo "GOOGLE_APPLICATION_CREDENTIALS=$GITHUB_WORKSPACE/gcp-key.json" >> $GITHUB_ENV
 
       - name: Create search-service .env
         run: |
@@ -279,10 +261,9 @@ jobs:
       - name: Cache Composer deps
         uses: actions/cache@v4
         with:
-          path: vendor
-          key: e2e-composer-${{ hashFiles('composer.lock') }}
+          path: gateway-api/vendor
+          key: e2e-composer-${{ hashFiles('gateway-api/composer.lock') }}
           restore-keys: e2e-composer-
-          working-directory: gateway-api
 
       - name: Install Composer deps
         run: |
@@ -373,19 +354,19 @@ jobs:
       #     docker logs $(docker ps -q --filter "ancestor=docker.elastic.co/elasticsearch/elasticsearch:8.11.1") \
       #       > elasticsearch.log 2>&1 || true
 
-      # - name: Upload Elasticsearch logs
-      #   if: always()
-      #   uses: actions/upload-artifact@v4
-      #   with:
-      #     name: elasticsearch-logs
-      #     path: elasticsearch.log
+      - name: Upload Elasticsearch logs
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: elasticsearch-logs
+          path: elasticsearch.log
 
-      # - name: Upload Laravel logs
-      #   if: always()
-      #   uses: actions/upload-artifact@v4
-      #   with:
-      #     name: laravel-logs
-      #     path: |
-      #       gateway-api/storage/logs/*.log
-      #       gateway-api/laravel.log
-      #       gateway-api/queue.log
+      - name: Upload Laravel logs
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: laravel-logs
+          path: |
+            gateway-api/storage/logs/*.log
+            gateway-api/laravel.log
+            gateway-api/queue.log
