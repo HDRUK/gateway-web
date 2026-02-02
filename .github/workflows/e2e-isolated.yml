@@ -69,7 +69,7 @@ env:
   REDIS_PASSWORD: "mypassword"
   REDIS_PORT: "6379"
   RQUEST_INIT_URL: "https://rquest.dev.hdruk.cloud/rquest/"
-  SEARCH_SERVICE_URL: "https://hdr-gateway-search-dev-qmnkcg5qjq-ew.a.run.app"
+  SEARCH_SERVICE_URL: "http://localhost:8080"
   TED_ENABLED: "true"
   TED_SERVICE_URL: "https://hdr-gateway-ted-dev-qmnkcg5qjq-ew.a.run.app"
   TRASER_ENABLED: "true"
@@ -154,7 +154,7 @@ jobs:
           --env discovery.type=single-node
           --env xpack.security.enabled=true
           --env ELASTIC_PASSWORD=supersecretpassword
-          --env logger.level=debug
+          # --env logger.level=debug
           --health-cmd="curl -u elastic:supersecretpassword -s http://localhost:9200 >/dev/null"
           --health-interval=10s
           --health-timeout=5s
@@ -176,6 +176,39 @@ jobs:
       - name: Wait for Elasticsearch
         run: |
           curl --retry 10 --retry-delay 5 http://localhost:9200
+
+
+      - name: Checkout search-service
+        uses: actions/checkout@v4
+        with:
+          repository: HDRUK/search-service
+          path: search-service
+
+      - name: Setup Go
+        uses: actions/setup-go@v5
+        with:
+          go-version: "1.22"  
+
+      - name: Build search-service
+        run: |
+          cd search-service
+          go mod download
+          go build -o search-service
+
+      - name: Start search-service and wait for readiness
+        run: |
+          cd search-service
+          nohup ./search-service > search-service.log 2>&1 &
+          echo "Waiting for search-service to start..."
+          for i in {1..20}; do
+            if curl -s http://localhost:8080/status >/dev/null; then
+              echo "✅ search-service is up!"
+              break
+            fi
+            echo "Waiting for search-service... attempt $i"
+            sleep 3
+          done
+          tail -n 20 search-service.log
 
       - name: Checkout api
         uses: actions/checkout@v4
@@ -281,25 +314,25 @@ jobs:
           name: cypress-video
           path: cypress/videos
 
-      - name: Collect Elasticsearch logs
-        if: always()
-        run: |
-          docker logs $(docker ps -q --filter "ancestor=docker.elastic.co/elasticsearch/elasticsearch:8.11.1") \
-            > elasticsearch.log 2>&1 || true
+      # - name: Collect Elasticsearch logs
+      #   if: always()
+      #   run: |
+      #     docker logs $(docker ps -q --filter "ancestor=docker.elastic.co/elasticsearch/elasticsearch:8.11.1") \
+      #       > elasticsearch.log 2>&1 || true
 
-      - name: Upload Elasticsearch logs
-        if: always()
-        uses: actions/upload-artifact@v4
-        with:
-          name: elasticsearch-logs
-          path: elasticsearch.log
+      # - name: Upload Elasticsearch logs
+      #   if: always()
+      #   uses: actions/upload-artifact@v4
+      #   with:
+      #     name: elasticsearch-logs
+      #     path: elasticsearch.log
 
-      - name: Upload Laravel logs
-        if: always()
-        uses: actions/upload-artifact@v4
-        with:
-          name: laravel-logs
-          path: |
-            gateway-api/storage/logs/*.log
-            gateway-api/laravel.log
-            gateway-api/queue.log
+      # - name: Upload Laravel logs
+      #   if: always()
+      #   uses: actions/upload-artifact@v4
+      #   with:
+      #     name: laravel-logs
+      #     path: |
+      #       gateway-api/storage/logs/*.log
+      #       gateway-api/laravel.log
+      #       gateway-api/queue.log
