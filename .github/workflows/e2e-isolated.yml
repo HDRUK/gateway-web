@@ -215,12 +215,11 @@ jobs:
           SEARCH_EXPLANATION_PASSWORD=${{secrets.SEARCH_EXPLANATION_PASSWORD}}
           SEARCH_EXPLANATION_TABLE=${{secrets.SEARCH_EXPLANATION_TABLE}}
           PMC_URL="https://www.ebi.ac.uk/europepmc/webservices/rest"
-          BQ_PROJECT_ID=${{secrets.BQ_PROJECT_ID}}
-          BQ_DATASET_NAME=${{secrets.BQ_DATASET_NAME}}
-          BQ_TABLE_NAME=${{secrets.BQ_TABLE_NAME}}
           DEBUG_LOGGING="true"
-          GOOGLE_APPLICATION_CREDENTIALS=$GITHUB_WORKSPACE/gcp-key.json
           SEARCH_ANALYTICS_DISABLED="true"
+          SEARCH_NO_RECORDS=100
+          SEARCH_NO_RECORDS_AGGREGATION=1000
+          EARCH_NO_RECORDS_SIMILAR_SEARCH=3
           EOF
 
       - name: Start search-service and wait for readiness
