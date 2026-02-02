@@ -192,9 +192,10 @@ jobs:
           go mod download
           go build -o search-service
 
-      - name: Start search-service and wait for readiness
-        env:
-          ELASTIC_URL: "http://localhost:9200"
+      - name: Create search-service .env
+        run: |
+          cat <<EOF > search-service/.env
+          ELASTIC_URL: "http://loca lhost:9200"
           ELASTIC_USERNAME: "elastic"
           ELASTIC_PASSWORD: "supersecretpassword"
           SEARCHSERVICE_HOST: "http://localhost:8080"
@@ -207,6 +208,9 @@ jobs:
           BQ_DATASET_NAME: ${{secrets.BQ_DATASET_NAME}}
           BQ_TABLE_NAME: ${{secrets.BQ_TABLE_NAME}}
           DEBUG_LOGGING: "true"
+          EOF
+
+      - name: Start search-service and wait for readiness
         run: |
           cd search-service
           nohup ./search-service > search-service.log 2>&1 &
