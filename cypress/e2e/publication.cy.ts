@@ -31,6 +31,7 @@ describe("Publication - creation", () => {
     it("should create a new active publication", () => {
         createPublication();
         cy.contains("button", "Publish").click();
+        cy.wait(10000);
     });
 });
 
