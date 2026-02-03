@@ -10,6 +10,8 @@ import { useFeatures } from "@/providers/FeatureProvider";
 import CohortDiscoveryRQuestButton from "./CohortDiscoveryRQuest";
 import CohortDiscoveryServiceButton from "./CohortDiscoveryService";
 
+export const DATA_TEST_ID = "cohort-discovery-button";
+
 export interface CohortDiscoveryButtonProps {
     ctaLink: CtaLink;
     showDatasetExplanatoryTooltip: boolean | null;
@@ -26,12 +28,15 @@ const CohortDiscoveryButton = (props: CohortDiscoveryButtonProps) => {
     const { ctaLink, color } = props;
     const { isLoggedIn } = useAuth();
 
-    //const { isRQuestEnabled, isCohortDiscoveryServiceEnabled } = useFeatures();
-    const [isRQuestEnabled, isCohortDiscoveryServiceEnabled] = [true, true];
+    const { isRQuestEnabled, isCohortDiscoveryServiceEnabled } = useFeatures();
 
     const content = useMemo(
         () => (
-            <Stack gap={1} justifyContent="center" direction={"row"}>
+            <Stack
+                data-testid={DATA_TEST_ID}
+                gap={1}
+                justifyContent="center"
+                direction={"row"}>
                 {isRQuestEnabled && <CohortDiscoveryRQuestButton {...props} />}{" "}
                 {isCohortDiscoveryServiceEnabled && (
                     <CohortDiscoveryServiceButton
@@ -65,7 +70,11 @@ const CohortDiscoveryButton = (props: CohortDiscoveryButtonProps) => {
 
     if (isRQuestEnabled && isCohortDiscoveryServiceEnabled) {
         return (
-            <Button {...props} color={color} onClick={handleClick}>
+            <Button
+                data-testid={DATA_TEST_ID}
+                {...props}
+                color={color}
+                onClick={handleClick}>
                 {ctaLink?.title}
             </Button>
         );

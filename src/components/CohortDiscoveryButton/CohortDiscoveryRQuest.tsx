@@ -19,7 +19,7 @@ interface CohortDiscoveryButtonProps {
     clickedAction?: () => void;
 }
 
-export const DATA_TEST_ID = "cohort-discovery-button";
+export const DATA_TEST_ID = "rquest-cohort-discovery-button";
 
 const TRANSLATION_PATH_CTAOVERRIDE = "components.CohortDiscoveryButton";
 
