@@ -27,14 +27,13 @@ describe("Analysis Scripts & Software - creation", () => {
     it("should create a new active tool", () => {
         createTool();
         cy.contains("button", "Publish").click();
-        cy.wait(5000);
+        cy.contains("Tool successfully created");
     });
 });
 
 describe("Analysis Scripts & Software - search", () => {
     it("should be able to search for the tool", () => {
         cy.visit("/search?type=tools");
-        cy.wait(1000);
         cy.get("#query").type(`${TOOL_NAME}{enter}`);
         cy.get("a").contains(TOOL_NAME).click();
         cy.get("h2").contains(TOOL_NAME);

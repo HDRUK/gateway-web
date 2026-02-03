@@ -31,14 +31,13 @@ describe("Publication - creation", () => {
     it("should create a new active publication", () => {
         createPublication();
         cy.contains("button", "Publish").click();
-        cy.wait(5000);
+        cy.contains("Publication successfully created");
     });
 });
 
 describe("Publication - search", () => {
     it("should be able to search for the publication", () => {
         cy.visit("/search?type=publications");
-        cy.wait(1000);
         cy.get("#query").type(`${PUBLICATION_NAME}{enter}`);
         cy.get("a").contains(PUBLICATION_NAME).click();
         cy.get("h2").contains(PUBLICATION_NAME);
@@ -50,12 +49,12 @@ describe("Publication - draft", () => {
         cy.intercept(
             "POST",
             "http://localhost:8000/api/v2/users/34/publications"
-        ).as("createTool");
+        ).as("createPublication");
 
         createPublication();
         cy.contains("button", "Save as draft").click();
 
-        cy.wait("@createTool").then(({ response }) => {
+        cy.wait("@createPublication").then(({ response }) => {
             expect(response?.statusCode).to.be.oneOf([200, 201]);
 
             const id = response?.body?.data;
