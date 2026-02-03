@@ -3,7 +3,6 @@
 import { Fragment, useId, useMemo, useState } from "react";
 import {
     Box,
-    CircularProgress,
     Collapse,
     Divider,
     Drawer,
@@ -17,13 +16,10 @@ import {
 } from "@mui/material";
 import Cookies from "js-cookie";
 import Link from "next/link";
-import { usePathname, useParams, useRouter } from "next/navigation";
-import { Role } from "@/interfaces/Role";
+import { usePathname, useParams } from "next/navigation";
 import { LeftNavItem } from "@/interfaces/Ui";
 import EllipsisCharacterLimit from "@/components/EllipsisCharacterLimit";
 import Typography from "@/components/Typography";
-import useAuth from "@/hooks/useAuth";
-import { useCohortStatus } from "@/hooks/useCohortStatus";
 import config from "@/config/config";
 import theme, { colors } from "@/config/theme";
 import {
@@ -34,6 +30,7 @@ import {
 import { getTrimmedpathname } from "@/utils/general";
 import { getProfileNav, getTeamNav } from "@/utils/nav";
 import { useFeatures } from "@/providers/FeatureProvider";
+import { Role } from "@/interfaces/Role";
 
 const isExpanded = (
     item: LeftNavItem,
@@ -50,7 +47,8 @@ interface LeftNavProps {
     navHeading?: string;
     permissions: { [key: string]: boolean };
     initialLeftNavOpen: boolean;
-    roles?: Role[];
+    roles? : Role[]
+
 }
 
 const ICON_SIZE = "18px";
@@ -62,29 +60,14 @@ const LeftNav = ({
     teamId,
     navHeading,
     initialLeftNavOpen,
-    roles,
+    roles
 }: LeftNavProps) => {
     const isMobile = useMediaQuery(theme.breakpoints.only("mobile"));
     const features = useFeatures();
-    const router = useRouter();
-
-    const { user } = useAuth();
-    const { requestStatus } = useCohortStatus(user?.id);
-    const [showLoader, setShowLoader] = useState<Record<string, boolean>>({});
 
     const navItems = teamId
-        ? getTeamNav(
-              permissions,
-              teamId,
-              features,
-              requestStatus === "APPROVED"
-          )
-        : getProfileNav(
-              permissions,
-              roles ?? [],
-              features,
-              requestStatus === "APPROVED"
-          );
+        ? getTeamNav(permissions, teamId, features)
+        : getProfileNav(permissions, roles);
 
     const params = useParams<{ locale: string }>();
     const pathname = usePathname() || "";
@@ -158,10 +141,12 @@ const LeftNav = ({
         const sectionId = itemIds[item.label];
         const expanded = isExpanded(item, expandedSection, trimmedPathname);
 
-        const calculateLeftBorder = (subItemHref: string) =>
+        const calculateLeftBorder = (subItemHref: string) => 
             `1px solid 
                 ${
-                    subNavItemSelected(subItemHref)
+                    subNavItemSelected(
+                        subItemHref
+                    )
                         ? colors.green400
                         : colors.grey200
                 }`;
@@ -322,41 +307,23 @@ const LeftNav = ({
                                             ? "page"
                                             : undefined
                                     }
-                                    onClick={async e => {
+                                    onClick={() => {
                                         setLeftNavExpandedOnMobile(
                                             !leftNavExpandedOnMobile
                                         );
-
-                                        if (!subItem.onClick) return;
-                                        setShowLoader(prev => ({
-                                            ...prev,
-                                            [subItem.href]: true,
-                                        }));
-
-                                        e.preventDefault();
-
-                                        const href = await subItem.onClick(
-                                            subItem.href
-                                        );
-
-                                        await router.push(href);
                                     }}>
-                                    {!!showLoader?.[subItem.href] ? (
-                                        <CircularProgress />
-                                    ) : (
-                                        <ListItemText
-                                            sx={{
-                                                m: 0,
-                                                ml: 6,
-                                                py: 1.5,
-                                                px: 1,
-                                                borderLeft: calculateLeftBorder(
-                                                    subItem.href
-                                                ),
-                                            }}
-                                            primary={subItem.label}
-                                        />
-                                    )}
+                                    <ListItemText
+                                        sx={{
+                                            m: 0,
+                                            ml: 6,
+                                            py: 1.5,
+                                            px: 1,
+                                            borderLeft: calculateLeftBorder(
+                                                subItem.href
+                                            ),
+                                        }}
+                                        primary={subItem.label}
+                                    />
                                 </ListItemButton>
                             ))}
                         </List>

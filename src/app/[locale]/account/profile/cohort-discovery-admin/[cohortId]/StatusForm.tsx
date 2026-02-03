@@ -5,21 +5,17 @@ import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useRouter } from "next/navigation";
 import { CohortRequest, CohortRequestForm } from "@/interfaces/CohortRequest";
-import { Workgroup } from "@/interfaces/Workgroup";
 import Form from "@/components/Form";
 import InputWrapper from "@/components/InputWrapper";
 import ChangesActionBar from "@/modules/ChangesActionBar";
 import useActionBar from "@/hooks/useActionBar";
-import useGet from "@/hooks/useGet";
 import usePut from "@/hooks/usePut";
 import { useUnsavedChanges } from "@/hooks/useUnsavedChanges";
 import apis from "@/config/apis";
 import { RouteName } from "@/consts/routeName";
-import { useFeatures } from "@/providers/FeatureProvider";
 import {
     defaultValues,
     requestStatusField,
-    workgroupField,
     detailsField,
     validationSchema,
     nhseSdeRequestStatusField,
@@ -32,7 +28,6 @@ interface EditCohortRequestProps {
 export default function StatusForm({ cohortRequest }: EditCohortRequestProps) {
     const { push } = useRouter();
     const { showBar, hideBar, store, updateStoreProps } = useActionBar();
-    const { isCohortDiscoveryServiceEnabled } = useFeatures();
     const { control, handleSubmit, formState, reset } =
         useForm<CohortRequestForm>({
             resolver: yupResolver(validationSchema),
@@ -40,15 +35,8 @@ export default function StatusForm({ cohortRequest }: EditCohortRequestProps) {
                 ...defaultValues,
                 request_status: cohortRequest.request_status,
                 nhse_sde_request_status: cohortRequest.nhse_sde_request_status,
-                workgroup_ids: isCohortDiscoveryServiceEnabled
-                    ? cohortRequest.user?.workgroups?.map(wg => wg.id) ?? []
-                    : [],
             },
         });
-
-    const { data: workgroupData } = useGet<Workgroup[]>(apis.workgroupsV1Url, {
-        shouldFetch: isCohortDiscoveryServiceEnabled,
-    });
 
     useUnsavedChanges({
         shouldConfirmLeave: formState.isDirty && !formState.isSubmitSuccessful,
@@ -73,18 +61,6 @@ export default function StatusForm({ cohortRequest }: EditCohortRequestProps) {
                     ],
                 }),
             },
-            ...(isCohortDiscoveryServiceEnabled
-                ? [
-                      {
-                          ...workgroupField,
-                          options: workgroupData?.map(wg => ({
-                              id: wg.id,
-                              value: wg.id,
-                              label: wg.name,
-                          })),
-                      },
-                  ]
-                : []),
             {
                 ...nhseSdeRequestStatusField,
                 /* only add "EXPIRED" to dropdown if that is the current status */
@@ -95,21 +71,16 @@ export default function StatusForm({ cohortRequest }: EditCohortRequestProps) {
                     ],
                 }),
             },
-            /* only display "details" field if "request_status", "nhs_sde_request_status" or 'workgroups' has changed */
+            /* only display "details" field if "request_status" or "nhs_sde_request_status" has changed */
             ...(formState.dirtyFields.request_status ||
-            formState.dirtyFields.nhse_sde_request_status ||
-            (isCohortDiscoveryServiceEnabled &&
-                formState.dirtyFields.workgroup_ids)
+            formState.dirtyFields.nhse_sde_request_status
                 ? [detailsField]
                 : []),
         ],
         [
-            formState.dirtyFields.workgroup_ids,
             formState.dirtyFields.request_status,
             formState.dirtyFields.nhse_sde_request_status,
             cohortRequest,
-            workgroupData,
-            isCohortDiscoveryServiceEnabled,
         ]
     );
 
@@ -134,7 +105,6 @@ export default function StatusForm({ cohortRequest }: EditCohortRequestProps) {
             details: formData.details,
             request_status: formData.request_status,
             nhse_sde_request_status: formData.nhse_sde_request_status,
-            workgroup_ids: formData.workgroup_ids,
         });
         push(
             `/${RouteName.ACCOUNT}/${RouteName.PROFILE}/${RouteName.COHORT_DISCOVERY_ADMIN}`

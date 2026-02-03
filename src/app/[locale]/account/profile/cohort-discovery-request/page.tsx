@@ -1,7 +1,7 @@
 import CtaOverride from "@/components/CtaOverride";
 import { getNewCohortDiscovery } from "@/utils/cms";
 import metaData, { noFollowRobots } from "@/utils/metadata";
-import CohortDiscoveryCoverPage from "./components/CohortDiscoveryCoverPage/CohortDiscoveryCoverPage";
+import CohortDiscoveryCoverPage from "./components/CohortDiscoveryCoverPage";
 
 export const metadata = metaData(
     {

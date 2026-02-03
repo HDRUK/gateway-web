@@ -48,7 +48,6 @@ interface CohortRequestForm {
     details: string;
     request_status: CohortRequestStatus;
     nhse_sde_request_status: NHSSDERequestStatus;
-    workgroup_ids?: number[];
 }
 
 interface CohortRequestUser {

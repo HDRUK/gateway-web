@@ -52,10 +52,7 @@ const CohortDiscoveryRequestForm = ({
 
     // same access is currently returned by both /access/rquest and /access/cohort-discovery
     // - just with a different redirect url
-    const {
-        data: cohortDiscoveryAccessData,
-        isLoading: isCohortAccessLoading,
-    } = useGet<accessRequestType>(
+    const { data: cohortDiscoveryAccessData } = useGet<accessRequestType>(
         `${apis.cohortRequestsV1Url}/access/cohort-discovery`,
         {
             errorNotificationsOn: false,
@@ -74,8 +71,14 @@ const CohortDiscoveryRequestForm = ({
 
     useEffect(() => {
         if (!isUserLoading && !isAccessLoading) {
-            if (rQuestAccessData?.redirect_url) {
-                //push(rQuestAccessData.redirect_url);
+            if (isRQuestEnabled && rQuestAccessData?.redirect_url) {
+                push(rQuestAccessData.redirect_url);
+            } else if (
+                isCohortDiscoveryServiceEnabled &&
+                !isRQuestEnabled &&
+                cohortDiscoveryAccessData?.redirect_url
+            ) {
+                push(cohortDiscoveryAccessData.redirect_url);
             } else if (
                 userData?.request_status &&
                 userData.request_status === "APPROVED"
@@ -83,7 +86,16 @@ const CohortDiscoveryRequestForm = ({
                 push(`/${RouteName.ABOUT}/${RouteName.COHORT_DISCOVERY}`);
             }
         }
-    }, [isUserLoading, isAccessLoading, rQuestAccessData, userData, push]);
+    }, [
+        isUserLoading,
+        isAccessLoading,
+        cohortDiscoveryAccessData,
+        rQuestAccessData,
+        userData,
+        push,
+        isCohortDiscoveryServiceEnabled,
+        isRQuestEnabled,
+    ]);
 
     return !isUserLoading && !isAccessLoading ? (
         <BoxContainer

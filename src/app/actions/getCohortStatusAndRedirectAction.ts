@@ -25,7 +25,6 @@ export const getCohortStatusAndRedirect = async (
             redirectUrl: accessRedirect?.redirect_url ?? null,
         };
     } catch (error) {
-        console.log("got error");
         const session = await getSessionCookie();
         const err = error as {
             response?: {
