@@ -104,7 +104,7 @@ const CohortDiscoveryRQuestButton = ({
                     onClick={() => setIsClicked(true)}
                     data-testid={DATA_TEST_ID}
                     color={color}
-                    disabled={disabledOuter || isDisabled}
+                    disabled={disabledOuter || isDisabled || !redirectUrl}
                     {...restProps}>
                     {isLoading || isLoadingAuth ? (
                         <CircularProgress size={20} color="inherit" />
