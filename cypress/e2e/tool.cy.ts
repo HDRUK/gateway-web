@@ -33,8 +33,8 @@ describe("Analysis Scripts & Software - creation", () => {
 
 describe("Analysis Scripts & Software - search", () => {
     it("should be able to search for the tool", () => {
-        cy.visit(`/en`);
-        cy.get("a").contains("Analysis Scripts & Software").click();
+        cy.visit("/search?type=tools");
+        cy.wait(1000);
         cy.get("#query").type(`${TOOL_NAME}{enter}`);
         cy.get("a").contains(TOOL_NAME).click();
         cy.get("h2").contains(TOOL_NAME);
