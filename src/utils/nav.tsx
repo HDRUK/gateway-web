@@ -1,3 +1,5 @@
+import PersonSearchIcon from "@mui/icons-material/PersonSearch";
+import { Role } from "@/interfaces/Role";
 import { LeftNavItem } from "@/interfaces/Ui";
 import {
     ControlPointIcon,
@@ -15,15 +17,23 @@ import {
     TeamMembersIcon,
     DarIcon,
 } from "@/consts/icons";
-import { RouteName } from "@/consts/routeName";
-import { Role } from "@/interfaces/Role";
 import { ROLE_HDRUK_SUPERADMIN } from "@/consts/roles";
+import { RouteName } from "@/consts/routeName";
+import { setCohortRedirectCookie } from "@/app/actions/setCohortRedirectCookie";
+import { getCohortAccessRedirect } from "./api";
 
 const navIcon = (Icon: React.ElementType) => <Icon fontSize="inherit" />;
 
-const getProfileNav = (permissions: {
-    [key: string]: boolean;
-}, roles? : Role[]): LeftNavItem[] => {
+const getProfileNav = (
+    permissions: {
+        [key: string]: boolean;
+    },
+    roles: Role[],
+    features: { [key: string]: boolean },
+    cohortDiscoveryApproved: boolean = false
+): LeftNavItem[] => {
+    const { isCohortDiscoveryServiceEnabled, isRQuestEnabled } = features;
+
     return [
         {
             icon: navIcon(PersonOutlineOutlinedIcon),
@@ -40,13 +50,12 @@ const getProfileNav = (permissions: {
             label: "Saved searches",
             href: `/${RouteName.ACCOUNT}/${RouteName.PROFILE}/${RouteName.SAVED_SEARCHES}`,
         },
-         ...(roles?.some(role => role.name === ROLE_HDRUK_SUPERADMIN)
+        ...(roles?.some(role => role.name === ROLE_HDRUK_SUPERADMIN)
             ? [
                   {
                       icon: navIcon(DataUseIcon),
                       label: "Feature Flags",
                       href: `/${RouteName.ACCOUNT}/${RouteName.PROFILE}/${RouteName.FEATURES}`,
-
                   },
               ]
             : []),
@@ -59,7 +68,9 @@ const getProfileNav = (permissions: {
                   },
               ]
             : []),
-        ...(permissions["cohort.read"]
+        ...(permissions["cohort.read"] &&
+        isRQuestEnabled &&
+        !isCohortDiscoveryServiceEnabled
             ? [
                   {
                       icon: navIcon(CohortIcon),
@@ -76,9 +87,32 @@ const getProfileNav = (permissions: {
                     label: "My access request",
                     href: `/${RouteName.ACCOUNT}/${RouteName.PROFILE}/${RouteName.COHORT_DISCOVERY_REQUEST}`,
                 },
+
+                ...(permissions["cohort.read"] &&
+                isCohortDiscoveryServiceEnabled
+                    ? [
+                          {
+                              label: "User Admin",
+                              href: `/${RouteName.ACCOUNT}/${RouteName.PROFILE}/${RouteName.COHORT_DISCOVERY_ADMIN}`,
+                          },
+                          /*...(isCohortDiscoveryServiceEnabled &&
+                          cohortDiscoveryApproved
+                              ? [
+                                    {
+                                        label: "Collection & Workgroup Admin",
+                                        href: `/${RouteName.ACCOUNT}/${RouteName.PROFILE}/${RouteName.COHORT_DISCOVERY_ADMIN_COLLECTIONS}`,
+                                    },
+                                    {
+                                        label: "Discover Cohorts",
+                                        href: `/${RouteName.ACCOUNT}/${RouteName.PROFILE}/cohort-discovery-builder`,
+                                    },
+                                ]
+                              : []),*/
+                      ]
+                    : []),
                 {
                     label: "About this service",
-                    href: `/${RouteName.ACCOUNT}/${RouteName.PROFILE}/${RouteName.COHORT_DISCOVERY}`,
+                    href: `/${RouteName.ACCOUNT}/${RouteName.PROFILE}/${RouteName.COHORT_DISCOVERY_ABOUT}`,
                 },
             ],
         },
@@ -124,9 +158,10 @@ const getTeamNav = (
         [key: string]: boolean;
     },
     teamId: string | undefined,
-    features: { [key: string]: boolean }
+    features: { [key: string]: boolean },
+    cohortDiscoveryApproved: boolean = false
 ): LeftNavItem[] => {
-    const { isWidgetsEnabled } = features;
+    const { isWidgetsEnabled, isCohortDiscoveryServiceEnabled } = features;
 
     return [
         ...(permissions["roles.read"]
@@ -258,6 +293,20 @@ const getTeamNav = (
                       icon: navIcon(DataUseIcon),
                       label: "Data Uses",
                       href: `/${RouteName.ACCOUNT}/${RouteName.TEAM}/${teamId}/${RouteName.DATA_USES}`,
+                  },
+              ]
+            : []),
+        ...(isCohortDiscoveryServiceEnabled &&
+        cohortDiscoveryApproved &&
+        [
+            permissions["cohort.team.read"],
+            permissions["cohort.team.create"],
+        ].every(isTrue => isTrue)
+            ? [
+                  {
+                      icon: <PersonSearchIcon />,
+                      label: "Cohort Discovery",
+                      href: `/${RouteName.ACCOUNT}/${RouteName.TEAM}/${teamId}/${RouteName.COHORT_DISCOVERY}`,
                   },
               ]
             : []),

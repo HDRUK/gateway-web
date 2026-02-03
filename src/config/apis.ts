@@ -10,8 +10,6 @@ const apiV2IPUrl =
         ? process.env.NEXT_PUBLIC_API_V2_IP_URL
         : process.env.NEXT_PUBLIC_API_V2_URL;
 
-const apiBase = apiV2Url?.split("/api")[0];
-
 const apis = {
     apiV1Url,
     apiV1IPUrl,
@@ -19,7 +17,6 @@ const apis = {
     logoutInternalUrl: "/api/logout",
     signInInternalUrl: "/api/signIn",
     authInternalUrl: "/api/auth",
-    oauth2: `${apiBase}/oauth2/authorize`,
     signInV1UrlIP: `${apiV1IPUrl}/auth`,
     usersV1Url: `${apiV1Url}/users`,
     usersV1UrlIP: `${apiV1IPUrl}/users`,
@@ -38,6 +35,7 @@ const apis = {
     filtersV1UrlIP: `${apiV1IPUrl}/filters`,
     sectorsV1Url: `${apiV1Url}/sectors`,
     tagsV1Url: `${apiV1Url}/tags`,
+    workgroupsV1Url: `${apiV1Url}/workgroups`,
     applicationsV1Url: `${apiV1Url}/applications`,
     applicationsV1UrlIP: `${apiV1IPUrl}/applications`,
     permissionsV1Url: `${apiV1Url}/permissions`,

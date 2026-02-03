@@ -15,6 +15,7 @@ import useGet from "@/hooks/useGet";
 import apis from "@/config/apis";
 import { colors } from "@/config/theme";
 import { RouteName } from "@/consts/routeName";
+import { useFeatures } from "@/providers/FeatureProvider";
 import CohortRequestTermsDialog from "../CohortRequestTermsDialog";
 
 const COHORT_TRANSLATION_PATH = "pages.about.cohortDiscoveryRequest";
@@ -35,6 +36,7 @@ const CohortDiscoveryRequestForm = ({
     const { push } = useRouter();
     const { showDialog } = useDialog();
     const t = useTranslations();
+    const { isCohortDiscoveryServiceEnabled, isRQuestEnabled } = useFeatures();
 
     const { data: userData, isLoading: isUserLoading } = useGet<CohortRequest>(
         `${apis.cohortRequestsV1Url}/user/${userId}`,
@@ -43,10 +45,22 @@ const CohortDiscoveryRequestForm = ({
         }
     );
 
-    const { data: accessData, isLoading: isAccessLoading } =
-        useGet<accessRequestType>(`${apis.cohortRequestsV1Url}/access`, {
+    const { data: rQuestAccessData, isLoading: isAccessLoading } =
+        useGet<accessRequestType>(`${apis.cohortRequestsV1Url}/access/rquest`, {
             errorNotificationsOn: false,
         });
+
+    // same access is currently returned by both /access/rquest and /access/cohort-discovery
+    // - just with a different redirect url
+    const {
+        data: cohortDiscoveryAccessData,
+        isLoading: isCohortAccessLoading,
+    } = useGet<accessRequestType>(
+        `${apis.cohortRequestsV1Url}/access/cohort-discovery`,
+        {
+            errorNotificationsOn: false,
+        }
+    );
 
     const handleSubmit = () => {
         showDialog(CohortRequestTermsDialog, { cmsContent });
@@ -60,8 +74,8 @@ const CohortDiscoveryRequestForm = ({
 
     useEffect(() => {
         if (!isUserLoading && !isAccessLoading) {
-            if (accessData?.redirect_url) {
-                push(accessData.redirect_url);
+            if (rQuestAccessData?.redirect_url) {
+                //push(rQuestAccessData.redirect_url);
             } else if (
                 userData?.request_status &&
                 userData.request_status === "APPROVED"
@@ -69,7 +83,7 @@ const CohortDiscoveryRequestForm = ({
                 push(`/${RouteName.ABOUT}/${RouteName.COHORT_DISCOVERY}`);
             }
         }
-    }, [isUserLoading, isAccessLoading, accessData, userData, push]);
+    }, [isUserLoading, isAccessLoading, rQuestAccessData, userData, push]);
 
     return !isUserLoading && !isAccessLoading ? (
         <BoxContainer
@@ -133,7 +147,6 @@ const CohortDiscoveryRequestForm = ({
                     />
                 </Box>
             </Paper>
-
             <Box
                 sx={{
                     display: "flex",
