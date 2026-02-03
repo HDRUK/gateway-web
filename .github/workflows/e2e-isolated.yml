@@ -27,9 +27,9 @@ env:
   DB_USERNAME: "root"
   DB_PASSWORD: "root"
   ELASTICSEARCH_VERIFY_SSL: "false"
-  ELASTIC_SERVICE_URL: "http://localhost:9200"
-  ELASTICSEARCH_USER: "elastic"
-  ELASTICSEARCH_PASS: "supersecretpassword"
+  ELASTIC_SERVICE_URL: ${{ secrets.ELASTIC_SERVICE_URL }}
+  ELASTICSEARCH_USER: ${{ secrets.ELASTICSEARCH_USER }}
+  ELASTICSEARCH_PASS: ${{ secrets.ELASTICSEARCH_PASS }}
   FILESYSTEM_DISK: "local" # public
   FORM_HYDRATION_SCHEMA_URL: "https://raw.githubusercontent.com/HDRUK/schemata-2/master/docs/%s/%s.form.json"
   FORM_HYDRATION_SCHEMA_MODEL: "HDRUK"
@@ -146,18 +146,18 @@ jobs:
         env:
           REDIS_PASSWORD: mypassword
 
-      elasticsearch:
-        image: docker.elastic.co/elasticsearch/elasticsearch:8.11.1
-        ports:
-          - 9200:9200
-        options: >-
-          --env discovery.type=single-node
-          --env xpack.security.enabled=true
-          --env ELASTIC_PASSWORD=supersecretpassword
-          --health-cmd="curl -u elastic:supersecretpassword -s http://localhost:9200 >/dev/null"
-          --health-interval=10s
-          --health-timeout=5s
-          --health-retries=10
+      # elasticsearch:
+      #   image: docker.elastic.co/elasticsearch/elasticsearch:8.11.1
+      #   ports:
+      #     - 9200:9200
+      #   options: >-
+      #     --env discovery.type=single-node
+      #     --env xpack.security.enabled=true
+      #     --env ELASTIC_PASSWORD=supersecretpassword
+      #     --health-cmd="curl -u elastic:supersecretpassword -s http://localhost:9200 >/dev/null"
+      #     --health-interval=10s
+      #     --health-timeout=5s
+      #     --health-retries=10
 
     steps:
       - name: Install MailDev
@@ -171,9 +171,9 @@ jobs:
       - name: Checkout web
         uses: actions/checkout@v4
 
-      - name: Wait for Elasticsearch
-        run: |
-          curl -u elastic:supersecretpassword --retry 10 --retry-delay 5 -sSf http://localhost:9200 >/dev/null
+      # - name: Wait for Elasticsearch
+      #   run: |
+      #     curl -u elastic:supersecretpassword --retry 10 --retry-delay 5 -sSf http://localhost:9200 >/dev/null
 
       - name: Checkout search-service
         uses: actions/checkout@v4
@@ -206,9 +206,9 @@ jobs:
       - name: Create search-service .env
         run: |
           cat <<EOF > search-service/.env
-          ELASTIC_URL="http://localhost:9200"
-          ELASTIC_USERNAME=elastic
-          ELASTIC_PASSWORD=supersecretpassword
+          ELASTIC_URL=${{secrets.ELASTIC_SERVICE_URL}}
+          ELASTIC_USERNAME=${{secrets.ELASTICSEARCH_USER}}
+          ELASTIC_PASSWORD=${{secrets.ELASTICSEARCH_PASS}}
           ELASTICSEARCH_VERIFY_SSL=false
           SEARCHSERVICE_HOST="0.0.0.0:8080"
           SEARCH_EXPLANATION_EXTRACTOR=${{secrets.SEARCH_EXPLANATION_EXTRACTOR}}
@@ -290,9 +290,9 @@ jobs:
           tail -n 20 laravel.log
           php artisan queue:work --daemon > queue.log 2>&1 &
 
-      - name: Dump Elasticsearch indices
-        run: |
-          curl -u elastic:supersecretpassword http://localhost:9200/_cat/indices?v || true
+      # - name: Dump Elasticsearch indices
+      #   run: |
+      #     curl -u elastic:supersecretpassword http://localhost:9200/_cat/indices?v || true
 
       - name: Setup Node
         uses: actions/setup-node@v4
@@ -354,18 +354,18 @@ jobs:
           name: search-service-logs
           path: search-service/search-service.log
 
-      - name: Collect Elasticsearch logs
-        if: always()
-        run: |
-          docker logs $(docker ps -q --filter "ancestor=docker.elastic.co/elasticsearch/elasticsearch:8.11.1") \
-            > elasticsearch.log 2>&1 || true
+      # - name: Collect Elasticsearch logs
+      #   if: always()
+      #   run: |
+      #     docker logs $(docker ps -q --filter "ancestor=docker.elastic.co/elasticsearch/elasticsearch:8.11.1") \
+      #       > elasticsearch.log 2>&1 || true
 
-      - name: Upload Elasticsearch logs
-        if: always()
-        uses: actions/upload-artifact@v4
-        with:
-          name: elasticsearch-logs
-          path: elasticsearch.log
+      # - name: Upload Elasticsearch logs
+      #   if: always()
+      #   uses: actions/upload-artifact@v4
+      #   with:
+      #     name: elasticsearch-logs
+      #     path: elasticsearch.log
 
       - name: Upload Laravel logs
         if: always()
