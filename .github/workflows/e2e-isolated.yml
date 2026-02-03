@@ -27,9 +27,9 @@ env:
   DB_USERNAME: "root"
   DB_PASSWORD: "root"
   ELASTICSEARCH_VERIFY_SSL: "false"
-  ELASTIC_SERVICE_URL: ${{ secrets.ELASTIC_SERVICE_URL }}
-  ELASTICSEARCH_USER: ${{ secrets.ELASTICSEARCH_USER }}
-  ELASTICSEARCH_PASS: ${{ secrets.ELASTICSEARCH_PASS }}
+  ELASTIC_SERVICE_URL: "http://localhost:9200"
+  ELASTICSEARCH_USER: "elastic"
+  ELASTICSEARCH_PASS: "supersecretpassword"
   FILESYSTEM_DISK: "local"
   FORM_HYDRATION_SCHEMA_URL: "https://raw.githubusercontent.com/HDRUK/schemata-2/master/docs/%s/%s.form.json"
   FORM_HYDRATION_SCHEMA_MODEL: "HDRUK"
@@ -206,9 +206,9 @@ jobs:
       - name: Create search-service .env
         run: |
           cat <<EOF > search-service/.env
-          ELASTIC_URL=${{secrets.ELASTIC_SERVICE_URL}}
-          ELASTIC_USERNAME=${{secrets.ELASTICSEARCH_USER}}
-          ELASTIC_PASSWORD=${{secrets.ELASTICSEARCH_PASS}}
+          ELASTIC_URL="http://localhost:9200"
+          ELASTIC_USERNAME=elastic
+          ELASTIC_PASSWORD=supersecretpassword
           ELASTICSEARCH_VERIFY_SSL=false
           SEARCHSERVICE_HOST="0.0.0.0:8080"
           SEARCH_EXPLANATION_EXTRACTOR=${{secrets.SEARCH_EXPLANATION_EXTRACTOR}}
