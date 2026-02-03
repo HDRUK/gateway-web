@@ -2,12 +2,12 @@
 
 import { Box } from "@mui/material";
 import { CtaLink } from "@/interfaces/Cms";
-import CohortDiscoveryButton from "../CohortDiscoveryButton";
+import CohortDiscoveryRQuestButton from "../CohortDiscoveryButton/CohortDiscoveryRQuest";
 
 const CtaOverride = ({ ctaLink }: { ctaLink: CtaLink }) => {
     return (
         <Box sx={{ display: "flex" }}>
-            <CohortDiscoveryButton
+            <CohortDiscoveryRQuestButton
                 ctaLink={ctaLink}
                 color="greyCustom"
                 sx={{ mt: 3 }}
