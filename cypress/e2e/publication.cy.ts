@@ -31,15 +31,14 @@ describe("Publication - creation", () => {
     it("should create a new active publication", () => {
         createPublication();
         cy.contains("button", "Publish").click();
-        cy.wait(10000);
+        cy.wait(5000);
     });
 });
 
 describe("Publication - search", () => {
     it("should be able to search for the publication", () => {
-        cy.wait(10000);
-        cy.visit("/");
-        cy.get("a").contains("Publication").click();
+        cy.visit("/search?type=publications");
+        cy.wait(5000);
         cy.get("#query").type(`${PUBLICATION_NAME}{enter}`);
         cy.get("a").contains(PUBLICATION_NAME).click();
         cy.get("h2").contains(PUBLICATION_NAME);
