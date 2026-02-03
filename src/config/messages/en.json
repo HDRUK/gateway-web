@@ -664,7 +664,8 @@
                                 "actions": "Actions",
                                 "team": "Team",
                                 "dar": "Data Access Requests",
-                                "metadata": "Metadata"
+                                "metadata": "Metadata",
+                                "cohortDiscovery": "Cohort Discovery"
                             }
                         }
                     }
