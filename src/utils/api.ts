@@ -334,14 +334,18 @@ export async function getUserCohortRequest(
     );
 }
 
-export async function getCohortAccessRedirect(): Promise<CohortRequestAccess> {
+export async function getCohortAccessRedirect(
+    useRQuest = true
+): Promise<CohortRequestAccess> {
     const cookieStore = await cookies();
     const cookieHeader = cookieStore
         .getAll()
         .map(cookie => `${cookie.name}=${cookie.value}`)
         .join("; ");
     return get<CohortRequestAccess>(
-        `${apis.cohortRequestsV1UrlIP}/access`,
+        `${apis.cohortRequestsV1UrlIP}/access/${
+            useRQuest ? "rquest" : "cohort-discovery"
+        }`,
         undefined,
         {
             Cookie: cookieHeader,

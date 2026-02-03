@@ -26,7 +26,9 @@ const IndicateNhseSdeAccessButton = ({ sx }: { sx?: SxProps }) => {
     const t = useTranslations("components.IndicateNhseSdeAccessButton");
     const { isLoggedIn, user, isLoading: isLoadingAuth } = useAuth();
     const { isNhsSdeApplicationsEnabled } = useFeatures();
-    const { nhseSdeRequestStatus, isLoading } = useCohortStatus(user?.id, true);
+    const { nhseSdeRequestStatus, isLoading } = useCohortStatus(user?.id, {
+        redirect: true,
+    });
 
     const [hasClickedButton, setHasClickedButton] = useState(false);
 
