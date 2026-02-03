@@ -69,7 +69,7 @@ env:
   REDIS_PASSWORD: "mypassword"
   REDIS_PORT: "6379"
   RQUEST_INIT_URL: "https://rquest.dev.hdruk.cloud/rquest/"
-  SEARCH_SERVICE_URL: ${{ secrets.SEARCH_SERVICE_URL }}
+  SEARCH_SERVICE_URL: "http://localhost:8080"
   TED_ENABLED: "true"
   TED_SERVICE_URL: "https://hdr-gateway-ted-dev-qmnkcg5qjq-ew.a.run.app"
   TRASER_ENABLED: "true"
@@ -175,68 +175,68 @@ jobs:
       #   run: |
       #     curl -u elastic:supersecretpassword --retry 10 --retry-delay 5 -sSf http://localhost:9200 >/dev/null
 
-      # - name: Checkout search-service
-      #   uses: actions/checkout@v4
-      #   with:
-      #     repository: HDRUK/search-service
-      #     ref: fix/optional-bigquery
-      #     path: search-service
+      - name: Checkout search-service
+        uses: actions/checkout@v4
+        with:
+          repository: HDRUK/search-service
+          ref: fix/optional-bigquery
+          path: search-service
 
       - name: Setup Go
         uses: actions/setup-go@v5
         with:
           go-version: "1.22"
 
-      # - name: Cache Go modules
-      #   uses: actions/cache@v4
-      #   with:
-      #     path: |
-      #       ~/go/pkg/mod
-      #       ~/.cache/go-build
-      #     key: go-modules-${{ hashFiles('search-service/go.sum') }}
-      #     restore-keys: |
-      #       go-modules-
+      - name: Cache Go modules
+        uses: actions/cache@v4
+        with:
+          path: |
+            ~/go/pkg/mod
+            ~/.cache/go-build
+          key: go-modules-${{ hashFiles('search-service/go.sum') }}
+          restore-keys: |
+            go-modules-
 
-      # - name: Build search-service
-      #   run: |
-      #     cd search-service
-      #     go mod download
-      #     go build -o search-service
+      - name: Build search-service
+        run: |
+          cd search-service
+          go mod download
+          go build -o search-service
 
-      # - name: Create search-service .env
-      #   run: |
-      #     cat <<EOF > search-service/.env
-      #     ELASTIC_URL=${{secrets.ELASTIC_SERVICE_URL}}
-      #     ELASTIC_USERNAME=${{secrets.ELASTICSEARCH_USER}}
-      #     ELASTIC_PASSWORD=${{secrets.ELASTICSEARCH_PASS}}
-      #     ELASTICSEARCH_VERIFY_SSL=false
-      #     SEARCHSERVICE_HOST="0.0.0.0:8080"
-      #     SEARCH_EXPLANATION_EXTRACTOR=${{secrets.SEARCH_EXPLANATION_EXTRACTOR}}
-      #     SEARCH_EXPLANATION_USER=${{secrets.SEARCH_EXPLANATION_USER}}
-      #     SEARCH_EXPLANATION_PASSWORD=${{secrets.SEARCH_EXPLANATION_PASSWORD}}
-      #     SEARCH_EXPLANATION_TABLE=${{secrets.SEARCH_EXPLANATION_TABLE}}
-      #     PMC_URL="https://www.ebi.ac.uk/europepmc/webservices/rest"
-      #     DEBUG_LOGGING="true"
-      #     SEARCH_ANALYTICS_DISABLED="true"
-      #     SEARCH_NO_RECORDS=100
-      #     SEARCH_NO_RECORDS_AGGREGATION=1000
-      #     SEARCH_NO_RECORDS_SIMILAR_SEARCH=3
-      #     EOF
+      - name: Create search-service .env
+        run: |
+          cat <<EOF > search-service/.env
+          ELASTIC_URL=${{secrets.ELASTIC_SERVICE_URL}}
+          ELASTIC_USERNAME=${{secrets.ELASTICSEARCH_USER}}
+          ELASTIC_PASSWORD=${{secrets.ELASTICSEARCH_PASS}}
+          ELASTICSEARCH_VERIFY_SSL=false
+          SEARCHSERVICE_HOST="0.0.0.0:8080"
+          SEARCH_EXPLANATION_EXTRACTOR=${{secrets.SEARCH_EXPLANATION_EXTRACTOR}}
+          SEARCH_EXPLANATION_USER=${{secrets.SEARCH_EXPLANATION_USER}}
+          SEARCH_EXPLANATION_PASSWORD=${{secrets.SEARCH_EXPLANATION_PASSWORD}}
+          SEARCH_EXPLANATION_TABLE=${{secrets.SEARCH_EXPLANATION_TABLE}}
+          PMC_URL="https://www.ebi.ac.uk/europepmc/webservices/rest"
+          DEBUG_LOGGING="true"
+          SEARCH_ANALYTICS_DISABLED="true"
+          SEARCH_NO_RECORDS=100
+          SEARCH_NO_RECORDS_AGGREGATION=1000
+          SEARCH_NO_RECORDS_SIMILAR_SEARCH=3
+          EOF
 
-      # - name: Start search-service and wait for readiness
-      #   run: |
-      #     cd search-service
-      #     nohup ./search-service > search-service.log 2>&1 &
-      #     echo "Waiting for search-service to start..."
-      #     for i in {1..20}; do
-      #       if curl -s http://localhost:8080/status >/dev/null; then
-      #         echo "✅ search-service is up!"
-      #         break
-      #       fi
-      #       echo "Waiting for search-service... attempt $i"
-      #       sleep 3
-      #     done
-      #     tail -n 20 search-service.log
+      - name: Start search-service and wait for readiness
+        run: |
+          cd search-service
+          nohup ./search-service > search-service.log 2>&1 &
+          echo "Waiting for search-service to start..."
+          for i in {1..20}; do
+            if curl -s http://localhost:8080/status >/dev/null; then
+              echo "✅ search-service is up!"
+              break
+            fi
+            echo "Waiting for search-service... attempt $i"
+            sleep 3
+          done
+          tail -n 20 search-service.log
 
       - name: Checkout api
         uses: actions/checkout@v4
@@ -341,18 +341,18 @@ jobs:
           name: cypress-video
           path: cypress/videos
 
-      # - name: Collect search-service logs
-      #   if: always()
-      #   run: |
-      #     ps aux | grep search-service | grep -v grep || true
-      #     cat search-service/search-service.log
+      - name: Collect search-service logs
+        if: always()
+        run: |
+          ps aux | grep search-service | grep -v grep || true
+          cat search-service/search-service.log
 
-      # - name: Upload search-service logs
-      #   if: always()
-      #   uses: actions/upload-artifact@v4
-      #   with:
-      #     name: search-service-logs
-      #     path: search-service/search-service.log
+      - name: Upload search-service logs
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: search-service-logs
+          path: search-service/search-service.log
 
       # - name: Collect Elasticsearch logs
       #   if: always()

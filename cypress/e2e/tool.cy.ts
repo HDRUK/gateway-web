@@ -27,6 +27,7 @@ describe("Analysis Scripts & Software - creation", () => {
     it("should create a new active tool", () => {
         createTool();
         cy.contains("button", "Publish").click();
+        cy.wait(5000);
     });
 });
 
