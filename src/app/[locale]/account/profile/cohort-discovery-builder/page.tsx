@@ -1,13 +1,16 @@
+"use client";
+
 import { Box } from "@mui/material";
 import { redirect } from "next/navigation";
 import { RouteName } from "@/consts/routeName";
-import { isCohortDiscoveryServiceEnabled } from "@/flags";
+import { useFeatures } from "@/providers/FeatureProvider";
 
 const EXTERNAL_URL = `${process.env.NEXT_PUBLIC_COHORT_DISCOVERY_URL}/dashboard/new-query`;
 
-const CohortDiscoveryPage = async () => {
-    const allowed = await isCohortDiscoveryServiceEnabled();
-    if (!allowed) redirect(RouteName.ERROR_403);
+const CohortDiscoveryPage = () => {
+    const { isCohortDiscoveryServiceEnabled } = useFeatures();
+    if (!isCohortDiscoveryServiceEnabled) redirect(RouteName.ERROR_403);
+
     return (
         <Box
             component="iframe"

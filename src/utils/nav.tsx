@@ -19,6 +19,8 @@ import {
 } from "@/consts/icons";
 import { ROLE_HDRUK_SUPERADMIN } from "@/consts/roles";
 import { RouteName } from "@/consts/routeName";
+import { setCohortRedirectCookie } from "@/app/actions/setCohortRedirectCookie";
+import { getCohortAccessRedirect } from "./api";
 
 const navIcon = (Icon: React.ElementType) => <Icon fontSize="inherit" />;
 
@@ -81,6 +83,11 @@ const getProfileNav = (
             icon: navIcon(CohortIcon),
             label: "Cohort Discovery",
             subItems: [
+                {
+                    label: "My access request",
+                    href: `/${RouteName.ACCOUNT}/${RouteName.PROFILE}/${RouteName.COHORT_DISCOVERY_REQUEST}`,
+                },
+
                 ...(permissions["cohort.read"] &&
                 isCohortDiscoveryServiceEnabled
                     ? [
@@ -88,7 +95,7 @@ const getProfileNav = (
                               label: "User Admin",
                               href: `/${RouteName.ACCOUNT}/${RouteName.PROFILE}/${RouteName.COHORT_DISCOVERY_ADMIN}`,
                           },
-                          ...(isCohortDiscoveryServiceEnabled &&
+                          /*...(isCohortDiscoveryServiceEnabled &&
                           cohortDiscoveryApproved
                               ? [
                                     {
@@ -96,17 +103,13 @@ const getProfileNav = (
                                         href: `/${RouteName.ACCOUNT}/${RouteName.PROFILE}/${RouteName.COHORT_DISCOVERY_ADMIN_COLLECTIONS}`,
                                     },
                                     {
-                                        label: "Cohort Builder",
+                                        label: "Discover Cohorts",
                                         href: `/${RouteName.ACCOUNT}/${RouteName.PROFILE}/cohort-discovery-builder`,
                                     },
                                 ]
-                              : []),
+                              : []),*/
                       ]
                     : []),
-                {
-                    label: "My access request",
-                    href: `/${RouteName.ACCOUNT}/${RouteName.PROFILE}/${RouteName.COHORT_DISCOVERY_REQUEST}`,
-                },
                 {
                     label: "About this service",
                     href: `/${RouteName.ACCOUNT}/${RouteName.PROFILE}/${RouteName.COHORT_DISCOVERY_ABOUT}`,

@@ -5,6 +5,7 @@ export enum RouteName {
     APPLICATIONS = "applications",
     API_MANAGEMENT = "api-management",
     COHORT_DISCOVERY = "cohort-discovery",
+    COHORT_DISCOVERY_SERVICE = "cohort-discovery-service",
     COHORT_DISCOVERY_ABOUT = "cohort-discovery-about",
     COHORT_DISCOVERY_ADMIN = "cohort-discovery-admin",
     COHORT_DISCOVERY_ADMIN_COLLECTIONS = "cohort-discovery-admin-collections",

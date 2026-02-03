@@ -35,7 +35,9 @@ const CohortDiscoveryRQuestButton = ({
     const { showDialog } = useDialog();
     const { push } = useRouter();
     const { isLoggedIn, user, isLoading: isLoadingAuth } = useAuth();
-    const { requestStatus, redirectUrl } = useCohortStatus(user?.id, true);
+    const { requestStatus, redirectUrl } = useCohortStatus(user?.id, {
+        redirect: true,
+    });
 
     const [isClicked, setIsClicked] = useState(false);
     const [isLoading, setIsLoading] = useState(false);

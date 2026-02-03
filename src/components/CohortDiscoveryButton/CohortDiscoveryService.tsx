@@ -8,24 +8,24 @@ import { useCohortStatus } from "@/hooks/useCohortStatus";
 import useDialog from "@/hooks/useDialog";
 import { CohortDiscoveryButtonProps } from "./CohortDiscoveryButton";
 
-export const DATA_TEST_ID = "cohort-discovery-button";
+export const DATA_TEST_ID = "new-cohort-discovery-button";
 
 const CohortDiscoveryServiceButton = ({
     ctaLink,
     color = undefined,
     disabledOuter = false,
     clickedAction,
+    onRedirect,
     ...restProps
 }: CohortDiscoveryButtonProps) => {
     const { showDialog } = useDialog();
     const { push } = useRouter();
     const [isLoading, setIsLoading] = useState(false);
     const { isLoggedIn, user, isLoading: isLoadingAuth } = useAuth();
-    const { requestStatus, redirectUrl } = useCohortStatus(
-        user?.id,
-        true,
-        false
-    );
+    const { requestStatus, redirectUrl } = useCohortStatus(user?.id, {
+        redirect: true,
+        useRQuest: false,
+    });
 
     const isDisabled =
         isLoggedIn && requestStatus
@@ -36,7 +36,12 @@ const CohortDiscoveryServiceButton = ({
         if (disabledOuter || isDisabled || isLoadingAuth) return;
         setIsLoading(true);
         if (redirectUrl) {
-            push(redirectUrl);
+            if (redirectUrl.startsWith("/")) {
+                push(redirectUrl);
+            } else {
+                window.open(redirectUrl, "_blank", "noopener,noreferrer");
+            }
+            onRedirect?.();
             return;
         }
 
@@ -61,6 +66,7 @@ const CohortDiscoveryServiceButton = ({
         clickedAction,
         push,
         showDialog,
+        onRedirect,
     ]);
 
     return (
@@ -75,7 +81,7 @@ const CohortDiscoveryServiceButton = ({
                     {isLoadingAuth || isLoading ? (
                         <CircularProgress size={20} color="inherit" />
                     ) : (
-                        "Cohort Discovery Service"
+                        "New (Beta) Service"
                     )}
                 </Button>
             </span>
