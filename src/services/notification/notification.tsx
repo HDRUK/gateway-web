@@ -28,6 +28,10 @@ const notification = (
         },
         variant,
         preventDuplicate: true,
+        SnackbarProps: {
+            'aria-live': 'assertive',
+            role: 'status'
+        }
     });
 };
 
