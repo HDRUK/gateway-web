@@ -39,16 +39,11 @@ const completeDatasetForm = () => {
     cy.get('[name="Data use limitation"] input').click();
     cy.get('[role="listbox"] [role="option"]').eq(1).click();
     cy.get('[name="Data use limitation"] [aria-label="Clear"]').click();
-    cy.wait(1000);
     cy.get('[name="Data use limitation"] input').click();
     cy.get('[role="listbox"] [role="option"]').first().click();
-    cy.wait(1000);
     cy.get('textarea[name="Access rights"]').type(faker.random.alphaNumeric(5));
     cy.get('[name="Controlled vocabulary"]').click();
     cy.get('[role="listbox"] [role="option"]').first().click();
-    cy.wait(1000);
-    cy.scrollTo(0);
-    cy.wait(1000);
 
     cy.get('[name="Alignment with standardised data models"]').click();
     cy.get('[role="listbox"] [role="option"]').first().click();
