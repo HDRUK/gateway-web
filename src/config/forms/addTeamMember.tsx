@@ -12,7 +12,7 @@ import {
 } from "@/consts/roles";
 import { inputComponents } from ".";
 
-const getRoleOptions = () => {
+const getRoleOptions = (isCohortDiscoveryServiceEnabled: boolean) => {
     return [
         {
             label: "Team Admin",
@@ -86,17 +86,21 @@ const getRoleOptions = () => {
             value: ROLE_CUSTODIAN_DAR_REVIEWER,
         },
 
-        {
-            label: "Cohort Discovery Manager",
-            labelComponent: (
-                <LabelAndDescription
-                    label="Cohort Discovery Manager"
-                    description="Can create hosts and collections on the Cohort Discovery Service."
-                />
-            ),
-            permissions: ["team-members.update"],
-            value: ROLE_CUSTODIAN_COHORT_MANAGER,
-        },
+        ...(isCohortDiscoveryServiceEnabled
+            ? [
+                  {
+                      label: "Cohort Discovery Manager",
+                      labelComponent: (
+                          <LabelAndDescription
+                              label="Cohort Discovery Manager"
+                              description="Can create hosts and collections on the Cohort Discovery Service."
+                          />
+                      ),
+                      permissions: ["team-members.update"],
+                      value: ROLE_CUSTODIAN_COHORT_MANAGER,
+                  },
+              ]
+            : []),
     ];
 };
 

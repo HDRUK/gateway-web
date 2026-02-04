@@ -106,6 +106,7 @@ const getColumns = ({
     translations,
     permissions,
     actions,
+    features,
 }: {
     translations: { [key: string]: string };
     permissions: { [key: string]: boolean };
@@ -114,6 +115,7 @@ const getColumns = ({
         onClick: (rowUser: User) => void;
         icon: IconType;
     }[];
+    features: { [key: string]: boolean };
 }) => [
     columnHelper.display({
         id: "name",
@@ -190,32 +192,36 @@ const getColumns = ({
             />
         ),
     }),
-    columnHelper.display({
-        id: "cohortDiscoveryAdmin",
-        header: () => (
-            <TooltipIcon
-                label={translations.cohortDiscoveryHeader}
-                content={
-                    <PermissionDescriptions
-                        roles={[ROLE_CUSTODIAN_COHORT_MANAGER]}
-                    />
-                }
-            />
-        ),
-        cell: props => (
-            <CheckboxesCell
-                {...props}
-                translations={translations}
-                permissions={permissions}
-                checkboxes={[
-                    {
-                        name: ROLE_CUSTODIAN_COHORT_MANAGER,
-                        disabled: false, //!permissions["roles.dar-m.update"],
-                    },
-                ]}
-            />
-        ),
-    }),
+    ...(features["isCohortDiscoveryServiceEnabled"]
+        ? [
+              columnHelper.display({
+                  id: "cohortDiscoveryAdmin",
+                  header: () => (
+                      <TooltipIcon
+                          label={translations.cohortDiscoveryHeader}
+                          content={
+                              <PermissionDescriptions
+                                  roles={[ROLE_CUSTODIAN_COHORT_MANAGER]}
+                              />
+                          }
+                      />
+                  ),
+                  cell: props => (
+                      <CheckboxesCell
+                          {...props}
+                          translations={translations}
+                          permissions={permissions}
+                          checkboxes={[
+                              {
+                                  name: ROLE_CUSTODIAN_COHORT_MANAGER,
+                                  disabled: false, //!permissions["roles.dar-m.update"],
+                              },
+                          ]}
+                      />
+                  ),
+              }),
+          ]
+        : []),
     columnHelper.display({
         id: "metaData",
         header: () => (
