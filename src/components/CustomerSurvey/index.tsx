@@ -164,11 +164,9 @@ export default function CustomerSurvey({
     };
 
     const handleClose = () => {
-        Cookies.set(
-            cookieName,
-            JSON.stringify({ closed: true }),
-            { expires: cookieLifeClosed }
-        );
+        Cookies.set(cookieName, JSON.stringify({ closed: true }), {
+            expires: cookieLifeClosed,
+        });
 
         setAnimateOut(true);
         setTimeout(() => {
@@ -236,12 +234,10 @@ export default function CustomerSurvey({
                 width: boxSize,
                 zIndex: 1400,
                 animation: `${animateOut ? slideOut : slideIn} 0.5s ease-out`,
-            }}
-        >
+            }}>
             <IconButton
                 sx={{ position: "absolute", top: 10, right: 10 }}
-                onClick={handleClose}
-            >
+                onClick={handleClose}>
                 <CloseIcon />
             </IconButton>
 
@@ -249,8 +245,8 @@ export default function CustomerSurvey({
                 variant="h6"
                 gutterBottom
                 id={id}
-                width={isMobile ? "90%" : "100%"}
-            >
+                component="h2" // h2 for accessibility but we want it to look like a h6
+                width={isMobile ? "90%" : "100%"}>
                 {t("title")}
             </Typography>
 
@@ -268,8 +264,7 @@ export default function CustomerSurvey({
                                                 selectedScore === rating
                                                     ? `2px solid ${colour}`
                                                     : "",
-                                        }}
-                                    >
+                                        }}>
                                         <Icon
                                             aria-label={`Rating ${rating}`}
                                             sx={{
@@ -304,16 +299,13 @@ export default function CustomerSurvey({
                         variant="contained"
                         sx={{ mt: 2 }}
                         type="submit"
-                        disabled={!watch("reason")?.trim()}
-                    >
+                        disabled={!watch("reason")?.trim()}>
                         {t("submit")}
                     </Button>
                 </Box>
             )}
 
-            {step === "complete" && (
-                <Typography>{t("success")}</Typography>
-            )}
+            {step === "complete" && <Typography>{t("success")}</Typography>}
         </Box>
     );
 }

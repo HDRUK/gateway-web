@@ -664,7 +664,8 @@
                                 "actions": "Actions",
                                 "team": "Team",
                                 "dar": "Data Access Requests",
-                                "metadata": "Metadata"
+                                "metadata": "Metadata",
+                                "cohortDiscovery": "Cohort Discovery"
                             }
                         }
                     }
@@ -924,8 +925,8 @@
                         "searchBarInfo": "Search within the widget like you can on the Gateway",
                         "cohortLink": "Include Cohort Discovery link",
                         "scripts": "Analysis Scripts & Software",
-                        "collections": "Collections / Networks",
-                        "selectCollections": "Select Collections / Networks",
+                        "collections": "Collections",
+                        "selectCollections": "Select Collections",
                         "cohortLinkInfo": "Add a button for the user to go to Cohort Discovery search within the Gateway",
                         "save": "Save and preview",
                         "cancel": "Cancel"
