@@ -16,7 +16,6 @@ env:
   AUDIT_LOG_ENABLED: "true"
   APP_URL: "http://localhost:8000"
   ZURE_PROXY: "false"
-  AZURE_REDIRECT_URL: "http://localhost:8000/api/v1/auth/azure/callback"
   BROADCAST_DRIVER: "log"
   CORS_ACCESS_CONTROL_ALLOW_ORIGIN: "http://localhost:3000"
   CACHE_DRIVER: "file"
@@ -37,20 +36,15 @@ env:
   GATEWAY_API_USER_ID: 2
   GATEWAY_LOGOUT_URL: "http://localhost:3000"
   GATEWAY_URL: "http://localhost:3000"
-  DTA_URL: "https://web.dementiatrials.dev.hdruk.cloud/en"
-  DTA_DOMAIN: "web.dementiatrials.dev.hdruk.cloud"
-  DTA_API_URL: "http://localhost:8000"
   SCANNING_FILESYSTEM_DISK: "local_scan"
   CLAMAV_API_URL: "https://hdr-gateway-scanning-dev-qmnkcg5qjq-ew.a.run.app"
   SDEConciergeServiceEnquiry: "true"
-  GOOGLE_REDIRECT_URL: "http://localhost:8000/api/v1/auth/google/callback"
   GWDM: "GWDM"
   GWDM_TRASER_IDENT: "gdmv1"
   GWDM_CURRENT_VERSION: "2.0"
   APP_KEY: ${{ secrets.APP_KEY }}
   JWT_KID: ${{ secrets.JWT_KID }}
   JWT_SECRET: ${{ secrets.JWT_SECRET }}
-  LINKEDIN_REDIRECT_URL: "http://localhost:8000/api/v1/auth/linkedin/callback"
   MAIL_MAILER: "smtp"
   MAIL_HOST: "127.0.0.1"
   MAIL_PORT: "1025"
@@ -61,35 +55,21 @@ env:
   MAIL_FROM_NAME: "gateway-api-2"
   MEMCACHED_HOST: "127.0.0.1"
   MJML_RENDER_URL: "https://europe-west1-hdrukshareddev.cloudfunctions.net/hdr-shared-mjml-dev"
-  OPENATHENS_ISSUER_URL: "https://connect.openathens.net"
-  OPENATHENS_REDIRECT_URL: "http://localhost:8000/api/v1/auth/openathens/callback"
   QUEUE_CONNECTION: "database"
   REDIS_CLIENT: "phpredis"
   REDIS_HOST: "localhost"
   REDIS_PASSWORD: "mypassword"
   REDIS_PORT: "6379"
-  RQUEST_INIT_URL: "https://rquest.dev.hdruk.cloud/rquest/"
   SEARCH_SERVICE_URL: ${{ secrets.SEARCH_SERVICE_URL }}
   TED_ENABLED: "true"
-  TED_SERVICE_URL: "https://hdr-gateway-ted-dev-qmnkcg5qjq-ew.a.run.app"
+  TED_SERVICE_URL: ${{ secrets.TED_SERVICE_URL }}
   TRASER_ENABLED: "true"
-  TRASER_SERVICE_URL: "https://hdr-gateway-traser-dev-qmnkcg5qjq-ew.a.run.app"
+  TRASER_SERVICE_URL: ${{ secrets.TRASER_SERVICE_URL }}
   MEDIA_URL: "https://media.dev.hdruk.cloud"
-  COHORT_DISCOVERY_ACCESS_URL: "https://web.dev.hdruk.cloud/en/about/cohort-discovery"
-  COHORT_DISCOVERY_RENEW_URL: "https://web.dev.hdruk.cloud/en/about/cohort-discovery"
-  AZURE_CLIENT_ID: ${{ secrets.AZURE_CLIENT_ID }}
-  AZURE_CLIENT_SECRET: ${{ secrets.AZURE_CLIENT_SECRET }}
-  AZURE_TENANT_ID: ${{ secrets.AZURE_TENANT_ID }}
+  COHORT_DISCOVERY_ACCESS_URL: "http://localhost:3000/en/about/cohort-discovery"
+  COHORT_DISCOVERY_RENEW_URL: "http://localhost:3000/en/about/cohort-discovery"
   AZURE_PROXY: "false"
-  LINKEDIN_CLIENT_ID: ${{ secrets.LINKEDIN_CLIENT_ID }}
-  LINKEDIN_CLIENT_SECRET: ${{ secrets.LINKEDIN_CLIENT_SECRET }}
-  GOOGLE_CLIENT_ID: ${{ secrets.GOOGLE_CLIENT_ID }}
-  GOOGLE_CLIENT_SECRET: ${{ secrets.GOOGLE_CLIENT_SECRET }}
-  OPENATHENS_CLIENT_ID: ${{ secrets.OPENATHENS_CLIENT_ID }}
-  OPENATHENS_CLIENT_SECRET: ${{ secrets.OPENATHENS_CLIENT_SECRET }}
   CYPRESS_BASE_URL: "http://localhost:3000/en"
-  DEV_EMAIL: ${{ secrets.DEV_EMAIL }}
-  DEV_PASSWORD: ${{ secrets.DEV_PASSWORD }}
   isTest: "true"
   TEST_USER_PASSWORD: "3pFOx4a6D464"
   NEXT_PUBLIC_API_V1_URL: "http://localhost:8000/api/v1"
@@ -110,7 +90,10 @@ env:
   NEXT_PUBLIC_CMS_LINK_HOSTNAME: "www.healthdatagateway.org"
   NEXT_PUBLIC_CONFLUENCE_URL: ${{ secrets.NEXT_PUBLIC_CONFLUENCE_URL }}
   NEXT_PUBLIC_API_BASE_URL: "http://localhost:8000/api"
-  CUST_ADMIN_1_EMAIL: ${{secrets.CUST_ADMIN_1_EMAIL}}
+  DEV_EMAIL: "CypressDevelopers@hdruk.ac.uk"
+  CUST_ADMIN_1_EMAIL: "CypressTeamAdmin@hdruk.ac.uk"
+  METADATA_MANAGER_EMAIL: "CypressMetaDataManager@hdruk.ac.uk"
+  DAR_MANAGER_AND_METADATA_MANAGER_EMAIL: "CypressDarMetadataManager@hdruk.ac.uk"
 
 jobs:
   e2e-tests:
@@ -255,19 +238,9 @@ jobs:
           browser: chrome
           headless: true
 
-      - name: Upload Cypress video
-        uses: actions/upload-artifact@v4
-        if: always()
-        with:
-          name: cypress-video
-          path: cypress/videos
-
-      - name: Upload Laravel logs
-        if: always()
-        uses: actions/upload-artifact@v4
-        with:
-          name: laravel-logs
-          path: |
-            gateway-api/storage/logs/*.log
-            gateway-api/laravel.log
-            gateway-api/queue.log
+      # - name: Upload Cypress video
+      #   uses: actions/upload-artifact@v4
+      #   if: always()
+      #   with:
+      #     name: cypress-video
+      #     path: cypress/videos
