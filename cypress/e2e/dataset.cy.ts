@@ -51,9 +51,11 @@ const completeDatasetForm = () => {
 
     cy.get('[name="Alignment with standardised data models"]').click();
     cy.get('[role="listbox"] [role="option"]').first().click();
-    clickNextButton();
-    clickNextButton();
-    clickNextButton();
+
+    cy.get('[name="Format"]')
+        .click()
+        .type(faker.random.alphaNumeric(5))
+        .type("{enter}");
 };
 
 beforeEach(() => {
