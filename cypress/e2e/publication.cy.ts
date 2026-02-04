@@ -16,7 +16,7 @@ const createPublication = () => {
     cy.get('input[name="url"]').type("http://www.google.com");
     cy.get('[role="combobox"][aria-label="Relationship"]').click();
     cy.contains("li", "About the dataset").click();
-    cy.get('input[name="datasets.0.id"]').click();
+    cy.get('[name="datasets.0.id"] input').click();
     cy.get('[role="listbox"] [role="option"]').first().click();
 };
 

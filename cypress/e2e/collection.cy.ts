@@ -8,7 +8,7 @@ const createCollection = () => {
     cy.get('[href="/account/profile/collections"]').click();
     cy.contains("button", "Add new Collection").click();
     cy.get('input[name="name"]').type(NAME);
-    cy.get('input[name="collaborators"]').type(faker.random.alphaNumeric(5));
+    cy.get('[name="collaborators"] input').type(faker.random.alphaNumeric(5));
 };
 
 beforeEach(() => {
