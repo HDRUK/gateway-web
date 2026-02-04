@@ -91,7 +91,7 @@ const getRoleOptions = () => {
             labelComponent: (
                 <LabelAndDescription
                     label="Cohort Discovery Manager"
-                    description="Has the ability to create hosts and collections on the Cohort Discovery Service."
+                    description="Can create hosts and collections on the Cohort Discovery Service."
                 />
             ),
             permissions: ["team-members.update"],
