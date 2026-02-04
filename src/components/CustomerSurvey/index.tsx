@@ -42,7 +42,7 @@ interface Ratings {
 
 const cookieName = "surveySession";
 const cookieLife = 90; // days
-const cookieLifeShort = 1; // days
+const cookieLifeClosed = 5; // days
 
 const ratings: Ratings[] = [
     { icon: MoodBadIcon, rating: 1, colour: colors.red700 },
@@ -164,9 +164,8 @@ export default function CustomerSurvey({
     };
 
     const handleClose = () => {
-        // Create a short lifetime cookie to avoid survey reappearing
-        Cookies.set(cookieName, JSON.stringify({ id }), {
-            expires: cookieLifeShort,
+        Cookies.set(cookieName, JSON.stringify({ closed: true }), {
+            expires: cookieLifeClosed,
         });
 
         setAnimateOut(true);
@@ -175,11 +174,25 @@ export default function CustomerSurvey({
             setSubmitted(false);
         }, 500);
     };
+
     const checkToShowSurvey = useCallback(() => {
-        if (!Cookies.get(cookieName)) {
+        const cookie = Cookies.get(cookieName);
+
+        if (!cookie) {
             setAnimateOut(false);
             setHideComponent(false);
+            return;
         }
+
+        try {
+            const parsed = JSON.parse(cookie);
+            if (parsed?.closed) return;
+        } catch {
+            // ignore invalid cookie
+        }
+
+        setAnimateOut(false);
+        setHideComponent(false);
     }, []);
 
     useEffect(() => {
@@ -198,7 +211,6 @@ export default function CustomerSurvey({
 
     const isValidMonth = () => {
         const currentMonth = formatDate(getToday(), "MM");
-
         if (!currentMonth) {
             return false;
         }
@@ -207,7 +219,6 @@ export default function CustomerSurvey({
     };
 
     if (hideComponent || submitted) return null;
-
     if (!isValidMonth()) return null;
 
     return (
@@ -234,6 +245,7 @@ export default function CustomerSurvey({
                 variant="h6"
                 gutterBottom
                 id={id}
+                component="h2" // h2 for accessibility but we want it to look like a h6
                 width={isMobile ? "90%" : "100%"}>
                 {t("title")}
             </Typography>
