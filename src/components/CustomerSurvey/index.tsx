@@ -249,6 +249,7 @@ export default function CustomerSurvey({
                 variant="h6"
                 gutterBottom
                 id={id}
+                aria-level={2}
                 width={isMobile ? "90%" : "100%"}
             >
                 {t("title")}
