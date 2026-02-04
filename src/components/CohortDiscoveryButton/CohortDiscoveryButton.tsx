@@ -1,5 +1,5 @@
 import { useCallback, useMemo } from "react";
-import { Box, Button, Chip, Stack, Typography } from "@mui/material";
+import { Button, Chip, Stack, Typography } from "@mui/material";
 import { useRouter } from "next/navigation";
 import { CtaLink } from "@/interfaces/Cms";
 import ProvidersDialog from "@/modules/ProvidersDialog";
@@ -9,7 +9,6 @@ import useDialog from "@/hooks/useDialog";
 import useModal from "@/hooks/useModal";
 import { statusMapping } from "@/consts/cohortDiscovery";
 import { RouteName } from "@/consts/routeName";
-import { differenceInDays } from "@/utils/date";
 import { capitalise } from "@/utils/general";
 import { useFeatures } from "@/providers/FeatureProvider";
 import CohortDiscoveryRQuestButton from "./CohortDiscoveryRQuest";
@@ -124,7 +123,6 @@ const CohortDiscoveryButton = (props: CohortDiscoveryButtonProps) => {
             </Button>
         );
     }
-
     return content;
 };
 
