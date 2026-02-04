@@ -26,16 +26,11 @@ export const useCohortStatus = (
             setIsLoading(true);
 
             try {
-<<<<<<< HEAD
                 const result = await getCohortStatusAndRedirect(
                     userId,
                     redirect,
                     useRQuest
                 );
-=======
-                const result = await getCohortStatusAndRedirect(userId);
-                console.log("res", result);
->>>>>>> dev
                 setData(result);
             } catch (err) {
                 console.error("Error fetching cohort status:", err);
