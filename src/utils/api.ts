@@ -327,7 +327,7 @@ export async function getUserCohortRequest(
     };
     return get<CohortRequestUser>(
         `${apis.cohortRequestsV1UrlIP}/user/${userId}`,
-        { cache },
+        {}, // cache },
         {
             Cookie: cookieHeader,
         }
