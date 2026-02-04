@@ -36,7 +36,14 @@ const completeDatasetForm = () => {
     cy.get('[role="listbox"] [role="option"]').first().click();
     clickNextButton();
 
-    cy.get('[name="Data use limitation"] [data-testid="CancelIcon"]').click();
+    cy.get("body").then($body => {
+        const selector =
+            '[name="Data use limitation"] [data-testid="CancelIcon"]';
+
+        if ($body.find(selector).length) {
+            cy.get(selector).click();
+        }
+    });
     cy.get('[name="Data use limitation"] input').click();
     cy.get('[role="listbox"] [role="option"]').first().click();
     cy.get('[name="Controlled vocabulary"]').click();
