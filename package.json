@@ -22,7 +22,9 @@
     "semi": "npx semantic-release",
     "schemaTester": "tsx ./datasetsSchemaTester.ts",
     "pageTester": "tsx ./datasetsPageTester.ts",
-    "build:widget": "tsx ./widgetBuilder.ts"
+    "build:widget": "tsx ./widgetBuilder.ts",
+    "cypress:open": "cypress open",
+    "cypress:run": "cypress run"
   },
   "dependencies": {
     "@dnd-kit/core": "^6.1.0",
@@ -68,8 +70,11 @@
     "@visx/shape": "3.12.0",
     "@xyflow/react": "^12.6.1",
     "cookie": "^0.5.0",
+    "cypress": "^14.5.4",
+    "cypress-axe": "^1.7.0",
     "css-mediaquery": "^0.1.2",
     "dayjs": "^1.11.10",
+    "dotenv": "^17.2.3",
     "esbuild": "^0.25.11",
     "escape-html": "^1.0.3",
     "get-node-dimensions": "^1.2.1",
