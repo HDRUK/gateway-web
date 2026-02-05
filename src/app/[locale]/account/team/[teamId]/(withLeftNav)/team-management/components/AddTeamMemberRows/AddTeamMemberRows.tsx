@@ -15,6 +15,7 @@ import {
 import { AddIcon, RemoveIcon, SearchRoundedIcon } from "@/consts/icons";
 import { getPermissions } from "@/utils/permissions";
 import { getTeamUser } from "@/utils/user";
+import { useFeatures } from "@/providers/FeatureProvider";
 import { getAvailableUsers } from "../AddTeamMemberDialog/AddTeamMemberDialog.utils";
 
 interface AddTeamMemberRowsProps<TFieldValues extends FieldValues> {
@@ -39,6 +40,8 @@ const AddTeamMemberRows = <TFieldValues extends FieldValues>({
     append,
     onInputChangeUser,
 }: AddTeamMemberRowsProps<TFieldValues>) => {
+    const { isCohortDiscoveryServiceEnabled } = useFeatures();
+
     const teamUser = useMemo(() => {
         return getTeamUser(team.users, user.id);
     }, [team, user]);
@@ -64,10 +67,10 @@ const AddTeamMemberRows = <TFieldValues extends FieldValues>({
     }, [team, users]);
 
     const roleOptionsFiltered = useMemo(() => {
-        return getRoleOptions().filter(role =>
+        return getRoleOptions(isCohortDiscoveryServiceEnabled).filter(role =>
             role.permissions?.every(permission => userPermissions[permission])
         );
-    }, [userPermissions]);
+    }, [userPermissions, isCohortDiscoveryServiceEnabled]);
 
     const [userField, memberField] = addTeamMemberFormFields;
     return (

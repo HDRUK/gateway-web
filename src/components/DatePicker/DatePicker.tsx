@@ -74,6 +74,8 @@ const DatePicker = <
                             }}
                             slotProps={{
                                 textField: {
+                                    "data-testid": `${name}-date`,
+                                    id: name,
                                     onBlur,
                                     error: !!error,
                                     onFocus: () => onFocus && onFocus(),
