@@ -20,7 +20,7 @@ export default defineConfig({
             METADATA_EDITOR_EMAIL: process.env.METADATA_EDITOR_EMAIL,
             DAR_MANAGER_AND_METADATA_MANAGER_EMAIL:
                 process.env.DAR_MANAGER_AND_METADATA_MANAGER_EMAIL,
-            API_URL: process.env.NEXT_PUBLIC_API_V1_URL,
+            API_URL: process.env.APP_URL,
             TEST_USER_PASSWORD: process.env.TEST_USER_PASSWORD,
         },
         async setupNodeEvents(on, config) {

@@ -5,7 +5,7 @@ const NAME = "NEW_DATASET";
 const clickNextButton = () => cy.contains("button", "Next").click();
 
 const navigateToDatasetCreation = () => {
-    cy.visit("http://localhost:3000/account/team/21/team-management");
+    cy.visit("/account/team/21/team-management");
     cy.contains("a", "Datasets").click();
     cy.contains("button", "Add new dataset").click();
     cy.contains("button", "Manually input metadata").click();
@@ -25,17 +25,14 @@ const completeDatasetForm = () => {
     clickNextButton();
     cy.get('[role="combobox"][aria-label="Publishing frequency"]').click();
     cy.get('[role="listbox"] [role="option"]').first().click();
-
     cy.get('[data-testid="Start\\ date-date"]').within(() => {
         cy.get('span[role="spinbutton"][aria-label="Day"]')
             .click()
             .type("12032026");
     });
-
     cy.get('[role="combobox"][aria-label="Time lag"]').click();
     cy.get('[role="listbox"] [role="option"]').first().click();
     clickNextButton();
-
     cy.get('[name="Data use limitation"] input').click();
     cy.get('[role="listbox"] [role="option"]').eq(1).click();
     cy.get('[name="Data use limitation"] [aria-label="Clear"]').click();
@@ -47,7 +44,6 @@ const completeDatasetForm = () => {
 
     cy.get('[name="Alignment with standardised data models"]').click();
     cy.get('[role="listbox"] [role="option"]').first().click();
-
     cy.get('[name="Format"]')
         .click()
         .type(faker.random.alphaNumeric(5))

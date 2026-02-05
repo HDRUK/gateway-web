@@ -1,7 +1,7 @@
 import "cypress-axe";
 import { getUserForLogin } from "./utils/getUserForLogin";
 
-const API_URL = Cypress.env("API_URL") + "/auth";
+const API_URL = Cypress.env("API_URL") + "/api/v1/auth";
 
 Cypress.Commands.add("checkA11yPage", () => {
     cy.injectAxe(); // injects axe-core into the page

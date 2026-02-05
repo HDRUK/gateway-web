@@ -47,9 +47,10 @@ describe("Analysis Scripts & Software - draft", () => {
     });
 
     it("should create a new active tool", () => {
-        cy.intercept("POST", "http://localhost:8000/api/v2/users/34/tools").as(
-            "createTool"
-        );
+        cy.intercept(
+            "POST",
+            `${Cypress.env("API_URL")}/api/v2/users/34/tools`
+        ).as("createTool");
 
         createTool();
         cy.contains("button", "Save as draft").click();

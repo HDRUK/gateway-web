@@ -48,7 +48,7 @@ describe("Publication - draft", () => {
     it("should create a new draft publication", () => {
         cy.intercept(
             "POST",
-            "http://localhost:8000/api/v2/users/34/publications"
+            `${Cypress.env("API_URL")}/api/v2/users/34/publications`
         ).as("createPublication");
 
         createPublication();
