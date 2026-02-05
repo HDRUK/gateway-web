@@ -10,7 +10,11 @@ interface LeftNavItem {
     icon: ReactNode;
     label: string;
     href?: string;
-    subItems?: { label: string; href: string }[];
+    subItems?: {
+        label: string;
+        href: string;
+        onClick?: (href: string) => Promise<string>;
+    }[];
 }
 
 export type { IconType, LeftNavItem };
