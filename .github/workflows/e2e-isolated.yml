@@ -32,7 +32,7 @@ env:
   FILESYSTEM_DISK: "local"
   FORM_HYDRATION_SCHEMA_URL: "https://raw.githubusercontent.com/HDRUK/schemata-2/master/docs/%s/%s.form.json"
   FORM_HYDRATION_SCHEMA_MODEL: "HDRUK"
-  FORM_HYDRATION_SCHEMA_LATEST_VERSION: "3.0.0"
+  FORM_HYDRATION_SCHEMA_LATEST_VERSION: "4.0.0"
   GATEWAY_API_USER_ID: 2
   GATEWAY_LOGOUT_URL: "http://localhost:3000"
   GATEWAY_URL: "http://localhost:3000"
@@ -97,7 +97,8 @@ env:
 
 jobs:
   e2e-tests:
-    if: github.event_name != 'pull_request' || github.event.pull_request.state == 'open' && github.event.pull_request.draft == false
+    if: github.event_name != 'pull_request' || github.event.pull_request.state == 'open'
+    # && github.event.pull_request.draft == false
     runs-on: ubuntu-latest
     environment: cypress_dev
 
