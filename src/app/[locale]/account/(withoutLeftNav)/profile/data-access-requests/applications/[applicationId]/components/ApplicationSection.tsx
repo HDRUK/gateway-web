@@ -70,6 +70,7 @@ import notFound from "@/app/not-found";
 import DarFieldArray from "./DarFieldArray";
 import DarFormBanner from "./DarFormBanner";
 import DarMessages from "./DarMessages";
+import { DarFormHeader } from "./DarFormHeader";
 
 const TRANSLATION_PATH = "pages.account.team.dar.application.create";
 const PROJECT_TITLE_FIELD = "project_title";
@@ -562,6 +563,7 @@ const ApplicationSection = ({
                     flexDirection: "row",
                     p: 0,
                 }}>
+
                 <Box
                     sx={{
                         flex: 1,
@@ -583,6 +585,8 @@ const ApplicationSection = ({
                         display: "flex",
                         flexDirection: "column",
                     }}>
+                    <DarFormHeader projectTitle={projectTitle} applicationId={applicationId} />
+
                     {parentSections.find(section => section.id === sectionId)
                         ?.name !== messageSection.name && (
                         <>
