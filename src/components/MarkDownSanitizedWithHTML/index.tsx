@@ -4,7 +4,6 @@ import React, { useEffect, useMemo, useState } from "react";
 import { Typography } from "@mui/material";
 import { SxProps } from "@mui/material/styles";
 import { generateHTML, JSONContent } from "@tiptap/react";
-import DOMPurify from "isomorphic-dompurify";
 import Markdown from "markdown-to-jsx";
 import { decodeHtmlEntity } from "@/utils/general";
 import { EXTENSIONS } from "../Wysiwyg/consts";
@@ -45,7 +44,7 @@ export const MarkDownSanitizedWithHtml = ({
             // If parsing fails, fallback to raw content
         }
 
-        const sanitized = DOMPurify.sanitize(value);
+        const sanitized = value;
         const decoded = decodeHtmlEntity(sanitized);
 
         return decoded;

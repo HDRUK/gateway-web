@@ -3,7 +3,6 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import { useForm } from "react-hook-form";
 import { Divider, Typography } from "@mui/material";
-import DOMPurify from "isomorphic-dompurify";
 import { useTranslations } from "next-intl";
 import { DarReviewsResponse } from "@/interfaces/DataAccessReview";
 import Box from "@/components/Box";
@@ -292,9 +291,7 @@ const DarMessages = ({
                                 <Typography
                                     sx={{ pt: 1 }}
                                     dangerouslySetInnerHTML={{
-                                        __html: DOMPurify.sanitize(
-                                            review.comment
-                                        ),
+                                        __html: review.comment,
                                     }}
                                 />
                             </Box>
