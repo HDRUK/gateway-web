@@ -1,6 +1,8 @@
 "use client";
 
-import { Content } from "./HTMLContent.styles";
+import DOMPurify from "dompurify";
+import theme from "@/config/theme";
+import Box from "../Box";
 
 export interface HTMLContentProps {
     content: string;
@@ -8,9 +10,29 @@ export interface HTMLContentProps {
 
 const HTMLContent = ({ content }: HTMLContentProps) => {
     return (
-        <Content
+        <Box
+            sx={{
+                p: 0,
+                h5: {
+                    fontSize: 18,
+                },
+                a: {
+                    color: theme.palette.secondary.main,
+                    ":hover": {
+                        textDecoration: "none",
+                    },
+                },
+            }}
             dangerouslySetInnerHTML={{
-                __html: content,
+                __html: DOMPurify.sanitize(content, {
+                    ADD_TAGS: ["iframe"],
+                    ADD_ATTR: [
+                        "allow",
+                        "allowfullscreen",
+                        "frameborder",
+                        "scrolling",
+                    ],
+                }),
             }}
         />
     );
