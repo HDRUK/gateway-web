@@ -1,3 +1,5 @@
+"use client";
+
 import { useEffect, useMemo, useRef, useState } from "react";
 import { useForm } from "react-hook-form";
 import { Divider, Typography } from "@mui/material";
