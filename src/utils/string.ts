@@ -9,4 +9,10 @@ const getLastSplitPart = (input: string, delimiter: string): string => {
     return parts[parts.length - 1];
 };
 
-export { toTitleCase, getLastSplitPart };
+const getShortenedText = (text: string, characterLimit: number) => {
+    return text.length > characterLimit
+        ? `${text.slice(0, characterLimit)}...`
+        : text;
+};
+
+export { toTitleCase, getLastSplitPart, getShortenedText };

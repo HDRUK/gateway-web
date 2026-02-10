@@ -19,4 +19,12 @@ module.exports = {
         "^@/(.*)$",
         "^[./]",
     ],
+    overrides: [
+        {
+            files: ["*.yml", "*.yaml", "*.json"],
+            options: {
+                tabWidth: 2,
+            },
+        },
+    ],
 };

@@ -22,7 +22,8 @@ const getToday = (): string => {
 };
 
 const getDayjs = (date: string | Date) => {
-    return date ? getTZDate(date) : null;
+    const formattedDate = getTZDate(date);
+    return formattedDate.isValid() ? formattedDate : null;
 };
 
 const formatDate = (date: string | Date, formatStr = "DD MMM YYYY") => {
