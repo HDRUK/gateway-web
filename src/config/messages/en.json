@@ -231,6 +231,9 @@
                 "statementOutro": "I understand that my access to the tool may be terminated if I do not comply with the above.",
                 "checkboxLabel": "I have read and agree to the user declaration"
             },
+            "cohortDiscovery": {
+                "viewDatasets": "View all Datasets available in Cohort Discovery"
+            },
             "backToHomepage": "Back to homepage",
             "accessibilityStatement": {
                 "title": "Accessibility Statement",
@@ -1910,6 +1913,18 @@
                 "actionPermanent": "I understand this action is permanent",
                 "yes": "Yes",
                 "no": "No"
+            },
+            "CohortDiscoveryDatasets": {
+                "title": "Datasets available on Cohort Discovery",
+                "dataset": "Dataset",
+                "custodian": "Custodian",
+                "closeButton": "Close",
+                "viewMoreButton": "View full information on Gateway Search",
+                "populationSize": {
+                    "notReported": "Not reported",
+                    "label": "Population Size",
+                    "tooltip": "Population size associated with the population type in the dataset"
+                }
             }
         }
     },

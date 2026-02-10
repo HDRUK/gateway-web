@@ -8,6 +8,7 @@ import Typography from "@/components/Typography";
 import IndicateNhseSdeAccessButton from "../IndicateNhseSdeAccessButton";
 import RequestNhseSdeAccessButton from "../RequestNhseSdeAccessButton";
 import { CohortDiscoveryTabContent } from "./CohortDiscoveryInfo.styles";
+import ViewCohortDatasetsButton from "./ViewCohortDatasetsButton";
 
 const CohortDiscoveryInfo = ({
     cohortDiscovery,
@@ -89,6 +90,7 @@ const CohortDiscoveryInfo = ({
                                                     .firstPageText
                                             }
                                         />
+                                        <ViewCohortDatasetsButton />
                                     </Box>
                                     <Box sx={{ flex: 1 }}>
                                         {cohortDiscovery?.template
