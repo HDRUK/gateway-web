@@ -10,6 +10,7 @@ import BoxContainer from "@/components/BoxContainer";
 import Button from "@/components/Button";
 import InputWrapper from "@/components/InputWrapper";
 import Loading from "@/components/Loading";
+import SafeHtml from "@/components/SafeHtml/SafeHtml";
 import useAuth from "@/hooks/useAuth";
 import useGet from "@/hooks/useGet";
 import useModal from "@/hooks/useModal";
@@ -288,11 +289,10 @@ const DarMessages = ({
                                         )}
                                     </Typography>
                                 </Box>
-                                <Typography
+                                <SafeHtml
+                                    html={review.comment}
                                     sx={{ pt: 1 }}
-                                    dangerouslySetInnerHTML={{
-                                        __html: review.comment,
-                                    }}
+                                    component={"div"}
                                 />
                             </Box>
                         ))
