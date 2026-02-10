@@ -19,7 +19,7 @@ export interface FeatureFlagsResponse {
 const setCache = async (): Promise<Record<string, boolean>> => {
     try {
         const cookieStore = await cookies();
-        const jwtToken = cookieStore.get(config.JWT_COOKIE)?.value;
+        const jwtToken = cookieStore?.get(config.JWT_COOKIE)?.value;
 
         //get the features for the current jwt user using /me
         const res = await fetch(`${apis.features}/me`, {
