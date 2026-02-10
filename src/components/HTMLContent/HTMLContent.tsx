@@ -1,6 +1,6 @@
 "use client";
 
-import DOMPurify from "isomorphic-dompurify";
+import DOMPurify from "dompurify";
 import { Content } from "./HTMLContent.styles";
 
 export interface HTMLContentProps {
