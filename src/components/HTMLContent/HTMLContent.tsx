@@ -1,5 +1,6 @@
 "use client";
 
+import DOMPurify from "dompurify";
 import { Content } from "./HTMLContent.styles";
 
 export interface HTMLContentProps {
@@ -10,7 +11,15 @@ const HTMLContent = ({ content }: HTMLContentProps) => {
     return (
         <Content
             dangerouslySetInnerHTML={{
-                __html: content,
+                __html: DOMPurify.sanitize(content, {
+                    ADD_TAGS: ["iframe"],
+                    ADD_ATTR: [
+                        "allow",
+                        "allowfullscreen",
+                        "frameborder",
+                        "scrolling",
+                    ],
+                }),
             }}
         />
     );

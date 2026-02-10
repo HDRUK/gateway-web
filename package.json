@@ -41,8 +41,8 @@
     "@mui/lab": "7.0.0",
     "@mui/material": "^7.3.5",
     "@mui/material-nextjs": "7.3.5",
-    "@mui/x-data-grid": "8.26.0",
     "@mui/utils": "^7.3.5",
+    "@mui/x-data-grid": "8.26.0",
     "@mui/x-date-pickers": "^8.18.0",
     "@next/third-parties": "16.0.3",
     "@tanstack/react-table": "^8.9.3",
@@ -72,6 +72,7 @@
     "cookie": "^0.5.0",
     "css-mediaquery": "^0.1.2",
     "dayjs": "^1.11.10",
+    "dompurify": "^3.3.1",
     "esbuild": "^0.25.11",
     "escape-html": "^1.0.3",
     "get-node-dimensions": "^1.2.1",
@@ -155,6 +156,6 @@
     "typescript": "5.9.3"
   },
   "overrides": {
-    "parse5": "6.0.1"
+    "parse5": "7.1.2"
   }
 }
