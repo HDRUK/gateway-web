@@ -1,22 +1,27 @@
-import { Box } from "@mui/material";
+import { Box, Stack } from "@mui/material";
+import { getTranslations } from "next-intl/server";
 import { CohortDiscoveryTemplate } from "@/interfaces/Cms";
+import Button from "@/components/Button";
 import Container from "@/components/Container";
-import CtaOverride from "@/components/CtaOverride";
 import HTMLContent from "@/components/HTMLContent";
 import Tabs from "@/components/Tabs";
 import Typography from "@/components/Typography";
-import IndicateNhseSdeAccessButton from "../IndicateNhseSdeAccessButton";
-import RequestNhseSdeAccessButton from "../RequestNhseSdeAccessButton";
+import { RouteName } from "@/consts/routeName";
+import CohortAccessButtons from "./CohortAccessButtons";
 import { CohortDiscoveryTabContent } from "./CohortDiscoveryInfo.styles";
 import ViewCohortDatasetsButton from "./ViewCohortDatasetsButton";
 
-const CohortDiscoveryInfo = ({
+const TRANSLATION_PATH = "components.CohortDiscoveryInfo";
+
+const CohortDiscoveryInfo = async ({
     cohortDiscovery,
     showAccessButton = false,
 }: {
-    cohortDiscovery?: CohortDiscoveryTemplate;
+    cohortDiscovery?: CohortDiscoveryTemplate | null;
     showAccessButton?: boolean;
 }) => {
+    const t = await getTranslations(TRANSLATION_PATH);
+
     return (
         <Container>
             <Box
@@ -32,24 +37,15 @@ const CohortDiscoveryInfo = ({
                     justifyContent: "space-between",
                 }}>
                 <Box sx={{ flexDirection: "column" }}>
-                    <Typography variant="h2">Cohort Discovery</Typography>
-                    <Typography variant="body1">
-                        Learn about Cohort Discovery and gain access to the
-                        service
-                    </Typography>
+                    <Typography variant="h2">{t("title")}</Typography>
+                    <Typography variant="body1">{t("learnAbout")}</Typography>
                 </Box>
                 {showAccessButton && (
-                    <Box>
-                        {cohortDiscovery?.template?.newCohortDiscoveryFieldGroup
-                            .ctaLink && (
-                            <CtaOverride
-                                ctaLink={
-                                    cohortDiscovery?.template
-                                        ?.newCohortDiscoveryFieldGroup.ctaLink
-                                }
-                            />
-                        )}
-                    </Box>
+                    <Button
+                        href={`/${RouteName.ACCOUNT}/${RouteName.PROFILE}/${RouteName.COHORT_DISCOVERY_REQUEST}`}
+                        color="greyCustom">
+                        {t("accessButton")}
+                    </Button>
                 )}
             </Box>
             <Tabs
@@ -240,11 +236,10 @@ const CohortDiscoveryInfo = ({
                                         display: "flex",
                                         justifyContent: "center",
                                         mb: 2,
-                                        gap: 2,
+                                        gap: 3,
                                         py: 2,
                                     }}>
-                                    <RequestNhseSdeAccessButton />
-                                    <IndicateNhseSdeAccessButton />
+                                    <CohortAccessButtons />
                                 </Box>
                                 <Box
                                     sx={{
@@ -265,6 +260,21 @@ const CohortDiscoveryInfo = ({
                                             flexDirection: "column",
                                             justifyContent: "flex-start",
                                         }}>
+                                        <Stack sx={{ mb: 3 }}>
+                                            <Typography variant="h1">
+                                                {t("nhsNetwork")}
+                                            </Typography>
+                                            <Typography sx={{ mb: 1 }}>
+                                                {t("nhsNetworkInfo")}
+                                            </Typography>
+
+                                            <ViewCohortDatasetsButton
+                                                nhsSdeOnly={true}
+                                            />
+
+                                            <ViewCohortDatasetsButton />
+                                        </Stack>
+
                                         <HTMLContent
                                             content={
                                                 cohortDiscovery?.template

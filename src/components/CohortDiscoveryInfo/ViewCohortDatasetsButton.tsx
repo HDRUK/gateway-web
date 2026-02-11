@@ -10,8 +10,13 @@ import usePost from "@/hooks/usePost";
 import apis from "@/config/apis";
 
 const TRANSLATION_PATH = "pages.about.cohortDiscovery";
+const NHS_SDE_FILTER = "The NHS Research Secure Data Environment (SDE) Network";
 
-const ViewCohortDatasetsButton = () => {
+const ViewCohortDatasetsButton = ({
+    nhsSdeOnly = false,
+}: {
+    nhsSdeOnly?: boolean;
+}) => {
     const t = useTranslations(TRANSLATION_PATH);
     const { showDialog } = useDialog();
 
@@ -32,22 +37,27 @@ const ViewCohortDatasetsButton = () => {
                 query: "",
                 filters: {
                     dataset: {
-                        populationSize: { includeUnreported: true },
+                        dataProviderColl: nhsSdeOnly ? [NHS_SDE_FILTER] : [],
+                        populationSize: {
+                            includeUnreported: false,
+                        },
                         isCohortDiscovery: [true],
                         sampleAvailability: [],
+                        collectionName: [],
                     },
                 },
             });
             setData(result);
         })();
-    }, [data, search]);
+    }, [data, nhsSdeOnly, search]);
 
     return (
         <Button
             variant="outlined"
             color="secondary"
-            onClick={() => showDialog(CohortDiscoveryDatasetsDialog, { data })}>
-            {t("viewDatasets")}
+            onClick={() => showDialog(CohortDiscoveryDatasetsDialog, { data })}
+            sx={{ alignSelf: "flex-start", mt: 1 }}>
+            {nhsSdeOnly ? t("viewDatasetsNHS") : t("viewDatasets")}
         </Button>
     );
 };

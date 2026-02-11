@@ -1,28 +1,26 @@
 "use client";
 
-import { ReactElement } from "react";
 import QueryBuilderIcon from "@mui/icons-material/QueryBuilder";
 import { Grid, Link, Typography } from "@mui/material";
 import { useTranslations } from "next-intl";
 import Box from "@/components/Box";
 import Chip from "@/components/Chip";
+import CohortDiscoveryButton from "@/components/CohortDiscoveryButton";
 import Container from "@/components/Container";
 import IndicateNhseSdeAccessButton from "@/components/IndicateNhseSdeAccessButton";
+import { MarkDownSanitizedWithHtml } from "@/components/MarkDownSanitizedWithHTML";
 import Paper from "@/components/Paper";
 import RequestNhseSdeAccessButton from "@/components/RequestNhseSdeAccessButton";
 import useAuth from "@/hooks/useAuth";
 import { useCohortStatus } from "@/hooks/useCohortStatus";
 import { colors } from "@/config/theme";
 import { statusMapping } from "@/consts/cohortDiscovery";
+import { RouteName } from "@/consts/routeName";
 import { differenceInDays } from "@/utils/date";
 import { capitalise } from "@/utils/general";
 import { useFeatures } from "@/providers/FeatureProvider";
 
-export default function CohortDiscoveryCoverPage({
-    ctaOverrideComponent,
-}: {
-    ctaOverrideComponent?: ReactElement;
-}) {
+export default function CohortDiscoveryCoverPage() {
     const t = useTranslations("pages.account.profile.cohortDiscovery");
     const { isNhsSdeApplicationsEnabled } = useFeatures();
     const { user } = useAuth();
@@ -96,7 +94,15 @@ export default function CohortDiscoveryCoverPage({
                             alignItems: "center",
                             justifyContent: "center",
                         }}>
-                        {ctaOverrideComponent}
+                        <CohortDiscoveryButton
+                            ctaLink={{
+                                target: "_self",
+                                url: `/${RouteName.ACCOUNT}/${RouteName.PROFILE}/${RouteName.COHORT_DISCOVERY_REGISTER}`,
+                                title: "Access Cohort Discovery",
+                            }}
+                            color="greyCustom"
+                            showDatasetExplanatoryTooltip
+                        />
                     </Paper>
                 </Grid>
                 <Grid size={{ mobile: 12, laptop: 8 }}>
@@ -112,18 +118,14 @@ export default function CohortDiscoveryCoverPage({
                         {isNhsSdeApplicationsEnabled && (
                             <>
                                 <Typography
-                                    color={colors.red700}
+                                    color={colors.grey600}
                                     sx={{ pb: 2 }}>
                                     {t("nhseSdeText1")}
                                 </Typography>
-                                <Typography
-                                    color={colors.grey600}
-                                    sx={{ pb: 2 }}>
-                                    {t("nhseSdeText2")}
-                                </Typography>
-                                <Typography color={colors.red700}>
-                                    {t("nhseSdeText3")}
-                                </Typography>
+                                <MarkDownSanitizedWithHtml
+                                    sx={{ color: colors.red700 }}
+                                    content={t("nhseSdeText2")}
+                                />
                             </>
                         )}
                         {!isNhsSdeApplicationsEnabled && (
@@ -152,7 +154,10 @@ export default function CohortDiscoveryCoverPage({
                             gap: 2,
                             py: 2,
                         }}>
-                        <RequestNhseSdeAccessButton sx={{ width: "90%" }} />
+                        <RequestNhseSdeAccessButton
+                            sx={{ width: "90%" }}
+                            color="greyCustom"
+                        />
                         <IndicateNhseSdeAccessButton sx={{ width: "90%" }} />
                     </Paper>
                 </Grid>

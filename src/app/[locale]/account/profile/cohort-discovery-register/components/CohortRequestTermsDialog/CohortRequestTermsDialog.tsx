@@ -12,11 +12,11 @@ import { useRouter } from "next/navigation";
 import { templateRepeatFields } from "@/interfaces/Cms";
 import ActiveList from "@/components/ActiveList";
 import Box from "@/components/Box";
+import Button from "@/components/Button";
 import Dialog from "@/components/Dialog";
 import Form from "@/components/Form";
 import HTMLContent from "@/components/HTMLContent";
 import InputWrapper from "@/components/InputWrapper";
-import ModalButtons from "@/components/ModalButtons";
 import ScrollContent from "@/components/ScrollContent";
 import useDialog from "@/hooks/useDialog";
 import useModal from "@/hooks/useModal";
@@ -28,6 +28,7 @@ import {
     cohortAcceptTermsField,
 } from "@/config/forms/cohortTermsAccept";
 import { colors } from "@/config/theme";
+import { RouteName } from "@/consts/routeName";
 
 const TRANSLATION_PATH_MODAL = "modals.CohortRequestSent";
 const TRANSLATION_PATH_DIALOG = "dialogs.CohortRequestTerms";
@@ -36,7 +37,9 @@ const CohortRequestTermsDialog = () => {
     const [navClicked, setNavClicked] = useState<number | null>(null);
     const [activeItem, setActiveItem] = useState(1);
     const { push } = useRouter();
-    const { control, handleSubmit } = useForm<{ hasAccepted: boolean }>({
+    const { control, handleSubmit, watch } = useForm<{
+        hasAccepted: boolean;
+    }>({
         defaultValues: cohortAcceptTermsDefaultValues,
         resolver: yupResolver(cohortAcceptTermsValidationSchema),
     });
@@ -45,6 +48,8 @@ const CohortRequestTermsDialog = () => {
     const { dialogProps } = store as unknown as {
         dialogProps: { cmsContent: templateRepeatFields };
     };
+
+    const hasAcceptedTerms = watch("hasAccepted");
 
     const { showModal } = useModal();
 
@@ -61,7 +66,9 @@ const CohortRequestTermsDialog = () => {
             content: t(`${TRANSLATION_PATH_MODAL}.text`),
             confirmText: t(`${TRANSLATION_PATH_MODAL}.confirmButton`),
             onSuccess: () => {
-                push("/");
+                push(
+                    `/${RouteName.ACCOUNT}/${RouteName.PROFILE}/${RouteName.COHORT_DISCOVERY_REQUEST}`
+                );
             },
             showCancel: false,
         });
@@ -172,16 +179,23 @@ const CohortRequestTermsDialog = () => {
                         label={t(`${TRANSLATION_PATH_DIALOG}.acceptTerms`)}
                         {...cohortAcceptTermsField}
                     />
-                    <ModalButtons
-                        confirmText={t(
-                            `${TRANSLATION_PATH_DIALOG}.confirmButton`
-                        )}
-                        cancelText={t(
-                            `${TRANSLATION_PATH_DIALOG}.discardButton`
-                        )}
-                        confirmType="submit"
-                        onSuccess={handleSuccess}
-                    />
+                    <Box
+                        sx={{
+                            display: "flex",
+                            flexDirection: "row",
+                            gap: 2,
+                            alignItems: "flex-end",
+                        }}>
+                        <Button
+                            variant="outlined"
+                            color="secondary"
+                            onClick={() => hideDialog()}>
+                            {t(`${TRANSLATION_PATH_DIALOG}.discardButton`)}
+                        </Button>
+                        <Button type="submit" disabled={!hasAcceptedTerms}>
+                            {t(`${TRANSLATION_PATH_DIALOG}.confirmButton`)}
+                        </Button>
+                    </Box>
                 </MuiDialogActions>
             </Form>
         </Dialog>

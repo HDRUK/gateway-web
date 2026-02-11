@@ -1,5 +1,8 @@
+import { getTranslations } from "next-intl/server";
+import Box from "@/components/Box";
 import Container from "@/components/Container";
 import ProtectedAccountRoute from "@/components/ProtectedAccountRoute";
+import Typography from "@/components/Typography";
 import { getUserFromCookie } from "@/utils/api";
 import { getCohortTermsAndConditions } from "@/utils/cms";
 import metaData from "@/utils/metadata";
@@ -10,8 +13,8 @@ export const metadata = metaData({
     description: "",
 });
 
-//why is this in (logged-out) - it's a protected page?
-export default async function CohortDiscoryRequestPage() {
+export default async function CohortDiscoryRegister() {
+    const t = await getTranslations("pages.account.profile.cohortDiscovery");
     const user = await getUserFromCookie();
 
     const content = await getCohortTermsAndConditions();
@@ -22,7 +25,14 @@ export default async function CohortDiscoryRequestPage() {
 
     return (
         <ProtectedAccountRoute loggedInOnly={!!user?.id}>
-            <Container>
+            <Container sx={{ display: "flex", flexDirection: "column" }}>
+                <Box sx={{ bgcolor: "white", mb: 3, px: 4, pb: 1, pt: 3 }}>
+                    <Typography variant="h2" component={"h1"}>
+                        {t("title")}
+                    </Typography>
+                    <Typography>{t("headerText")}</Typography>
+                </Box>
+
                 <CohortDiscoveryRequestForm
                     userId={user?.id}
                     cmsContent={repeatfields}

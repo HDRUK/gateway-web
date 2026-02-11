@@ -1,7 +1,8 @@
 import { useCallback, useMemo } from "react";
-import { Button, Chip, Stack, Typography } from "@mui/material";
+import { ButtonProps, Chip, Stack, Typography } from "@mui/material";
 import { useRouter } from "next/navigation";
 import { CtaLink } from "@/interfaces/Cms";
+import Button from "@/components/Button";
 import ProvidersDialog from "@/modules/ProvidersDialog";
 import useAuth from "@/hooks/useAuth";
 import { useCohortStatus } from "@/hooks/useCohortStatus";
@@ -19,7 +20,7 @@ export const DATA_TEST_ID = "cohort-discovery-button";
 export interface CohortDiscoveryButtonProps {
     ctaLink: CtaLink;
     showDatasetExplanatoryTooltip: boolean | null;
-    color?: string | null;
+    color?: ButtonProps["color"];
     tooltipOverride?: string | null;
     disabledOuter?: boolean;
     clickedAction?: () => void;

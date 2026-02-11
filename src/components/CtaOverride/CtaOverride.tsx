@@ -10,7 +10,7 @@ const CtaOverride = ({ ctaLink }: { ctaLink: CtaLink }) => {
             <CohortDiscoveryButton
                 ctaLink={ctaLink}
                 color="greyCustom"
-                sx={{ mt: 3 }}
+                showDatasetExplanatoryTooltip
             />
         </Box>
     );
