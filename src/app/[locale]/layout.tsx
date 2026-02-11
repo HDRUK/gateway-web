@@ -12,7 +12,7 @@ import NavigationEvents from "@/components/NavigationEvents";
 import SupportPopOut from "@/components/SupportPopOut";
 import ThemeRegistry from "@/components/ThemeRegistry/ThemeRegistry";
 import ProvidersDialog from "@/modules/ProvidersDialog";
-import { getHomePageBanner, getNewCohortDiscovery } from "@/utils/cms";
+import { getHomePageBanner } from "@/utils/cms";
 import metaData from "@/utils/metadata";
 import packageJson from "@/../package.json";
 import {

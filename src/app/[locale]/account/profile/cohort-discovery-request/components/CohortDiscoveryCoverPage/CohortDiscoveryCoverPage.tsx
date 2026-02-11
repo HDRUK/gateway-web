@@ -38,7 +38,7 @@ export default function CohortDiscoveryCoverPage({
         <Container sx={{ display: "flex", flexDirection: "column" }}>
             <Box sx={{ bgcolor: "white", mb: 3, px: 4, pb: 1, pt: 3 }}>
                 <Typography variant="h2">{t("title")}</Typography>
-                <Typography>{t("headerText")} </Typography>
+                <Typography>{t("headerText")}</Typography>
             </Box>
             <Grid
                 container
