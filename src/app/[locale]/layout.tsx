@@ -12,7 +12,7 @@ import NavigationEvents from "@/components/NavigationEvents";
 import SupportPopOut from "@/components/SupportPopOut";
 import ThemeRegistry from "@/components/ThemeRegistry/ThemeRegistry";
 import ProvidersDialog from "@/modules/ProvidersDialog";
-import { getHomePageBanner } from "@/utils/cms";
+import { getHomePageBanner, getNewCohortDiscovery } from "@/utils/cms";
 import metaData from "@/utils/metadata";
 import packageJson from "@/../package.json";
 import {
@@ -76,6 +76,8 @@ export default async function RootLayout(props: {
         homePageBanner = (await getHomePageBanner()) as HomepageBannerNode[];
     }
 
+    const cohortDiscovery = await getNewCohortDiscovery();
+
     return (
         <html lang={locale}>
             {gtmId && <GoogleTagManager gtmId={gtmId} />}
@@ -96,7 +98,13 @@ export default async function RootLayout(props: {
                                                 />
                                             )}
                                         <SnackbarProvider />
+<<<<<<< HEAD
                                         <CohortRedirectProvider />
+=======
+                                        <CohortRedirectProvider
+                                            cohortDiscovery={cohortDiscovery}
+                                        />
+>>>>>>> f864d340 (fixes)
                                         <Header />
                                         {children}
                                         <Footer />
