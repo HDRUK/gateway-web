@@ -251,7 +251,7 @@ const getColumns = ({
                                   alignItems: "center",
                               }}
                               textAlign="left">
-                              Workgroups
+                              Initial Workgroups
                               <SortIcon
                                   setSort={setSort}
                                   sort={sort}
