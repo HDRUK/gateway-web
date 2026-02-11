@@ -37,7 +37,7 @@ export const requestStatusField = {
 };
 
 export const workgroupField = {
-    label: "Workgroups",
+    label: "Initial Workgroups",
     name: "workgroup_ids",
     component: inputComponents.Autocomplete,
     multiple: true,
