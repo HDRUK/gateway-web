@@ -76,8 +76,6 @@ export default async function RootLayout(props: {
         homePageBanner = (await getHomePageBanner()) as HomepageBannerNode[];
     }
 
-    const cohortDiscovery = await getNewCohortDiscovery();
-
     return (
         <html lang={locale}>
             {gtmId && <GoogleTagManager gtmId={gtmId} />}
@@ -98,13 +96,7 @@ export default async function RootLayout(props: {
                                                 />
                                             )}
                                         <SnackbarProvider />
-<<<<<<< HEAD
                                         <CohortRedirectProvider />
-=======
-                                        <CohortRedirectProvider
-                                            cohortDiscovery={cohortDiscovery}
-                                        />
->>>>>>> f864d340 (fixes)
                                         <Header />
                                         {children}
                                         <Footer />
