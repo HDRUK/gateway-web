@@ -72,7 +72,6 @@
     "cookie": "^0.5.0",
     "css-mediaquery": "^0.1.2",
     "dayjs": "^1.11.10",
-    "dompurify": "^3.3.1",
     "esbuild": "^0.25.11",
     "escape-html": "^1.0.3",
     "get-node-dimensions": "^1.2.1",
@@ -81,6 +80,7 @@
     "i18next": "^22.5.1",
     "i18next-browser-languagedetector": "^7.1.0",
     "i18next-http-backend": "^2.2.2",
+    "isomorphic-dompurify": "^3.0.0-rc.2",
     "js-cookie": "^3.0.5",
     "jwt-decode": "^3.1.2",
     "lodash": "^4.17.21",
@@ -156,6 +156,6 @@
     "typescript": "5.9.3"
   },
   "overrides": {
-    "parse5": "6.0.1"
+    "parse5": "7.1.2"
   }
 }

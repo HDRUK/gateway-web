@@ -3,6 +3,7 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import { useForm } from "react-hook-form";
 import { Divider, Typography } from "@mui/material";
+import DOMPurify from "isomorphic-dompurify";
 import { useTranslations } from "next-intl";
 import { DarReviewsResponse } from "@/interfaces/DataAccessReview";
 import Box from "@/components/Box";
@@ -10,7 +11,6 @@ import BoxContainer from "@/components/BoxContainer";
 import Button from "@/components/Button";
 import InputWrapper from "@/components/InputWrapper";
 import Loading from "@/components/Loading";
-import SafeHtml from "@/components/SafeHtml/SafeHtml";
 import useAuth from "@/hooks/useAuth";
 import useGet from "@/hooks/useGet";
 import useModal from "@/hooks/useModal";
@@ -289,10 +289,13 @@ const DarMessages = ({
                                         )}
                                     </Typography>
                                 </Box>
-                                <SafeHtml
-                                    html={review.comment}
+                                <Typography
                                     sx={{ pt: 1 }}
-                                    component={"div"}
+                                    dangerouslySetInnerHTML={{
+                                        __html: DOMPurify.sanitize(
+                                            review.comment
+                                        ),
+                                    }}
                                 />
                             </Box>
                         ))
