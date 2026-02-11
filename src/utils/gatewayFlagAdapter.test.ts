@@ -7,13 +7,14 @@ jest.mock("@/config/apis", () => ({
     },
 }));
 
+jest.mock("next/headers", () => ({
+    cookies: jest.fn(),
+}));
+
 describe("createGatewayFlagAdapter", () => {
     const mockResponse = {
-    message: "OK",
-        data: [
-            { id: 1, name: "SDEConciergeServiceEnquiry", value: "true", scope: null },
-            { id: 2, name: "Aliases", value: "false", scope: null },
-        ],
+        message: "OK",
+        data: { SDEConciergeServiceEnquiry: true, Aliases: false },
     };
 
     let adapter: ReturnType<ReturnType<typeof createAPIFlagAdapter>>;
