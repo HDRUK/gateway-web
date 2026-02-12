@@ -15,6 +15,7 @@ import usePut from "@/hooks/usePut";
 import { useUnsavedChanges } from "@/hooks/useUnsavedChanges";
 import apis from "@/config/apis";
 import { RouteName } from "@/consts/routeName";
+import { useFeatures } from "@/providers/FeatureProvider";
 import {
     defaultValues,
     requestStatusField,
@@ -31,6 +32,7 @@ interface EditCohortRequestProps {
 export default function StatusForm({ cohortRequest }: EditCohortRequestProps) {
     const { push } = useRouter();
     const { showBar, hideBar, store, updateStoreProps } = useActionBar();
+    const { isCohortDiscoveryServiceEnabled } = useFeatures();
 
     const { control, handleSubmit, formState, reset } =
         useForm<CohortRequestForm>({
@@ -69,14 +71,18 @@ export default function StatusForm({ cohortRequest }: EditCohortRequestProps) {
                     ],
                 }),
             },
-            {
-                ...workgroupField,
-                options: workgroupData?.map(wg => ({
-                    id: wg.id,
-                    value: wg.id,
-                    label: wg.name,
-                })),
-            },
+            ...(isCohortDiscoveryServiceEnabled
+                ? [
+                      {
+                          ...workgroupField,
+                          options: workgroupData?.map(wg => ({
+                              id: wg.id,
+                              value: wg.id,
+                              label: wg.name,
+                          })),
+                      },
+                  ]
+                : []),
             {
                 ...nhseSdeRequestStatusField,
                 /* only add "EXPIRED" to dropdown if that is the current status */
@@ -100,6 +106,7 @@ export default function StatusForm({ cohortRequest }: EditCohortRequestProps) {
             formState.dirtyFields.nhse_sde_request_status,
             cohortRequest,
             workgroupData,
+            isCohortDiscoveryServiceEnabled,
         ]
     );
 
