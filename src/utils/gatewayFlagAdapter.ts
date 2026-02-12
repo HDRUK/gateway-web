@@ -3,12 +3,6 @@ import { cookies } from "next/headers";
 import apis from "@/config/apis";
 import config from "@/config/config";
 
-const { isTest } = process.env;
-
-let cache: Record<string, boolean> | null = null;
-let cacheTimestamp: number | null = null;
-const CACHE_TTL_MS = 5 * 60 * 1000;
-
 export type Features = Record<string, boolean>;
 
 export interface FeatureFlagsResponse {
@@ -16,7 +10,7 @@ export interface FeatureFlagsResponse {
     data: Features;
 }
 
-const setCache = async (): Promise<Record<string, boolean>> => {
+const getFeatures = async (): Promise<Record<string, boolean>> => {
     try {
         const cookieStore = await cookies();
         const jwtToken = cookieStore?.get(config.JWT_COOKIE)?.value;
@@ -34,21 +28,14 @@ const setCache = async (): Promise<Record<string, boolean>> => {
 
         const features: FeatureFlagsResponse = await res.json();
 
-        cacheTimestamp = Date.now();
         return features.data;
     } catch (err) {
         console.error(
             "Error fetching feature flags, will retry after cache is stale",
             err
         );
-        cacheTimestamp = Date.now();
         return {};
     }
-};
-
-const isCacheStale = () => {
-    if (!cacheTimestamp) return true;
-    return Date.now() - cacheTimestamp > CACHE_TTL_MS;
 };
 
 export function createAPIFlagAdapter() {
@@ -58,10 +45,8 @@ export function createAPIFlagAdapter() {
     > {
         return {
             async decide({ key }): Promise<ValueType> {
-                if (!cache || isCacheStale()) {
-                    cache = await setCache();
-                }
-                return (cache[key] ?? false) as ValueType;
+                const features = await getFeatures();
+                return (features[key] ?? false) as ValueType;
             },
         };
     };
