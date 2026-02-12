@@ -634,6 +634,15 @@ const Search = ({ filters, cohortDiscovery, schema }: SearchProps) => {
                     queryParams.type === SearchCategory.DATA_CUSTODIANS
                         ? "tiled"
                         : "list"
+                }
+                maxDesktopColumns={
+                    queryParams.type === SearchCategory.COLLECTIONS
+                        ? 4
+                        : undefined
+                }
+                fillDanglingSingleCard={
+                    queryParams.type === SearchCategory.COLLECTIONS ||
+                    queryParams.type === SearchCategory.DATA_CUSTODIANS
                 }>
                 {data?.list.map(result => renderResultCard(result))}
             </ResultsList>
@@ -1429,7 +1438,11 @@ const Search = ({ filters, cohortDiscovery, schema }: SearchProps) => {
                                             aria-describedby="result-summary"
                                             aria-label="results list"
                                             sx={{
-                                                p: `0 ${theme.spacing(2)}`,
+                                                p:
+                                                    queryParams.type ===
+                                                    SearchCategory.COLLECTIONS
+                                                        ? 0
+                                                        : `0 ${theme.spacing(2)}`,
                                             }}>
                                             {renderResults()}
                                         </Box>

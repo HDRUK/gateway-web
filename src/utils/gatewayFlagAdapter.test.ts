@@ -7,13 +7,14 @@ jest.mock("@/config/apis", () => ({
     },
 }));
 
+jest.mock("next/headers", () => ({
+    cookies: jest.fn(),
+}));
+
 describe("createGatewayFlagAdapter", () => {
     const mockResponse = {
-    message: "OK",
-        data: [
-            { id: 1, name: "SDEConciergeServiceEnquiry", value: "true", scope: null },
-            { id: 2, name: "Aliases", value: "false", scope: null },
-        ],
+        message: "OK",
+        data: { SDEConciergeServiceEnquiry: true, Aliases: false },
     };
 
     let adapter: ReturnType<ReturnType<typeof createAPIFlagAdapter>>;
@@ -43,16 +44,17 @@ describe("createGatewayFlagAdapter", () => {
         expect(fetch).toHaveBeenCalledTimes(2);
     });
 
-    it("fetches and caches feature flags", async () => {
+    it("fetches feature flags", async () => {
         const result = await adapter.decide({
             key: "SDEConciergeServiceEnquiry",
         });
         expect(result).toBe(true);
+        expect(fetch).toHaveBeenCalledTimes(1);
 
         const result2 = await adapter.decide({ key: "Aliases" });
         expect(result2).toBe(false);
 
-        expect(fetch).toHaveBeenCalledTimes(0); // cached
+        expect(fetch).toHaveBeenCalledTimes(2);
     });
 
     it("handles API failure gracefully", async () => {
