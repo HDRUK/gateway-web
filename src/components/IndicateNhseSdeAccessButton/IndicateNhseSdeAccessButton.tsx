@@ -29,9 +29,11 @@ const hiddenStatuses = ["APPROVED", "REJECTED", "BANNED", "SUSPENDED"];
 const IndicateNhseSdeAccessButton = ({
     sx,
     action,
+    refetchCohort,
 }: {
     sx?: SxProps;
     action?: () => void;
+    refetchCohort?: () => void;
 }) => {
     const t = useTranslations("components.IndicateNhseSdeAccessButton");
     const { showModal } = useModal();
@@ -69,19 +71,17 @@ const IndicateNhseSdeAccessButton = ({
                     <Typography>{t("successInfo")}</Typography>
                 </Stack>
             ),
-            showCancel: false,
             showConfirm: false,
         });
 
         const result = await submitRequest({});
         if (result) {
             revalidateCacheAction(`cohort-user-${user?.id}`);
+            refetchCohort && refetchCohort();
         }
     };
     const approvalPending =
-        hasClickedButton ||
-        nhseSdeRequestStatus === "APPROVAL REQUESTED" ||
-        nhseSdeRequestStatus === "IN PROCESS";
+        hasClickedButton || nhseSdeRequestStatus === "APPROVAL REQUESTED";
     const isDisabled =
         !isLoggedIn ||
         approvalPending ||
@@ -112,11 +112,7 @@ const IndicateNhseSdeAccessButton = ({
                         {isLoading || isLoadingAuth ? (
                             <CircularProgress size={20} color="inherit" />
                         ) : (
-                            <>
-                                {approvalPending
-                                    ? "Access requested"
-                                    : t("label")}
-                            </>
+                            t("label")
                         )}
                     </Button>
                 </span>

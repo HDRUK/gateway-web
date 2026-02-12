@@ -24,8 +24,13 @@ export default function CohortDiscoveryCoverPage() {
     const t = useTranslations("pages.account.profile.cohortDiscovery");
     const { isNhsSdeApplicationsEnabled } = useFeatures();
     const { user, isLoading: loadingUser } = useAuth();
-    const { requestExpiry, requestStatus, nhseSdeRequestStatus, isLoading } =
-        useCohortStatus(user?.id);
+    const {
+        requestExpiry,
+        requestStatus,
+        nhseSdeRequestStatus,
+        isLoading,
+        refetch,
+    } = useCohortStatus(user?.id);
 
     const daysRemaining =
         requestStatus === "APPROVED" && requestExpiry
@@ -148,16 +153,15 @@ export default function CohortDiscoveryCoverPage() {
                                     sx={{ pb: 2 }}>
                                     {t("nhseSdeText1")}
                                 </Typography>
-                                {!loading &&
-                                    nhseSdeRequestStatus !== "APPROVED" && (
-                                        <MarkDownSanitizedWithHtml
-                                            sx={{ color: colors.red700 }}
-                                            content={t("nhseSdeText2")}
-                                        />
-                                    )}
+                                {!loading && !nhseSdeRequestStatus && (
+                                    <MarkDownSanitizedWithHtml
+                                        sx={{ color: colors.red700 }}
+                                        content={t("nhseSdeText2")}
+                                    />
+                                )}
                             </>
                         )}
-                        {!isNhsSdeApplicationsEnabled && !loading && (
+                        {!isNhsSdeApplicationsEnabled && (
                             <Typography color={colors.grey600}>
                                 {t.rich("nhseSdeTemporaryText", {
                                     mailto: chunks => (
@@ -186,11 +190,13 @@ export default function CohortDiscoveryCoverPage() {
                         }}>
                         {!loading && nhseSdeRequestStatus !== "APPROVED" && (
                             <>
-                                {!nhseSdeRequestStatus && (
-                                    <RequestNhseSdeAccessButton color="greyCustom" />
-                                )}
+                                <RequestNhseSdeAccessButton
+                                    color="greyCustom"
+                                    refetchCohort={refetch}
+                                />
                                 <IndicateNhseSdeAccessButton
                                     sx={{ width: "100%" }}
+                                    refetchCohort={refetch}
                                 />
                             </>
                         )}

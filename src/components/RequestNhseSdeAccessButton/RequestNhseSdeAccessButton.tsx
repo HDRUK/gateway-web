@@ -17,11 +17,13 @@ const RequestNhseSdeAccessButton = ({
     color,
     label,
     action,
+    refetchCohort,
 }: {
     sx?: SxProps;
     color?: string;
     label?: string;
     action?: () => void;
+    refetchCohort?: () => void;
 }) => {
     const t = useTranslations("components.RequestNhseSdeAccessButton");
 
@@ -39,6 +41,7 @@ const RequestNhseSdeAccessButton = ({
         if (isNhsSdeApplicationsEnabled) {
             action && action();
             await submitRequest({ details: "required" });
+            refetchCohort && refetchCohort();
         }
     };
 
