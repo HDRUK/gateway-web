@@ -18,6 +18,7 @@ import Form from "@/components/Form";
 import HTMLContent from "@/components/HTMLContent";
 import InputWrapper from "@/components/InputWrapper";
 import ScrollContent from "@/components/ScrollContent";
+import CohortTermsSuccessDialog from "@/modules/CohortTermsSuccessDialog";
 import useDialog from "@/hooks/useDialog";
 import useModal from "@/hooks/useModal";
 import usePost from "@/hooks/usePost";
@@ -29,11 +30,13 @@ import {
 } from "@/config/forms/cohortTermsAccept";
 import { colors } from "@/config/theme";
 import { RouteName } from "@/consts/routeName";
+import { useFeatures } from "@/providers/FeatureProvider";
 
 const TRANSLATION_PATH_MODAL = "modals.CohortRequestSent";
 const TRANSLATION_PATH_DIALOG = "dialogs.CohortRequestTerms";
 
 const CohortRequestTermsDialog = () => {
+    const { isNhsSdeApplicationsEnabled } = useFeatures();
     const [navClicked, setNavClicked] = useState<number | null>(null);
     const [activeItem, setActiveItem] = useState(1);
     const { push } = useRouter();
@@ -53,6 +56,8 @@ const CohortRequestTermsDialog = () => {
 
     const { showModal } = useModal();
 
+    const { showDialog } = useDialog();
+
     const t = useTranslations("modules");
 
     const submitRequest = usePost(apis.cohortRequestsV1Url, {
@@ -61,17 +66,10 @@ const CohortRequestTermsDialog = () => {
 
     const handleSuccess = () => {
         hideDialog();
-        showModal({
-            title: t(`${TRANSLATION_PATH_MODAL}.title`),
-            content: t(`${TRANSLATION_PATH_MODAL}.text`),
-            confirmText: t(`${TRANSLATION_PATH_MODAL}.confirmButton`),
-            onSuccess: () => {
-                push(
-                    `/${RouteName.ACCOUNT}/${RouteName.PROFILE}/${RouteName.COHORT_DISCOVERY_REQUEST}`
-                );
-            },
-            showCancel: false,
-        });
+        push(
+            `/${RouteName.ACCOUNT}/${RouteName.PROFILE}/${RouteName.COHORT_DISCOVERY_REQUEST}`
+        );
+        showDialog(CohortTermsSuccessDialog);
     };
 
     const onFormSubmit = async () => {

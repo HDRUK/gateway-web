@@ -15,9 +15,13 @@ import Button from "../Button";
 const RequestNhseSdeAccessButton = ({
     sx,
     color,
+    label,
+    action,
 }: {
     sx?: SxProps;
     color?: string;
+    label?: string;
+    action?: () => void;
 }) => {
     const t = useTranslations("components.RequestNhseSdeAccessButton");
 
@@ -33,6 +37,7 @@ const RequestNhseSdeAccessButton = ({
 
     const onClick = async () => {
         if (isNhsSdeApplicationsEnabled) {
+            action && action();
             await submitRequest({ details: "required" });
         }
     };
@@ -54,7 +59,11 @@ const RequestNhseSdeAccessButton = ({
             target="_blank"
             rel="noopener noreferrer"
             endIcon={<OpenInNewIcon />}>
-            {isNhsSdeApplicationsEnabled ? t("label") : t("temporaryLabel")}
+            {label
+                ? label
+                : isNhsSdeApplicationsEnabled
+                ? t("label")
+                : t("temporaryLabel")}
         </Button>
     );
 };

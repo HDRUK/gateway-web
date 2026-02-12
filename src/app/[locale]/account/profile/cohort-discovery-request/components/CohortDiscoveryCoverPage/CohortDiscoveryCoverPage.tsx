@@ -14,7 +14,7 @@ import RequestNhseSdeAccessButton from "@/components/RequestNhseSdeAccessButton"
 import useAuth from "@/hooks/useAuth";
 import { useCohortStatus } from "@/hooks/useCohortStatus";
 import { colors } from "@/config/theme";
-import { statusMapping } from "@/consts/cohortDiscovery";
+import { NHSSDEStatusMapping, statusMapping } from "@/consts/cohortDiscovery";
 import { RouteName } from "@/consts/routeName";
 import { differenceInDays } from "@/utils/date";
 import { capitalise } from "@/utils/general";
@@ -24,7 +24,8 @@ export default function CohortDiscoveryCoverPage() {
     const t = useTranslations("pages.account.profile.cohortDiscovery");
     const { isNhsSdeApplicationsEnabled } = useFeatures();
     const { user } = useAuth();
-    const { requestExpiry, requestStatus } = useCohortStatus(user?.id);
+    const { requestExpiry, requestStatus, nhseSdeRequestStatus } =
+        useCohortStatus(user?.id);
 
     const daysRemaining =
         requestStatus === "APPROVED" && requestExpiry
@@ -59,7 +60,6 @@ export default function CohortDiscoveryCoverPage() {
                                         size="small"
                                         label={capitalise(requestStatus)}
                                         color={statusMapping[requestStatus]}
-                                        sx={{ color: "white" }}
                                     />
 
                                     {requestStatus === "APPROVED" && (
@@ -93,15 +93,11 @@ export default function CohortDiscoveryCoverPage() {
                             display: "flex",
                             alignItems: "center",
                             justifyContent: "center",
+                            p: 2,
                         }}>
                         <CohortDiscoveryButton
-                            ctaLink={{
-                                target: "_self",
-                                url: `/${RouteName.ACCOUNT}/${RouteName.PROFILE}/${RouteName.COHORT_DISCOVERY_REGISTER}`,
-                                title: "Access Cohort Discovery",
-                            }}
                             color="greyCustom"
-                            showDatasetExplanatoryTooltip
+                            hrefOverride={`/${RouteName.ACCOUNT}/${RouteName.PROFILE}/${RouteName.COHORT_DISCOVERY_REGISTER}`}
                         />
                     </Paper>
                 </Grid>
@@ -115,6 +111,33 @@ export default function CohortDiscoveryCoverPage() {
                         <Typography variant="h1">
                             {t("nhseSdeTitle")}
                         </Typography>
+                        <Box sx={{ display: "flex", px: 0, pt: 0, gap: 2 }}>
+                            {nhseSdeRequestStatus && (
+                                <>
+                                    <Chip
+                                        size="small"
+                                        label={capitalise(nhseSdeRequestStatus)}
+                                        color={
+                                            NHSSDEStatusMapping[
+                                                nhseSdeRequestStatus
+                                            ]
+                                        }
+                                    />
+
+                                    {nhseSdeRequestStatus === "APPROVED" && (
+                                        <>
+                                            <Typography
+                                                sx={{
+                                                    color: colors.grey600,
+                                                    alignContent: "center",
+                                                }}>
+                                                {t("nhsExpiry")}
+                                            </Typography>
+                                        </>
+                                    )}
+                                </>
+                            )}
+                        </Box>
                         {isNhsSdeApplicationsEnabled && (
                             <>
                                 <Typography
@@ -122,10 +145,12 @@ export default function CohortDiscoveryCoverPage() {
                                     sx={{ pb: 2 }}>
                                     {t("nhseSdeText1")}
                                 </Typography>
-                                <MarkDownSanitizedWithHtml
-                                    sx={{ color: colors.red700 }}
-                                    content={t("nhseSdeText2")}
-                                />
+                                {nhseSdeRequestStatus !== "APPROVED" && (
+                                    <MarkDownSanitizedWithHtml
+                                        sx={{ color: colors.red700 }}
+                                        content={t("nhseSdeText2")}
+                                    />
+                                )}
                             </>
                         )}
                         {!isNhsSdeApplicationsEnabled && (
@@ -141,6 +166,7 @@ export default function CohortDiscoveryCoverPage() {
                         )}
                     </Paper>
                 </Grid>
+
                 <Grid size={{ mobile: 12, laptop: 4 }}>
                     <Paper
                         sx={{
@@ -154,11 +180,19 @@ export default function CohortDiscoveryCoverPage() {
                             gap: 2,
                             py: 2,
                         }}>
-                        <RequestNhseSdeAccessButton
-                            sx={{ width: "90%" }}
-                            color="greyCustom"
-                        />
-                        <IndicateNhseSdeAccessButton sx={{ width: "90%" }} />
+                        {nhseSdeRequestStatus !== "APPROVED" && (
+                            <>
+                                {!nhseSdeRequestStatus && (
+                                    <RequestNhseSdeAccessButton
+                                        sx={{ width: "90%" }}
+                                        color="greyCustom"
+                                    />
+                                )}
+                                <IndicateNhseSdeAccessButton
+                                    sx={{ width: "90%" }}
+                                />
+                            </>
+                        )}
                     </Paper>
                 </Grid>
             </Grid>

@@ -19,11 +19,6 @@ export const Default: Story = {
             template: {
                 promofields: {
                     bannerTitle: "Cohort Discovery",
-                    ctaLink: {
-                        title: "Button title",
-                        url: "button/url",
-                        target: "",
-                    },
                     topRightPanel:
                         '<p><iframe loading="lazy" title="Cohort Discovery on the Health Data Research Innovation Gateway" width="500" height="281" src="https://www.youtube.com/embed/yvFrnbXlqRk?feature=oembed" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe></p>\n' +
                         "<p><!--more--></p>\n" +

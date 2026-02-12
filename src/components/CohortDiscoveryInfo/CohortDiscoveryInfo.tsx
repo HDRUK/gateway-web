@@ -1,12 +1,11 @@
 import { Box, Stack } from "@mui/material";
 import { getTranslations } from "next-intl/server";
 import { CohortDiscoveryTemplate } from "@/interfaces/Cms";
-import Button from "@/components/Button";
 import Container from "@/components/Container";
 import HTMLContent from "@/components/HTMLContent";
 import Tabs from "@/components/Tabs";
 import Typography from "@/components/Typography";
-import { RouteName } from "@/consts/routeName";
+import CohortDiscoveryButton from "../CohortDiscoveryButton";
 import CohortAccessButtons from "./CohortAccessButtons";
 import { CohortDiscoveryTabContent } from "./CohortDiscoveryInfo.styles";
 import ViewCohortDatasetsButton from "./ViewCohortDatasetsButton";
@@ -41,11 +40,10 @@ const CohortDiscoveryInfo = async ({
                     <Typography variant="body1">{t("learnAbout")}</Typography>
                 </Box>
                 {showAccessButton && (
-                    <Button
-                        href={`/${RouteName.ACCOUNT}/${RouteName.PROFILE}/${RouteName.COHORT_DISCOVERY_REQUEST}`}
-                        color="greyCustom">
-                        {t("accessButton")}
-                    </Button>
+                    <CohortDiscoveryButton
+                        color="greyCustom"
+                        showDatasetExplanatoryTooltip
+                    />
                 )}
             </Box>
             <Tabs
