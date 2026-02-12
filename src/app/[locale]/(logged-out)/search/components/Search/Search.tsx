@@ -635,8 +635,10 @@ const Search = ({ filters, cohortDiscovery, schema }: SearchProps) => {
                         ? "tiled"
                         : "list"
                 }
-                tiledDesktopColumns={
-                    queryParams.type === SearchCategory.COLLECTIONS ? 4 : 3
+                maxDesktopColumns={
+                    queryParams.type === SearchCategory.COLLECTIONS
+                        ? 4
+                        : undefined
                 }>
                 {data?.list.map(result => renderResultCard(result))}
             </ResultsList>

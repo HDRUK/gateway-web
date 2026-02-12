@@ -84,7 +84,7 @@ const DataCustodianNetwork = ({
                     <Box sx={{ pb: 2 }}>{t("noResults")}</Box>
                 </Paper>
             )}
-            <ResultsList variant="tiled" tiledDesktopColumns={SEARCH_PER_PAGE}>
+            <ResultsList variant="tiled">
                 {isLoading &&
                     Array.from({ length: SEARCH_PER_PAGE }, (_, index) => (
                         <CardStackedSkeleton key={index} />
