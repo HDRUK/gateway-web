@@ -5,10 +5,12 @@ import BoxContainer from "@/components/BoxContainer";
 export interface ResultsListProps {
     children: ReactNode;
     variant?: "list" | "tiled";
+    tiledDesktopColumns?: number;
 }
 
 export default function ResultsList({
     variant = "list",
+    tiledDesktopColumns = 3,
     children,
 }: ResultsListProps) {
     return variant === "list" ? (
@@ -26,7 +28,7 @@ export default function ResultsList({
             sx={{
                 gridTemplateColumns: {
                     mobile: "repeat(1, 1fr)",
-                    desktop: "repeat(3, 1fr)",
+                    desktop: `repeat(${tiledDesktopColumns}, minmax(0, 1fr))`,
                 },
                 gap: 2,
                 mb: 2,

@@ -34,7 +34,7 @@ interface DataCustodianNetworkProps {
 }
 
 const TRANSLATION_PATH = "pages.search";
-const SEARCH_PER_PAGE = 3;
+const SEARCH_PER_PAGE = 4;
 
 const DataCustodianNetwork = ({
     searchParams = {},
@@ -84,9 +84,11 @@ const DataCustodianNetwork = ({
                     <Box sx={{ pb: 2 }}>{t("noResults")}</Box>
                 </Paper>
             )}
-            <ResultsList variant="tiled">
+            <ResultsList variant="tiled" tiledDesktopColumns={SEARCH_PER_PAGE}>
                 {isLoading &&
-                    [1, 2, 3].map(item => <CardStackedSkeleton key={item} />)}
+                    Array.from({ length: SEARCH_PER_PAGE }, (_, index) => (
+                        <CardStackedSkeleton key={index} />
+                    ))}
                 {!isLoading &&
                     data?.map(result => (
                         <CardStacked
