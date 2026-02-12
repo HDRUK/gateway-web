@@ -23,8 +23,8 @@ import { useFeatures } from "@/providers/FeatureProvider";
 export default function CohortDiscoveryCoverPage() {
     const t = useTranslations("pages.account.profile.cohortDiscovery");
     const { isNhsSdeApplicationsEnabled } = useFeatures();
-    const { user } = useAuth();
-    const { requestExpiry, requestStatus, nhseSdeRequestStatus } =
+    const { user, isLoading: loadingUser } = useAuth();
+    const { requestExpiry, requestStatus, nhseSdeRequestStatus, isLoading } =
         useCohortStatus(user?.id);
 
     const daysRemaining =
@@ -32,6 +32,8 @@ export default function CohortDiscoveryCoverPage() {
             ? // eslint-disable-next-line react-hooks/purity
               differenceInDays(requestExpiry, Date.now())
             : null;
+
+    const loading = loadingUser || isLoading;
 
     return (
         <Container sx={{ display: "flex", flexDirection: "column" }}>
@@ -80,7 +82,7 @@ export default function CohortDiscoveryCoverPage() {
                                 </>
                             )}
                         </Box>
-                        <Typography color={colors.grey600} sx={{ pb: 2 }}>
+                        <Typography color={colors.grey700} sx={{ pb: 2 }}>
                             {t("accessText1")}
                         </Typography>
                     </Paper>
@@ -98,6 +100,7 @@ export default function CohortDiscoveryCoverPage() {
                         <CohortDiscoveryButton
                             color="greyCustom"
                             hrefOverride={`/${RouteName.ACCOUNT}/${RouteName.PROFILE}/${RouteName.COHORT_DISCOVERY_REGISTER}`}
+                            wrapperSx={{ width: "100%" }}
                         />
                     </Paper>
                 </Grid>
@@ -141,19 +144,20 @@ export default function CohortDiscoveryCoverPage() {
                         {isNhsSdeApplicationsEnabled && (
                             <>
                                 <Typography
-                                    color={colors.grey600}
+                                    color={colors.grey700}
                                     sx={{ pb: 2 }}>
                                     {t("nhseSdeText1")}
                                 </Typography>
-                                {nhseSdeRequestStatus !== "APPROVED" && (
-                                    <MarkDownSanitizedWithHtml
-                                        sx={{ color: colors.red700 }}
-                                        content={t("nhseSdeText2")}
-                                    />
-                                )}
+                                {!loading &&
+                                    nhseSdeRequestStatus !== "APPROVED" && (
+                                        <MarkDownSanitizedWithHtml
+                                            sx={{ color: colors.red700 }}
+                                            content={t("nhseSdeText2")}
+                                        />
+                                    )}
                             </>
                         )}
-                        {!isNhsSdeApplicationsEnabled && (
+                        {!isNhsSdeApplicationsEnabled && !loading && (
                             <Typography color={colors.grey600}>
                                 {t.rich("nhseSdeTemporaryText", {
                                     mailto: chunks => (
@@ -178,18 +182,15 @@ export default function CohortDiscoveryCoverPage() {
                             justifyContent: "center",
                             mb: 2,
                             gap: 2,
-                            py: 2,
+                            p: 2,
                         }}>
-                        {nhseSdeRequestStatus !== "APPROVED" && (
+                        {!loading && nhseSdeRequestStatus !== "APPROVED" && (
                             <>
                                 {!nhseSdeRequestStatus && (
-                                    <RequestNhseSdeAccessButton
-                                        sx={{ width: "90%" }}
-                                        color="greyCustom"
-                                    />
+                                    <RequestNhseSdeAccessButton color="greyCustom" />
                                 )}
                                 <IndicateNhseSdeAccessButton
-                                    sx={{ width: "90%" }}
+                                    sx={{ width: "100%" }}
                                 />
                             </>
                         )}

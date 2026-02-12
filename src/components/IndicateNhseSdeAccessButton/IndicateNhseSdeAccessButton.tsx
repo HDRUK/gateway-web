@@ -102,7 +102,7 @@ const IndicateNhseSdeAccessButton = ({
     if (isNhsSdeApplicationsEnabled) {
         return (
             <ConditionalWrapper requiresWrapper={isDisabled} wrapper={wrapper}>
-                <div>
+                <span style={{ width: "100%" }}>
                     <Button
                         sx={{ ...sx }}
                         variant="outlined"
@@ -119,7 +119,7 @@ const IndicateNhseSdeAccessButton = ({
                             </>
                         )}
                     </Button>
-                </div>
+                </span>
             </ConditionalWrapper>
         );
     }

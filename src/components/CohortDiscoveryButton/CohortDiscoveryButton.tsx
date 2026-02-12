@@ -6,6 +6,7 @@ import {
     Chip,
     CircularProgress,
     Stack,
+    SxProps,
     Tooltip,
     Typography,
 } from "@mui/material";
@@ -21,6 +22,7 @@ import { statusMapping } from "@/consts/cohortDiscovery";
 import { RouteName } from "@/consts/routeName";
 import { capitalise } from "@/utils/general";
 import { useFeatures } from "@/providers/FeatureProvider";
+import Box from "../Box";
 import CohortDiscoveryRQuestButton from "./CohortDiscoveryRQuest";
 import CohortDiscoveryServiceButton from "./CohortDiscoveryService";
 
@@ -31,6 +33,7 @@ const TRANSLATION_PATH_CTAOVERRIDE = "components.CohortDiscoveryButton";
 export interface CohortDiscoveryButtonProps {
     showDatasetExplanatoryTooltip?: boolean | null;
     color?: ButtonProps["color"];
+    wrapperSx?: SxProps;
     tooltipOverride?: string | null;
     hrefOverride?: string;
     disabledOuter?: boolean;
@@ -167,20 +170,21 @@ const CohortDiscoveryButton = (props: CohortDiscoveryButtonProps) => {
                         ? t("explanatoryTooltip")
                         : ""
                 }>
-                <span>
+                <Box component="span" sx={{ p: 0, ...props.wrapperSx }}>
                     <Button
                         onClick={handleClick}
                         data-testid={DATA_TEST_ID}
                         color={color}
                         disabled={isLoading || isLoadingAuth || isDisabled}
-                        {...props}>
+                        {...props}
+                        sx={{ width: "100%" }}>
                         {isLoading || isLoadingAuth ? (
                             <CircularProgress size={20} color="inherit" />
                         ) : (
                             t("buttonText")
                         )}
                     </Button>
-                </span>
+                </Box>
             </Tooltip>
         );
     }

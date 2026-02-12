@@ -20,7 +20,7 @@ const TRANSLATION_PATH = "components.CohortDiscoveryInfo";
 const TRANSLATION_PATH_MODAL = "pages.account.profile.cohortDiscovery";
 
 const CohortAccessButtons = () => {
-    const { isLoggedIn, user } = useAuth();
+    const { user } = useAuth();
     const { isNhsSdeApplicationsEnabled } = useFeatures();
     const t = useTranslations(TRANSLATION_PATH);
     const tModal = useTranslations(TRANSLATION_PATH_MODAL);
