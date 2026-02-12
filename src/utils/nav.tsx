@@ -1,3 +1,4 @@
+import { Role } from "@/interfaces/Role";
 import { LeftNavItem } from "@/interfaces/Ui";
 import {
     ControlPointIcon,
@@ -15,13 +16,17 @@ import {
     TeamMembersIcon,
     DarIcon,
 } from "@/consts/icons";
+import { ROLE_HDRUK_SUPERADMIN } from "@/consts/roles";
 import { RouteName } from "@/consts/routeName";
 
 const navIcon = (Icon: React.ElementType) => <Icon fontSize="inherit" />;
 
-const getProfileNav = (permissions: {
-    [key: string]: boolean;
-}): LeftNavItem[] => {
+const getProfileNav = (
+    permissions: {
+        [key: string]: boolean;
+    },
+    roles?: Role[]
+): LeftNavItem[] => {
     return [
         {
             icon: navIcon(PersonOutlineOutlinedIcon),
@@ -38,6 +43,15 @@ const getProfileNav = (permissions: {
             label: "Saved searches",
             href: `/${RouteName.ACCOUNT}/${RouteName.PROFILE}/${RouteName.SAVED_SEARCHES}`,
         },
+        ...(roles?.some(role => role.name === ROLE_HDRUK_SUPERADMIN)
+            ? [
+                  {
+                      icon: navIcon(DataUseIcon),
+                      label: "Feature Flags",
+                      href: `/${RouteName.ACCOUNT}/${RouteName.PROFILE}/${RouteName.FEATURES}`,
+                  },
+              ]
+            : []),
         ...(permissions["custodians.read"]
             ? [
                   {
@@ -66,7 +80,7 @@ const getProfileNav = (permissions: {
                 },
                 {
                     label: "About this service",
-                    href: `/${RouteName.ACCOUNT}/${RouteName.PROFILE}/${RouteName.COHORT_DISCOVERY}`,
+                    href: `/${RouteName.ACCOUNT}/${RouteName.PROFILE}/${RouteName.COHORT_DISCOVERY_ABOUT}`,
                 },
             ],
         },

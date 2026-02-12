@@ -9,6 +9,8 @@ export const metadata = metaData({
     title: "Cohort Discovery Request - About",
     description: "",
 });
+
+//why is this in (logged-out) - it's a protected page?
 export default async function CohortDiscoryRequestPage() {
     const user = await getUserFromCookie();
 

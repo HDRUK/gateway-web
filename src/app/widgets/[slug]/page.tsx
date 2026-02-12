@@ -6,64 +6,72 @@ import { isWidgetsEnabled } from "@/flags";
 import WidgetDisplay from "@/widgets/WidgetDisplay";
 
 interface WidgetProps {
-    params: Promise<{
-        slug: string;
-    }>;
+  params: Promise<{
+    slug: string;
+  }>;
 }
 
 export default async function Widget({ params }: WidgetProps) {
-    console.log('hi')
-    const widgetsEnabled = await isWidgetsEnabled();
-    console.log(widgetsEnabled, 'widgetsEnabled')
+  const widgetsEnabled = await isWidgetsEnabled();
 
-    if (!widgetsEnabled) {
-        return notFound();
+  if (!widgetsEnabled) {
+    return renderError("This feature is temporarily unavailable.");
+  }
+
+  const { slug } = await params;
+  const [teamId, widgetId] = slug.split("-");
+
+
+  const headersList = await headers();
+  const referer = headersList.get("referer");
+
+  if (!referer) {
+    return renderError(
+      "This widget cannot be viewed in a browser tab, please view this in the iframe script provided on your website."
+    );
+  }
+
+  const referrerOrigin = new URL(referer).origin;
+
+  const response = await fetch(
+    `${apis.apiV1IPUrl}/teams/${teamId}/widgets/${widgetId}/data?domain_origin=${referrerOrigin}`,
+    {
+      next: { revalidate: 180, tags: ["all", `widget-${widgetId}`] },
+      cache: "force-cache",
+    }
+  );
+
+  if (!response.ok) {
+    if (response.status === 403) {
+      return renderError(
+        `${referrerOrigin} is not in the list of permitted domains for this widget, please update your widget configuration.`
+      );
     }
 
-    const { slug } = await params;
+    return notFound();
+  }
 
-    const popped = slug.split("-");
-    const teamId = popped[0];
-    const widgetId = popped[1];
-    const headersList = await headers();
-    const referer = headersList.get("referer");
-    
-    console.log(referer, 'referer')
-    console.log(widgetId, 'widgetId')
-    console.log(teamId, 'teamId')
+  const { data } = await response.json();
 
+  return (
+    <html lang="en">
+      <body>
+        <ThemeRegistry isIframe>
+          <WidgetDisplay data={data} isIframe />
+        </ThemeRegistry>
+      </body>
+    </html>
+  );
+}
 
-     // if (!referer) {
-    //     return (
-    //         <html lang="en">
-    //             <body>
-    //                 <>This widget cannot be viewed in a standalone browser, it must be inside the iframe on the permitted domains assigned.</>
-    //             </body>
-    //         </html>
-    //     );
-    // }
-
-    const response = await fetch(
-        `${apis.apiV1IPUrl}/teams/${teamId}/widgets/${widgetId}/data?domain_origin=${referer}`,
-        // {
-        //     next: { revalidate: 180, tags: ["all", `widget-${widgetId}`] },
-        //     cache: "force-cache",
-        // }
-    );
-
-    if (!response.ok) {
-        console.log(response)
-        notFound();
-    }
-    const { data } = await response.json();
-
-    return (
-        <html lang="en">
-            <body>
-                <ThemeRegistry isIframe>
-                    <WidgetDisplay data={data} isIframe />
-                </ThemeRegistry>
-            </body>
-        </html>
-    );
+function renderError(message: string) {
+  return (
+    <html lang="en">
+      <body>
+        <ThemeRegistry isIframe>
+          {message}
+        </ThemeRegistry>
+      </body>
+    </html>
+  );
 }

@@ -17,6 +17,8 @@ import CheckboxControlled from "@/components/CheckboxControlled";
 import TextField from "@/components/TextField";
 import Typography from "@/components/Typography";
 import { SearchIcon } from "@/consts/icons";
+import { SEARCH_FILTER_CHAR_LIMIT } from "@/consts/search";
+import { getShortenedText } from "@/utils/string";
 import ClearFilterButton from "@/app/[locale]/(logged-out)/search/components/ClearFilterButton";
 import HTMLContent from "../HTMLContent";
 
@@ -94,12 +96,13 @@ const FilterSection = <
         style: CSSProperties;
     }) => {
         const { label, ...formattedRow } = cloneDeep(checkboxes[index]);
+        const formattedText = getShortenedText(label, SEARCH_FILTER_CHAR_LIMIT);
 
         return (
             <div key={key} style={style}>
                 <CheckboxControlled
-                    rawLabel={label}
-                    label={<HTMLContent content={label} />}
+                    rawLabel={formattedText}
+                    label={<HTMLContent content={formattedText} />}
                     {...formattedRow}
                     formControlSx={{ pl: 1, pr: 1 }}
                     checked={

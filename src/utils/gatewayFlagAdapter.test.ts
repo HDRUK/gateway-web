@@ -1,4 +1,4 @@
-import { createGatewayFlagAdapter } from "./gatewayFlagAdapter";
+import { createAPIFlagAdapter } from "./gatewayFlagAdapter";
 
 jest.mock("@/config/apis", () => ({
     __esModule: true,
@@ -7,13 +7,17 @@ jest.mock("@/config/apis", () => ({
     },
 }));
 
+jest.mock("next/headers", () => ({
+    cookies: jest.fn(),
+}));
+
 describe("createGatewayFlagAdapter", () => {
     const mockResponse = {
-        SDEConciergeServiceEnquiry: { enabled: true },
-        Aliases: { enabled: false },
+        message: "OK",
+        data: { SDEConciergeServiceEnquiry: true, Aliases: false },
     };
 
-    let adapter: ReturnType<ReturnType<typeof createGatewayFlagAdapter>>;
+    let adapter: ReturnType<ReturnType<typeof createAPIFlagAdapter>>;
 
     beforeEach(() => {
         global.fetch = jest.fn().mockResolvedValue({
@@ -22,7 +26,7 @@ describe("createGatewayFlagAdapter", () => {
         }) as jest.Mock;
 
         jest.useFakeTimers();
-        adapter = createGatewayFlagAdapter()();
+        adapter = createAPIFlagAdapter()();
     });
 
     afterEach(() => {
@@ -40,16 +44,17 @@ describe("createGatewayFlagAdapter", () => {
         expect(fetch).toHaveBeenCalledTimes(2);
     });
 
-    it("fetches and caches feature flags", async () => {
+    it("fetches feature flags", async () => {
         const result = await adapter.decide({
             key: "SDEConciergeServiceEnquiry",
         });
         expect(result).toBe(true);
+        expect(fetch).toHaveBeenCalledTimes(1);
 
         const result2 = await adapter.decide({ key: "Aliases" });
         expect(result2).toBe(false);
 
-        expect(fetch).toHaveBeenCalledTimes(0); // cached
+        expect(fetch).toHaveBeenCalledTimes(2);
     });
 
     it("handles API failure gracefully", async () => {

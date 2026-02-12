@@ -30,6 +30,7 @@ import {
 import { getTrimmedpathname } from "@/utils/general";
 import { getProfileNav, getTeamNav } from "@/utils/nav";
 import { useFeatures } from "@/providers/FeatureProvider";
+import { Role } from "@/interfaces/Role";
 
 const isExpanded = (
     item: LeftNavItem,
@@ -46,6 +47,8 @@ interface LeftNavProps {
     navHeading?: string;
     permissions: { [key: string]: boolean };
     initialLeftNavOpen: boolean;
+    roles? : Role[]
+
 }
 
 const ICON_SIZE = "18px";
@@ -57,13 +60,14 @@ const LeftNav = ({
     teamId,
     navHeading,
     initialLeftNavOpen,
+    roles
 }: LeftNavProps) => {
     const isMobile = useMediaQuery(theme.breakpoints.only("mobile"));
     const features = useFeatures();
 
     const navItems = teamId
         ? getTeamNav(permissions, teamId, features)
-        : getProfileNav(permissions);
+        : getProfileNav(permissions, roles);
 
     const params = useParams<{ locale: string }>();
     const pathname = usePathname() || "";
