@@ -84,7 +84,7 @@ const DataCustodianNetwork = ({
                     <Box sx={{ pb: 2 }}>{t("noResults")}</Box>
                 </Paper>
             )}
-            <ResultsList variant="tiled">
+            <ResultsList variant="tiled" fillDanglingSingleCard>
                 {isLoading &&
                     Array.from({ length: SEARCH_PER_PAGE }, (_, index) => (
                         <CardStackedSkeleton key={index} />

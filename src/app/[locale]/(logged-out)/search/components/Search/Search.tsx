@@ -639,6 +639,10 @@ const Search = ({ filters, cohortDiscovery, schema }: SearchProps) => {
                     queryParams.type === SearchCategory.COLLECTIONS
                         ? 4
                         : undefined
+                }
+                fillDanglingSingleCard={
+                    queryParams.type === SearchCategory.COLLECTIONS ||
+                    queryParams.type === SearchCategory.DATA_CUSTODIANS
                 }>
                 {data?.list.map(result => renderResultCard(result))}
             </ResultsList>
