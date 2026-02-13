@@ -72,6 +72,7 @@ const IndicateNhseSdeAccessButton = ({
                 </Stack>
             ),
             showConfirm: false,
+            showCancel: false,
         });
 
         const result = await submitRequest({});
