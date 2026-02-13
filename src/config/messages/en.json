@@ -248,7 +248,8 @@
                     "nhseHeader": "NHS: ",
                     "dateActionedTooltip": "This is the date for the latest status update for this user",
                     "accountExpired": "This user's access is expired",
-                    "expiryWarning": "This user access is close to expiration date"
+                    "expiryWarning": "This user access is close to expiration date",
+                    "backButtonLabel": "Back to Cohort Discovery Admin Panel"
                 },
                 "cohortDiscovery": {
                     "title": "Cohort Discovery",
