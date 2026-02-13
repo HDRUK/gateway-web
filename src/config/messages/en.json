@@ -1726,12 +1726,12 @@
             "send": "Send",
             "status": "Status"
         },
-        "DataAccessheader": {
+        "DataAccessHeader": {
             "saveDraft": "Save draft",
             "assignWorkflow": "Assign a workflow",
             "applicationStatus": "Change application status",
             "submitApplication": "Submit application",
-            "investigator": "Primary Investigator",
+            "primaryInvestigator": "Primary Investigator",
             "organisation": "Organisation",
             "datasets": "Datasets",
             "lastActivity":"Last activity"

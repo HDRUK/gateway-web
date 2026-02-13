@@ -585,7 +585,7 @@ const ApplicationSection = ({
                         display: "flex",
                         flexDirection: "column",
                     }}>
-                    <DarFormHeader projectTitle={projectTitle} applicationId={applicationId} />
+                    <DarFormHeader applicationId={applicationId} teamId={teamId} userId={userId} />
 
                     {parentSections.find(section => section.id === sectionId)
                         ?.name !== messageSection.name && (
