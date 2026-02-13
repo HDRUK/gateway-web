@@ -8,6 +8,7 @@ export enum RouteName {
     COHORT_DISCOVERY_ABOUT = "cohort-discovery-about",
     COHORT_DISCOVERY_ADMIN = "cohort-discovery-admin",
     COHORT_DISCOVERY_REQUEST = "cohort-discovery-request",
+    COHORT_DISCOVERY_REGISTER = "cohort-discovery-register",
     DAR_ADMIN = "dar-admin",
     QUESTION_BANK_ADMIN = "question-bank",
     CREATE = "create",

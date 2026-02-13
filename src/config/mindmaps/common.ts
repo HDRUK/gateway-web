@@ -1,5 +1,4 @@
 import { Position } from "@xyflow/react";
-import { CtaLink } from "@/interfaces/Cms";
 import theme from "@/config/theme";
 
 export interface NodeValue {
@@ -9,7 +8,6 @@ export interface NodeValue {
     source?: string;
     hidden?: boolean;
     cohort?: boolean;
-    ctaLink: CtaLink | null;
 }
 
 export const nodeValueToRectNode = (
@@ -61,7 +59,6 @@ export const nodeValueToRectNode = (
             hidden: node.hidden,
             source: node.source,
             cohort: node.cohort,
-            ctaLink: node.ctaLink,
         },
     };
 };

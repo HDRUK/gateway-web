@@ -73,18 +73,6 @@ exports[`CMSPromoTemplate should render content 1`] = `
           </div>
         </div>
       </div>
-      <a
-        class="MuiTypography-root MuiTypography-inherit MuiLink-root MuiLink-underlineAlways mui-style-aevukc-MuiTypography-root-MuiLink-root"
-        href="button/url"
-      >
-        <button
-          class="MuiButtonBase-root MuiButton-root MuiButton-contained MuiButton-containedPrimary MuiButton-sizeMedium MuiButton-containedSizeMedium MuiButton-colorPrimary MuiButton-root MuiButton-contained MuiButton-containedPrimary MuiButton-sizeMedium MuiButton-containedSizeMedium MuiButton-colorPrimary mui-style-1mfbltw-MuiButtonBase-root-MuiButton-root"
-          tabindex="0"
-          type="button"
-        >
-          Button title
-        </button>
-      </a>
     </div>
     <div
       class="MuiBox-root mui-style-1iru1wc"
@@ -117,18 +105,6 @@ exports[`CMSPromoTemplate should render content 1`] = `
 
         </div>
       </div>
-      <a
-        class="MuiTypography-root MuiTypography-inherit MuiLink-root MuiLink-underlineAlways mui-style-aevukc-MuiTypography-root-MuiLink-root"
-        href="button/url"
-      >
-        <button
-          class="MuiButtonBase-root MuiButton-root MuiButton-contained MuiButton-containedPrimary MuiButton-sizeMedium MuiButton-containedSizeMedium MuiButton-colorPrimary MuiButton-root MuiButton-contained MuiButton-containedPrimary MuiButton-sizeMedium MuiButton-containedSizeMedium MuiButton-colorPrimary mui-style-1mfbltw-MuiButtonBase-root-MuiButton-root"
-          tabindex="0"
-          type="button"
-        >
-          Button title
-        </button>
-      </a>
     </div>
     <div
       class="MuiBox-root mui-style-gfthyi"
@@ -154,18 +130,6 @@ exports[`CMSPromoTemplate should render content 1`] = `
           </div>
         </div>
       </div>
-      <a
-        class="MuiTypography-root MuiTypography-inherit MuiLink-root MuiLink-underlineAlways mui-style-aevukc-MuiTypography-root-MuiLink-root"
-        href="button/url"
-      >
-        <button
-          class="MuiButtonBase-root MuiButton-root MuiButton-contained MuiButton-containedPrimary MuiButton-sizeMedium MuiButton-containedSizeMedium MuiButton-colorPrimary MuiButton-root MuiButton-contained MuiButton-containedPrimary MuiButton-sizeMedium MuiButton-containedSizeMedium MuiButton-colorPrimary mui-style-1mfbltw-MuiButtonBase-root-MuiButton-root"
-          tabindex="0"
-          type="button"
-        >
-          Button title
-        </button>
-      </a>
     </div>
   </div>
 </div>

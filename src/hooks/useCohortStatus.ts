@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { CohortResponse } from "@/interfaces/CohortRequest";
 import { getCohortStatusAndRedirect } from "@/app/actions/getCohortStatusAndRedirectAction";
 
@@ -16,13 +16,11 @@ export const useCohortStatus = (
     const [data, setData] = useState<CohortResponse | null>(null);
     const [isLoading, setIsLoading] = useState(true);
 
-    useEffect(() => {
-        if (!userId || data) {
-            setIsLoading(false);
-            return;
-        }
+    const fetchData = useCallback(
+        async (opts?: { force?: boolean }) => {
+            if (!userId) return;
+            if (!opts?.force && data) return;
 
-        const fetchData = async () => {
             setIsLoading(true);
 
             try {
@@ -38,7 +36,15 @@ export const useCohortStatus = (
             } finally {
                 setIsLoading(false);
             }
-        };
+        },
+        [userId, redirect, useRQuest, data]
+    );
+
+    useEffect(() => {
+        if (!userId || data) {
+            setIsLoading(false);
+            return;
+        }
 
         fetchData();
     }, [data, userId, redirect, useRQuest]);
@@ -49,5 +55,6 @@ export const useCohortStatus = (
         requestExpiry: data?.requestExpiry ?? null,
         redirectUrl: data?.redirectUrl ?? null,
         isLoading,
+        refetch: () => fetchData({ force: true }),
     };
 };

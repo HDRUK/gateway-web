@@ -15,7 +15,6 @@ import apis from "@/config/apis";
 import { StaticImages } from "@/config/images";
 import { AspectRatioImage } from "@/consts/image";
 import { getTeamInfo } from "@/utils/api";
-import { getCohortDiscovery } from "@/utils/cms";
 import metaData from "@/utils/metadata";
 import ActionBar from "./components/ActionBar";
 import DataCustodianContent from "./components/DataCustodianContent";
@@ -58,8 +57,6 @@ export default async function DataCustodianItemPage({
     }
     const { data: cohortDiscoverySupport } = await resp.json();
 
-    const cohortDiscovery = await getCohortDiscovery();
-
     const populatedSections = dataCustodianFields.filter(section =>
         section.fields.some(field => !isEmpty(get(infoData, field.path)))
     );
@@ -96,7 +93,6 @@ export default async function DataCustodianItemPage({
                             name: infoData.name,
                             member_of: infoData.member_of,
                         }}
-                        cohortDiscovery={cohortDiscovery}
                         cohortDiscoveryEnabled={
                             cohortDiscoverySupport.supportsCohortDiscovery
                         }
