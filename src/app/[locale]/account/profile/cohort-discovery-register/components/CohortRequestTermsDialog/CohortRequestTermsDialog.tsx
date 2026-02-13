@@ -12,14 +12,14 @@ import { useRouter } from "next/navigation";
 import { templateRepeatFields } from "@/interfaces/Cms";
 import ActiveList from "@/components/ActiveList";
 import Box from "@/components/Box";
+import Button from "@/components/Button";
 import Dialog from "@/components/Dialog";
 import Form from "@/components/Form";
 import HTMLContent from "@/components/HTMLContent";
 import InputWrapper from "@/components/InputWrapper";
-import ModalButtons from "@/components/ModalButtons";
 import ScrollContent from "@/components/ScrollContent";
+import CohortTermsSuccessDialog from "@/modules/CohortTermsSuccessDialog";
 import useDialog from "@/hooks/useDialog";
-import useModal from "@/hooks/useModal";
 import usePost from "@/hooks/usePost";
 import apis from "@/config/apis";
 import {
@@ -28,15 +28,17 @@ import {
     cohortAcceptTermsField,
 } from "@/config/forms/cohortTermsAccept";
 import { colors } from "@/config/theme";
+import { RouteName } from "@/consts/routeName";
 
-const TRANSLATION_PATH_MODAL = "modals.CohortRequestSent";
 const TRANSLATION_PATH_DIALOG = "dialogs.CohortRequestTerms";
 
 const CohortRequestTermsDialog = () => {
     const [navClicked, setNavClicked] = useState<number | null>(null);
     const [activeItem, setActiveItem] = useState(1);
     const { push } = useRouter();
-    const { control, handleSubmit } = useForm<{ hasAccepted: boolean }>({
+    const { control, handleSubmit, watch } = useForm<{
+        hasAccepted: boolean;
+    }>({
         defaultValues: cohortAcceptTermsDefaultValues,
         resolver: yupResolver(cohortAcceptTermsValidationSchema),
     });
@@ -46,7 +48,9 @@ const CohortRequestTermsDialog = () => {
         dialogProps: { cmsContent: templateRepeatFields };
     };
 
-    const { showModal } = useModal();
+    const hasAcceptedTerms = watch("hasAccepted");
+
+    const { showDialog } = useDialog();
 
     const t = useTranslations("modules");
 
@@ -56,14 +60,11 @@ const CohortRequestTermsDialog = () => {
 
     const handleSuccess = () => {
         hideDialog();
-        showModal({
-            title: t(`${TRANSLATION_PATH_MODAL}.title`),
-            content: t(`${TRANSLATION_PATH_MODAL}.text`),
-            confirmText: t(`${TRANSLATION_PATH_MODAL}.confirmButton`),
-            onSuccess: () => {
-                push("/");
-            },
-            showCancel: false,
+        showDialog(CohortTermsSuccessDialog, {
+            onClose: () =>
+                push(
+                    `/${RouteName.ACCOUNT}/${RouteName.PROFILE}/${RouteName.COHORT_DISCOVERY_REQUEST}`
+                ),
         });
     };
 
@@ -172,16 +173,23 @@ const CohortRequestTermsDialog = () => {
                         label={t(`${TRANSLATION_PATH_DIALOG}.acceptTerms`)}
                         {...cohortAcceptTermsField}
                     />
-                    <ModalButtons
-                        confirmText={t(
-                            `${TRANSLATION_PATH_DIALOG}.confirmButton`
-                        )}
-                        cancelText={t(
-                            `${TRANSLATION_PATH_DIALOG}.discardButton`
-                        )}
-                        confirmType="submit"
-                        onSuccess={handleSuccess}
-                    />
+                    <Box
+                        sx={{
+                            display: "flex",
+                            flexDirection: "row",
+                            gap: 2,
+                            alignItems: "flex-end",
+                        }}>
+                        <Button
+                            variant="outlined"
+                            color="secondary"
+                            onClick={() => hideDialog()}>
+                            {t(`${TRANSLATION_PATH_DIALOG}.discardButton`)}
+                        </Button>
+                        <Button type="submit" disabled={!hasAcceptedTerms}>
+                            {t(`${TRANSLATION_PATH_DIALOG}.confirmButton`)}
+                        </Button>
+                    </Box>
                 </MuiDialogActions>
             </Form>
         </Dialog>

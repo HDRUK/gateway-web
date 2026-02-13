@@ -1,7 +1,18 @@
+"use client";
+
 import { useCallback, useMemo } from "react";
-import { Button, Chip, Stack, Typography } from "@mui/material";
+import {
+    ButtonProps,
+    Chip,
+    CircularProgress,
+    Stack,
+    SxProps,
+    Tooltip,
+    Typography,
+} from "@mui/material";
+import { useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
-import { CtaLink } from "@/interfaces/Cms";
+import Button from "@/components/Button";
 import ProvidersDialog from "@/modules/ProvidersDialog";
 import useAuth from "@/hooks/useAuth";
 import { useCohortStatus } from "@/hooks/useCohortStatus";
@@ -11,16 +22,20 @@ import { statusMapping } from "@/consts/cohortDiscovery";
 import { RouteName } from "@/consts/routeName";
 import { capitalise } from "@/utils/general";
 import { useFeatures } from "@/providers/FeatureProvider";
+import Box from "../Box";
 import CohortDiscoveryRQuestButton from "./CohortDiscoveryRQuest";
 import CohortDiscoveryServiceButton from "./CohortDiscoveryService";
 
 export const DATA_TEST_ID = "cohort-discovery-button";
 
+const TRANSLATION_PATH_CTAOVERRIDE = "components.CohortDiscoveryButton";
+
 export interface CohortDiscoveryButtonProps {
-    ctaLink: CtaLink;
-    showDatasetExplanatoryTooltip: boolean | null;
-    color?: string | null;
+    showDatasetExplanatoryTooltip?: boolean | null;
+    color?: ButtonProps["color"];
+    wrapperSx?: SxProps;
     tooltipOverride?: string | null;
+    hrefOverride?: string;
     disabledOuter?: boolean;
     clickedAction?: () => void;
     onRedirect?: () => void;
@@ -30,10 +45,12 @@ const CohortDiscoveryButton = (props: CohortDiscoveryButtonProps) => {
     const { showModal, hideModal } = useModal();
     const { showDialog } = useDialog();
     const { push } = useRouter();
-    const { ctaLink, color } = props;
+    const { color } = props;
     const { isLoggedIn, user, isLoading: isLoadingAuth } = useAuth();
     const { isRQuestEnabled, isCohortDiscoveryServiceEnabled } = useFeatures();
     const { requestStatus, isLoading } = useCohortStatus(user?.id);
+
+    const t = useTranslations(TRANSLATION_PATH_CTAOVERRIDE);
 
     const content = useMemo(
         () => (
@@ -42,7 +59,7 @@ const CohortDiscoveryButton = (props: CohortDiscoveryButtonProps) => {
                 gap={1}
                 justifyContent="center"
                 direction={"row"}>
-                {isRQuestEnabled && <CohortDiscoveryRQuestButton {...props} />}{" "}
+                {isRQuestEnabled && <CohortDiscoveryRQuestButton {...props} />}
                 {isCohortDiscoveryServiceEnabled && (
                     <CohortDiscoveryServiceButton
                         onRedirect={() => {
@@ -74,53 +91,108 @@ const CohortDiscoveryButton = (props: CohortDiscoveryButtonProps) => {
     );
 
     const handleClick = useCallback(() => {
-        if (isLoggedIn) {
-            if (requestStatus) {
-                if (requestStatus === "APPROVED") {
-                    showModal({
-                        title: "Choose which Cohort Discovery Service",
-                        content,
-                        showConfirm: false,
-                        showCancel: false,
-                    });
-                } else {
-                    showModal({
-                        title: "Your acccess request is not approved",
-                        content: nonApprovedContent,
-                        showConfirm: false,
-                        showCancel: false,
-                    });
-                }
+        if (requestStatus) {
+            if (requestStatus === "APPROVED") {
+                showModal({
+                    title: "Choose which Cohort Discovery Service",
+                    content,
+                    showConfirm: false,
+                    showCancel: false,
+                });
             } else {
-                push(ctaLink.url);
+                showModal({
+                    title: "Your acccess request is not approved",
+                    content: nonApprovedContent,
+                    showConfirm: false,
+                    showCancel: false,
+                });
             }
         } else {
-            showDialog(ProvidersDialog, {
-                isProvidersDialog: true,
-                redirectPath: `/${RouteName.ABOUT}/${RouteName.COHORT_DISCOVERY_REQUEST}`,
-            });
+            push(
+                props.hrefOverride
+                    ? props.hrefOverride
+                    : `/${RouteName.ACCOUNT}/${RouteName.PROFILE}/${RouteName.COHORT_DISCOVERY_REQUEST}`
+            );
         }
     }, [
-        nonApprovedContent,
-        content,
-        isLoggedIn,
-        ctaLink.url,
         requestStatus,
-        showDialog,
         showModal,
+        content,
+        nonApprovedContent,
         push,
+        props.hrefOverride,
     ]);
+
+    const isDisabled =
+        isLoggedIn && requestStatus
+            ? !["APPROVED", "REJECTED", "EXPIRED"].includes(requestStatus)
+            : false;
+
+    const isApproved =
+        isLoggedIn && requestStatus && requestStatus === "APPROVED";
+
+    const openAthensInvalid = useMemo(
+        () =>
+            isLoggedIn &&
+            user?.provider === "open-athens" &&
+            !user?.secondary_email,
+        [isLoggedIn, user]
+    );
+
+    if (!isLoggedIn) {
+        return (
+            <Box component="span" sx={{ p: 0, ...props.wrapperSx }}>
+                <Button
+                    onClick={() => {
+                        showDialog(ProvidersDialog, {
+                            isProvidersDialog: true,
+                            redirectPath: props.hrefOverride
+                                ? props.hrefOverride
+                                : `/${RouteName.ACCOUNT}/${RouteName.PROFILE}/${RouteName.COHORT_DISCOVERY_REQUEST}`,
+                        });
+                    }}
+                    data-testid={DATA_TEST_ID}
+                    color={color}
+                    {...props}
+                    sx={{ width: "100%" }}>
+                    {isLoading || isLoadingAuth ? (
+                        <CircularProgress size={20} color="inherit" />
+                    ) : (
+                        t("buttonText")
+                    )}
+                </Button>
+            </Box>
+        );
+    }
 
     if (isRQuestEnabled && isCohortDiscoveryServiceEnabled) {
         return (
-            <Button
-                data-testid={DATA_TEST_ID}
-                {...props}
-                color={color}
-                disabled={isLoading || isLoadingAuth}
-                onClick={handleClick}>
-                {ctaLink?.title}
-            </Button>
+            <Tooltip
+                title={
+                    isDisabled
+                        ? t(`notApproved`)
+                        : openAthensInvalid
+                        ? t("setSecondaryEmail")
+                        : props.showDatasetExplanatoryTooltip && isApproved
+                        ? t("explanatoryTooltip")
+                        : ""
+                }>
+                <Box component="span" sx={{ p: 0, ...props.wrapperSx }}>
+                    <Button
+                        onClick={handleClick}
+                        data-testid={DATA_TEST_ID}
+                        color={color}
+                        disabled={isLoading || isLoadingAuth || isDisabled}
+                        {...props}
+                        sx={{ width: "100%" }}>
+                        {isLoading || isLoadingAuth ? (
+                            <CircularProgress size={20} color="inherit" />
+                        ) : (
+                            t("buttonText")
+                        )}
+                    </Button>
+                </Box>
+            </Tooltip>
         );
     }
     return content;

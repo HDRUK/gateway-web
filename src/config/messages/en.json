@@ -231,6 +231,10 @@
                 "statementOutro": "I understand that my access to the tool may be terminated if I do not comply with the above.",
                 "checkboxLabel": "I have read and agree to the user declaration"
             },
+            "cohortDiscovery": {
+                "viewDatasets": "View all Datasets available in Cohort Discovery",
+                "viewDatasetsNHS": "View NHS Research SDE Datasets available in Cohort Discovery"
+            },
             "backToHomepage": "Back to homepage",
             "accessibilityStatement": {
                 "title": "Accessibility Statement",
@@ -257,11 +261,11 @@
                     "accessTitle": "Cohort Data Access",
                     "daysRemaining": "days remaining in current access period",
                     "accessText1": "Cohort Discovery allows researchers to explore and identify patient cohorts across multiple, federated health data sources without accessing identifiable patient-level data. It streamlines study feasibility assessments by providing rapid, aggregated cohort counts and characteristics across diverse datasets. To request access or log in, please click the 'Access Cohort Discovery' button.",
-                    "nhseSdeTitle": "NHS SDE Cohort Data Access",
-                    "nhseSdeText1": "SDE access is limited by access to Gateway Cohort Discovery",
-                    "nhseSdeText2": "By selecting 'I have been approved by the NHS SDE', you are confirming that you have completed NHS SDE validation and are requesting access to SDE Network datasets through Cohort Discovery. You consent to HDR UK sharing your email address with the NHS SDE team solely for the purpose of verifying your approval status.",
-                    "nhseSdeText3": "Please note: this step involves manual validation by NHS SDE and HDR UK and may take up to 10 working days. You will receive an email notification once your access has been granted.",
-                    "nhseSdeTemporaryText": "To access SDE Network data, users must first be validated by the SDE Network. This validation process is currently in its pilot phase, with the full service expected to be operational by October 2025. In the meantime, if you would like to be added to the list for validation once the service goes live, please email <mailto>england.data.healthresearch@nhs.net</mailto>"
+                    "nhseSdeTitle": "NHS Research SDE Network Datasets",
+                    "nhseSdeText1": "This service gives approved researchers, access to the additional NHS Research SDE Network datasets and subsequently those with approved projects secure access to NHS data. You must also have approved access to Cohort Discovery service to access the NHS Research SDE Network datasets.",
+                    "nhseSdeText2": "By selecting ‘Confirm approval by the NHS Research SDE’, you are confirming that you have been approved by the NHS Research SDE validation service and you are consenting to HDR UK sharing your email address with the NHS Research SDE team solely for the purpose of verifying your approval status.  \nPlease note: this step involves manual validation by NHS Research SDE validation team and may take up to 10 working days. You will receive an email notification once your access to the additional datasets in cohort discovery has been granted.",
+                    "nhseSdeTemporaryText": "To access SDE Network data, users must first be validated by the SDE Network. This validation process is currently in its pilot phase, with the full service expected to be operational by October 2025. In the meantime, if you would like to be added to the list for validation once the service goes live, please email <mailto>england.data.healthresearch@nhs.net</mailto>",
+                    "nhsExpiry": "SDE access is limited by access to Gateway Cohort Discovery"
                 },
                 "dataAccessRequests": {
                     "applications": {
@@ -1617,7 +1621,8 @@
         "CohortDiscoveryButton": {
             "notApproved": "Your request to access Cohort Discovery is still pending. Keep an eye out for an email with next steps, or contact support via the ‘Need Support’ button on the bottom right of this screen.",
             "setSecondaryEmail": "You are logged in via OpenAthens, which generates a primary email address in your profile that cannot be used for Cohort Discovery. This button will now send you to your profile page to please set your secondary email address. This must be an institutional email address. Please return here after setting and saving a secondary email address.",
-            "explanatoryTooltip": "You will be taken to the Cohort Discovery tool. You must have access to this dataset in order to run queries."
+            "explanatoryTooltip": "You will be taken to the Cohort Discovery tool. You must have access to this dataset in order to run queries.",
+            "buttonText": "Access Cohort Discovery"
         },
         "RequestNhseSdeAccessButton": {
             "label": "Request access to NHS SDE Network datasets",
@@ -1626,8 +1631,10 @@
         "IndicateNhseSdeAccessButton": {
             "disabledTooltip": "Please sign in to activate this button",
             "pendingTooltip": "Access request pending",
-            "label": "I have been approved by the NHS SDE",
-            "success": "Successfully notified HDR UK"
+            "label": "Confirm approval by the NHS Research SDE",
+            "success": "Successfully notified HDR UK",
+            "successTitle": "Thank you, we've recorded your NHS Research SDE approval.",
+            "successInfo": "It may take up to 10 working days to verify this with the NHS Research SDE Network. You'll be notified once verification is complete."
         },
         "CMSBanner": {
             "ariaCloseButtonLabel": "Close banner"
@@ -1734,6 +1741,15 @@
             "downloadInfo": "Download the form, you can re-download anytime if needed.",
             "reUpload": "Re-upload",
             "reUploadInfo": "Re-upload form template here to replace existing file"
+        },
+        "CohortDiscoveryInfo": {
+            "title": "Cohort Discovery",
+            "step1": "Firstly, request access through the NHS website",
+            "step2": "Once approved, select this button",
+            "learnAbout": "Learn about Cohort Discovery and gain access to the service",
+            "accessButton": "Access Cohort Discovery",
+            "nhsNetwork": "NHS Research SDE Network",
+            "nhsNetworkInfo": "The following additional NHS Research SDE datasets are available in Cohort Discovery, but require you go to through a separate approval process by the NHS Research SDE Network."
         }
     },
     "modules": {
@@ -1741,7 +1757,7 @@
             "CohortRequestSent": {
                 "title": "Request Sent!",
                 "text": "We have sent confirmation to your registered e-mail address. We will then notify you with the decision via your registered e-mail address within 5 business days.",
-                "confirmButton": "Back to homepage"
+                "confirmButton": "Back to Profile"
             },
             "DarTemplateDelete": {
                 "title": "Are you sure you want to delete this template?",
@@ -1806,7 +1822,7 @@
             },
             "CohortRequestTerms": {
                 "confirmButton": "Accept Terms & Conditions",
-                "discardButton": "Discard",
+                "discardButton": "Decline",
                 "acceptTerms": "I have read the Terms and Conditions"
             },
             "DataUseDetailsDialog": {
@@ -1911,7 +1927,28 @@
                 "actionPermanent": "I understand this action is permanent",
                 "yes": "Yes",
                 "no": "No"
+            },
+            "CohortDiscoveryDatasets": {
+                "title": "Datasets available on Cohort Discovery",
+                "dataset": "Dataset",
+                "custodian": "Custodian",
+                "closeButton": "Close",
+                "viewMoreButton": "View full information on Gateway Search",
+                "populationSize": {
+                    "notReported": "Not reported",
+                    "label": "Population Size",
+                    "tooltip": "Population size associated with the population type in the dataset"
+                }
             }
+        },
+        "CohortTermsSuccessDialog": {
+            "title": "Your access request for Cohort Discovery has been submitted!",
+            "reviewTime": "Your cohort access request has been submitted and will be reviewed within 5–7 working days.",
+            "nhsTitle": "Want access to additional NHS Research SDE datasets?",
+            "nhsInfo1": "Access to the NHS Research SDE Network datasets requires additional approval by the NHS Research SDE Network and is dependent on Cohort Discovery Data Access approval submitted above.",
+            "nhsInfo2": "To request this access, you will need to complete the external NHS Research SDE Network validation process and then return here to confirm that you have been approved.",
+            "maybeLater": "Maybe later",
+            "nhsButtonLabel": "Yes, take me to NHS site"
         }
     },
     "hooks": {

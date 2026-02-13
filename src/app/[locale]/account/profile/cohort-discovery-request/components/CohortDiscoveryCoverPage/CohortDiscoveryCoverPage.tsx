@@ -1,38 +1,44 @@
 "use client";
 
-import { ReactElement } from "react";
 import QueryBuilderIcon from "@mui/icons-material/QueryBuilder";
 import { Grid, Link, Typography } from "@mui/material";
 import { useTranslations } from "next-intl";
 import Box from "@/components/Box";
 import Chip from "@/components/Chip";
+import CohortDiscoveryButton from "@/components/CohortDiscoveryButton";
 import Container from "@/components/Container";
 import IndicateNhseSdeAccessButton from "@/components/IndicateNhseSdeAccessButton";
+import { MarkDownSanitizedWithHtml } from "@/components/MarkDownSanitizedWithHTML";
 import Paper from "@/components/Paper";
 import RequestNhseSdeAccessButton from "@/components/RequestNhseSdeAccessButton";
 import useAuth from "@/hooks/useAuth";
 import { useCohortStatus } from "@/hooks/useCohortStatus";
 import { colors } from "@/config/theme";
-import { statusMapping } from "@/consts/cohortDiscovery";
+import { NHSSDEStatusMapping, statusMapping } from "@/consts/cohortDiscovery";
+import { RouteName } from "@/consts/routeName";
 import { differenceInDays } from "@/utils/date";
 import { capitalise } from "@/utils/general";
 import { useFeatures } from "@/providers/FeatureProvider";
 
-export default function CohortDiscoveryCoverPage({
-    ctaOverrideComponent,
-}: {
-    ctaOverrideComponent?: ReactElement;
-}) {
+export default function CohortDiscoveryCoverPage() {
     const t = useTranslations("pages.account.profile.cohortDiscovery");
     const { isNhsSdeApplicationsEnabled } = useFeatures();
-    const { user } = useAuth();
-    const { requestExpiry, requestStatus } = useCohortStatus(user?.id);
+    const { user, isLoading: loadingUser } = useAuth();
+    const {
+        requestExpiry,
+        requestStatus,
+        nhseSdeRequestStatus,
+        isLoading,
+        refetch,
+    } = useCohortStatus(user?.id);
 
     const daysRemaining =
         requestStatus === "APPROVED" && requestExpiry
             ? // eslint-disable-next-line react-hooks/purity
               differenceInDays(requestExpiry, Date.now())
             : null;
+
+    const loading = loadingUser || isLoading;
 
     return (
         <Container sx={{ display: "flex", flexDirection: "column" }}>
@@ -61,7 +67,6 @@ export default function CohortDiscoveryCoverPage({
                                         size="small"
                                         label={capitalise(requestStatus)}
                                         color={statusMapping[requestStatus]}
-                                        sx={{ color: "white" }}
                                     />
 
                                     {requestStatus === "APPROVED" && (
@@ -82,7 +87,7 @@ export default function CohortDiscoveryCoverPage({
                                 </>
                             )}
                         </Box>
-                        <Typography color={colors.grey600} sx={{ pb: 2 }}>
+                        <Typography color={colors.grey700} sx={{ pb: 2 }}>
                             {t("accessText1")}
                         </Typography>
                     </Paper>
@@ -95,8 +100,13 @@ export default function CohortDiscoveryCoverPage({
                             display: "flex",
                             alignItems: "center",
                             justifyContent: "center",
+                            p: 2,
                         }}>
-                        {ctaOverrideComponent}
+                        <CohortDiscoveryButton
+                            color="greyCustom"
+                            hrefOverride={`/${RouteName.ACCOUNT}/${RouteName.PROFILE}/${RouteName.COHORT_DISCOVERY_REGISTER}`}
+                            wrapperSx={{ width: "100%" }}
+                        />
                     </Paper>
                 </Grid>
                 <Grid size={{ mobile: 12, laptop: 8 }}>
@@ -109,21 +119,46 @@ export default function CohortDiscoveryCoverPage({
                         <Typography variant="h1">
                             {t("nhseSdeTitle")}
                         </Typography>
+                        <Box sx={{ display: "flex", px: 0, pt: 0, gap: 2 }}>
+                            {nhseSdeRequestStatus && (
+                                <>
+                                    <Chip
+                                        size="small"
+                                        label={capitalise(nhseSdeRequestStatus)}
+                                        color={
+                                            NHSSDEStatusMapping[
+                                                nhseSdeRequestStatus
+                                            ]
+                                        }
+                                    />
+
+                                    {nhseSdeRequestStatus === "APPROVED" && (
+                                        <>
+                                            <Typography
+                                                sx={{
+                                                    color: colors.grey600,
+                                                    alignContent: "center",
+                                                }}>
+                                                {t("nhsExpiry")}
+                                            </Typography>
+                                        </>
+                                    )}
+                                </>
+                            )}
+                        </Box>
                         {isNhsSdeApplicationsEnabled && (
                             <>
                                 <Typography
-                                    color={colors.red700}
+                                    color={colors.grey700}
                                     sx={{ pb: 2 }}>
                                     {t("nhseSdeText1")}
                                 </Typography>
-                                <Typography
-                                    color={colors.grey600}
-                                    sx={{ pb: 2 }}>
-                                    {t("nhseSdeText2")}
-                                </Typography>
-                                <Typography color={colors.red700}>
-                                    {t("nhseSdeText3")}
-                                </Typography>
+                                {!loading && !nhseSdeRequestStatus && (
+                                    <MarkDownSanitizedWithHtml
+                                        sx={{ color: colors.red700 }}
+                                        content={t("nhseSdeText2")}
+                                    />
+                                )}
                             </>
                         )}
                         {!isNhsSdeApplicationsEnabled && (
@@ -139,6 +174,7 @@ export default function CohortDiscoveryCoverPage({
                         )}
                     </Paper>
                 </Grid>
+
                 <Grid size={{ mobile: 12, laptop: 4 }}>
                     <Paper
                         sx={{
@@ -150,10 +186,20 @@ export default function CohortDiscoveryCoverPage({
                             justifyContent: "center",
                             mb: 2,
                             gap: 2,
-                            py: 2,
+                            p: 2,
                         }}>
-                        <RequestNhseSdeAccessButton sx={{ width: "90%" }} />
-                        <IndicateNhseSdeAccessButton sx={{ width: "90%" }} />
+                        {!loading && nhseSdeRequestStatus !== "APPROVED" && (
+                            <>
+                                <RequestNhseSdeAccessButton
+                                    color="greyCustom"
+                                    refetchCohort={refetch}
+                                />
+                                <IndicateNhseSdeAccessButton
+                                    sx={{ width: "100%" }}
+                                    refetchCohort={refetch}
+                                />
+                            </>
+                        )}
                     </Paper>
                 </Grid>
             </Grid>

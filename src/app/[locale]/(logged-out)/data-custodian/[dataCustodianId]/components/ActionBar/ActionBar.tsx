@@ -3,7 +3,6 @@
 import { Button } from "@mui/material";
 import { useTranslations } from "next-intl";
 import { usePathname } from "next/navigation";
-import { PageTemplatePromo } from "@/interfaces/Cms";
 import { SearchCategory } from "@/interfaces/Search";
 import { Team } from "@/interfaces/Team";
 import CohortDiscoveryButton from "@/components/CohortDiscoveryButton";
@@ -16,15 +15,10 @@ import { RouteName } from "@/consts/routeName";
 const TRANSLATION_PATH = "pages.dataCustodian.components.ActionBar";
 interface ActionBarProps {
     team: Pick<Team, "id" | "name" | "member_of">;
-    cohortDiscovery: PageTemplatePromo | null;
     cohortDiscoveryEnabled: boolean;
 }
 
-const ActionBar = ({
-    team,
-    cohortDiscovery,
-    cohortDiscoveryEnabled,
-}: ActionBarProps) => {
+const ActionBar = ({ team, cohortDiscoveryEnabled }: ActionBarProps) => {
     const path = usePathname();
     const { isLoggedIn } = useAuth();
     const showGeneralEnquiry = useGeneralEnquiry();
@@ -61,20 +55,15 @@ const ActionBar = ({
                         startIcon={<SpeechBubbleIcon />}>
                         {t("enquire")}
                     </Button>
-                    {cohortDiscovery?.template?.promofields?.ctaLink && (
-                        <CohortDiscoveryButton
-                            ctaLink={
-                                cohortDiscovery?.template?.promofields?.ctaLink
-                            }
-                            disabledOuter={!cohortDiscoveryEnabled}
-                            tooltipOverride={
-                                cohortDiscoveryEnabled
-                                    ? ""
-                                    : t("cohortDiscoveryDisabled")
-                            }
-                            showDatasetExplanatoryTooltip
-                        />
-                    )}
+                    <CohortDiscoveryButton
+                        disabledOuter={!cohortDiscoveryEnabled}
+                        tooltipOverride={
+                            cohortDiscoveryEnabled
+                                ? ""
+                                : t("cohortDiscoveryDisabled")
+                        }
+                        showDatasetExplanatoryTooltip
+                    />
                 </>
             }
         />

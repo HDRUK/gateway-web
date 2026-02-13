@@ -5,7 +5,6 @@ import { get } from "lodash";
 import { useTranslations } from "next-intl";
 import { usePathname, useSearchParams } from "next/navigation";
 import { KeyedMutator } from "swr";
-import { PageTemplatePromo } from "@/interfaces/Cms";
 import { Library, NewLibrary } from "@/interfaces/Library";
 import { SearchResultDataset } from "@/interfaces/Search";
 import Box from "@/components/Box";
@@ -38,7 +37,6 @@ interface ResultCardProps {
     libraryData: Library[];
     mutateLibraries: KeyedMutator<Library[]>;
     isCohortDiscoveryDisabled: boolean;
-    cohortDiscovery: PageTemplatePromo;
 }
 
 const TRANSLATION_PATH = "pages.search.components.ResultCard";
@@ -49,7 +47,6 @@ const ResultCard = ({
     libraryData,
     mutateLibraries,
     isCohortDiscoveryDisabled,
-    cohortDiscovery,
 }: ResultCardProps) => {
     const t = useTranslations(TRANSLATION_PATH);
     const pathname = usePathname();
@@ -167,10 +164,6 @@ const ResultCard = ({
                       label: "Start a Cohort Discovery query",
                       button: (
                           <CohortDiscoveryButton
-                              ctaLink={
-                                  cohortDiscovery?.template?.promofields
-                                      ?.ctaLink
-                              }
                               showDatasetExplanatoryTooltip
                               variant="link"
                               clickedAction={() => setAnchorElement(null)}
