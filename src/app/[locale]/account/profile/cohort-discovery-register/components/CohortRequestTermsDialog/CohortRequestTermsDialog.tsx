@@ -20,7 +20,6 @@ import InputWrapper from "@/components/InputWrapper";
 import ScrollContent from "@/components/ScrollContent";
 import CohortTermsSuccessDialog from "@/modules/CohortTermsSuccessDialog";
 import useDialog from "@/hooks/useDialog";
-import useModal from "@/hooks/useModal";
 import usePost from "@/hooks/usePost";
 import apis from "@/config/apis";
 import {
@@ -30,13 +29,10 @@ import {
 } from "@/config/forms/cohortTermsAccept";
 import { colors } from "@/config/theme";
 import { RouteName } from "@/consts/routeName";
-import { useFeatures } from "@/providers/FeatureProvider";
 
-const TRANSLATION_PATH_MODAL = "modals.CohortRequestSent";
 const TRANSLATION_PATH_DIALOG = "dialogs.CohortRequestTerms";
 
 const CohortRequestTermsDialog = () => {
-    const { isNhsSdeApplicationsEnabled } = useFeatures();
     const [navClicked, setNavClicked] = useState<number | null>(null);
     const [activeItem, setActiveItem] = useState(1);
     const { push } = useRouter();
@@ -54,8 +50,6 @@ const CohortRequestTermsDialog = () => {
 
     const hasAcceptedTerms = watch("hasAccepted");
 
-    const { showModal } = useModal();
-
     const { showDialog } = useDialog();
 
     const t = useTranslations("modules");
@@ -66,10 +60,12 @@ const CohortRequestTermsDialog = () => {
 
     const handleSuccess = () => {
         hideDialog();
-        push(
-            `/${RouteName.ACCOUNT}/${RouteName.PROFILE}/${RouteName.COHORT_DISCOVERY_REQUEST}`
-        );
-        showDialog(CohortTermsSuccessDialog);
+        showDialog(CohortTermsSuccessDialog, {
+            onClose: () =>
+                push(
+                    `/${RouteName.ACCOUNT}/${RouteName.PROFILE}/${RouteName.COHORT_DISCOVERY_REQUEST}`
+                ),
+        });
     };
 
     const onFormSubmit = async () => {

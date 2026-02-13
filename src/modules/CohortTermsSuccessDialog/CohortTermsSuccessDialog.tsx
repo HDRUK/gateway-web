@@ -14,13 +14,18 @@ import { useFeatures } from "@/providers/FeatureProvider";
 
 const TRANSLATION_PATH = "modules.CohortTermsSuccessDialog";
 
-const CohortTermsSuccessDialog = () => {
+const CohortTermsSuccessDialog = ({ onClose }: { onClose: () => void }) => {
     const { user } = useAuth();
     const t = useTranslations(TRANSLATION_PATH);
     const { isNhsSdeApplicationsEnabled } = useFeatures();
     const { nhseSdeRequestStatus, isLoading } = useCohortStatus(user?.id);
 
     const { hideDialog } = useDialog();
+
+    const handleCloseDialog = () => {
+        onClose && onClose();
+        hideDialog();
+    };
 
     const showNhsInfo = isNhsSdeApplicationsEnabled && !nhseSdeRequestStatus;
 
@@ -30,7 +35,8 @@ const CohortTermsSuccessDialog = () => {
 
     return (
         <Dialog
-            onClose={() => hideDialog()}
+            onClose={() => handleCloseDialog()}
+            title=""
             maxWidth={"tablet"}
             fullWidth={false}
             showCloseButton>
@@ -75,13 +81,15 @@ const CohortTermsSuccessDialog = () => {
                         <Button
                             variant="outlined"
                             color="secondary"
-                            onClick={() => hideDialog()}>
+                            onClick={() => {
+                                handleCloseDialog();
+                            }}>
                             {t("maybeLater")}
                         </Button>
 
                         <RequestNhseSdeAccessButton
                             label={t("nhsButtonLabel")}
-                            action={() => hideDialog()}
+                            action={() => handleCloseDialog()}
                         />
                     </Box>
                 </MuiDialogActions>

@@ -39,6 +39,7 @@ export interface CohortDiscoveryButtonProps {
     disabledOuter?: boolean;
     clickedAction?: () => void;
     onRedirect?: () => void;
+    refetchCohort?: () => void;
 }
 
 const CohortDiscoveryButton = (props: CohortDiscoveryButtonProps) => {
@@ -141,20 +142,27 @@ const CohortDiscoveryButton = (props: CohortDiscoveryButtonProps) => {
 
     if (!isLoggedIn) {
         return (
-            <Button
-                onClick={() => {
-                    showDialog(ProvidersDialog, {
-                        isProvidersDialog: true,
-                        redirectPath: props.hrefOverride
-                            ? props.hrefOverride
-                            : `/${RouteName.ACCOUNT}/${RouteName.PROFILE}/${RouteName.COHORT_DISCOVERY_REQUEST}`,
-                    });
-                }}
-                data-testid={DATA_TEST_ID}
-                color={color}
-                {...props}>
-                {t("buttonText")}
-            </Button>
+            <Box component="span" sx={{ p: 0, ...props.wrapperSx }}>
+                <Button
+                    onClick={() => {
+                        showDialog(ProvidersDialog, {
+                            isProvidersDialog: true,
+                            redirectPath: props.hrefOverride
+                                ? props.hrefOverride
+                                : `/${RouteName.ACCOUNT}/${RouteName.PROFILE}/${RouteName.COHORT_DISCOVERY_REQUEST}`,
+                        });
+                    }}
+                    data-testid={DATA_TEST_ID}
+                    color={color}
+                    {...props}
+                    sx={{ width: "100%" }}>
+                    {isLoading || isLoadingAuth ? (
+                        <CircularProgress size={20} color="inherit" />
+                    ) : (
+                        t("buttonText")
+                    )}
+                </Button>
+            </Box>
         );
     }
 
