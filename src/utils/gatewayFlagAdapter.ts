@@ -15,12 +15,17 @@ const getFeatures = async (): Promise<Record<string, boolean>> => {
         const cookieStore = await cookies();
         const jwtToken = cookieStore?.get(config.JWT_COOKIE)?.value;
 
-        //get the features for the current jwt user using /me
-        const res = await fetch(`${apis.features}/me`, {
-            headers: {
-                Authorization: `Bearer ${jwtToken}`,
-            },
+        const hasToken = Boolean(jwtToken);
+
+        const url = hasToken ? `${apis.features}/me` : `${apis.features}`;
+
+        const res = await fetch(url, {
+            headers: hasToken
+                ? { Authorization: `Bearer ${jwtToken}` }
+                : undefined,
+            cache: "no-store",
         });
+
         if (!res.ok) {
             console.error(`Failed to fetch feature flags: ${res.statusText}`);
             return {};
