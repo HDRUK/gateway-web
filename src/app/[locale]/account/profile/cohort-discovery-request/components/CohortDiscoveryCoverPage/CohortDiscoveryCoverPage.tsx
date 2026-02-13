@@ -106,7 +106,6 @@ export default function CohortDiscoveryCoverPage() {
                             color="greyCustom"
                             hrefOverride={`/${RouteName.ACCOUNT}/${RouteName.PROFILE}/${RouteName.COHORT_DISCOVERY_REGISTER}`}
                             wrapperSx={{ width: "100%" }}
-                            refetchCohort={refetch}
                         />
                     </Paper>
                 </Grid>

@@ -39,7 +39,6 @@ export interface CohortDiscoveryButtonProps {
     disabledOuter?: boolean;
     clickedAction?: () => void;
     onRedirect?: () => void;
-    refetchCohort?: () => void;
 }
 
 const CohortDiscoveryButton = (props: CohortDiscoveryButtonProps) => {
