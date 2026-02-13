@@ -1,18 +1,14 @@
 "use client"
 
-import { Box, Divider, Grid, Paper, Stack, Typography } from "@mui/material"
+import { Box, Collapse, Divider, Grid, Paper, Stack, Typography } from "@mui/material"
 import { useTranslations } from "next-intl";
 import Button from "@/components/Button";
-import BoxContainer from "@/components/BoxContainer";
 import DarStatusTracker from "@/components/DarStatusTracker";
 import { DataAccessRequestApplication } from "@/interfaces/DataAccessRequestApplication";
 import { DarApplicationApprovalStatus, DarApplicationStatus } from "@/consts/dataAccess";
-import { useMemo } from "react";
-import { DarApplication } from "@/interfaces/DataAccessRequest";
-import { getUser } from "@/utils/api";
+import { useMemo, useState } from "react";
 import useGet from "@/hooks/useGet";
 import apis from "@/config/apis";
-import { User } from "@/interfaces/User";
 import Chip from "@/components/Chip";
 import { formatDate } from "@/utils/date";
 
@@ -23,22 +19,24 @@ interface DarFormHeaderProps {
     applicationId: string;
     teamId?: string;
     userId?: string;
+    saveDraftOnClick: () => Promise<void> | void | undefined;
 }
 
 const DarFormHeader = ({
     applicationId,
     teamId,
     userId,
+    saveDraftOnClick,
 } : DarFormHeaderProps) => {
 
     const idTitle = `DAR Application ${applicationId}`;
     const t = useTranslations(TRANSLATION_PATH);
 
     const darApiPath = teamId ? `${apis.teamsV1Url}/${teamId}/dar/applications` : `${apis.usersV1Url}/${userId}/dar/applications`;
+    const url = `${darApiPath}/${applicationId}/header`;
+    console.log("url:", url);
+    const { data, isLoading } = useGet<DataAccessRequestApplication>(url);
 
-    const { data, isLoading } = useGet<DataAccessRequestApplication>(`${darApiPath}/${applicationId}`);
-    console.log(`${darApiPath}/${applicationId}`);
-    console.log(data);
     const statuses = teamId
                         ? [
                                 DarApplicationStatus.SUBMITTED,
@@ -60,9 +58,9 @@ const DarFormHeader = ({
         [data?.teams, teamId]
     );
 
-    console.log(data?.datasets);
-
     const datasetChips = data?.datasets?.map( (x) => <Chip label={x.dataset_title} />)
+
+    const [ visible, setVisible ] = useState<boolean>(false);
 
     const typographyDisplay = [
         { label: t("primaryInvestigator"), value: data?.primary_applicant?.name },
@@ -72,7 +70,7 @@ const DarFormHeader = ({
     ]
 
     return (
-        <Paper sx= {{ padding: 2 }}>
+        <Paper sx= {{ padding: 2 }} onMouseOver={() => setVisible(true)}   onMouseLeave={() => setVisible(false)}>
             <Grid container spacing={1} >
                 <Grid size={2}>
                     <Typography variant="h2" color="primary">{idTitle}</Typography>
@@ -82,33 +80,37 @@ const DarFormHeader = ({
                 </Grid>
             </Grid>
 
-            <Box>
-                <Grid container spacing={1}>
-                    <Grid size={1}>
-                        {typographyDisplay.map( ({label, value}) => 
-                            value && (<Typography color="grey">{label}</Typography>)
-                        )}
+            <Collapse in={visible}>
+                <Box>
+                    <Grid container spacing={1}>
+                        <Grid size={1}>
+                            {typographyDisplay.map( ({label, value}) => 
+                                value && (<Typography color="grey">{label}</Typography>)
+                            )}
+                        </Grid>
+                        <Grid size={1}>
+                            {typographyDisplay.map( ({label, value}) => 
+                                value && (<Typography>{value}</Typography>)
+                            )}
+                        </Grid>
+                        <Grid sx={{ ml: 'auto', mr: 2 }}>                        
+                            <DarStatusTracker
+                                submissionStatus={data?.submission_status || DarApplicationStatus.DRAFT }
+                                approvalStatus={approvalStatus}
+                                statuses={statuses}
+                            />
+                        </Grid>
                     </Grid>
-                    <Grid size={1}>
-                        {typographyDisplay.map( ({label, value}) => 
-                            value && (<Typography>{value}</Typography>)
-                        )}
-                    </Grid>
-                    <Grid sx={{ ml: 'auto', mr: 2 }}>                        
-                        <DarStatusTracker
-                            submissionStatus={data?.submission_status}
-                            approvalStatus={approvalStatus}
-                            statuses={statuses}
-                        />
-                    </Grid>
-                </Grid>
-            </Box>
+                </Box>
+            </Collapse>
 
             <Divider />
             <Stack direction="row" spacing={1} sx={{ my: 2, ml: 2 }}>
-                <Button color="greyCustom">{t("saveDraft")}</Button>
-                <Button variant="outlined" color="secondary">{t("assignWorkflow")}</Button>
-                <Button variant="outlined" color="secondary">{t("applicationStatus")}</Button>
+                <Button color="greyCustom" onClick={saveDraftOnClick}>{t("saveDraft")}</Button>
+                <Collapse in={visible} orientation="horizontal">
+                    <Button variant="outlined" color="secondary">{t("assignWorkflow")}</Button>
+                    <Button variant="outlined" color="secondary">{t("applicationStatus")}</Button>
+                </Collapse>
                 <Button color="primary">{t("submitApplication")}</Button>
             </Stack>
             <Divider />
