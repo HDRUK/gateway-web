@@ -15,6 +15,7 @@ const getFeatures = async (): Promise<Record<string, boolean>> => {
         const cookieStore = await cookies();
         const jwtToken = cookieStore?.get(config.JWT_COOKIE)?.value;
         const hasToken = Boolean(jwtToken);
+        //get my feature flags in logged in, otherwise get global features
         const url = hasToken ? `${apis.features}/me` : `${apis.features}`;
 
         const res = await fetch(url, {
