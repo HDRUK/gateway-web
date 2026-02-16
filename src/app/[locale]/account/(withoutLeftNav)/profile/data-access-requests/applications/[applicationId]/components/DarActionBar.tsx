@@ -22,7 +22,7 @@ interface DarFormHeaderProps {
     saveDraftOnClick: () => Promise<void> | void | undefined;
 }
 
-const DarFormHeader = ({
+const DarActionBar = ({
     applicationId,
     teamId,
     userId,
@@ -117,4 +117,4 @@ const DarFormHeader = ({
         </Paper>);
 }
 
-export { DarFormHeader };
+export { DarActionBar };
