@@ -51,6 +51,8 @@ const CohortDiscoveryButton = (props: CohortDiscoveryButtonProps) => {
     const { requestStatus, isLoading } = useCohortStatus(user?.id);
 
     const t = useTranslations(TRANSLATION_PATH_CTAOVERRIDE);
+    const isDualServiceEnabled =
+        isRQuestEnabled && isCohortDiscoveryServiceEnabled;
 
     const content = useMemo(
         () => (
@@ -91,6 +93,16 @@ const CohortDiscoveryButton = (props: CohortDiscoveryButtonProps) => {
     );
 
     const handleClick = useCallback(() => {
+        if (isDualServiceEnabled) {
+            showModal({
+                title: "Choose which Cohort Discovery Service",
+                content,
+                showConfirm: false,
+                showCancel: false,
+            });
+            return;
+        }
+
         if (requestStatus) {
             if (requestStatus === "APPROVED") {
                 showModal({
@@ -115,6 +127,7 @@ const CohortDiscoveryButton = (props: CohortDiscoveryButtonProps) => {
             );
         }
     }, [
+        isDualServiceEnabled,
         requestStatus,
         showModal,
         content,
@@ -165,7 +178,7 @@ const CohortDiscoveryButton = (props: CohortDiscoveryButtonProps) => {
         );
     }
 
-    if (isRQuestEnabled && isCohortDiscoveryServiceEnabled) {
+    if (isDualServiceEnabled) {
         return (
             <Tooltip
                 title={
