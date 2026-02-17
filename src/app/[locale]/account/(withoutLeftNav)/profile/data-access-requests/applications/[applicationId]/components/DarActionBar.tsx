@@ -85,12 +85,14 @@ const DarActionBar = ({
             <Collapse in={visible}>
                 <Box>
                     <Grid container spacing={1} direction="row">
-                        {typographyDisplay.map(({ label, value }) => (
-                            <Grid size={2} key={label}>
-                            <Typography variant="caption" color="text.secondary">{label}</Typography>
-                            <Typography>{value ?? "—"}</Typography>
-                            </Grid>
-                        ))}
+                        <Grid container spacing={1} direction="column">
+                            {typographyDisplay.map(({ label, value }) => (
+                                <Grid size={2} key={label} direction="column">
+                                    <Typography variant="caption" color="text.secondary">{label}</Typography>
+                                    <Typography>{value ?? "—"}</Typography>
+                                </Grid>
+                            ))}
+                        </Grid>
                         <Grid sx={{ ml: 'auto', mr: 2 }}>                        
                             <DarStatusTracker
                                 submissionStatus={data?.submission_status || DarApplicationStatus.DRAFT }
