@@ -6,7 +6,6 @@ import { Divider, Stack, Tooltip } from "@mui/material";
 import { uniq } from "lodash";
 import { useTranslations } from "next-intl";
 import { usePathname } from "next/navigation";
-import { PageTemplatePromo } from "@/interfaces/Cms";
 import { SelectedLibrary } from "@/interfaces/Library";
 import Box from "@/components/Box";
 import Button from "@/components/Button";
@@ -29,14 +28,9 @@ const TRANSLATION_PATH_DAR =
 interface RightPanelProps {
     selected: SelectedLibrary;
     handleRemove: (id: string) => void;
-    cohortDiscovery: PageTemplatePromo;
 }
 
-const RightPanel = ({
-    selected,
-    handleRemove,
-    cohortDiscovery,
-}: RightPanelProps) => {
+const RightPanel = ({ selected, handleRemove }: RightPanelProps) => {
     const t = useTranslations(TRANSLATION_PATH);
     const tDar = useTranslations(TRANSLATION_PATH_DAR);
     const { showSidebar } = useSidebar();
@@ -261,9 +255,6 @@ const RightPanel = ({
                                 !selectedDatasets.every(
                                     dataset => dataset.cohortEnabled
                                 )
-                            }
-                            ctaLink={
-                                cohortDiscovery?.template?.promofields?.ctaLink
                             }
                             showDatasetExplanatoryTooltip
                             tooltipOverride={

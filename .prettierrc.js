@@ -21,7 +21,7 @@ module.exports = {
     ],
     overrides: [
         {
-            files: ["*.yml", "*.yaml", "*.json"],
+            files: ["*.yml", "*.yaml"],
             options: {
                 tabWidth: 2,
             },

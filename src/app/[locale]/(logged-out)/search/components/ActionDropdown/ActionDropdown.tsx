@@ -6,7 +6,6 @@ import { get } from "lodash";
 import { useTranslations } from "next-intl";
 import { usePathname, useSearchParams } from "next/navigation";
 import { KeyedMutator } from "swr";
-import { PageTemplatePromo } from "@/interfaces/Cms";
 import { Library } from "@/interfaces/Library";
 import { SearchResultDataset } from "@/interfaces/Search";
 import CohortDiscoveryButton from "@/components/CohortDiscoveryButton";
@@ -32,7 +31,6 @@ interface ResultRowProps {
     showLibraryModal: (props: { datasetId: number }) => void;
     mutateLibraries: KeyedMutator<Library[]>;
     isCohortDiscoveryDisabled: boolean;
-    cohortDiscovery: PageTemplatePromo;
 }
 
 const TRANSLATION_PATH = `${PAGES}.${SEARCH}.${COMPONENTS}.ResultCard`;
@@ -44,7 +42,6 @@ const ActionDropdown = ({
     showLibraryModal,
     mutateLibraries,
     isCohortDiscoveryDisabled,
-    cohortDiscovery,
 }: ResultRowProps) => {
     const title = get(result, "metadata.summary.title");
     const t = useTranslations(TRANSLATION_PATH);
@@ -137,10 +134,6 @@ const ActionDropdown = ({
                       label: "Start a Cohort Discovery query",
                       button: (
                           <CohortDiscoveryButton
-                              ctaLink={
-                                  cohortDiscovery?.template?.promofields
-                                      ?.ctaLink
-                              }
                               showDatasetExplanatoryTooltip
                               variant="link"
                           />

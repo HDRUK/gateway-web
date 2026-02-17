@@ -14,7 +14,7 @@ jest.mock("@/hooks/useAuth", () => ({
 
 describe("CtaOverride", () => {
     it("should display cta link title text", () => {
-        render(<CtaOverride ctaLink={MOCK_CTA_LINK} />);
+        render(<CtaOverride />);
         expect(
             screen.getByTestId("cohort-discovery-button")
         ).toBeInTheDocument();
