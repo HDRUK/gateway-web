@@ -20,6 +20,7 @@ interface DarFormHeaderProps {
     teamId?: string;
     userId?: string;
     saveDraftOnClick: () => Promise<void> | void | undefined;
+    submitOnClick: () => Promise<void> | void | undefined;
 }
 
 const DarActionBar = ({
@@ -27,6 +28,7 @@ const DarActionBar = ({
     teamId,
     userId,
     saveDraftOnClick,
+    submitOnClick,
 } : DarFormHeaderProps) => {
 
     const idTitle = `DAR Application ${applicationId}`;
@@ -82,17 +84,13 @@ const DarActionBar = ({
 
             <Collapse in={visible}>
                 <Box>
-                    <Grid container spacing={1}>
-                        <Grid size={1}>
-                            {typographyDisplay.map( ({label, value}) => 
-                                value && (<Typography color="grey">{label}</Typography>)
-                            )}
-                        </Grid>
-                        <Grid size={1}>
-                            {typographyDisplay.map( ({label, value}) => 
-                                value && (<Typography>{value}</Typography>)
-                            )}
-                        </Grid>
+                    <Grid container spacing={1} direction="row">
+                        {typographyDisplay.map(({ label, value }) => (
+                            <Grid size={2} key={label}>
+                            <Typography variant="caption" color="text.secondary">{label}</Typography>
+                            <Typography>{value ?? "—"}</Typography>
+                            </Grid>
+                        ))}
                         <Grid sx={{ ml: 'auto', mr: 2 }}>                        
                             <DarStatusTracker
                                 submissionStatus={data?.submission_status || DarApplicationStatus.DRAFT }
@@ -105,13 +103,15 @@ const DarActionBar = ({
             </Collapse>
 
             <Divider />
-            <Stack direction="row" spacing={1} sx={{ my: 2, ml: 2 }}>
+            <Stack direction="row" spacing={1} alignItems="center" sx={{ my: 2, ml: 2 }}>
                 <Button color="greyCustom" onClick={saveDraftOnClick}>{t("saveDraft")}</Button>
-                <Collapse in={visible} orientation="horizontal">
-                    <Button variant="outlined" color="secondary">{t("assignWorkflow")}</Button>
-                    <Button variant="outlined" color="secondary">{t("applicationStatus")}</Button>
-                </Collapse>
-                <Button color="primary">{t("submitApplication")}</Button>
+                    <Collapse in={visible} orientation="horizontal" sx={{ display: 'flex', alignItems: 'center' }}>
+                        <Box sx={{ display: 'flex', gap: 1, whiteSpace: 'nowrap', overflow: 'hidden' }}>
+                            <Button variant="outlined" color="secondary">{t("assignWorkflow")}</Button>
+                            <Button variant="outlined" color="secondary">{t("applicationStatus")}</Button>
+                        </Box>
+                    </Collapse>
+                <Button color="primary" onClick={submitOnClick}>{t("submitApplication")}</Button>
             </Stack>
             <Divider />
         </Paper>);

@@ -585,7 +585,7 @@ const ApplicationSection = ({
                         display: "flex",
                         flexDirection: "column",
                     }}>
-                    <DarActionBar applicationId={applicationId} teamId={teamId} userId={userId} saveDraftOnClick={handleSaveAsDraft} />
+                    <DarActionBar applicationId={applicationId} teamId={teamId} userId={userId} saveDraftOnClick={handleSaveAsDraft} submitOnClick={handleSubmit(handleSave)}/>
 
                     {parentSections.find(section => section.id === sectionId)
                         ?.name !== messageSection.name && (
