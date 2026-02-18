@@ -67,10 +67,10 @@ import { updateDarApplicationAnswersAction } from "@/app/actions/updateDarApplic
 import { updateDarApplicationTeamAction } from "@/app/actions/updateDarApplicationTeam";
 import { updateDarApplicationUserAction } from "@/app/actions/updateDarApplicationUser";
 import notFound from "@/app/not-found";
+import { DarActionBar } from "./DarActionBar";
 import DarFieldArray from "./DarFieldArray";
 import DarFormBanner from "./DarFormBanner";
 import DarMessages from "./DarMessages";
-import { DarActionBar } from "./DarActionBar";
 
 const TRANSLATION_PATH = "pages.account.team.dar.application.create";
 const PROJECT_TITLE_FIELD = "project_title";
@@ -563,7 +563,6 @@ const ApplicationSection = ({
                     flexDirection: "row",
                     p: 0,
                 }}>
-
                 <Box
                     sx={{
                         flex: 1,
@@ -585,7 +584,15 @@ const ApplicationSection = ({
                         display: "flex",
                         flexDirection: "column",
                     }}>
-                    <DarActionBar applicationId={applicationId} teamId={teamId} userId={userId} saveDraftOnClick={handleSaveAsDraft} submitOnClick={handleSubmit(handleSave)}/>
+                    <DarActionBar
+                        applicationId={applicationId}
+                        teamId={teamId}
+                        userId={userId}
+                        saveDraftOnClick={handleSaveAsDraft}
+                        submitOnClick={handleSubmit(handleSave)}
+                        isResearcher={isResearcher}
+                        manageApplicationOnStatus={handleManageApplication}
+                    />
 
                     {parentSections.find(section => section.id === sectionId)
                         ?.name !== messageSection.name && (
