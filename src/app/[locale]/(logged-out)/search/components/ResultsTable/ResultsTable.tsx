@@ -3,7 +3,6 @@ import { createColumnHelper } from "@tanstack/react-table";
 import { get } from "lodash";
 import { useTranslations } from "next-intl";
 import { KeyedMutator } from "swr";
-import { PageTemplatePromo } from "@/interfaces/Cms";
 import { Library } from "@/interfaces/Library";
 import { SearchResultDataset } from "@/interfaces/Search";
 import EllipsisLineLimit from "@/components/EllipsisLineLimit";
@@ -23,7 +22,6 @@ import ActionDropdown from "../ActionDropdown";
 interface ResultTableProps {
     results: SearchResultDataset[];
     showLibraryModal: (props: { datasetId: number }) => void;
-    cohortDiscovery: PageTemplatePromo;
 }
 
 const CONFORMS_TO_PATH = "metadata.accessibility.formatAndStandards.conformsTo";
@@ -43,14 +41,12 @@ const getColumns = ({
     showLibraryModal,
     mutateLibraries,
     isCohortDiscoveryDisabled,
-    cohortDiscovery,
 }: {
     translations: { [id: string]: string };
     libraryData?: Library[];
     showLibraryModal: (props: { datasetId: number }) => void;
     mutateLibraries: KeyedMutator<Library[]>;
     isCohortDiscoveryDisabled: boolean;
-    cohortDiscovery: PageTemplatePromo;
 }) => [
     columnHelper.display({
         id: "actions",
@@ -64,7 +60,6 @@ const getColumns = ({
                         showLibraryModal={showLibraryModal}
                         mutateLibraries={mutateLibraries}
                         isCohortDiscoveryDisabled={isCohortDiscoveryDisabled}
-                        cohortDiscovery={cohortDiscovery}
                     />
                 </div>
             );
@@ -276,11 +271,7 @@ const getColumns = ({
 ];
 
 const RESULTS_TABLE_TRANSLATION_PATH = "pages.search.components.ResultsTable";
-const ResultTable = ({
-    results,
-    showLibraryModal,
-    cohortDiscovery,
-}: ResultTableProps) => {
+const ResultTable = ({ results, showLibraryModal }: ResultTableProps) => {
     const t = useTranslations(RESULTS_TABLE_TRANSLATION_PATH);
     const { isLoggedIn, user } = useAuth();
 
@@ -333,7 +324,6 @@ const ResultTable = ({
                         showLibraryModal,
                         mutateLibraries,
                         isCohortDiscoveryDisabled,
-                        cohortDiscovery,
                     })}
                     rows={results}
                 />

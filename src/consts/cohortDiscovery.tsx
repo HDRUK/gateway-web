@@ -1,14 +1,14 @@
 const statusMapping = {
     APPROVED: "secondary",
     REJECTED: "warning",
-    PENDING: "primary",
+    PENDING: "greyCustom",
     BANNED: "error",
     SUSPENDED: "warningCustom",
     EXPIRED: "default",
 };
 
 const NHSSDEStatusMapping = {
-    "IN PROCESS": "yellowCustom",
+    "IN PROCESS": "greyCustom",
     "APPROVAL REQUESTED": "primary",
     APPROVED: "secondary",
     REJECTED: "warning",

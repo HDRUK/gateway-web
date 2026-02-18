@@ -25,7 +25,6 @@ import {
 import Cookies from "js-cookie";
 import { useTranslations } from "next-intl";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
-import { PageTemplatePromo } from "@/interfaces/Cms";
 import { Filter } from "@/interfaces/Filter";
 import { Library } from "@/interfaces/Library";
 import {
@@ -151,7 +150,6 @@ const EUROPE_PMC_SOURCE_FIELD = "FED";
 
 interface SearchProps {
     filters: Filter[];
-    cohortDiscovery: PageTemplatePromo;
     schema: V4Schema;
 }
 
@@ -169,7 +167,7 @@ const filterSidebarStyles = {
     },
 };
 
-const Search = ({ filters, cohortDiscovery, schema }: SearchProps) => {
+const Search = ({ filters, schema }: SearchProps) => {
     const { showDialog, hideDialog } = useDialog();
     const [isDownloading, setIsDownloading] = useState(false);
     const [hasSearched, setHasSearched] = useState(false);
@@ -578,7 +576,6 @@ const Search = ({ filters, cohortDiscovery, schema }: SearchProps) => {
                         mutateLibraries={mutateLibraries}
                         libraryData={libraryData}
                         isCohortDiscoveryDisabled={isCohortDiscoveryDisabled}
-                        cohortDiscovery={cohortDiscovery}
                     />
                 );
             case SearchCategory.PUBLICATIONS:
@@ -625,7 +622,6 @@ const Search = ({ filters, cohortDiscovery, schema }: SearchProps) => {
             <ResultsTable
                 results={data?.list as SearchResultDataset[]}
                 showLibraryModal={showLibraryModal}
-                cohortDiscovery={cohortDiscovery}
             />
         ) : (
             <ResultsList
@@ -634,6 +630,15 @@ const Search = ({ filters, cohortDiscovery, schema }: SearchProps) => {
                     queryParams.type === SearchCategory.DATA_CUSTODIANS
                         ? "tiled"
                         : "list"
+                }
+                maxDesktopColumns={
+                    queryParams.type === SearchCategory.COLLECTIONS
+                        ? 4
+                        : undefined
+                }
+                fillDanglingSingleCard={
+                    queryParams.type === SearchCategory.COLLECTIONS ||
+                    queryParams.type === SearchCategory.DATA_CUSTODIANS
                 }>
                 {data?.list.map(result => renderResultCard(result))}
             </ResultsList>
@@ -1429,7 +1434,13 @@ const Search = ({ filters, cohortDiscovery, schema }: SearchProps) => {
                                             aria-describedby="result-summary"
                                             aria-label="results list"
                                             sx={{
-                                                p: `0 ${theme.spacing(2)}`,
+                                                p:
+                                                    queryParams.type ===
+                                                    SearchCategory.COLLECTIONS
+                                                        ? 0
+                                                        : `0 ${theme.spacing(
+                                                              2
+                                                          )}`,
                                             }}>
                                             {renderResults()}
                                         </Box>
