@@ -75,7 +75,7 @@ const DarActionBar = ({
     );
 
     const datasetChips = data?.datasets?.map(x => (
-        <Chip label={x.dataset_title} />
+        <Chip label={x.dataset_title} key={x.dataset_id} />
     ));
     const [visible, setVisible] = useState<boolean>(false);
 
@@ -149,23 +149,23 @@ const DarActionBar = ({
                 spacing={1}
                 alignItems="center"
                 sx={{ my: 2, ml: 2 }}>
-                {isResearcher
-                    ? [
-                          <Button color="greyCustom" onClick={saveDraftOnClick}>
-                              {t("saveDraft")}
-                          </Button>,
-                          <Button color="primary" onClick={submitOnClick}>
-                              {t("submitApplication")}
-                          </Button>,
-                      ]
-                    : [
-                          <Button
-                              variant="outlined"
-                              color="secondary"
-                              onClick={manageApplicationOnStatus}>
-                              {t("applicationStatus")}
-                          </Button>,
-                      ]}
+                    {isResearcher
+                        ? [
+                            <Button color="greyCustom" onClick={saveDraftOnClick}>
+                                {t("saveDraft")}
+                            </Button>,
+                            <Button color="primary" onClick={submitOnClick}>
+                                {t("submitApplication")}
+                            </Button>,
+                        ]
+                        : [
+                            <Button
+                                variant="outlined"
+                                color="secondary"
+                                onClick={manageApplicationOnStatus}>
+                                {t("applicationStatus")}
+                            </Button>,]
+                    }
             </Stack>
             <Divider />
         </Paper>
