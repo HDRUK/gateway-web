@@ -154,11 +154,9 @@ const DarActionBar = ({
                         <Button color="greyCustom" onClick={saveDraftOnClick}>
                             {t("saveDraft")}
                         </Button>
-                        ,
                         <Button color="primary" onClick={submitOnClick}>
                             {t("submitApplication")}
                         </Button>
-                        ,
                     </>
                 ) : (
                     <Button
