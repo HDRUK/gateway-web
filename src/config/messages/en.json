@@ -762,7 +762,7 @@
                 },
                 "integrations": {
                     "apiManagement": {
-                        "howTo": "How to setup and manage integrations",
+                        "howTo": "How to setup and manage custom integrations",
                         "cannotCreate": "Please note that HDR UK cannot create Custom Integrations on behalf of users.",
                         "create": {
                             "title": "Custom Integrations",
@@ -794,6 +794,9 @@
                         "authSettingsTitle": "Authentication settings",
                         "authSettingsIntro": "These authentication credentials determine how your API interacts with HDR UK Gateway and its permissions.",
                         "generateClientId": "Generate new client ID"
+                    },
+                    "integrations": {
+                        "howTo": "How to setup and manage predefined integrations"
                     }
                 },
                 "dar": {

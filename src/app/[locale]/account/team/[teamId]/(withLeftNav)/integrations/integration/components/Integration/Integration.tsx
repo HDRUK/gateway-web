@@ -5,13 +5,13 @@ import ImageMediaCard from "@/components/ImageMediaCard";
 import { StaticImages } from "@/config/images";
 import { RouteName } from "@/consts/routeName";
 import { Button } from "@mui/material";
-import { INTEGRATION_TESTING_URL } from "@/config/hrefs";
+import { PREDEFINED_INTEGRATION_OVERVIEW_URL } from "@/config/hrefs";
 import { useTranslations } from "next-intl";
 import { DescriptionOutlinedIcon } from "@/consts/icons";
 import Link from "@/components/Link";
 
 const Integration = ({ teamId }: { teamId: string }) => {
-    const TRANSLATION_PATH = `pages.account.team.integrations.apiManagement`;
+    const TRANSLATION_PATH = `pages.account.team.integrations.integrations`;
     const t = useTranslations(TRANSLATION_PATH);
     
     return (
@@ -22,7 +22,7 @@ const Integration = ({ teamId }: { teamId: string }) => {
                 flexDirection: "column",
                 alignItems: "center",
             }}>            
-                <Link passHref target="_blank" href={INTEGRATION_TESTING_URL}>
+                <Link passHref target="_blank" href={PREDEFINED_INTEGRATION_OVERVIEW_URL}>
                 <Button
                     sx={{ fontSize: 16 }}
                     startIcon={
