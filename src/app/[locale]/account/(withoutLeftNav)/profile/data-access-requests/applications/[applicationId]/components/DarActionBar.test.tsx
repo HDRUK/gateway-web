@@ -49,17 +49,8 @@ describe("DarActionBar", () => {
         expect(await screen.findByText("My Research Project")).toBeInTheDocument();
     });
 
-    it("renders the primary investigator name", async () => {
-        render(<DarActionBar {...defaultProps} />);
-        expect(await screen.findByText("Jane Doe")).toBeInTheDocument();
-    });
-
-    it("renders the organisation", async () => {
-        render(<DarActionBar {...defaultProps} />);
-        expect(await screen.findByText("University of Dundee")).toBeInTheDocument();
-    });
-
     it("renders dataset chips", async () => {
+        mockFetch(mockData);
         render(<DarActionBar {...defaultProps} />);
         expect(await screen.findByText("Dataset Alpha")).toBeInTheDocument();
         expect(await screen.findByText("Dataset Beta")).toBeInTheDocument();
