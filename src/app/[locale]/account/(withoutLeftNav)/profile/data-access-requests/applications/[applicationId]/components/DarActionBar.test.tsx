@@ -25,40 +25,43 @@ const mockData = {
     teams: [{ team_id: 1, approval_status: "APPROVED" }],
 };
 
-jest.mock("@/hooks/useGet", () => ({
-    __esModule: true,
-    default: jest.fn(),
-}));
-
-const mockUseGet = useGet as jest.Mock;
+const mockFetch = (data: unknown, ok = true) => {
+    global.fetch = jest.fn(() =>
+        Promise.resolve({
+            ok,
+            headers: {
+                get: () => "application/json",
+            },
+            json: () => Promise.resolve({ data }),
+        })
+    ) as jest.Mock;
+};
 
 describe("DarActionBar", () => {
-    beforeEach(() => {
-        mockUseGet.mockReturnValue({ data: mockData });
-    });
 
     afterEach(() => {
         jest.clearAllMocks();
     });
 
-    it("renders the project title", () => {
+    it("renders the project title", async () => {
+        mockFetch(mockData);
         render(<DarActionBar {...defaultProps} />);
-        expect(screen.getByText("My Research Project")).toBeInTheDocument();
+        expect(await screen.findByText("My Research Project")).toBeInTheDocument();
     });
 
-    it("renders the primary investigator name", () => {
+    it("renders the primary investigator name", async () => {
         render(<DarActionBar {...defaultProps} />);
-        expect(screen.getByText("Jane Doe")).toBeInTheDocument();
+        expect(await screen.findByText("Jane Doe")).toBeInTheDocument();
     });
 
-    it("renders the organisation", () => {
+    it("renders the organisation", async () => {
         render(<DarActionBar {...defaultProps} />);
-        expect(screen.getByText("University of Dundee")).toBeInTheDocument();
+        expect(await screen.findByText("University of Dundee")).toBeInTheDocument();
     });
 
-    it("renders dataset chips", () => {
+    it("renders dataset chips", async () => {
         render(<DarActionBar {...defaultProps} />);
-        expect(screen.getByText("Dataset Alpha")).toBeInTheDocument();
-        expect(screen.getByText("Dataset Beta")).toBeInTheDocument();
+        expect(await screen.findByText("Dataset Alpha")).toBeInTheDocument();
+        expect(await screen.findByText("Dataset Beta")).toBeInTheDocument();
     });
 })
