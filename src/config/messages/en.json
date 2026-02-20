@@ -1734,6 +1734,16 @@
             "send": "Send",
             "status": "Status"
         },
+        "DataAccessHeader": {
+            "saveDraft": "Save draft",
+            "assignWorkflow": "Assign a workflow",
+            "applicationStatus": "Change application status",
+            "submitApplication": "Submit application",
+            "primaryInvestigator": "Primary Investigator",
+            "organisation": "Organisation",
+            "datasets": "Datasets",
+            "lastActivity":"Last activity"
+        },
         "DocumentExchange": {
             "upload": "Upload",
             "uploadInfo": "Upload your completed form as part of your application.",
