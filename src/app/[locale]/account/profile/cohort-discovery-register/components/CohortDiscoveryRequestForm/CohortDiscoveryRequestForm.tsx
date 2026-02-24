@@ -63,10 +63,6 @@ const CohortDiscoveryRequestForm = ({
         showDialog(CohortRequestTermsDialog, { cmsContent });
     };
 
-    const handleCancel = () => {
-        push(`/${RouteName.ABOUT}/${RouteName.COHORT_DISCOVERY}`);
-    };
-
     const [termsAccepted, setTermsAccepted] = useState<boolean>(false);
 
     useEffect(() => {
@@ -98,10 +94,7 @@ const CohortDiscoveryRequestForm = ({
     ]);
 
     return !isUserLoading && !isAccessLoading ? (
-        <BoxContainer
-            sx={{
-                p: 4,
-            }}>
+        <BoxContainer>
             <Paper sx={{ mb: 2 }}>
                 <Box sx={{ p: 4, pb: 2 }}>
                     <Typography variant="h2">
@@ -151,26 +144,43 @@ const CohortDiscoveryRequestForm = ({
                     <Typography>
                         {t(`${COHORT_TRANSLATION_PATH}.statementOutro`)}
                     </Typography>
-                    <CheckboxControlled
-                        formControlSx={{ pt: 1 }}
-                        label={t(`${COHORT_TRANSLATION_PATH}.checkboxLabel`)}
-                        name="dataset-population-checkbox"
-                        onChange={(_e, value) => setTermsAccepted(value)}
-                    />
+                    <Box
+                        sx={{
+                            display: "flex",
+                            gap: 2,
+                            mt: 2,
+                        }}>
+                        <CheckboxControlled
+                            label={t(
+                                `${COHORT_TRANSLATION_PATH}.checkboxLabel`
+                            )}
+                            name="dataset-population-checkbox"
+                            onChange={(_e, value) => setTermsAccepted(value)}
+                            checked={termsAccepted}
+                        />
+
+                        <Box
+                            sx={{
+                                display: "flex",
+                                alignItems: "center",
+                                gap: 2,
+                            }}>
+                            <Button
+                                variant="outlined"
+                                color="secondary"
+                                href={`/${RouteName.ACCOUNT}/${RouteName.PROFILE}/${RouteName.COHORT_DISCOVERY_REQUEST}`}>
+                                {t("common.cancel")}
+                            </Button>
+                            <Button
+                                onClick={handleSubmit}
+                                disabled={termsAccepted !== true}
+                                sx={{ flexGrow: 0, height: "auto" }}>
+                                {t("common.submit")}
+                            </Button>
+                        </Box>
+                    </Box>
                 </Box>
             </Paper>
-            <Box
-                sx={{
-                    display: "flex",
-                    gap: 2,
-                }}>
-                <Button onClick={handleSubmit} disabled={!termsAccepted}>
-                    {t("common.submit")}
-                </Button>
-                <Button variant="text" onClick={handleCancel}>
-                    {t("common.cancel")}
-                </Button>
-            </Box>
         </BoxContainer>
     ) : null;
 };

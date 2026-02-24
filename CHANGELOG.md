@@ -1,3 +1,16 @@
+## [2.32.1](https://github.com/HDRUK/gateway-web/compare/v2.32.0...v2.32.1) (2026-02-23)
+
+### 🐛 Bug Fixes
+
+* **GAT-8536:** Fix to make sure feature flags can be retrieved when n… (#1479) ([f45d22e](https://github.com/HDRUK/gateway-web/commit/f45d22e1381030ad89098180b5d6d483f686f2eb))
+
+## [2.32.0](https://github.com/HDRUK/gateway-web/compare/v2.31.0...v2.32.0) (2026-02-17)
+
+### ✨ Features
+
+* **GAT-8489:** Add back button to cohort user page (#1474) ([3b1bfaf](https://github.com/HDRUK/gateway-web/commit/3b1bfafe42620c19997275d33e5ae8ac5a7f19f1)), closes [GAT-8489](GAT-8489)
+* **GAT-8498:** Cohort Discovery UI Changes (#1472) ([242d825](https://github.com/HDRUK/gateway-web/commit/242d825cac7e6e7630702a9da2e9a2d4a6e53352)), closes [GAT-8498](GAT-8498)
+
 ## [2.31.0](https://github.com/HDRUK/gateway-web/compare/v2.30.0...v2.31.0) (2026-02-12)
 
 ### ✨ Features

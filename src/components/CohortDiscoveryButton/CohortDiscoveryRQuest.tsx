@@ -2,7 +2,6 @@ import { useEffect, useMemo, useState } from "react";
 import { CircularProgress, Tooltip } from "@mui/material";
 import { useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
-import { CtaLink } from "@/interfaces/Cms";
 import Button from "@/components/Button";
 import ProvidersDialog from "@/modules/ProvidersDialog";
 import useAuth from "@/hooks/useAuth";
@@ -11,8 +10,7 @@ import useDialog from "@/hooks/useDialog";
 import { RouteName } from "@/consts/routeName";
 
 interface CohortDiscoveryButtonProps {
-    ctaLink: CtaLink;
-    showDatasetExplanatoryTooltip: boolean | null;
+    showDatasetExplanatoryTooltip?: boolean | null;
     color?: string | null;
     tooltipOverride?: string | null;
     disabledOuter?: boolean;
@@ -24,7 +22,6 @@ export const DATA_TEST_ID = "rquest-cohort-discovery-button";
 const TRANSLATION_PATH_CTAOVERRIDE = "components.CohortDiscoveryButton";
 
 const CohortDiscoveryRQuestButton = ({
-    ctaLink,
     showDatasetExplanatoryTooltip = false,
     color = undefined,
     tooltipOverride = "",
@@ -67,7 +64,9 @@ const CohortDiscoveryRQuestButton = ({
                 if (openAthensInvalid) {
                     push(`/${RouteName.ACCOUNT}/${RouteName.PROFILE}`);
                 } else {
-                    push(ctaLink.url);
+                    push(
+                        `/${RouteName.ACCOUNT}/${RouteName.PROFILE}/${RouteName.COHORT_DISCOVERY_REGISTER}`
+                    );
                 }
             } else {
                 showDialog(ProvidersDialog, {
@@ -109,7 +108,7 @@ const CohortDiscoveryRQuestButton = ({
                     {isLoading || isLoadingAuth ? (
                         <CircularProgress size={20} color="inherit" />
                     ) : (
-                        ctaLink?.title
+                        t("buttonText")
                     )}
                 </Button>
             </span>

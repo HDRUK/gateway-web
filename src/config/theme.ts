@@ -82,6 +82,7 @@ declare module "@mui/material/Chip" {
     interface ChipPropsColorOverrides {
         warningCustom: true;
         alias: true;
+        greyCustom: true;
     }
 }
 
@@ -349,7 +350,7 @@ const theme = createTheme({
                         },
                         "&.Mui-focusVisible": {
                             background: palette.greyCustom.main,
-                        }
+                        },
                     },
                 },
                 {
@@ -745,6 +746,7 @@ const theme = createTheme({
                     "& .MuiChip-deleteIcon": {
                         color: colors.black,
                     },
+                    padding: 2,
                 },
             },
             variants: [
@@ -752,6 +754,13 @@ const theme = createTheme({
                     props: { color: "success" },
                     style: {
                         background: colors.green400,
+                        color: colors.white,
+                    },
+                },
+                {
+                    props: { color: "secondary" },
+                    style: {
+                        color: colors.white,
                     },
                 },
                 {
@@ -765,6 +774,13 @@ const theme = createTheme({
                     style: {
                         backgroundColor: palette.alias.backgroundColor,
                         color: palette.alias.contrastText,
+                    },
+                },
+                {
+                    props: { color: "greyCustom" },
+                    style: {
+                        backgroundColor: colors.grey600,
+                        color: colors.white,
                     },
                 },
             ],
