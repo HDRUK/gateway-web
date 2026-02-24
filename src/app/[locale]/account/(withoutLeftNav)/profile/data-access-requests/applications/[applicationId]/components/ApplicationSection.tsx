@@ -67,6 +67,7 @@ import { updateDarApplicationAnswersAction } from "@/app/actions/updateDarApplic
 import { updateDarApplicationTeamAction } from "@/app/actions/updateDarApplicationTeam";
 import { updateDarApplicationUserAction } from "@/app/actions/updateDarApplicationUser";
 import notFound from "@/app/not-found";
+import { DarActionBar } from "./DarActionBar";
 import DarFieldArray from "./DarFieldArray";
 import DarFormBanner from "./DarFormBanner";
 import DarMessages from "./DarMessages";
@@ -583,6 +584,16 @@ const ApplicationSection = ({
                         display: "flex",
                         flexDirection: "column",
                     }}>
+                    <DarActionBar
+                        applicationId={applicationId}
+                        teamId={teamId}
+                        userId={userId}
+                        saveDraftOnClick={handleSaveAsDraft}
+                        submitOnClick={handleSubmit(handleSave)}
+                        isResearcher={isResearcher}
+                        manageApplicationOnStatus={handleManageApplication}
+                    />
+
                     {parentSections.find(section => section.id === sectionId)
                         ?.name !== messageSection.name && (
                         <>
