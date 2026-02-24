@@ -1,7 +1,7 @@
 "use client";
 
 import { useCallback, useState, useEffect } from "react";
-import { Menu, MenuItem, useMediaQuery, useTheme } from "@mui/material";
+import { Menu, MenuItem, Typography, useMediaQuery, useTheme } from "@mui/material";
 import { toNumber } from "lodash";
 import { useTranslations } from "next-intl";
 import { usePathname, useSearchParams } from "next/navigation";
@@ -14,6 +14,9 @@ import {
     BookmarkText,
     Wrapper,
 } from "./ActiveListSidebar.styles";
+import FilterSection from "@/components/FilterSection";
+import { FieldValues, InternalFieldName, FieldArrayPath, FieldArray, FieldErrors, FieldName, ReadFormState, FormState, RegisterOptions, UseFormRegisterReturn, SubmitHandler, SubmitErrorHandler, FieldError, ErrorOption, UseFormSetValue, useForm } from "react-hook-form";
+import { FILTER_PUBLISHER_NAME } from "@/config/forms/filters";
 
 const TRANSLATION_PATH = "modules.ActiveListSidebar";
 const MOBILE_SCROLL_OFFSET = 60;
@@ -42,6 +45,14 @@ const ActiveListSidebar = ({
     const handleClose = () => {
         setAnchorEl(null);
     };
+
+    const { control, setValue } = useForm<{
+        [FILTER_PUBLISHER_NAME]: string;
+    }>({
+        defaultValues: {
+            [FILTER_PUBLISHER_NAME]: "",
+        },
+    });
 
     useEffect(() => {
         if (!searchParams) {
@@ -94,6 +105,25 @@ const ActiveListSidebar = ({
                             activeItem={activeItem}
                         />
                     </ActiveLinkWrapper>
+                    <Box>
+                        <FilterSection filterSection="publisherName" filterItem={{
+                            label: "",
+                            value: "",
+                            buckets: []
+                        }} 
+                        control={control}
+                        checkboxValues={{}} 
+                        countsDisabled={false} 
+                        handleCheckboxChange={function (updates: { [key: string]: boolean; }): void {
+                            throw new Error("Function not implemented.");
+                        } } 
+                        setValue={function (name: string, value: UseFormSetValue<FieldValues>): void {
+                            throw new Error("Function not implemented.");
+                        } } 
+                        resetFilterSection={function (): void {
+                            throw new Error("Function not implemented.");
+                        } } />
+                    </Box>
                 </Wrapper>
             )}
             {isMobile && (
