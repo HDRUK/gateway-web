@@ -75,9 +75,9 @@ const ActiveListSidebar = ({
                 label: filter.keys,
                 value: filter.value,
                 buckets: filter.buckets.map(bucket => {
-                    return {
-                        value: bucket.key,
-                        label: bucket.doc_count.toString()
+                    return {value: bucket.key,
+                            label: bucket.key,
+                            count: bucket.doc_count,
                     }
                 }),
             });
@@ -85,12 +85,20 @@ const ActiveListSidebar = ({
     }, [filter])
 
     const resetFilterSection = (filterSection: string) => {
-        setFilterValues({
-            ...filterValues,
+        setFilterValues(prev => ({
+            ...prev,
             [filterSection]: {},
-        });
+        }));
+    };
 
-        //setFilterQueryParams([], filterSection);
+    const handleCheckboxChange = (updates: { [key: string]: boolean }) => {
+        setFilterValues(prev => ({
+            ...prev,
+            [FILTER_PUBLISHER_NAME]: {
+                ...prev[FILTER_PUBLISHER_NAME],
+                ...updates,
+            },
+        }));
     };
 
     const { control, setValue } = useForm<{
@@ -138,17 +146,7 @@ const ActiveListSidebar = ({
         },
         [isDatasetPage, isMobile]
     );
-
-    const selectedFilters = {
-        [FILTER_PUBLISHER_NAME]: "",
-    };
-
-    useEffect(() => {
-        const defaultValues: DefaultValues = {};
-
-        setFilterValues(defaultValues);
-    }, [selectedFilters]);
-
+    
     return (
         <>
             {!isMobile && (
@@ -164,17 +162,16 @@ const ActiveListSidebar = ({
                     </ActiveLinkWrapper>
                     <Box>
                         {filterItem && (
-                        <FilterSection filterSection="publisherName" 
-                            filterItem={filterItem}
-                            checkboxValues={filterValues} 
-                            control={control}
-                            countsDisabled={false} 
-                            handleCheckboxChange={function (updates: { [key: string]: boolean; }): void {
-                                throw new Error("Function not implemented.");
-                            } } 
-                            setValue={setValue} 
-                            resetFilterSection={resetFilterSection} 
-                        />)}
+                            <FilterSection
+                                filterSection={FILTER_PUBLISHER_NAME}
+                                filterItem={filterItem}
+                                checkboxValues={filterValues[FILTER_PUBLISHER_NAME]}
+                                control={control}
+                                countsDisabled={false}
+                                handleCheckboxChange={handleCheckboxChange}
+                                setValue={setValue}
+                                resetFilterSection={() => resetFilterSection(FILTER_PUBLISHER_NAME)}
+                            />)}
                     </Box>
                 </Wrapper>
             )}
