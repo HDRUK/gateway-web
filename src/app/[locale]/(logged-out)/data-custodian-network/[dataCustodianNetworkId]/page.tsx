@@ -12,13 +12,15 @@ import ActiveListSidebar from "@/modules/ActiveListSidebar";
 import { StaticImages } from "@/config/images";
 import { AspectRatioImage } from "@/consts/image";
 import { RouteName } from "@/consts/routeName";
-import { getNetworkInfo } from "@/utils/api";
+import { getFilters, getNetworkInfo } from "@/utils/api";
 import metaData from "@/utils/metadata";
 import DataCustodianOuter from "./components/DataCustodianOuter";
 import DatasetsOuter from "./components/DatasetsOuter";
 import IntroductionContent from "./components/IntroductionContent";
 import NetworkContent from "./components/NetworkContent";
 import { accordions } from "./config";
+import { Filter } from "@/interfaces/Filter";
+import { FILTER_COLLECTION_NAME, FILTER_DATA_SUBTYPE, FILTER_PUBLISHER_NAME } from "@/config/forms/filters";
 
 const TRANSLATION_PATH = "pages.dataCustodianNetwork";
 
@@ -48,9 +50,27 @@ export default async function DataCustodianNetworkPage({
         };
     });
 
+    const filters: Filter[] = await getFilters();
+
+    const adjustedFilters = filters.filter(filter => filter.keys === FILTER_PUBLISHER_NAME)
+    .filter(filter => filter.type === "collection")
+    .map(filter => {
+        if (filter.keys === FILTER_DATA_SUBTYPE) {
+            return {
+                ...filter,
+                buckets: filter.buckets.filter(
+                    bucket => bucket.key !== "Not applicable"
+                ),
+            };
+        }
+        return filter;
+    }).pop();
+
+    console.log(adjustedFilters);
+
     return (
         <LayoutDataItemPage
-            navigation={<ActiveListSidebar items={activeLinkList} />}
+            navigation={<ActiveListSidebar items={activeLinkList} filter={adjustedFilters} />}
             body={
                 <>
                     <Typography variant="h1" sx={{ ml: 2, mt: 2 }}>
