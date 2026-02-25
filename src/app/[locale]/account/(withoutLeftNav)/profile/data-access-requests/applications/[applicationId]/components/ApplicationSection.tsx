@@ -580,7 +580,7 @@ const ApplicationSection = ({
                     sx={{
                         m: 2,
                         flex: 5,
-                        height: "65vh",
+                        minheight: "70vh",
                         display: "flex",
                         flexDirection: "column",
                     }}>
@@ -617,6 +617,7 @@ const ApplicationSection = ({
                             p: 0,
                             overflowY: "auto",
                             flex: 1,
+                            minHeight: "30vh",
                         }}>
                         <Box
                             sx={{
