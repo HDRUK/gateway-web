@@ -618,6 +618,7 @@ const ApplicationSection = ({
                             overflowY: "auto",
                             flex: 1,
                             minHeight: "30vh",
+                            paddingBottom: 1,
                         }}>
                         <Box
                             sx={{
