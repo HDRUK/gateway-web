@@ -138,6 +138,16 @@ jobs:
 
       - name: Checkout web
         uses: actions/checkout@v4
+      
+      - name: Generate GitHub App token
+        id: generate-deployment-token
+        uses: actions/create-github-app-token@v2
+        with:
+          app-id: ${{ secrets.DEPLOY_APP_ID }}
+          private-key: ${{ secrets.DEPLOY_APP_PRIVATE_KEY }}
+          owner: HDRUK
+          repositories: |
+            ${{ github.event.repository.name }}
 
       - name: Setup Go
         uses: actions/setup-go@v5
@@ -149,7 +159,7 @@ jobs:
         with:
           repository: HDRUK/gateway-api
           path: gateway-api
-          token: ${{ secrets.GITHUB_TOKEN }}
+          token: ${{ steps.generate-deployment-token.outputs.token }}
           ref: ${{ github.event.inputs.api_branch || 'dev' }}
 
       - name: Setup PHP
