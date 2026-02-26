@@ -12,7 +12,7 @@ import ActiveListSidebar from "@/modules/ActiveListSidebar";
 import { StaticImages } from "@/config/images";
 import { AspectRatioImage } from "@/consts/image";
 import { RouteName } from "@/consts/routeName";
-import { getFilters, getNetworkInfo } from "@/utils/api";
+import { getFilters, getNetworkCustodiansSummary, getNetworkInfo } from "@/utils/api";
 import metaData from "@/utils/metadata";
 import DataCustodianOuter from "./components/DataCustodianOuter";
 import DatasetsOuter from "./components/DatasetsOuter";
@@ -50,27 +50,24 @@ export default async function DataCustodianNetworkPage({
         };
     });
 
-    const filters: Filter[] = await getFilters();
 
-    const adjustedFilters = filters.filter(filter => filter.keys === FILTER_PUBLISHER_NAME)
-    .filter(filter => filter.type === "collection")
-    .map(filter => {
-        if (filter.keys === FILTER_DATA_SUBTYPE) {
-            return {
-                ...filter,
-                buckets: filter.buckets.filter(
-                    bucket => bucket.key !== "Not applicable"
-                ),
-            };
-        }
-        return filter;
-    }).pop();
+    const dataNetworkCustodiansSummary = await getNetworkCustodiansSummary(dataCustodianNetworkId);
 
-    console.log(adjustedFilters);
+    const publisherFilter: Filter = {
+        keys: FILTER_PUBLISHER_NAME,
+        value: FILTER_PUBLISHER_NAME,
+        buckets: dataNetworkCustodiansSummary.teams_counts.map(team => ({
+            key: team.name,
+            doc_count: team.datasets_count || 0,
+        })),
+        id: 0,
+        enabled: true,
+        type: "dataset"
+    };
 
     return (
         <LayoutDataItemPage
-            navigation={<ActiveListSidebar items={activeLinkList} filter={adjustedFilters} />}
+            navigation={<ActiveListSidebar items={activeLinkList} filter={publisherFilter} />}
             body={
                 <>
                     <Typography variant="h1" sx={{ ml: 2, mt: 2 }}>
@@ -107,7 +104,7 @@ export default async function DataCustodianNetworkPage({
                     <Suspense
                         fallback={<SectionSkeleton title="Data Custodians" />}>
                         <DataCustodianOuter
-                            dataCustodianNetworkId={+dataCustodianNetworkId}
+                            custodiansSummaryData={dataNetworkCustodiansSummary}
                         />
                     </Suspense>
                     <Suspense fallback={<SectionSkeleton title="Datasets" />}>

@@ -18,7 +18,6 @@ import FilterSection from "@/components/FilterSection";
 import { FILTER_PUBLISHER_NAME, filtersList } from "@/config/forms/filters";
 import { BucketCheckbox, Filter } from "@/interfaces/Filter";
 import { useForm } from "react-hook-form";
-import { transformQueryFiltersToForm } from "@/utils/filters";
 
 const TRANSLATION_PATH = "modules.ActiveListSidebar";
 const MOBILE_SCROLL_OFFSET = 60;
@@ -42,8 +41,6 @@ const ActiveListSidebar = ({
     }[];
     filter?: Filter
 }) => {
-
-    //console.log(filter);
 
     const t = useTranslations(TRANSLATION_PATH);
 
@@ -167,7 +164,7 @@ const ActiveListSidebar = ({
                                 filterItem={filterItem}
                                 checkboxValues={filterValues[FILTER_PUBLISHER_NAME]}
                                 control={control}
-                                countsDisabled={false}
+                                countsDisabled={true}
                                 handleCheckboxChange={handleCheckboxChange}
                                 setValue={setValue}
                                 resetFilterSection={() => resetFilterSection(FILTER_PUBLISHER_NAME)}

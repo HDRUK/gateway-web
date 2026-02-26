@@ -1,27 +1,13 @@
 import { ReactElement } from "react";
 import Box from "@/components/Box";
-import apis from "@/config/apis";
 import DataCustodianContent from "../DataCustodianContent";
+import { NetworkCustodiansSummaryData } from "@/interfaces/NetworkCustodiansSummaryData";
 
 export default async function DataCustodianOuter({
-    dataCustodianNetworkId,
+    custodiansSummaryData,
 }: {
-    dataCustodianNetworkId: number;
+    custodiansSummaryData: NetworkCustodiansSummaryData;
 }): Promise<ReactElement> {
-    const resp = await fetch(
-        `${apis.dataCustodianNetworkV2UrlIP}/${dataCustodianNetworkId}/custodians_summary`,
-        {
-            next: {
-                revalidate: 180,
-                tags: ["all", `custodians_summary-${dataCustodianNetworkId}`],
-            },
-            cache: "force-cache",
-        }
-    );
-    if (!resp.ok) {
-        throw new Error("Failed to fetch network data");
-    }
-    const { data: custodiansSummaryData } = await resp.json();
 
     return (
         <Box

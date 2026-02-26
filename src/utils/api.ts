@@ -51,6 +51,7 @@ import { getUserFromToken } from "@/utils/cookies";
 import { getSessionCookie } from "./getSessionCookie";
 import { logger } from "./logger";
 import { revalidateCache } from "./revalidateCache";
+import { NetworkCustodiansSummaryData } from "@/interfaces/CustodianSummaryData";
 
 type Payload<T> = T | (() => BodyInit & T);
 
@@ -808,6 +809,11 @@ async function getPublication(
     return publication;
 }
 
+async function getNetworkCustodiansSummary(id: string, options?: GetOptions) {
+    const custodianSummary = await get<NetworkCustodiansSummaryData>(`${apis.dataCustodianNetworkV2UrlIP}/${id}/custodians_summary`, options);
+    return custodianSummary;
+}
+
 export {
     getApplication,
     getCohort,
@@ -851,4 +857,5 @@ export {
     getWidget,
     getTeamNames,
     getPublication,
+    getNetworkCustodiansSummary,
 };
