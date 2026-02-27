@@ -1,7 +1,7 @@
 "use client";
 
-import { useCallback, useState, useEffect } from "react";
-import { Menu, MenuItem, Typography, useMediaQuery, useTheme } from "@mui/material";
+import { useCallback, useState, useEffect, SetStateAction } from "react";
+import { Menu, MenuItem, useMediaQuery, useTheme } from "@mui/material";
 import { toNumber } from "lodash";
 import { useTranslations } from "next-intl";
 import { usePathname, useSearchParams } from "next/navigation";
@@ -35,11 +35,15 @@ type DefaultValues = {
 const ActiveListSidebar = ({
     items,
     filter,
-}: {
+    filterValues,
+    onFilterChange
+    }: {
     items: {
         label: string;
     }[];
     filter?: Filter
+    filterValues: { [key: string]: boolean };
+    onFilterChange: (values: { [key: string]: boolean }) => void;
 }) => {
 
     const t = useTranslations(TRANSLATION_PATH);
@@ -53,7 +57,7 @@ const ActiveListSidebar = ({
     const isMobile = useMediaQuery(theme.breakpoints.only("mobile"));
 
     const [anchorEl, setAnchorEl] = useState(null);
-    const handleClick = e => {
+    const handleClick = (e: { currentTarget: SetStateAction<null>; }) => {
         setAnchorEl(e.currentTarget);
     };
     const handleClose = () => {
@@ -62,9 +66,6 @@ const ActiveListSidebar = ({
 
     const [filterItem, setFilterItem] =
         useState<FilterItem>();
-
-    const [filterValues, setFilterValues] =
-        useState<DefaultValues>(EMPTY_FILTERS);
 
     useEffect(() => {
         if (filter) {
@@ -81,21 +82,12 @@ const ActiveListSidebar = ({
         }
     }, [filter])
 
-    const resetFilterSection = (filterSection: string) => {
-        setFilterValues(prev => ({
-            ...prev,
-            [filterSection]: {},
-        }));
+    const resetFilterSection = () => {
+        onFilterChange({});
     };
 
     const handleCheckboxChange = (updates: { [key: string]: boolean }) => {
-        setFilterValues(prev => ({
-            ...prev,
-            [FILTER_PUBLISHER_NAME]: {
-                ...prev[FILTER_PUBLISHER_NAME],
-                ...updates,
-            },
-        }));
+        onFilterChange({ ...filterValues, ...updates });
     };
 
     const { control, setValue } = useForm<{
@@ -162,12 +154,12 @@ const ActiveListSidebar = ({
                             <FilterSection
                                 filterSection={FILTER_PUBLISHER_NAME}
                                 filterItem={filterItem}
-                                checkboxValues={filterValues[FILTER_PUBLISHER_NAME]}
+                                checkboxValues={filterValues}
+                                resetFilterSection={resetFilterSection}                                
                                 control={control}
                                 countsDisabled={true}
                                 handleCheckboxChange={handleCheckboxChange}
                                 setValue={setValue}
-                                resetFilterSection={() => resetFilterSection(FILTER_PUBLISHER_NAME)}
                             />)}
                     </Box>
                 </Wrapper>

@@ -5,7 +5,7 @@ import LayoutDataItemPage from "@/components/LayoutDataItemPage";
 import ActiveListSidebar from "@/modules/ActiveListSidebar";
 import { Box, Typography } from "@mui/material";
 import IntroductionContent from "../IntroductionContent";
-import { Suspense } from "react";
+import { Suspense, useEffect, useState } from "react";
 import { NetworkSkeleton, SectionSkeleton } from "@/components/Skeletons";
 import DataCustodianOuter from "../DataCustodianOuter";
 import DatasetsOuter from "../DatasetsOuter";
@@ -17,7 +17,7 @@ import { RouteName } from "@/consts/routeName";
 import { accordions } from "../../config";
 import { useTranslations } from "next-intl";
 import { NetworkSummary } from "@/interfaces/NetworkSummary";
-import { Filter } from "@/interfaces/Filter";
+import { Filter, FilterValues } from "@/interfaces/Filter";
 import { FILTER_PUBLISHER_NAME } from "@/config/forms/filters";
 import { DatasetsSummaryData, EntitiesSummaryData, NetworkCustodiansSummaryData } from "@/interfaces/DataCustodianNetwork";
 import { SearchCategory } from "@/interfaces/Search";
@@ -52,9 +52,15 @@ export default function DataCustodianNetwork({infoData, dataNetworkCustodiansSum
         type: "dataset"
     };
 
+    const [filterValues, setFilterValues] = useState<FilterValues>({});
+    
+    useEffect(() => {
+        console.log(filterValues);
+    }, [filterValues])
+
     return (
         <LayoutDataItemPage
-            navigation={<ActiveListSidebar items={activeLinkList} filter={publisherFilter} />}
+            navigation={<ActiveListSidebar items={activeLinkList} filter={publisherFilter} filterValues={filterValues} onFilterChange={setFilterValues}/>}
             body={
                 <>
                     <Typography variant="h1" sx={{ ml: 2, mt: 2 }}>
@@ -92,6 +98,7 @@ export default function DataCustodianNetwork({infoData, dataNetworkCustodiansSum
                         fallback={<SectionSkeleton title="Data Custodians" />}>
                         <DataCustodianOuter
                             custodiansSummaryData={dataNetworkCustodiansSummary}
+                            filterValues={filterValues}
                         />
                     </Suspense>
                     <Suspense fallback={<SectionSkeleton title="Datasets" />}>

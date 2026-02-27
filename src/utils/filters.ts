@@ -1,5 +1,5 @@
 import { isEmpty, pick } from "lodash";
-import { Bucket, BucketCheckbox, Filter } from "@/interfaces/Filter";
+import { Bucket, BucketCheckbox, Filter, FilterValues } from "@/interfaces/Filter";
 import { SearchQueryParams } from "@/interfaces/Search";
 import {
     FILTER_COHORT_DISCOVERY,
@@ -147,6 +147,8 @@ const cleanSearchFilters = (
     );
 };
 
+const hasActiveFilters = (filterValues: FilterValues) => Object.values(filterValues).some(value => value);
+
 export {
     formatBucketCounts,
     getAllSelectedFilters,
@@ -155,4 +157,5 @@ export {
     pickOnlyFilters,
     transformQueryFiltersToForm,
     cleanSearchFilters,
+    hasActiveFilters,
 };

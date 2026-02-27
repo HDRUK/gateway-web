@@ -72,6 +72,8 @@ export interface BucketCheckbox {
     subBuckets?: subBucket[];
 }
 
+export type FilterValues = Record<string, boolean>;
+
 interface Filter {
     id: number;
     keys: FilterKey;
