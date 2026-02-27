@@ -14,29 +14,23 @@ const TRANSLATION_PATH =
 interface DataCustodianContentProps {
     dataCustodians: DataCustodians[];
     anchorIndex: number;
-    selectedTeams: Record<string, string>;
 }
 
 export default function DataCustodianContent({
     dataCustodians,
     anchorIndex,
-    selectedTeams,
 }: DataCustodianContentProps) {
     const t = useTranslations(TRANSLATION_PATH);
-
-    const activeCustodians = 
-        dataCustodians.filter((dataCustodian) => 
-            isEmpty(selectedTeams) ? true : selectedTeams[dataCustodian.name]);
 
     return (
         <AccordionSection
             id={`anchor${anchorIndex}`}
-            disabled={!activeCustodians.length}
+            disabled={!dataCustodians.length}
             heading={t("heading", {
-                length: activeCustodians.length,
+                length: dataCustodians.length,
             })}
-            defaultExpanded={activeCustodians.length > 0}
-            contents={activeCustodians.map(
+            defaultExpanded={dataCustodians.length > 0}
+            contents={dataCustodians.map(
                 ({
                     name,
                     id,

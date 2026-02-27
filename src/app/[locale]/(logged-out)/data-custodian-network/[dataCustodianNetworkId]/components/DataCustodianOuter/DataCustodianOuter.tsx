@@ -1,14 +1,19 @@
 import Box from "@/components/Box";
 import DataCustodianContent from "../DataCustodianContent";
 import { NetworkCustodiansSummaryData } from "@/interfaces/DataCustodianNetwork";
+import { isEmpty } from "lodash";
 
 export default function DataCustodianOuter({
     custodiansSummaryData,
-    selectedTeams,
+    selectedTeamIds,
 }: {
     custodiansSummaryData: NetworkCustodiansSummaryData;
-    selectedTeams: Record<string, string>;
+    selectedTeamIds: Set<string>;
 }) {
+
+    const activeCustodians = custodiansSummaryData.teams_counts.filter(
+        (team) => isEmpty(selectedTeamIds) ? true : selectedTeamIds.has(team.id));
+
     return (
         <Box
             sx={{
@@ -18,9 +23,8 @@ export default function DataCustodianOuter({
                 pb: 0,
             }}>
             <DataCustodianContent
-                dataCustodians={custodiansSummaryData.teams_counts}
+                dataCustodians={activeCustodians}
                 anchorIndex={1}
-                selectedTeams={selectedTeams}
             />
         </Box>
     );

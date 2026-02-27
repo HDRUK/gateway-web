@@ -61,19 +61,13 @@ export default function DataCustodianNetwork({infoData, dataNetworkCustodiansSum
 
     const [filterValues, setFilterValues] = useState<FilterValues>({});
 
-    const selectedTeams: Record<string, string> = useMemo(() =>
-        Object.entries(filterValues)
-            .filter(([, checked]) => checked)
-            .reduce((acc, [name]) => {
-                acc[name] = teams[name];
-                return acc;
-            }, {} as Record<string, string>),
+    const selectedTeamIds = useMemo(() =>
+        new Set(
+            Object.entries(filterValues)
+                .filter(([, checked]) => checked)
+                .map(([name]) => teams[name])
+        ),
         [filterValues, teams]
-    );
-
-    const selectedTeamIds = useMemo(() => 
-        new Set(Object.values(selectedTeams)),
-        [selectedTeams]
     );
 
     return (
@@ -116,7 +110,7 @@ export default function DataCustodianNetwork({infoData, dataNetworkCustodiansSum
                         fallback={<SectionSkeleton title="Data Custodians" />}>
                         <DataCustodianOuter
                             custodiansSummaryData={dataNetworkCustodiansSummary}
-                            selectedTeams={selectedTeams}
+                            selectedTeamIds={selectedTeamIds}
                         />
                     </Suspense>
                     <Suspense fallback={<SectionSkeleton title="Datasets" />}>
