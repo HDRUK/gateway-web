@@ -12,9 +12,9 @@ interface NetworkContentProps {
     entitiesSummaryData: EntitiesSummaryData;
 }
 
-const NetworkContent = async ({
+const NetworkContent = ({
     entitiesSummaryData,
-}: NetworkContentProps): Promise<ReactElement> => {
+}: NetworkContentProps) => {
 
     return (
         <Box

@@ -1,5 +1,8 @@
+import { Collection } from "./Collection";
 import { DataProvider } from "./DataProvider";
 import { DataCustodianDataset } from "./Dataset";
+import { Publication, ReducedPublication } from "./Publication";
+import { ReducedTool, Tool } from "./Tool";
 
 export interface DataCustodianNetwork {
     name: string;
@@ -14,46 +17,16 @@ export interface DataCustodianNetwork {
     service: string[] | null;
 }
 
-export interface NetworkTool {
-    id: number;
-    name: string;
-    enabled: number;
-    status: string;
-    created_at: string;
-    updated_at: string;
-}
-
-export interface NetworkPublication {
-    id: number;
-    paper_title: string;
-    authors: string;
-    publication_type: string;
-    publication_type_mk1: string;
-    status: string;
-    created_at: string;
-    updated_at: string;
-    url: string;
-}
-
-export interface NetworkCollection {
-    id: number;
-    name: string;
-    image_link: string;
-    status: string;
-    created_at: string;
-    updated_at: string;
-}
-
 export interface EntitiesSummaryData {
     id: number;
     datasets_total: number;
     datasets: DataCustodianDataset[];
     tools_total: number;
-    tools: NetworkTool[];
+    tools: Tool[] | ReducedTool[];
     publications_total: number;
-    publications: NetworkPublication[];
+    publications: Publication[] | ReducedPublication[];
     collections_total: number;
-    collections: NetworkCollection[];
+    collections:  Collection[];
     durs: any;
 }
 

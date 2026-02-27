@@ -1,13 +1,13 @@
 import { ReactElement } from "react";
 import Box from "@/components/Box";
 import DataCustodianContent from "../DataCustodianContent";
-import { NetworkCustodiansSummaryData } from "@/interfaces/NetworkCustodiansSummaryData";
+import { NetworkCustodiansSummaryData } from "@/interfaces/DataCustodianNetwork";
 
-export default async function DataCustodianOuter({
+export default function DataCustodianOuter({
     custodiansSummaryData,
 }: {
     custodiansSummaryData: NetworkCustodiansSummaryData;
-}): Promise<ReactElement> {
+}) {
 
     return (
         <Box

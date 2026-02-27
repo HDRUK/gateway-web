@@ -5,13 +5,11 @@ import { DatasetsSummaryData } from "@/interfaces/DataCustodianNetwork";
 
 const TRANSLATION_PATH = "pages.dataCustodianNetwork";
 
-export default async function DatasetsOuter({
+export default function DatasetsOuter({
     datasets,
 }: {
     datasets: DatasetsSummaryData;
-}): Promise<ReactElement> {
-
-
+}) {
     return (
         <Box
             sx={{
