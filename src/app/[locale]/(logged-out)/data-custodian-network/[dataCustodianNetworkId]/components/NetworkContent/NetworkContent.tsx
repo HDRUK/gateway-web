@@ -19,14 +19,13 @@ const NetworkContent = ({
     selectedTeamIds,
 }: NetworkContentProps) => {
 
-    const activeTools = entitiesSummaryData.tools.filter((tool) => isEmpty(selectedTeamIds) ? true : selectedTeamIds.has(tool.team_id));
-    const activeDataUses = entitiesSummaryData.durs.filter((datause) => 
-        isEmpty(selectedTeamIds) ? true : selectedTeamIds.has(datause.team_id));
-    const activePublications = entitiesSummaryData.publications.filter((publication) => 
-        isEmpty(selectedTeamIds) ? true : selectedTeamIds.has(publication.team_id));
-    const activeCollections = entitiesSummaryData.collections.filter((collection) => 
-        isEmpty(selectedTeamIds) ? true : selectedTeamIds.has(collection.team_id));
+    const filterByActiveTeams = <T extends { team_id: string }>(items: T[]): T[] =>
+        isEmpty(selectedTeamIds) ? items : items.filter(item => selectedTeamIds.has(item.team_id));
 
+    const activeTools = filterByActiveTeams(entitiesSummaryData.tools);
+    const activeDataUses = filterByActiveTeams(entitiesSummaryData.durs);
+    const activePublications = filterByActiveTeams(entitiesSummaryData.publications);
+    const activeCollections = filterByActiveTeams(entitiesSummaryData.collections);
     return (
         <Box
             sx={{
