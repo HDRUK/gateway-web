@@ -4,31 +4,17 @@ import CollectionsContent from "@/components/CollectionsContent";
 import DataUsesContent from "@/components/DataUsesContent";
 import PublicationsContent from "@/components/PublicationsContent";
 import ToolsContent from "@/components/ToolsContent";
-import apis from "@/config/apis";
+import { EntitiesSummaryData } from "@/interfaces/DataCustodianNetwork";
 
 const TRANSLATION_PATH = "pages.dataCustodianNetwork";
 
 interface NetworkContentProps {
-    dataCustodianNetworkId: number;
+    entitiesSummaryData: EntitiesSummaryData;
 }
 
 const NetworkContent = async ({
-    dataCustodianNetworkId,
+    entitiesSummaryData,
 }: NetworkContentProps): Promise<ReactElement> => {
-    const resp = await fetch(
-        `${apis.dataCustodianNetworkV2UrlIP}/${dataCustodianNetworkId}/entities_summary`,
-        {
-            next: {
-                revalidate: 180,
-                tags: ["all", `entities_summary-${dataCustodianNetworkId}`],
-            },
-            cache: "force-cache",
-        }
-    );
-    if (!resp.ok) {
-        throw new Error("Failed to fetch network data");
-    }
-    const { data: entitiesSummaryData } = await resp.json();
 
     return (
         <Box

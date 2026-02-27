@@ -19,7 +19,7 @@ import {
     DataAccessRequestApplication,
 } from "@/interfaces/DataAccessRequestApplication";
 import { DarReviewsResponse } from "@/interfaces/DataAccessReview";
-import { DataCustodianNetwork } from "@/interfaces/DataCustodianNetwork";
+import { DataCustodianNetwork, DatasetsSummaryData, EntitiesSummaryData, NetworkCustodiansSummaryData } from "@/interfaces/DataCustodianNetwork";
 import { DataUse } from "@/interfaces/DataUse";
 import { Dataset } from "@/interfaces/Dataset";
 import { Filter } from "@/interfaces/Filter";
@@ -51,7 +51,6 @@ import { getUserFromToken } from "@/utils/cookies";
 import { getSessionCookie } from "./getSessionCookie";
 import { logger } from "./logger";
 import { revalidateCache } from "./revalidateCache";
-import { NetworkCustodiansSummaryData } from "@/interfaces/CustodianSummaryData";
 
 type Payload<T> = T | (() => BodyInit & T);
 
@@ -814,6 +813,16 @@ async function getNetworkCustodiansSummary(id: string, options?: GetOptions) {
     return custodianSummary;
 }
 
+async function getNetworkCustodiansDatasets(id: string, options?: GetOptions) {
+    const datasets = await get<DatasetsSummaryData>(`${apis.dataCustodianNetworkV2UrlIP}/${id}/datasets_summary`, options);
+    return datasets;
+}
+
+async function getNetworkCustodiansEntities(id: string, options?: GetOptions) {
+    const datasets = await get<EntitiesSummaryData>(`${apis.dataCustodianNetworkV2UrlIP}/${id}/entities_summary`, options);
+    return datasets;
+}
+
 export {
     getApplication,
     getCohort,
@@ -858,4 +867,6 @@ export {
     getTeamNames,
     getPublication,
     getNetworkCustodiansSummary,
+    getNetworkCustodiansDatasets,
+    getNetworkCustodiansEntities,
 };

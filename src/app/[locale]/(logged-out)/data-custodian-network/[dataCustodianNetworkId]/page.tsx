@@ -12,7 +12,7 @@ import ActiveListSidebar from "@/modules/ActiveListSidebar";
 import { StaticImages } from "@/config/images";
 import { AspectRatioImage } from "@/consts/image";
 import { RouteName } from "@/consts/routeName";
-import { getFilters, getNetworkCustodiansSummary, getNetworkInfo } from "@/utils/api";
+import { getFilters, getNetworkCustodiansDatasets, getNetworkCustodiansEntities, getNetworkCustodiansSummary, getNetworkInfo } from "@/utils/api";
 import metaData from "@/utils/metadata";
 import DataCustodianOuter from "./components/DataCustodianOuter";
 import DatasetsOuter from "./components/DatasetsOuter";
@@ -50,9 +50,9 @@ export default async function DataCustodianNetworkPage({
         };
     });
 
-
     const dataNetworkCustodiansSummary = await getNetworkCustodiansSummary(dataCustodianNetworkId);
-
+    const dataNetworkDatasets = await getNetworkCustodiansDatasets(dataCustodianNetworkId);
+    const dataNetworkCustodiansEntities = await getNetworkCustodiansEntities(dataCustodianNetworkId);
     const publisherFilter: Filter = {
         keys: FILTER_PUBLISHER_NAME,
         value: FILTER_PUBLISHER_NAME,
@@ -109,12 +109,12 @@ export default async function DataCustodianNetworkPage({
                     </Suspense>
                     <Suspense fallback={<SectionSkeleton title="Datasets" />}>
                         <DatasetsOuter
-                            dataCustodianNetworkId={+dataCustodianNetworkId}
+                            datasets={dataNetworkDatasets}
                         />
                     </Suspense>
                     <Suspense fallback={<NetworkSkeleton />}>
                         <NetworkContent
-                            dataCustodianNetworkId={+dataCustodianNetworkId}
+                            entitiesSummaryData={dataNetworkCustodiansEntities}
                         />
                     </Suspense>
                 </>

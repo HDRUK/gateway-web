@@ -219,6 +219,7 @@ interface DataCustodianDataset {
     title?: string;
     name?: string;
     datasetType: string;
+    team_id?: string;
 }
 
 interface NewDataset extends Omit<Dataset, "versions" | "id"> {
