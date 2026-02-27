@@ -16,34 +16,24 @@ import {
 } from "./ActiveListSidebar.styles";
 import FilterSection from "@/components/FilterSection";
 import { FILTER_PUBLISHER_NAME, filtersList } from "@/config/forms/filters";
-import { BucketCheckbox, Filter } from "@/interfaces/Filter";
+import { BucketCheckbox, Filter, FilterItem, FilterValues } from "@/interfaces/Filter";
 import { useForm } from "react-hook-form";
 
 const TRANSLATION_PATH = "modules.ActiveListSidebar";
 const MOBILE_SCROLL_OFFSET = 60;
 
-const EMPTY_FILTERS = {
-    [FILTER_PUBLISHER_NAME]: {},
-};
-
-type FilterItem = { label: string; value: string; buckets: BucketCheckbox[] }
-
-type DefaultValues = {
-    [key: string]: { [key: string]: boolean };
-};
-
 const ActiveListSidebar = ({
     items,
     filter,
     filterValues,
-    onFilterChange
+    onFilterChange,
     }: {
     items: {
         label: string;
     }[];
     filter?: Filter
-    filterValues: { [key: string]: boolean };
-    onFilterChange: (values: { [key: string]: boolean }) => void;
+    filterValues: FilterValues;
+    onFilterChange: (values: FilterValues) => void;
 }) => {
 
     const t = useTranslations(TRANSLATION_PATH);

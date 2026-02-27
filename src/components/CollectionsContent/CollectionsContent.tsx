@@ -5,9 +5,10 @@ import { Collection } from "@/interfaces/Collection";
 import AccordionSection from "@/components/AccordionSection";
 import { RouteName } from "@/consts/routeName";
 import CardStacked from "../CardStacked";
+import { NetworkCollection } from "@/interfaces/DataCustodianNetwork";
 
 export interface CollectionsContentProps {
-    collections: Collection[];
+    collections: NetworkCollection[];
     anchorIndex: number;
     translationPath: string;
 }

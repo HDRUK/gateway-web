@@ -5,7 +5,7 @@ import LayoutDataItemPage from "@/components/LayoutDataItemPage";
 import ActiveListSidebar from "@/modules/ActiveListSidebar";
 import { Box, Typography } from "@mui/material";
 import IntroductionContent from "../IntroductionContent";
-import { Suspense, useEffect, useState } from "react";
+import { Suspense, useEffect, useMemo, useState } from "react";
 import { NetworkSkeleton, SectionSkeleton } from "@/components/Skeletons";
 import DataCustodianOuter from "../DataCustodianOuter";
 import DatasetsOuter from "../DatasetsOuter";
@@ -52,15 +52,33 @@ export default function DataCustodianNetwork({infoData, dataNetworkCustodiansSum
         type: "dataset"
     };
 
+    const teams = dataNetworkCustodiansSummary.teams_counts.reduce((acc, team) => {
+        if (team.name && team.id) {
+            acc[team.name] = team.id;
+        }
+        return acc;
+    }, {} as Record<string, string>);
+
     const [filterValues, setFilterValues] = useState<FilterValues>({});
-    
-    useEffect(() => {
-        console.log(filterValues);
-    }, [filterValues])
+
+    const selectedTeams: Record<string, string> = useMemo(() =>
+        Object.entries(filterValues)
+            .filter(([, checked]) => checked)
+            .reduce((acc, [name]) => {
+                acc[name] = teams[name];
+                return acc;
+            }, {} as Record<string, string>),
+        [filterValues, teams]
+    );
+
+    const selectedTeamIds = useMemo(() => 
+        new Set(Object.values(selectedTeams)),
+        [selectedTeams]
+    );
 
     return (
         <LayoutDataItemPage
-            navigation={<ActiveListSidebar items={activeLinkList} filter={publisherFilter} filterValues={filterValues} onFilterChange={setFilterValues}/>}
+            navigation={<ActiveListSidebar items={activeLinkList} filter={publisherFilter} filterValues={filterValues} onFilterChange={setFilterValues} />}
             body={
                 <>
                     <Typography variant="h1" sx={{ ml: 2, mt: 2 }}>
@@ -98,17 +116,19 @@ export default function DataCustodianNetwork({infoData, dataNetworkCustodiansSum
                         fallback={<SectionSkeleton title="Data Custodians" />}>
                         <DataCustodianOuter
                             custodiansSummaryData={dataNetworkCustodiansSummary}
-                            filterValues={filterValues}
+                            selectedTeams={selectedTeams}
                         />
                     </Suspense>
                     <Suspense fallback={<SectionSkeleton title="Datasets" />}>
                         <DatasetsOuter
                             datasets={dataNetworkDatasets}
+                            selectedTeamIds={selectedTeamIds}
                         />
                     </Suspense>
                     <Suspense fallback={<NetworkSkeleton />}>
                         <NetworkContent
                             entitiesSummaryData={dataNetworkCustodiansEntities}
+                            selectedTeamIds={selectedTeamIds}
                         />
                     </Suspense>
                 </>

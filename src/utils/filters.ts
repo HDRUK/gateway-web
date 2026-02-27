@@ -147,8 +147,6 @@ const cleanSearchFilters = (
     );
 };
 
-const hasActiveFilters = (filterValues: FilterValues) => Object.values(filterValues).some(value => value);
-
 export {
     formatBucketCounts,
     getAllSelectedFilters,
@@ -157,5 +155,4 @@ export {
     pickOnlyFilters,
     transformQueryFiltersToForm,
     cleanSearchFilters,
-    hasActiveFilters,
 };

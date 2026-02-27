@@ -6,8 +6,7 @@ import { useTranslations } from "next-intl";
 import { DataProvider as DataCustodians } from "@/interfaces/DataProvider";
 import AccordionSection from "@/components/AccordionSection";
 import { RouteName } from "@/consts/routeName";
-import { FilterValues } from "@/interfaces/Filter";
-import { hasActiveFilters } from "@/utils/filters";
+import { isEmpty } from "lodash";
 
 const TRANSLATION_PATH =
     "pages.dataCustodianNetwork.components.DataCustodianContent";
@@ -15,19 +14,19 @@ const TRANSLATION_PATH =
 interface DataCustodianContentProps {
     dataCustodians: DataCustodians[];
     anchorIndex: number;
-    filterValues: FilterValues;
+    selectedTeams: Record<string, string>;
 }
 
 export default function DataCustodianContent({
     dataCustodians,
     anchorIndex,
-    filterValues,
+    selectedTeams,
 }: DataCustodianContentProps) {
     const t = useTranslations(TRANSLATION_PATH);
 
     const activeCustodians = 
         dataCustodians.filter((dataCustodian) => 
-            hasActiveFilters(filterValues) ? filterValues[dataCustodian.name] : true);
+            isEmpty(selectedTeams) ? true : selectedTeams[dataCustodian.name]);
 
     return (
         <AccordionSection
