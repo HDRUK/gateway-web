@@ -1,6 +1,6 @@
 "use client";
 
-import { useCallback, useState, useEffect } from "react";
+import { useCallback, useState, useEffect, SetStateAction } from "react";
 import { Menu, MenuItem, useMediaQuery, useTheme } from "@mui/material";
 import { toNumber } from "lodash";
 import { useTranslations } from "next-intl";
@@ -14,17 +14,28 @@ import {
     BookmarkText,
     Wrapper,
 } from "./ActiveListSidebar.styles";
+import FilterSection from "@/components/FilterSection";
+import { FILTER_PUBLISHER_NAME, filtersList } from "@/config/forms/filters";
+import { BucketCheckbox, Filter, FilterItem, FilterValues } from "@/interfaces/Filter";
+import { useForm } from "react-hook-form";
 
 const TRANSLATION_PATH = "modules.ActiveListSidebar";
 const MOBILE_SCROLL_OFFSET = 60;
 
 const ActiveListSidebar = ({
     items,
-}: {
+    filter,
+    filterValues,
+    onFilterChange,
+    }: {
     items: {
         label: string;
     }[];
+    filter?: Filter
+    filterValues: FilterValues;
+    onFilterChange: (values: FilterValues) => void;
 }) => {
+
     const t = useTranslations(TRANSLATION_PATH);
 
     const [activeItem, setActiveItem] = useState(0);
@@ -36,12 +47,46 @@ const ActiveListSidebar = ({
     const isMobile = useMediaQuery(theme.breakpoints.only("mobile"));
 
     const [anchorEl, setAnchorEl] = useState(null);
-    const handleClick = e => {
+    const handleClick = (e: { currentTarget: SetStateAction<null>; }) => {
         setAnchorEl(e.currentTarget);
     };
     const handleClose = () => {
         setAnchorEl(null);
     };
+
+    const [filterItem, setFilterItem] =
+        useState<FilterItem>();
+
+    useEffect(() => {
+        if (filter) {
+            setFilterItem({
+                label: filter.keys,
+                value: filter.value,
+                buckets: filter.buckets.map(bucket => {
+                    return {value: bucket.key,
+                            label: bucket.key,
+                            count: bucket.doc_count,
+                    }
+                }),
+            });
+        }
+    }, [filter])
+
+    const resetFilterSection = () => {
+        onFilterChange({});
+    };
+
+    const handleCheckboxChange = (updates: { [key: string]: boolean }) => {
+        onFilterChange({ ...filterValues, ...updates });
+    };
+
+    const { control, setValue } = useForm<{
+        [FILTER_PUBLISHER_NAME]: string;
+    }>({
+        defaultValues: {
+            [FILTER_PUBLISHER_NAME]: "",
+        },
+    });
 
     useEffect(() => {
         if (!searchParams) {
@@ -80,7 +125,7 @@ const ActiveListSidebar = ({
         },
         [isDatasetPage, isMobile]
     );
-
+    
     return (
         <>
             {!isMobile && (
@@ -94,6 +139,19 @@ const ActiveListSidebar = ({
                             activeItem={activeItem}
                         />
                     </ActiveLinkWrapper>
+                    <Box>
+                        {filterItem && (
+                            <FilterSection
+                                filterSection={FILTER_PUBLISHER_NAME}
+                                filterItem={filterItem}
+                                checkboxValues={filterValues}
+                                resetFilterSection={resetFilterSection}                                
+                                control={control}
+                                countsDisabled={true}
+                                handleCheckboxChange={handleCheckboxChange}
+                                setValue={setValue}
+                            />)}
+                    </Box>
                 </Wrapper>
             )}
             {isMobile && (

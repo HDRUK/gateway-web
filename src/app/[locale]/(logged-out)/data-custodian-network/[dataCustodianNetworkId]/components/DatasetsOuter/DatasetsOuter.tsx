@@ -1,30 +1,18 @@
-import { ReactElement } from "react";
 import Box from "@/components/Box";
 import DatasetsContent from "@/components/DatasetsContent";
-import apis from "@/config/apis";
+import { DatasetsSummaryData } from "@/interfaces/DataCustodianNetwork";
+import { FilterValues } from "@/interfaces/Filter";
 
 const TRANSLATION_PATH = "pages.dataCustodianNetwork";
 
-export default async function DatasetsOuter({
-    dataCustodianNetworkId,
+export default function DatasetsOuter({
+    datasets,
+    selectedTeamIds,
 }: {
-    dataCustodianNetworkId: number;
-}): Promise<ReactElement> {
-    const resp = await fetch(
-        `${apis.dataCustodianNetworkV2UrlIP}/${dataCustodianNetworkId}/datasets_summary`,
-        {
-            next: {
-                revalidate: 180,
-                tags: ["all", `datasets_summary-${dataCustodianNetworkId}`],
-            },
-            cache: "force-cache",
-        }
-    );
-    if (!resp.ok) {
-        throw new Error("Failed to fetch network data");
-    }
-    const { data: datasetsSummaryData } = await resp.json();
-
+    datasets: DatasetsSummaryData;
+    selectedTeamIds: Set<string>;
+}) {
+    
     return (
         <Box
             sx={{
@@ -34,9 +22,10 @@ export default async function DatasetsOuter({
                 pb: 0,
             }}>
             <DatasetsContent
-                datasets={datasetsSummaryData.datasets}
+                datasets={datasets.datasets}
                 anchorIndex={2}
                 translationPath={TRANSLATION_PATH}
+                selectedTeamIds={selectedTeamIds}
             />
         </Box>
     );

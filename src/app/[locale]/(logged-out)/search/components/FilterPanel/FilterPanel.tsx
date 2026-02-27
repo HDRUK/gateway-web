@@ -216,6 +216,7 @@ const FilterPanel = ({
                 selectedFilters[filterName]
             );
         });
+        console.log(defaultValues);
         setFilterValues(defaultValues);
     }, [selectedFilters]);
 
@@ -733,6 +734,9 @@ const FilterPanel = ({
                 );
         }
     };
+
+    console.log(filterItems);
+    console.log(filterValues);
 
     return (
         <aside aria-label="filters">

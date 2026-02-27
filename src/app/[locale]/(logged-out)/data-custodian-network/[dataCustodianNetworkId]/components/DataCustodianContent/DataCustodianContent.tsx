@@ -6,6 +6,7 @@ import { useTranslations } from "next-intl";
 import { DataProvider as DataCustodians } from "@/interfaces/DataProvider";
 import AccordionSection from "@/components/AccordionSection";
 import { RouteName } from "@/consts/routeName";
+import { isEmpty } from "lodash";
 
 const TRANSLATION_PATH =
     "pages.dataCustodianNetwork.components.DataCustodianContent";

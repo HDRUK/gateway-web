@@ -4,32 +4,28 @@ import CollectionsContent from "@/components/CollectionsContent";
 import DataUsesContent from "@/components/DataUsesContent";
 import PublicationsContent from "@/components/PublicationsContent";
 import ToolsContent from "@/components/ToolsContent";
-import apis from "@/config/apis";
+import { EntitiesSummaryData } from "@/interfaces/DataCustodianNetwork";
+import { isEmpty } from "lodash";
 
 const TRANSLATION_PATH = "pages.dataCustodianNetwork";
 
 interface NetworkContentProps {
-    dataCustodianNetworkId: number;
+    entitiesSummaryData: EntitiesSummaryData;
+    selectedTeamIds: Set<string>;
 }
 
-const NetworkContent = async ({
-    dataCustodianNetworkId,
-}: NetworkContentProps): Promise<ReactElement> => {
-    const resp = await fetch(
-        `${apis.dataCustodianNetworkV2UrlIP}/${dataCustodianNetworkId}/entities_summary`,
-        {
-            next: {
-                revalidate: 180,
-                tags: ["all", `entities_summary-${dataCustodianNetworkId}`],
-            },
-            cache: "force-cache",
-        }
-    );
-    if (!resp.ok) {
-        throw new Error("Failed to fetch network data");
-    }
-    const { data: entitiesSummaryData } = await resp.json();
+const NetworkContent = ({
+    entitiesSummaryData,
+    selectedTeamIds,
+}: NetworkContentProps) => {
 
+    const filterByActiveTeams = <T extends { team_id: string }>(items: T[]): T[] =>
+        isEmpty(selectedTeamIds) ? items : items.filter(item => selectedTeamIds.has(item.team_id));
+
+    const activeTools = filterByActiveTeams(entitiesSummaryData.tools);
+    const activeDataUses = filterByActiveTeams(entitiesSummaryData.durs);
+    const activePublications = filterByActiveTeams(entitiesSummaryData.publications);
+    const activeCollections = filterByActiveTeams(entitiesSummaryData.collections);
     return (
         <Box
             sx={{
@@ -38,22 +34,22 @@ const NetworkContent = async ({
                 gap: 2,
             }}>
             <DataUsesContent
-                datauses={entitiesSummaryData.durs}
+                datauses={activeDataUses}
                 anchorIndex={3}
                 translationPath={TRANSLATION_PATH}
             />
             <ToolsContent
-                tools={entitiesSummaryData.tools}
+                tools={activeTools}
                 anchorIndex={4}
                 translationPath={TRANSLATION_PATH}
             />
             <PublicationsContent
-                publications={entitiesSummaryData.publications}
+                publications={activePublications}
                 anchorIndex={5}
                 translationPath={TRANSLATION_PATH}
             />
             <CollectionsContent
-                collections={entitiesSummaryData.collections}
+                collections={activeCollections}
                 anchorIndex={6}
                 translationPath={TRANSLATION_PATH}
             />

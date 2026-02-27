@@ -3,12 +3,12 @@
 import { Fragment } from "react";
 import { Link } from "@mui/material";
 import { useTranslations } from "next-intl";
-import { DataUse, ReducedDataUse } from "@/interfaces/DataUse";
 import { RouteName } from "@/consts/routeName";
 import AccordionSection from "../AccordionSection";
+import { NetworkDur } from "@/interfaces/DataCustodianNetwork";
 
 export interface DataUsesContentProps {
-    datauses: DataUse[] | ReducedDataUse[];
+    datauses: NetworkDur[];
     anchorIndex: number;
     translationPath: string;
 }

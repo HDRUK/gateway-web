@@ -1,27 +1,18 @@
-import { ReactElement } from "react";
 import Box from "@/components/Box";
-import apis from "@/config/apis";
 import DataCustodianContent from "../DataCustodianContent";
+import { NetworkCustodiansSummaryData } from "@/interfaces/DataCustodianNetwork";
+import { isEmpty } from "lodash";
 
-export default async function DataCustodianOuter({
-    dataCustodianNetworkId,
+export default function DataCustodianOuter({
+    custodiansSummaryData,
+    selectedTeamIds,
 }: {
-    dataCustodianNetworkId: number;
-}): Promise<ReactElement> {
-    const resp = await fetch(
-        `${apis.dataCustodianNetworkV2UrlIP}/${dataCustodianNetworkId}/custodians_summary`,
-        {
-            next: {
-                revalidate: 180,
-                tags: ["all", `custodians_summary-${dataCustodianNetworkId}`],
-            },
-            cache: "force-cache",
-        }
-    );
-    if (!resp.ok) {
-        throw new Error("Failed to fetch network data");
-    }
-    const { data: custodiansSummaryData } = await resp.json();
+    custodiansSummaryData: NetworkCustodiansSummaryData;
+    selectedTeamIds: Set<string>;
+}) {
+
+    const activeCustodians = custodiansSummaryData.teams_counts.filter(
+        (team) => isEmpty(selectedTeamIds) ? true : selectedTeamIds.has(team.id));
 
     return (
         <Box
@@ -32,7 +23,7 @@ export default async function DataCustodianOuter({
                 pb: 0,
             }}>
             <DataCustodianContent
-                dataCustodians={custodiansSummaryData.teams_counts}
+                dataCustodians={activeCustodians}
                 anchorIndex={1}
             />
         </Box>

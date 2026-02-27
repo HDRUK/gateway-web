@@ -72,6 +72,10 @@ export interface BucketCheckbox {
     subBuckets?: subBucket[];
 }
 
+export type FilterValues = Record<string, boolean>;
+
+type FilterItem = { label: string; value: string; buckets: BucketCheckbox[] }
+
 interface Filter {
     id: number;
     keys: FilterKey;
@@ -81,4 +85,4 @@ interface Filter {
     buckets: Bucket[];
 }
 
-export type { Filter };
+export type { Filter, FilterItem };
