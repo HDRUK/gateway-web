@@ -43,11 +43,7 @@ export default function DataCustodianNetworkPage({
 }: DataCustodianNetworkProps) {
     const t = useTranslations(TRANSLATION_PATH);
 
-    const activeLinkList = accordions.map(section => {
-        return {
-            label: t(section.sectionName),
-        };
-    });
+    const activeLinkList = accordions.map(section => ({ label: t(section.sectionName)}))
 
     const publisherFilter: Filter = {
         keys: FILTER_PUBLISHER_NAME,
