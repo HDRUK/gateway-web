@@ -7,7 +7,7 @@ import Button from "@/components/Button";
 import ImageMediaCard from "@/components/ImageMediaCard";
 import Link from "@/components/Link";
 import Typography from "@/components/Typography";
-import { INTEGRATION_TESTING_URL } from "@/config/hrefs";
+import { CUSTOM_INTEGRATION_OVERVIEW_URL } from "@/config/hrefs";
 import { StaticImages } from "@/config/images";
 import { DescriptionOutlinedIcon } from "@/consts/icons";
 import { RouteName } from "@/consts/routeName";
@@ -25,7 +25,7 @@ const ApiManagement = () => {
                 flexDirection: "column",
                 alignItems: "center",
             }}>
-            <Link passHref target="_blank" href={INTEGRATION_TESTING_URL}>
+            <Link passHref target="_blank" href={CUSTOM_INTEGRATION_OVERVIEW_URL}>
                 <Button
                     sx={{ fontSize: 16 }}
                     startIcon={

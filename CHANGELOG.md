@@ -1,3 +1,9 @@
+## [2.32.1](https://github.com/HDRUK/gateway-web/compare/v2.32.0...v2.32.1) (2026-02-23)
+
+### 🐛 Bug Fixes
+
+* **GAT-8536:** Fix to make sure feature flags can be retrieved when n… (#1479) ([f45d22e](https://github.com/HDRUK/gateway-web/commit/f45d22e1381030ad89098180b5d6d483f686f2eb))
+
 ## [2.32.0](https://github.com/HDRUK/gateway-web/compare/v2.31.0...v2.32.0) (2026-02-17)
 
 ### ✨ Features
