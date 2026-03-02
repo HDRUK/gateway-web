@@ -3,10 +3,10 @@
 import { Fragment } from "react";
 import { Link } from "@mui/material";
 import { useTranslations } from "next-intl";
-import { RouteName } from "@/consts/routeName";
-import AccordionSection from "../AccordionSection";
 import { NetworkDur } from "@/interfaces/DataCustodianNetwork";
 import { useControlledAccordion } from "@/hooks/useControllerAccordion";
+import { RouteName } from "@/consts/routeName";
+import AccordionSection from "../AccordionSection";
 
 export interface DataUsesContentProps {
     datauses: NetworkDur[];
@@ -32,7 +32,7 @@ export default function DataUsesContent({
                 length: datauses.length,
             })}
             defaultExpanded={datauses.length > 0}
-            {...accordionProps}            
+            {...accordionProps}
             contents={datauses.map(
                 ({ project_title, organisation_name, id }) => (
                     <Fragment key={`dataUse_${id}`}>

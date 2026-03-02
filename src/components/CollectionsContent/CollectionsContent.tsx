@@ -2,11 +2,11 @@
 
 import { useTranslations } from "next-intl";
 import { Collection } from "@/interfaces/Collection";
+import { NetworkCollection } from "@/interfaces/DataCustodianNetwork";
 import AccordionSection from "@/components/AccordionSection";
+import { useControlledAccordion } from "@/hooks/useControllerAccordion";
 import { RouteName } from "@/consts/routeName";
 import CardStacked from "../CardStacked";
-import { NetworkCollection } from "@/interfaces/DataCustodianNetwork";
-import { useControlledAccordion } from "@/hooks/useControllerAccordion";
 
 export interface CollectionsContentProps {
     collections: NetworkCollection[];

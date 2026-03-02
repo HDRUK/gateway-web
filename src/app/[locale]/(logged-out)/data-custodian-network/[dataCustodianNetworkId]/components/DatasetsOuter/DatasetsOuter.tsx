@@ -1,7 +1,7 @@
-import Box from "@/components/Box";
-import DatasetsContent from "@/components/DatasetsContent";
 import { DatasetsSummaryData } from "@/interfaces/DataCustodianNetwork";
 import { FilterValues } from "@/interfaces/Filter";
+import Box from "@/components/Box";
+import DatasetsContent from "@/components/DatasetsContent";
 
 const TRANSLATION_PATH = "pages.dataCustodianNetwork";
 
@@ -12,7 +12,6 @@ export default function DatasetsOuter({
     datasets: DatasetsSummaryData;
     selectedTeamIds: Set<string>;
 }) {
-    
     return (
         <Box
             sx={{

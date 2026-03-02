@@ -51,7 +51,7 @@ export interface NetworkPublication {
     updated_at: string;
     url: string;
     team_id: string;
-    year_of_publication?: string
+    year_of_publication?: string;
 }
 
 export interface NetworkCollection {

@@ -3,11 +3,11 @@
 import { Fragment } from "react";
 import { Link, Typography } from "@mui/material";
 import { useTranslations } from "next-intl";
+import { NetworkTool } from "@/interfaces/DataCustodianNetwork";
 import AccordionSection from "@/components/AccordionSection";
+import { useControlledAccordion } from "@/hooks/useControllerAccordion";
 import { RouteName } from "@/consts/routeName";
 import { formatDate } from "@/utils/date";
-import { NetworkTool } from "@/interfaces/DataCustodianNetwork";
-import { useControlledAccordion } from "@/hooks/useControllerAccordion";
 
 export interface ToolsContentProps {
     tools: NetworkTool[];

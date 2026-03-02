@@ -74,7 +74,7 @@ export interface BucketCheckbox {
 
 export type FilterValues = Record<string, boolean>;
 
-type FilterItem = { label: string; value: string; buckets: BucketCheckbox[] }
+type FilterItem = { label: string; value: string; buckets: BucketCheckbox[] };
 
 interface Filter {
     id: number;

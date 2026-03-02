@@ -3,8 +3,8 @@
 import { Fragment, useState } from "react";
 import { Link } from "@mui/material";
 import { useTranslations } from "next-intl";
-import AccordionSection from "@/components/AccordionSection";
 import { NetworkPublication } from "@/interfaces/DataCustodianNetwork";
+import AccordionSection from "@/components/AccordionSection";
 import { useControlledAccordion } from "@/hooks/useControllerAccordion";
 
 export interface PublicationsContentProps {

@@ -1,11 +1,10 @@
-import { ReactElement } from "react";
+import { isEmpty } from "lodash";
+import { EntitiesSummaryData } from "@/interfaces/DataCustodianNetwork";
 import Box from "@/components/Box";
 import CollectionsContent from "@/components/CollectionsContent";
 import DataUsesContent from "@/components/DataUsesContent";
 import PublicationsContent from "@/components/PublicationsContent";
 import ToolsContent from "@/components/ToolsContent";
-import { EntitiesSummaryData } from "@/interfaces/DataCustodianNetwork";
-import { isEmpty } from "lodash";
 
 const TRANSLATION_PATH = "pages.dataCustodianNetwork";
 
@@ -18,14 +17,21 @@ const NetworkContent = ({
     entitiesSummaryData,
     selectedTeamIds,
 }: NetworkContentProps) => {
-
-    const filterByActiveTeams = <T extends { team_id: string }>(items: T[]): T[] =>
-        isEmpty(selectedTeamIds) ? items : items.filter(item => selectedTeamIds.has(item.team_id));
+    const filterByActiveTeams = <T extends { team_id: string }>(
+        items: T[]
+    ): T[] =>
+        isEmpty(selectedTeamIds)
+            ? items
+            : items.filter(item => selectedTeamIds.has(item.team_id));
 
     const activeTools = filterByActiveTeams(entitiesSummaryData.tools);
     const activeDataUses = filterByActiveTeams(entitiesSummaryData.durs);
-    const activePublications = filterByActiveTeams(entitiesSummaryData.publications);
-    const activeCollections = filterByActiveTeams(entitiesSummaryData.collections);
+    const activePublications = filterByActiveTeams(
+        entitiesSummaryData.publications
+    );
+    const activeCollections = filterByActiveTeams(
+        entitiesSummaryData.collections
+    );
     return (
         <Box
             sx={{

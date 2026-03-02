@@ -1,30 +1,28 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import { useForm } from "react-hook-form";
+import { Box } from "@mui/material";
+import { Filter, FilterItem, FilterValues } from "@/interfaces/Filter";
 import FilterSection from "@/components/FilterSection";
 import { FILTER_PUBLISHER_NAME } from "@/config/forms/filters";
-import { Filter, FilterItem, FilterValues } from "@/interfaces/Filter";
-import { useForm } from "react-hook-form";
 import ActiveListSidebar from "../ActiveListSidebar";
-import { Box } from "@mui/material";
 import { Wrapper } from "../ActiveListSidebar/ActiveListSidebar.styles";
-
 
 const ActiveListSidebarWithFilter = ({
     items,
     filter,
     filterValues,
     onFilterChange,
-    }: {
+}: {
     items: {
         label: string;
     }[];
-    filter?: Filter
+    filter?: Filter;
     filterValues: FilterValues;
     onFilterChange: (values: FilterValues) => void;
 }) => {
-    const [filterItem, setFilterItem] =
-        useState<FilterItem>();
+    const [filterItem, setFilterItem] = useState<FilterItem>();
 
     useEffect(() => {
         if (filter) {
@@ -32,14 +30,15 @@ const ActiveListSidebarWithFilter = ({
                 label: filter.keys,
                 value: filter.value,
                 buckets: filter.buckets.map(bucket => {
-                    return {value: bucket.key,
-                            label: bucket.key,
-                            count: bucket.doc_count,
-                    }
+                    return {
+                        value: bucket.key,
+                        label: bucket.key,
+                        count: bucket.doc_count,
+                    };
                 }),
             });
         }
-    }, [filter])
+    }, [filter]);
 
     const resetFilterSection = () => {
         onFilterChange({});
@@ -56,23 +55,24 @@ const ActiveListSidebarWithFilter = ({
             [FILTER_PUBLISHER_NAME]: "",
         },
     });
-    
+
     return (
-        <Box sx={{ position: 'sticky', top: 0, alignSelf: 'flex-start' }}>            
+        <Box sx={{ position: "sticky", top: 0, alignSelf: "flex-start" }}>
             <ActiveListSidebar items={items} />
-                {filterItem && (
-                    <Box sx={{p: 1}}>
-                        <FilterSection
-                            filterSection={FILTER_PUBLISHER_NAME}
-                            filterItem={filterItem}
-                            checkboxValues={filterValues}
-                            resetFilterSection={resetFilterSection}                                
-                            control={control}
-                            countsDisabled={true}
-                            handleCheckboxChange={handleCheckboxChange}
-                            setValue={setValue} />
-                    </Box>
-                )}
+            {filterItem && (
+                <Box sx={{ p: 1 }}>
+                    <FilterSection
+                        filterSection={FILTER_PUBLISHER_NAME}
+                        filterItem={filterItem}
+                        checkboxValues={filterValues}
+                        resetFilterSection={resetFilterSection}
+                        control={control}
+                        countsDisabled={true}
+                        handleCheckboxChange={handleCheckboxChange}
+                        setValue={setValue}
+                    />
+                </Box>
+            )}
         </Box>
     );
 };
