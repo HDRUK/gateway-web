@@ -2,7 +2,6 @@
 
 import { Fragment } from "react";
 import { Link } from "@mui/material";
-import { data } from "cypress/types/jquery";
 import { isEmpty } from "lodash";
 import { useTranslations } from "next-intl";
 import { DataCustodianDataset } from "@/interfaces/Dataset";
