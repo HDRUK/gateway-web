@@ -7,6 +7,7 @@ import { Filter, FilterItem, FilterValues } from "@/interfaces/Filter";
 import { useForm } from "react-hook-form";
 import ActiveListSidebar from "../ActiveListSidebar";
 import { Box } from "@mui/material";
+import { Wrapper } from "../ActiveListSidebar/ActiveListSidebar.styles";
 
 
 const ActiveListSidebarWithFilter = ({
@@ -57,21 +58,21 @@ const ActiveListSidebarWithFilter = ({
     });
     
     return (
-        <Box>
+        <Box sx={{ position: 'sticky', top: 0, alignSelf: 'flex-start' }}>            
             <ActiveListSidebar items={items} />
-            {filterItem && (
-                <Box sx={{p: 1}}>
-                    <FilterSection
-                        filterSection={FILTER_PUBLISHER_NAME}
-                        filterItem={filterItem}
-                        checkboxValues={filterValues}
-                        resetFilterSection={resetFilterSection}                                
-                        control={control}
-                        countsDisabled={true}
-                        handleCheckboxChange={handleCheckboxChange}
-                        setValue={setValue} />
-                </Box>
-            )}
+                {filterItem && (
+                    <Box sx={{p: 1}}>
+                        <FilterSection
+                            filterSection={FILTER_PUBLISHER_NAME}
+                            filterItem={filterItem}
+                            checkboxValues={filterValues}
+                            resetFilterSection={resetFilterSection}                                
+                            control={control}
+                            countsDisabled={true}
+                            handleCheckboxChange={handleCheckboxChange}
+                            setValue={setValue} />
+                    </Box>
+                )}
         </Box>
     );
 };

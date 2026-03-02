@@ -7,7 +7,7 @@ import AccordionSection from "@/components/AccordionSection";
 import { RouteName } from "@/consts/routeName";
 import { formatDate } from "@/utils/date";
 import { NetworkTool } from "@/interfaces/DataCustodianNetwork";
-import { isEmpty } from "lodash";
+import { useControlledAccordion } from "@/hooks/useControllerAccordion";
 
 export interface ToolsContentProps {
     tools: NetworkTool[];
@@ -23,6 +23,7 @@ export default function ToolsContent({
     translationPath,
 }: ToolsContentProps) {
     const t = useTranslations(translationPath.concat(TRANSLATION_PATH));
+    const accordionProps = useControlledAccordion(tools.length > 0);
 
     return (
         <AccordionSection
@@ -32,6 +33,7 @@ export default function ToolsContent({
                 length: tools.length,
             })}
             defaultExpanded={tools.length > 0}
+            {...accordionProps}
             contents={tools.map(({ name, id, created_at, user }) => (
                 <Fragment key={`tool_${id}`}>
                     <Link href={`/${RouteName.TOOL_ITEM}/${id}`}>{name}</Link>

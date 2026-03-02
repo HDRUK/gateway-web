@@ -6,6 +6,7 @@ import AccordionSection from "@/components/AccordionSection";
 import { RouteName } from "@/consts/routeName";
 import CardStacked from "../CardStacked";
 import { NetworkCollection } from "@/interfaces/DataCustodianNetwork";
+import { useControlledAccordion } from "@/hooks/useControllerAccordion";
 
 export interface CollectionsContentProps {
     collections: NetworkCollection[];
@@ -21,7 +22,7 @@ export default function CollectionsContent({
     translationPath,
 }: CollectionsContentProps) {
     const t = useTranslations(translationPath.concat(TRANSLATION_PATH));
-
+    const accordionProps = useControlledAccordion(collections.length > 0);
     return (
         <AccordionSection
             id={`anchor${anchorIndex}`}
@@ -29,7 +30,7 @@ export default function CollectionsContent({
             heading={t("heading", {
                 length: collections.length,
             })}
-            defaultExpanded={collections.length > 0}
+            {...accordionProps}
             contents={collections.map(({ name, id, image_link }) => (
                 <CardStacked
                     href={`/${RouteName.COLLECTION_ITEM}/${id}`}
