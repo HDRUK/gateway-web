@@ -7,7 +7,7 @@ import { Filter, FilterItem, FilterValues } from "@/interfaces/Filter";
 import FilterSection from "@/components/FilterSection";
 import { FILTER_PUBLISHER_NAME } from "@/config/forms/filters";
 import ActiveListSidebar from "../ActiveListSidebar";
-import { Wrapper } from "../ActiveListSidebar/ActiveListSidebar.styles";
+import theme from "@/config/theme";
 
 const ActiveListSidebarWithFilter = ({
     items,
@@ -57,22 +57,23 @@ const ActiveListSidebarWithFilter = ({
     });
 
     return (
-        <Box sx={{ position: "sticky", top: 0, alignSelf: "flex-start" }}>
-            <ActiveListSidebar items={items} />
-            {filterItem && (
-                <Box sx={{ p: 1 }}>
-                    <FilterSection
-                        filterSection={FILTER_PUBLISHER_NAME}
-                        filterItem={filterItem}
-                        checkboxValues={filterValues}
-                        resetFilterSection={resetFilterSection}
-                        control={control}
-                        countsDisabled={true}
-                        handleCheckboxChange={handleCheckboxChange}
-                        setValue={setValue}
-                    />
-                </Box>
-            )}
+        <Box sx={{ }}>
+            <Box sx={{ position: "sticky", top: 0, backgroundColor: theme.palette.common.white, minHeight: "100vh" }}>
+                <ActiveListSidebar items={items} />
+                {filterItem && (
+                    <Box sx={{ p: 1 }}>
+                        <FilterSection
+                            filterSection={FILTER_PUBLISHER_NAME}
+                            filterItem={filterItem}
+                            checkboxValues={filterValues}
+                            resetFilterSection={resetFilterSection}
+                            control={control}
+                            countsDisabled={true}
+                            handleCheckboxChange={handleCheckboxChange}
+                            setValue={setValue}
+                        />
+                    </Box>)}
+            </Box>
         </Box>
     );
 };

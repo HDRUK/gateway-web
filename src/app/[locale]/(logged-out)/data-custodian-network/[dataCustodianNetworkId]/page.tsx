@@ -6,6 +6,7 @@ import {
     getNetworkInfo,
 } from "@/utils/api";
 import metaData from "@/utils/metadata";
+import DataCustodianNetworkPage from "./components/DataCustodianNetworkPage/DataCustodianNetworkPage";
 
 export const metadata = metaData({
     title: "Data Custodian Network",
