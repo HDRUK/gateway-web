@@ -11,7 +11,7 @@ export default function DataCustodianOuter({
     selectedTeamIds: Set<string>;
 }) {
     const activeCustodians = custodiansSummaryData.teams_counts.filter(team =>
-        isEmpty(selectedTeamIds) ? true : selectedTeamIds.has(team.id)
+        isEmpty(selectedTeamIds) ? true : team.id ? selectedTeamIds.has(team.id) : false
     );
 
     return (

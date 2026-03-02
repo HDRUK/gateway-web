@@ -57,11 +57,16 @@ const ActiveListSidebarWithFilter = ({
     });
 
     return (
-        <Box sx={{ }}>
-            <Box sx={{ position: "sticky", top: 0, backgroundColor: theme.palette.common.white, minHeight: "100vh" }}>
-                <ActiveListSidebar items={items} />
+        <Box sx={{ backgroundColor: theme.palette.common.white }}>
+            <Box sx={{
+                position: "sticky",
+                top: 0,
+                zIndex: theme.zIndex.appBar,
+                alignSelf: "flex-start",
+            }}>
+                <ActiveListSidebar items={items} disableSticky />
                 {filterItem && (
-                    <Box sx={{ p: 1 }}>
+                <Box sx={{ p: 1 }}>
                         <FilterSection
                             filterSection={FILTER_PUBLISHER_NAME}
                             filterItem={filterItem}
@@ -72,7 +77,7 @@ const ActiveListSidebarWithFilter = ({
                             handleCheckboxChange={handleCheckboxChange}
                             setValue={setValue}
                         />
-                    </Box>)}
+                </Box>)}
             </Box>
         </Box>
     );
