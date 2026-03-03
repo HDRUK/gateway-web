@@ -72,21 +72,6 @@ export default async function DataCustodianItemPage({
             navigation={<ActiveListSidebar items={activeLinkList} />}
             body={
                 <>
-                    <Typography variant="h1" sx={{ ml: 2, mt: 2 }}>
-                        {infoData.name}
-                    </Typography>
-                    <Box sx={{ display: "flex", alignItems: "center", pt: 0 }}>
-                        <Image
-                            width={554}
-                            height={250}
-                            alt={infoData.name}
-                            src={
-                                infoData?.team_logo ||
-                                StaticImages.BASE.placeholder
-                            }
-                            style={AspectRatioImage}
-                        />
-                    </Box>
                     <ActionBar
                         team={{
                             id: infoData.id,
@@ -97,6 +82,25 @@ export default async function DataCustodianItemPage({
                             cohortDiscoverySupport.supportsCohortDiscovery
                         }
                     />
+                    <Box sx={{ ml: 2, mt: 2 }}>
+                        <Box sx={{ display: "flex", alignItems: "center", pt: 0, justifyContent: "space-between", p: 0}}>
+                            <Box sx={{ mb: 1, p: 0 }}>
+                                <Typography variant="h1" sx={{ ml: 2, mt: 2 }}>
+                                    {infoData.name}
+                                </Typography>
+                            </Box>
+                            <Image
+                                width={554}
+                                height={250}
+                                alt={infoData.name}
+                                src={
+                                    infoData?.team_logo ||
+                                    StaticImages.BASE.placeholder
+                                }
+                                style={AspectRatioImage}
+                            />
+                        </Box>
+                    </Box>
                     <Box
                         sx={{
                             display: "flex",
