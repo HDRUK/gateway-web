@@ -20,10 +20,12 @@ const MOBILE_SCROLL_OFFSET = 60;
 
 const ActiveListSidebar = ({
     items,
+    disableSticky,
 }: {
     items: {
         label: string;
     }[];
+    disableSticky?: boolean;
 }) => {
     const t = useTranslations(TRANSLATION_PATH);
 
@@ -85,6 +87,7 @@ const ActiveListSidebar = ({
         <>
             {!isMobile && (
                 <Wrapper
+                    disableSticky={disableSticky}
                     sx={{ gridColumn: { tablet: "span 1", laptop: "span 1" } }}>
                     <BookmarkText>{t("bookmarks")}</BookmarkText>
                     <ActiveLinkWrapper>

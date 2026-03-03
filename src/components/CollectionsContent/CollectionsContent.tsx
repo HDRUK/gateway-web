@@ -2,12 +2,14 @@
 
 import { useTranslations } from "next-intl";
 import { Collection } from "@/interfaces/Collection";
+import { NetworkCollection } from "@/interfaces/DataCustodianNetwork";
 import AccordionSection from "@/components/AccordionSection";
+import { useControlledAccordion } from "@/hooks/useControllerAccordion";
 import { RouteName } from "@/consts/routeName";
 import CardStacked from "../CardStacked";
 
 export interface CollectionsContentProps {
-    collections: Collection[];
+    collections: NetworkCollection[];
     anchorIndex: number;
     translationPath: string;
 }
@@ -20,7 +22,7 @@ export default function CollectionsContent({
     translationPath,
 }: CollectionsContentProps) {
     const t = useTranslations(translationPath.concat(TRANSLATION_PATH));
-
+    const accordionProps = useControlledAccordion(collections.length > 0);
     return (
         <AccordionSection
             id={`anchor${anchorIndex}`}
@@ -28,7 +30,7 @@ export default function CollectionsContent({
             heading={t("heading", {
                 length: collections.length,
             })}
-            defaultExpanded={collections.length > 0}
+            {...accordionProps}
             contents={collections.map(({ name, id, image_link }) => (
                 <CardStacked
                     href={`/${RouteName.COLLECTION_ITEM}/${id}`}

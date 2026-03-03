@@ -19,7 +19,12 @@ import {
     DataAccessRequestApplication,
 } from "@/interfaces/DataAccessRequestApplication";
 import { DarReviewsResponse } from "@/interfaces/DataAccessReview";
-import { DataCustodianNetwork } from "@/interfaces/DataCustodianNetwork";
+import {
+    DataCustodianNetwork,
+    DatasetsSummaryData,
+    EntitiesSummaryData,
+    NetworkCustodiansSummaryData,
+} from "@/interfaces/DataCustodianNetwork";
 import { DataUse } from "@/interfaces/DataUse";
 import { Dataset } from "@/interfaces/Dataset";
 import { Filter } from "@/interfaces/Filter";
@@ -808,6 +813,30 @@ async function getPublication(
     return publication;
 }
 
+async function getNetworkCustodiansSummary(id: string, options?: GetOptions) {
+    const custodianSummary = await get<NetworkCustodiansSummaryData>(
+        `${apis.dataCustodianNetworkV2UrlIP}/${id}/custodians_summary`,
+        options
+    );
+    return custodianSummary;
+}
+
+async function getNetworkCustodiansDatasets(id: string, options?: GetOptions) {
+    const datasets = await get<DatasetsSummaryData>(
+        `${apis.dataCustodianNetworkV2UrlIP}/${id}/datasets_summary`,
+        options
+    );
+    return datasets;
+}
+
+async function getNetworkCustodiansEntities(id: string, options?: GetOptions) {
+    const datasets = await get<EntitiesSummaryData>(
+        `${apis.dataCustodianNetworkV2UrlIP}/${id}/entities_summary`,
+        options
+    );
+    return datasets;
+}
+
 export {
     getApplication,
     getCohort,
@@ -851,4 +880,7 @@ export {
     getWidget,
     getTeamNames,
     getPublication,
+    getNetworkCustodiansSummary,
+    getNetworkCustodiansDatasets,
+    getNetworkCustodiansEntities,
 };

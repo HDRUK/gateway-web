@@ -3,11 +3,14 @@ import Box from "@/components/Box";
 import Typography from "@/components/Typography";
 import theme from "@/config/theme";
 
-export const Wrapper = styled(Box)(() => ({
-    position: "sticky",
-    top: 0,
-    padding: 0,
-    zIndex: theme.zIndex.appBar,
+
+
+export const Wrapper = styled(Box)<{ disableSticky?: boolean }>(({ disableSticky }) => ({
+    ...(disableSticky ? {} : {
+        position: "sticky",
+        top: 0,
+        zIndex: theme.zIndex.appBar,
+    }),
     backgroundColor: theme.palette.common.white,
 }));
 
