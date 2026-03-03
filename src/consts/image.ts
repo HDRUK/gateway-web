@@ -5,7 +5,7 @@ export enum ImageValidationError {
 
 export const AspectRatioImage = {
     width: "auto",
-    maxHeight: "20vw",
-    maxWidth: "30vw",
+    maxHeight: 400,
+    maxWidth: 400,
     height: "100%",
 };
