@@ -102,12 +102,25 @@ const getRequest = async <T>(
             console.error(error);
         }
 
+        const isAbortError =
+            error instanceof DOMException
+                ? error.name === "AbortError"
+                : typeof error === "object" &&
+                  error !== null &&
+                  "name" in error &&
+                  error.name === "AbortError";
+
+        if (isAbortError) {
+            return null;
+        }
+
         if (errorNotificationsOn) {
-            const message = error?.message ?? error
+            const message =
+                error instanceof Error ? error.message : String(error);
             errorNotification({
                 props,
                 method: "get",
-                extra: 'url:' + url + message,
+                extra: "url:" + url + message,
             });
         }
     }
