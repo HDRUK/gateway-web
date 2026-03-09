@@ -1,87 +1,36 @@
-import { useCallback, useState } from "react";
 import { CircularProgress, Tooltip } from "@mui/material";
-import { useRouter } from "next/navigation";
 import Button from "@/components/Button";
-import ProvidersDialog from "@/modules/ProvidersDialog";
-import useAuth from "@/hooks/useAuth";
-import { useCohortStatus } from "@/hooks/useCohortStatus";
-import useDialog from "@/hooks/useDialog";
 import { CohortDiscoveryButtonProps } from "./CohortDiscoveryButton";
 
 export const DATA_TEST_ID = "new-cohort-discovery-button";
 
+interface CohortDiscoveryServiceButtonProps
+    extends Omit<CohortDiscoveryButtonProps, "onRedirect"> {
+    onClick: () => void;
+    isLoading?: boolean;
+}
+
 const CohortDiscoveryServiceButton = ({
-    ctaLink,
-    color = undefined,
+    color = "secondary",
     disabledOuter = false,
-    clickedAction,
-    onRedirect,
+    onClick,
+    isLoading = false,
     ...restProps
-}: CohortDiscoveryButtonProps) => {
-    const { showDialog } = useDialog();
-    const { push } = useRouter();
-    const [isLoading, setIsLoading] = useState(false);
-    const { isLoggedIn, user, isLoading: isLoadingAuth } = useAuth();
-    const { requestStatus, redirectUrl } = useCohortStatus(user?.id, {
-        redirect: true,
-        useRQuest: false,
-    });
-
-    const isDisabled =
-        isLoggedIn && requestStatus
-            ? !["APPROVED", "REJECTED", "EXPIRED"].includes(requestStatus)
-            : false;
-
-    const handleClick = useCallback(() => {
-        if (disabledOuter || isDisabled || isLoadingAuth) return;
-        setIsLoading(true);
-        if (redirectUrl) {
-            if (redirectUrl.startsWith("/")) {
-                push(redirectUrl);
-            } else {
-                window.open(redirectUrl, "_blank", "noopener,noreferrer");
-            }
-            onRedirect?.();
-            return;
-        }
-
-        if (ctaLink) {
-            push(ctaLink.url);
-            return;
-        }
-
-        if (clickedAction) {
-            clickedAction();
-            setIsLoading(false);
-            return;
-        }
-
-        showDialog(ProvidersDialog);
-    }, [
-        disabledOuter,
-        isDisabled,
-        isLoadingAuth,
-        redirectUrl,
-        ctaLink,
-        clickedAction,
-        push,
-        showDialog,
-        onRedirect,
-    ]);
-
+}: CohortDiscoveryServiceButtonProps) => {
     return (
-        <Tooltip title={"Access the new cohort discovery service"}>
+        <Tooltip title="Access the new cohort discovery service">
             <span>
                 <Button
-                    onClick={handleClick}
+                    onClick={onClick}
                     data-testid={DATA_TEST_ID}
-                    color={color ?? "primary"}
-                    disabled={disabledOuter || isDisabled || !redirectUrl}
+                    color={color}
+                    disabled={disabledOuter || isLoading}
+                    sx={{ color: "white" }}
                     {...restProps}>
-                    {isLoadingAuth || isLoading ? (
+                    {isLoading ? (
                         <CircularProgress size={20} color="inherit" />
                     ) : (
-                        "New (Beta) Service"
+                        "Access Cohort Discovery Service (Beta) "
                     )}
                 </Button>
             </span>
