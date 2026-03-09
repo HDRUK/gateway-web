@@ -103,10 +103,11 @@ const getRequest = async <T>(
         }
 
         if (errorNotificationsOn) {
+            const message = error?.message ?? error
             errorNotification({
                 props,
                 method: "get",
-                extra: 'url:' + url,
+                extra: 'url:' + url + message,
             });
         }
     }
