@@ -106,6 +106,7 @@ const getRequest = async <T>(
             errorNotification({
                 props,
                 method: "get",
+                extra: 'url:' + url,
             });
         }
     }
