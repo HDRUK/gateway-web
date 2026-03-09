@@ -7,6 +7,8 @@ export default defineConfig({
     e2e: {
         baseUrl: process.env.CYPRESS_BASE_URL,
         defaultCommandTimeout: 10000,
+        requestTimeout: 15000,
+        responseTimeout: 20000,
         env: {
             DEV_EMAIL: process.env.DEV_EMAIL,
             CUST_ADMIN_1_EMAIL: process.env.CUST_ADMIN_1_EMAIL,
