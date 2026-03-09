@@ -2,35 +2,41 @@ import { CircularProgress, Tooltip } from "@mui/material";
 import Button from "@/components/Button";
 import { CohortDiscoveryButtonProps } from "./CohortDiscoveryButton";
 
-export const DATA_TEST_ID = "rquest-cohort-discovery-button";
-
-interface CohortDiscoveryRQuestButtonProps
+interface CohortAccessButtonProps
     extends Omit<CohortDiscoveryButtonProps, "onRedirect"> {
     onClick: () => void;
     isLoading?: boolean;
+    tooltip: string;
+    label: string;
+    testId: string;
+    forceWhiteText?: boolean;
 }
 
-const CohortDiscoveryRQuestButton = ({
+const CohortAccessButton = ({
     color,
-    tooltipOverride = "",
     disabledOuter = false,
     onClick,
     isLoading = false,
+    tooltip,
+    label,
+    testId,
+    forceWhiteText = false,
     ...restProps
-}: CohortDiscoveryRQuestButtonProps) => {
+}: CohortAccessButtonProps) => {
     return (
-        <Tooltip title={tooltipOverride || "Access RQuest"}>
+        <Tooltip title={tooltip}>
             <span>
                 <Button
                     onClick={onClick}
-                    data-testid={DATA_TEST_ID}
+                    data-testid={testId}
                     color={color}
                     disabled={disabledOuter || isLoading}
+                    sx={forceWhiteText ? { color: "white" } : undefined}
                     {...restProps}>
                     {isLoading ? (
                         <CircularProgress size={20} color="inherit" />
                     ) : (
-                        "Access RQuest"
+                        label
                     )}
                 </Button>
             </span>
@@ -38,4 +44,4 @@ const CohortDiscoveryRQuestButton = ({
     );
 };
 
-export default CohortDiscoveryRQuestButton;
+export default CohortAccessButton;

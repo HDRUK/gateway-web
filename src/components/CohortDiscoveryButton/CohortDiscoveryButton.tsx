@@ -24,8 +24,7 @@ import { RouteName } from "@/consts/routeName";
 import { capitalise } from "@/utils/general";
 import { useFeatures } from "@/providers/FeatureProvider";
 import Box from "../Box";
-import CohortDiscoveryRQuestButton from "./CohortDiscoveryRQuest";
-import CohortDiscoveryServiceButton from "./CohortDiscoveryService";
+import CohortAccessButton from "./CohrotDiscoveryAccessButton";
 
 export const DATA_TEST_ID = "cohort-discovery-button";
 const TRANSLATION_PATH = "components.CohortDiscoveryButton";
@@ -204,19 +203,26 @@ const CohortDiscoveryButton = ({
                 justifyContent="center"
                 direction="row">
                 {isRQuestEnabled && (
-                    <CohortDiscoveryRQuestButton
+                    <CohortAccessButton
                         color={color}
                         disabledOuter={!rQuestRedirectUrl}
                         onClick={handleOpenRQuest}
+                        tooltip={tooltipOverride || "Access RQuest"}
+                        label="Access RQuest"
+                        testId="request-cohort-discovery-button"
                         {...restProps}
                     />
                 )}
 
                 {isCohortDiscoveryServiceEnabled && (
-                    <CohortDiscoveryServiceButton
+                    <CohortAccessButton
                         color="secondary"
                         disabledOuter={!cdsRedirectUrl}
                         onClick={handleOpenCds}
+                        tooltip="Access the new cohort discovery service"
+                        label="Access Cohort Discovery Service (Beta)"
+                        testId="new-cohort-discovery-button"
+                        forceWhiteText
                         {...restProps}
                     />
                 )}
@@ -230,6 +236,7 @@ const CohortDiscoveryButton = ({
             cdsRedirectUrl,
             handleOpenRQuest,
             handleOpenCds,
+            tooltipOverride,
             restProps,
         ]
     );
