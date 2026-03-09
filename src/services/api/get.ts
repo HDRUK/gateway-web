@@ -93,6 +93,7 @@ const getRequest = async <T>(
                     error: { ...error },
                     props,
                     method: "get",
+                    extra: 'url:' + url,
                 });
             }
         }
