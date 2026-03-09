@@ -24,7 +24,7 @@ import { RouteName } from "@/consts/routeName";
 import { capitalise } from "@/utils/general";
 import { useFeatures } from "@/providers/FeatureProvider";
 import Box from "../Box";
-import CohortAccessButton from "./CohrotDiscoveryAccessButton";
+import CohortDiscoveryAccessButton from "./CohortDiscoveryAccessButton";
 
 export const DATA_TEST_ID = "cohort-discovery-button";
 const TRANSLATION_PATH = "components.CohortDiscoveryButton";
@@ -203,7 +203,7 @@ const CohortDiscoveryButton = ({
                 justifyContent="center"
                 direction="row">
                 {isRQuestEnabled && (
-                    <CohortAccessButton
+                    <CohortDiscoveryAccessButton
                         color={color}
                         disabledOuter={!rQuestRedirectUrl}
                         onClick={handleOpenRQuest}
@@ -215,7 +215,7 @@ const CohortDiscoveryButton = ({
                 )}
 
                 {isCohortDiscoveryServiceEnabled && (
-                    <CohortAccessButton
+                    <CohortDiscoveryAccessButton
                         color="secondary"
                         disabledOuter={!cdsRedirectUrl}
                         onClick={handleOpenCds}

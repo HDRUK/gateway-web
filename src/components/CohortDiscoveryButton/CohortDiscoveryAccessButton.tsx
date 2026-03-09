@@ -12,7 +12,7 @@ interface CohortAccessButtonProps
     forceWhiteText?: boolean;
 }
 
-const CohortAccessButton = ({
+const CohortDiscoveryAccessButton = ({
     color,
     disabledOuter = false,
     onClick,
@@ -44,4 +44,4 @@ const CohortAccessButton = ({
     );
 };
 
-export default CohortAccessButton;
+export default CohortDiscoveryAccessButton;
