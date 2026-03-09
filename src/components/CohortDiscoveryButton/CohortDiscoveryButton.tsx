@@ -171,7 +171,7 @@ const CohortDiscoveryButton = ({
         return (
             <Stack direction="column" gap={1}>
                 <Stack direction="row" gap={1}>
-                    <Typography>Status:</Typography>
+                    <Typography>{t("statusLabel")}</Typography>
                     <Chip
                         size="small"
                         label={capitalise(requestStatus)}
@@ -182,7 +182,7 @@ const CohortDiscoveryButton = ({
 
                 {requestExpiry && (
                     <Stack direction="row" gap={1}>
-                        <Typography>Expires at:</Typography>
+                        <Typography>{t("expiresAtLabel")}</Typography>
                         <Chip
                             size="small"
                             label={requestExpiry}
@@ -193,7 +193,7 @@ const CohortDiscoveryButton = ({
                 )}
             </Stack>
         );
-    }, [requestStatus, requestExpiry]);
+    }, [t, requestStatus, requestExpiry]);
 
     const chooserContent = useMemo(
         () => (
@@ -207,8 +207,8 @@ const CohortDiscoveryButton = ({
                         color={color}
                         disabledOuter={!rQuestRedirectUrl}
                         onClick={handleOpenRQuest}
-                        tooltip={tooltipOverride || "Access RQuest"}
-                        label="Access RQuest"
+                        tooltip={tooltipOverride || t("rquest.tooltip")}
+                        label={t("rquest.label")}
                         testId="request-cohort-discovery-button"
                         {...restProps}
                     />
@@ -219,8 +219,8 @@ const CohortDiscoveryButton = ({
                         color="secondary"
                         disabledOuter={!cdsRedirectUrl}
                         onClick={handleOpenCds}
-                        tooltip="Access the new cohort discovery service"
-                        label="Access Cohort Discovery Service (Beta)"
+                        tooltip={t("cds.tooltip")}
+                        label={t("cds.label")}
                         testId="new-cohort-discovery-button"
                         forceWhiteText
                         {...restProps}
@@ -238,6 +238,7 @@ const CohortDiscoveryButton = ({
             handleOpenCds,
             tooltipOverride,
             restProps,
+            t,
         ]
     );
 
@@ -259,11 +260,11 @@ const CohortDiscoveryButton = ({
 
         if (requestStatus !== "APPROVED") {
             showModal({
-                title: "Your access request is not approved",
+                title: t("modals.notApproved.title"),
                 content: nonApprovedContent,
                 showConfirm: true,
                 showCancel: true,
-                confirmText: "Request access",
+                confirmText: t("modals.notApproved.confirmText"),
                 onSuccess: handleRequestAccess,
             });
             return;
@@ -271,16 +272,15 @@ const CohortDiscoveryButton = ({
 
         if (hasClaimsMismatch) {
             showModal({
-                title: "Your access has been approved, but...",
+                title: t("modals.claimsMismatch.title"),
                 content: (
                     <Typography>
-                        Please log out and back in again so you can access this
-                        service with your renewed permissions.
+                        {t("modals.claimsMismatch.content")}
                     </Typography>
                 ),
+                confirmText: t("modals.claimsMismatch.confirmText"),
                 showConfirm: true,
                 showCancel: true,
-                confirmText: "Logout",
                 onSuccess: logout,
             });
             return;
@@ -288,7 +288,7 @@ const CohortDiscoveryButton = ({
 
         if (isRQuestEnabled && isCohortDiscoveryServiceEnabled) {
             showModal({
-                title: "Choose which Cohort Discovery Service",
+                title: t("modals.chooser.title"),
                 content: chooserContent,
                 showConfirm: false,
                 showCancel: false,
@@ -305,6 +305,7 @@ const CohortDiscoveryButton = ({
             handleOpenCds();
         }
     }, [
+        t,
         isLoggedIn,
         hrefOverride,
         requestStatus,
