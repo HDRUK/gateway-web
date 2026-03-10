@@ -23,7 +23,7 @@ const networkLogs: string[] = [];
 
 // --- Intercept all network requests ---
 beforeEach(() => {
-  cy.intercept("**", (req) => {
+  cy.intercept("/api/**", (req) => {
     // log the response once it's received
     req.continue((res) => {
       if (!res.statusCode || res.statusCode >= 400) {
