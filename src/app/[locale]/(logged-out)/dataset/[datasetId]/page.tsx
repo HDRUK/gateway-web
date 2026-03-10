@@ -48,6 +48,8 @@ export default async function DatasetItemPage({
         suppressError: true,
     });
 
+    console.log(data);
+
     // Note that the status check is only required under v1 - under v2, we can use
     // an endpoint that will not show the data if not active
     if (!data || data?.status !== DataStatus.ACTIVE) notFound();
@@ -150,7 +152,7 @@ export default async function DatasetItemPage({
                                 }}>
                                 <DatasetMindMap
                                     data={datasetVersion}
-                                    teamId={data?.team_id}
+                                    teamId={data?.team?.id}
                                     isCohortDiscovery={
                                         data?.is_cohort_discovery
                                     }
