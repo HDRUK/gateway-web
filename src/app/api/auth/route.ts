@@ -41,7 +41,11 @@ export async function GET() {
 
             return NextResponse.json(
                 {
-                    data: { isLoggedIn: true, user: json.data },
+                    data: {
+                        isLoggedIn: true,
+                        user: json.data,
+                        claims: authUser,
+                    },
                 },
                 { status: 200 }
             );
