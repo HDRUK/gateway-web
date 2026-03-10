@@ -8,16 +8,14 @@ interface ErrorNotificationProps {
     props: NotificationOptions;
     status?: number;
     error?: Error;
-    method: "delete" | "post" | "put" | "get" | "patch";
-    extra?: string
+    method: "delete" | "post" | "put" | "get" | "patch"
 }
 
 const errorNotification = ({
     error,
     method,
     status,
-    props,
-    extra
+    props
 }: ErrorNotificationProps) => {
     const { t, ...notificationProps } = props;
 
@@ -25,15 +23,11 @@ const errorNotification = ({
         ? t(`common.error.status.${status}`)
         : "There has been an error";
 
-    let messageTransformed =
+    const messageTransformed =
         error?.message ||
         t(`common.error.${method}.message`, {
             item: props.itemName || "item",
         });
-
-    if (extra) {
-        messageTransformed = extra
-    }
 
     notificationService.apiError(messageTransformed, {
         title,

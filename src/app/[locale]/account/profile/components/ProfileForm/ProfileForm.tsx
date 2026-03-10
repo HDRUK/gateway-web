@@ -107,10 +107,7 @@ const ProfileForm = () => {
     };
 
     const { data: sectors = [], isLoading: isSectorLoading } = useGet<Sector[]>(
-        apis.sectorsV1Url,
-        {
-            errorNotificationsOn: false,
-        }
+        apis.sectorsV1Url
     );
 
     const { setValue, control, handleSubmit, reset, formState, watch } =

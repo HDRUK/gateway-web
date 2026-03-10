@@ -29,12 +29,12 @@ export default defineConfig({
         },
         
         setupNodeEvents(on, config) {
-           on("task", {
-            networkLog(message) {
-                fs.appendFileSync(path.join("cypress", "network.log"), message + "\n");
-                return null;
-            }
-            });
+        //    on("task", {
+        //     networkLog(message) {
+        //         fs.appendFileSync(path.join("cypress", "network.log"), message + "\n");
+        //         return null;
+        //     }
+        //     });
             on("before:browser:launch", (browser, launchOptions) => {
                 if (browser.family === "chromium") {
                     // running headless chrome in a virtualized environment forces pointer type to default to `NONE`
@@ -52,7 +52,7 @@ export default defineConfig({
 
             return config;
         },
-        video: true,
-        videosFolder: "cypress/videos",
+        // video: true,
+        // videosFolder: "cypress/videos",
     },
 });

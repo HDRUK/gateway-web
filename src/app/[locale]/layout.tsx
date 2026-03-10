@@ -78,7 +78,7 @@ export default async function RootLayout(props: {
 
     return (
         <html lang={locale}>
-            {/* {gtmId && <GoogleTagManager gtmId={gtmId} />} */}
+            {gtmId && <GoogleTagManager gtmId={gtmId} />}
             <Organization />
             <body>
                 <NextIntlClientProvider locale={locale} messages={messages}>
