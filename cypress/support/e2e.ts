@@ -16,14 +16,11 @@ Cypress.on("uncaught:exception", (err) => {
 
 beforeEach(() => {
   cy.intercept("**", (req) => {
-
-    req.on("error", (err) => {
-      cy.task("networkLog", `ERROR ${req.method} ${req.url} ${err.message}`);
+    req.continue((res) => {
+      cy.task(
+        "networkLog",
+        `${req.method} ${req.url} -> ${res.statusCode}`
+      );
     });
-
-    req.on("response", (res) => {
-      cy.task("networkLog", `${req.method} ${req.url} -> ${res.statusCode}`);
-    });
-
   });
 });

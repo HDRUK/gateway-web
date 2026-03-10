@@ -28,12 +28,12 @@ export default defineConfig({
         },
         
         async setupNodeEvents(on, config) {
-            on("task", {
-                networkLog(message) {
+           on("task", {
+            networkLog(message) {
                 fs.appendFileSync("cypress-network.log", message + "\n");
                 return null;
-                },
-            }),
+            }
+            });
             on("before:browser:launch", (browser, launchOptions) => {
                 if (browser.family === "chromium") {
                     // running headless chrome in a virtualized environment forces pointer type to default to `NONE`
