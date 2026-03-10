@@ -1,5 +1,6 @@
 import { defineConfig } from "cypress";
 import * as dotenv from "dotenv";
+import fs from "fs";
 
 dotenv.config({ path: ".env" });
 
@@ -25,7 +26,14 @@ export default defineConfig({
             API_URL: process.env.APP_URL,
             TEST_USER_PASSWORD: process.env.TEST_USER_PASSWORD,
         },
+        
         async setupNodeEvents(on, config) {
+            on("task", {
+                networkLog(message) {
+                fs.appendFileSync("cypress-network.log", message + "\n");
+                return null;
+                },
+            }),
             on("before:browser:launch", (browser, launchOptions) => {
                 if (browser.family === "chromium") {
                     // running headless chrome in a virtualized environment forces pointer type to default to `NONE`
