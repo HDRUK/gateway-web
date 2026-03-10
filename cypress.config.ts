@@ -1,6 +1,7 @@
 import { defineConfig } from "cypress";
 import * as dotenv from "dotenv";
 import fs from "fs";
+import path from "path";
 
 dotenv.config({ path: ".env" });
 
@@ -27,10 +28,10 @@ export default defineConfig({
             TEST_USER_PASSWORD: process.env.TEST_USER_PASSWORD,
         },
         
-        async setupNodeEvents(on, config) {
+        setupNodeEvents(on, config) {
            on("task", {
             networkLog(message) {
-                fs.appendFileSync("cypress-network.log", message + "\n");
+                fs.appendFileSync(path.join("cypress", "network.log"), message + "\n");
                 return null;
             }
             });

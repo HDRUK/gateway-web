@@ -258,4 +258,4 @@ jobs:
         if: always()
         with:
           name: cypress-network
-          path: cypress-network.log
+          path: cypress/network.log
