@@ -150,7 +150,7 @@ export default async function DatasetItemPage({
                                 }}>
                                 <DatasetMindMap
                                     data={datasetVersion}
-                                    teamId={data?.team_id}
+                                    teamId={data?.team?.id}
                                     isCohortDiscovery={
                                         data?.is_cohort_discovery
                                     }
