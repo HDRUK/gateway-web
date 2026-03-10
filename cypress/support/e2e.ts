@@ -1,7 +1,6 @@
 // cypress/support/e2e.ts
 import "./commands";
 
-import { networkLogs } from "./networkLogs";
 
 // --- Handle uncaught exceptions ---
 Cypress.on("uncaught:exception", (err) => {
