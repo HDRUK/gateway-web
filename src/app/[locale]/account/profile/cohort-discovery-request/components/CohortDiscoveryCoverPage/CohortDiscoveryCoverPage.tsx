@@ -1,8 +1,10 @@
 "use client";
 
+import { useMemo } from "react";
 import QueryBuilderIcon from "@mui/icons-material/QueryBuilder";
 import { Grid, Link, Typography } from "@mui/material";
 import { useTranslations } from "next-intl";
+import { useSearchParams } from "next/navigation";
 import Box from "@/components/Box";
 import Chip from "@/components/Chip";
 import CohortDiscoveryButton from "@/components/CohortDiscoveryButton";
@@ -31,6 +33,12 @@ export default function CohortDiscoveryCoverPage() {
         isLoading,
         refetch,
     } = useCohortStatus(user?.id);
+
+    const searchParams = useSearchParams();
+
+    const autoOpen = useMemo(() => {
+        return searchParams?.get("open") === "true";
+    }, [searchParams]);
 
     const daysRemaining =
         requestStatus === "APPROVED" && requestExpiry
@@ -103,7 +111,7 @@ export default function CohortDiscoveryCoverPage() {
                             p: 2,
                         }}>
                         <CohortDiscoveryButton
-                            color="greyCustom"
+                            autoOpen={autoOpen}
                             hrefOverride={`/${RouteName.ACCOUNT}/${RouteName.PROFILE}/${RouteName.COHORT_DISCOVERY_REGISTER}`}
                             wrapperSx={{ width: "100%" }}
                         />
