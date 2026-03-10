@@ -1,20 +1,16 @@
-// cypress/support/e2e.ts
 import "./commands";
 
 
-// --- Handle uncaught exceptions ---
-Cypress.on("uncaught:exception", (err) => {
-  const msg = err?.message ?? "";
-
-  if (
-    msg.includes("Failed to execute 'measure' on 'Performance'") &&
-    msg.includes("NotFound") &&
-    msg.includes("negative time stamp")
-  ) {
-    return false; // ignore this known error
-  }
-
-  return true; // let Cypress fail on other errors
+Cypress.on("uncaught:exception", err => {
+    const msg = err?.message ?? "";
+    if (
+        msg.includes("Failed to execute 'measure' on 'Performance'") &&
+        msg.includes("NotFound") &&
+        msg.includes("negative time stamp")
+    ) {
+        return false;
+    }
+    return true;
 });
 
 // // --- Array to store network logs in memory ---
