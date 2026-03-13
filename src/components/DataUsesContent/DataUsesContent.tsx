@@ -3,12 +3,13 @@
 import { Fragment } from "react";
 import { Link } from "@mui/material";
 import { useTranslations } from "next-intl";
-import { DataUse, ReducedDataUse } from "@/interfaces/DataUse";
+import { NetworkDur } from "@/interfaces/DataCustodianNetwork";
+import { useControlledAccordion } from "@/hooks/useControllerAccordion";
 import { RouteName } from "@/consts/routeName";
 import AccordionSection from "../AccordionSection";
 
 export interface DataUsesContentProps {
-    datauses: DataUse[] | ReducedDataUse[];
+    datauses: NetworkDur[];
     anchorIndex: number;
     translationPath: string;
 }
@@ -21,6 +22,7 @@ export default function DataUsesContent({
     translationPath,
 }: DataUsesContentProps) {
     const t = useTranslations(translationPath.concat(TRANSLATION_PATH));
+    const accordionProps = useControlledAccordion(datauses.length > 0);
 
     return (
         <AccordionSection
@@ -30,6 +32,7 @@ export default function DataUsesContent({
                 length: datauses.length,
             })}
             defaultExpanded={datauses.length > 0}
+            {...accordionProps}
             contents={datauses.map(
                 ({ project_title, organisation_name, id }) => (
                     <Fragment key={`dataUse_${id}`}>

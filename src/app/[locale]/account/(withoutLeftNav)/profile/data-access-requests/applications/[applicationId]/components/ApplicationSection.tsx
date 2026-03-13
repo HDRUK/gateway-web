@@ -67,6 +67,7 @@ import { updateDarApplicationAnswersAction } from "@/app/actions/updateDarApplic
 import { updateDarApplicationTeamAction } from "@/app/actions/updateDarApplicationTeam";
 import { updateDarApplicationUserAction } from "@/app/actions/updateDarApplicationUser";
 import notFound from "@/app/not-found";
+import { DarActionBar } from "./DarActionBar";
 import DarFieldArray from "./DarFieldArray";
 import DarFormBanner from "./DarFormBanner";
 import DarMessages from "./DarMessages";
@@ -579,10 +580,20 @@ const ApplicationSection = ({
                     sx={{
                         m: 2,
                         flex: 5,
-                        height: "65vh",
+                        minheight: "70vh",
                         display: "flex",
                         flexDirection: "column",
                     }}>
+                    <DarActionBar
+                        applicationId={applicationId}
+                        teamId={teamId}
+                        userId={userId}
+                        saveDraftOnClick={handleSaveAsDraft}
+                        submitOnClick={handleSubmit(handleSave)}
+                        isResearcher={isResearcher}
+                        manageApplicationOnStatus={handleManageApplication}
+                    />
+
                     {parentSections.find(section => section.id === sectionId)
                         ?.name !== messageSection.name && (
                         <>
@@ -606,6 +617,8 @@ const ApplicationSection = ({
                             p: 0,
                             overflowY: "auto",
                             flex: 1,
+                            minHeight: "30vh",
+                            paddingBottom: 1,
                         }}>
                         <Box
                             sx={{

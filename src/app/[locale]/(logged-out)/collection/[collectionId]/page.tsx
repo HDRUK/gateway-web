@@ -63,10 +63,24 @@ export default async function CollectionItemPage({
             navigation={<ActiveListSidebar items={activeLinkList} />}
             body={
                 <>
-                    <Typography variant="h1" sx={{ ml: 2, mt: 2 }}>
+                    <Box>
+                        <HeaderActionBar
+                            backButtonText={t("backLabel")}
+                            backButtonHref={`/${RouteName.SEARCH}?type=${SearchCategory.COLLECTIONS}`}
+                            wrapperSx={{ p: 0, boxShadow: 0 }}
+                        />
+                    </Box>
+                <Box sx={{ ml: 2, mt: 2 }}>
+                    <Typography variant="h1" sx={{ }}>
                         <HTMLContent content={name} />
                     </Typography>
-                    <Box sx={{ display: "flex", alignItems: "center", pt: 0 }}>
+                    <Box sx={{ display: "flex", alignItems: "center", pt: 0, justifyContent: "space-between", p: 0}}>
+                        <Box sx={{ mb: 1, p: 0 }}>
+                            <Typography variant="h3" sx={{ mb: 1 }}>
+                                {t("introTitle")}
+                            </Typography>
+                            <MarkDownSanitizedWithHtml content={description} />
+                        </Box>
                         <Image
                             width={554}
                             height={250}
@@ -75,20 +89,7 @@ export default async function CollectionItemPage({
                             src={image_link || StaticImages.BASE.placeholder}
                         />
                     </Box>
-
-                    <Box>
-                        <HeaderActionBar
-                            backButtonText={t("backLabel")}
-                            backButtonHref={`/${RouteName.SEARCH}?type=${SearchCategory.COLLECTIONS}`}
-                            wrapperSx={{ p: 0, boxShadow: 0 }}
-                        />
-                    </Box>
-                    <Box sx={{ mb: 3 }}>
-                        <Typography variant="h3" sx={{ mb: 1 }}>
-                            {t("introTitle")}
-                        </Typography>
-                        <MarkDownSanitizedWithHtml content={description} />
-                    </Box>
+                </Box>
                     <Box>
                         <DatasetsContent
                             datasets={dataset_versions}

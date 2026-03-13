@@ -1,13 +1,14 @@
 "use client";
 
-import { Fragment } from "react";
+import { Fragment, useState } from "react";
 import { Link } from "@mui/material";
 import { useTranslations } from "next-intl";
-import { Publication, ReducedPublication } from "@/interfaces/Publication";
+import { NetworkPublication } from "@/interfaces/DataCustodianNetwork";
 import AccordionSection from "@/components/AccordionSection";
+import { useControlledAccordion } from "@/hooks/useControllerAccordion";
 
 export interface PublicationsContentProps {
-    publications: Publication[] | ReducedPublication[];
+    publications: NetworkPublication[];
     anchorIndex: number;
     translationPath: string;
 }
@@ -20,7 +21,7 @@ export default function PublicationContent({
     translationPath,
 }: PublicationsContentProps) {
     const t = useTranslations(translationPath.concat(TRANSLATION_PATH));
-
+    const accordionProps = useControlledAccordion(publications.length > 0);
     return (
         <AccordionSection
             id={`anchor${anchorIndex}`}
@@ -28,7 +29,7 @@ export default function PublicationContent({
             heading={t("heading", {
                 length: publications.length,
             })}
-            defaultExpanded={publications.length > 0}
+            {...accordionProps}
             contents={publications.map(
                 ({ id, paper_title, authors, url, year_of_publication }) => (
                     <Fragment key={`publication_${id}`}>
