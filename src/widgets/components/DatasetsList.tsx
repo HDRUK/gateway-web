@@ -63,14 +63,14 @@ export default function DatasetsList({ items, branding }: DatasetsListProps) {
                                         fontWeight={600}
                                         mb={0.5}
                                         target="_blank"
-                                        color={branding.primary}>
+                                        color={branding?.primary}>
                                         {result.short_title}
                                     </Link>
                                     {result.publisher && (
                                         <Link
                                             href={`${FULL_GATEWAY_URL}/${RouteName.DATA_CUSTODIANS_ITEM}/${result.team_id}`}
                                             target="_blank"
-                                            color={branding.secondary}>
+                                            color={branding?.secondary}>
                                             <Typography sx={{ mb: 1.5 }}>
                                                 {result.publisher}
                                             </Typography>
@@ -99,14 +99,14 @@ export default function DatasetsList({ items, branding }: DatasetsListProps) {
                                         },
                                         justifyContent: "space-between",
                                     }}>
-                                    <Typography color={branding.secondary ?? colors.green700}>
+                                    <Typography color={branding?.secondary ?? colors.green700}>
                                         {`${TRANSLATIONS.populationSize}: `}
                                         {formatPopulationSize(
                                             result.population_size,
                                             TRANSLATIONS.noData
                                         )}
                                     </Typography>
-                                    <Typography color={branding.secondary ?? colors.green700}>
+                                    <Typography color={branding?.secondary ?? colors.green700}>
                                         {`${TRANSLATIONS.dateRange}: `}
                                         {formatYearRange(
                                             result.start_date ?? null,
