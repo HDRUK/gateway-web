@@ -50,7 +50,7 @@ export default function CategoryMenu({
         <Box component="nav" sx={{ p: 0 }}>
             <Box
                 sx={{
-                    borderBottom: `3px solid ${branding.secondary ?? colors.green400}`,
+                    borderBottom: `3px solid ${branding?.secondary ?? colors.green400}`,
                     width: "100%",
                     p: 0,
                 }}>
