@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { Box, Button, Menu, MenuItem } from "@mui/material";
-import { WidgetCategory } from "@/interfaces/Widget";
+import { WidgetBranding, WidgetCategory } from "@/interfaces/Widget";
 import { colors } from "@/config/theme";
 import { ChevronThinIcon } from "@/consts/icons";
 import { CATEGORY_LABEL } from "../consts";
@@ -24,6 +24,7 @@ type CategoryMenuProps = {
     menuAnchor: HTMLElement | null;
     setMenuAnchor: (el: HTMLElement | null) => void;
     containerRef: React.RefObject<HTMLDivElement>;
+    branding: WidgetBranding;
 };
 
 export default function CategoryMenu({
@@ -33,6 +34,7 @@ export default function CategoryMenu({
     menuAnchor,
     setMenuAnchor,
     containerRef,
+    branding,
 }: CategoryMenuProps) {
     const [menuContainer, setMenuContainer] = useState<Element | null>(null);
     const [menuWidth, setMenuWidth] = useState<number | string>("100%");
@@ -48,7 +50,7 @@ export default function CategoryMenu({
         <Box component="nav" sx={{ p: 0 }}>
             <Box
                 sx={{
-                    borderBottom: `3px solid ${colors.green400}`,
+                    borderBottom: `3px solid ${branding.secondary ?? colors.green400}`,
                     width: "100%",
                     p: 0,
                 }}>

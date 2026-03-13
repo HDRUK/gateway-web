@@ -1,14 +1,14 @@
 "use client";
 
 import { Box, Chip, Link } from "@mui/material";
-import { CollectionItem } from "@/interfaces/Widget";
+import { CollectionItem, WidgetBranding } from "@/interfaces/Widget";
 import BoxStacked from "@/components/BoxStacked";
 import { colors } from "@/config/theme";
 import { FULL_GATEWAY_URL } from "@/consts/urls";
 
 const boxStackedSX = { aspectRatio: "1.9 / 1", minHeight: 130 } as const;
 
-type CollectionsGridProps = { items: CollectionItem[] };
+type CollectionsGridProps = { items: CollectionItem[]; branding: WidgetBranding };
 
 export default function CollectionsGrid({ items }: CollectionsGridProps) {
     return (

@@ -1,3 +1,9 @@
+export interface WidgetBranding {
+    primary?: string;
+    secondary?: string;
+    neutral?: string;
+}
+
 export enum Unit {
     PX = "px",
     PERCENT = "%",
@@ -20,6 +26,9 @@ export interface Widget {
     keep_proportions: boolean;
     widget_name: string;
     permitted_domains: string[];
+    branding_primary?: string;
+    branding_secondary?: string;
+    branding_neutral?: string;
     created_at: string;
     updated_at: string;
     deleted_at: string;
@@ -33,6 +42,9 @@ export interface WidgetDetails {
     include_search_bar: number;
     include_cohort_link: number;
     keep_proportions: number;
+    branding_primary: string;
+    branding_secondary: string;
+    branding_neutral: string;
 }
 
 export type WidgetCategory =
@@ -53,6 +65,7 @@ export interface DatasetItem {
     start_date?: string | null;
     end_date?: string | null;
     publisher?: string | null;
+    branding?: string | null;
 }
 
 export interface DataUseDatasetRef {

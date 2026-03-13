@@ -2,6 +2,7 @@
 
 /* eslint-disable @next/next/no-img-element */
 import { Box, IconButton, InputAdornment, OutlinedInput } from "@mui/material";
+import { WidgetBranding } from "@/interfaces/Widget";
 import Typography from "@/components/Typography";
 import theme, { colors } from "@/config/theme";
 import { SearchIcon, CancelIcon } from "@/consts/icons";
@@ -30,6 +31,7 @@ type HeaderProps = {
     gatewayUrl: string;
     searchValue: string;
     setSearchValue: (v: string) => void;
+    branding: WidgetBranding;
 };
 
 export default function Header({
@@ -37,6 +39,7 @@ export default function Header({
     gatewayUrl,
     searchValue,
     setSearchValue,
+    branding,
 }: HeaderProps) {
     return (
         <Box
@@ -49,7 +52,7 @@ export default function Header({
                 <Box sx={{ flexGrow: 1, p: 0 }}>
                     <OutlinedInput
                         sx={{
-                            border: `2px solid ${theme.palette.greyCustom.main}`,
+                            border: `2px solid ${branding.primary ?? theme.palette.greyCustom.main}`,
                             fontSize: "1.25rem",
                             backgroundColor: "white",
                             "& fieldset": { border: "none" },

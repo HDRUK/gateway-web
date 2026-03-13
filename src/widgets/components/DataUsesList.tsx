@@ -1,7 +1,7 @@
 "use client";
 
 import { Box, Link, List, ListItem, ListItemText } from "@mui/material";
-import { DataUseItem } from "@/interfaces/Widget";
+import { DataUseItem, WidgetBranding } from "@/interfaces/Widget";
 import EllipsisCharacterLimit from "@/components/EllipsisCharacterLimit";
 import EllipsisLineLimit from "@/components/EllipsisLineLimit";
 import TooltipText from "@/components/TooltipText";
@@ -35,7 +35,7 @@ const categorySx = {
     marginRight: theme.spacing(2),
 };
 
-type DataUsesListProps = { items: DataUseItem[] };
+type DataUsesListProps = { items: DataUseItem[]; branding: WidgetBranding };
 
 export default function DataUsesList({ items }: DataUsesListProps) {
     return (
