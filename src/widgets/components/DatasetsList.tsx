@@ -26,7 +26,7 @@ export default function DatasetsList({ items, branding }: DatasetsListProps) {
     return (
         <List
             sx={{
-                background: branding.neutral ?? colors.grey100,
+                background: branding?.neutral ?? colors.grey100,
                 px: 1,
                 mt: 1,
                 display: "flex",
