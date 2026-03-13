@@ -1,3 +1,21 @@
+## [2.33.0](https://github.com/HDRUK/gateway-web/compare/v2.32.1...v2.33.0) (2026-03-13)
+
+### ✨ Features
+
+* **GAT-0000:** updated chromatic pipeline (#1491) ([9efec1c](https://github.com/HDRUK/gateway-web/commit/9efec1c3a7f58b5f6a9a0f8ee23b4711743a5aab)), closes [GAT-0000](GAT-0000)
+* **GAT-7769:** Added integration help link (#1478) ([3e1bb73](https://github.com/HDRUK/gateway-web/commit/3e1bb73cffc337090056cb108d7128df3e605f92)), closes [GAT-7769](GAT-7769)
+* **GAT-7769:** added integrations pages links (#1490) ([c1c19eb](https://github.com/HDRUK/gateway-web/commit/c1c19ebdf1ca825b8b31624ba8cb9d0eeb174d4a)), closes [GAT-7769](GAT-7769)
+* **GAT-8242:** Add action bar to DAR  (#1477) ([9368e24](https://github.com/HDRUK/gateway-web/commit/9368e246fb94c815fbf78a334f04d74616da788b)), closes [GAT-8242](GAT-8242)
+* **GAT-8246:** Add filter panel to data custodian networks (#1487) ([b15dde8](https://github.com/HDRUK/gateway-web/commit/b15dde87e526158c21455f9d0996ccc8eeff0b41)), closes [GAT-8246](GAT-8246)
+* **GAT-8384:** added release workflow pipeline (#1480) ([aa31978](https://github.com/HDRUK/gateway-web/commit/aa31978e11894f344bfff3b532e924b9e7361152)), closes [GAT-8384](GAT-8384)
+* **GAT-8384:** updated chromatic checkout version (#1481) ([5619778](https://github.com/HDRUK/gateway-web/commit/56197783f398be92d61008b30e98349cceb6a00c)), closes [GAT-8384](GAT-8384)
+* **GAT-8606:** Updated collections and data custodian page to reflect new design (#1488) ([432d9f9](https://github.com/HDRUK/gateway-web/commit/432d9f9a61a7a8b70f8f1f517c126d9e69287d81)), closes [GAT-8606](GAT-8606)
+
+### 🐛 Bug Fixes
+
+* **GAT-7769:** Added new .env variables for integrations (#1485) ([d54c2bf](https://github.com/HDRUK/gateway-web/commit/d54c2bff2f8e7a1c2a7d15fd2e44907018adc555)), closes [GAT-7769](GAT-7769)
+* **GAT-8563:** Extend length of Data Access Request Form so questions are visible on all screen sizes (#1484) ([bb7be9c](https://github.com/HDRUK/gateway-web/commit/bb7be9c3995af31c7516a72ede198f492c21d5bf)), closes [GAT-8563](GAT-8563)
+
 ## [2.32.1](https://github.com/HDRUK/gateway-web/compare/v2.32.0...v2.32.1) (2026-02-23)
 
 ### 🐛 Bug Fixes
