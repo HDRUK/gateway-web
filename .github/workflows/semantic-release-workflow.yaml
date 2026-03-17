@@ -65,12 +65,8 @@ jobs:
 
       - name: Merge changes from main to dev
         env:
-<<<<<<< HEAD
-          GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
-          RELEASE_VERSION: ${{ steps.getversion.outputs.version }}
-=======
           GITHUB_TOKEN: ${{ steps.generate-deployment-token.outputs.token }}
->>>>>>> 0bd8d03fdbc0167df686555684f89ac552f44293
+          RELEASE_VERSION: ${{ steps.getversion.outputs.version }}
         run: |
           git fetch origin dev
           git checkout dev
