@@ -13,7 +13,7 @@ import usePost from "@/hooks/usePost";
 import apis from "@/config/apis";
 import { RouteName } from "@/consts/routeName";
 import { CUSTODIAN, DATA_USES, DATASETS } from "@/consts/translation";
-import { DATA_CUSTODIAN_LIMIT, TabValues } from "../const";
+import { BRANDING_DEFAULTS, DATA_CUSTODIAN_LIMIT, TabValues } from "../const";
 
 const TRANSLATION_PATH = `pages.account.team.widgets.edit`;
 
@@ -60,6 +60,7 @@ export default function useWidgetForm(
             size_height: 740,
             unit: Unit.PX,
             widget_name: "",
+            ...BRANDING_DEFAULTS,
             ...widget,
             has_datasets:
                 templateType === CUSTODIAN || templateType === DATASETS

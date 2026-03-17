@@ -21,9 +21,17 @@ jobs:
         id: checkout
         uses: actions/checkout@v6
         with:
-          token:  ${{ secrets.GH_TOKEN }}
           ref: main
-          fetch-depth: 0
+
+      - name: Generate GitHub App token
+        id: generate-deployment-token
+        uses: actions/create-github-app-token@v2
+        with:
+          app-id: ${{ secrets.DEPLOY_APP_ID }}
+          private-key: ${{ secrets.DEPLOY_APP_PRIVATE_KEY }}
+          owner: HDRUK
+          repositories: |
+            ${{ github.event.repository.name }}     
 
       - name: Set up Node.js
         uses: actions/setup-node@v5
@@ -37,7 +45,7 @@ jobs:
         run: npx semantic-release
         env:
           JIRA_URL: ${{ vars.JIRA_URL }}
-          GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
+          GITHUB_TOKEN: ${{ steps.generate-deployment-token.outputs.token }}
 
       - name: Set Git config
         run: |
@@ -57,8 +65,12 @@ jobs:
 
       - name: Merge changes from main to dev
         env:
+<<<<<<< HEAD
           GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
           RELEASE_VERSION: ${{ steps.getversion.outputs.version }}
+=======
+          GITHUB_TOKEN: ${{ steps.generate-deployment-token.outputs.token }}
+>>>>>>> 0bd8d03fdbc0167df686555684f89ac552f44293
         run: |
           git fetch origin dev
           git checkout dev

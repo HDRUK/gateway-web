@@ -23,6 +23,7 @@ import { Wysiwyg } from "@/components/Wysiwyg";
 import DocumentExchange from "../DocumentExchange";
 import FileUpload from "../UploadFile";
 import FileUploadMultiple from "../UploadFileMultiple";
+import HexColourField from "../HexColourField";
 
 type InputType<TFieldValues extends FieldValues, TName> =
     | TextFieldBaseProps<TFieldValues, TName>
@@ -36,7 +37,7 @@ export interface InputWrapperProps<TFieldValues extends FieldValues, TName> {
     component: ComponentTypes;
     control: Control<TFieldValues>;
     name: TName;
-    sx: SxProps;
+    sx?: SxProps;
 }
 
 export type InputWrapperCombinedProps<
@@ -70,6 +71,7 @@ function InputWrapper<
         FileUpload,
         FileUploadMultiple,
         DocumentExchange,
+        HexColourField,
     };
 
     if (component === "TextTime") {

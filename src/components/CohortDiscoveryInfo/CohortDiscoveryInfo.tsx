@@ -40,10 +40,7 @@ const CohortDiscoveryInfo = async ({
                     <Typography variant="body1">{t("learnAbout")}</Typography>
                 </Box>
                 {showAccessButton && (
-                    <CohortDiscoveryButton
-                        color="greyCustom"
-                        showDatasetExplanatoryTooltip
-                    />
+                    <CohortDiscoveryButton showDatasetExplanatoryTooltip />
                 )}
             </Box>
             <Tabs
