@@ -87,6 +87,15 @@ const datasetFields: DatasetSection[] = [
         ],
     },
     {
+        sectionName: "Dataset and BioSample Aliases",
+        fields: [
+            {
+                path: "metadata.metadata.summary.datasetAliases",
+                type: FieldType.LIST_TAG,
+            },
+        ],
+    },
+    {
         sectionName: "Observations",
         fields: [
             {
