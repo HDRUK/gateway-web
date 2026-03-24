@@ -5,6 +5,7 @@ import { Box, Button, Typography } from "@mui/material";
 import {
     WidgetEntityData,
     WidgetCategory,
+    WidgetBranding,
     DatasetItem,
     CollectionItem,
     ScriptItem,
@@ -40,6 +41,9 @@ export default function WidgetDisplay({
         size_height,
         size_width,
         unit,
+        branding_primary,
+        branding_secondary,
+        branding_neutral,
     } = data.widget;
 
     const [entityType, setEntityType] = useState<WidgetCategory>("datasets");
@@ -49,17 +53,23 @@ export default function WidgetDisplay({
     const resultsByType = useResultsByType(data, searchValue);
     const widgetContainer = useRef<HTMLDivElement | null>(null);
 
+    const branding: WidgetBranding = {
+        primary: branding_primary,
+        secondary: branding_secondary,
+        neutral: branding_neutral,
+    };
+
     const renderByType = () => {
         const results = resultsByType[entityType];
         switch (entityType) {
             case "datasets":
-                return <DatasetsList items={results as DatasetItem[]} />;
+                return <DatasetsList items={results as DatasetItem[]} branding={branding} />;
             case "collections":
-                return <CollectionsGrid items={results as CollectionItem[]} />;
+                return <CollectionsGrid items={results as CollectionItem[]} branding={branding} />;
             case "scripts":
-                return <ScriptsList items={results as ScriptItem[]} />;
+                return <ScriptsList items={results as ScriptItem[]} branding={branding} />;
             default:
-                return <DataUsesList items={results as DataUseItem[]} />;
+                return <DataUsesList items={results as DataUseItem[]} branding={branding} />;
         }
     };
 
@@ -73,7 +83,7 @@ export default function WidgetDisplay({
                 width: isIframe ? "100%" : `${size_width}${unit}`,
                 height: `${size_height}${unit}`,
                 overflow: "hidden",
-                backgroundColor: theme.palette.grey[100],
+                backgroundColor: branding_neutral ?? theme.palette.grey[100],
                 color: colors.grey900,
             }}
             ref={widgetContainer}>
@@ -89,6 +99,7 @@ export default function WidgetDisplay({
                     gatewayUrl={FULL_GATEWAY_URL}
                     searchValue={searchValue}
                     setSearchValue={setSearchValue}
+                    branding={branding}
                 />
 
                 <CategoryMenu
@@ -98,6 +109,7 @@ export default function WidgetDisplay({
                     menuAnchor={menuAnchor}
                     setMenuAnchor={setMenuAnchor}
                     containerRef={widgetContainer}
+                    branding={branding}
                 />
 
                 <Box sx={{ flex: 1, overflow: "auto", mb: 1, p: 0 }}>
@@ -108,7 +120,7 @@ export default function WidgetDisplay({
                     <Box
                         component="footer"
                         sx={{
-                            backgroundColor: colors.grey200,
+                            backgroundColor: branding_neutral ?? colors.grey200,
                             display: "flex",
                             flexDirection: "row",
                             justifyContent: "space-between",

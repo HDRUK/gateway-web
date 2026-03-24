@@ -14,40 +14,38 @@ export const useCohortStatus = (
     { redirect = false, useRQuest = true }: CohortStatusOptions = {}
 ) => {
     const [data, setData] = useState<CohortResponse | null>(null);
-    const [isLoading, setIsLoading] = useState(true);
+    const [isLoading, setIsLoading] = useState(false);
+    const [hasFetched, setHasFetched] = useState(false);
 
-    const fetchData = useCallback(
-        async (opts?: { force?: boolean }) => {
-            if (!userId) return;
-            if (!opts?.force && data) return;
-
-            setIsLoading(true);
-
-            try {
-                const result = await getCohortStatusAndRedirect(
-                    userId,
-                    redirect,
-                    useRQuest
-                );
-                setData(result);
-            } catch (err) {
-                console.error("Error fetching cohort status:", err);
-                setData(null);
-            } finally {
-                setIsLoading(false);
-            }
-        },
-        [userId, redirect, useRQuest, data]
-    );
-
-    useEffect(() => {
-        if (!userId || data) {
+    const fetchData = useCallback(async () => {
+        if (!userId) {
+            setData(null);
             setIsLoading(false);
+            setHasFetched(false);
             return;
         }
 
+        setIsLoading(true);
+
+        try {
+            const result = await getCohortStatusAndRedirect(
+                userId,
+                redirect,
+                useRQuest
+            );
+            setData(result);
+        } catch (err) {
+            console.error("Error fetching cohort status:", err);
+            setData(null);
+        } finally {
+            setIsLoading(false);
+            setHasFetched(true);
+        }
+    }, [userId, redirect, useRQuest]);
+
+    useEffect(() => {
         fetchData();
-    }, [data, userId, redirect, useRQuest]);
+    }, [fetchData]);
 
     return {
         requestStatus: data?.requestStatus ?? null,
@@ -55,6 +53,7 @@ export const useCohortStatus = (
         requestExpiry: data?.requestExpiry ?? null,
         redirectUrl: data?.redirectUrl ?? null,
         isLoading,
-        refetch: () => fetchData({ force: true }),
+        hasFetched,
+        refetch: fetchData,
     };
 };

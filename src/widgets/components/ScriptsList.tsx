@@ -1,14 +1,14 @@
 "use client";
 
 import { Box, Link, List, ListItem, ListItemText } from "@mui/material";
-import { ScriptItem } from "@/interfaces/Widget";
+import { ScriptItem, WidgetBranding } from "@/interfaces/Widget";
 import EllipsisLineLimit from "@/components/EllipsisLineLimit";
 import { MarkDownSanitizedWithHtml } from "@/components/MarkDownSanitizedWithHTML";
 import theme, { colors } from "@/config/theme";
 import { RouteName } from "@/consts/routeName";
 import { FULL_GATEWAY_URL } from "@/consts/urls";
 
-type ScriptsListProps = { items: ScriptItem[] };
+type ScriptsListProps = { items: ScriptItem[]; branding: WidgetBranding };
 
 export default function ScriptsList({ items }: ScriptsListProps) {
     return (

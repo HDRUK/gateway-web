@@ -4,7 +4,7 @@ const statusMapping = {
     PENDING: "greyCustom",
     BANNED: "error",
     SUSPENDED: "warningCustom",
-    EXPIRED: "default",
+    EXPIRED: "error",
 };
 
 const NHSSDEStatusMapping = {

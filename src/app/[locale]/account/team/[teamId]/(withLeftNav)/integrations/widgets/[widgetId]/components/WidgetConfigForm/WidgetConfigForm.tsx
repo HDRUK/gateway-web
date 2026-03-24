@@ -11,7 +11,7 @@ import InputWrapper from "@/components/InputWrapper";
 import Paper from "@/components/Paper";
 import { inputComponents } from "@/config/forms";
 import { colors } from "@/config/theme";
-import { DATA_CUSTODIAN_LIMIT } from "../../const";
+import { BRANDING_DEFAULTS, BRANDING_NHS, DATA_CUSTODIAN_LIMIT } from "../../const";
 import { getChipLabel, isOptionEqualToValue } from "../../utils";
 
 const TRANSLATION_PATH = `pages.account.team.widgets.edit`;
@@ -294,6 +294,87 @@ const WidgetConfigForm = ({
                     component: inputComponents.Select,
                     options: unitOptions,
                     inline: true,
+                },
+            ],
+        },
+        {
+            section: "Branding",
+            name: "Branding",
+            intro: (
+                <>
+                    <Typography>{t("brandingInfo")}</Typography>
+                    <Box sx={{ display: "flex", p: 0, gap: 3, mb: 2 }}>
+                        <Button
+                            onClick={() => {
+                                setValue(
+                                    "branding_primary",
+                                    BRANDING_DEFAULTS.branding_primary,
+                                    { shouldDirty: true }
+                                );
+                                setValue(
+                                    "branding_secondary",
+                                    BRANDING_DEFAULTS.branding_secondary,
+                                    { shouldDirty: true }
+                                );
+                                setValue(
+                                    "branding_neutral",
+                                    BRANDING_DEFAULTS.branding_neutral,
+                                    { shouldDirty: true }
+                                );
+                            }}
+                            variant="link"
+                            sx={{ color: colors.green700 }}>
+                            {t("brandingUseDefaults")}
+                        </Button>
+                        <Button
+                            onClick={() => {
+                                setValue(
+                                    "branding_primary",
+                                    BRANDING_NHS.branding_primary,
+                                    { shouldDirty: true }
+                                );
+                                setValue(
+                                    "branding_secondary",
+                                    BRANDING_NHS.branding_secondary,
+                                    { shouldDirty: true }
+                                );
+                                setValue(
+                                    "branding_neutral",
+                                    BRANDING_NHS.branding_neutral,
+                                    { shouldDirty: true }
+                                );
+                            }}
+                            variant="link"
+                            sx={{ color: colors.green700 }}>
+                            {t("brandingUseNHS")}
+                        </Button>
+                    </Box>
+                </>
+            ),
+            fields: [
+                {
+                    name: "branding_primary",
+                    label: t("brandingPrimary"),
+                    info: t("brandingPrimaryInfo"),
+                    component: inputComponents.HexColourField,
+                    required: false,
+                    sx: { width: 255 },
+                },
+                {
+                    name: "branding_secondary",
+                    label: t("brandingSecondary"),
+                    info: t("brandingSecondaryInfo"),
+                    component: inputComponents.HexColourField,
+                    required: false,
+                    sx: { width: 255 },
+                },
+                {
+                    name: "branding_neutral",
+                    label: t("brandingNeutral"),
+                    info: t("brandingNeutralInfo"),
+                    component: inputComponents.HexColourField,
+                    required: false,
+                    sx: { width: 255 },
                 },
             ],
         },

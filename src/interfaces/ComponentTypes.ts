@@ -14,6 +14,7 @@ type ComponentTypes =
     | "Wysiwyg"
     | "FileUpload"
     | "FileUploadMultiple"
-    | "DocumentExchange";
+    | "DocumentExchange"
+    | "HexColourField";
 
 export type { ComponentTypes };
