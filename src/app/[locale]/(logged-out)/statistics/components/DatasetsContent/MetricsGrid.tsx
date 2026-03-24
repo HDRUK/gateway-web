@@ -2,31 +2,16 @@ import { Card, CardContent, Grid, Typography } from "@mui/material";
 import { getTranslations } from "next-intl/server";
 import { MetricsResponse } from "@/interfaces/Metrics";
 
-type MetricKey =
-    | "datasets"
-    | "custodians"
-    | "durs"
-    | "datasetCohortRequest"
-    | "tools"
-    | "publications"
-    | "custodianNetworks"
-    | "collections";
-
-type MetricCardItem = {
-    key: MetricKey;
-    label: string;
-};
-
-const metricItems: MetricCardItem[] = [
-    { key: "datasets", label: "datasets" },
-    { key: "custodians", label: "dataCustodians" },
-    { key: "durs", label: "dur" },
-    { key: "datasetCohortRequest", label: "cohort" },
-    { key: "tools", label: "scripts" },
-    { key: "publications", label: "publications" },
-    { key: "custodianNetworks", label: "custodianNetworks" },
-    { key: "collections", label: "collections" },
-];
+const metricKeys = [
+    "datasets",
+    "dataCustodians",
+    "dur",
+    "cohort",
+    "scripts",
+    "publications",
+    "custodianNetworks",
+    "collections",
+] as const;
 
 const formatNumber = (value?: number) => (value ?? 0).toLocaleString();
 
@@ -41,10 +26,8 @@ export default async function MetricsGrid({ metrics }: MetricsGridProps) {
 
     return (
         <Grid container spacing={2}>
-            {metricItems.map(item => (
-                <Grid
-                    key={item.key}
-                    size={{ mobile: 12, tablet: 6, laptop: 3 }}>
+            {metricKeys.map(key => (
+                <Grid key={key} size={{ mobile: 12, tablet: 6, laptop: 3 }}>
                     <Card
                         sx={{
                             height: "100%",
@@ -57,11 +40,11 @@ export default async function MetricsGrid({ metrics }: MetricsGridProps) {
                                     color: "grey.700",
                                     mb: 1,
                                 }}>
-                                {t(item.label)}
+                                {t(key)}
                             </Typography>
 
                             <Typography variant="h2" component="span">
-                                {formatNumber(metrics[item.key])}
+                                {formatNumber(metrics[key])}
                             </Typography>
                         </CardContent>
                     </Card>
