@@ -1050,6 +1050,16 @@
             },
             "newsEvents": {
                 "seeAllLink": "See all events"
+            },
+            "stats": {
+                "datasetsCustodians": "{datasets} Datasets <light>from {custodians} Data Custodians</light>",
+                "durs": "{durs} Data Uses / Research Projects",
+                "datasetCohortRequest": "{datasetCohortRequest} Cohort Discovery Datasets",
+                "scripts": "{scripts} Analysis Scripts & Software",
+                "publications": "{publications} Publications",
+                "dataCustodians": "{dataCustodians} Data Custodians",
+                "collections": "{collections} Collections",
+                "viewAll": "View all"
             }
         },
         "saved_searches": {

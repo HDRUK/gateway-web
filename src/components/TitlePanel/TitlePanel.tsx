@@ -2,6 +2,7 @@ import { TypographyProps } from "@mui/material";
 import Image from "next/image";
 import Box from "@/components/Box";
 import Typography from "@/components/Typography";
+import FeaturedMetric from "../FeaturedMetric";
 import TitleWithBg from "../TitleWithBg";
 
 interface TitlePanelProps extends TypographyProps {
@@ -28,6 +29,8 @@ const TitlePanel = ({ image, text, title }: TitlePanelProps) => {
                     fontSize={{ mobile: 14, tablet: 18, desktop: 24 }}>
                     {text}
                 </Typography>
+
+                <FeaturedMetric />
             </Box>
             <Box
                 sx={{

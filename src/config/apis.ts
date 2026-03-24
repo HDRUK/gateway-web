@@ -91,6 +91,7 @@ const apis = {
     widgetsV1Url: `${apiV1Url}/widgets`,
     widgetsV1UrlIP: `${apiV1IPUrl}/widgets`,
     workgroupsV1Url: `${apiV1Url}/workgroups`,
+    metricsV2Url: `${apiV2Url}/metrics`,
 };
 
 export default apis;
