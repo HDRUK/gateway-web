@@ -51,7 +51,7 @@ const FeaturedMetric = () => {
 
             t("datasetCohortRequest", {
                 datasetCohortRequest: formatNumber(
-                    s?.datasetCohortRequest ?? 0
+                    metricsData?.datasetCohortRequest ?? 0
                 ),
             }),
 
