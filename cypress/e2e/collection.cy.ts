@@ -6,6 +6,7 @@ const NAME = "NEW_COLLECTION";
 const createCollection = () => {
     cy.visit(`/${RouteName.ACCOUNT}/${RouteName.PROFILE}`);
     cy.get('[href="/account/profile/collections"]').click();
+    cy.waitForApiIdle();
     cy.contains("button", "Add new Collection").click();
     cy.get('input[name="name"]').type(NAME);
     cy.get('[name="collaborators"] input').type(faker.random.alphaNumeric(5));
