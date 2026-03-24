@@ -3,6 +3,7 @@
 import { useEffect, useMemo, useState } from "react";
 import { useTranslations } from "next-intl";
 import { MetricsResponse } from "@/interfaces/Metrics";
+import { SearchCategory } from "@/interfaces/Search";
 import Box from "@/components/Box";
 import Typography from "@/components/Typography";
 import useGet from "@/hooks/useGet";
@@ -14,16 +15,36 @@ import Link from "../Link";
 
 const TRANSLATIONS_NAMESPACE = "pages.home.stats";
 const ROTATE_INTERVAL_MS = 10000;
+const STAT_ID_ORDER = [
+    SearchCategory.DATASETS,
+    SearchCategory.DATA_USE,
+    "feasibility",
+    SearchCategory.TOOLS,
+    SearchCategory.PUBLICATIONS,
+    "dataCustodians",
+    "dataCustodianNetworks",
+    SearchCategory.COLLECTIONS,
+];
 
 const formatNumber = (value?: number) => value?.toLocaleString() ?? 0;
 
-const FeaturedMetric = () => {
+interface FeatureMetricProps {
+    selectedButton?: string;
+}
+
+const FeaturedMetric = ({ selectedButton }: FeatureMetricProps) => {
     const t = useTranslations(TRANSLATIONS_NAMESPACE);
 
     const { data: metricsData } = useGet<MetricsResponse>(apis.metricsV2Url);
 
     const [currentIndex, setCurrentIndex] = useState(0);
     const [isPaused, setIsPaused] = useState(false);
+
+    const selectedIndex = selectedButton
+        ? STAT_ID_ORDER.indexOf(selectedButton)
+        : -1;
+
+    const displayIndex = selectedIndex !== -1 ? selectedIndex : currentIndex;
 
     const stats = useMemo(() => {
         return [
@@ -68,6 +89,12 @@ const FeaturedMetric = () => {
                 dataCustodians: formatNumber(metricsData?.custodians ?? 0),
             }),
 
+            t("dataCustodianNetworks", {
+                dataCustodians: formatNumber(
+                    metricsData?.custodianNetworks ?? 0
+                ),
+            }),
+
             t("collections", {
                 collections: formatNumber(metricsData?.collections ?? 0),
             }),
@@ -75,14 +102,15 @@ const FeaturedMetric = () => {
     }, [metricsData, t]);
 
     useEffect(() => {
-        if (stats.length <= 1 || isPaused) return undefined;
+        if (selectedIndex !== -1 || stats.length <= 1 || isPaused)
+            return undefined;
 
         const interval = window.setInterval(() => {
             setCurrentIndex(prevIndex => (prevIndex + 1) % stats.length);
         }, ROTATE_INTERVAL_MS);
 
         return () => window.clearInterval(interval);
-    }, [isPaused, stats.length]);
+    }, [isPaused, selectedIndex, stats.length]);
 
     if (!metricsData) {
         return null;
@@ -117,7 +145,7 @@ const FeaturedMetric = () => {
                             fontSize: "1.25rem",
                         },
                     }}>
-                    {stats[currentIndex]}
+                    {stats[displayIndex]}
                 </Typography>
             </Box>
             <Link

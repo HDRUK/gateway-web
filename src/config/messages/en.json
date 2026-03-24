@@ -1058,6 +1058,7 @@
                 "scripts": "{scripts} Analysis Scripts & Software",
                 "publications": "{publications} Publications",
                 "dataCustodians": "{dataCustodians} Data Custodians",
+                "dataCustodianNetworks": "{dataCustodians} Data Custodian Networks",
                 "collections": "{collections} Collections",
                 "viewAll": "View all"
             }

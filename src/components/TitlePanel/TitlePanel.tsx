@@ -9,9 +9,10 @@ interface TitlePanelProps extends TypographyProps {
     image: string;
     text: string;
     title: string;
+    id?: string;
 }
 
-const TitlePanel = ({ image, text, title }: TitlePanelProps) => {
+const TitlePanel = ({ image, text, title, id }: TitlePanelProps) => {
     return (
         <Box sx={{ p: 0, display: "flex" }}>
             <Box
@@ -30,7 +31,7 @@ const TitlePanel = ({ image, text, title }: TitlePanelProps) => {
                     {text}
                 </Typography>
 
-                <FeaturedMetric />
+                <FeaturedMetric selectedButton={id} />
             </Box>
             <Box
                 sx={{

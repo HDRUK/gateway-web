@@ -105,6 +105,7 @@ const InfoHoverPanel = ({
                 title={
                     selected ? t(`${selected?.id}.title`) : t("welcomeTitle")
                 }
+                id={selected ? selected.id : undefined}
                 sx={{ mt: "2rem" }}
             />
             <Box
