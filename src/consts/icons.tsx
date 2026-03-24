@@ -12,6 +12,7 @@ import ArrowForward from "@mui/icons-material/ArrowForward";
 import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
 import ArrowLeftIcon from "@mui/icons-material/ArrowLeft";
 import ArrowRightIcon from "@mui/icons-material/ArrowRight";
+import ArrowUpwardIcon from "@mui/icons-material/ArrowUpward";
 import ArticleIcon from "@mui/icons-material/Article";
 import BackupIcon from "@mui/icons-material/Backup";
 import BookmarkIcon from "@mui/icons-material/Bookmark";
@@ -160,4 +161,5 @@ export {
     QueryBuilderOutlinedIcon,
     VisibilityOutlinedIcon,
     ErrorIcon,
+    ArrowUpwardIcon,
 };
