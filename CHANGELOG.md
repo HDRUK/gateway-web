@@ -1,3 +1,13 @@
+## [2.34.0](https://github.com/HDRUK/gateway-web/compare/v2.33.0...v2.34.0) (2026-03-24)
+
+### ✨ Features
+
+* **GAT-0000:** Small tweak to cater for the API refactor (#1493) ([697d94f](https://github.com/HDRUK/gateway-web/commit/697d94f7dd4605ae0960f57b2026341b07c58520)), closes [GAT-0000](GAT-0000)
+* **GAT-0000:** updated matrix for pipeline (#1495) ([2843b19](https://github.com/HDRUK/gateway-web/commit/2843b19b7425f973a4095f562ebb60160a7337ab)), closes [GAT-0000](GAT-0000)
+* **GAT-7957:** added github authentication in pipeline (#1486) ([0b010f6](https://github.com/HDRUK/gateway-web/commit/0b010f69325194d0e8f4b2c72975202b54486e90)), closes [GAT-7957](GAT-7957)
+* **GAT-8465:** Applies branding colours to widgets (#1496) ([0bd8d03](https://github.com/HDRUK/gateway-web/commit/0bd8d03fdbc0167df686555684f89ac552f44293)), closes [GAT-8465](GAT-8465)
+* **GAT-8607:** Improve flow for CDS login (#1492) ([30b3405](https://github.com/HDRUK/gateway-web/commit/30b3405c16c654a5cbc0dd6d60cc14bb16b87f1b)), closes [GAT-8607](GAT-8607)
+
 ## [2.33.0](https://github.com/HDRUK/gateway-web/compare/v2.32.1...v2.33.0) (2026-03-13)
 
 ### ✨ Features
