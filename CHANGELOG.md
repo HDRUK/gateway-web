@@ -1,3 +1,9 @@
+## [2.34.1](https://github.com/HDRUK/gateway-web/compare/v2.34.0...v2.34.1) (2026-03-24)
+
+### 🐛 Bug Fixes
+
+* **GAT-8687:** Widget hotfix type error (#1501) ([74690eb](https://github.com/HDRUK/gateway-web/commit/74690eb5854be0027851ceb3cee012449717acc1))
+
 ## [2.34.0](https://github.com/HDRUK/gateway-web/compare/v2.33.0...v2.34.0) (2026-03-24)
 
 ### ✨ Features

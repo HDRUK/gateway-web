@@ -42,9 +42,9 @@ export interface WidgetDetails {
     include_search_bar: number;
     include_cohort_link: number;
     keep_proportions: number;
-    branding_primary: string;
-    branding_secondary: string;
-    branding_neutral: string;
+    branding_primary?: string;
+    branding_secondary?: string;
+    branding_neutral?: string;
 }
 
 export type WidgetCategory =
