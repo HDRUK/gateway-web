@@ -9,6 +9,7 @@ import useGet from "@/hooks/useGet";
 import apis from "@/config/apis";
 import theme from "@/config/theme";
 import { ArrowUpwardIcon } from "@/consts/icons";
+import { RouteName } from "@/consts/routeName";
 import Link from "../Link";
 
 const TRANSLATIONS_NAMESPACE = "pages.home.stats";
@@ -120,7 +121,7 @@ const FeaturedMetric = () => {
                 </Typography>
             </Box>
             <Link
-                href="/"
+                href={RouteName.STATISTICS}
                 sx={{
                     color: theme.palette.common.white,
                     textDecorationColor: theme.palette.common.white,

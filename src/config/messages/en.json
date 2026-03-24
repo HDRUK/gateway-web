@@ -1626,6 +1626,18 @@
             "tools": "Related Analysis Scripts & Software",
             "collections": "Related Collections",
             "backLabel": "Back to Publications search results"
+        },
+        "statistics": {
+            "title": "Gateway Statistics",
+            "backtoHomepage": "Go to Homepage",
+            "datasets": "Datasets",
+            "dataCustodians": "Data custodians",
+            "dur": "Data Uses / Research Projects",
+            "cohort": "Cohort Discovery Datasets",
+            "scripts": "Analysis Scripts & Software",
+            "publications": "Publications",
+            "custodianNetworks": "Data Custodian Networks",
+            "collections": "Collections"
         }
     },
     "components": {
