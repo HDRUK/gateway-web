@@ -840,7 +840,6 @@ async function getNetworkCustodiansEntities(id: string, options?: GetOptions) {
 
 async function getMetrics(options?: GetOptions) {
     const metrics = await get<MetricsResponse>(`${apis.metricsV2Url}`, options);
-
     return metrics;
 }
 
