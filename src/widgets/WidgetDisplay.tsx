@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef, useState } from "react";
+import { useMemo, useRef, useState } from "react";
 import { Box, Button, Typography } from "@mui/material";
 import {
     WidgetEntityData,
@@ -49,23 +49,30 @@ export default function WidgetDisplay({
     const resultsByType = useResultsByType(data, searchValue);
     const widgetContainer = useRef<HTMLDivElement | null>(null);
 
-    const renderByType = () => {
-        const results = resultsByType[entityType];
-        switch (entityType) {
-            case "datasets":
-                return <DatasetsList items={results as DatasetItem[]} />;
-            case "collections":
-                return <CollectionsGrid items={results as CollectionItem[]} />;
-            case "scripts":
-                return <ScriptsList items={results as ScriptItem[]} />;
-            default:
-                return <DataUsesList items={results as DataUseItem[]} />;
-        }
+    const branding: WidgetBranding = {
+        primary: branding_primary,
+        secondary: branding_secondary,
+        neutral: branding_neutral,
     };
 
-    const filteredMenuCategories = CATEGORIES.filter(
-        category => data?.[category].length > 0
-    );
+    const renderedContent = useMemo(() => {
+        const results = resultsByType[entityType];
+
+        switch (entityType) {
+            case "datasets":
+                return <DatasetsList items={results as DatasetItem[]} branding={branding} />;
+            case "collections":
+                return <CollectionsGrid items={results as CollectionItem[]} branding={branding} />;
+            case "scripts":
+                return <ScriptsList items={results as ScriptItem[]} branding={branding} />;
+            default:
+                return <DataUsesList items={results as DataUseItem[]} branding={branding} />;
+        }
+        }, [entityType, resultsByType, branding]);
+
+   const filteredMenuCategories = useMemo(() => {
+    return CATEGORIES.filter(category => data?.[category].length > 0);
+    }, [data]);
 
     return (
         <Box
@@ -101,7 +108,7 @@ export default function WidgetDisplay({
                 />
 
                 <Box sx={{ flex: 1, overflow: "auto", mb: 1, p: 0 }}>
-                    {renderByType()}
+                    {renderedContent}
                 </Box>
 
                 {!!include_cohort_link && (
