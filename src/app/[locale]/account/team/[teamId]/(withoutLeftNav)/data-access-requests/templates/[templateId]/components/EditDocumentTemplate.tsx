@@ -2,8 +2,10 @@
 
 import { useCallback, useMemo, useState } from "react";
 import { Control, useForm } from "react-hook-form";
+import { yupResolver } from "@hookform/resolvers/yup";
 import { useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
+import * as yup from "yup";
 import { DarTemplate } from "@/interfaces/DataAccessRequest";
 import { UploadedFileMetadata } from "@/interfaces/FileUpload";
 import {
@@ -131,6 +133,12 @@ const EditDocumentTemplate = ({
 
     const { control, handleSubmit, setValue, getValues } =
         useForm<QuestionBankQuestionForm>({
+            resolver: yupResolver(
+                yup.object({
+                    title: yup.string().required(),
+                    guidance: yup.string().required(),
+                })
+            ),
             defaultValues: {
                 section_id: 1,
                 required: true,
@@ -192,7 +200,7 @@ const EditDocumentTemplate = ({
             info: t("templateFormNameInfo"),
             name: "title",
             component: inputComponents.TextField,
-            required: false,
+            required: true,
             selectOnFocus: true,
         },
         {
@@ -200,7 +208,7 @@ const EditDocumentTemplate = ({
             info: t("templateFormGuidanceInfo"),
             name: "guidance",
             component: inputComponents.TextArea,
-            required: false,
+            required: true,
             selectOnFocus: true,
         },
         {
