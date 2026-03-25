@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useLayoutEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { useTranslations } from "next-intl";
 import { MetricsResponse } from "@/interfaces/Metrics";
 import { SearchCategory } from "@/interfaces/Search";
@@ -44,23 +44,11 @@ const FeaturedMetric = ({ selectedButton }: FeatureMetricProps) => {
         ? STAT_ID_ORDER.indexOf(selectedButton)
         : -1;
 
-    const [stableSelectedIndex, setStableSelectedIndex] = useState<
-        number | null
-    >(null);
-
-    useLayoutEffect(() => {
+    useEffect(() => {
         if (selectedIndex !== -1) {
-            setStableSelectedIndex(selectedIndex);
-            return;
-        }
-
-        if (!selectedButton) {
-            setStableSelectedIndex(null);
+            setCurrentIndex(selectedIndex);
         }
     }, [selectedButton, selectedIndex]);
-
-    const displayIndex =
-        stableSelectedIndex !== null ? stableSelectedIndex : currentIndex;
 
     const stats = useMemo(() => {
         return [
@@ -162,7 +150,7 @@ const FeaturedMetric = ({ selectedButton }: FeatureMetricProps) => {
                             fontSize: "1.25rem",
                         },
                     }}>
-                    {stats[displayIndex]}
+                    {stats[currentIndex]}
                 </Typography>
             </Box>
             <Link
