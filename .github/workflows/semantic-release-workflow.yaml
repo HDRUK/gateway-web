@@ -19,14 +19,22 @@ jobs:
     steps:
       - name: Checkout
         id: checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
         with:
-          token:  ${{ secrets.GH_TOKEN }}
           ref: main
-          fetch-depth: 0
+
+      - name: Generate GitHub App token
+        id: generate-deployment-token
+        uses: actions/create-github-app-token@v2
+        with:
+          app-id: ${{ secrets.DEPLOY_APP_ID }}
+          private-key: ${{ secrets.DEPLOY_APP_PRIVATE_KEY }}
+          owner: HDRUK
+          repositories: |
+            ${{ github.event.repository.name }}     
 
       - name: Set up Node.js
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v5
         with:
           node-version: ${{ env.NODE_VERSION }}
 
@@ -37,7 +45,7 @@ jobs:
         run: npx semantic-release
         env:
           JIRA_URL: ${{ vars.JIRA_URL }}
-          GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
+          GITHUB_TOKEN: ${{ steps.generate-deployment-token.outputs.token }}
 
       - name: Set Git config
         run: |
@@ -48,18 +56,24 @@ jobs:
         run: |
           git fetch origin main
           git reset --hard origin/main
+         
+      - name: Read VERSION file
+        id: getversion
+        run: |
+          sed -n 's/^appVersion:\(.*\)/\1/p' < "chart/gateway-web/Chart.yaml" > "version"
+          echo "version=$(sed 's/.*\"\(.*\)\".*/\1/g' "version")" >> "$GITHUB_OUTPUT"                   
 
       - name: Merge changes from main to dev
         env:
-          GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
+          GITHUB_TOKEN: ${{ steps.generate-deployment-token.outputs.token }}
+          RELEASE_VERSION: ${{ steps.getversion.outputs.version }}
         run: |
           git fetch origin dev
           git checkout dev
-          git merge --no-ff main || true
-          git checkout --theirs .
+          git merge --squash origin/main || true
+          git checkout --theirs . || true
           git add .
-          git commit -m "Auto-resolve merge conflicts by keeping main's changes [skip ci]" || echo "No changes to commit"
-          
+          git commit --allow-empty -m "sync: update dev with latest main changes from release ${RELEASE_VERSION} (squash sync) [skip ci]"
           git push origin dev
 
   build:
@@ -75,7 +89,7 @@ jobs:
     steps:
       - name: Checkout
         id: checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
         with:
           ref: main
 
@@ -111,7 +125,7 @@ jobs:
           GAR_NAME: ${{ secrets.GAR_NAME }}
 
         run: |-
-          docker build -t '${{ env.GAR_LOCATION }}'-docker.pkg.dev/'${{ env.PROJECT_ID }}'/'${{ env.GAR_NAME }}'/${{ steps.getversion.outputs.version }}:${{ github.sha }} -t '${{ env.GAR_LOCATION }}'-docker.pkg.dev/'${{ env.PROJECT_ID }}'/'${{ env.GAR_NAME }}'/${{ steps.getversion.outputs.version }}:latest --build-arg NEXT_PUBLIC_API_V1_URL=${{ vars.NEXT_PUBLIC_API_V1_URL }} --build-arg NEXT_PUBLIC_API_V1_IP_URL=${{ vars.NEXT_PUBLIC_API_V1_IP_URL }} --build-arg NEXT_PUBLIC_API_V2_URL=${{ vars.NEXT_PUBLIC_API_V2_URL }} --build-arg NEXT_PUBLIC_API_V2_IP_URL=${{ vars.NEXT_PUBLIC_API_V2_IP_URL }} --build-arg NEXT_PUBLIC_API_VERSION=${{ vars.NEXT_PUBLIC_API_VERSION}} --build-arg NEXT_PUBLIC_API_BASE_URL=${{ vars.NEXT_PUBLIC_API_BASE_URL }} --build-arg NEXT_PUBLIC_WORDPRESS_API_URL=${{ vars.NEXT_PUBLIC_WORDPRESS_API_URL }} --build-arg NEXT_PUBLIC_SERVICE_DESK_URL=${{ vars.NEXT_PUBLIC_SERVICE_DESK_URL }} --build-arg NEXT_PUBLIC_GATEWAY_URL=${{ vars.NEXT_PUBLIC_GATEWAY_URL }} --build-arg NEXT_PUBLIC_HOTJAR_ID=${{ vars.NEXT_PUBLIC_HOTJAR_ID }} --build-arg NEXT_PUBLIC_SCHEMA_NAME=${{ vars.NEXT_PUBLIC_SCHEMA_NAME }} --build-arg TRASER_SERVICE_URL=${{ vars.TRASER_SERVICE_URL }}  --build-arg NEXT_PUBLIC_SCHEMA_VERSION=${{ vars.NEXT_PUBLIC_SCHEMA_VERSION }} --build-arg NEXT_PUBLIC_SCHEMA_BRANCH=${{ vars.NEXT_PUBLIC_SCHEMA_BRANCH }} --build-arg NEXT_PUBLIC_GTM_ID=${{ vars.NEXT_PUBLIC_GTM_ID }} --build-arg NEXT_PUBLIC_OA_APP_ID=${{ vars.NEXT_PUBLIC_OA_APP_ID }} --build-arg NEXT_PUBLIC_INCLUDE_BANNERS=${{ vars.NEXT_PUBLIC_INCLUDE_BANNERS }} --build-arg NEXT_PUBLIC_MEDIA_DOMAIN=${{ vars.NEXT_PUBLIC_MEDIA_DOMAIN }} --build-arg NEXT_PUBLIC_MEDIA_STATIC_URL=${{ vars.NEXT_PUBLIC_MEDIA_STATIC_URL }} --build-arg NEXT_PUBLIC_PREDEFINED_INTEGRATION_OVERVIEW_URL=${{ vars.NEXT_PUBLIC_PREDEFINED_INTEGRATION_OVERVIEW_URL }}  --build-arg NEXT_PUBLIC_CUSTOM_INTEGRATION_OVERVIEW_URL=${{ vars.NEXT_PUBLIC_CUSTOM_INTEGRATION_OVERVIEW_URL }} --build-arg NEXT_PUBLIC_CONFLUENCE_URL=${{ vars.NEXT_PUBLIC_CONFLUENCE_URL }} ./
+          docker build -t '${{ env.GAR_LOCATION }}'-docker.pkg.dev/'${{ env.PROJECT_ID }}'/'${{ env.GAR_NAME }}'/${{ steps.getversion.outputs.version }}:${{ github.sha }} -t '${{ env.GAR_LOCATION }}'-docker.pkg.dev/'${{ env.PROJECT_ID }}'/'${{ env.GAR_NAME }}'/${{ steps.getversion.outputs.version }}:latest --build-arg NEXT_PUBLIC_API_V1_URL=${{ vars.NEXT_PUBLIC_API_V1_URL }} --build-arg NEXT_PUBLIC_API_V1_IP_URL=${{ vars.NEXT_PUBLIC_API_V1_IP_URL }} --build-arg NEXT_PUBLIC_API_V2_URL=${{ vars.NEXT_PUBLIC_API_V2_URL }} --build-arg NEXT_PUBLIC_API_V2_IP_URL=${{ vars.NEXT_PUBLIC_API_V2_IP_URL }} --build-arg NEXT_PUBLIC_API_VERSION=${{ vars.NEXT_PUBLIC_API_VERSION}} --build-arg NEXT_PUBLIC_API_BASE_URL=${{ vars.NEXT_PUBLIC_API_BASE_URL }} --build-arg NEXT_PUBLIC_WORDPRESS_API_URL=${{ vars.NEXT_PUBLIC_WORDPRESS_API_URL }} --build-arg NEXT_PUBLIC_SERVICE_DESK_URL=${{ vars.NEXT_PUBLIC_SERVICE_DESK_URL }} --build-arg NEXT_PUBLIC_GATEWAY_URL=${{ vars.NEXT_PUBLIC_GATEWAY_URL }} --build-arg NEXT_PUBLIC_HOTJAR_ID=${{ vars.NEXT_PUBLIC_HOTJAR_ID }} --build-arg NEXT_PUBLIC_SCHEMA_NAME=${{ vars.NEXT_PUBLIC_SCHEMA_NAME }} --build-arg TRASER_SERVICE_URL=${{ vars.TRASER_SERVICE_URL }}  --build-arg NEXT_PUBLIC_SCHEMA_VERSION=${{ vars.NEXT_PUBLIC_SCHEMA_VERSION }} --build-arg NEXT_PUBLIC_SCHEMA_BRANCH=${{ vars.NEXT_PUBLIC_SCHEMA_BRANCH }} --build-arg NEXT_PUBLIC_GTM_ID=${{ vars.NEXT_PUBLIC_GTM_ID }} --build-arg NEXT_PUBLIC_OA_APP_ID=${{ vars.NEXT_PUBLIC_OA_APP_ID }} --build-arg NEXT_PUBLIC_INCLUDE_BANNERS=${{ vars.NEXT_PUBLIC_INCLUDE_BANNERS }} --build-arg NEXT_PUBLIC_MEDIA_DOMAIN=${{ vars.NEXT_PUBLIC_MEDIA_DOMAIN }} --build-arg NEXT_PUBLIC_MEDIA_STATIC_URL=${{ vars.NEXT_PUBLIC_MEDIA_STATIC_URL }} --build-arg NEXT_PUBLIC_PREDEFINED_INTEGRATION_OVERVIEW_URL=${{ vars.NEXT_PUBLIC_PREDEFINED_INTEGRATION_OVERVIEW_URL }} --build-arg NEXT_PUBLIC_CUSTOM_INTEGRATION_OVERVIEW_URL=${{ vars.NEXT_PUBLIC_CUSTOM_INTEGRATION_OVERVIEW_URL }} --build-arg NEXT_PUBLIC_CONFLUENCE_URL=${{ vars.NEXT_PUBLIC_CONFLUENCE_URL }} --build-arg=NEXT_PUBLIC_PREDEFINED_INTEGRATION_OVERVIEW_URL=${{ vars.NEXT_PUBLIC_PREDEFINED_INTEGRATION_OVERVIEW_URL }} --build-arg NEXT_PUBLIC_CUSTOM_INTEGRATION_OVERVIEW_URL=${{ vars.NEXT_PUBLIC_CUSTOM_INTEGRATION_OVERVIEW_URL }} ./
           docker push --all-tags '${{ env.GAR_LOCATION }}'-docker.pkg.dev/'${{ env.PROJECT_ID }}'/'${{ env.GAR_NAME }}'/${{ steps.getversion.outputs.version }}
 
       - name: Run Notification

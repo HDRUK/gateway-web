@@ -6,6 +6,7 @@ const PUBLICATION_NAME = "NEW_PUBLICATION";
 const createPublication = () => {
     cy.visit(`/${RouteName.ACCOUNT}/${RouteName.PROFILE}`);
     cy.get('[href="/account/profile/publications"]').click();
+    cy.waitForApiIdle();
     cy.contains("button", "Add publication").click();
     cy.contains("button", "Manually fill form").click();
     cy.get('input[name="paper_title"]').type(PUBLICATION_NAME);

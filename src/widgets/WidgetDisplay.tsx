@@ -1,10 +1,11 @@
 "use client";
 
-import { useRef, useState } from "react";
+import { useMemo, useRef, useState } from "react";
 import { Box, Button, Typography } from "@mui/material";
 import {
     WidgetEntityData,
     WidgetCategory,
+    WidgetBranding,
     DatasetItem,
     CollectionItem,
     ScriptItem,
@@ -41,6 +42,9 @@ export default function WidgetDisplay({
         size_height,
         size_width,
         unit,
+        branding_primary,
+        branding_secondary,
+        branding_neutral,
     } = data.widget;
 
     const [entityType, setEntityType] = useState<WidgetCategory>("datasets");
@@ -50,22 +54,30 @@ export default function WidgetDisplay({
     const resultsByType = useResultsByType(data, searchValue);
     const widgetContainer = useRef<HTMLDivElement | null>(null);
 
-    const renderByType = () => {
-        const results = resultsByType[entityType];
-        switch (entityType) {
-            case "datasets":
-                return <DatasetsList items={results as DatasetItem[]} />;
-            case "collections":
-                return <CollectionsGrid items={results as CollectionItem[]} />;
-            case "scripts":
-                return <ScriptsList items={results as ScriptItem[]} />;
-            default:
-                return <DataUsesList items={results as DataUseItem[]} />;
-        }
-    };
+    const branding = useMemo<WidgetBranding>(() => ({
+        primary: branding_primary ?? undefined,
+        secondary: branding_secondary ?? undefined,
+        neutral: branding_neutral ?? undefined,
+    }), [branding_primary, branding_secondary, branding_neutral]);
 
-    const filteredMenuCategories = CATEGORIES.filter(
-        category => data?.[category].length > 0
+    const renderedContent = useMemo(() => {
+    const results = resultsByType[entityType];
+
+    switch (entityType) {
+        case "datasets":
+            return <DatasetsList items={results as DatasetItem[]} branding={branding} />;
+        case "collections":
+            return <CollectionsGrid items={results as CollectionItem[]} branding={branding} />;
+        case "scripts":
+            return <ScriptsList items={results as ScriptItem[]} branding={branding} />;
+        default:
+            return <DataUsesList items={results as DataUseItem[]} branding={branding} />;
+    }
+}, [entityType, resultsByType, branding]);
+
+    const filteredMenuCategories = useMemo(
+    () => CATEGORIES.filter(category => data?.[category].length > 0),
+        [data]
     );
 
     return (
@@ -74,7 +86,7 @@ export default function WidgetDisplay({
                 width: isIframe ? "100%" : `${size_width}${unit}`,
                 height: `${size_height}${unit}`,
                 overflow: "hidden",
-                backgroundColor: theme.palette.grey[100],
+                backgroundColor: branding_neutral ?? theme.palette.grey[100],
                 color: colors.grey900,
             }}
             ref={widgetContainer}>
@@ -90,6 +102,7 @@ export default function WidgetDisplay({
                     gatewayUrl={FULL_GATEWAY_URL}
                     searchValue={searchValue}
                     setSearchValue={setSearchValue}
+                    branding={branding}
                 />
 
                 <CategoryMenu
@@ -99,17 +112,18 @@ export default function WidgetDisplay({
                     menuAnchor={menuAnchor}
                     setMenuAnchor={setMenuAnchor}
                     containerRef={widgetContainer}
+                    branding={branding}
                 />
 
                 <Box sx={{ flex: 1, overflow: "auto", mb: 1, p: 0 }}>
-                    {renderByType()}
+                    {renderedContent}
                 </Box>
 
                 {!!include_cohort_link && (
                     <Box
                         component="footer"
                         sx={{
-                            backgroundColor: colors.grey200,
+                            backgroundColor: branding_neutral ?? colors.grey200,
                             display: "flex",
                             flexDirection: "row",
                             justifyContent: "space-between",

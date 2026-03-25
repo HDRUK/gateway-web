@@ -56,7 +56,7 @@ const RequestNhseSdeAccessButton = ({
             }}
             href={
                 isNhsSdeApplicationsEnabled
-                    ? "https://digital.nhs.uk/services/secure-data-environment-service/expression-of-interest"
+                    ? "https://sdevalidation.necsu.nhs.uk/form/user/"
                     : "https://digital.nhs.uk/data-and-information/research-powered-by-data/sde-network"
             }
             target="_blank"

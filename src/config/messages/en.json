@@ -927,6 +927,15 @@
                         "sizeLarge": "Large (600 x 740px)",
                         "sizeMedium": "Medium (400 x 592px)",
                         "sizeSmall": "Small (300 x 444px)",
+                        "brandingInfo": "You might want to use your own brand colours within our widgets. Note: This information will be saved against your team profile, so can be reused in future.",
+                        "brandingUseDefaults": "Use Defaults",
+                        "brandingUseNHS": "Use NHS Brand Colours",
+                        "brandingPrimary": "Primary colour",
+                        "brandingPrimaryInfo": "Used for primary colours and text links",
+                        "brandingSecondary": "Secondary colour",
+                        "brandingSecondaryInfo": "Used for secondary elements and tags",
+                        "brandingNeutral": "Neutral colour",
+                        "brandingNeutralInfo": "Used for some background elements",
                         "name": "Give your widget a name",
                         "nameInfo": "This is so you’ll be able to identify it later",
                         "searchBar": "Include search bar",
@@ -1041,6 +1050,17 @@
             },
             "newsEvents": {
                 "seeAllLink": "See all events"
+            },
+            "stats": {
+                "datasetsCustodians": "{datasets} Datasets <light>from {custodians} Data Custodians</light>",
+                "durs": "{durs} Data Uses / Research Projects",
+                "datasetCohortRequest": "{datasetCohortRequest} Cohort Discovery Datasets",
+                "scripts": "{scripts} Analysis Scripts & Software",
+                "publications": "{publications} Publications",
+                "dataCustodians": "{dataCustodians} Data Custodians",
+                "dataCustodianNetworks": "{dataCustodians} Data Custodian Networks",
+                "collections": "{collections} Collections",
+                "viewAll": "View all"
             }
         },
         "saved_searches": {
@@ -1607,6 +1627,18 @@
             "tools": "Related Analysis Scripts & Software",
             "collections": "Related Collections",
             "backLabel": "Back to Publications search results"
+        },
+        "statistics": {
+            "title": "Gateway Statistics",
+            "backtoHomepage": "Go to Homepage",
+            "datasets": "Datasets",
+            "dataCustodians": "Data custodians",
+            "dur": "Data Uses / Research Projects",
+            "cohort": "Cohort Discovery Datasets",
+            "scripts": "Analysis Scripts & Software",
+            "publications": "Publications",
+            "custodianNetworks": "Data Custodian Networks",
+            "collections": "Collections"
         }
     },
     "components": {
@@ -1625,7 +1657,38 @@
             "notApproved": "Your request to access Cohort Discovery is still pending. Keep an eye out for an email with next steps, or contact support via the ‘Need Support’ button on the bottom right of this screen.",
             "setSecondaryEmail": "You are logged in via OpenAthens, which generates a primary email address in your profile that cannot be used for Cohort Discovery. This button will now send you to your profile page to please set your secondary email address. This must be an institutional email address. Please return here after setting and saving a secondary email address.",
             "explanatoryTooltip": "You will be taken to the Cohort Discovery tool. You must have access to this dataset in order to run queries.",
-            "buttonText": "Access Cohort Discovery"
+            "buttonText": "Access Cohort Discovery",
+            "statusLabel": "Status:",
+            "expiresAtLabel": "Expires at:",
+            "statuses": {
+                "APPROVED": "Approved",
+                "REJECTED": "Rejected",
+                "EXPIRED": "Expired",
+                "PENDING": "Pending",
+                "SUBMITTED": "Submitted"
+            },
+            "rquest": {
+                "label": "Access RQuest",
+                "tooltip": "Access RQuest"
+            },
+            "cds": {
+                "label": "Access Cohort Discovery Service (Beta)",
+                "tooltip": "Access the new cohort discovery service"
+            },
+            "modals": {
+                "notApproved": {
+                    "title": "Your access request is not approved",
+                    "confirmText": "Request access"
+                },
+                "claimsMismatch": {
+                    "title": "Your access has been approved, but...",
+                    "content": "Please log out and back in again so you can access this service with your renewed permissions.",
+                    "confirmText": "Logout"
+                },
+                "chooser": {
+                    "title": "Choose which Cohort Discovery Service"
+                }
+            }
         },
         "RequestNhseSdeAccessButton": {
             "label": "Request access to NHS SDE Network datasets",
@@ -1745,7 +1808,7 @@
             "primaryInvestigator": "Primary Investigator",
             "organisation": "Organisation",
             "datasets": "Datasets",
-            "lastActivity":"Last activity"
+            "lastActivity": "Last activity"
         },
         "DocumentExchange": {
             "upload": "Upload",

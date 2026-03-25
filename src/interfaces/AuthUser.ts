@@ -25,4 +25,9 @@ interface AuthUser {
     roles: Role[];
 }
 
-export type { AuthUser };
+interface TokenClaims {
+    rquestroles: string[];
+    cohort_discovery_roles: string[];
+}
+
+export type { AuthUser, TokenClaims };

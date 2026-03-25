@@ -1,3 +1,37 @@
+## [2.34.1](https://github.com/HDRUK/gateway-web/compare/v2.34.0...v2.34.1) (2026-03-24)
+
+### 🐛 Bug Fixes
+
+* **GAT-8687:** Widget hotfix type error (#1501) ([74690eb](https://github.com/HDRUK/gateway-web/commit/74690eb5854be0027851ceb3cee012449717acc1))
+
+## [2.34.0](https://github.com/HDRUK/gateway-web/compare/v2.33.0...v2.34.0) (2026-03-24)
+
+### ✨ Features
+
+* **GAT-0000:** Small tweak to cater for the API refactor (#1493) ([697d94f](https://github.com/HDRUK/gateway-web/commit/697d94f7dd4605ae0960f57b2026341b07c58520)), closes [GAT-0000](GAT-0000)
+* **GAT-0000:** updated matrix for pipeline (#1495) ([2843b19](https://github.com/HDRUK/gateway-web/commit/2843b19b7425f973a4095f562ebb60160a7337ab)), closes [GAT-0000](GAT-0000)
+* **GAT-7957:** added github authentication in pipeline (#1486) ([0b010f6](https://github.com/HDRUK/gateway-web/commit/0b010f69325194d0e8f4b2c72975202b54486e90)), closes [GAT-7957](GAT-7957)
+* **GAT-8465:** Applies branding colours to widgets (#1496) ([0bd8d03](https://github.com/HDRUK/gateway-web/commit/0bd8d03fdbc0167df686555684f89ac552f44293)), closes [GAT-8465](GAT-8465)
+* **GAT-8607:** Improve flow for CDS login (#1492) ([30b3405](https://github.com/HDRUK/gateway-web/commit/30b3405c16c654a5cbc0dd6d60cc14bb16b87f1b)), closes [GAT-8607](GAT-8607)
+
+## [2.33.0](https://github.com/HDRUK/gateway-web/compare/v2.32.1...v2.33.0) (2026-03-13)
+
+### ✨ Features
+
+* **GAT-0000:** updated chromatic pipeline (#1491) ([9efec1c](https://github.com/HDRUK/gateway-web/commit/9efec1c3a7f58b5f6a9a0f8ee23b4711743a5aab)), closes [GAT-0000](GAT-0000)
+* **GAT-7769:** Added integration help link (#1478) ([3e1bb73](https://github.com/HDRUK/gateway-web/commit/3e1bb73cffc337090056cb108d7128df3e605f92)), closes [GAT-7769](GAT-7769)
+* **GAT-7769:** added integrations pages links (#1490) ([c1c19eb](https://github.com/HDRUK/gateway-web/commit/c1c19ebdf1ca825b8b31624ba8cb9d0eeb174d4a)), closes [GAT-7769](GAT-7769)
+* **GAT-8242:** Add action bar to DAR  (#1477) ([9368e24](https://github.com/HDRUK/gateway-web/commit/9368e246fb94c815fbf78a334f04d74616da788b)), closes [GAT-8242](GAT-8242)
+* **GAT-8246:** Add filter panel to data custodian networks (#1487) ([b15dde8](https://github.com/HDRUK/gateway-web/commit/b15dde87e526158c21455f9d0996ccc8eeff0b41)), closes [GAT-8246](GAT-8246)
+* **GAT-8384:** added release workflow pipeline (#1480) ([aa31978](https://github.com/HDRUK/gateway-web/commit/aa31978e11894f344bfff3b532e924b9e7361152)), closes [GAT-8384](GAT-8384)
+* **GAT-8384:** updated chromatic checkout version (#1481) ([5619778](https://github.com/HDRUK/gateway-web/commit/56197783f398be92d61008b30e98349cceb6a00c)), closes [GAT-8384](GAT-8384)
+* **GAT-8606:** Updated collections and data custodian page to reflect new design (#1488) ([432d9f9](https://github.com/HDRUK/gateway-web/commit/432d9f9a61a7a8b70f8f1f517c126d9e69287d81)), closes [GAT-8606](GAT-8606)
+
+### 🐛 Bug Fixes
+
+* **GAT-7769:** Added new .env variables for integrations (#1485) ([d54c2bf](https://github.com/HDRUK/gateway-web/commit/d54c2bff2f8e7a1c2a7d15fd2e44907018adc555)), closes [GAT-7769](GAT-7769)
+* **GAT-8563:** Extend length of Data Access Request Form so questions are visible on all screen sizes (#1484) ([bb7be9c](https://github.com/HDRUK/gateway-web/commit/bb7be9c3995af31c7516a72ede198f492c21d5bf)), closes [GAT-8563](GAT-8563)
+
 ## [2.32.1](https://github.com/HDRUK/gateway-web/compare/v2.32.0...v2.32.1) (2026-02-23)
 
 ### 🐛 Bug Fixes

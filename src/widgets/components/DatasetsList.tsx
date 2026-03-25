@@ -1,7 +1,7 @@
 "use client";
 
 import { Box, Link, List, ListItem, ListItemText } from "@mui/material";
-import { DatasetItem } from "@/interfaces/Widget";
+import { DatasetItem, WidgetBranding } from "@/interfaces/Widget";
 import EllipsisLineLimit from "@/components/EllipsisLineLimit";
 import Typography from "@/components/Typography";
 import { colors } from "@/config/theme";
@@ -17,13 +17,16 @@ const TRANSLATIONS = {
     notAvailable: "n/a",
 };
 
-type DatasetsListProps = { items: DatasetItem[] };
+type DatasetsListProps = {
+    items: DatasetItem[];
+    branding: WidgetBranding;
+};
 
-export default function DatasetsList({ items }: DatasetsListProps) {
+export default function DatasetsList({ items, branding }: DatasetsListProps) {
     return (
         <List
             sx={{
-                background: colors.grey100,
+                background: branding?.neutral ?? colors.grey100,
                 px: 1,
                 mt: 1,
                 display: "flex",
@@ -36,7 +39,7 @@ export default function DatasetsList({ items }: DatasetsListProps) {
                     sx={{
                         p: 0,
                         mb: 1,
-                        borderBottom: `1px solid ${colors.grey300}`,
+                        borderBottom: `1px solid ${branding?.neutral ?? colors.grey300}`,
                         background: colors.white,
                     }}>
                     <ListItemText
@@ -59,13 +62,15 @@ export default function DatasetsList({ items }: DatasetsListProps) {
                                         fontSize={16}
                                         fontWeight={600}
                                         mb={0.5}
-                                        target="_blank">
+                                        target="_blank"
+                                        color={branding?.primary}>
                                         {result.short_title}
                                     </Link>
                                     {result.publisher && (
                                         <Link
                                             href={`${FULL_GATEWAY_URL}/${RouteName.DATA_CUSTODIANS_ITEM}/${result.team_id}`}
-                                            target="_blank">
+                                            target="_blank"
+                                            color={branding?.secondary}>
                                             <Typography sx={{ mb: 1.5 }}>
                                                 {result.publisher}
                                             </Typography>
@@ -94,14 +99,14 @@ export default function DatasetsList({ items }: DatasetsListProps) {
                                         },
                                         justifyContent: "space-between",
                                     }}>
-                                    <Typography color={colors.green700}>
+                                    <Typography color={branding?.secondary ?? colors.green700}>
                                         {`${TRANSLATIONS.populationSize}: `}
                                         {formatPopulationSize(
                                             result.population_size,
                                             TRANSLATIONS.noData
                                         )}
                                     </Typography>
-                                    <Typography color={colors.green700}>
+                                    <Typography color={branding?.secondary ?? colors.green700}>
                                         {`${TRANSLATIONS.dateRange}: `}
                                         {formatYearRange(
                                             result.start_date ?? null,

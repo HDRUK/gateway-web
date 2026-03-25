@@ -2,15 +2,17 @@ import { TypographyProps } from "@mui/material";
 import Image from "next/image";
 import Box from "@/components/Box";
 import Typography from "@/components/Typography";
+import FeaturedMetric from "../FeaturedMetric";
 import TitleWithBg from "../TitleWithBg";
 
 interface TitlePanelProps extends TypographyProps {
     image: string;
     text: string;
     title: string;
+    id?: string;
 }
 
-const TitlePanel = ({ image, text, title }: TitlePanelProps) => {
+const TitlePanel = ({ image, text, title, id }: TitlePanelProps) => {
     return (
         <Box sx={{ p: 0, display: "flex" }}>
             <Box
@@ -28,6 +30,8 @@ const TitlePanel = ({ image, text, title }: TitlePanelProps) => {
                     fontSize={{ mobile: 14, tablet: 18, desktop: 24 }}>
                     {text}
                 </Typography>
+
+                <FeaturedMetric selectedButton={id} />
             </Box>
             <Box
                 sx={{
