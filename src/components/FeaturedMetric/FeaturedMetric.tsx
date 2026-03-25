@@ -128,7 +128,7 @@ const FeaturedMetric = ({ selectedButton }: FeatureMetricProps) => {
         return () => window.clearInterval(interval);
     }, [isPaused, selectedIndex, stats.length]);
 
-    if (!metricsData || (selectedIndex === -1 && selectedButton)) {
+    if (!metricsData) {
         return null;
     }
 
@@ -148,6 +148,7 @@ const FeaturedMetric = ({ selectedButton }: FeatureMetricProps) => {
                 background:
                     "linear-gradient(90deg, rgba(255, 255, 255, 0.10) 0%, rgba(255, 255, 255, 0.00) 100%)",
                 justifyContent: "space-between",
+                opacity: selectedIndex === -1 && selectedButton ? 0 : 100,
             }}>
             <Box sx={{ p: 0, display: "flex", gap: 1, alignItems: "center" }}>
                 <ArrowUpwardIcon fontSize="large" />
