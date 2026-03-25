@@ -17,7 +17,7 @@ const QuestionBankEditPage = async ({
     return (
         <ProtectedAccountRoute
             permissions={permissions}
-            pagePermissions={["question-bank.update"]}>
+            pagePermissions={["dar-config.update"]}>
             <BackButton />
             <Header />
             <UpdateQuestion questionId={questionId} />
