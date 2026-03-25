@@ -1,6 +1,7 @@
 "use client";
 
 import { CSSProperties } from "react";
+import { SxProps } from "@mui/material";
 import { useRouter } from "next/navigation";
 import Button from "@/components/Button";
 import { getPreviousPage } from "@/hooks/useTrackPreviousPage";
@@ -10,9 +11,10 @@ interface BackButtonProps {
     label: string;
     onClick?: () => void;
     style?: CSSProperties;
+    buttonSx?: SxProps;
 }
 
-const BackButton = ({ label, onClick, ...rest }: BackButtonProps) => {
+const BackButton = ({ label, onClick, buttonSx, ...rest }: BackButtonProps) => {
     const router = useRouter();
 
     const handleClick = () => {
@@ -32,7 +34,7 @@ const BackButton = ({ label, onClick, ...rest }: BackButtonProps) => {
 
     return (
         <Button
-            sx={{ marginBottom: 2 }}
+            sx={{ marginBottom: 2, ...buttonSx }}
             variant="link"
             onClick={handleClick}
             startIcon={<ArrowBackIosNewIcon />}

@@ -13,7 +13,7 @@ const apiV2IPUrl =
 const apis = {
     apiV1Url,
     apiV1IPUrl,
-    enabledFeatures: `${apiV1IPUrl}/feature-flags/enabled`,
+    features: `${apiV1IPUrl}/features`,
     logoutInternalUrl: "/api/logout",
     signInInternalUrl: "/api/signIn",
     authInternalUrl: "/api/auth",
@@ -88,6 +88,10 @@ const apis = {
     doiSearchV1Url: `${apiV1Url}/search/doi`,
     aliasesV1Url: `${apiV1Url}/aliases`,
     licensesV1URL: `${apiV1Url}/licenses`,
+    widgetsV1Url: `${apiV1Url}/widgets`,
+    widgetsV1UrlIP: `${apiV1IPUrl}/widgets`,
+    workgroupsV1Url: `${apiV1Url}/workgroups`,
+    metricsV2Url: `${apiV2Url}/metrics`,
 };
 
 export default apis;

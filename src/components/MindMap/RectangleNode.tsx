@@ -16,18 +16,7 @@ export interface RectangleNodeData {
 }
 
 const RectangleNode = ({
-    data: {
-        id,
-        label,
-        href,
-        nodeSx,
-        position,
-        color,
-        hidden,
-        action,
-        cohort,
-        ctaLink,
-    },
+    data: { id, label, href, nodeSx, position, color, hidden, action, cohort },
 }: NodeProps<RectangleNodeData>) => {
     if (hidden) return null;
 
@@ -71,7 +60,6 @@ const RectangleNode = ({
                 </Button>
             ) : cohort ? (
                 <CohortDiscoveryButton
-                    ctaLink={ctaLink}
                     showDatasetExplanatoryTooltip
                     color="inherit"
                     variant="text"

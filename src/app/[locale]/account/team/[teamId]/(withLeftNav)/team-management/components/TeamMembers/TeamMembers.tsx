@@ -23,6 +23,7 @@ import {
     getChangeCount,
     getDifferences,
 } from "@/utils/userRoles";
+import { useFeatures } from "@/providers/FeatureProvider";
 
 interface TeamMembersProps {
     teamMembers: User[];
@@ -42,6 +43,7 @@ const TeamMembers = ({
     const router = useRouter();
     const { showModal } = useModal();
     const { mutate: mututeUser } = useSWRConfig();
+    const features = useFeatures();
 
     const [rolesToUpdate, setRolesToUpdate] = useState<RolesPayload[] | null>(
         null
@@ -161,6 +163,7 @@ const TeamMembers = ({
         return getColumns({
             permissions,
             actions,
+            features,
             translations: {
                 lastRoleAdminMessage: t("lastRoleAdminMessage"),
                 lastRoleMessage: t("lastRoleMessage"),
@@ -170,9 +173,10 @@ const TeamMembers = ({
                 teamHeader: t("columns.team"),
                 darHeader: t("columns.dar"),
                 metaDataHeader: t("columns.metadata"),
+                cohortDiscoveryHeader: t("columns.cohortDiscovery"),
             },
         });
-    }, [actions, permissions, t]);
+    }, [actions, features, permissions, t]);
 
     const handleUpdate = async (updatedUsers: User[]) => {
         setTableRows(updatedUsers);

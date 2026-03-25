@@ -853,7 +853,10 @@ const FilterPanel = ({
                                     width: "100%",
                                     pr: 3.25,
                                 }}>
-                                <Typography fontWeight="400" fontSize={20}>
+                                <Typography
+                                    fontWeight="400"
+                                    fontSize={20}
+                                    sx={{ textWrap: "auto" }}>
                                     {t(label)}
                                 </Typography>
                                 {filterCount}

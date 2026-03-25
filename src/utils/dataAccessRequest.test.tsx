@@ -441,6 +441,7 @@ describe("Data Access Request utils", () => {
                 validations: {},
                 is_child: 0,
                 options: [],
+                document: undefined,
             };
 
             const expected: DarFormattedField = {
@@ -450,6 +451,8 @@ describe("Data Access Request utils", () => {
                 question_id: 101,
                 section_id: 1,
                 options: [],
+                document: undefined,
+                guidance: "",
             };
 
             expect(formatDarQuestion(input)).toEqual(expected);
@@ -471,6 +474,7 @@ describe("Data Access Request utils", () => {
                     { label: "Yes", children: {} },
                     { label: "No", children: {} },
                 ],
+                document: undefined,
             };
 
             const expected: DarFormattedField = {
@@ -487,6 +491,8 @@ describe("Data Access Request utils", () => {
                     { label: "Yes", value: "Yes" },
                     { label: "No", value: "No" },
                 ],
+                document: undefined,
+                guidance: "",
             };
 
             expect(formatDarQuestion(input)).toEqual(expected);

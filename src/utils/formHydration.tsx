@@ -438,7 +438,9 @@ const mapFormFieldsForSubmission = (
     // - the schema needs them as either null or filled to be valid
     const cleanedFormattedFormData = cleanUndefinedObjects(
         formattedFormData
-    ) as { revisions: Revision | Revision[] | null };
+    ) as {
+        revisions: Revision | Revision[] | null;
+    };
 
     return convertRevisionsToArray(cleanedFormattedFormData);
 };

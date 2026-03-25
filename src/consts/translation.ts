@@ -13,6 +13,7 @@ export const DATA_ACCESS_REQUESTS = "dataAccessRequests";
 export const APPLICATIONS = "applications";
 export const EDIT_FORM = "editForm";
 export const WORKFLOWS = "workflows";
+export const CUSTODIAN = "custodian";
 export const DATA_USES = "dataUses";
 export const DATASETS = "datasets";
 export const COMPONENTS = "components";

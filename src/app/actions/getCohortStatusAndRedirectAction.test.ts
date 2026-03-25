@@ -31,13 +31,10 @@ describe("getCohortStatusAndRedirect", () => {
 
         const result = await getCohortStatusAndRedirect(123);
 
-        expect(cookies).toHaveBeenCalled();
-        expect(getUserCohortRequest).toHaveBeenCalledWith(
-            mockCookieStore,
-            "123"
-        );
+        expect(getUserCohortRequest).toHaveBeenCalledWith("123");
         expect(result).toEqual({
             requestStatus: "APPROVED",
+            nhseSdeRequestStatus: null,
             requestExpiry: "07-07-2025 10:00:00",
             redirectUrl: "",
         });
@@ -64,6 +61,7 @@ describe("getCohortStatusAndRedirect", () => {
 
         expect(result).toEqual({
             requestStatus: null,
+            nhseSdeRequestStatus: null,
             requestExpiry: null,
             redirectUrl: "",
         });

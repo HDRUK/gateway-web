@@ -14,7 +14,6 @@ describe("Upload", () => {
                 label={label}
                 name="uploadFile"
                 control={control}
-                helperText="Max file size: 5MB"
                 {...props}
             />
         );
@@ -22,11 +21,6 @@ describe("Upload", () => {
     it("renders the component with the correct label", () => {
         render(<Component />);
         expect(screen.getByText("Upload File")).toBeInTheDocument();
-    });
-
-    it("displays the helper text", () => {
-        render(<Component />);
-        expect(screen.getByText("Max file size: 5MB")).toBeInTheDocument();
     });
 
     it("calls `onFileChange` when a file is uploaded", async () => {

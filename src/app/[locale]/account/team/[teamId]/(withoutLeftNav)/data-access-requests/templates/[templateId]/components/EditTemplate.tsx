@@ -2,7 +2,6 @@
 
 import { useEffect, useState, useMemo } from "react";
 import { Box } from "@mui/material";
-import zIndex from "@mui/material/styles/zIndex";
 import { useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
 import {
@@ -28,7 +27,7 @@ import useModal from "@/hooks/useModal";
 import usePatch from "@/hooks/usePatch";
 import notificationService from "@/services/notification";
 import apis from "@/config/apis";
-import { colors } from "@/config/theme";
+import theme, { colors } from "@/config/theme";
 import { ArrowBackIosNewIcon } from "@/consts/icons";
 import { RouteName } from "@/consts/routeName";
 import PreviewTemplate from "./PreviewTemplate";
@@ -49,14 +48,19 @@ function countBySectionId(templateQuestions: DarHasQuestion[]) {
 interface EditTemplateProps {
     teamId: string;
     templateId: string;
+    darTemplateData: DarTemplate;
 }
 
-const EditTemplate = ({ teamId, templateId }: EditTemplateProps) => {
+const EditTemplate = ({
+    teamId,
+    templateId,
+    darTemplateData,
+}: EditTemplateProps) => {
     const t = useTranslations(EDIT_TEMPLATE_TRANSLATION_PATH);
     const { user } = useAuth();
     const router = useRouter();
 
-    const backHref = `/${RouteName.ACCOUNT}/${RouteName.TEAM}/${teamId}/${RouteName.DATA_ACCESS_REQUESTS}/${RouteName.DAR_TEMPLATES}`;
+    const backHref = `/${RouteName.ACCOUNT}/${RouteName.TEAM}/${teamId}/${RouteName.DATA_ACCESS_REQUESTS}/${RouteName.DAR_TEMPLATES}/${RouteName.LIST}`;
 
     const { data: sections, isLoading: isLoadingSections } = useGet<
         QuestionBankSection[]
@@ -68,6 +72,8 @@ const EditTemplate = ({ teamId, templateId }: EditTemplateProps) => {
         mutate: mutateTemplate,
     } = useGet<DarTemplate>(`${apis.dataAccessTemplateV1Url}/${templateId}`, {
         keepPreviousData: true,
+        fallbackData: darTemplateData,
+        revalidateOnMount: false,
     });
 
     const [sectionId, setSectionId] = useState(1);
@@ -331,7 +337,7 @@ const EditTemplate = ({ teamId, templateId }: EditTemplateProps) => {
                 sx={{
                     position: "sticky",
                     top: 0,
-                    zIndex: zIndex.appBar,
+                    zIndex: theme.zIndex.appBar,
                     bgcolor: colors.grey,
                     borderBottom: 1,
                     borderColor: "divider",

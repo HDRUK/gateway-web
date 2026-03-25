@@ -3,6 +3,7 @@
 import { useEffect, useMemo, useState } from "react";
 import { FormProvider, useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
+import { Divider } from "@mui/material";
 import { useTranslations } from "next-intl";
 import { useParams, useRouter } from "next/navigation";
 import { Alias } from "@/interfaces/Alias";
@@ -31,6 +32,7 @@ import {
     teamCreateDefaultValues,
     teamFormFields,
     teamValidationSchema,
+    hydratedDarFormFields,
 } from "@/config/forms/team";
 import { ROLE_CUSTODIAN_TEAM_ADMIN } from "@/consts/roles";
 import { Routes } from "@/consts/routes";
@@ -168,6 +170,8 @@ const CreateTeamForm = () => {
             is_question_bank,
             team_logo,
             dar_modal_content,
+            dar_modal_header,
+            dar_modal_footer,
             url,
             service,
             aliases,
@@ -181,6 +185,8 @@ const CreateTeamForm = () => {
             users: teamAdmins.map(user => user.id),
             contact_point: contact_point ?? "",
             dar_modal_content,
+            dar_modal_header,
+            dar_modal_footer,
             url,
             service,
             aliases: aliases?.map(alias => alias.id),
@@ -456,6 +462,20 @@ const CreateTeamForm = () => {
                                     />
                                 </Box>
                             )}
+                        </Box>
+
+                        <Divider sx={{ mb: 3 }} />
+                        <Box>
+                            <Typography variant="h3" sx={{ mb: 2 }}>
+                                {t(`${TRANSLATION_PATH_CREATE}.darModal`)}
+                            </Typography>
+                            {hydratedDarFormFields.map(field => (
+                                <InputWrapper
+                                    key={field.name}
+                                    control={control}
+                                    {...field}
+                                />
+                            ))}
                         </Box>
                     </Box>
                 </Paper>

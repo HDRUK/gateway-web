@@ -42,7 +42,9 @@ interface TeamEditForm
         | "is_question_bank"
         | "team_logo"
         | "introduction"
+        | "dar_modal_header"
         | "dar_modal_content"
+        | "dar_modal_footer"
     > {
     users: number[];
     aliases: number[];
@@ -63,10 +65,17 @@ interface TeamCreateForm
         | "is_question_bank"
         | "team_logo"
         | "introduction"
+        | "dar_modal_header"
         | "dar_modal_content"
+        | "dar_modal_footer"
     > {
     users: number[];
     aliases: number[];
 }
 
-export type { Team, TeamEditForm, TeamCreateForm };
+interface TeamNames {
+    id: number;
+    name: string;
+}
+
+export type { Team, TeamEditForm, TeamCreateForm, TeamNames };

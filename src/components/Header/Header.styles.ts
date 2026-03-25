@@ -1,11 +1,12 @@
 import { css } from "@emotion/react";
+import theme from "@/config/theme";
 
 export const appbar = css({
     flexDirection: "row",
     padding: "12px 16px",
     background: "white",
     marginBottom: "5px",
-    boxShadow: "1px 1px 3px 0 rgba(0,0,0,.09)",
+    boxShadow: theme.customShadows.subtle,
 });
 
 export const toolbar = css({

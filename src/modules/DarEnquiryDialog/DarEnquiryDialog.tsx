@@ -27,6 +27,7 @@ export interface DarEnquiryDialogProps {
     url: string;
     modalHeader?: string;
     modalContent?: string;
+    modalFooter?: string;
     datasetIds: number[];
     teamIds: number[];
     redirectPath?: string;
@@ -42,6 +43,7 @@ const DarEnquiryDialog = ({
     hasPublishedDarTemplate,
     modalHeader,
     modalContent,
+    modalFooter,
     url,
     datasetIds,
     teamIds,
@@ -75,10 +77,11 @@ const DarEnquiryDialog = ({
                     <Typography mb={2}>{t("messageNotEnabled")}</Typography>
                 )}
 
+                {modalFooter && <Typography>{modalFooter}</Typography>}
+
                 {!isDarEnabled && (
                     <Typography>
                         {t.rich("messageNotEnabledOtherInstructions", {
-                            // eslint-disable-next-line react/no-unstable-nested-components
                             generalEnquiryLink: () => (
                                 <Button
                                     aria-label="general"
@@ -87,7 +90,6 @@ const DarEnquiryDialog = ({
                                     {t("generalEnquiryLink")}
                                 </Button>
                             ),
-                            // eslint-disable-next-line react/no-unstable-nested-components
                             feasabilityEnquiryLink: () => (
                                 <Button
                                     aria-label="feasibility"

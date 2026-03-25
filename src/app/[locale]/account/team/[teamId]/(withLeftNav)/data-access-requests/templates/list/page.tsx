@@ -1,4 +1,3 @@
-import { cookies } from "next/headers";
 import { notFound } from "next/navigation";
 import ProtectedAccountRoute from "@/components/ProtectedAccountRoute";
 import {
@@ -24,33 +23,32 @@ export default async function DARTemplateListPage({
     params,
     searchParams,
 }: {
-    params: { teamId: string };
-    searchParams: { page?: string; published?: boolean };
+    params: Promise<{ teamId: string }>;
+    searchParams: Promise<{ page?: string; published?: boolean }>;
 }) {
-    const { teamId } = params;
-    const cookieStore = cookies();
-    const user = await getUser(cookieStore);
-    const team = await getTeam(cookieStore, teamId);
+    const { teamId } = await params;
+    const { page, published } = await searchParams;
+    const user = await getUser();
+    const team = await getTeam(teamId);
     const teamUser = getTeamUser(team?.users, user?.id);
     const permissions = getPermissions(user.roles, teamUser?.roles);
 
     const queryPublished = new URLSearchParams();
 
-    if (searchParams.page) {
-        queryPublished.set("page", searchParams.page.toString());
+    if (page) {
+        queryPublished.set("page", page.toString());
     }
 
-    if (searchParams.published) {
-        queryPublished.set("published", searchParams.published.toString());
+    if (published) {
+        queryPublished.set("published", published.toString());
     }
 
     const darTemplateData = await getDarTemplates(
-        cookieStore,
         teamId,
         queryPublished.toString()
     );
 
-    const darTemplatesCount = await getDarTemplatesCount(cookieStore, teamId);
+    const darTemplatesCount = await getDarTemplatesCount(teamId);
 
     if (!darTemplateData) {
         notFound();

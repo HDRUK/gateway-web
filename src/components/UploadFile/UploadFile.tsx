@@ -39,7 +39,7 @@ export interface UploadFileProps {
     onFileChange?: (file: File) => void;
     onFileUploaded?: (uploadResponse?: FileUpload) => void;
     onFileUploadError?: () => void;
-    onFileRemove?: (fileId: number) => void;
+    onFileRemove?: (fileId: string) => void;
     showUploadButton?: boolean;
     triggerFileUpload?: boolean;
     sx?: SxProps;
@@ -54,6 +54,7 @@ export interface UploadFileProps {
     skipImageValidation?: boolean;
     onFocus?: () => void;
     info?: string;
+    hideExistingFiles?: boolean;
 }
 
 const TRANSLATION_PATH = "components.UploadFile";
@@ -83,11 +84,12 @@ const UploadFile = ({
     skipImageValidation = false,
     onFocus,
     info,
+    hideExistingFiles = false,
 }: UploadFileProps) => {
     const t = useTranslations(TRANSLATION_PATH);
 
     const [file, setFile] = useState<File>();
-    const [fileId, setFileId] = useState<number>();
+    const [fileId, setFileId] = useState<string>();
     const [pollFileStatus, setPollFileStatus] = useState<boolean>(false);
     const [hasSanitisedFilename, setHasSantisedFilename] = useState(false);
     const [errorMessage, setErrorMessage] = useState<FieldError>();
@@ -153,6 +155,7 @@ const UploadFile = ({
 
                 if (
                     apiPath?.includes("media") ||
+                    apiPath?.includes("document-exchange-upload") ||
                     (fileScanStatus?.entity_id &&
                         fileScanStatus?.entity_id > 0) ||
                     fileScanStatus?.structural_metadata
@@ -192,7 +195,7 @@ const UploadFile = ({
             )) as FileUpload;
 
             if (uploadedFileStatus) {
-                const fileId = uploadedFileStatus.id;
+                const fileId = uploadedFileStatus.uuid;
 
                 setFileId(fileId);
                 setPollFileStatus(true);
@@ -318,29 +321,32 @@ const UploadFile = ({
                                         onFileChange?.(formattedFile);
                                     }
                                 }}
-                                helperText={
-                                    file?.name ||
-                                    (acceptedFileTypes
-                                        ? t("uploadHelper", {
-                                              fileType: acceptedFileTypes,
-                                          })
-                                        : t("uploadHelperFilesize"))
-                                }
-                                fileName={file?.name || existingFilename}
-                                fileDownloadApiPath={fileDownloadApiPath}
                                 onFocus={() => onFocus && onFocus()}
                             />
                         )}
                         {showUploadButton && !hideUpload && (
-                            <Button
-                                onClick={handleSubmit(onSubmit)}
-                                sx={{ maxWidth: 150 }}
-                                disabled={!file}>
-                                {t("uploadButtonText")}
-                            </Button>
+                            <>
+                                <Button
+                                    onClick={handleSubmit(onSubmit)}
+                                    sx={{ maxWidth: 150 }}
+                                    disabled={!file}>
+                                    {t("uploadButtonText")}
+                                </Button>
+
+                                <Typography
+                                    color={colors.grey600}
+                                    sx={{ mt: 2 }}>
+                                    {file?.name ||
+                                        (acceptedFileTypes
+                                            ? t("uploadHelper", {
+                                                  fileType: acceptedFileTypes,
+                                              })
+                                            : t("uploadHelperFilesize"))}
+                                </Typography>
+                            </>
                         )}
 
-                        {!!existingFileArray?.length && (
+                        {!hideExistingFiles && !!existingFileArray?.length && (
                             <List sx={{ mt: 2, mb: 1 }}>
                                 {existingFileArray?.map(file => (
                                     <ListItem
@@ -350,10 +356,10 @@ const UploadFile = ({
                                             pl: 0,
                                             pb: 0,
                                         }}
-                                        key={file.id}>
+                                        key={file.uuid}>
                                         {fileDownloadApiPath ? (
                                             <Link
-                                                href={`${fileDownloadApiPath}/${file.id}/download`}
+                                                href={`${fileDownloadApiPath}/${file.uuid}/download`}
                                                 sx={{ pt: 1, pb: 1 }}>
                                                 {file.filename}
                                             </Link>
@@ -366,7 +372,7 @@ const UploadFile = ({
                                             <IconButton
                                                 aria-label={`Remove file ${file.filename}`}
                                                 onClick={() =>
-                                                    onFileRemove(file.id)
+                                                    onFileRemove(file.uuid)
                                                 }>
                                                 <DeleteForeverOutlinedIcon color="primary" />
                                             </IconButton>

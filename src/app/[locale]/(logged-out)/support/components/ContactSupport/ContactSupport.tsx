@@ -13,7 +13,7 @@ export default function MeetTheTeam() {
 
     return (
         <Box sx={{ textAlign: "center" }}>
-            <Typography variant="h1" sx={{ mb: 1 }}>
+            <Typography variant="h2" sx={{ mb: 1 }}>
                 {t("title")}
             </Typography>
             <Typography sx={{ mb: 3 }}>{t("content")}</Typography>

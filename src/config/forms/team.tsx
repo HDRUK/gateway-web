@@ -11,7 +11,9 @@ const defaultValues: TeamEditForm = {
     users: [],
     is_question_bank: false,
     introduction: "",
+    dar_modal_header: "",
     dar_modal_content: "",
+    dar_modal_footer: "",
     aliases: [],
 };
 
@@ -28,7 +30,9 @@ const createDefaultValues: TeamCreateForm = {
     uses_5_safes: true,
     is_question_bank: false,
     introduction: "",
+    dar_modal_header: "",
     dar_modal_content: "",
+    dar_modal_footer: "",
     aliases: [],
 };
 
@@ -42,7 +46,9 @@ const validationSchema = yup.object({
         .min(1, "Team admin(s) is a required field")
         .of(yup.number())
         .label("Team admin(s)"),
-    dar_modal_content: yup.string().nullable().label("Dar modal content"),
+    dar_modal_header: yup.string().nullable().label("Header").max(255),
+    dar_modal_content: yup.string().nullable().label("Body"),
+    dar_modal_footer: yup.string().nullable().label("Footer").max(255),
 });
 
 const questionBankField = {
@@ -120,10 +126,24 @@ const formFields = [
         info: "Provide a valid URL to services offered.",
         component: inputComponents.TextField,
     },
+];
+
+const formFieldsDar = [
     {
-        label: "DAR modal content",
+        label: "Header",
+        name: "dar_modal_header",
+        component: inputComponents.TextField,
+        max: 255,
+    },
+    {
+        label: "Body",
         name: "dar_modal_content",
         component: inputComponents.Wysiwyg,
+    },
+    {
+        label: "Footer",
+        name: "dar_modal_footer",
+        component: inputComponents.TextField,
     },
 ];
 
@@ -133,4 +153,5 @@ export {
     createDefaultValues as teamCreateDefaultValues,
     validationSchema as teamValidationSchema,
     formFields as teamFormFields,
+    formFieldsDar as hydratedDarFormFields,
 };

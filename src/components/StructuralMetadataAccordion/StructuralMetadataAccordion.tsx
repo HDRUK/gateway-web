@@ -104,7 +104,7 @@ const StructuralMetadataAccordion = ({
                             }}>
                             <TooltipText
                                 content={item?.description}
-                                label={item?.name}
+                                label={decodeHtmlEntity(item?.name)}
                                 variant="h4"
                             />
                         </Box>

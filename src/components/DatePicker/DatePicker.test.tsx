@@ -22,10 +22,13 @@ describe("DatePicker", () => {
 
     it("renders DatePicker with a default value", () => {
         const defaultValues = dayjs(new Date("2020-01-01"));
+
         render(<Component defaultValues={defaultValues} />);
-        const inputElement = screen.getByPlaceholderText(
-            "DD/MM/YYYY"
+
+        const inputElement = screen.getByDisplayValue(
+            "01/01/2020"
         ) as HTMLInputElement;
-        expect(inputElement.value).toBe("01/01/2020");
+
+        expect(inputElement).toBeInTheDocument();
     });
 });

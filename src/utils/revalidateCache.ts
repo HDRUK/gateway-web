@@ -1,13 +1,18 @@
-"use server";
+import { refresh, revalidateTag } from "next/cache";
 
-import { revalidateTag } from "next/cache";
-
-export const revalidateCache = (tags: string[] | string) => {
+export const revalidateCache = (
+    tags: string[] | string,
+    refreshCache?: boolean
+) => {
     if (Array.isArray(tags)) {
         tags.forEach(tag => {
-            revalidateTag(tag);
+            revalidateTag(tag, "max");
         });
     } else {
-        revalidateTag(tags);
+        revalidateTag(tags, "max");
+    }
+
+    if (refreshCache) {
+        refresh();
     }
 };

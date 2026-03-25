@@ -11,25 +11,18 @@ const TwoColumn = ({ leftContent, rightContent }: TwoColumnProps) => {
     return (
         <BoxContainer
             sx={{
-                gridTemplateColumns: {
-                    mobile: "repeat(1, 1fr)",
-                    tablet: "repeat(5, 1fr)",
-                },
-                gap: {
-                    mobile: 0,
-                    tablet: 1,
-                },
+                display: "flex",
+                flexGrow: 1,
+                flexDirection: { mobile: "column", tablet: "row" },
             }}>
             <Box
                 sx={{
-                    gridColumn: { tablet: "span 2", laptop: "span 1" },
                     bgcolor: "white",
+                    p: 0,
                 }}>
                 {leftContent}
             </Box>
-            <Box sx={{ gridColumn: { tablet: "span 3", laptop: "span 4" } }}>
-                {rightContent}
-            </Box>
+            <Box sx={{ flex: 1 }}>{rightContent}</Box>
         </BoxContainer>
     );
 };

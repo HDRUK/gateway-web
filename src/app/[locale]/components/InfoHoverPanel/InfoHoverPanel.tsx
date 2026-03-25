@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { Box } from "@mui/material";
 import { useTranslations } from "next-intl";
+import Link from "next/link";
 import Button from "@/components/Button";
 import TitlePanel from "@/components/TitlePanel";
 import Typography from "@/components/Typography";
@@ -76,7 +77,7 @@ const InfoHoverPanel = ({
             </Button>
         ) : (
             <Button
-                component="a"
+                component={Link}
                 onMouseEnter={handleMouseEnter}
                 onMouseLeave={handleMouseLeave}
                 onFocus={() => setSelected(item)}
@@ -104,6 +105,7 @@ const InfoHoverPanel = ({
                 title={
                     selected ? t(`${selected?.id}.title`) : t("welcomeTitle")
                 }
+                id={selected ? selected.id : undefined}
                 sx={{ mt: "2rem" }}
             />
             <Box

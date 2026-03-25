@@ -1,5 +1,5 @@
 /** @jsxImportSource @emotion/react */
-import { CSSProperties, useCallback, useEffect, useRef } from "react";
+import { CSSProperties, useCallback, useEffect, useState } from "react";
 import {
     flexRender,
     getCoreRowModel,
@@ -35,17 +35,18 @@ interface TableProps<T> {
 }
 
 function useSkipper() {
-    const shouldSkipRef = useRef(true);
-    const shouldSkip = shouldSkipRef.current;
+    const [shouldSkip, setShouldSkip] = useState(true);
 
     // Wrap a function with this to skip a pagination reset temporarily
     const skip = useCallback(() => {
-        shouldSkipRef.current = false;
+        setShouldSkip(false);
     }, []);
 
     useEffect(() => {
-        shouldSkipRef.current = true;
-    });
+        if (!shouldSkip) {
+            setShouldSkip(true);
+        }
+    }, [shouldSkip]);
 
     return [shouldSkip, skip] as const;
 }
@@ -123,7 +124,6 @@ const Table = <T,>({
                 {
                     id: "checkinout",
                     Header: "CheckIn/Out",
-                    // eslint-disable-next-line react/no-unstable-nested-components, react/prop-types
                     Cell: ({ row }) => <ActionDropdown {...row} />,
                 },
                 ...columns,
@@ -172,9 +172,7 @@ const Table = <T,>({
             )}
             <tbody>
                 {table.getRowModel().rows.map(row => (
-                    // eslint-disable-next-line react/prop-types
                     <tr key={row.id}>
-                        {/* eslint-disable-next-line react/prop-types */}
                         {row.getVisibleCells().map(cell => (
                             <td
                                 css={styles.td}

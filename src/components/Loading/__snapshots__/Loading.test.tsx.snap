@@ -7,16 +7,16 @@ exports[`Loading should render component 1`] = `
     class="MuiBox-root mui-style-1c3tbzi"
   >
     <span
-      class="MuiCircularProgress-root MuiCircularProgress-indeterminate MuiCircularProgress-colorSecondary mui-style-waivou-MuiCircularProgress-root"
+      class="MuiCircularProgress-root MuiCircularProgress-indeterminate MuiCircularProgress-colorSecondary mui-style-zxm296-MuiCircularProgress-root"
       role="status"
       style="width: 48px; height: 48px;"
     >
       <svg
-        class="MuiCircularProgress-svg mui-style-1idz92c-MuiCircularProgress-svg"
+        class="MuiCircularProgress-svg mui-style-54pwck-MuiCircularProgress-svg"
         viewBox="22 22 44 44"
       >
         <circle
-          class="MuiCircularProgress-circle MuiCircularProgress-circleIndeterminate mui-style-176wh8e-MuiCircularProgress-circle"
+          class="MuiCircularProgress-circle MuiCircularProgress-circleIndeterminate mui-style-19t5dcl-MuiCircularProgress-circle"
           cx="44"
           cy="44"
           fill="none"

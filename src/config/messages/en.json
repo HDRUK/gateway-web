@@ -114,6 +114,7 @@
         "companyPostalCode": "NW1 2BE",
         "companyStreetAddress": "Gibbs Building, 215 Euston Road",
         "submit": "Submit",
+        "myProfile": "My Profile",
         "logout": "Logout",
         "publish": "Publish",
         "cancel": "Cancel",
@@ -172,6 +173,7 @@
             "theAllianceTitle": "The Alliance",
             "faqsTitle": "FAQs",
             "onboardingCohortDiscoveryTitle": "Onboarding to Cohort Discovery",
+            "widgetTitle": "Creating and Managing Widgets",
             "documentation": {
                 "title": "Documentation"
             },
@@ -229,7 +231,15 @@
                 "statementOutro": "I understand that my access to the tool may be terminated if I do not comply with the above.",
                 "checkboxLabel": "I have read and agree to the user declaration"
             },
-            "backToHomepage": "Back to homepage"
+            "cohortDiscovery": {
+                "viewDatasets": "View all Datasets available in Cohort Discovery",
+                "viewDatasetsNHS": "View NHS Research SDE Datasets available in Cohort Discovery"
+            },
+            "backToHomepage": "Back to homepage",
+            "accessibilityStatement": {
+                "title": "Accessibility Statement",
+                "subTitle": "We are committed to creating an accessible experience for all users"
+            }
         },
         "account": {
             "profile": {
@@ -242,7 +252,8 @@
                     "nhseHeader": "NHS: ",
                     "dateActionedTooltip": "This is the date for the latest status update for this user",
                     "accountExpired": "This user's access is expired",
-                    "expiryWarning": "This user access is close to expiration date"
+                    "expiryWarning": "This user access is close to expiration date",
+                    "backButtonLabel": "Back to Cohort Discovery Admin Panel"
                 },
                 "cohortDiscovery": {
                     "title": "Cohort Discovery",
@@ -250,11 +261,11 @@
                     "accessTitle": "Cohort Data Access",
                     "daysRemaining": "days remaining in current access period",
                     "accessText1": "Cohort Discovery allows researchers to explore and identify patient cohorts across multiple, federated health data sources without accessing identifiable patient-level data. It streamlines study feasibility assessments by providing rapid, aggregated cohort counts and characteristics across diverse datasets. To request access or log in, please click the 'Access Cohort Discovery' button.",
-                    "nhseSdeTitle": "NHS SDE Cohort Data Access",
-                    "nhseSdeText1": "SDE access is limited by access to Gateway Cohort Discovery",
-                    "nhseSdeText2": "By selecting 'I have been approved by the NHS SDE', you are confirming that you have completed NHS SDE validation and are requesting access to SDE Network datasets through Cohort Discovery. You consent to HDR UK sharing your email address with the NHS SDE team solely for the purpose of verifying your approval status.",
-                    "nhseSdeText3": "Please note: this step involves manual validation by NHS SDE and HDR UK and may take up to 10 working days. You will receive an email notification once your access has been granted.",
-                    "nhseSdeTemporaryText": "To access SDE Network data, users must first be validated by the SDE Network. This validation process is currently in its pilot phase, with the full service expected to be operational by October 2025. In the meantime, if you would like to be added to the list for validation once the service goes live, please email <mailto>england.data.healthresearch@nhs.net</mailto>"
+                    "nhseSdeTitle": "NHS Research SDE Network Datasets",
+                    "nhseSdeText1": "This service gives approved researchers, access to the additional NHS Research SDE Network datasets and subsequently those with approved projects secure access to NHS data. You must also have approved access to Cohort Discovery service to access the NHS Research SDE Network datasets.",
+                    "nhseSdeText2": "By selecting ‘Confirm approval by the NHS Research SDE’, you are confirming that you have been approved by the NHS Research SDE validation service and you are consenting to HDR UK sharing your email address with the NHS Research SDE team solely for the purpose of verifying your approval status.  \nPlease note: this step involves manual validation by NHS Research SDE validation team and may take up to 10 working days. You will receive an email notification once your access to the additional datasets in cohort discovery has been granted.",
+                    "nhseSdeTemporaryText": "To access SDE Network data, users must first be validated by the SDE Network. This validation process is currently in its pilot phase, with the full service expected to be operational by October 2025. In the meantime, if you would like to be added to the list for validation once the service goes live, please email <mailto>england.data.healthresearch@nhs.net</mailto>",
+                    "nhsExpiry": "SDE access is limited by access to Gateway Cohort Discovery"
                 },
                 "dataAccessRequests": {
                     "applications": {
@@ -338,7 +349,8 @@
                         "text": "Add details of the data publisher team you want to create on the Gateway",
                         "aspectRatioInfo": "Please note the aspect ratio of the image should be approximately 2:1 (width:height)",
                         "addImageSuccess": "Image Uploaded",
-                        "fileSelectButtonText": "Choose logo"
+                        "fileSelectButtonText": "Choose logo",
+                        "darModal": "Data Access Request modal"
                     },
                     "edit": {
                         "title": "Edit Team details",
@@ -407,7 +419,17 @@
                                 "text": "Start your DAR application. Not all Data Custodians on the Gateway have this feature enabled. When DAR is not enabled, raise a feasibility enquiry to contact them directly about datasets.",
                                 "buttonText": "Start a Data Access Request",
                                 "buttonTooltip": "Select at least one dataset to enable",
-                                "buttonTooltipDar": "You have selected dataset(s) from Data Custodian(s) that don't have an associated DAR application template"
+                                "buttonTooltipDar": "You have selected dataset(s) from Data Custodian(s) that don't have an associated DAR application template",
+                                "document": "File-based",
+                                "documentSingle": "You have selected a dataset that requires an offline, form-based application. Once the completed form is uploaded, you will be able to track the application progress online through the Gateway.",
+                                "documentMultiple": "You have selected multiple datasets that each require an offline, form-based application. Each must be selected and submitted individually. After uploading the completed forms, you will be able to track all application progress online through the Gateway.",
+                                "documentMultipleSameTeam": "You have selected multiple datasets that each require an offline, form-based application.",
+                                "form": "Web-based",
+                                "formSingle": "You have selected a single dataset that supports an online application. You can proceed to submit a Data Access Request through the Gateway.",
+                                "formMultiple": "You have selected multiple datasets that support a combined application. Starting a Data Access Request will allow you to complete a single form for all selected datasets.",
+                                "mixed": "Mixed",
+                                "mixedMultiple": "You have selected multiple datasets that do not support a combined application. Please select each dataset individually to begin a separate Data Access Request.",
+                                "selectedDatasets": "Selected datasets"
                             },
                             "cohortDiscovery": {
                                 "title": "Cohort Discovery",
@@ -647,7 +669,8 @@
                                 "actions": "Actions",
                                 "team": "Team",
                                 "dar": "Data Access Requests",
-                                "metadata": "Metadata"
+                                "metadata": "Metadata",
+                                "cohortDiscovery": "Cohort Discovery"
                             }
                         }
                     }
@@ -739,7 +762,7 @@
                 },
                 "integrations": {
                     "apiManagement": {
-                        "howTo": "How to setup and manage integrations",
+                        "howTo": "How to setup and manage custom integrations",
                         "cannotCreate": "Please note that HDR UK cannot create Custom Integrations on behalf of users.",
                         "create": {
                             "title": "Custom Integrations",
@@ -771,6 +794,9 @@
                         "authSettingsTitle": "Authentication settings",
                         "authSettingsIntro": "These authentication credentials determine how your API interacts with HDR UK Gateway and its permissions.",
                         "generateClientId": "Generate new client ID"
+                    },
+                    "integrations": {
+                        "howTo": "How to setup and manage predefined integrations"
                     }
                 },
                 "dar": {
@@ -821,7 +847,11 @@
                             "unsavedCancel": "Continue without saving",
                             "unsavedTitle": "Are you sure you want to exit?",
                             "unsavedInfo": "You have changes to your template that will not be saved automatically",
-                            "backLinkText": "Back to DAR Template Management"
+                            "backLinkText": "Back to Data Access Request Templates",
+                            "templateFormName": "Template Form Name",
+                            "templateFormNameInfo": "Fill in the title of the document you are requesting to be filled",
+                            "templateFormGuidance": "Template Form Guidance",
+                            "templateFormGuidanceInfo": "Insert template guidance here"
                         },
                         "list": {
                             "title": "Manage Data Access Request Templates",
@@ -856,6 +886,77 @@
                                 "description": "Upload an existing Data Access Request form for users to complete and upload to the Gateway"
                             }
                         }
+                    }
+                },
+                "widgets": {
+                    "title": "Widgets",
+                    "intro": "Widgets are a way of embedding functionality from the Gateway into your own site. We have a range of different types of widgets from search functionality, to widgets that highlight your own Datasets and Data Uses to your researchers",
+                    "search": "Search",
+                    "dimensions": "Dimensions",
+                    "dateUpdated": "Date updated",
+                    "widget": "Widget",
+                    "actions": {
+                        "edit": { "label": "Edit widget" },
+                        "preview": { "label": "Preview widget" },
+                        "delete": { "label": "Delete widget" }
+                    },
+                    "createmodal": {
+                        "create": "Create new widget",
+                        "edit": "Edit widget",
+                        "title": "Start using an existing template",
+                        "cancel": "Cancel",
+                        "confirm": "Confirm"
+                    },
+                    "edit": {
+                        "titleCreate": "Create new widget",
+                        "titleEdit": "Edit Widget",
+                        "intro": "Create a widget by selecting from the options below. You can preview what your widget will look like in the preview tab.",
+                        "configuration": "Configuration",
+                        "preview": "Preview and copy code",
+                        "content": "Content",
+                        "contentLabel": "Show entries from specific Data Custodians",
+                        "contentInfo": "You might just want to show entities from yourselves for example",
+                        "dataCustodians": "Data custodians",
+                        "permittedDomains": "Permitted domains",
+                        "permittedDomainInfo": "If you have multiple environments, like a dev & preprod, it may be useful to add these in here too, like: https://web.preprod.hdruk.cloud (without the trailing slash)",
+                        "validUrl": "Each item must be a valid URL",
+                        "widget": "Widget",
+                        "widgetName": "Widget name",
+                        "size": "What size do you want your widget?",
+                        "sizeInfo": "We've suggested some sizes below but feel free to try your own. You can also switch to percentage values if you want it to be more fluid and fit within a responsive layout.",
+                        "sizeLarge": "Large (600 x 740px)",
+                        "sizeMedium": "Medium (400 x 592px)",
+                        "sizeSmall": "Small (300 x 444px)",
+                        "brandingInfo": "You might want to use your own brand colours within our widgets. Note: This information will be saved against your team profile, so can be reused in future.",
+                        "brandingUseDefaults": "Use Defaults",
+                        "brandingUseNHS": "Use NHS Brand Colours",
+                        "brandingPrimary": "Primary colour",
+                        "brandingPrimaryInfo": "Used for primary colours and text links",
+                        "brandingSecondary": "Secondary colour",
+                        "brandingSecondaryInfo": "Used for secondary elements and tags",
+                        "brandingNeutral": "Neutral colour",
+                        "brandingNeutralInfo": "Used for some background elements",
+                        "name": "Give your widget a name",
+                        "nameInfo": "This is so you’ll be able to identify it later",
+                        "searchBar": "Include search bar",
+                        "searchBarInfo": "Search within the widget like you can on the Gateway",
+                        "cohortLink": "Include Cohort Discovery link",
+                        "scripts": "Analysis Scripts & Software",
+                        "collections": "Collections",
+                        "selectCollections": "Select Collections",
+                        "cohortLinkInfo": "Add a button for the user to go to Cohort Discovery search within the Gateway",
+                        "save": "Save and preview",
+                        "cancel": "Cancel"
+                    },
+                    "preview": {
+                        "codeCopied": "Code copied to clipboard",
+                        "codeTitle": "Here's the code you need",
+                        "codeIntro": "You'll just need to copy and paste the code below into the HTML on your site. Come back here if you need to make any changes.",
+                        "cspTitle": "Note",
+                        "cspIntro": "If your site uses a Content Security Policy (CSP), make sure to include the following directive in your header:",
+                        "copyCode": "Copy code",
+                        "back": "Back to configuration",
+                        "viewAll": "View all my widgets"
                     }
                 }
             }
@@ -949,6 +1050,17 @@
             },
             "newsEvents": {
                 "seeAllLink": "See all events"
+            },
+            "stats": {
+                "datasetsCustodians": "{datasets} Datasets <light>from {custodians} Data Custodians</light>",
+                "durs": "{durs} Data Uses / Research Projects",
+                "datasetCohortRequest": "{datasetCohortRequest} Cohort Discovery Datasets",
+                "scripts": "{scripts} Analysis Scripts & Software",
+                "publications": "{publications} Publications",
+                "dataCustodians": "{dataCustodians} Data Custodians",
+                "dataCustodianNetworks": "{dataCustodians} Data Custodian Networks",
+                "collections": "{collections} Collections",
+                "viewAll": "View all"
             }
         },
         "saved_searches": {
@@ -1204,10 +1316,8 @@
         },
         "collection": {
             "introTitle": "Description",
+            "backLabel": "Back to Collections search results",
             "components": {
-                "ActionBar": {
-                    "label": "Back to Collections search results"
-                },
                 "DatasetsContent": {
                     "heading": "Datasets & BioSamples ({ length })",
                     "populationSize": "Dataset population size: { length }",
@@ -1238,7 +1348,7 @@
                     "usefulLinks": "Useful links:"
                 },
                 "ActionBar": {
-                    "label": "Back",
+                    "backLabel": "Back",
                     "enquire": "Make a general enquiry",
                     "cohortDiscoveryEnabled": "Start a Cohort Discovery query",
                     "cohortDiscoveryDisabled": "This data custodian does not support Cohort Discovery"
@@ -1274,9 +1384,9 @@
             "publications": "Publication",
             "tools": "Analysis Scripts & Software",
             "serviceOfferings": "Service offerings",
+            "backLabel": "Back to Collections search results",
             "components": {
                 "ActionBar": {
-                    "label": "Back to Collections search results",
                     "enquire": "Make an enquiry"
                 },
                 "IntroductionContent": {
@@ -1376,7 +1486,7 @@
             "safeSetting": "Safe Setting",
             "safeOutput": "Safe Outputs",
             "projectIdText": "Project ID",
-            "projectIdTextTooltip": "A unique identifier for the project assigned by the data custodian",
+            "projectIdTextTooltip": "A unique identifier for the project assigned by the Data Custodian",
             "organisationName": "Organisation name",
             "organisationNameTooltip": "The name of the legal entity that signs the contract to access the data",
             "organisationId": "Organisation ID",
@@ -1392,7 +1502,6 @@
             "sublicenceArrangements": "Sub-licence arrangements (if any)?",
             "sublicenceArrangementsTooltip": "Whether there are any permissions for the applicant to share the data beyond the named parties",
             "projectTitle": "Project title",
-            "projectTitleTooltip": "The title of the project/research study/request",
             "laySummary": "Lay summary",
             "laySummaryTooltip": "A concise and clear description of the project in language that is understandable to the general public",
             "publicBenefitStatement": "Public benefit statement",
@@ -1456,7 +1565,6 @@
             "url": "URL",
             "urlTooltip": "URL to access the resource",
             "license": "License",
-            "licenseTooltip": "The type of software licence for this entity, if applicable",
             "toolCategory": "Tool Category",
             "keywords": "Keywords",
             "domain": "Domain",
@@ -1467,10 +1575,8 @@
             "collections": "Related Collections",
             "authors": "Associated Authors",
             "authorsTooltip": "People who authored this analysis script, tool or software.",
+            "backLabel": "Back to Tools search results",
             "components": {
-                "ActionBar": {
-                    "label": "Back to Tools search results"
-                },
                 "DatasetsContent": {
                     "heading": "Datasets that the analysis, tool or software can be applied to ({ length })",
                     "populationSize": "Dataset population size: { length }",
@@ -1486,6 +1592,53 @@
                     "heading": "Collections which include this analysis, tool or software ({ length })"
                 }
             }
+        },
+        "publication": {
+            "abstract": "Abstract",
+            "details": "Details",
+            "journalName": "Journal name",
+            "journalNameTooltip": "Name of the journal which the article belongs to, e.g. PloS One",
+            "authors": "Author(s)",
+            "authorsTooltip": "List of author details which contains full name, initials and last name",
+            "publicationType": "Publication type",
+            "publicationTypeTooltip": "The type of publication: research article, review article, preprint or book and document",
+            "paperDoi": "DOI",
+            "paperDoiTooltip": "Digital Object Identifier of the article, e.g. 10.1073/pnas.0401194101",
+            "yearOfPublication": "Publication year",
+            "yearOfPublicationTooltip": "Year of the publication",
+            "url": "Web link",
+            "urlTooltip": "Weblink for the publication text or site from which the text is available",
+            "components": {
+                "DatasetsContent": {
+                    "heading": "Datasets related to this Publication ({ length })"
+                },
+                "DatausesContent": {
+                    "heading": "Data Uses / Research Projects which are related to this Publication ({ length })"
+                },
+                "ToolsContent": {
+                    "heading": "Analysis Scripts & Software related to this Publication ({ length })"
+                },
+                "CollectionsContent": {
+                    "heading": "Collections which include this Publication ({ length })"
+                }
+            },
+            "datasets": "Related Datasets",
+            "dataUses": "Related Data Uses",
+            "tools": "Related Analysis Scripts & Software",
+            "collections": "Related Collections",
+            "backLabel": "Back to Publications search results"
+        },
+        "statistics": {
+            "title": "Gateway Statistics",
+            "backtoHomepage": "Go to Homepage",
+            "datasets": "Datasets",
+            "dataCustodians": "Data custodians",
+            "dur": "Data Uses / Research Projects",
+            "cohort": "Cohort Discovery Datasets",
+            "scripts": "Analysis Scripts & Software",
+            "publications": "Publications",
+            "custodianNetworks": "Data Custodian Networks",
+            "collections": "Collections"
         }
     },
     "components": {
@@ -1503,7 +1656,39 @@
         "CohortDiscoveryButton": {
             "notApproved": "Your request to access Cohort Discovery is still pending. Keep an eye out for an email with next steps, or contact support via the ‘Need Support’ button on the bottom right of this screen.",
             "setSecondaryEmail": "You are logged in via OpenAthens, which generates a primary email address in your profile that cannot be used for Cohort Discovery. This button will now send you to your profile page to please set your secondary email address. This must be an institutional email address. Please return here after setting and saving a secondary email address.",
-            "explanatoryTooltip": "You will be taken to the Cohort Discovery tool. You must have access to this dataset in order to run queries."
+            "explanatoryTooltip": "You will be taken to the Cohort Discovery tool. You must have access to this dataset in order to run queries.",
+            "buttonText": "Access Cohort Discovery",
+            "statusLabel": "Status:",
+            "expiresAtLabel": "Expires at:",
+            "statuses": {
+                "APPROVED": "Approved",
+                "REJECTED": "Rejected",
+                "EXPIRED": "Expired",
+                "PENDING": "Pending",
+                "SUBMITTED": "Submitted"
+            },
+            "rquest": {
+                "label": "Access RQuest",
+                "tooltip": "Access RQuest"
+            },
+            "cds": {
+                "label": "Access Cohort Discovery Service (Beta)",
+                "tooltip": "Access the new cohort discovery service"
+            },
+            "modals": {
+                "notApproved": {
+                    "title": "Your access request is not approved",
+                    "confirmText": "Request access"
+                },
+                "claimsMismatch": {
+                    "title": "Your access has been approved, but...",
+                    "content": "Please log out and back in again so you can access this service with your renewed permissions.",
+                    "confirmText": "Logout"
+                },
+                "chooser": {
+                    "title": "Choose which Cohort Discovery Service"
+                }
+            }
         },
         "RequestNhseSdeAccessButton": {
             "label": "Request access to NHS SDE Network datasets",
@@ -1511,8 +1696,11 @@
         },
         "IndicateNhseSdeAccessButton": {
             "disabledTooltip": "Please sign in to activate this button",
-            "label": "I have been approved by the NHS SDE",
-            "success": "Successfully notified HDR UK"
+            "pendingTooltip": "Access request pending",
+            "label": "Confirm approval by the NHS Research SDE",
+            "success": "Successfully notified HDR UK",
+            "successTitle": "Thank you, we've recorded your NHS Research SDE approval.",
+            "successInfo": "It may take up to 10 working days to verify this with the NHS Research SDE Network. You'll be notified once verification is complete."
         },
         "CMSBanner": {
             "ariaCloseButtonLabel": "Close banner"
@@ -1527,9 +1715,8 @@
         },
         "SupportPopOut": {
             "buttonText": "Need support?",
-            "giveFeedback": "Give feedback",
-            "reportBug": "Report bug",
-            "requestSupport": "Request support",
+            "giveFeedback": "Share feedback",
+            "reportBug": "Get Help / Report an Issue",
             "visitSupportCentre": "Visit Support Centre"
         },
         "ShowMore": {
@@ -1546,7 +1733,8 @@
             "termsConditions": "Terms and conditions",
             "privacyPolicy": "Privacy policy",
             "cookieNotice": "Cookie notice",
-            "apiDocs": "API docs"
+            "apiDocs": "API docs",
+            "accessibilityStatement": "Accessibility Statement"
         },
         "DesktopNav": {
             "labels": {
@@ -1611,6 +1799,33 @@
             "replyInfo": "Type your reply below.",
             "send": "Send",
             "status": "Status"
+        },
+        "DataAccessHeader": {
+            "saveDraft": "Save draft",
+            "assignWorkflow": "Assign a workflow",
+            "applicationStatus": "Change application status",
+            "submitApplication": "Submit application",
+            "primaryInvestigator": "Primary Investigator",
+            "organisation": "Organisation",
+            "datasets": "Datasets",
+            "lastActivity": "Last activity"
+        },
+        "DocumentExchange": {
+            "upload": "Upload",
+            "uploadInfo": "Upload your completed form as part of your application.",
+            "download": "Download",
+            "downloadInfo": "Download the form, you can re-download anytime if needed.",
+            "reUpload": "Re-upload",
+            "reUploadInfo": "Re-upload form template here to replace existing file"
+        },
+        "CohortDiscoveryInfo": {
+            "title": "Cohort Discovery",
+            "step1": "Firstly, request access through the NHS website",
+            "step2": "Once approved, select this button",
+            "learnAbout": "Learn about Cohort Discovery and gain access to the service",
+            "accessButton": "Access Cohort Discovery",
+            "nhsNetwork": "NHS Research SDE Network",
+            "nhsNetworkInfo": "The following additional NHS Research SDE datasets are available in Cohort Discovery, but require you go to through a separate approval process by the NHS Research SDE Network."
         }
     },
     "modules": {
@@ -1618,7 +1833,7 @@
             "CohortRequestSent": {
                 "title": "Request Sent!",
                 "text": "We have sent confirmation to your registered e-mail address. We will then notify you with the decision via your registered e-mail address within 5 business days.",
-                "confirmButton": "Back to homepage"
+                "confirmButton": "Back to Profile"
             },
             "DarTemplateDelete": {
                 "title": "Are you sure you want to delete this template?",
@@ -1683,7 +1898,7 @@
             },
             "CohortRequestTerms": {
                 "confirmButton": "Accept Terms & Conditions",
-                "discardButton": "Discard",
+                "discardButton": "Decline",
                 "acceptTerms": "I have read the Terms and Conditions"
             },
             "DataUseDetailsDialog": {
@@ -1788,7 +2003,28 @@
                 "actionPermanent": "I understand this action is permanent",
                 "yes": "Yes",
                 "no": "No"
+            },
+            "CohortDiscoveryDatasets": {
+                "title": "Datasets available on Cohort Discovery",
+                "dataset": "Dataset",
+                "custodian": "Custodian",
+                "closeButton": "Close",
+                "viewMoreButton": "View full information on Gateway Search",
+                "populationSize": {
+                    "notReported": "Not reported",
+                    "label": "Population Size",
+                    "tooltip": "Population size associated with the population type in the dataset"
+                }
             }
+        },
+        "CohortTermsSuccessDialog": {
+            "title": "Your access request for Cohort Discovery has been submitted!",
+            "reviewTime": "Your cohort access request has been submitted and will be reviewed within 5–7 working days.",
+            "nhsTitle": "Want access to additional NHS Research SDE datasets?",
+            "nhsInfo1": "Access to the NHS Research SDE Network datasets requires additional approval by the NHS Research SDE Network and is dependent on Cohort Discovery Data Access approval submitted above.",
+            "nhsInfo2": "To request this access, you will need to complete the external NHS Research SDE Network validation process and then return here to confirm that you have been approved.",
+            "maybeLater": "Maybe later",
+            "nhsButtonLabel": "Yes, take me to NHS site"
         }
     },
     "hooks": {

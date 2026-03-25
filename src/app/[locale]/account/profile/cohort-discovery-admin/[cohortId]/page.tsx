@@ -1,4 +1,5 @@
-import { cookies } from "next/headers";
+import { getTranslations } from "next-intl/server";
+import BackButton from "@/components/BackButton";
 import Box from "@/components/Box";
 import Paper from "@/components/Paper";
 import ProtectedAccountRoute from "@/components/ProtectedAccountRoute";
@@ -10,6 +11,8 @@ import Header from "./Header";
 import ReadOnly from "./ReadOnly";
 import StatusForm from "./StatusForm";
 
+const TRANSLATION_PATH = "pages.account.profile.cohortDiscoveryAdmin";
+
 export const metadata = metaData(
     {
         title: "Cohort Discovery Manage - My Account",
@@ -17,21 +20,23 @@ export const metadata = metaData(
     },
     noFollowRobots
 );
+
 export default async function CohortDiscoveryManage({
     params,
 }: {
-    params: { cohortId: string };
+    params: Promise<{ cohortId: string }>;
 }) {
-    const { cohortId } = params;
-    const cookieStore = cookies();
-    const user = await getUser(cookieStore);
+    const { cohortId } = await params;
+    const t = await getTranslations(TRANSLATION_PATH);
+    const user = await getUser();
     const permissions = await getPermissions(user.roles);
-    const cohortRequest = await getCohort(cookieStore, cohortId);
+    const cohortRequest = await getCohort(cohortId);
 
     return (
         <ProtectedAccountRoute
             permissions={permissions}
             pagePermissions={["cohort.read"]}>
+            <BackButton label={t("backButtonLabel")} />
             <Paper>
                 <Box>
                     <Header cohortRequest={cohortRequest} />

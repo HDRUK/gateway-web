@@ -18,6 +18,9 @@ const ENTITY_TYPE_DAR_APPLICATION = "dar-application-upload";
 const mapKeysToValues = (keys: string[], valuesArray: (string | undefined)[]) =>
     Object.fromEntries(keys.map((key, index) => [key, valuesArray[index]]));
 
+type Row = Record<string, string | undefined>;
+type RowsByArrayName = Record<string, Row[]>;
+
 const getVisibleQuestionIds = (
     filteredData: DarFormattedField[],
     parentValues: DarApplicationResponses,
@@ -111,6 +114,8 @@ const formatDarQuestion = (
     ...(field?.fields && {
         fields: field?.fields,
     }),
+    document: field.document,
+    guidance: field.guidance,
 });
 
 const formatDarAnswers = (
@@ -143,6 +148,23 @@ const formatDarAnswers = (
             )
     );
 
+    //  Set of childIds to create blank row
+    const childIdsByArrayName = new Map<string, Set<string>>();
+    (questions || [])
+        .filter(q => q.component === ARRAY_FIELD && Array.isArray(q.fields))
+        .forEach(q => {
+            const set = childIdsByArrayName.get(q.title) ?? new Set<string>();
+            q.fields?.forEach(f => {
+                set.add(String(f.question_id));
+                (f.options ?? []).forEach(opt =>
+                    (opt.children ?? []).forEach(ch =>
+                        set.add(String(ch.question_id))
+                    )
+                );
+            });
+            childIdsByArrayName.set(q.title, set);
+        });
+
     // Non-array answers
     const nonArrayValues = Object.fromEntries(
         userAnswers
@@ -170,7 +192,7 @@ const formatDarAnswers = (
     });
 
     // Format columns -> rows per array name
-    const arrayRowsByName = Object.fromEntries(
+    const arrayRowsByName: RowsByArrayName = Object.fromEntries(
         [...arrayColumnsByName].map(([arrayName, cols]) => {
             const childIds = [...cols.keys()];
             const len = Math.max(0, ...[...cols.values()].map(a => a.length));
@@ -184,6 +206,16 @@ const formatDarAnswers = (
             return [arrayName, rows];
         })
     );
+
+    // Add a single blank row to arrays with no answers
+    childIdsByArrayName.forEach((idSet, arrayName) => {
+        if (!(arrayName in arrayRowsByName)) {
+            const ids = [...idSet];
+            arrayRowsByName[arrayName] = [
+                Object.fromEntries(ids.map(id => [id, undefined])),
+            ];
+        }
+    });
 
     return { ...nonArrayValues, ...arrayRowsByName };
 };
@@ -202,9 +234,15 @@ const createFileUploadConfig = (
         fileDownloadApiPath: fileDownloadApiPath || undefined,
         apiPath: `${apis.fileUploadV1Url}?entity_flag=${ENTITY_TYPE_DAR_APPLICATION}&application_id=${applicationId}&question_id=${questionId}`,
         onFileUploaded: async response => {
-            const newFile = { filename: response.filename, id: response.id };
+            const newFile = {
+                filename: response.filename,
+                uuid: response.uuid,
+            };
 
-            if (component === inputComponents.FileUpload) {
+            if (
+                component === inputComponents.FileUpload ||
+                component === inputComponents.DocumentExchange
+            ) {
                 setValue(
                     questionId,
                     { value: newFile },
@@ -225,7 +263,6 @@ const createFileUploadConfig = (
                     { shouldValidate: true }
                 );
             }
-
             revalidateCacheAction(`${CACHE_DAR_ANSWERS}${applicationId}`);
         },
         ...(isResearcher &&
@@ -236,9 +273,10 @@ const createFileUploadConfig = (
 
                     if (response && prev && typeof prev === "object") {
                         const prevValue = prev.value;
+
                         if (Array.isArray(prevValue)) {
                             setValue(questionId, {
-                                value: prevValue.filter(v => v.id !== fileId),
+                                value: prevValue.filter(v => v.uuid !== fileId),
                             });
                         } else {
                             setValue(questionId, undefined);

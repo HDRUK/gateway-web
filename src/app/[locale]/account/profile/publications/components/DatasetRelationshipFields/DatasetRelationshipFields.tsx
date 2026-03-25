@@ -144,10 +144,11 @@ const DatasetRelationshipFields = <TFieldValues extends FieldValues>({
                     <Box
                         sx={{
                             p: 0,
+                            mt: "5px",
                             gridColumn: "span 1",
                             display: "flex",
                             justifyContent: "flex-end",
-                            alignItems: "flex-end",
+                            alignItems: "flex-start",
                         }}>
                         {fields.length > 1 && (
                             <IconButton

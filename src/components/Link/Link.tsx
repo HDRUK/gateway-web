@@ -1,3 +1,5 @@
+"use client";
+
 import { forwardRef } from "react";
 import { LinkProps as MuiLinkProps } from "@mui/material";
 import MuiLink from "@mui/material/Link";

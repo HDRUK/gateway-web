@@ -31,6 +31,7 @@ import usePost from "@/hooks/usePost";
 import apis from "@/config/apis";
 import { inputComponents } from "@/config/forms";
 import { colors } from "@/config/theme";
+import { formatDate, getToday } from "@/utils/date";
 import InputWrapper from "../InputWrapper";
 
 interface Ratings {
@@ -41,6 +42,7 @@ interface Ratings {
 
 const cookieName = "surveySession";
 const cookieLife = 90; // days
+const cookieLifeClosed = 5; // days
 
 const ratings: Ratings[] = [
     { icon: MoodBadIcon, rating: 1, colour: colors.red700 },
@@ -59,6 +61,8 @@ const slideOut = keyframes`
   from { transform: translateY(0); opacity: 1; }
   to { transform: translateY(100%); opacity: 0; }
 `;
+
+const validMonths = ["01", "04", "07", "10"];
 
 interface CustomerSurveyProps {
     hideOnLoad?: boolean;
@@ -160,17 +164,35 @@ export default function CustomerSurvey({
     };
 
     const handleClose = () => {
+        Cookies.set(cookieName, JSON.stringify({ closed: true }), {
+            expires: cookieLifeClosed,
+        });
+
         setAnimateOut(true);
         setTimeout(() => {
             setHideComponent(true);
             setSubmitted(false);
         }, 500);
     };
+
     const checkToShowSurvey = useCallback(() => {
-        if (!Cookies.get(cookieName)) {
+        const cookie = Cookies.get(cookieName);
+
+        if (!cookie) {
             setAnimateOut(false);
             setHideComponent(false);
+            return;
         }
+
+        try {
+            const parsed = JSON.parse(cookie);
+            if (parsed?.closed) return;
+        } catch {
+            // ignore invalid cookie
+        }
+
+        setAnimateOut(false);
+        setHideComponent(false);
     }, []);
 
     useEffect(() => {
@@ -187,7 +209,17 @@ export default function CustomerSurvey({
         return () => clearTimeout(timeoutId);
     }, [hideComponent, checkToShowSurvey]);
 
+    const isValidMonth = () => {
+        const currentMonth = formatDate(getToday(), "MM");
+        if (!currentMonth) {
+            return false;
+        }
+
+        return validMonths.includes(currentMonth);
+    };
+
     if (hideComponent || submitted) return null;
+    if (!isValidMonth()) return null;
 
     return (
         <Box
@@ -213,6 +245,7 @@ export default function CustomerSurvey({
                 variant="h6"
                 gutterBottom
                 id={id}
+                component="h2" // h2 for accessibility but we want it to look like a h6
                 width={isMobile ? "90%" : "100%"}>
                 {t("title")}
             </Typography>
@@ -220,7 +253,7 @@ export default function CustomerSurvey({
             {step === "rating" && (
                 <Grid container spacing={1} justifyContent="center">
                     {ratings.map(({ icon: Icon, rating, colour }, index) => (
-                        <Grid item key={rating}>
+                        <Grid key={rating}>
                             <Tooltip title={t(`tooltip-${index}`)}>
                                 <div>
                                     <IconButton

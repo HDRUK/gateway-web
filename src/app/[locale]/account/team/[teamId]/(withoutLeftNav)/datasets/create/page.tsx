@@ -1,4 +1,3 @@
-import { cookies } from "next/headers";
 import BoxContainer from "@/components/BoxContainer";
 import ProtectedAccountRoute from "@/components/ProtectedAccountRoute";
 import {
@@ -26,23 +25,17 @@ const SCHEMA_VERSION = process.env.NEXT_PUBLIC_SCHEMA_VERSION || "4.0.0";
 export default async function CreateDatasetPage({
     params,
 }: {
-    params: { teamId: string };
+    params: Promise<{ teamId: string }>;
 }) {
-    const { teamId } = params;
-    const cookieStore = cookies();
-    const user = await getUser(cookieStore);
-    const team = await getTeam(cookieStore, teamId);
+    const { teamId } = await params;
+    const user = await getUser();
+    const team = await getTeam(teamId);
     const teamUser = getTeamUser(team?.users, user?.id);
     const permissions = getPermissions(user.roles, teamUser?.roles);
 
-    const { schema } = await getSchemaFromTraser(
-        cookieStore,
-        SCHEMA_NAME,
-        SCHEMA_VERSION
-    );
+    const { schema } = await getSchemaFromTraser(SCHEMA_NAME, SCHEMA_VERSION);
 
     const formJSON = await getFormHydration(
-        cookieStore,
         SCHEMA_NAME,
         SCHEMA_VERSION,
         [],

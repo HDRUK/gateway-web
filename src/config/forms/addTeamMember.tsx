@@ -2,6 +2,7 @@ import * as yup from "yup";
 import LabelAndDescription from "@/components/LabelAndDescription";
 import { SearchRoundedIcon } from "@/consts/icons";
 import {
+    ROLE_CUSTODIAN_COHORT_MANAGER,
     ROLE_CUSTODIAN_DAR_MANAGER,
     ROLE_CUSTODIAN_DAR_REVIEWER,
     ROLE_CUSTODIAN_DEVELOPER,
@@ -11,7 +12,7 @@ import {
 } from "@/consts/roles";
 import { inputComponents } from ".";
 
-const getRoleOptions = () => {
+const getRoleOptions = (isCohortDiscoveryServiceEnabled: boolean) => {
     return [
         {
             label: "Team Admin",
@@ -84,6 +85,22 @@ const getRoleOptions = () => {
             permissions: ["team-members.update", "roles.dar-r.update"],
             value: ROLE_CUSTODIAN_DAR_REVIEWER,
         },
+
+        ...(isCohortDiscoveryServiceEnabled
+            ? [
+                  {
+                      label: "Cohort Discovery Manager",
+                      labelComponent: (
+                          <LabelAndDescription
+                              label="Cohort Discovery Manager"
+                              description="Can create hosts and collections on the Cohort Discovery Service."
+                          />
+                      ),
+                      permissions: ["team-members.update"],
+                      value: ROLE_CUSTODIAN_COHORT_MANAGER,
+                  },
+              ]
+            : []),
     ];
 };
 

@@ -71,6 +71,10 @@ const Footer = () => {
             href: `${process.env.NEXT_PUBLIC_API_BASE_URL}/documentation`,
             label: t("apiDocs"),
         },
+        {
+            href: "/about/accessibility-statement",
+            label: t("accessibilityStatement"),
+        },
     ];
 
     return (
@@ -118,11 +122,7 @@ const Footer = () => {
                 </FooterLinksContainer>
             </FooterContainer>
 
-            <div
-                role="note"
-                // eslint-disable-next-line
-                tabIndex={0}
-                style={visuallyHidden}>
+            <div role="note" tabIndex={0} style={visuallyHidden}>
                 end of page
             </div>
         </FooterWrapper>

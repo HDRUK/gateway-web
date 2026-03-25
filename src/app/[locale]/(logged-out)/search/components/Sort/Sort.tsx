@@ -97,7 +97,9 @@ const Sort = ({
                     aria-label="Open to show sort options"
                     title="Open to show sort options">
                     {options.map(option =>
-                        option.value === watchSort ? <option.icon /> : undefined
+                        option.value === watchSort ? (
+                            <option.icon key={option.value} />
+                        ) : undefined
                     )}
                 </IconButton>
             </Tooltip>

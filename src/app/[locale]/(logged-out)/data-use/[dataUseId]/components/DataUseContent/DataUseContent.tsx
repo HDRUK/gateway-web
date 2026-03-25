@@ -4,6 +4,7 @@ import { get, isEmpty } from "lodash";
 import { useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
 import { DataUse, DatasetWithTitle } from "@/interfaces/DataUse";
+import { FieldType } from "@/interfaces/FieldType";
 import Box from "@/components/Box";
 import BoxContainer from "@/components/BoxContainer";
 import EllipsisCharacterLimit from "@/components/EllipsisCharacterLimit";
@@ -14,7 +15,7 @@ import Typography from "@/components/Typography";
 import { RouteName } from "@/consts/routeName";
 import { formatDate } from "@/utils/date";
 import { convertToCamelCase } from "@/utils/general";
-import { DataUseSection, FieldType } from "../../config";
+import { DataUseSection } from "../../config";
 import { DatasetFieldWrapper, ListContainer } from "./DataUseContent.styles";
 
 const TRANSLATION_PATH = "pages.dataUse";
@@ -126,7 +127,7 @@ const DataUseContent = ({
                     gridColumn: { tablet: "span 5", laptop: "span 5" },
                     p: 0,
                 }}>
-                <Paper sx={{ borderRadius: 2, p: 2 }}>
+                <Paper sx={{ p: 2 }}>
                     {populatedSections
                         .filter(section => section.sectionName !== "general")
                         .map((section, index) => (
@@ -171,7 +172,7 @@ const DataUseContent = ({
                                         <BoxContainer
                                             sx={{
                                                 gridTemplateColumns: {
-                                                    desktop: "repeat(4, 1fr)",
+                                                    tablet: "repeat(4, 1fr)",
                                                 },
                                                 gap: 1,
                                                 "&:not(:last-of-type)": {
@@ -182,7 +183,7 @@ const DataUseContent = ({
                                             <Box
                                                 sx={{
                                                     gridColumn: {
-                                                        desktop: "span 1",
+                                                        tablet: "span 1",
                                                     },
                                                     p: 0,
                                                 }}>
@@ -200,7 +201,7 @@ const DataUseContent = ({
                                             <Box
                                                 sx={{
                                                     gridColumn: {
-                                                        desktop: "span 2",
+                                                        tablet: "span 2",
                                                     },
                                                     p: 0,
                                                     display: "flex",

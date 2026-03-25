@@ -1,4 +1,4 @@
-import type { Meta, StoryObj } from "@storybook/react";
+import type { Meta, StoryObj } from "@storybook/nextjs";
 import FormBanner from "./FormBanner";
 
 const meta: Meta<typeof FormBanner> = {

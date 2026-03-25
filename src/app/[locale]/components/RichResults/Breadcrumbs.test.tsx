@@ -14,7 +14,7 @@ Object.defineProperty(window, "location", {
 });
 
 jest.mock("next/script", () => {
-    // eslint-disable-next-line react/display-name, react/prop-types
+    // eslint-disable-next-line react/display-name
     return ({ children, ...props }) => {
         return (
             <script data-testid="breadCrumbs" {...props}>

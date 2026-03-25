@@ -1,20 +1,19 @@
-import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
-import { DarTeamApplication } from "@/interfaces/DataAccessRequestApplication";
+import { QuestionBankSection } from "@/interfaces/QuestionBankSection";
 import {
     beforeYouBeginSection,
+    fileBasedTemplateSection,
     messageSection,
 } from "@/config/forms/dataAccessApplication";
 import {
     DarApplicationApprovalStatus,
-    DarApplicationStatus,
+    DarTemplateType,
 } from "@/consts/dataAccess";
 import {
     getDarAnswersUser,
     getDarApplicationUser,
     getDarReviewsUser,
     getUserFromCookie,
-    updateDarApplicationUser,
     getAllDarSections,
 } from "@/utils/api";
 import metaData, { noFollowRobots } from "@/utils/metadata";
@@ -33,14 +32,13 @@ export default async function DarApplicationPage({
     params,
     searchParams,
 }: {
-    params: { applicationId: string };
-    searchParams: { teamId: string };
+    params: Promise<{ applicationId: string }>;
+    searchParams: Promise<{ teamId: string }>;
 }) {
-    const { applicationId } = params;
-    const { teamId } = searchParams;
+    const { applicationId } = await params;
+    const { teamId } = await searchParams;
 
-    const cookieStore = cookies();
-    const user = getUserFromCookie(cookieStore);
+    const user = await getUserFromCookie();
 
     if (!user) {
         redirect("/error/401");
@@ -50,11 +48,7 @@ export default async function DarApplicationPage({
 
     let darApplication;
     try {
-        darApplication = await getDarApplicationUser(
-            cookieStore,
-            applicationId,
-            userId
-        );
+        darApplication = await getDarApplicationUser(applicationId, userId);
     } catch {
         redirect("/error/401");
     }
@@ -64,9 +58,9 @@ export default async function DarApplicationPage({
     let reviews;
     try {
         [sections, userAnswers, reviews] = await Promise.all([
-            getAllDarSections(cookieStore),
-            getDarAnswersUser(cookieStore, applicationId, userId),
-            getDarReviewsUser(cookieStore, applicationId, userId),
+            getAllDarSections(),
+            getDarAnswersUser(applicationId, userId),
+            getDarReviewsUser(applicationId, userId),
         ]);
     } catch {
         redirect("/error/401");
@@ -77,13 +71,39 @@ export default async function DarApplicationPage({
     }
 
     // Format sections
-    const formattedSections = [
-        beforeYouBeginSection,
-        ...(reviews?.length ? [...sections, messageSection] : sections),
-    ];
+    let formattedSections: QuestionBankSection[] = [];
+    let parentSections: QuestionBankSection[];
 
-    const parentSections =
-        formattedSections?.filter(s => s.parent_section === null) || [];
+    if (darApplication.application_type === DarTemplateType.DOCUMENT) {
+        formattedSections = [
+            beforeYouBeginSection,
+            fileBasedTemplateSection,
+            ...(reviews?.length ? [messageSection] : []),
+        ];
+
+        parentSections = [
+            beforeYouBeginSection,
+            {
+                id: 1,
+                created_at: "",
+                updated_at: "",
+                deleted_at: null,
+                name: "File-based Template",
+                description: "",
+                parent_section: null,
+                order: 1,
+            },
+            ...(reviews?.length ? [messageSection] : []),
+        ];
+    } else {
+        formattedSections = [
+            beforeYouBeginSection,
+            ...(reviews?.length ? [...sections, messageSection] : sections),
+        ];
+
+        parentSections =
+            formattedSections?.filter(s => s.parent_section === null) || [];
+    }
 
     let sectionId = 0;
 
@@ -91,25 +111,6 @@ export default async function DarApplicationPage({
     let teamApplication = darApplication.teams?.find(
         team => team.team_id === +teamId
     );
-
-    const suppress = cookieStore.get("dar-update-suppress");
-
-    // If no approval status and submitted, set to draft
-    if (
-        !teamApplication?.approval_status &&
-        teamApplication?.submission_status === DarApplicationStatus.SUBMITTED &&
-        !suppress
-    ) {
-        await updateDarApplicationUser(applicationId, userId, {
-            submission_status: DarApplicationStatus.DRAFT,
-        });
-
-        // Find the specific team and override its submission_status
-        teamApplication = {
-            ...darApplication?.teams?.find(team => team.team_id === +teamId),
-            submission_status: DarApplicationStatus.DRAFT,
-        } as DarTeamApplication;
-    }
 
     if (!teamApplication && teamId) {
         return notFound();

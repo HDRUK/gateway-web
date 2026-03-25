@@ -51,6 +51,7 @@ const MindMap = ({
             connectionLineType={ConnectionLineType.Straight}
             nodeOrigin={[0.5, 0.5]}
             proOptions={proOptions}
+            preventScrolling={false}
             fitView
             {...rest}
             disableKeyboardA11y

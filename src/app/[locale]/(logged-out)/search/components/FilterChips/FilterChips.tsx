@@ -52,18 +52,31 @@ const FilterChips = ({
 
                                     return (
                                         <Tooltip
+                                            key={`${filterType}-${filter}`}
                                             title={`${t("filter")}: ${t(
                                                 filterTranslationPath
                                             )}`}
                                             placement="top">
                                             <Chip
-                                                key={`${filterType}-${filter}`}
+                                                variant="outlined"
                                                 sx={{
                                                     textOverflow: "ellipsis",
                                                     maxWidth: 200,
                                                     overflow: "hidden",
                                                     whiteSpace: "nowrap",
+                                                    color: colors.white,
+                                                    backgroundColor:
+                                                        colors.green400,
+                                                    borderColor:
+                                                        colors.green400,
                                                     marginBottom: "4px",
+                                                    "&:focus-visible": {
+                                                        borderColor:
+                                                            colors.orange,
+                                                        borderWidth: 2,
+                                                        backgroundColor:
+                                                            colors.green400,
+                                                    },
                                                 }}
                                                 color={color}
                                                 size={size}

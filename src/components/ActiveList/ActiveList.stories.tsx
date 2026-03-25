@@ -1,4 +1,4 @@
-import type { Meta, StoryObj } from "@storybook/react";
+import type { Meta, StoryObj } from "@storybook/nextjs";
 import ActiveList from "./ActiveList";
 
 const meta: Meta<typeof ActiveList> = {

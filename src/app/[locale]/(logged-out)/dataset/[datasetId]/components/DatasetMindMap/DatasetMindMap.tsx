@@ -3,7 +3,6 @@
 import { useMemo } from "react";
 import { ReactFlowProps } from "@xyflow/react";
 import { useTranslations } from "next-intl";
-import { CtaLink } from "@/interfaces/Cms";
 import { VersionItem } from "@/interfaces/Dataset";
 import MindMap from "@/components/MindMap/MindMap";
 import Paper from "@/components/Paper";
@@ -22,7 +21,6 @@ interface DatasetMindMapProps extends ReactFlowProps {
     data: VersionItem;
     teamId: number;
     isCohortDiscovery: boolean;
-    ctaLink?: CtaLink;
     populatedSections: DatasetSection[];
     hasStructuralMetadata: boolean;
     hasDemographics: boolean;
@@ -33,7 +31,6 @@ const DatasetMindMap = ({
     data,
     teamId,
     isCohortDiscovery,
-    ctaLink,
     populatedSections,
     linkageCounts,
     panOnDrag = false,
@@ -48,33 +45,34 @@ const DatasetMindMap = ({
 }: DatasetMindMapProps) => {
     const t = useTranslations(TRANSLATION_PATH);
 
-    const hydratedRootNode = useMemo(() => {
-        return {
+    const hydratedRootNode = useMemo(
+        () => ({
             ...rootNode,
             data: {
                 ...rootNode.data,
                 label: "Dataset",
             },
-        };
-    }, [data, t]);
+        }),
+        [data, t]
+    );
 
-    const emptyNodes = useMemo<string[]>(() => [], []);
+    const { hydratedOuterNodes, emptyNodes } = useMemo(() => {
+        const empty: string[] = [];
 
-    const hydratedOuterNodes = useMemo(() => {
         const outerNodes = getOuterNodes(
             outerNodeValues.map(node => ({
                 ...node,
                 label: t(node.name),
-                ctaLink,
             }))
         );
 
-        return outerNodes
+        const nodes = outerNodes
             .map(node => {
-                let href = null;
-                let action = null;
+                let href: string | null = null;
+                let action: (() => void) | null = null;
                 let hidden = false;
                 let cohort = false;
+
                 const { title } = data.metadata.metadata.summary;
                 const safeTitle = encodeURIComponent(title);
 
@@ -84,7 +82,7 @@ const DatasetMindMap = ({
                             ?.syntheticDataWebLink[0];
 
                     if (!href) {
-                        emptyNodes.push(node.id);
+                        empty.push(node.id);
                         hidden = true;
                     }
                 } else if (
@@ -94,10 +92,12 @@ const DatasetMindMap = ({
                 ) {
                     const entityName = node.id.replace("node-", "");
                     const entityCount = linkageCounts[entityName];
+
                     if (!entityCount) {
                         hidden = true;
-                        emptyNodes.push(node.id);
+                        empty.push(node.id);
                     }
+
                     href = `${node.data.href}&datasetTitles=${safeTitle}`;
                 } else if (node.id === "node-dataCustodian") {
                     href = `/data-custodian/${teamId}`;
@@ -105,7 +105,7 @@ const DatasetMindMap = ({
                     const entityCount = linkageCounts.publications_using;
                     if (!entityCount) {
                         hidden = true;
-                        emptyNodes.push(node.id);
+                        empty.push(node.id);
                     }
                     href = `${node.data.href}&query=&datasetTitles=${safeTitle}&source=${node.data.source}&force`;
                 } else if (node.id === "node-externalPublications") {
@@ -115,7 +115,7 @@ const DatasetMindMap = ({
                         data.metadata.metadata?.coverage?.datasetCompleteness;
 
                     if (!href) {
-                        emptyNodes.push(node.id);
+                        empty.push(node.id);
                         hidden = true;
                     }
                 } else if (node.id === "node-cohortDiscovery") {
@@ -123,15 +123,16 @@ const DatasetMindMap = ({
                     cohort = node.data.cohort;
 
                     if (!isCohortDiscovery) {
-                        emptyNodes.push(node.id);
+                        empty.push(node.id);
                         hidden = true;
                     }
                 } else if (node.data.href?.includes("scrollTo:")) {
-                    if (
+                    const canScrollToSection =
                         (hasStructuralMetadata &&
                             node.data.name === "structuralMetadata") ||
-                        (hasDemographics && node.data.name === "demographics")
-                    ) {
+                        (hasDemographics && node.data.name === "demographics");
+
+                    if (canScrollToSection) {
                         const sectionIndex = populatedSections.findIndex(
                             section =>
                                 node.data.href?.includes(section.sectionName)
@@ -147,7 +148,7 @@ const DatasetMindMap = ({
                                 });
                     } else {
                         hidden = true;
-                        emptyNodes.push(node.id);
+                        empty.push(node.id);
                     }
                 }
 
@@ -162,8 +163,22 @@ const DatasetMindMap = ({
                     },
                 };
             })
-            .filter(item => !!item);
-    }, [data]);
+            .filter(Boolean);
+
+        return {
+            hydratedOuterNodes: nodes,
+            emptyNodes: empty,
+        };
+    }, [
+        data,
+        t,
+        linkageCounts,
+        teamId,
+        isCohortDiscovery,
+        hasStructuralMetadata,
+        hasDemographics,
+        populatedSections,
+    ]);
 
     return (
         <Paper sx={{ borderRadius: 2, height: "370px" }}>

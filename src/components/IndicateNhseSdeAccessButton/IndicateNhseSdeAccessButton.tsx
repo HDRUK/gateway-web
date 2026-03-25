@@ -1,12 +1,16 @@
 "use client";
 
-import { ReactElement } from "react";
-import { SxProps, Tooltip } from "@mui/material";
+import { ReactElement, useState } from "react";
+import { CircularProgress, Stack, SxProps, Tooltip } from "@mui/material";
 import { useTranslations } from "next-intl";
+import Box from "@/components/Box";
+import Typography from "@/components/Typography";
 import useAuth from "@/hooks/useAuth";
+import { useCohortStatus } from "@/hooks/useCohortStatus";
+import useModal from "@/hooks/useModal";
 import usePost from "@/hooks/usePost";
-import notificationService from "@/services/notification";
 import apis from "@/config/apis";
+import { revalidateCacheAction } from "@/app/actions/revalidateCacheAction";
 import { useFeatures } from "@/providers/FeatureProvider";
 import Button from "../Button";
 import ConditionalWrapper from "../ConditionalWrapper";
@@ -14,15 +18,33 @@ import ConditionalWrapper from "../ConditionalWrapper";
 const tooltipWrapper = (tooltip: string) => (children: ReactElement) =>
     (
         <Tooltip title={tooltip} describeChild placement="bottom">
-            {children}
+            <Box sx={{ p: 0, m: 0, textAlign: "center", width: "100%" }}>
+                {children}
+            </Box>
         </Tooltip>
     );
 
-const IndicateNhseSdeAccessButton = ({ sx }: { sx?: SxProps }) => {
-    const t = useTranslations("components.IndicateNhseSdeAccessButton");
-    const { isNhsSdeApplicationsEnabled } = useFeatures();
+const hiddenStatuses = ["APPROVED", "REJECTED", "BANNED", "SUSPENDED"];
 
-    const { isLoggedIn, user } = useAuth();
+const IndicateNhseSdeAccessButton = ({
+    sx,
+    action,
+    refetchCohort,
+}: {
+    sx?: SxProps;
+    action?: () => void;
+    refetchCohort?: () => void;
+}) => {
+    const t = useTranslations("components.IndicateNhseSdeAccessButton");
+    const { showModal } = useModal();
+    const { isLoggedIn, user, isLoading: isLoadingAuth } = useAuth();
+    const { isNhsSdeApplicationsEnabled } = useFeatures();
+    const { nhseSdeRequestStatus, isLoading } = useCohortStatus(user?.id, {
+        redirect: true,
+    });
+
+    const [hasClickedButton, setHasClickedButton] = useState(false);
+
     const submitRequest = usePost(
         `${apis.cohortRequestsV1Url}/user/${user?.id}/indicate_nhse_access`,
         {
@@ -31,29 +53,70 @@ const IndicateNhseSdeAccessButton = ({ sx }: { sx?: SxProps }) => {
     );
 
     const onClick = async () => {
-        const result = await submitRequest({ details: "required" });
+        if (action) {
+            return action();
+        }
+
+        setHasClickedButton(true); // move to modal action
+
+        showModal({
+            content: (
+                <Stack sx={{ gap: 2, textAlign: "center" }}>
+                    <Typography
+                        variant="h2"
+                        sx={{ mt: 2, mb: 1 }}
+                        color="secondary">
+                        {t("successTitle")}
+                    </Typography>
+                    <Typography>{t("successInfo")}</Typography>
+                </Stack>
+            ),
+            showConfirm: false,
+            showCancel: false,
+        });
+
+        const result = await submitRequest({});
         if (result) {
-            notificationService.apiSuccess(t("success"));
+            revalidateCacheAction(`cohort-user-${user?.id}`);
+            refetchCohort && refetchCohort();
         }
     };
+    const approvalPending =
+        hasClickedButton || nhseSdeRequestStatus === "APPROVAL REQUESTED";
+    const isDisabled =
+        !isLoggedIn ||
+        approvalPending ||
+        hasClickedButton ||
+        isLoading ||
+        isLoadingAuth ||
+        !!(
+            nhseSdeRequestStatus &&
+            hiddenStatuses.includes(nhseSdeRequestStatus)
+        );
 
-    const isDisabled = !isLoggedIn;
+    const wrapper = !isLoggedIn
+        ? tooltipWrapper(t("disabledTooltip"))
+        : approvalPending
+        ? tooltipWrapper(t("pendingTooltip"))
+        : tooltipWrapper("");
 
     if (isNhsSdeApplicationsEnabled) {
         return (
-            <ConditionalWrapper
-                requiresWrapper={isDisabled}
-                wrapper={tooltipWrapper(t("disabledTooltip") || "")}>
-                <div>
+            <ConditionalWrapper requiresWrapper={isDisabled} wrapper={wrapper}>
+                <span style={{ width: "100%" }}>
                     <Button
                         sx={{ ...sx }}
                         variant="outlined"
                         color="secondary"
                         disabled={isDisabled}
                         onClick={() => user?.id && onClick()}>
-                        {t("label")}
+                        {isLoading || isLoadingAuth ? (
+                            <CircularProgress size={20} color="inherit" />
+                        ) : (
+                            t("label")
+                        )}
                     </Button>
-                </div>
+                </span>
             </ConditionalWrapper>
         );
     }

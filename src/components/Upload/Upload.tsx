@@ -2,16 +2,14 @@ import { Control, useController } from "react-hook-form";
 import { FormControl, FormControlLabel, Stack, SxProps } from "@mui/material";
 import Input, { InputProps } from "@mui/material/Input";
 import { visuallyHidden } from "@mui/utils";
-import theme, { colors } from "@/config/theme";
+import theme from "@/config/theme";
 import { UploadFileIcon } from "@/consts/icons";
 import Button from "../Button";
-import Typography from "../Typography";
 
 export interface UploadProps extends InputProps {
     label: string;
     name: string;
     control: Control;
-    helperText?: string;
     acceptFileTypes?: string;
     formControlSx?: SxProps;
     onFileChange?: (file: File) => void;
@@ -24,7 +22,6 @@ const Upload = (props: UploadProps) => {
         label,
         control,
         name,
-        helperText,
         formControlSx,
         onFileChange,
         onFocus,
@@ -92,9 +89,6 @@ const Upload = (props: UploadProps) => {
                             tabIndex={-1}>
                             {label}
                         </Button>
-                        <Typography color={colors.grey600}>
-                            {helperText}
-                        </Typography>
                     </Stack>
                 }
                 disableTypography

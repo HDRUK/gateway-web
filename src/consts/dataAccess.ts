@@ -14,3 +14,8 @@ export enum DarApplicationApprovalStatus {
 
 export const ARRAY_FIELD = "ArrayField";
 export const ARRAY_PREFIX = " - array";
+
+export enum DarTemplateType {
+    FORM = "FORM",
+    DOCUMENT = "DOCUMENT",
+}

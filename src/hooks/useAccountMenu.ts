@@ -21,17 +21,19 @@ const useAccountMenu = () => {
                 href: `/${RouteName.ACCOUNT}/${RouteName.TEAM}/${team.id}/${RouteName.TEAM_MANAGEMENT}`,
             }));
 
-        return [
-            {
-                label: `${user?.firstname} ${user?.lastname}`,
+        return {
+            myProfile: {
+                label: t("myProfile"),
                 href: `/${RouteName.ACCOUNT}/${RouteName.PROFILE}`,
             },
-            ...teams,
-            {
-                label: t("logout"),
-                action: logout,
-            },
-        ];
+            otherItems: [
+                ...teams,
+                {
+                    label: t("logout"),
+                    action: logout,
+                },
+            ],
+        };
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [logout, user]);
 };

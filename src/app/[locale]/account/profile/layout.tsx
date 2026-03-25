@@ -2,7 +2,9 @@ import { cookies } from "next/headers";
 import ActionBar from "@/components/ActionBar";
 import TwoColumn from "@/components/TwoColumn";
 import LeftNav from "@/modules/LeftNav";
+import config from "@/config/config";
 import { getUser } from "@/utils/api";
+import { checkLeftNavCookie } from "@/utils/cookies";
 import { getPermissions } from "@/utils/permissions";
 
 export default async function AccountProfileLayout({
@@ -10,17 +12,26 @@ export default async function AccountProfileLayout({
 }: {
     children: React.ReactNode;
 }) {
-    const cookieStore = cookies();
-    const user = await getUser(cookieStore);
+    const user = await getUser();
     const permissions = await getPermissions(user.roles);
+    const cookieStore = await cookies();
 
     return (
-        <div>
+        <>
             <TwoColumn
-                leftContent={<LeftNav permissions={permissions} />}
+                leftContent={
+                    <LeftNav
+                        permissions={permissions}
+                        navHeading={user.name}
+                        initialLeftNavOpen={checkLeftNavCookie(
+                            cookieStore.get(config.LEFT_NAV_COOKIE)?.value
+                        )}
+                        roles={user.roles}
+                    />
+                }
                 rightContent={children}
             />
             <ActionBar />
-        </div>
+        </>
     );
 }

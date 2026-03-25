@@ -23,7 +23,7 @@ const CheckboxRow = <
                 alignItems: "center",
             }}>
             <Typography sx={{ width: "100px" }}>{title}</Typography>
-            <StyledCheckbox formControlSx={{ marginBottom: 0 }} {...rest} />
+            <StyledCheckbox {...rest} />
         </Box>
     );
 };

@@ -27,7 +27,7 @@ export const errors: { [char: number]: Error } = {
     404: {
         message:
             "Oops! We tried but couldn’t find the page you were looking for",
-        imageAlt: "Permission denied",
+        imageAlt: "404 - Page not found",
         imageSrc: "/images/errors/404.png",
     },
     423: {

@@ -1,4 +1,3 @@
-import { cookies } from "next/headers";
 import { ValueType } from "@/components/Autocomplete/Autocomplete";
 import CollectionForm from "@/components/CollectionForm";
 import ProtectedAccountRoute from "@/components/ProtectedAccountRoute";
@@ -17,15 +16,14 @@ export const metadata = metaData(
 export default async function CollectionCreatePage({
     params,
 }: {
-    params: { teamId: string };
+    params: Promise<{ teamId: string }>;
 }) {
-    const { teamId } = params;
-    const cookieStore = cookies();
-    const user = await getUser(cookieStore);
-    const team = await getTeam(cookieStore, teamId);
+    const { teamId } = await params;
+    const user = await getUser();
+    const team = await getTeam(teamId);
     const teamUser = getTeamUser(team?.users, user?.id);
     const permissions = getPermissions(user.roles, teamUser?.roles);
-    const keywords = await getKeywords(cookieStore);
+    const keywords = await getKeywords();
     const keywordOptions = keywords.map(data => {
         return {
             value: data.id as ValueType,

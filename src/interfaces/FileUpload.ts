@@ -2,6 +2,7 @@ import { StructuralMetadata } from "./Dataset";
 
 interface FileUpload {
     id: number;
+    uuid: string;
     created_at: string;
     updated_at: string;
     filename: string;
@@ -14,9 +15,13 @@ interface FileUpload {
     structural_metadata?: StructuralMetadata[] | null;
 }
 
-type UploadedFileMetadata = {
-    id: number;
+type UploadedFileMetadataValue = {
+    uuid: string;
     filename: string;
+};
+
+type UploadedFileMetadata = {
+    value: UploadedFileMetadataValue;
 };
 
 interface FileUploadFields {
@@ -25,8 +30,13 @@ interface FileUploadFields {
     allowReuploading: boolean;
     hideUpload: boolean;
     onFileUploaded: (file: FileUpload) => Promise<void>;
-    onFileRemove?: (fileId: number) => Promise<void>;
+    onFileRemove?: (fileId: string) => Promise<void>;
     skipImageValidation: boolean;
 }
 
-export type { FileUpload, UploadedFileMetadata, FileUploadFields };
+export type {
+    FileUpload,
+    UploadedFileMetadata,
+    UploadedFileMetadataValue,
+    FileUploadFields,
+};

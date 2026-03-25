@@ -1,4 +1,4 @@
-FROM node:alpine
+FROM node:24.13.1-alpine
 
 RUN mkdir -p /usr/src
 WORKDIR /usr/src
@@ -9,5 +9,6 @@ ENV NODE_ENV=development
 
 RUN npm install
 RUN npm run seeder
+# RUN npm run build:widget
 EXPOSE 3000
 CMD npm run dev

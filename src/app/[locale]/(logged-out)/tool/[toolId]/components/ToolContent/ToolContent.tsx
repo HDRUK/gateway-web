@@ -2,6 +2,7 @@
 
 import { get } from "lodash";
 import { useTranslations } from "next-intl";
+import { FieldType } from "@/interfaces/FieldType";
 import { Tool } from "@/interfaces/Tool";
 import Box from "@/components/Box";
 import BoxContainer from "@/components/BoxContainer";
@@ -11,7 +12,7 @@ import Paper from "@/components/Paper";
 import TooltipText from "@/components/TooltipText";
 import Typography from "@/components/Typography";
 import { formatDate } from "@/utils/date";
-import { ToolSection, FieldType } from "../../config";
+import { ToolSection } from "../../config";
 
 const TRANSLATION_PATH = "pages.tool";
 const DATE_FORMAT = "DD/MM/YYYY";

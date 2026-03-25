@@ -1,12 +1,10 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import { Bookmark, BookmarkBorder } from "@mui/icons-material";
 import { ListItem, ListItemText } from "@mui/material";
 import { get } from "lodash";
-import uniqueId from "lodash/uniqueId";
 import { useTranslations } from "next-intl";
 import { usePathname, useSearchParams } from "next/navigation";
 import { KeyedMutator } from "swr";
-import { PageTemplatePromo } from "@/interfaces/Cms";
 import { Library, NewLibrary } from "@/interfaces/Library";
 import { SearchResultDataset } from "@/interfaces/Search";
 import Box from "@/components/Box";
@@ -39,7 +37,6 @@ interface ResultCardProps {
     libraryData: Library[];
     mutateLibraries: KeyedMutator<Library[]>;
     isCohortDiscoveryDisabled: boolean;
-    cohortDiscovery: PageTemplatePromo;
 }
 
 const TRANSLATION_PATH = "pages.search.components.ResultCard";
@@ -50,10 +47,8 @@ const ResultCard = ({
     libraryData,
     mutateLibraries,
     isCohortDiscoveryDisabled,
-    cohortDiscovery,
 }: ResultCardProps) => {
     const t = useTranslations(TRANSLATION_PATH);
-    const { current: resultId } = useRef(uniqueId("result-title-"));
     const pathname = usePathname();
     const searchParams = useSearchParams();
     const { showDialog } = useDialog();
@@ -64,6 +59,8 @@ const ResultCard = ({
     const showGeneralEnquiry = useGeneralEnquiry();
     const showFeasibilityEnquiry = useFeasibilityEnquiry();
     const { showDARApplicationModal } = useDataAccessRequest();
+
+    const resultId = `result-title-${datasetId}`;
 
     const [isLibraryToggled, setLibraryToggle] = useState(false);
 
@@ -139,6 +136,7 @@ const ResultCard = ({
             url: `/${RouteName.DATASET_ITEM}/${datasetId}`,
             modalHeader: team.dar_modal_header,
             modalContent: team.dar_modal_content,
+            modalFooter: team.dar_modal_footer,
             datasetIds: [+datasetId],
             teamIds: [team.id],
             redirectPath: pathname,
@@ -166,9 +164,6 @@ const ResultCard = ({
                       label: "Start a Cohort Discovery query",
                       button: (
                           <CohortDiscoveryButton
-                              ctaLink={
-                                  cohortDiscovery.template.promofields.ctaLink
-                              }
                               showDatasetExplanatoryTooltip
                               variant="link"
                               clickedAction={() => setAnchorElement(null)}
@@ -256,7 +251,6 @@ const ResultCard = ({
             alignItems="flex-start">
             <section
                 style={{ width: "100%" }}
-                // eslint-disable-next-line
                 aria-description={`Result for ${metadata.summary.shortTitle}`}>
                 <ListItemText
                     disableTypography
@@ -295,7 +289,6 @@ const ResultCard = ({
                                         href={linkHref}
                                         sx={{ display: "inline-block" }}>
                                         <Typography
-                                            // eslint-disable-next-line
                                             aria-description="Data Custodian"
                                             sx={{
                                                 textDecoration: "uppercase",
@@ -320,7 +313,6 @@ const ResultCard = ({
 
                                 {!isNumber && (
                                     <Typography
-                                        // eslint-disable-next-line
                                         aria-description="Data Custodian"
                                         sx={{
                                             textDecoration: "uppercase",

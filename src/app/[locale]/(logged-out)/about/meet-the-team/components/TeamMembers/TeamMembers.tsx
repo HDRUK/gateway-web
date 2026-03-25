@@ -33,6 +33,7 @@ export default function TeamMembers({ title, data }: TeamMembersProps) {
 
         return (
             <Box
+                key={teamMember.name}
                 component="li"
                 sx={{
                     width: "200px",

@@ -6,24 +6,16 @@ const navItems = [
         label: "Search",
         subItems: [
             {
-                label: "Cohort Discovery",
-                href: "/about/cohort-discovery",
-            },
-            {
-                label: "Phenotypes",
-                href: "https://phenotypes.healthdatagateway.org/",
-            },
-            {
-                label: "Courses",
-                href: "https://hdruklearn.org/",
-            },
-            {
                 label: "Datasets & BioSamples",
                 href: `/search?type=${SearchCategory.DATASETS}`,
             },
             {
                 label: "Data Uses / Research Projects",
                 href: `/search?type=${SearchCategory.DATA_USE}`,
+            },
+            {
+                label: "Cohort Discovery",
+                href: "/about/cohort-discovery",
             },
             {
                 label: "Analysis Scripts & Software",
@@ -38,7 +30,11 @@ const navItems = [
                 href: `/search?type=${SearchCategory.DATA_CUSTODIANS}`,
             },
             {
-                label: "Collections / Networks",
+                label: "Data Custodian Networks",
+                href: `/search?type=${SearchCategory.COLLECTIONS}`,
+            },
+            {
+                label: "Collections",
                 href: `/search?type=${SearchCategory.COLLECTIONS}`,
             },
         ],

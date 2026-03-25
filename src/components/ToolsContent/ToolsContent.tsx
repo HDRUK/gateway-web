@@ -3,13 +3,14 @@
 import { Fragment } from "react";
 import { Link, Typography } from "@mui/material";
 import { useTranslations } from "next-intl";
-import { ReducedTool, Tool } from "@/interfaces/Tool";
+import { NetworkTool } from "@/interfaces/DataCustodianNetwork";
 import AccordionSection from "@/components/AccordionSection";
+import { useControlledAccordion } from "@/hooks/useControllerAccordion";
 import { RouteName } from "@/consts/routeName";
 import { formatDate } from "@/utils/date";
 
 export interface ToolsContentProps {
-    tools: Tool[] | ReducedTool[];
+    tools: NetworkTool[];
     anchorIndex: number;
     translationPath: string;
 }
@@ -22,6 +23,7 @@ export default function ToolsContent({
     translationPath,
 }: ToolsContentProps) {
     const t = useTranslations(translationPath.concat(TRANSLATION_PATH));
+    const accordionProps = useControlledAccordion(tools.length > 0);
 
     return (
         <AccordionSection
@@ -31,6 +33,7 @@ export default function ToolsContent({
                 length: tools.length,
             })}
             defaultExpanded={tools.length > 0}
+            {...accordionProps}
             contents={tools.map(({ name, id, created_at, user }) => (
                 <Fragment key={`tool_${id}`}>
                     <Link href={`/${RouteName.TOOL_ITEM}/${id}`}>{name}</Link>

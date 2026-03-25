@@ -29,14 +29,7 @@ export default function LayoutDataItemPage({
                     laptop: "repeat(5, 1fr)",
                 },
             }}>
-            <Box
-                sx={{
-                    gridColumn: { tablet: "span 1", laptop: "span 1" },
-                    bgcolor: "white",
-                    p: 0,
-                }}>
-                {navigation}
-            </Box>
+            {navigation}
             <Box
                 sx={{
                     gridColumn: { tablet: "span 2", laptop: "span 4" },

@@ -3,6 +3,7 @@ import { Chip, Tooltip } from "@mui/material";
 import { ButtonProps } from "@mui/material/Button";
 import Button from "@/components/Button";
 import ConditionalWrapper from "@/components/ConditionalWrapper";
+import { getShortenedText } from "@/utils/string";
 
 interface EllipsisCharacterLimitProps extends ButtonProps {
     text: string;
@@ -37,10 +38,7 @@ const EllipsisCharacterLimit = ({
     isChip = false,
     ...rest
 }: EllipsisCharacterLimitProps) => {
-    const formattedText =
-        text.length > characterLimit
-            ? `${text.slice(0, characterLimit)}...`
-            : text;
+    const formattedText = getShortenedText(text, characterLimit);
 
     return (
         <ConditionalWrapper

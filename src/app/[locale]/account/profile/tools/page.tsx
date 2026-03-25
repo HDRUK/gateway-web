@@ -1,4 +1,3 @@
-import { cookies } from "next/headers";
 import { getUser } from "@/utils/api";
 import metaData, { noFollowRobots } from "@/utils/metadata";
 import { getPermissions } from "@/utils/permissions";
@@ -12,8 +11,7 @@ export const metadata = metaData(
     noFollowRobots
 );
 export default async function TeamsPage() {
-    const cookieStore = cookies();
-    const user = await getUser(cookieStore);
+    const user = await getUser();
     const permissions = getPermissions(user.roles);
     const userId = user?.id?.toString();
 

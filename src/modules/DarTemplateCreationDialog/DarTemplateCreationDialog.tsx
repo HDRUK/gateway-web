@@ -9,6 +9,7 @@ import useDialog from "@/hooks/useDialog";
 import usePost from "@/hooks/usePost";
 import apis from "@/config/apis";
 import { colors } from "@/config/theme";
+import { DarTemplateType } from "@/consts/dataAccess";
 import { AddIcon } from "@/consts/icons";
 import { RouteName } from "@/consts/routeName";
 
@@ -24,6 +25,7 @@ const BUTTON_SX = {
     flexDirection: "column",
     gap: 2,
     p: 2,
+    mt: 2,
     maxWidth: "300px",
     justifySelf: "center",
     color: colors.grey700,
@@ -71,10 +73,17 @@ const DarTemplateCreationDialog = ({
                     }}
                     spacing={2}
                     columnSpacing={4}>
-                    <Grid item mobile={12} desktop={6}>
+                    <Grid
+                        size={{
+                            mobile: 12,
+                            desktop: 6,
+                        }}>
                         <Button
                             onClick={() => {
-                                createNewTemplate(payload).then(res => {
+                                createNewTemplate({
+                                    ...payload,
+                                    template_type: DarTemplateType.FORM,
+                                }).then(res => {
                                     const templateId = res;
                                     const redirectUrl = `${RouteName.DAR_TEMPLATES}/${templateId}`;
                                     router.push(redirectUrl);
@@ -92,17 +101,25 @@ const DarTemplateCreationDialog = ({
                             </>
                         </Button>
                     </Grid>
-                    <Grid item mobile={12} desktop={6}>
+                    <Grid
+                        size={{
+                            mobile: 12,
+                            desktop: 6,
+                        }}>
                         <Button
                             onClick={() => {
-                                const redirectUrl = `${RouteName.DAR_TEMPLATES}/file`;
-                                router.push(redirectUrl);
+                                createNewTemplate({
+                                    ...payload,
+                                    template_type: DarTemplateType.DOCUMENT,
+                                }).then(res => {
+                                    const templateId = res;
+                                    const redirectUrl = `${RouteName.DAR_TEMPLATES}/${templateId}`;
+                                    router.push(redirectUrl);
+                                });
                                 hideDialog();
                             }}
                             variant="text"
-                            sx={BUTTON_SX}
-                            // Disabled as file creation doesn't exist yet
-                            disabled>
+                            sx={BUTTON_SX}>
                             <AddIcon />
                             <>
                                 <Typography variant="h2">

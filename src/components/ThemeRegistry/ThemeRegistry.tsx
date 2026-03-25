@@ -11,10 +11,12 @@ import NextAppDirEmotionCacheProvider from "./EmotionCache";
 
 export default function ThemeRegistry({
     children,
+    isIframe = false,
 }: {
     children: React.ReactNode;
+    isIframe?: boolean;
 }) {
-    const isHome = useIsHomePage();
+    const isHome = useIsHomePage(isIframe);
 
     return (
         <NextAppDirEmotionCacheProvider options={{ key: "mui" }}>

@@ -20,6 +20,8 @@ const AccountNav = () => {
     );
     const { isLoggedIn, user, isLoading } = useAuth();
     const accountLinks = useAccountMenu();
+    const menuItems = [accountLinks.myProfile, ...accountLinks.otherItems];
+
     const handleOpenNav = (event: React.MouseEvent<HTMLElement>) => {
         setAnchorElement(event.currentTarget);
     };
@@ -60,7 +62,7 @@ const AccountNav = () => {
                     handleClose={() => {
                         setAnchorElement(null);
                     }}
-                    menuItems={accountLinks}
+                    menuItems={menuItems}
                 />
             </>
         );

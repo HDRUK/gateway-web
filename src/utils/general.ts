@@ -1,3 +1,5 @@
+import { decode } from "he";
+
 const capitalise = (str: string) => {
     return str.charAt(0).toUpperCase() + str.slice(1).toLowerCase();
 };
@@ -52,8 +54,7 @@ function parseStaticImagePaths<T>(values: T, prefix?: string) {
 }
 
 function decodeHtmlEntity(input: string): string {
-    const doc = new DOMParser().parseFromString(input, "text/html");
-    return doc.documentElement.textContent || "";
+    return decode(input);
 }
 
 export {

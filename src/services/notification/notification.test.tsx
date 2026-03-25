@@ -21,6 +21,10 @@ describe("Notification Service", () => {
             persist: true,
             preventDuplicate: true,
             variant: "apiError",
+            SnackbarProps: {
+                'aria-live': 'assertive',
+                role: 'status'
+            }
         });
     });
 
@@ -33,6 +37,10 @@ describe("Notification Service", () => {
             },
             preventDuplicate: true,
             variant: "error",
+            SnackbarProps: {
+                'aria-live': 'assertive',
+                role: 'status'
+            }
         });
     });
 
@@ -45,6 +53,10 @@ describe("Notification Service", () => {
             },
             preventDuplicate: true,
             variant: "success",
+            SnackbarProps: {
+                'aria-live': 'assertive',
+                role: 'status'
+            }
         });
     });
 
@@ -57,6 +69,10 @@ describe("Notification Service", () => {
             },
             preventDuplicate: true,
             variant: "warning",
+            SnackbarProps: {
+                'aria-live': 'assertive',
+                role: 'status'
+            }   
         });
     });
 
@@ -69,6 +85,10 @@ describe("Notification Service", () => {
             },
             preventDuplicate: true,
             variant: "info",
+            SnackbarProps: {
+                'aria-live': 'assertive',
+                role: 'status'
+            }
         });
     });
 });

@@ -8,8 +8,16 @@ const MockUploadFile = (props: Partial<UploadFileProps>) => {
         defaultValues: {
             upload: {
                 value: [
-                    { id: 1, filename: "test-file-1.png" },
-                    { id: 2, filename: "test-file-2.png" },
+                    {
+                        id: 1,
+                        filename: "test-file-1.png",
+                        uuid: "977badec-cd56-438e-b468-196bf066fdb2",
+                    },
+                    {
+                        id: 2,
+                        filename: "test-file-2.png",
+                        uuid: "95290b80-0292-4cab-ac78-d5e20bb9b914",
+                    },
                 ],
             },
         },
@@ -49,7 +57,11 @@ describe("UploadFile Component", () => {
         );
         fireEvent.click(removeButton);
 
-        await waitFor(() => expect(onFileRemove).toHaveBeenCalledWith(1));
+        await waitFor(() =>
+            expect(onFileRemove).toHaveBeenCalledWith(
+                "977badec-cd56-438e-b468-196bf066fdb2"
+            )
+        );
     });
 
     it("handles multiple file uploads", async () => {
@@ -71,7 +83,11 @@ describe("UploadFile Component", () => {
         );
         fireEvent.click(removeButton);
 
-        await waitFor(() => expect(onFileRemove).toHaveBeenCalledWith(2));
+        await waitFor(() =>
+            expect(onFileRemove).toHaveBeenCalledWith(
+                "95290b80-0292-4cab-ac78-d5e20bb9b914"
+            )
+        );
     });
 
     it("does not allow file upload if no file is selected", async () => {

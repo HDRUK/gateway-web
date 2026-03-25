@@ -9,7 +9,7 @@ import Tabs from "@/components/Tabs";
 import Typography from "@/components/Typography";
 import useDialog from "@/hooks/useDialog";
 import { useNewMembersOnTop } from "@/hooks/useNewMembersOnTop";
-import { CUSTOMER_PORTAL_RAISE_SUPPORT_URL } from "@/config/hrefs";
+import { CUSTOMER_PORTAL_REPORT_BUG_URL } from "@/config/hrefs";
 import { AddIcon } from "@/consts/icons";
 import AddTeamMemberDialog from "./AddTeamMemberDialog";
 import EmailNotifications from "./EmailNotifications";
@@ -58,7 +58,7 @@ export default function TeamManagement({
                         notifications. If you need assistance, please{" "}
                         <a
                             target="_blank"
-                            href={CUSTOMER_PORTAL_RAISE_SUPPORT_URL}
+                            href={CUSTOMER_PORTAL_REPORT_BUG_URL}
                             rel="noreferrer">
                             raise a support ticket
                         </a>

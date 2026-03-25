@@ -8,11 +8,6 @@ query GetCohortDiscoveryQuery {
         ... on PromoTemplate {
           promofields { 
             bannerTitle
-            ctaLink {
-              target
-              url
-              title
-            }
             topRightPanel
             topLeftPanel
             middlePanel

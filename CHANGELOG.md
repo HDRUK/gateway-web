@@ -1,3 +1,237 @@
+## [2.34.1](https://github.com/HDRUK/gateway-web/compare/v2.34.0...v2.34.1) (2026-03-24)
+
+### 🐛 Bug Fixes
+
+* **GAT-8687:** Widget hotfix type error (#1501) ([74690eb](https://github.com/HDRUK/gateway-web/commit/74690eb5854be0027851ceb3cee012449717acc1))
+
+## [2.34.0](https://github.com/HDRUK/gateway-web/compare/v2.33.0...v2.34.0) (2026-03-24)
+
+### ✨ Features
+
+* **GAT-0000:** Small tweak to cater for the API refactor (#1493) ([697d94f](https://github.com/HDRUK/gateway-web/commit/697d94f7dd4605ae0960f57b2026341b07c58520)), closes [GAT-0000](GAT-0000)
+* **GAT-0000:** updated matrix for pipeline (#1495) ([2843b19](https://github.com/HDRUK/gateway-web/commit/2843b19b7425f973a4095f562ebb60160a7337ab)), closes [GAT-0000](GAT-0000)
+* **GAT-7957:** added github authentication in pipeline (#1486) ([0b010f6](https://github.com/HDRUK/gateway-web/commit/0b010f69325194d0e8f4b2c72975202b54486e90)), closes [GAT-7957](GAT-7957)
+* **GAT-8465:** Applies branding colours to widgets (#1496) ([0bd8d03](https://github.com/HDRUK/gateway-web/commit/0bd8d03fdbc0167df686555684f89ac552f44293)), closes [GAT-8465](GAT-8465)
+* **GAT-8607:** Improve flow for CDS login (#1492) ([30b3405](https://github.com/HDRUK/gateway-web/commit/30b3405c16c654a5cbc0dd6d60cc14bb16b87f1b)), closes [GAT-8607](GAT-8607)
+
+## [2.33.0](https://github.com/HDRUK/gateway-web/compare/v2.32.1...v2.33.0) (2026-03-13)
+
+### ✨ Features
+
+* **GAT-0000:** updated chromatic pipeline (#1491) ([9efec1c](https://github.com/HDRUK/gateway-web/commit/9efec1c3a7f58b5f6a9a0f8ee23b4711743a5aab)), closes [GAT-0000](GAT-0000)
+* **GAT-7769:** Added integration help link (#1478) ([3e1bb73](https://github.com/HDRUK/gateway-web/commit/3e1bb73cffc337090056cb108d7128df3e605f92)), closes [GAT-7769](GAT-7769)
+* **GAT-7769:** added integrations pages links (#1490) ([c1c19eb](https://github.com/HDRUK/gateway-web/commit/c1c19ebdf1ca825b8b31624ba8cb9d0eeb174d4a)), closes [GAT-7769](GAT-7769)
+* **GAT-8242:** Add action bar to DAR  (#1477) ([9368e24](https://github.com/HDRUK/gateway-web/commit/9368e246fb94c815fbf78a334f04d74616da788b)), closes [GAT-8242](GAT-8242)
+* **GAT-8246:** Add filter panel to data custodian networks (#1487) ([b15dde8](https://github.com/HDRUK/gateway-web/commit/b15dde87e526158c21455f9d0996ccc8eeff0b41)), closes [GAT-8246](GAT-8246)
+* **GAT-8384:** added release workflow pipeline (#1480) ([aa31978](https://github.com/HDRUK/gateway-web/commit/aa31978e11894f344bfff3b532e924b9e7361152)), closes [GAT-8384](GAT-8384)
+* **GAT-8384:** updated chromatic checkout version (#1481) ([5619778](https://github.com/HDRUK/gateway-web/commit/56197783f398be92d61008b30e98349cceb6a00c)), closes [GAT-8384](GAT-8384)
+* **GAT-8606:** Updated collections and data custodian page to reflect new design (#1488) ([432d9f9](https://github.com/HDRUK/gateway-web/commit/432d9f9a61a7a8b70f8f1f517c126d9e69287d81)), closes [GAT-8606](GAT-8606)
+
+### 🐛 Bug Fixes
+
+* **GAT-7769:** Added new .env variables for integrations (#1485) ([d54c2bf](https://github.com/HDRUK/gateway-web/commit/d54c2bff2f8e7a1c2a7d15fd2e44907018adc555)), closes [GAT-7769](GAT-7769)
+* **GAT-8563:** Extend length of Data Access Request Form so questions are visible on all screen sizes (#1484) ([bb7be9c](https://github.com/HDRUK/gateway-web/commit/bb7be9c3995af31c7516a72ede198f492c21d5bf)), closes [GAT-8563](GAT-8563)
+
+## [2.32.1](https://github.com/HDRUK/gateway-web/compare/v2.32.0...v2.32.1) (2026-02-23)
+
+### 🐛 Bug Fixes
+
+* **GAT-8536:** Fix to make sure feature flags can be retrieved when n… (#1479) ([f45d22e](https://github.com/HDRUK/gateway-web/commit/f45d22e1381030ad89098180b5d6d483f686f2eb))
+
+## [2.32.0](https://github.com/HDRUK/gateway-web/compare/v2.31.0...v2.32.0) (2026-02-17)
+
+### ✨ Features
+
+* **GAT-8489:** Add back button to cohort user page (#1474) ([3b1bfaf](https://github.com/HDRUK/gateway-web/commit/3b1bfafe42620c19997275d33e5ae8ac5a7f19f1)), closes [GAT-8489](GAT-8489)
+* **GAT-8498:** Cohort Discovery UI Changes (#1472) ([242d825](https://github.com/HDRUK/gateway-web/commit/242d825cac7e6e7630702a9da2e9a2d4a6e53352)), closes [GAT-8498](GAT-8498)
+
+## [2.31.0](https://github.com/HDRUK/gateway-web/compare/v2.30.0...v2.31.0) (2026-02-12)
+
+### ✨ Features
+
+* **GAT-7886:** Guidance now appears alongside the field (#1449) ([88a769d](https://github.com/HDRUK/gateway-web/commit/88a769da0054ca21ef7f5b25aa6afb40ce80b581)), closes [GAT-7886](GAT-7886)
+* **GAT-8243:** Changed from user name to my profile (#1453) ([3ed28d0](https://github.com/HDRUK/gateway-web/commit/3ed28d00be9cc366470d8324d4f12969e4b0d2b2)), closes [GAT-8243](GAT-8243)
+* **GAT-8427:** Feature Flagging Table (#1415) ([3edb0fd](https://github.com/HDRUK/gateway-web/commit/3edb0fd61a668d9d8d485734c1041c7c9ddf8935)), closes [GAT-8427](GAT-8427)
+* **GAT-8440:** cypress tests (#1445) ([28b773a](https://github.com/HDRUK/gateway-web/commit/28b773a852d2432872e90293881e2d088907822f)), closes [GAT-8440](GAT-8440)
+* **GAT-8470:** Widget referrer (#1442) ([074048f](https://github.com/HDRUK/gateway-web/commit/074048f4fb131be15f269c2a41683399833c17df)), closes [GAT-8470](GAT-8470)
+* **GAT-8480:** Updates custodian network page to cater for 4 per row (#1470) ([ba28901](https://github.com/HDRUK/gateway-web/commit/ba2890183254ae884be7f11844a08e9193bfa60a)), closes [GAT-8480](GAT-8480)
+* **GAT-8487:** Cohort Discovery Service dual button (#1455) ([c7436e2](https://github.com/HDRUK/gateway-web/commit/c7436e2c56fcf77ab42769e1b10cb96450c8351a)), closes [GAT-8487](GAT-8487)
+* **GAT-8487:** Update to cohort access (#1458) ([792882a](https://github.com/HDRUK/gateway-web/commit/792882a7fc904d27c021ef5527629db87f71badb)), closes [GAT-8487](GAT-8487)
+* **GAT-8521:** Enable workgroup management for CDS (#1465) ([d1a6914](https://github.com/HDRUK/gateway-web/commit/d1a69141bd783ec25af9b957ec2289701b5f022b)), closes [GAT-8521](GAT-8521)
+* **GAT-8521:** Feature flag protection for workgroup fields (#1469) ([97915d5](https://github.com/HDRUK/gateway-web/commit/97915d536e7bb450ae437bf458deef3df4f30f3b)), closes [GAT-8521](GAT-8521)
+* **GAT-8521:** Fix Caching problems  (#1471) ([53d97c3](https://github.com/HDRUK/gateway-web/commit/53d97c3f5eee03468811f0545ea682972fdb60c8))
+
+### 🐛 Bug Fixes
+
+* **GAT-0000:** feature flags rebase drop (#1448) ([063fc32](https://github.com/HDRUK/gateway-web/commit/063fc322d50f0861b023020bba968c05e3bcba68)), closes [GAT-0000](GAT-0000)
+* **GAT-0000:** Missing dep (#1447) ([32c960d](https://github.com/HDRUK/gateway-web/commit/32c960d42d423dbb093bd01da8a6adcc115d4d37)), closes [GAT-0000](GAT-0000)
+* **GAT-5766:** Can now scroll when mouse is on mindmap (#1451) ([66e9401](https://github.com/HDRUK/gateway-web/commit/66e94010e40da4f849c51d5c3008e5d7a72e5e11)), closes [GAT-5766](GAT-5766)
+* **GAT-6814:** Notifications now have aria-live tag (#1457) ([131ffcf](https://github.com/HDRUK/gateway-web/commit/131ffcf4ba2c1b22a655fe37a0381aa1b9493bca)), closes [GAT-6814](GAT-6814)
+* **GAT-6835:** Fixed incorrect heading levels (#1459) ([4ed4d7a](https://github.com/HDRUK/gateway-web/commit/4ed4d7a79310fd81aa3452185390fbd4ed675853))
+* **GAT-6841:** Fixed 404 error image alt text (#1460) ([a13e323](https://github.com/HDRUK/gateway-web/commit/a13e323dcc60e1aecdf24aed8235b9d16cecf473))
+* **GAT-7897:** Order of search nav items is now consistent  (#1450) ([cb86128](https://github.com/HDRUK/gateway-web/commit/cb861287283018c66a2a13f81197fb1576c86c71)), closes [GAT-7897](GAT-7897)
+* **GAT-8210:** Removed the alliance from FAQ page title (#1452) ([1bbeb2c](https://github.com/HDRUK/gateway-web/commit/1bbeb2c6e27867c9878e1fd213e375a9d1994712)), closes [GAT-8210](GAT-8210)
+* **GAT-8304:** Updated widget message to remove Networks (#1454) ([6f42f91](https://github.com/HDRUK/gateway-web/commit/6f42f91935958fd9a3ab2a97a3576849fbc6649a)), closes [GAT-8304](GAT-8304)
+* **GAT-8477:** survey logic (#1440) ([c5b8993](https://github.com/HDRUK/gateway-web/commit/c5b899386aae866a19d4226073cce5a3ad4ab9c7)), closes [GAT-8477](GAT-8477)
+* **GAT-8484:** Set character limit for search filters (#1456) ([5ce50c8](https://github.com/HDRUK/gateway-web/commit/5ce50c84ffb5eff9a836689f4cd7ec3ceb159451)), closes [GAT-8484](GAT-8484)
+* **GAT-8495:** Allow add team member with cohort  (#1461) ([e0d4275](https://github.com/HDRUK/gateway-web/commit/e0d427520e29560a1ae2ccb40ecb43cc14e42a1b)), closes [GAT-8495](GAT-8495)
+* **GAT-8495:** User specific feature flags (#1464) ([02c380e](https://github.com/HDRUK/gateway-web/commit/02c380eff3ae566041325a67c422e09ca86684b7)), closes [GAT-8495](GAT-8495)
+
+## [2.30.0](https://github.com/HDRUK/gateway-web/compare/v2.29.1...v2.30.0) (2026-01-28)
+
+### ✨ Features
+
+* **GAT-7892:** Add some horizontal padding (#1423) ([e7b239b](https://github.com/HDRUK/gateway-web/commit/e7b239b6f6beded159e7f2d8e54ffbce77ecd6d7)), closes [GAT-7892](GAT-7892)
+* **GAT-7893:** Created collapsible navigation for mobile (#1438) ([1b7972d](https://github.com/HDRUK/gateway-web/commit/1b7972d6fda943a05b05b44e47ac9135a09da5f9)), closes [GAT-7893](GAT-7893) [navigation](gation)
+* **GAT-7895:** Filter chips now have orange background when selected (#1441) ([b210ce9](https://github.com/HDRUK/gateway-web/commit/b210ce9f5c7ea77f10bf6295bca0292e3346eed0)), closes [GAT-7895](GAT-7895)
+* **GAT-8265:** Add publication landing page (#1431) ([05826bc](https://github.com/HDRUK/gateway-web/commit/05826bcd07c7dcdd8062b7538455adc1571f24f7)), closes [GAT-8265](GAT-8265)
+* **GAT-8265:** Tweak to publication page content (#1433) ([2abc19e](https://github.com/HDRUK/gateway-web/commit/2abc19ec63f77fbe2c87662f31ea932bcf60d532)), closes [GAT-8265](GAT-8265)
+* **GAT-8453:** Add dar modal header and footer (#1432) ([05925bf](https://github.com/HDRUK/gateway-web/commit/05925bfb0b1d36a1a6dd929f568b912b06ff8426)), closes [GAT-8453](GAT-8453)
+* **GAT-8456:** Add docker envs (#1435) ([21d21dd](https://github.com/HDRUK/gateway-web/commit/21d21ddae0d8880f6d23ec6a2a87d100b1718b60)), closes [GAT-8456](GAT-8456)
+* **GAT-8456:** Add widget support page (#1434) ([a705a70](https://github.com/HDRUK/gateway-web/commit/a705a70789a543414391fcc4b01ed2f05a40a7d1)), closes [GAT-8456](GAT-8456)
+* **GAT-8456:** Fix publication link for online publications (#1436) ([778829a](https://github.com/HDRUK/gateway-web/commit/778829a4e8a83d6792321b76963de9040978a504))
+* **GAT-8456:** widget link tweak (#1439) ([8b0e963](https://github.com/HDRUK/gateway-web/commit/8b0e963bed5691b05d603c0659a469880ac1138a)), closes [GAT-8456](GAT-8456)
+
+## [2.29.1](https://github.com/HDRUK/gateway-web/compare/v2.29.0...v2.29.1) (2026-01-26)
+
+### 🐛 Bug Fixes
+
+* **GAT-0000:** Add in logs to prod for widgets ([6d7356c](https://github.com/HDRUK/gateway-web/commit/6d7356c657c8b59b5b81b55ec530dafacf899953)), closes [GAT-0000](GAT-0000)
+* **GAT-0000:** Add in logs to prod for widgets (#1443) ([c3b16e0](https://github.com/HDRUK/gateway-web/commit/c3b16e09bf50962b3ba8708a27512d16ac1c6e53)), closes [GAT-0000](GAT-0000)
+
+## [2.29.0](https://github.com/HDRUK/gateway-web/compare/v2.28.1...v2.29.0) (2026-01-16)
+
+### ✨ Features
+
+* **GAT-7136:** DAR Document Application (#1411) ([c36a935](https://github.com/HDRUK/gateway-web/commit/c36a935f9926ef615ec3ed9711a2073056e5846b)), closes [GAT-7136](GAT-7136)
+* **GAT-7247:** Dar web/form initiation logic (#1413) ([91ed598](https://github.com/HDRUK/gateway-web/commit/91ed59812d38ffff53a7d76e763eb184b72205c2)), closes [GAT-7247](GAT-7247)
+* **GAT-8186:** Collapsable left nav (#1416) ([47bf604](https://github.com/HDRUK/gateway-web/commit/47bf6048e8249c7f26960c06f956b14f9a40fa89)), closes [GAT-8186](GAT-8186)
+* **GAT-8186:** Fix display of long team names in nav (#1424) ([1feb3a1](https://github.com/HDRUK/gateway-web/commit/1feb3a10118947144fe586febc997f58add5936f))
+* **GAT-8186:** Fix mobile nav (#1422) ([2efea93](https://github.com/HDRUK/gateway-web/commit/2efea9337ac6f840ace120865b90ac7912a6bbe9))
+* **GAT-8186:** Open left nav initially (#1425) ([6a3a269](https://github.com/HDRUK/gateway-web/commit/6a3a2696140ef5748a2172fe51b6647a5781d926)), closes [GAT-8186](GAT-8186)
+
+### 🐛 Bug Fixes
+
+* **GAT-0000:** package tweaks (#1412) ([756d14a](https://github.com/HDRUK/gateway-web/commit/756d14a93bf6efe0d53f93a406ebceec94fbb12a)), closes [GAT-0000](GAT-0000)
+* **GAT-5235:** Add sign in link to mobile nav (#1421) ([0774db0](https://github.com/HDRUK/gateway-web/commit/0774db097224d6c1d8ffad0f210fdbdccb00ec9f)), closes [GAT-5235](GAT-5235)
+* **GAT-5323:** Remove unused tooltips (#1420) ([d0ec03b](https://github.com/HDRUK/gateway-web/commit/d0ec03ba1f4c67bc51c78a5e08ba097999041623)), closes [GAT-5323](GAT-5323)
+* **GAT-5323:** Update tooltips (#1429) ([dbae8d3](https://github.com/HDRUK/gateway-web/commit/dbae8d37c62b587bcbd71295601bfc5a3a8809b1)), closes [GAT-5323](GAT-5323)
+* **GAT-7825:** Ensure html chars are decoded correctly (#1418) ([17a6aeb](https://github.com/HDRUK/gateway-web/commit/17a6aebd356bfcf91f3e5a6170df78a09e5e30d7)), closes [GAT-7825](GAT-7825)
+* **GAT-7839:** Escaping > in markdown (#1427) ([7da72fe](https://github.com/HDRUK/gateway-web/commit/7da72fe9927aca7dfcfb4f6f27587f74d1c7e0cc)), closes [GAT-7839](GAT-7839)
+* **GAT-8409:** Resolve issues around searching publications (#1414) ([c08ca26](https://github.com/HDRUK/gateway-web/commit/c08ca267cae3074a42ccb98427717d2c460ca9ad))
+
+## [2.28.1](https://github.com/HDRUK/gateway-web/compare/v2.28.0...v2.28.1) (2025-12-12)
+
+### 🐛 Bug Fixes
+
+* **GAT-0000:** Font weight tweak (#1409) ([83bb4fa](https://github.com/HDRUK/gateway-web/commit/83bb4fa36ed6740ec073df1cb019a356e4bf0b6f)), closes [GAT-0000](GAT-0000)
+
+## [2.28.0](https://github.com/HDRUK/gateway-web/compare/v2.27.2...v2.28.0) (2025-12-12)
+
+### ✨ Features
+
+* **GAT-8288:** Add accessibility page (#1406) ([ab23c64](https://github.com/HDRUK/gateway-web/commit/ab23c64b568278032db27fedfbd1dc69e3225d41)), closes [GAT-8288](GAT-8288)
+
+### 🐛 Bug Fixes
+
+* **GAT-0000:** DAR child question uploads [SUPP-1855] (#1402) ([4cece96](https://github.com/HDRUK/gateway-web/commit/4cece969af062837b68100d4f98cdf61246eaa02)), closes [GAT-0000](GAT-0000)
+* **GAT-0000:** Update widget embed code (#1404) ([9e399f8](https://github.com/HDRUK/gateway-web/commit/9e399f83b434b73967a4f671d5a0a4ffe8b7220b)), closes [GAT-0000](GAT-0000)
+* **GAT-8299:** Fix await in widget slug (#1401) ([d29deb8](https://github.com/HDRUK/gateway-web/commit/d29deb8f3d12cd947fed82de9c5f7af94cd47507))
+* **GAT-8315:** Update next version (#1407) ([7b0adfb](https://github.com/HDRUK/gateway-web/commit/7b0adfbee78140e118388a135f27a4bde129383e)), closes [GAT-8315](GAT-8315)
+
+## [2.27.2](https://github.com/HDRUK/gateway-web/compare/v2.27.1...v2.27.2) (2025-12-09)
+
+### 🐛 Bug Fixes
+
+* **GAT-0000:** Update widget embed code (#1404) ([f01a5cf](https://github.com/HDRUK/gateway-web/commit/f01a5cf73d5481060e5092d1d73f558ef98f0df8)), closes [GAT-0000](GAT-0000)
+
+## [2.27.1](https://github.com/HDRUK/gateway-web/compare/v2.27.0...v2.27.1) (2025-12-09)
+
+### 🐛 Bug Fixes
+
+* **GAT-8299:** Fix await in widget slug (#1401) ([94e3442](https://github.com/HDRUK/gateway-web/commit/94e34429ea8765ccf05a875406b55abdf0f6ad43))
+
+## [2.27.0](https://github.com/HDRUK/gateway-web/compare/v2.26.0...v2.27.0) (2025-12-05)
+
+### ✨ Features
+
+* **GAT-7721:** Revised Cohort Discovery user experience enhancements (#1375) ([6eff390](https://github.com/HDRUK/gateway-web/commit/6eff390ab16b8a0b5368dff7ad5d6fa5c82c17be)), closes [GAT-7721](GAT-7721)
+* **GAT-7826:** Update support centre links (#1376) ([2f38a7e](https://github.com/HDRUK/gateway-web/commit/2f38a7ec3e4984e12e6b0d441ab44e60c91ab12c)), closes [GAT-7826](GAT-7826)
+* **GAT-8031:** Widgets (#1364) ([faf73aa](https://github.com/HDRUK/gateway-web/commit/faf73aa8fe6af56d1d978c7d85f4f7b55a79d7b1)), closes [GAT-8031](GAT-8031)
+* **GAT-8198:** Data custodian networks speed (#1377) ([1d5b172](https://github.com/HDRUK/gateway-web/commit/1d5b1720f869656aa64a9b2f3425a66d29fd2741)), closes [GAT-8198](GAT-8198)
+* **GAT-8200:** Data custodian landing page load times (#1378) ([4cd7098](https://github.com/HDRUK/gateway-web/commit/4cd7098c83bfe77eca8bd73932e14f759750e5b2)), closes [GAT-8200](GAT-8200)
+
+### 🐛 Bug Fixes
+
+* **GAT-0000:** Correct widgets flag (#1384) ([1b43595](https://github.com/HDRUK/gateway-web/commit/1b4359523a44c99d19781cab5564dd25a0b854b2)), closes [GAT-0000](GAT-0000)
+* **GAT-0000:** Enable Widgets (#1385) ([ed2b457](https://github.com/HDRUK/gateway-web/commit/ed2b457bce41e57bf82d529baf7d3cc03477e98e)), closes [GAT-0000](GAT-0000)
+* **GAT-0000:** Ensure cache is cleared (#1395) ([afb542e](https://github.com/HDRUK/gateway-web/commit/afb542e979103990b568d25ed40bfc7686cc5dfc)), closes [GAT-0000](GAT-0000)
+* **GAT-0000:** fix gcloud up check (#1397) ([2ee3817](https://github.com/HDRUK/gateway-web/commit/2ee381792e993981a2d69780460ab8894546db7b))
+* **GAT-0000:** Fix next build issues (#1392) ([3f72a4e](https://github.com/HDRUK/gateway-web/commit/3f72a4e36c5d70b8d20d1655cacc3462ab825a84))
+* **GAT-0000:** Fix widget modal image path (#1387) ([1438fbc](https://github.com/HDRUK/gateway-web/commit/1438fbc9788a97c0c44878e03b5a1b4de204ebb6))
+* **GAT-0000:** Widget modal mui modal (#1393) ([14521eb](https://github.com/HDRUK/gateway-web/commit/14521eb66dee53b12eb2fb6fdd86b1864ef2c03f)), closes [GAT-0000](GAT-0000)
+* **GAT-0000:** widgets appearing server vs client (#1386) ([237aec5](https://github.com/HDRUK/gateway-web/commit/237aec57823dd2652409c9b8abacbf39d06535bb)), closes [GAT-0000](GAT-0000)
+* **GAT-1234:** Defensive checks for cohort response on dataset search page (#1380) ([8e9b9ba](https://github.com/HDRUK/gateway-web/commit/8e9b9ba3e0922429a6c5d9c5f0e5ca7fb38ee66c)), closes [GAT-1234](GAT-1234)
+* **GAT-7593:** Remove extra 0 being displayed (#1382) ([fd1e0bc](https://github.com/HDRUK/gateway-web/commit/fd1e0bca3b54a85ee31f7ef0f8de29d67b7b54a1)), closes [GAT-7593](GAT-7593)
+* **GAT-7677:** Data use responsive tweaks (#1390) ([be806ae](https://github.com/HDRUK/gateway-web/commit/be806ae7784e48b063bffa00bb964e2048cef601)), closes [GAT-7677](GAT-7677)
+* **GAT-7692:** Format filter text when too long (#1383) ([1f9b779](https://github.com/HDRUK/gateway-web/commit/1f9b7796bdf864f1b030a1014eac03cb61f3afae)), closes [GAT-7692](GAT-7692)
+* **GAT-8031:** Fix merge conflict error. (#1389) ([a0d40a0](https://github.com/HDRUK/gateway-web/commit/a0d40a0188256d83d059a307e3212825023797b4))
+* **GAT-8134:** Move file id to uuids (#1371) ([00debeb](https://github.com/HDRUK/gateway-web/commit/00debeb5a179ec3c63c58462531d11c332f0fcec)), closes [GAT-8134](GAT-8134)
+* **GAT-8221:** Tweak navigation events  (#1394) ([923a712](https://github.com/HDRUK/gateway-web/commit/923a712ad773151eb8e8fbff8cc8676ec052d8fa)), closes [GAT-8221](GAT-8221) [navigation](gation)
+* **GAT-8221:** Update package versions (#1379) ([2859129](https://github.com/HDRUK/gateway-web/commit/2859129554bb5c808f9831cb00e714a65be47818)), closes [GAT-8221](GAT-8221)
+* **GAT-8264:** Use next link for homepage info panel buttons (#1391) ([e6a52f0](https://github.com/HDRUK/gateway-web/commit/e6a52f0e4b1a07df9177beaa3baefbfb69e18249)), closes [GAT-8264](GAT-8264)
+
+## [2.26.0](https://github.com/HDRUK/gateway-web/compare/v2.25.0...v2.26.0) (2025-11-20)
+
+### ✨ Features
+
+* **GAT-7721:** Revised Cohort Discovery user experience enhancements (#1375) ([3466dff](https://github.com/HDRUK/gateway-web/commit/3466dff3fb76c0883681124e38d343501f4a1110)), closes [GAT-7721](GAT-7721)
+* **GAT-7826:** Update support centre links (#1376) ([ef4eb40](https://github.com/HDRUK/gateway-web/commit/ef4eb406d9f59ea6730b0baa79d4c547d137c50c)), closes [GAT-7826](GAT-7826)
+* **GAT-8079:** Only show CSAT survey on certain months (#1368) ([7baf4fb](https://github.com/HDRUK/gateway-web/commit/7baf4fb06d815306f9a825b5d93577977a104459)), closes [GAT-8079](GAT-8079)
+* **GAT-8105:** Use team payload to determine cohort support on Custodian landing pages (#1374) ([2f508fd](https://github.com/HDRUK/gateway-web/commit/2f508fdc28d7462ccf26a0f38e9dd00d1c281cc9)), closes [GAT-8105](GAT-8105)
+* **GAT-8198:** Data custodian networks speed (#1377) ([bce56a6](https://github.com/HDRUK/gateway-web/commit/bce56a629ccbb11a8ebf925ce19edeeca23cb3b3)), closes [GAT-8198](GAT-8198)
+* **GAT-8200:** Data custodian landing page load times (#1378) ([79ef5ee](https://github.com/HDRUK/gateway-web/commit/79ef5ee5cbae934af9a11657e89a3c36656f6341)), closes [GAT-8200](GAT-8200)
+
+### 🐛 Bug Fixes
+
+* **GAT-0000:** fixed users load (#1369) ([e25313b](https://github.com/HDRUK/gateway-web/commit/e25313b7121b8c67cd6d7daa3408a3b3b02a3eb5))
+* **GAT-0000:** User Roles Loading conflict (#1370) ([3f4876f](https://github.com/HDRUK/gateway-web/commit/3f4876faa6659e65ea2fb6eef585dcb3aab2e545)), closes [GAT-0000](GAT-0000)
+* **GAT-1234:** Defensive checks for cohort response on dataset search page (#1380) ([8292642](https://github.com/HDRUK/gateway-web/commit/82926425e5d10904884876b30268d93e3110c079)), closes [GAT-1234](GAT-1234)
+* **GAT-8025:** Limit resources in modal, fix collection POST (#1372) ([2f6fb0b](https://github.com/HDRUK/gateway-web/commit/2f6fb0bc6425c1cb5d2d0b9ab5c38831b3012d5c))
+
+## [2.25.0](https://github.com/HDRUK/gateway-web/compare/v2.24.0...v2.25.0) (2025-11-04)
+
+### ✨ Features
+
+* **GAT-7284:** Turn off array changes (#1361) ([ff7754f](https://github.com/HDRUK/gateway-web/commit/ff7754fbbe7073259382194b8ca70c48dc5e6141)), closes [GAT-7284](GAT-7284)
+
+### 🐛 Bug Fixes
+
+* **GAT-7911:** Dom parser error (#1363) ([59ca04b](https://github.com/HDRUK/gateway-web/commit/59ca04bee0d41c634eee026f7bd64198ec7bec53)), closes [GAT-7911](GAT-7911)
+* **GAT-8113:** Number.isNaN is strict, isNaN is less strict (#1360) ([825ac61](https://github.com/HDRUK/gateway-web/commit/825ac61f0661152d87e1206e2123e4758cc2cca0)), closes [GAT-8113](GAT-8113)
+* **GAT-8127:** Add check for scrambled email addresses.  (#1365) ([030167f](https://github.com/HDRUK/gateway-web/commit/030167f2e4e42731f37dec7bed9350c769ee499c)), closes [GAT-8127](GAT-8127)
+* **GAT-8127:** open-athens provider don't default (#1366) ([b4a42fc](https://github.com/HDRUK/gateway-web/commit/b4a42fc8946416c039ebfc64463e27d2430cd00d)), closes [GAT-8127](GAT-8127)
+
+## [2.24.0](https://github.com/HDRUK/gateway-web/compare/v2.23.0...v2.24.0) (2025-10-24)
+
+### ✨ Features
+
+* **GAT-7284:** Turn off array changes (#1361) ([4b4055e](https://github.com/HDRUK/gateway-web/commit/4b4055e4398e5c8584ccff72d1ffe738eef85c7d)), closes [GAT-7284](GAT-7284)
+
+## [2.23.0](https://github.com/HDRUK/gateway-web/compare/v2.22.2...v2.23.0) (2025-10-23)
+
+### ✨ Features
+
+* **GAT-7284:** DAR field arrays (#1356) ([0188ce7](https://github.com/HDRUK/gateway-web/commit/0188ce725b2fc3132f7b96731bcd5859821ef39b)), closes [GAT-7284](GAT-7284)
+* **GAT-7284:** Ensure at least one row of array fields are displayed (#1358) ([60cc91f](https://github.com/HDRUK/gateway-web/commit/60cc91f47ccf5ce61d20cdd221378e467ad0379f)), closes [GAT-7284](GAT-7284)
+
+### 🐛 Bug Fixes
+
+* **GAT-8073:** Cohort hand over (#1354) ([537a263](https://github.com/HDRUK/gateway-web/commit/537a263cf914533fa964d95846f4fee65baf1994)), closes [GAT-8073](GAT-8073)
+* **GAT-8073:** cohort handover (#1352) ([410e8ec](https://github.com/HDRUK/gateway-web/commit/410e8eccb86e0ddb78c4a44e55f378cdd9210aff)), closes [GAT-8073](GAT-8073)
+* **GAT-8073:** cohort handover (#1353) ([ace0983](https://github.com/HDRUK/gateway-web/commit/ace09834a911acb4412c01e67bd07f2fa2bcacf8)), closes [GAT-8073](GAT-8073)
+* **GAT-8082:** Don't call export on load (#1357) ([ae18965](https://github.com/HDRUK/gateway-web/commit/ae18965cc72b2350f066ff743cc0713cb8d99508)), closes [GAT-8082](GAT-8082)
+
 ## [2.22.2](https://github.com/HDRUK/gateway-web/compare/v2.22.1...v2.22.2) (2025-10-13)
 
 ### 🐛 Bug Fixes

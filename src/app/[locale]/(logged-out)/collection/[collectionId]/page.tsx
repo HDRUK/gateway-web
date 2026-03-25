@@ -1,9 +1,11 @@
 import { getTranslations } from "next-intl/server";
-import { cookies } from "next/headers";
+import Image from "next/image";
 import { notFound } from "next/navigation";
+import { SearchCategory } from "@/interfaces/Search";
 import Box from "@/components/Box";
 import DataUsesContent from "@/components/DataUsesContent";
 import HTMLContent from "@/components/HTMLContent";
+import HeaderActionBar from "@/components/HeaderActionBar";
 import LayoutDataItemPage from "@/components/LayoutDataItemPage";
 import { MarkDownSanitizedWithHtml } from "@/components/MarkDownSanitizedWithHTML";
 import PublicationsContent from "@/components/PublicationsContent";
@@ -11,12 +13,12 @@ import ToolsContent from "@/components/ToolsContent";
 import Typography from "@/components/Typography";
 import ActiveListSidebar from "@/modules/ActiveListSidebar";
 import { StaticImages } from "@/config/images";
-import { AspectRatioImage } from "@/config/theme";
 import { DataStatus } from "@/consts/application";
+import { AspectRatioImage } from "@/consts/image";
+import { RouteName } from "@/consts/routeName";
 import { getReducedCollection } from "@/utils/api";
 import metaData from "@/utils/metadata";
 import { toTitleCase } from "@/utils/string";
-import ActionBar from "./components/ActionBar";
 import DatasetsContent from "./components/DatasetsContent";
 import { collectionSections } from "./config";
 
@@ -30,12 +32,11 @@ const TRANSLATION_PATH = "pages.collection";
 export default async function CollectionItemPage({
     params,
 }: {
-    params: { collectionId: string };
+    params: Promise<{ collectionId: string }>;
 }) {
-    const { collectionId } = params;
-    const cookieStore = cookies();
+    const { collectionId } = await params;
     const t = await getTranslations(TRANSLATION_PATH);
-    const collection = await getReducedCollection(cookieStore, collectionId, {
+    const collection = await getReducedCollection(collectionId, {
         suppressError: true,
     });
 
@@ -62,27 +63,33 @@ export default async function CollectionItemPage({
             navigation={<ActiveListSidebar items={activeLinkList} />}
             body={
                 <>
-                    <Typography variant="h1" sx={{ ml: 2, mt: 2 }}>
+                    <Box>
+                        <HeaderActionBar
+                            backButtonText={t("backLabel")}
+                            backButtonHref={`/${RouteName.SEARCH}?type=${SearchCategory.COLLECTIONS}`}
+                            wrapperSx={{ p: 0, boxShadow: 0 }}
+                        />
+                    </Box>
+                <Box sx={{ ml: 2, mt: 2 }}>
+                    <Typography variant="h1" sx={{ }}>
                         <HTMLContent content={name} />
                     </Typography>
-                    <Box sx={{ display: "flex", alignItems: "center", pt: 0 }}>
-                        <AspectRatioImage
+                    <Box sx={{ display: "flex", alignItems: "center", pt: 0, justifyContent: "space-between", p: 0}}>
+                        <Box sx={{ mb: 1, p: 0 }}>
+                            <Typography variant="h3" sx={{ mb: 1 }}>
+                                {t("introTitle")}
+                            </Typography>
+                            <MarkDownSanitizedWithHtml content={description} />
+                        </Box>
+                        <Image
                             width={554}
                             height={250}
                             alt={toTitleCase(name)}
+                            style={AspectRatioImage}
                             src={image_link || StaticImages.BASE.placeholder}
                         />
                     </Box>
-
-                    <Box>
-                        <ActionBar />
-                    </Box>
-                    <Box sx={{ mb: 3 }}>
-                        <Typography variant="h3" sx={{ mb: 1 }}>
-                            {t("introTitle")}
-                        </Typography>
-                        <MarkDownSanitizedWithHtml content={description} />
-                    </Box>
+                </Box>
                     <Box>
                         <DatasetsContent
                             datasets={dataset_versions}

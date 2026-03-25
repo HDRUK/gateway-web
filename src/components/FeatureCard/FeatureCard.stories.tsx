@@ -1,5 +1,5 @@
 import AccountTreeIcon from "@mui/icons-material/AccountTree";
-import type { Meta, StoryObj } from "@storybook/react";
+import type { Meta, StoryObj } from "@storybook/nextjs";
 import FeatureCard from "./FeatureCard";
 import FeatureCardBody from "./FeatureCardBody";
 import FeatureCardHeading from "./FeatureCardHeading";
@@ -16,7 +16,7 @@ type Story = StoryObj<typeof FeatureCard>;
 
 const WrapperComponent = props => {
     return (
-        <FeatureCard {...props}>
+        <FeatureCard {...props} href="/">
             <FeatureCardHeading>Cohort Discovery</FeatureCardHeading>
             <FeatureCardBody>Cohort Discovery</FeatureCardBody>
         </FeatureCard>

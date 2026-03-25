@@ -47,7 +47,7 @@ const IntegrationHistoryTable = () => {
     const { lastPage, list } = data;
 
     const rows = list.map(x => (
-        <TableRow>
+        <TableRow key={x?.message}>
             <TableCell>
                 {x.run_time}
                 {!x.success && (

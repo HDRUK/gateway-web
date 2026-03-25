@@ -157,8 +157,7 @@ const TeamDatasets = ({ permissions, teamId }: TeamDatasetsProps) => {
     });
 
     useEffect(() => {
-        window.scrollTo({ top: 0 });
-        // eslint-disable-next-line react-hooks/exhaustive-deps
+        window.scrollTo({ top: 0 });         
     }, [queryParams.page]);
 
     const showArchiveButton =

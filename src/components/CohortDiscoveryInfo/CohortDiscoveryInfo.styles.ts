@@ -10,7 +10,4 @@ export const CohortDiscoveryTabContent = styled(Box)(() => ({
     overflowY: "auto",
     height: "620px",
     justifySelf: "center",
-    "&::-webkit-scrollbar": {
-        display: "none",
-    },
 }));

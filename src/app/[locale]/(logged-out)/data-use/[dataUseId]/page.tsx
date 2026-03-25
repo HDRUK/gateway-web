@@ -1,6 +1,5 @@
 import { get, isEmpty } from "lodash";
 import { getTranslations } from "next-intl/server";
-import { cookies } from "next/headers";
 import { notFound } from "next/navigation";
 import Box from "@/components/Box";
 import LayoutDataItemPage from "@/components/LayoutDataItemPage";
@@ -22,13 +21,12 @@ export const metadata = metaData({
 export default async function DataUseItemPage({
     params,
 }: {
-    params: { dataUseId: string };
+    params: Promise<{ dataUseId: string }>;
 }) {
     const t = await getTranslations(TRANSLATION_PATH);
 
-    const { dataUseId } = params;
-    const cookieStore = cookies();
-    const data = await getDataUse(cookieStore, dataUseId, {
+    const { dataUseId } = await params;
+    const data = await getDataUse(dataUseId, {
         suppressError: true,
     });
 
@@ -62,7 +60,8 @@ export default async function DataUseItemPage({
                         }}>
                         <Typography
                             variant="h2"
-                            sx={{ pt: 0.5, pb: 0.5, m: 0 }}>
+                            sx={{ pt: 0.5, pb: 0.5, m: 0 }}
+                            id="anchor1">
                             {data.project_title}
                         </Typography>
                         <DataUseContent

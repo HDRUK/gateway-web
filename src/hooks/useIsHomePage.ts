@@ -1,11 +1,16 @@
 "use client";
 
-import { useLocale } from "next-intl";
 import { usePathname } from "next/navigation";
 
-export function useIsHomePage(): boolean {
+export function useIsHomePage(isIframe?: boolean): boolean {
     const pathname = usePathname();
-    const locale = useLocale();
 
-    return pathname === `/${locale}`;
+    if (isIframe || !pathname) {
+        return false;
+    }
+
+    // Remove leading/trailing slashes and split into segments
+    const segments = pathname.split("/").filter(Boolean);
+
+    return segments.length === 1;
 }

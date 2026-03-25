@@ -1,5 +1,5 @@
 import { faker } from "@faker-js/faker";
-import type { Meta, StoryObj } from "@storybook/react";
+import type { Meta, StoryObj } from "@storybook/nextjs";
 import { ColumnDef, createColumnHelper } from "@tanstack/react-table";
 import Box from "@/components/Box";
 import TooltipIcon from "@/components/TooltipIcon";

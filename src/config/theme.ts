@@ -1,8 +1,7 @@
 "use client";
 
 import { ReactElement } from "react";
-import { createTheme, styled } from "@mui/material/styles";
-import Image from "next/image";
+import { createTheme } from "@mui/material/styles";
 import { sourceSans3 } from "./fonts";
 
 const buttonLinkStyle = {
@@ -12,13 +11,6 @@ const buttonLinkStyle = {
         backgroundColor: "transparent",
     },
 };
-
-export const AspectRatioImage = styled(Image)(() => ({
-    width: "auto",
-    maxHeight: "20vw",
-    maxWidth: "30vw",
-    height: "100%",
-}));
 
 export const DISABLED_OPACITY = 0.4;
 
@@ -61,6 +53,18 @@ declare module "@mui/material/styles" {
         greyCustom?: PaletteOptions["primary"];
         yellowCustom?: PaletteOptions["primary"];
     }
+
+    interface Theme {
+        customShadows: {
+            subtle: string;
+        };
+    }
+
+    interface ThemeOptions {
+        customShadows?: {
+            subtle?: string;
+        };
+    }
 }
 
 declare module "@mui/material/Button" {
@@ -78,6 +82,7 @@ declare module "@mui/material/Chip" {
     interface ChipPropsColorOverrides {
         warningCustom: true;
         alias: true;
+        greyCustom: true;
     }
 }
 
@@ -182,6 +187,8 @@ const palette = {
     },
 };
 
+const subtleShadow = "1px 1px 3px 0 rgba(0,0,0,.09)";
+
 const theme = createTheme({
     typography: {
         fontFamily: sourceSans3.style.fontFamily,
@@ -206,10 +213,11 @@ const theme = createTheme({
             styleOverrides: {
                 root: ({ theme }) => {
                     return {
-                        "&.Mui-focusVisible > .MuiSvgIcon-root": {
-                            outline: `2px solid ${theme.palette.primary.main}`,
-                            outlineOffset: 2,
+                        "&.Mui-focusVisible": {
+                            outline: `2px solid ${colors.orange}`,
                             borderRadius: "50%",
+                            outlineOffset: 0,
+                            background: colors.grey400,
                         },
                     };
                 },
@@ -340,6 +348,9 @@ const theme = createTheme({
                         "&:hover": {
                             background: palette.greyCustom.main,
                         },
+                        "&.Mui-focusVisible": {
+                            background: palette.greyCustom.main,
+                        },
                     },
                 },
                 {
@@ -386,8 +397,8 @@ const theme = createTheme({
                             : _theme.palette[ownerState.color || "primary"]
                                   ?.main,
                     "&.Mui-focusVisible:not(.MuiIconButton-root)": {
-                        outline: `2px solid ${_theme.palette.primary.main}`,
-                        outlineOffset: 2,
+                        outline: `2px solid ${colors.orange}`,
+                        borderWidth: 0,
                     },
                 }),
                 outlined: ({ ownerState, theme: _theme }) => {
@@ -519,7 +530,7 @@ const theme = createTheme({
             styleOverrides: {
                 paper: {
                     borderRadius: 0,
-                    boxShadow: "1px 1px 3px 0 rgba(0,0,0,.09)",
+                    boxShadow: subtleShadow,
                 },
             },
         },
@@ -568,7 +579,7 @@ const theme = createTheme({
             styleOverrides: {
                 root: {
                     borderRadius: 0,
-                    boxShadow: "1px 1px 3px 0px rgba(0, 0, 0, 0.09)",
+                    boxShadow: subtleShadow,
                 },
             },
         },
@@ -578,6 +589,15 @@ const theme = createTheme({
                     borderRadius: 0,
                     boxShadow: "none",
                 },
+            },
+        },
+        MuiCardContent: {
+            styleOverrides: {
+                root: ({ theme: _theme }) => ({
+                    "&:last-child": {
+                        paddingBottom: _theme.spacing(2),
+                    },
+                }),
             },
         },
         MuiDialogTitle: {
@@ -735,6 +755,7 @@ const theme = createTheme({
                     "& .MuiChip-deleteIcon": {
                         color: colors.black,
                     },
+                    padding: 2,
                 },
             },
             variants: [
@@ -742,6 +763,13 @@ const theme = createTheme({
                     props: { color: "success" },
                     style: {
                         background: colors.green400,
+                        color: colors.white,
+                    },
+                },
+                {
+                    props: { color: "secondary" },
+                    style: {
+                        color: colors.white,
                     },
                 },
                 {
@@ -757,8 +785,18 @@ const theme = createTheme({
                         color: palette.alias.contrastText,
                     },
                 },
+                {
+                    props: { color: "greyCustom" },
+                    style: {
+                        backgroundColor: colors.grey600,
+                        color: colors.white,
+                    },
+                },
             ],
         },
+    },
+    customShadows: {
+        subtle: subtleShadow,
     },
 });
 

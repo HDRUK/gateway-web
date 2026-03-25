@@ -21,7 +21,6 @@ const PermissionDescriptions = ({ roles }: PermissionDescriptionsProps) => {
         <ul css={styles.root}>
             {descriptions.map((description, index) => {
                 return (
-                    // eslint-disable-next-line react/no-array-index-key
                     <li key={index}>
                         <Typography>
                             <strong>{description.tooltipLabel}</strong>

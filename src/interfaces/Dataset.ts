@@ -214,8 +214,10 @@ interface Dataset {
 
 interface DataCustodianDataset {
     id: number;
+    is_cohort_discovery: boolean;
     populationSize: number;
-    title: string;
+    title?: string;
+    name?: string;
     datasetType: string;
 }
 

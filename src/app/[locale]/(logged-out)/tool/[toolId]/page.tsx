@@ -1,18 +1,19 @@
 import { get, isEmpty } from "lodash";
 import { getTranslations } from "next-intl/server";
-import { cookies } from "next/headers";
 import { notFound } from "next/navigation";
+import { SearchCategory } from "@/interfaces/Search";
 import Box from "@/components/Box";
 import CollectionsContent from "@/components/CollectionsContent";
 import DataUsesContent from "@/components/DataUsesContent";
+import HeaderActionBar from "@/components/HeaderActionBar";
 import LayoutDataItemPage from "@/components/LayoutDataItemPage";
 import PublicationsContent from "@/components/PublicationsContent";
 import Typography from "@/components/Typography";
 import ActiveListSidebar from "@/modules/ActiveListSidebar";
 import { DataStatus } from "@/consts/application";
+import { RouteName } from "@/consts/routeName";
 import { getReducedTool } from "@/utils/api";
 import metaData from "@/utils/metadata";
-import ActionBar from "./components/ActionBar";
 import DatasetsContent from "./components/DatasetsContent";
 import ToolContent from "./components/ToolContent";
 import { toolFields, accordions } from "./config";
@@ -25,13 +26,12 @@ export const metadata = metaData({
 export default async function ToolPage({
     params,
 }: {
-    params: { toolId: string };
+    params: Promise<{ toolId: string }>;
 }) {
     const t = await getTranslations(TRANSLATION_PATH);
 
-    const { toolId } = params;
-    const cookieStore = cookies();
-    const data = await getReducedTool(cookieStore, toolId, {
+    const { toolId } = await params;
+    const data = await getReducedTool(toolId, {
         suppressError: true,
     });
 
@@ -54,7 +54,10 @@ export default async function ToolPage({
             navigation={<ActiveListSidebar items={activeLinkList} />}
             body={
                 <>
-                    <ActionBar />
+                    <HeaderActionBar
+                        backButtonText={t("backLabel")}
+                        backButtonHref={`/${RouteName.SEARCH}?type=${SearchCategory.TOOLS}`}
+                    />
                     <Box sx={{ px: 3, py: 3 }}>
                         <Typography variant="h2" sx={{ pt: 0.5, pb: 0.5 }}>
                             {data.name}

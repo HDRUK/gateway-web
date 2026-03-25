@@ -1,36 +1,47 @@
-"use client";
-
+import { ReactElement } from "react";
 import { get } from "lodash";
-import { useTranslations } from "next-intl";
+import { getTranslations } from "next-intl/server";
 import { DataProvider } from "@/interfaces/DataProvider";
+import { FieldType } from "@/interfaces/FieldType";
 import Box from "@/components/Box";
 import BoxContainer from "@/components/BoxContainer";
 import DataCustodianLinks from "@/components/DataCustodianLinks";
 import Link from "@/components/Link";
 import { MarkDownSanitizedWithHtml } from "@/components/MarkDownSanitizedWithHTML";
 import Paper from "@/components/Paper";
-import ShowMore from "@/components/ShowMore";
 import TooltipIcon from "@/components/TooltipIcon";
 import Typography from "@/components/Typography";
+import apis from "@/config/apis";
 import { formatDate } from "@/utils/date";
-import {
-    DataCustodianField,
-    DataCustodianSection,
-    FieldType,
-} from "../../config";
+import { DataCustodianField, DataCustodianSection } from "../../config";
 
 const TRANSLATION_PATH = "pages.dataCustodian";
 const DATE_FORMAT = "DD/MM/YYYY";
 const TOOLTIP_SUFFIX = "Tooltip";
 
-const DataCustodianContent = ({
-    data,
+async function DataCustodianContent({
+    dataCustodianId,
     populatedSections,
 }: {
-    data: DataProvider;
+    dataCustodianId: number;
     populatedSections: DataCustodianSection[];
-}) => {
-    const t = useTranslations(TRANSLATION_PATH);
+}): Promise<ReactElement> {
+    const resp = await fetch(
+        `${apis.teamsV1UrlIP}/${dataCustodianId}/summary`,
+        {
+            next: {
+                revalidate: 180,
+                tags: ["all", `custodian_datasets-${dataCustodianId}`],
+            },
+            cache: "force-cache",
+        }
+    );
+    if (!resp.ok) {
+        throw new Error("Failed to fetch custodian data");
+    }
+    const { data } = await resp.json();
+
+    const t = await getTranslations(TRANSLATION_PATH);
 
     const getValue = (data: DataProvider, field: DataCustodianField) => {
         const value = get(data, field.path);
@@ -52,11 +63,7 @@ const DataCustodianContent = ({
             case FieldType.LINK:
                 return <Link href={val}>{val}</Link>;
             default:
-                return (
-                    <Typography component="span">
-                        <ShowMore maxHeight={18}>{val}</ShowMore>
-                    </Typography>
-                );
+                return <Typography component="span">{val}</Typography>;
         }
     };
 
@@ -178,6 +185,6 @@ const DataCustodianContent = ({
             </BoxContainer>
         )
     );
-};
+}
 
 export default DataCustodianContent;

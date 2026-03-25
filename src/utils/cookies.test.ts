@@ -1,4 +1,3 @@
-/* eslint-disable no-underscore-dangle */
 import Cookies from "js-cookie";
 import jwtDecode from "jwt-decode";
 import { getUserFromToken, setTemporaryCookie } from "@/utils/cookies";

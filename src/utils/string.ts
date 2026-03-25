@@ -9,9 +9,10 @@ const getLastSplitPart = (input: string, delimiter: string): string => {
     return parts[parts.length - 1];
 };
 
-const convertNumericalCharaterEntities = (value: string) =>
-    value.replace(/&#(\d+);/g, function (_, n) {
-        return String.fromCharCode(n);
-    });
+const getShortenedText = (text: string, characterLimit: number) => {
+    return text.length > characterLimit
+        ? `${text.slice(0, characterLimit)}...`
+        : text;
+};
 
-export { toTitleCase, getLastSplitPart, convertNumericalCharaterEntities };
+export { toTitleCase, getLastSplitPart, getShortenedText };

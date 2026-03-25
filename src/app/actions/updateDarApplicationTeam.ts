@@ -1,6 +1,8 @@
 "use server";
 
+import { updateTag } from "next/cache";
 import { DarTeamApplication } from "@/interfaces/DataAccessRequestApplication";
+import { CACHE_DAR_APPLICATION } from "@/consts/cache";
 import { updateDarApplicationTeam } from "@/utils/api";
 
 export const updateDarApplicationTeamAction = async (
@@ -14,6 +16,7 @@ export const updateDarApplicationTeamAction = async (
             teamId,
             payload
         );
+        updateTag(`${CACHE_DAR_APPLICATION}${applicationId}`);
         return res;
     } catch (e) {
         console.error(e);

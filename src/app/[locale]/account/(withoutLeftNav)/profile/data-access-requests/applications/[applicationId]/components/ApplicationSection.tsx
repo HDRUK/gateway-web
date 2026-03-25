@@ -32,7 +32,6 @@ import useDelete from "@/hooks/useDelete";
 import useDialog from "@/hooks/useDialog";
 import notificationService from "@/services/notification";
 import apis from "@/config/apis";
-import config from "@/config/config";
 import { inputComponents } from "@/config/forms";
 import {
     beforeYouBeginFormFields,
@@ -48,10 +47,10 @@ import {
     ARRAY_PREFIX,
     DarApplicationApprovalStatus,
     DarApplicationStatus,
+    DarTemplateType,
 } from "@/consts/dataAccess";
 import { ArrowBackIosNewIcon, HelpOutlineIcon } from "@/consts/icons";
 import { RouteName } from "@/consts/routeName";
-import { setTemporaryCookie } from "@/utils/cookies";
 import {
     createFileUploadConfig,
     formatDarAnswers,
@@ -68,6 +67,7 @@ import { updateDarApplicationAnswersAction } from "@/app/actions/updateDarApplic
 import { updateDarApplicationTeamAction } from "@/app/actions/updateDarApplicationTeam";
 import { updateDarApplicationUserAction } from "@/app/actions/updateDarApplicationUser";
 import notFound from "@/app/not-found";
+import { DarActionBar } from "./DarActionBar";
 import DarFieldArray from "./DarFieldArray";
 import DarFormBanner from "./DarFormBanner";
 import DarMessages from "./DarMessages";
@@ -253,12 +253,6 @@ const ApplicationSection = ({
             );
 
         if (formData) {
-            setTemporaryCookie(
-                config.DAR_UPDATE_SUPPRESS_COOKIE,
-                Date.now().toString(),
-                60
-            );
-
             const [resAnswers, resApplication] = await Promise.all([
                 updateDarApplicationAnswersAction(applicationId, userId, {
                     ...applicationData,
@@ -332,6 +326,36 @@ const ApplicationSection = ({
         ? parentSections.findIndex(section => section.id === sectionId)
         : 0;
 
+    const formatFileUploadFields = (component: string, questionId: number) => {
+        let fileUploadFields: FileUploadFields | undefined;
+
+        if (
+            component === inputComponents.FileUpload ||
+            component === inputComponents.FileUploadMultiple ||
+            component === inputComponents.DocumentExchange
+        ) {
+            const fileDownloadApiPath = isResearcher
+                ? `${apis.usersV1Url}/${userId}/dar/applications/${applicationId}/files`
+                : `${apis.teamsV1Url}/${teamId}/dar/applications/${applicationId}/files`;
+
+            fileUploadFields = createFileUploadConfig(
+                questionId.toString(),
+                component,
+                applicationId,
+                fileDownloadApiPath,
+                isResearcher,
+                setValue,
+                getValues,
+                teamApplication?.submission_status !==
+                    DarApplicationStatus.SUBMITTED
+                    ? removeUploadedFile
+                    : undefined
+            );
+
+            return fileUploadFields;
+        }
+    };
+
     const renderFormFields = () =>
         filteredData
             ?.filter(
@@ -344,34 +368,12 @@ const ApplicationSection = ({
                 if (field.is_child) return null;
 
                 let sectionHeader = null;
-                if (!processedSections.has(field.section_id)) {
+                if (
+                    !processedSections.has(field.section_id) &&
+                    data.application_type !== DarTemplateType.DOCUMENT
+                ) {
                     processedSections.add(field.section_id);
                     sectionHeader = renderSectionHeader(field);
-                }
-
-                let fileUploadFields: FileUploadFields | undefined;
-
-                if (
-                    field.component === inputComponents.FileUpload ||
-                    field.component === inputComponents.FileUploadMultiple
-                ) {
-                    const fileDownloadApiPath = isResearcher
-                        ? `${apis.usersV1Url}/${userId}/dar/applications/${applicationId}/files`
-                        : `${apis.teamsV1Url}/${teamId}/dar/applications/${applicationId}/files`;
-
-                    fileUploadFields = createFileUploadConfig(
-                        field.question_id.toString(),
-                        field.component,
-                        applicationId,
-                        fileDownloadApiPath,
-                        isResearcher,
-                        setValue,
-                        getValues,
-                        teamApplication?.submission_status !==
-                            DarApplicationStatus.SUBMITTED
-                            ? removeUploadedFile
-                            : undefined
-                    );
                 }
 
                 return (
@@ -418,8 +420,15 @@ const ApplicationSection = ({
                                         },
                                         control,
                                         field.question_id.toString(),
-                                        updateGuidanceText,
-                                        fileUploadFields
+                                        field.component !==
+                                            inputComponents.DocumentExchange &&
+                                            updateGuidanceText,
+                                        field.component &&
+                                            formatFileUploadFields(
+                                                field.component,
+                                                field.question_id
+                                            ),
+                                        field.document
                                     )}
                                 </Box>
                             </>
@@ -456,7 +465,12 @@ const ApplicationSection = ({
                                                     },
                                                     control,
                                                     child.question_id.toString(),
-                                                    updateGuidanceText
+                                                    updateGuidanceText,
+                                                    child.component &&
+                                                        formatFileUploadFields(
+                                                            child.component,
+                                                            child.question_id
+                                                        )
                                                 )}
                                             </Box>
                                         </Fragment>
@@ -566,10 +580,20 @@ const ApplicationSection = ({
                     sx={{
                         m: 2,
                         flex: 5,
-                        height: "65vh",
+                        minheight: "70vh",
                         display: "flex",
                         flexDirection: "column",
                     }}>
+                    <DarActionBar
+                        applicationId={applicationId}
+                        teamId={teamId}
+                        userId={userId}
+                        saveDraftOnClick={handleSaveAsDraft}
+                        submitOnClick={handleSubmit(handleSave)}
+                        isResearcher={isResearcher}
+                        manageApplicationOnStatus={handleManageApplication}
+                    />
+
                     {parentSections.find(section => section.id === sectionId)
                         ?.name !== messageSection.name && (
                         <>
@@ -577,10 +601,10 @@ const ApplicationSection = ({
                                 <Typography
                                     variant="h2"
                                     sx={{ p: 2, pl: 0, pb: 1 }}>
-                                    {sections[sectionId].name}
+                                    {sections[sectionId]?.name}
                                 </Typography>
                                 <Typography>
-                                    {sections[sectionId].description}
+                                    {sections[sectionId]?.description}
                                 </Typography>
                             </Box>
                             <Divider variant="fullWidth" />
@@ -593,6 +617,8 @@ const ApplicationSection = ({
                             p: 0,
                             overflowY: "auto",
                             flex: 1,
+                            minHeight: "30vh",
+                            paddingBottom: 1,
                         }}>
                         <Box
                             sx={{
@@ -664,49 +690,55 @@ const ApplicationSection = ({
 
                         {parentSections.find(
                             section => section.id === sectionId
-                        )?.name !== messageSection.name && (
-                            <Box sx={{ flex: 1, overflowY: "auto", p: 0 }}>
-                                <Box>
-                                    <Typography
-                                        variant="h3"
-                                        sx={{
-                                            display: "flex",
-                                            alignItems: "center",
-                                            justifyContent: "center",
-                                            m: 0,
-                                        }}>
-                                        <HelpOutlineIcon
-                                            sx={{
-                                                mr: 1,
-                                                color: colors.grey600,
-                                                fontSize: 16,
-                                            }}
-                                        />
-                                        {t("guidance")}
-                                    </Typography>
-                                </Box>
-                                <Divider variant="fullWidth" sx={{ mb: 4 }} />
-                                <Box
-                                    sx={{
-                                        pt: 0,
-                                        pb: 0,
-                                    }}>
-                                    {guidanceText ? (
-                                        <MarkDownSanitizedWithHtml
-                                            content={guidanceText}
-                                        />
-                                    ) : (
+                        )?.name !== messageSection.name &&
+                            data.application_type !==
+                                DarTemplateType.DOCUMENT && (
+                                <Box sx={{ flex: 1, overflowY: "auto", p: 0 }}>
+                                    <Box>
                                         <Typography
+                                            variant="h3"
                                             sx={{
-                                                color: theme.palette.grey[500],
-                                                textAlign: "center",
+                                                display: "flex",
+                                                alignItems: "center",
+                                                justifyContent: "center",
+                                                m: 0,
                                             }}>
-                                            {t("defaultGuidance")}
+                                            <HelpOutlineIcon
+                                                sx={{
+                                                    mr: 1,
+                                                    color: colors.grey600,
+                                                    fontSize: 16,
+                                                }}
+                                            />
+                                            {t("guidance")}
                                         </Typography>
-                                    )}
+                                    </Box>
+                                    <Divider
+                                        variant="fullWidth"
+                                        sx={{ mb: 4 }}
+                                    />
+                                    <Box
+                                        sx={{
+                                            pt: 0,
+                                            pb: 0,
+                                        }}>
+                                        {guidanceText ? (
+                                            <MarkDownSanitizedWithHtml
+                                                content={guidanceText}
+                                            />
+                                        ) : (
+                                            <Typography
+                                                sx={{
+                                                    color: theme.palette
+                                                        .grey[500],
+                                                    textAlign: "center",
+                                                }}>
+                                                {t("defaultGuidance")}
+                                            </Typography>
+                                        )}
+                                    </Box>
                                 </Box>
-                            </Box>
-                        )}
+                            )}
                     </Box>
                 </Paper>
             </Box>

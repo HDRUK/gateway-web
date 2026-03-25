@@ -2,7 +2,6 @@ export function getSubtypeOptionsFromSchema(
     schema: Record<string, unknown>,
     selectedLabel: string
 ): string[] {
-    // eslint-disable-next-line
     const matchedEntry = Object.entries(schema).find(([_, value]) => {
         return value?.properties?.name?.default === selectedLabel;
     });

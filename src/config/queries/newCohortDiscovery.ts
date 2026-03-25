@@ -7,11 +7,6 @@ query GetNewCohortDiscoveryQuery {
         __typename
         ... on CohortDiscoveryTemplate {
           newCohortDiscoveryFieldGroup { 
-            ctaLink {
-              target
-              url
-              title
-            }
             firstPageText
             firstPageMedia
             secondPageText

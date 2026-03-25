@@ -38,6 +38,7 @@ const Publications = ({ data }: PublicationsProps) => {
                 }}>
                 {publicationAboutThisDataset.map(pub => (
                     <Card
+                        key={pub.id}
                         variant="outlined"
                         sx={{ p: 1, borderRadius: 2, display: "grid" }}>
                         <Link

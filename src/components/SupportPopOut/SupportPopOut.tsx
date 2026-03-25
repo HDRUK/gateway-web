@@ -7,7 +7,6 @@ import { usePathname } from "next/navigation";
 import Button from "@/components/Button";
 import Link from "@/components/Link";
 import {
-    CUSTOMER_PORTAL_RAISE_SUPPORT_URL,
     CUSTOMER_PORTAL_REPORT_BUG_URL,
     CUSTOMER_PORTAL_SUPPORT_URL,
 } from "@/config/hrefs";
@@ -37,7 +36,7 @@ const SupportPopOut = () => {
 
     useEffect(() => {
         handleClose();
-        // eslint-disable-next-line react-hooks/exhaustive-deps
+         
     }, [pathname]);
 
     const links = [
@@ -54,11 +53,6 @@ const SupportPopOut = () => {
         {
             label: t("reportBug"),
             href: CUSTOMER_PORTAL_REPORT_BUG_URL,
-            isExternal: true,
-        },
-        {
-            label: t("requestSupport"),
-            href: CUSTOMER_PORTAL_RAISE_SUPPORT_URL,
             isExternal: true,
         },
     ];

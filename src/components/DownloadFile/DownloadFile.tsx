@@ -12,18 +12,18 @@ export interface DownloadFileProps {
 }
 
 const DownloadFile = ({ apiPath, buttonText, buttonSx }: DownloadFileProps) => {
-    const [isFetched, setIsFetched] = useState(false);
+    const [triggerFetch, setTriggerFetch] = useState(false);
     const download = useGet<FileExport>(apiPath, {
-        shouldFetch: !isFetched,
+        shouldFetch: triggerFetch,
     });
-
-    const handleDownload = () => {
-        download.mutate().then(data => {
-            downloadFile(data);
-            setIsFetched(true);
-        });
+    const handleDownload = async () => {
+        setTriggerFetch(true);
     };
 
+    if (triggerFetch && download.data) {
+        downloadFile(download.data);
+        setTriggerFetch(false);
+    }
     return (
         <DownloadButton onClick={handleDownload} sx={buttonSx}>
             {buttonText}

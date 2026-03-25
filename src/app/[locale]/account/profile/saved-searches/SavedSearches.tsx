@@ -106,7 +106,7 @@ const SavedSearches = () => {
                     {!list?.length && (
                         <Box sx={{ pb: 2 }}>{t("noResults")}</Box>
                     )}
-                    {savedSearchesData?.total && (
+                    {!!savedSearchesData?.total && (
                         <ShowingXofX
                             to={savedSearchesData?.to}
                             from={savedSearchesData?.from}
@@ -232,15 +232,17 @@ const SavedSearches = () => {
                 </List>
             </Box>
 
-            <Pagination
-                isLoading={isLoading}
-                page={currentPage}
-                count={lastPage}
-                onChange={(e: React.ChangeEvent<unknown>, page: number) =>
-                    setCurrentPage(page)
-                }
-                sx={{ mt: 2, mb: 2 }}
-            />
+            {!!savedSearchesData?.total && (
+                <Pagination
+                    isLoading={isLoading}
+                    page={currentPage}
+                    count={lastPage}
+                    onChange={(e: React.ChangeEvent<unknown>, page: number) =>
+                        setCurrentPage(page)
+                    }
+                    sx={{ mt: 2, mb: 2 }}
+                />
+            )}
         </Paper>
     );
 };

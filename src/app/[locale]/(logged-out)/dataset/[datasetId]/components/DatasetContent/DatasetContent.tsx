@@ -5,6 +5,7 @@ import { get, isArray } from "lodash";
 import { useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
 import { VersionItem } from "@/interfaces/Dataset";
+import { FieldType } from "@/interfaces/FieldType";
 import { SearchCategory } from "@/interfaces/Search";
 import Box from "@/components/Box";
 import BoxContainer from "@/components/BoxContainer";
@@ -25,7 +26,6 @@ import { decodeHtmlEntity } from "@/utils/general";
 import {
     DatasetSection,
     DatasetType,
-    FieldType,
     Observation,
     observationTableColumns,
 } from "../../config";
@@ -41,6 +41,7 @@ const OBSERVATION_DATE = "observationDate";
 const TRANSLATION_PATH = "common";
 const DOI_URL = "https://doi.org/";
 const DOI_NAME_PATH = "metadata.metadata.summary.doiName";
+const FOLLOWUP_PATH = "metadata.metadata.coverage.followUp";
 
 const columnHelper = createColumnHelper<Observation>();
 
@@ -101,7 +102,7 @@ const DatasetContent = ({
                     <Typography>{formatDate(value, DATE_FORMAT)}</Typography>
                 );
             }
-            case FieldType.TAG_LIST: {
+            case FieldType.LIST_TAG: {
                 let tagList: string[] | string = value;
 
                 if (typeof tagList === "string") {
@@ -113,6 +114,7 @@ const DatasetContent = ({
                     <DatasetFieldWrapper>
                         {tagList.map(tag => (
                             <DatasetButtonItem
+                                key={tag}
                                 color="success"
                                 size="small"
                                 onClick={() =>
@@ -128,7 +130,7 @@ const DatasetContent = ({
                     </DatasetFieldWrapper>
                 );
             }
-            case FieldType.LIST: {
+            case FieldType.LIST_TEXT: {
                 const list = isArray(value)
                     ? value
                     : Array.from(new Set(splitStringList(value)));
@@ -138,7 +140,7 @@ const DatasetContent = ({
                     formatTextWithLinks(item),
                 ]);
             }
-            case FieldType.LINK_LIST: {
+            case FieldType.LIST_LINK: {
                 const list = isArray(value)
                     ? value
                     : Array.from(new Set(splitStringList(value)));
@@ -146,7 +148,10 @@ const DatasetContent = ({
                 return (
                     <ListContainer>
                         {list.map(item => (
-                            <Link href={item} target="_blank">
+                            <Link
+                                key={item.toString()}
+                                href={item}
+                                target="_blank">
                                 {item}
                             </Link>
                         ))}
@@ -154,7 +159,7 @@ const DatasetContent = ({
                 );
             }
 
-            case FieldType.DATASETTYPE_LIST: {
+            case FieldType.LIST_DATASETTYPE: {
                 return value.map((item, i) => [i > 0 && ", ", item.name]);
             }
 
@@ -274,6 +279,14 @@ const DatasetContent = ({
 
                                     if (field.path === DOI_NAME_PATH) {
                                         value = DOI_URL.concat(value);
+                                    }
+
+                                    // Follow up can contain '>' which markdown will try to render as a blockquotes
+                                    // backticks escape it
+                                    if (field.path === FOLLOWUP_PATH) {
+                                        value = value
+                                            .toString()
+                                            .replace(/>/g, "`>`");
                                     }
 
                                     if (!field.label) {

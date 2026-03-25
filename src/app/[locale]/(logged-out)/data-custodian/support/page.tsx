@@ -5,8 +5,10 @@ export const metadata = metaData({
     title: "Support - Data Custodians",
     description: "",
 });
+const { NEXT_PUBLIC_CONFLUENCE_URL } = process.env;
+
 const SupportCenterPage = () => {
-    return <SupportCentreLinks />;
+    return <SupportCentreLinks confluenceUrl={NEXT_PUBLIC_CONFLUENCE_URL} />;
 };
 
 export default SupportCenterPage;

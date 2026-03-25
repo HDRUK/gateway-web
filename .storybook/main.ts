@@ -1,4 +1,12 @@
+// This file has been automatically migrated to valid ESM format by Storybook.
 import type { StorybookConfig } from "@storybook/nextjs";
+import { createRequire } from "node:module";
+import { dirname } from "node:path";
+import { fileURLToPath } from "node:url";
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
+const require = createRequire(import.meta.url);
 
 const path = require("path");
 
@@ -7,9 +15,11 @@ const config: StorybookConfig = {
     stories: ["../src/**/*.mdx", "../src/**/*.stories.@(js|jsx|mjs|ts|tsx)"],
     addons: [
         "@storybook/addon-links",
-        "@storybook/addon-essentials",
-        "@storybook/addon-interactions",
+        "@storybook/addon-docs",
+        "@storybook/addon-themes",
+        "@storybook/nextjs",
     ],
+
     babel: async () => {
         return {
             presets: [
@@ -17,14 +27,14 @@ const config: StorybookConfig = {
             ],
         };
     },
+
     framework: {
         name: "@storybook/nextjs",
         options: {},
     },
+
     features: {},
-    docs: {
-        autodocs: "tag",
-    },
+
     typescript: {
         check: false,
         checkOptions: {},
@@ -38,6 +48,11 @@ const config: StorybookConfig = {
                     : true,
         },
     },
+
+    core: {
+        disableTelemetry: true,
+    },
+
     webpackFinal: async config => {
         if (config.resolve) {
             config.resolve.modules = [

@@ -22,11 +22,8 @@ export interface GlobalActionBarContextProps {
 }
 
 const initalState: GlobalActionBarContextProps = {
-    // eslint-disable-next-line @typescript-eslint/no-empty-function
     updateStoreProps: () => {},
-    // eslint-disable-next-line @typescript-eslint/no-empty-function
     showBar: () => {},
-    // eslint-disable-next-line @typescript-eslint/no-empty-function
     hideBar: () => {},
     store: {
         name: "",

@@ -13,6 +13,8 @@ type ComponentTypes =
     | "DatePicker"
     | "Wysiwyg"
     | "FileUpload"
-    | "FileUploadMultiple";
+    | "FileUploadMultiple"
+    | "DocumentExchange"
+    | "HexColourField";
 
 export type { ComponentTypes };
