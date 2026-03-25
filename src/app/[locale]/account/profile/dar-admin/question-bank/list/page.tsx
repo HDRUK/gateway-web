@@ -10,7 +10,7 @@ export default async function QuestionBankListPage() {
     return (
         <ProtectedAccountRoute
             permissions={permissions}
-            pagePermissions={["dar-config.update"]}>
+            pagePermissions={["question-bank.update"]}>
             <QuestionBankList />
         </ProtectedAccountRoute>
     );
