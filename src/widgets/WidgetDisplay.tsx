@@ -20,6 +20,7 @@ import Header from "./components/Header";
 import ScriptsList from "./components/ScriptsList";
 import { CATEGORIES } from "./consts";
 import useResultsByType from "./hooks/useResultsByType";
+import CohortDiscoveryButton from "@/components/CohortDiscoveryButton";
 
 const TRANSLATIONS = {
     footerTtle: "Want to dig deeper?",
@@ -124,17 +125,10 @@ export default function WidgetDisplay({
                             </Typography>
                             {TRANSLATIONS.footerDesc}
                         </Typography>
-                        <Button
-                            href={`${FULL_GATEWAY_URL}/about/cohort-discovery`}
-                            target="_blank"
-                            sx={{
-                                backgroundColor: colors.white,
-                                flexShrink: 0,
-                            }}
-                            color="greyCustom"
-                            disableElevation>
-                            {TRANSLATIONS.cohortButton}
-                        </Button>
+                    <CohortDiscoveryButton
+                        color="white"
+                        showDatasetExplanatoryTooltip
+                    />
                     </Box>
                 )}
             </Box>
