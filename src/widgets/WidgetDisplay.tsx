@@ -11,6 +11,7 @@ import {
     ScriptItem,
     DataUseItem,
 } from "@/interfaces/Widget";
+import CohortDiscoveryButton from "@/components/CohortDiscoveryButton";
 import theme, { colors } from "@/config/theme";
 import { FULL_GATEWAY_URL } from "@/consts/urls";
 import CategoryMenu from "./components/CategoryMenu";
@@ -21,7 +22,6 @@ import Header from "./components/Header";
 import ScriptsList from "./components/ScriptsList";
 import { CATEGORIES } from "./consts";
 import useResultsByType from "./hooks/useResultsByType";
-import CohortDiscoveryButton from "@/components/CohortDiscoveryButton";
 
 const TRANSLATIONS = {
     footerTtle: "Want to dig deeper?",
@@ -139,9 +139,9 @@ export default function WidgetDisplay({
                             </Typography>
                             {TRANSLATIONS.footerDesc}
                         </Typography>
-                    <CohortDiscoveryButton
-                        showDatasetExplanatoryTooltip
-                    />
+                        <CohortDiscoveryButton
+                            showDatasetExplanatoryTooltip
+                        />
                     </Box>
                 )}
             </Box>
