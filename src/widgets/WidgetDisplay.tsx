@@ -140,7 +140,6 @@ export default function WidgetDisplay({
                             {TRANSLATIONS.footerDesc}
                         </Typography>
                     <CohortDiscoveryButton
-                        color="white"
                         showDatasetExplanatoryTooltip
                     />
                     </Box>
