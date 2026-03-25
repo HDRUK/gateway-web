@@ -44,7 +44,11 @@ const FeaturedMetric = ({ selectedButton }: FeatureMetricProps) => {
         ? STAT_ID_ORDER.indexOf(selectedButton)
         : -1;
 
-    const displayIndex = selectedIndex !== -1 ? selectedIndex : currentIndex;
+    useEffect(() => {
+        if (selectedIndex !== -1) {
+            setCurrentIndex(selectedIndex);
+        }
+    }, [selectedButton, selectedIndex]);
 
     const stats = useMemo(() => {
         return [
@@ -132,6 +136,7 @@ const FeaturedMetric = ({ selectedButton }: FeatureMetricProps) => {
                 background:
                     "linear-gradient(90deg, rgba(255, 255, 255, 0.10) 0%, rgba(255, 255, 255, 0.00) 100%)",
                 justifyContent: "space-between",
+                opacity: selectedIndex === -1 && selectedButton ? 0 : 100,
             }}>
             <Box sx={{ p: 0, display: "flex", gap: 1, alignItems: "center" }}>
                 <ArrowUpwardIcon fontSize="large" />
@@ -145,7 +150,7 @@ const FeaturedMetric = ({ selectedButton }: FeatureMetricProps) => {
                             fontSize: "1.25rem",
                         },
                     }}>
-                    {stats[displayIndex]}
+                    {stats[currentIndex]}
                 </Typography>
             </Box>
             <Link
