@@ -159,8 +159,10 @@ const ApplicationSection = ({
     const updateGuidanceText = (fieldName: string) => {
         setSelectedField(fieldName);
 
+        const baseName = fieldName.split(".").pop() ?? fieldName;
+
         const guidance = [...questions, ...beforeYouBeginFormFields]?.find(
-            question => question.title === fieldName
+            question => question.title === baseName
         )?.guidance;
 
         if (!guidance) {
@@ -223,25 +225,25 @@ const ApplicationSection = ({
         const answers = Object.entries(formData ?? getValues())
             .flatMap(([key, val]) => {
                 if (key.includes(ARRAY_PREFIX) && Array.isArray(val)) {
-                    const cols = (val as Array<Record<string, string>>).reduce<
-                        Record<string, string[]>
-                    >((acc, row) => {
-                        Object.entries(row || {}).forEach(([qid, v]) => {
-                            const s = String(v ?? "").trim();
-                            if (!s) return;
-                            (acc[qid] ||= []).push(s);
-                        });
-                        return acc;
-                    }, {});
-
-                    // emit one entry per question_id with JSON array as the answer
-                    return Object.entries(cols).map(([qid, arr]) => [qid, arr]);
+                    return (val as Array<Record<string, string>>).flatMap(
+                        (row, answer_index) =>
+                            Object.entries(row || {})
+                                .filter(([, v]) => String(v ?? "").trim())
+                                .map(([qid, answer]) => ({
+                                    question_id: qid,
+                                    answer,
+                                    answer_index,
+                                }))
+                    );
                 }
 
-                // pass normal fields
-                return [[key, val]];
+                return [
+                    {
+                        question_id: key,
+                        answer: val,
+                    },
+                ];
             })
-            .map(([question_id, answer]) => ({ question_id, answer }))
             .filter(
                 a =>
                     !isEmpty(a.answer) &&
@@ -427,8 +429,8 @@ const ApplicationSection = ({
                                             formatFileUploadFields(
                                                 field.component,
                                                 field.question_id
-                                            ),
-                                        field.document
+                                            )
+                                        // field.document
                                     )}
                                 </Box>
                             </>

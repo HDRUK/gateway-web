@@ -172,44 +172,37 @@ const formatDarAnswers = (
             .map(a => [a.question_id, a.answer])
     );
 
-    // Group array answers by array name: name -> { qid: string[] }
-    const arrayColumnsByName = new Map<string, Map<string, string[]>>();
+    // Group array answers by array name then by answers_index => rows
+    const arrayRowsByName: RowsByArrayName = {};
 
     userAnswers.forEach(a => {
-        const arrayName = childQuestionToArrayName.get(a.question_id);
+        const arrayName = childQuestionToArrayName.get(String(a.question_id));
         if (!arrayName) return;
 
-        const values = Array.isArray(a.answer)
-            ? a.answer.map(v => String(v ?? ""))
-            : [String(a.answer ?? "")];
+        const rowIndex = a.answer_index ?? 0;
 
-        const cols =
-            arrayColumnsByName.get(arrayName) ?? new Map<string, string[]>();
+        if (!arrayRowsByName[arrayName]) {
+            arrayRowsByName[arrayName] = [];
+        }
 
-        const col = cols.get(a.question_id) ?? [];
-        cols.set(a.question_id, col.concat(values));
-        arrayColumnsByName.set(arrayName, cols);
+        if (!arrayRowsByName[arrayName][rowIndex]) {
+            arrayRowsByName[arrayName][rowIndex] = {};
+        }
+
+        arrayRowsByName[arrayName][rowIndex][String(a.question_id)] = String(
+            a.answer ?? ""
+        );
     });
 
-    // Format columns -> rows per array name
-    const arrayRowsByName: RowsByArrayName = Object.fromEntries(
-        [...arrayColumnsByName].map(([arrayName, cols]) => {
-            const childIds = [...cols.keys()];
-            const len = Math.max(0, ...[...cols.values()].map(a => a.length));
-
-            const rows = Array.from({ length: len }, (_, i) =>
-                Object.fromEntries(
-                    childIds.map(qid => [qid, (cols.get(qid) ?? [])[i] ?? ""])
-                )
-            ).filter(r => Object.values(r).some(v => String(v).trim()));
-
-            return [arrayName, rows];
-        })
-    );
+    Object.keys(arrayRowsByName).forEach(arrayName => {
+        arrayRowsByName[arrayName] = arrayRowsByName[arrayName].filter(
+            row => row && Object.values(row).some(v => String(v ?? "").trim())
+        );
+    });
 
     // Add a single blank row to arrays with no answers
     childIdsByArrayName.forEach((idSet, arrayName) => {
-        if (!(arrayName in arrayRowsByName)) {
+        if (!arrayRowsByName[arrayName]?.length) {
             const ids = [...idSet];
             arrayRowsByName[arrayName] = [
                 Object.fromEntries(ids.map(id => [id, undefined])),

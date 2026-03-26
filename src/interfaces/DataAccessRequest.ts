@@ -1,9 +1,6 @@
 import { FormHydration, FormHydrationField } from "@/interfaces/FormHydration";
-import {
-    DarApplicationApprovalStatus,
-    DarApplicationStatus,
-} from "@/consts/dataAccess";
 import { ComponentTypes } from "./ComponentTypes";
+import { DarTeamApplication } from "./DataAccessRequestApplication";
 import { UploadedFileMetadata } from "./FileUpload";
 
 interface DarQuestion {
@@ -77,6 +74,7 @@ interface DarApplicationAnswer {
     question_id: number;
     contributor_id: number;
     answer: string | string[];
+    answer_index?: number;
 }
 
 interface DarTemplateCountResponse {
@@ -90,16 +88,7 @@ interface DarApplication {
     project_title: string;
     applicant_id: number;
     submission_date: string;
-    teams: {
-        approval_status: DarApplicationApprovalStatus;
-        created_at: string;
-        dar_application_id: number;
-        id: number;
-        review_id: number;
-        submission_status: DarApplicationStatus;
-        team_id: number;
-        updated_at: string;
-    }[];
+    teams: DarTeamApplication[];
     application_type: "FORM" | "DOCUMENT";
 }
 

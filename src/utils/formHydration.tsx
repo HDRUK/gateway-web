@@ -274,7 +274,8 @@ const renderFormHydrationField = (
     control: Control<FormValues>,
     nameOverride?: string,
     setActiveField?: (fieldName: string) => void,
-    fileUploadFields?: FileUploadFields
+    fileUploadFields?: FileUploadFields,
+    keyOverride?: string
 ) => {
     const componentType = inputComponents[component as ComponentTypes];
     const { options } = rest;
@@ -286,7 +287,7 @@ const renderFormHydrationField = (
     return (
         <InputWrapper
             name={nameOverride || name}
-            key={nameOverride || name}
+            key={keyOverride || nameOverride || name}
             placeholder={placeholder || ""}
             component={componentType}
             required={required}

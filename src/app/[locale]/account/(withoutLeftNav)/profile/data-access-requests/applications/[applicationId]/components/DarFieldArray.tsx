@@ -124,7 +124,8 @@ const DarFieldArray = ({
                                     m: 0,
                                     py: 0,
                                     backgroundColor:
-                                        arrayField.name === selectedField
+                                        `${arrayName}.${fieldIndex}.${arrayField.name}` ===
+                                        selectedField
                                             ? theme.palette.grey[100]
                                             : "inherit",
                                 }}>
@@ -133,7 +134,12 @@ const DarFieldArray = ({
                                     { ...arrayField, disabled: isViewOnly },
                                     control,
                                     `${arrayName}.${fieldIndex}.${arrayField.question_id}`,
-                                    () => setSelectedField(arrayField.name)
+                                    () =>
+                                        setSelectedField(
+                                            `${arrayName}.${fieldIndex}.${arrayField.name}`
+                                        ),
+                                    undefined,
+                                    `${field.id}-${arrayField.question_id}`
                                 )}
 
                                 {/* Render optional fields dependant on selected value */}
@@ -159,8 +165,10 @@ const DarFieldArray = ({
                                                         `${arrayName}.${fieldIndex}.${child.question_id}`,
                                                         () =>
                                                             setSelectedField(
-                                                                child.name
-                                                            )
+                                                                `${arrayName}.${fieldIndex}.${child.name}`
+                                                            ),
+                                                        undefined,
+                                                        `${field.id}-${child.question_id}`
                                                     )}
                                                 </Box>
                                             ) : null
