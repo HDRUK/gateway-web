@@ -15,7 +15,7 @@ import { revalidateCacheAction } from "@/app/actions/revalidateCacheAction";
 
 const ENTITY_TYPE_DAR_APPLICATION = "dar-application-upload";
 
-const mapKeysToValues = (keys: string[], valuesArray: (string | undefined)[]) =>
+const mapKeysToValues = (keys: string[], valuesArray: unknown[]) =>
     Object.fromEntries(keys.map((key, index) => [key, valuesArray[index]]));
 
 type Row = Record<string, string | undefined>;
@@ -36,8 +36,9 @@ const getVisibleQuestionIds = (
                 field.component === "ArrayField" &&
                 Array.isArray(parentValues[field.name])
             ) {
-                const rows: DarApplicationResponses[] =
-                    parentValues[field.name];
+                const rows = parentValues[
+                    field.name
+                ] as unknown as DarApplicationResponses[];
                 const inner = field.fields ?? [];
                 return inner.flatMap(innerField => {
                     // base IDs per row (count rows even if values are undefined)
@@ -47,10 +48,16 @@ const getVisibleQuestionIds = (
 
                     // Children per row (only when selected)
                     const child = rows.flatMap((row, i) => {
-                        const sel = row?.[innerField.question_id];
+                        const sel = row?.[innerField.question_id] as
+                            | string
+                            | undefined;
                         const children =
                             innerField.options
-                                ?.filter(opt => isSelected(sel, opt.label))
+                                ?.filter(
+                                    opt =>
+                                        sel !== null &&
+                                        isSelected(sel, opt.label)
+                                )
                                 .flatMap(opt => opt.children ?? []) ?? [];
 
                         return children.map(
@@ -213,19 +220,34 @@ const formatDarAnswers = (
     return { ...nonArrayValues, ...arrayRowsByName };
 };
 
+const DAR_FILE_UPLOAD_COMPONENTS = [
+    inputComponents.FileUpload,
+    inputComponents.FileUploadMultiple,
+    inputComponents.DocumentExchange,
+] as const;
+
+const isDarFileUploadComponent = (component: string) =>
+    (DAR_FILE_UPLOAD_COMPONENTS as readonly string[]).includes(component);
+
 const createFileUploadConfig = (
-    questionId: string,
+    formPath: string,
     component: ComponentTypes,
     applicationId: string,
     fileDownloadApiPath: string | undefined,
     isResearcher: boolean,
     setValue: UseFormSetValue<DarApplicationResponses>,
     getValues: UseFormGetValues<DarApplicationResponses>,
-    removeUploadedFile?: (id: number | string) => Promise<unknown>
+    removeUploadedFile?: (id: number | string) => Promise<unknown>,
+    apiQuestionId?: string
 ): FileUploadFields => {
+    console.log("QUESTION ID -", apiQuestionId);
     return {
         fileDownloadApiPath: fileDownloadApiPath || undefined,
-        apiPath: `${apis.fileUploadV1Url}?entity_flag=${ENTITY_TYPE_DAR_APPLICATION}&application_id=${applicationId}&question_id=${questionId}`,
+        apiPath: `${
+            apis.fileUploadV1Url
+        }?entity_flag=${ENTITY_TYPE_DAR_APPLICATION}&application_id=${applicationId}&question_id=${
+            apiQuestionId ?? formPath
+        }`,
         onFileUploaded: async response => {
             const newFile = {
                 filename: response.filename,
@@ -237,12 +259,12 @@ const createFileUploadConfig = (
                 component === inputComponents.DocumentExchange
             ) {
                 setValue(
-                    questionId,
+                    formPath,
                     { value: newFile },
                     { shouldValidate: true }
                 );
             } else {
-                const prev = getValues(questionId);
+                const prev = getValues(formPath);
                 const prevValue =
                     prev && typeof prev === "object"
                         ? Array.isArray(prev.value)
@@ -251,7 +273,7 @@ const createFileUploadConfig = (
                         : [];
 
                 setValue(
-                    questionId,
+                    formPath,
                     { value: [...prevValue, newFile] },
                     { shouldValidate: true }
                 );
@@ -261,18 +283,18 @@ const createFileUploadConfig = (
         ...(isResearcher &&
             removeUploadedFile && {
                 onFileRemove: async fileId => {
-                    const prev = getValues(questionId);
+                    const prev = getValues(formPath);
                     const response = await removeUploadedFile(fileId);
 
                     if (response && prev && typeof prev === "object") {
                         const prevValue = prev.value;
 
                         if (Array.isArray(prevValue)) {
-                            setValue(questionId, {
+                            setValue(formPath, {
                                 value: prevValue.filter(v => v.uuid !== fileId),
                             });
                         } else {
-                            setValue(questionId, undefined);
+                            setValue(formPath, undefined);
                         }
                     }
 
@@ -287,10 +309,42 @@ const createFileUploadConfig = (
     };
 };
 
+const createDarFileUploadConfig = (
+    formPath: string,
+    component: ComponentTypes,
+    applicationId: string,
+    isResearcher: boolean,
+    userId: string,
+    teamId: string,
+    setValue: UseFormSetValue<DarApplicationResponses>,
+    getValues: UseFormGetValues<DarApplicationResponses>,
+    removeUploadedFile?: (id: number | string) => Promise<unknown>,
+    apiQuestionId?: string
+): FileUploadFields | undefined => {
+    if (!isDarFileUploadComponent(component)) return undefined;
+
+    const fileDownloadApiPath = isResearcher
+        ? `${apis.usersV1Url}/${userId}/dar/applications/${applicationId}/files`
+        : `${apis.teamsV1Url}/${teamId}/dar/applications/${applicationId}/files`;
+
+    return createFileUploadConfig(
+        formPath,
+        component as ComponentTypes,
+        applicationId,
+        fileDownloadApiPath,
+        isResearcher,
+        setValue,
+        getValues,
+        removeUploadedFile,
+        apiQuestionId
+    );
+};
+
 export {
     getVisibleQuestionIds,
     mapKeysToValues,
     formatDarQuestion,
     formatDarAnswers,
     createFileUploadConfig,
+    createDarFileUploadConfig,
 };

@@ -8,6 +8,7 @@ import {
 import { Divider } from "@mui/material";
 import { useTranslations } from "next-intl";
 import { DarFormattedField } from "@/interfaces/DataAccessRequest";
+import { FileUploadFields } from "@/interfaces/FileUpload";
 import { Option } from "@/interfaces/Option";
 import Box from "@/components/Box";
 import Button from "@/components/Button";
@@ -39,6 +40,11 @@ interface DarFieldArrayProps {
     setSelectedField: (fieldName: string) => void;
     selectedField?: string;
     isViewOnly?: boolean;
+    getFileUploadFields?: (
+        formPath: string,
+        component: string,
+        questionId: number
+    ) => FileUploadFields | undefined;
 }
 
 const isSelected = (selected: unknown, label: string) =>
@@ -50,6 +56,7 @@ const DarFieldArray = ({
     setSelectedField,
     selectedField,
     isViewOnly,
+    getFileUploadFields,
 }: DarFieldArrayProps) => {
     const arrayName = fieldParent.name;
 
@@ -138,7 +145,11 @@ const DarFieldArray = ({
                                         setSelectedField(
                                             `${arrayName}.${fieldIndex}.${arrayField.name}`
                                         ),
-                                    undefined,
+                                    getFileUploadFields?.(
+                                        `${arrayName}.${fieldIndex}.${arrayField.question_id}`,
+                                        arrayField.component,
+                                        arrayField.question_id
+                                    ),
                                     `${field.id}-${arrayField.question_id}`
                                 )}
 
@@ -167,7 +178,11 @@ const DarFieldArray = ({
                                                             setSelectedField(
                                                                 `${arrayName}.${fieldIndex}.${child.name}`
                                                             ),
-                                                        undefined,
+                                                        getFileUploadFields?.(
+                                                            `${arrayName}.${fieldIndex}.${child.question_id}`,
+                                                            child.component,
+                                                            child.question_id
+                                                        ),
                                                         `${field.id}-${child.question_id}`
                                                     )}
                                                 </Box>

@@ -603,18 +603,18 @@ async function getDarApplicationUser(
 async function getDarAnswersTeam(
     applicationId: string,
     teamId: string
-): Promise<DarTemplateCountResponse> {
-    return get<DarTemplateCountResponse>(
-        `${apis.teamsV1UrlIP}/${teamId}/dar/applications/${applicationId}/answers`,
-        {
-            cache: {
-                tags: [
-                    CACHE_DAR,
-                    CACHE_DAR_ANSWERS,
-                    `${CACHE_DAR_ANSWERS}${applicationId}`,
-                ],
-            },
-        }
+): Promise<DarApplicationAnswer[]> {
+    return get<DarApplicationAnswer[]>(
+        `${apis.teamsV1UrlIP}/${teamId}/dar/applications/${applicationId}/answers`
+        // {
+        //     cache: {
+        //         tags: [
+        //             CACHE_DAR,
+        //             CACHE_DAR_ANSWERS,
+        //             `${CACHE_DAR_ANSWERS}${applicationId}`,
+        //         ],
+        //     },
+        // }
     );
 }
 
@@ -623,16 +623,16 @@ async function getDarAnswersUser(
     userId: string
 ): Promise<DarApplicationAnswer[]> {
     return get<DarApplicationAnswer[]>(
-        `${apis.usersV1UrlIP}/${userId}/dar/applications/${applicationId}/answers`,
-        {
-            cache: {
-                tags: [
-                    CACHE_DAR,
-                    CACHE_DAR_ANSWERS,
-                    `${CACHE_DAR_ANSWERS}${applicationId}`,
-                ],
-            },
-        }
+        `${apis.usersV1UrlIP}/${userId}/dar/applications/${applicationId}/answers`
+        // {
+        //     cache: {
+        //         tags: [
+        //             CACHE_DAR,
+        //             CACHE_DAR_ANSWERS,
+        //             `${CACHE_DAR_ANSWERS}${applicationId}`,
+        //         ],
+        //     },
+        // }
     );
 }
 

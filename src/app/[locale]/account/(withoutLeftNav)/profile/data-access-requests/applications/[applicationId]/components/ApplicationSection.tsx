@@ -15,7 +15,6 @@ import {
 } from "@/interfaces/DataAccessRequest";
 import { DarTeamApplication } from "@/interfaces/DataAccessRequestApplication";
 import { DarReviewsResponse } from "@/interfaces/DataAccessReview";
-import { FileUploadFields } from "@/interfaces/FileUpload";
 import { QuestionBankSection } from "@/interfaces/QuestionBankSection";
 import Box from "@/components/Box";
 import BoxContainer from "@/components/BoxContainer";
@@ -52,7 +51,7 @@ import {
 import { ArrowBackIosNewIcon, HelpOutlineIcon } from "@/consts/icons";
 import { RouteName } from "@/consts/routeName";
 import {
-    createFileUploadConfig,
+    createDarFileUploadConfig,
     formatDarAnswers,
     formatDarQuestion,
     getVisibleQuestionIds,
@@ -222,37 +221,93 @@ const ApplicationSection = ({
         const questionIsVisible = (qid: string, ids: string[]) =>
             ids.includes(qid) || ids.some(id => id.split(".").pop() === qid);
 
-        const answers = Object.entries(formData ?? getValues())
-            .flatMap(([key, val]) => {
-                if (key.includes(ARRAY_PREFIX) && Array.isArray(val)) {
-                    return (val as Array<Record<string, string>>).flatMap(
-                        (row, answer_index) =>
-                            Object.entries(row || {})
-                                .filter(([, v]) => String(v ?? "").trim())
-                                .map(([qid, answer]) => ({
-                                    question_id: qid,
-                                    answer,
-                                    answer_index,
-                                }))
-                    );
-                }
+        const values = formData ?? getValues();
 
-                return [
-                    {
-                        question_id: key,
-                        answer: val,
-                    },
-                ];
-            })
+        const arrayAnswers = Object.entries(values)
+            .filter(
+                ([key, val]) => key.includes(ARRAY_PREFIX) && Array.isArray(val)
+            )
+            .flatMap(([arrayName, val]) =>
+                (val as unknown as Array<Record<string, string>>).flatMap(
+                    (row, answer_index) =>
+                        Object.entries(row || {})
+                            .filter(
+                                ([qid, answer]) =>
+                                    !excludedQuestionFields.includes(qid) &&
+                                    questionIsVisible(
+                                        `${arrayName}.${answer_index}.${qid}`,
+                                        visibleQuestionIds
+                                    ) &&
+                                    !isEmpty(answer)
+                            )
+                            .map(([qid, answer]) => ({
+                                question_id: qid,
+                                answer: answer ?? "",
+                                answer_index,
+                            }))
+                )
+            );
+
+        const arrayChildQuestionIds = new Set<string>(
+            (questions ?? [])
+                .filter(
+                    q => q.component === ARRAY_FIELD && Array.isArray(q.fields)
+                )
+                .flatMap(q => [
+                    ...(q.fields ?? []).map(f => String(f.question_id)),
+                    ...(q.fields ?? []).flatMap(f =>
+                        (f.options ?? []).flatMap(opt =>
+                            (opt.children ?? []).map(c => String(c.question_id))
+                        )
+                    ),
+                ])
+        );
+
+        const currentArrayPaths = new Set(
+            arrayAnswers.map(a => `${a.question_id}:${a.answer_index}`)
+        );
+
+        const clearedArrayAnswers = (userAnswers ?? [])
+            .filter(
+                a =>
+                    a.answer_index !== null &&
+                    a.answer_index !== undefined &&
+                    arrayChildQuestionIds.has(String(a.question_id)) &&
+                    !currentArrayPaths.has(
+                        `${String(a.question_id)}:${a.answer_index}`
+                    )
+            )
+            .map(a => ({
+                question_id: String(a.question_id),
+                answer: " ",
+                answer_index: a.answer_index as number,
+            }));
+
+        const nonArrayAnswers = Object.entries(values)
+            .filter(
+                ([key, val]) =>
+                    !(key.includes(ARRAY_PREFIX) && Array.isArray(val))
+            )
+            .map(([key, val]) => ({
+                question_id: key,
+                answer: val,
+            }))
             .filter(
                 a =>
                     !isEmpty(a.answer) &&
                     !excludedQuestionFields.includes(a.question_id) &&
+                    !arrayChildQuestionIds.has(a.question_id) &&
                     questionIsVisible(
                         a.question_id.toString(),
                         visibleQuestionIds
                     )
             );
+
+        const answers = [
+            ...arrayAnswers,
+            // ...clearedArrayAnswers,
+            ...nonArrayAnswers,
+        ];
 
         if (formData) {
             const [resAnswers, resApplication] = await Promise.all([
@@ -328,35 +383,39 @@ const ApplicationSection = ({
         ? parentSections.findIndex(section => section.id === sectionId)
         : 0;
 
-    const formatFileUploadFields = (component: string, questionId: number) => {
-        let fileUploadFields: FileUploadFields | undefined;
+    const getFileUploadConfig = (
+        formPath: string,
+        component: string,
+        apiQuestionId: string
+    ) =>
+        createDarFileUploadConfig(
+            formPath,
+            component,
+            applicationId,
+            isResearcher,
+            userId,
+            teamId,
+            setValue,
+            getValues,
+            teamApplication?.submission_status !==
+                DarApplicationStatus.SUBMITTED
+                ? removeUploadedFile
+                : undefined,
+            apiQuestionId
+        );
 
-        if (
-            component === inputComponents.FileUpload ||
-            component === inputComponents.FileUploadMultiple ||
-            component === inputComponents.DocumentExchange
-        ) {
-            const fileDownloadApiPath = isResearcher
-                ? `${apis.usersV1Url}/${userId}/dar/applications/${applicationId}/files`
-                : `${apis.teamsV1Url}/${teamId}/dar/applications/${applicationId}/files`;
+    const formatFileUploadFields = (component: string, questionId: number) =>
+        getFileUploadConfig(
+            questionId.toString(),
+            component,
+            questionId.toString()
+        );
 
-            fileUploadFields = createFileUploadConfig(
-                questionId.toString(),
-                component,
-                applicationId,
-                fileDownloadApiPath,
-                isResearcher,
-                setValue,
-                getValues,
-                teamApplication?.submission_status !==
-                    DarApplicationStatus.SUBMITTED
-                    ? removeUploadedFile
-                    : undefined
-            );
-
-            return fileUploadFields;
-        }
-    };
+    const getArrayFileUploadFields = (
+        formPath: string,
+        component: string,
+        questionId: number
+    ) => getFileUploadConfig(formPath, component, questionId.toString());
 
     const renderFormFields = () =>
         filteredData
@@ -395,6 +454,7 @@ const ApplicationSection = ({
                                         teamApplication?.approval_status !==
                                             null)
                                 }
+                                getFileUploadFields={getArrayFileUploadFields}
                             />
                         ) : (
                             <>
@@ -430,7 +490,6 @@ const ApplicationSection = ({
                                                 field.component,
                                                 field.question_id
                                             )
-                                        // field.document
                                     )}
                                 </Box>
                             </>
