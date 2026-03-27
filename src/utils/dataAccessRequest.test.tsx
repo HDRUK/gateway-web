@@ -308,10 +308,11 @@ describe("Data Access Request utils", () => {
                 },
             ];
 
-            // Backend provided “columns”: each child qid can have multiple values
             const userAnswers: QA[] = [
-                { question_id: "1752", answer: ["Alice", "Bob"] },
-                { question_id: "1753", answer: ["Dev", "PM"] },
+                { question_id: "1752", answer: "Alice", answer_index: 0 },
+                { question_id: "1753", answer: "Dev", answer_index: 0 },
+                { question_id: "1752", answer: "Bob", answer_index: 1 },
+                { question_id: "1753", answer: "PM", answer_index: 1 },
             ];
 
             expect(formatDarAnswers(userAnswers, questions)).toEqual({
@@ -327,24 +328,22 @@ describe("Data Access Request utils", () => {
                 {
                     component: ARRAY_FIELD,
                     title: ARRAY_NAME,
-                    fields: [
-                        { question_id: 1752 },
-                        { question_id: 1753 },
-                        { question_id: 1762 },
-                    ],
+                    fields: [{ question_id: 1752 }, { question_id: 1753 }],
                 },
             ];
 
             const userAnswers: QA[] = [
-                { question_id: "1752", answer: ["Alice", "Bob"] },
-                { question_id: "1753", answer: ["Dev"] },
-                { question_id: "1762", answer: [] },
+                { question_id: "1752", answer: "Alice", answer_index: 0 },
+                { question_id: "1753", answer: "Dev", answer_index: 0 },
+                { question_id: "1752", answer: "Bob", answer_index: 1 },
+                { question_id: "1752", answer: "", answer_index: 2 },
+                { question_id: "1753", answer: "", answer_index: 2 },
             ];
 
             expect(formatDarAnswers(userAnswers, questions)).toEqual({
                 [ARRAY_NAME]: [
-                    { "1752": "Alice", "1753": "Dev", "1762": "" },
-                    { "1752": "Bob", "1753": "", "1762": "" },
+                    { "1752": "Alice", "1753": "Dev" },
+                    { "1752": "Bob" },
                 ],
             });
         });
@@ -359,8 +358,10 @@ describe("Data Access Request utils", () => {
             ];
 
             const userAnswers: QA[] = [
-                { question_id: "1752", answer: ["Alice", ""] },
-                { question_id: "1753", answer: ["Dev", ""] },
+                { question_id: "1752", answer: "Alice", answer_index: 0 },
+                { question_id: "1753", answer: "Dev", answer_index: 0 },
+                { question_id: "1752", answer: "", answer_index: 1 },
+                { question_id: "1753", answer: "", answer_index: 1 },
             ];
 
             expect(formatDarAnswers(userAnswers, questions)).toEqual({
@@ -389,12 +390,14 @@ describe("Data Access Request utils", () => {
                 { question_id: "1722", answer: "Project X" },
 
                 // first array
-                { question_id: "1752", answer: ["Alice", "Bob"] },
-                { question_id: "1753", answer: ["Dev", "PM"] },
+                { question_id: "1752", answer: "Alice", answer_index: 0 },
+                { question_id: "1753", answer: "Dev", answer_index: 0 },
+                { question_id: "1752", answer: "Bob", answer_index: 1 },
+                { question_id: "1753", answer: "PM", answer_index: 1 },
 
                 // second array
-                { question_id: "1832", answer: ["Yes"] },
-                { question_id: "1839", answer: ["Describe"] },
+                { question_id: "1832", answer: "Yes", answer_index: 0 },
+                { question_id: "1839", answer: "Describe", answer_index: 0 },
             ];
 
             expect(formatDarAnswers(userAnswers, questions)).toEqual({
@@ -407,7 +410,7 @@ describe("Data Access Request utils", () => {
             });
         });
 
-        it("wraps single value answers into array", () => {
+        it("handles answers without answer_index", () => {
             const questions: Q[] = [
                 {
                     component: ARRAY_FIELD,
