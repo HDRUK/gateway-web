@@ -1,10 +1,12 @@
 import {
     DarApplicationQuestion,
+    DarApplicationResponses,
     DarFormattedField,
 } from "@/interfaces/DataAccessRequest";
 import { inputComponents } from "@/config/forms";
-import { ARRAY_FIELD } from "@/consts/dataAccess";
+import { ARRAY_FIELD, ARRAY_PREFIX } from "@/consts/dataAccess";
 import {
+    buildDarAnswers,
     formatDarAnswers,
     formatDarQuestion,
     getVisibleQuestionIds,
@@ -499,6 +501,149 @@ describe("Data Access Request utils", () => {
             };
 
             expect(formatDarQuestion(input)).toEqual(expected);
+        });
+    });
+
+    describe("buildDarAnswers", () => {
+        const ARRAY_FIELD_NAME = `Collaborators${ARRAY_PREFIX}`;
+
+        const arrayQuestion = {
+            component: ARRAY_FIELD,
+            question_id: 0,
+            title: ARRAY_FIELD_NAME,
+            fields: [
+                { question_id: 1752 },
+                {
+                    question_id: 1762,
+                    options: [
+                        {
+                            children: [{ question_id: 1763 }],
+                        },
+                    ],
+                },
+            ],
+        } as unknown as Q;
+
+        it("returns non-array answers that are visible and not-empty", () => {
+            const values = { "1722": "Project X", "1729": "Yes" };
+            const visibleIds = ["1722", "1729"];
+
+            const result = buildDarAnswers(values, [], visibleIds, []);
+
+            expect(result).toEqual([
+                { question_id: "1722", answer: "Project X" },
+                { question_id: "1729", answer: "Yes" },
+            ]);
+        });
+
+        it("excludes non-array answers that are not visible", () => {
+            const values = { "1722": "Project X", "1729": "Yes" };
+            const visibleIds = ["1722"];
+
+            const result = buildDarAnswers(values, [], visibleIds, []);
+
+            expect(result).toEqual([
+                { question_id: "1722", answer: "Project X" },
+            ]);
+        });
+
+        it("excludes non-array answers that are empty", () => {
+            const values = { "1722": "", "1729": "Yes" };
+            const visibleIds = ["1722", "1729"];
+
+            const result = buildDarAnswers(values, [], visibleIds, []);
+
+            expect(result).toEqual([{ question_id: "1729", answer: "Yes" }]);
+        });
+
+        it("excludes array child question ids from non-array answers", () => {
+            const values = {
+                "1722": "Project X",
+                "1752": "should be excluded",
+            };
+            const visibleIds = ["1722", "1752"];
+
+            const result = buildDarAnswers(
+                values,
+                [arrayQuestion] as DarApplicationQuestion[],
+                visibleIds,
+                []
+            );
+
+            expect(result).toEqual([
+                { question_id: "1722", answer: "Project X" },
+            ]);
+        });
+
+        it("flattens array rows into answers with answer_index", () => {
+            const values = {
+                [ARRAY_FIELD_NAME]: [
+                    { "1752": "Alice", "1762": "Yes" },
+                    { "1752": "Bob", "1762": "No" },
+                ],
+            } as unknown as DarApplicationResponses;
+
+            const visibleIds = [
+                `${ARRAY_FIELD_NAME}.0.1752`,
+                `${ARRAY_FIELD_NAME}.0.1762`,
+                `${ARRAY_FIELD_NAME}.1.1752`,
+                `${ARRAY_FIELD_NAME}.1.1762`,
+            ];
+
+            const result = buildDarAnswers(
+                values,
+                [arrayQuestion] as DarApplicationQuestion[],
+                visibleIds,
+                []
+            );
+
+            expect(result).toEqual([
+                { question_id: "1752", answer: "Alice", answer_index: 0 },
+                { question_id: "1762", answer: "Yes", answer_index: 0 },
+                { question_id: "1752", answer: "Bob", answer_index: 1 },
+                { question_id: "1762", answer: "No", answer_index: 1 },
+            ]);
+        });
+
+        it("excludes empty rows that are not visible", () => {
+            const values = {
+                [ARRAY_FIELD_NAME]: [{ "1752": "Alice", "1762": "Yes" }],
+            } as unknown as DarApplicationResponses;
+
+            const visibleIds = [`${ARRAY_FIELD_NAME}.0.1752`];
+
+            const result = buildDarAnswers(
+                values,
+                [arrayQuestion] as DarApplicationQuestion[],
+                visibleIds,
+                []
+            );
+
+            expect(result).toEqual([
+                { question_id: "1752", answer: "Alice", answer_index: 0 },
+            ]);
+        });
+
+        it("excludes empty array row answers", () => {
+            const values = {
+                [ARRAY_FIELD_NAME]: [{ "1752": "Alice", "1762": "" }],
+            } as unknown as DarApplicationResponses;
+
+            const visibleIds = [
+                `${ARRAY_FIELD_NAME}.0.1752`,
+                `${ARRAY_FIELD_NAME}.0.1762`,
+            ];
+
+            const result = buildDarAnswers(
+                values,
+                [arrayQuestion] as DarApplicationQuestion[],
+                visibleIds,
+                []
+            );
+
+            expect(result).toEqual([
+                { question_id: "1752", answer: "Alice", answer_index: 0 },
+            ]);
         });
     });
 });
