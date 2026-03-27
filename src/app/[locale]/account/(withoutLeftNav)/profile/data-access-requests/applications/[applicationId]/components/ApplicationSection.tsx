@@ -1,10 +1,10 @@
 "use client";
 
 import { Fragment, useEffect, useMemo, useState } from "react";
-import { useForm } from "react-hook-form";
+import { Control, useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { Divider } from "@mui/material";
-import { get, isEmpty } from "lodash";
+import { get } from "lodash";
 import { useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
 import { ComponentTypes } from "@/interfaces/ComponentTypes";
@@ -44,7 +44,6 @@ import {
 import theme, { colors } from "@/config/theme";
 import {
     ARRAY_FIELD,
-    ARRAY_PREFIX,
     DarApplicationApprovalStatus,
     DarApplicationStatus,
     DarTemplateType,
@@ -52,11 +51,11 @@ import {
 import { ArrowBackIosNewIcon, HelpOutlineIcon } from "@/consts/icons";
 import { RouteName } from "@/consts/routeName";
 import {
+    buildDarAnswers,
     createDarFileUploadConfig,
     formatDarAnswers,
     formatDarQuestion,
     getVisibleQuestionIds,
-    mapKeysToValues,
 } from "@/utils/dataAccessRequest";
 import { formatDate } from "@/utils/date";
 import {
@@ -154,6 +153,8 @@ const ApplicationSection = ({
             ),
         });
 
+    const formControl = control as Control<Record<string, unknown>>;
+
     const projectTitle = watch(PROJECT_TITLE_FIELD);
 
     const updateGuidanceText = (fieldName: string) => {
@@ -187,21 +188,6 @@ const ApplicationSection = ({
         );
     }, [questions]);
 
-    const parentFieldNames = useMemo(
-        () =>
-            questions
-                ?.filter(f => f.is_child === 0)
-                .map(f => f.question_id.toString()) || [],
-        [questions]
-    );
-
-    const parentValuesArray = watch(parentFieldNames);
-
-    const parentValues = useMemo(
-        () => mapKeysToValues(parentFieldNames, parentValuesArray),
-        [parentFieldNames, parentValuesArray]
-    );
-
     const watchAll = watch();
 
     const visibleQuestionIds = getVisibleQuestionIds(
@@ -219,96 +205,14 @@ const ApplicationSection = ({
             submission_status: DarApplicationStatus.DRAFT,
         };
 
-        const questionIsVisible = (qid: string, ids: string[]) =>
-            ids.includes(qid) || ids.some(id => id.split(".").pop() === qid);
-
         const values = formData ?? getValues();
 
-        const arrayAnswers = Object.entries(values)
-            .filter(
-                ([key, val]) => key.includes(ARRAY_PREFIX) && Array.isArray(val)
-            )
-            .flatMap(([arrayName, val]) =>
-                (val as unknown as Array<Record<string, string>>).flatMap(
-                    (row, answer_index) =>
-                        Object.entries(row || {})
-                            .filter(
-                                ([qid, answer]) =>
-                                    !excludedQuestionFields.includes(qid) &&
-                                    questionIsVisible(
-                                        `${arrayName}.${answer_index}.${qid}`,
-                                        visibleQuestionIds
-                                    ) &&
-                                    !isEmpty(answer)
-                            )
-                            .map(([qid, answer]) => ({
-                                question_id: qid,
-                                answer: answer ?? "",
-                                answer_index,
-                            }))
-                )
-            );
-
-        const arrayChildQuestionIds = new Set<string>(
-            (questions ?? [])
-                .filter(
-                    q => q.component === ARRAY_FIELD && Array.isArray(q.fields)
-                )
-                .flatMap(q => [
-                    ...(q.fields ?? []).map(f => String(f.question_id)),
-                    ...(q.fields ?? []).flatMap(f =>
-                        (f.options ?? []).flatMap(opt =>
-                            (opt.children ?? []).map(c => String(c.question_id))
-                        )
-                    ),
-                ])
+        const answers = buildDarAnswers(
+            values,
+            questions,
+            visibleQuestionIds,
+            excludedQuestionFields
         );
-
-        const currentArrayPaths = new Set(
-            arrayAnswers.map(a => `${a.question_id}:${a.answer_index}`)
-        );
-
-        const clearedArrayAnswers = (userAnswers ?? [])
-            .filter(
-                a =>
-                    a.answer_index !== null &&
-                    a.answer_index !== undefined &&
-                    arrayChildQuestionIds.has(String(a.question_id)) &&
-                    !currentArrayPaths.has(
-                        `${String(a.question_id)}:${a.answer_index}`
-                    )
-            )
-            .map(a => ({
-                question_id: String(a.question_id),
-                answer: " ",
-                answer_index: a.answer_index as number,
-            }));
-
-        const nonArrayAnswers = Object.entries(values)
-            .filter(
-                ([key, val]) =>
-                    !(key.includes(ARRAY_PREFIX) && Array.isArray(val))
-            )
-            .map(([key, val]) => ({
-                question_id: key,
-                answer: val,
-            }))
-            .filter(
-                a =>
-                    !isEmpty(a.answer) &&
-                    !excludedQuestionFields.includes(a.question_id) &&
-                    !arrayChildQuestionIds.has(a.question_id) &&
-                    questionIsVisible(
-                        a.question_id.toString(),
-                        visibleQuestionIds
-                    )
-            );
-
-        const answers = [
-            ...arrayAnswers,
-            // ...clearedArrayAnswers,
-            ...nonArrayAnswers,
-        ];
 
         if (formData) {
             const [resAnswers, resApplication] = await Promise.all([
@@ -367,7 +271,11 @@ const ApplicationSection = ({
         showDialog(DarManageDialog, { darApplicationEndpoint, applicationId });
     };
 
-    const processedSections = new Set();
+    const isViewOnly =
+        !isResearcher ||
+        (isResearcher &&
+            teamApplication &&
+            teamApplication?.approval_status !== null);
 
     const renderSectionHeader = (field: DarFormattedField) => (
         <>
@@ -427,130 +335,116 @@ const ApplicationSection = ({
             arrayIndex
         );
 
-    const renderFormFields = () =>
-        filteredData
-            ?.filter(
+    const renderFormFields = () => {
+        const sectionFields =
+            filteredData?.filter(
                 field =>
                     getParentSection(field.section_id) === sectionId ||
                     getParentSection(field?.fields?.[0]?.section_id) ===
                         sectionId
-            )
-            .map(field => {
-                if (field.is_child) return null;
+            ) ?? [];
 
-                let sectionHeader = null;
-                if (
-                    !processedSections.has(field.section_id) &&
-                    data.application_type !== DarTemplateType.DOCUMENT
-                ) {
-                    processedSections.add(field.section_id);
-                    sectionHeader = renderSectionHeader(field);
-                }
+        return sectionFields.map(field => {
+            if (field.is_child) return null;
 
-                return (
-                    <Fragment key={field.question_id}>
-                        {field.component === ARRAY_FIELD ? (
-                            <DarFieldArray
-                                key={`${field.name}-${sectionId}`}
-                                control={control}
-                                fieldParent={field}
-                                formArrayValues={watch(field.name)}
-                                selectedField={selectedField}
-                                setSelectedField={updateGuidanceText}
-                                isViewOnly={
-                                    !isResearcher ||
-                                    (isResearcher &&
-                                        teamApplication &&
-                                        teamApplication?.approval_status !==
-                                            null)
-                                }
-                                getFileUploadFields={getArrayFileUploadFields}
-                            />
-                        ) : (
-                            <>
-                                {sectionHeader}
-                                <Box
-                                    sx={{
-                                        pt: 1,
-                                        pb: 0,
-                                        pl: 3,
-                                        pr: 3,
-                                        backgroundColor:
-                                            field.name === selectedField
-                                                ? theme.palette.grey[100]
-                                                : "inherit",
-                                    }}>
-                                    {renderFormHydrationField(
-                                        {
-                                            ...field,
-                                            disabled:
-                                                !isResearcher ||
-                                                (isResearcher &&
-                                                    teamApplication &&
-                                                    teamApplication?.approval_status !==
-                                                        null),
-                                        },
-                                        control,
-                                        field.question_id.toString(),
-                                        field.component !==
-                                            inputComponents.DocumentExchange &&
-                                            updateGuidanceText,
-                                        field.component &&
-                                            formatFileUploadFields(
-                                                field.component,
-                                                field.question_id
-                                            )
-                                    )}
-                                </Box>
-                            </>
-                        )}
-                        {/* Process child fields when necessary */}
-                        {field.options.flatMap(
-                            option =>
-                                option.children?.map(child =>
-                                    parentValues[field.question_id] ===
-                                    option.label ? (
-                                        <Fragment key={child.question_id}>
-                                            <Box
-                                                sx={{
-                                                    pt: 1,
-                                                    pb: 0,
-                                                    pl: 3,
-                                                    pr: 3,
-                                                    backgroundColor:
-                                                        child.name ===
-                                                        selectedField
-                                                            ? theme.palette
-                                                                  .grey[100]
-                                                            : "inherit",
-                                                }}>
-                                                {renderFormHydrationField(
-                                                    {
-                                                        ...child,
-                                                        disabled:
-                                                            !isResearcher ||
-                                                            (isResearcher &&
-                                                                teamApplication &&
-                                                                teamApplication?.approval_status !==
-                                                                    null),
-                                                    },
-                                                    control,
-                                                    child.question_id.toString(),
-                                                    updateGuidanceText,
-                                                    child.component &&
-                                                        formatFileUploadFields(
-                                                            child.component,
-                                                            child.question_id
-                                                        )
-                                                )}
-                                            </Box>
-                                        </Fragment>
-                                    ) : null
-                                ) || []
-                        )}
-                    </Fragment>
-                );
-            });
+            const isFirstInSection =
+                data.application_type !== DarTemplateType.DOCUMENT &&
+                sectionFields.find(f => f.section_id === field.section_id) ===
+                    field;
+
+            return (
+                <Fragment key={field.question_id}>
+                    {field.component === ARRAY_FIELD ? (
+                        <DarFieldArray
+                            key={`${field.name}-${sectionId}`}
+                            control={formControl}
+                            fieldParent={field}
+                            selectedField={selectedField}
+                            setSelectedField={updateGuidanceText}
+                            isViewOnly={isViewOnly}
+                            getFileUploadFields={getArrayFileUploadFields}
+                        />
+                    ) : (
+                        <>
+                            {isFirstInSection && renderSectionHeader(field)}
+                            <Box
+                                sx={{
+                                    pt: 1,
+                                    pb: 0,
+                                    pl: 3,
+                                    pr: 3,
+                                    backgroundColor:
+                                        field.name === selectedField
+                                            ? theme.palette.grey[100]
+                                            : "inherit",
+                                }}>
+                                {renderFormHydrationField(
+                                    {
+                                        ...field,
+                                        disabled:
+                                            !isResearcher ||
+                                            (isResearcher &&
+                                                teamApplication &&
+                                                teamApplication?.approval_status !==
+                                                    null),
+                                    },
+                                    formControl,
+                                    field.question_id.toString(),
+                                    field.component !==
+                                        inputComponents.DocumentExchange &&
+                                        updateGuidanceText,
+                                    field.component &&
+                                        formatFileUploadFields(
+                                            field.component,
+                                            field.question_id
+                                        )
+                                )}
+                            </Box>
+                        </>
+                    )}
+                    {/* Process child fields when necessary */}
+                    {field.options.flatMap(
+                        option =>
+                            option.children?.map(child =>
+                                watchAll[field.question_id.toString()] ===
+                                option.label ? (
+                                    <Fragment key={child.question_id}>
+                                        <Box
+                                            sx={{
+                                                pt: 1,
+                                                pb: 0,
+                                                pl: 3,
+                                                pr: 3,
+                                                backgroundColor:
+                                                    child.name === selectedField
+                                                        ? theme.palette
+                                                              .grey[100]
+                                                        : "inherit",
+                                            }}>
+                                            {renderFormHydrationField(
+                                                {
+                                                    ...child,
+                                                    disabled: isViewOnly,
+                                                },
+                                                formControl,
+                                                child.question_id.toString(),
+                                                updateGuidanceText,
+                                                child.component
+                                                    ? formatFileUploadFields(
+                                                          child.component,
+                                                          child.question_id
+                                                      )
+                                                    : undefined
+                                            )}
+                                        </Box>
+                                    </Fragment>
+                                ) : null
+                            ) || []
+                    )}
+                </Fragment>
+            );
+        });
+    };
 
     const completedVisibleQuestions = useMemo(
         () =>

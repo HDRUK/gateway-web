@@ -73,7 +73,7 @@ interface DarApplicationAnswer {
     application_id: number;
     question_id: number;
     contributor_id: number;
-    answer: string | string[];
+    answer: unknown;
     answer_index?: number;
 }
 

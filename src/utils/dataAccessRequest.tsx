@@ -1,4 +1,5 @@
 import { UseFormGetValues, UseFormSetValue } from "react-hook-form";
+import { isEmpty } from "lodash";
 import { ComponentTypes } from "@/interfaces/ComponentTypes";
 import {
     DarApplicationAnswer,
@@ -10,13 +11,16 @@ import { FileUploadFields } from "@/interfaces/FileUpload";
 import apis from "@/config/apis";
 import { inputComponents } from "@/config/forms";
 import { CACHE_DAR_ANSWERS } from "@/consts/cache";
-import { ARRAY_FIELD } from "@/consts/dataAccess";
+import { ARRAY_FIELD, ARRAY_PREFIX } from "@/consts/dataAccess";
 import { revalidateCacheAction } from "@/app/actions/revalidateCacheAction";
 
 const ENTITY_TYPE_DAR_APPLICATION = "dar-application-upload";
 
 const mapKeysToValues = (keys: string[], valuesArray: unknown[]) =>
     Object.fromEntries(keys.map((key, index) => [key, valuesArray[index]]));
+
+const isSelected = (selected: unknown, label: string) =>
+    Array.isArray(selected) ? selected.includes(label) : selected === label;
 
 type Row = Record<string, unknown>;
 type RowsByArrayName = Record<string, Row[]>;
@@ -240,7 +244,6 @@ const createFileUploadConfig = (
     apiQuestionId?: string,
     answerIndex?: number
 ): FileUploadFields => {
-    console.log("QUESTION ID -", apiQuestionId);
     return {
         fileDownloadApiPath: fileDownloadApiPath || undefined,
         apiPath: `${
@@ -342,11 +345,84 @@ const createDarFileUploadConfig = (
     );
 };
 
+type DarAnswer = {
+    question_id: string;
+    answer: unknown;
+    answer_index?: number;
+};
+
+const questionIsVisible = (qid: string, ids: string[]) => ids.includes(qid);
+
+const buildDarAnswers = (
+    values: DarApplicationResponses,
+    questions: DarApplicationQuestion[],
+    visibleQuestionIds: string[],
+    excludedQuestionFields: string[]
+): DarAnswer[] => {
+    const arrayAnswers = Object.entries(values)
+        .filter(
+            ([key, val]) => key.includes(ARRAY_PREFIX) && Array.isArray(val)
+        )
+        .flatMap(([arrayName, val]) =>
+            (val as unknown as Array<Record<string, string>>).flatMap(
+                (row, answer_index) =>
+                    Object.entries(row || {})
+                        .filter(
+                            ([qid, answer]) =>
+                                !excludedQuestionFields.includes(qid) &&
+                                questionIsVisible(
+                                    `${arrayName}.${answer_index}.${qid}`,
+                                    visibleQuestionIds
+                                ) &&
+                                !isEmpty(answer)
+                        )
+                        .map(([qid, answer]) => ({
+                            question_id: qid,
+                            answer: answer ?? "",
+                            answer_index,
+                        }))
+            )
+        );
+
+    const arrayChildQuestionIds = new Set<string>(
+        (questions ?? [])
+            .filter(q => q.component === ARRAY_FIELD && Array.isArray(q.fields))
+            .flatMap(q => [
+                ...(q.fields ?? []).map(f => String(f.question_id)),
+                ...(q.fields ?? []).flatMap(f =>
+                    (f.options ?? []).flatMap(opt =>
+                        (opt.children ?? []).map(c => String(c.question_id))
+                    )
+                ),
+            ])
+    );
+
+    const nonArrayAnswers = Object.entries(values)
+        .filter(
+            ([key, val]) => !(key.includes(ARRAY_PREFIX) && Array.isArray(val))
+        )
+        .map(([key, val]) => ({
+            question_id: key,
+            answer: val,
+        }))
+        .filter(
+            a =>
+                !isEmpty(a.answer) &&
+                !excludedQuestionFields.includes(a.question_id) &&
+                !arrayChildQuestionIds.has(a.question_id) &&
+                questionIsVisible(a.question_id.toString(), visibleQuestionIds)
+        );
+
+    return [...arrayAnswers, ...nonArrayAnswers];
+};
+
 export {
+    isSelected,
     getVisibleQuestionIds,
     mapKeysToValues,
     formatDarQuestion,
     formatDarAnswers,
+    buildDarAnswers,
     createFileUploadConfig,
     createDarFileUploadConfig,
 };
