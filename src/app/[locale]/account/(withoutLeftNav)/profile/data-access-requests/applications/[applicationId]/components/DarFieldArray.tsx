@@ -43,7 +43,8 @@ interface DarFieldArrayProps {
     getFileUploadFields?: (
         formPath: string,
         component: string,
-        questionId: number
+        questionId: number,
+        answerIndex: number
     ) => FileUploadFields | undefined;
 }
 
@@ -147,8 +148,9 @@ const DarFieldArray = ({
                                         ),
                                     getFileUploadFields?.(
                                         `${arrayName}.${fieldIndex}.${arrayField.question_id}`,
-                                        arrayField.component,
-                                        arrayField.question_id
+                                        arrayField.component ?? "",
+                                        arrayField.question_id,
+                                        arrayIndex
                                     ),
                                     `${field.id}-${arrayField.question_id}`
                                 )}
@@ -180,8 +182,10 @@ const DarFieldArray = ({
                                                             ),
                                                         getFileUploadFields?.(
                                                             `${arrayName}.${fieldIndex}.${child.question_id}`,
-                                                            child.component,
-                                                            child.question_id
+                                                            child.component ??
+                                                                "",
+                                                            child.question_id,
+                                                            fieldIndex
                                                         ),
                                                         `${field.id}-${child.question_id}`
                                                     )}

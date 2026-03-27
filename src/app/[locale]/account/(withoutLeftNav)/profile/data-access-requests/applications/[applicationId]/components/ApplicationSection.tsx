@@ -7,6 +7,7 @@ import { Divider } from "@mui/material";
 import { get, isEmpty } from "lodash";
 import { useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
+import { ComponentTypes } from "@/interfaces/ComponentTypes";
 import {
     DarApplication,
     DarApplicationAnswer,
@@ -386,22 +387,24 @@ const ApplicationSection = ({
     const getFileUploadConfig = (
         formPath: string,
         component: string,
-        apiQuestionId: string
+        apiQuestionId: string,
+        answerIndex?: number
     ) =>
         createDarFileUploadConfig(
             formPath,
-            component,
+            component as ComponentTypes,
             applicationId,
             isResearcher,
             userId,
-            teamId,
+            teamId ?? "",
             setValue,
             getValues,
             teamApplication?.submission_status !==
                 DarApplicationStatus.SUBMITTED
                 ? removeUploadedFile
                 : undefined,
-            apiQuestionId
+            apiQuestionId,
+            answerIndex
         );
 
     const formatFileUploadFields = (component: string, questionId: number) =>
@@ -414,8 +417,15 @@ const ApplicationSection = ({
     const getArrayFileUploadFields = (
         formPath: string,
         component: string,
-        questionId: number
-    ) => getFileUploadConfig(formPath, component, questionId.toString());
+        questionId: number,
+        arrayIndex: number
+    ) =>
+        getFileUploadConfig(
+            formPath,
+            component,
+            questionId.toString(),
+            arrayIndex
+        );
 
     const renderFormFields = () =>
         filteredData

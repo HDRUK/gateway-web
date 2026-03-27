@@ -18,7 +18,7 @@ const ENTITY_TYPE_DAR_APPLICATION = "dar-application-upload";
 const mapKeysToValues = (keys: string[], valuesArray: unknown[]) =>
     Object.fromEntries(keys.map((key, index) => [key, valuesArray[index]]));
 
-type Row = Record<string, string | undefined>;
+type Row = Record<string, unknown>;
 type RowsByArrayName = Record<string, Row[]>;
 
 const getVisibleQuestionIds = (
@@ -33,7 +33,7 @@ const getVisibleQuestionIds = (
         ...filteredData.flatMap(field => {
             // Array field
             if (
-                field.component === "ArrayField" &&
+                field.component === inputComponents.ArrayField &&
                 Array.isArray(parentValues[field.name])
             ) {
                 const rows = parentValues[
@@ -196,9 +196,8 @@ const formatDarAnswers = (
             arrayRowsByName[arrayName][rowIndex] = {};
         }
 
-        arrayRowsByName[arrayName][rowIndex][String(a.question_id)] = String(
-            a.answer ?? ""
-        );
+        arrayRowsByName[arrayName][rowIndex][String(a.question_id)] =
+            a.answer ?? "";
     });
 
     Object.keys(arrayRowsByName).forEach(arrayName => {
@@ -238,7 +237,8 @@ const createFileUploadConfig = (
     setValue: UseFormSetValue<DarApplicationResponses>,
     getValues: UseFormGetValues<DarApplicationResponses>,
     removeUploadedFile?: (id: number | string) => Promise<unknown>,
-    apiQuestionId?: string
+    apiQuestionId?: string,
+    answerIndex?: number
 ): FileUploadFields => {
     console.log("QUESTION ID -", apiQuestionId);
     return {
@@ -247,7 +247,7 @@ const createFileUploadConfig = (
             apis.fileUploadV1Url
         }?entity_flag=${ENTITY_TYPE_DAR_APPLICATION}&application_id=${applicationId}&question_id=${
             apiQuestionId ?? formPath
-        }`,
+        }${answerIndex !== undefined ? `&answer_index=${answerIndex}` : ""}`,
         onFileUploaded: async response => {
             const newFile = {
                 filename: response.filename,
@@ -319,7 +319,8 @@ const createDarFileUploadConfig = (
     setValue: UseFormSetValue<DarApplicationResponses>,
     getValues: UseFormGetValues<DarApplicationResponses>,
     removeUploadedFile?: (id: number | string) => Promise<unknown>,
-    apiQuestionId?: string
+    apiQuestionId?: string,
+    answerIndex?: number
 ): FileUploadFields | undefined => {
     if (!isDarFileUploadComponent(component)) return undefined;
 
@@ -336,7 +337,8 @@ const createDarFileUploadConfig = (
         setValue,
         getValues,
         removeUploadedFile,
-        apiQuestionId
+        apiQuestionId,
+        answerIndex
     );
 };
 
