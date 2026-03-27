@@ -92,7 +92,7 @@ const getRequest = async <T>(
                     status: response.status,
                     error: { ...error },
                     props,
-                    method: "get",
+                    method: "get"
                 });
             }
         }
@@ -104,7 +104,7 @@ const getRequest = async <T>(
         if (errorNotificationsOn) {
             errorNotification({
                 props,
-                method: "get",
+                method: "get"
             });
         }
     }

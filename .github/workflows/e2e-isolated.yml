@@ -252,3 +252,20 @@ jobs:
       #   with:
       #     name: cypress-video
       #     path: cypress/videos
+   
+      # - name: Upload Laravel logs
+      #   uses: actions/upload-artifact@v4
+      #   if: always()
+      #   with:
+      #     name: laravel-logs
+      #     path: |
+      #       gateway-api/laravel.log
+      #       gateway-api/queue.log
+      #       gateway-api/storage/logs/*.log
+
+      # - name: Upload Cypress network logs
+      #   uses: actions/upload-artifact@v4
+      #   if: always()
+      #   with:
+      #     name: cypress-network
+      #     path: cypress/network.log
