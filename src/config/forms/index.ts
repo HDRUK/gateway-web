@@ -18,4 +18,5 @@ export const inputComponents: Record<ComponentTypes, ComponentTypes> = {
     FileUploadMultiple: "FileUploadMultiple",
     DocumentExchange: "DocumentExchange",
     HexColourField: "HexColourField",
+    ArrayField: "ArrayField",
 };

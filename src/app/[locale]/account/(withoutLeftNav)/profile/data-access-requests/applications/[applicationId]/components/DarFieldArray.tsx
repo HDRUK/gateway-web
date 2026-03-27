@@ -8,6 +8,7 @@ import {
 import { Divider } from "@mui/material";
 import { useTranslations } from "next-intl";
 import { DarFormattedField } from "@/interfaces/DataAccessRequest";
+import { FileUploadFields } from "@/interfaces/FileUpload";
 import { Option } from "@/interfaces/Option";
 import Box from "@/components/Box";
 import Button from "@/components/Button";
@@ -39,6 +40,12 @@ interface DarFieldArrayProps {
     setSelectedField: (fieldName: string) => void;
     selectedField?: string;
     isViewOnly?: boolean;
+    getFileUploadFields?: (
+        formPath: string,
+        component: string,
+        questionId: number,
+        answerIndex: number
+    ) => FileUploadFields | undefined;
 }
 
 const isSelected = (selected: unknown, label: string) =>
@@ -50,6 +57,7 @@ const DarFieldArray = ({
     setSelectedField,
     selectedField,
     isViewOnly,
+    getFileUploadFields,
 }: DarFieldArrayProps) => {
     const arrayName = fieldParent.name;
 
@@ -124,7 +132,8 @@ const DarFieldArray = ({
                                     m: 0,
                                     py: 0,
                                     backgroundColor:
-                                        arrayField.name === selectedField
+                                        `${arrayName}.${fieldIndex}.${arrayField.name}` ===
+                                        selectedField
                                             ? theme.palette.grey[100]
                                             : "inherit",
                                 }}>
@@ -133,7 +142,17 @@ const DarFieldArray = ({
                                     { ...arrayField, disabled: isViewOnly },
                                     control,
                                     `${arrayName}.${fieldIndex}.${arrayField.question_id}`,
-                                    () => setSelectedField(arrayField.name)
+                                    () =>
+                                        setSelectedField(
+                                            `${arrayName}.${fieldIndex}.${arrayField.name}`
+                                        ),
+                                    getFileUploadFields?.(
+                                        `${arrayName}.${fieldIndex}.${arrayField.question_id}`,
+                                        arrayField.component ?? "",
+                                        arrayField.question_id,
+                                        fieldIndex
+                                    ),
+                                    `${field.id}-${arrayField.question_id}`
                                 )}
 
                                 {/* Render optional fields dependant on selected value */}
@@ -159,8 +178,16 @@ const DarFieldArray = ({
                                                         `${arrayName}.${fieldIndex}.${child.question_id}`,
                                                         () =>
                                                             setSelectedField(
-                                                                child.name
-                                                            )
+                                                                `${arrayName}.${fieldIndex}.${child.name}`
+                                                            ),
+                                                        getFileUploadFields?.(
+                                                            `${arrayName}.${fieldIndex}.${child.question_id}`,
+                                                            child.component ??
+                                                                "",
+                                                            child.question_id,
+                                                            fieldIndex
+                                                        ),
+                                                        `${field.id}-${child.question_id}`
                                                     )}
                                                 </Box>
                                             ) : null

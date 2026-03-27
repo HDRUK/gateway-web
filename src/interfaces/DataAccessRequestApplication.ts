@@ -48,6 +48,7 @@ interface DataAccessRequestApplication {
     answers?: {
         question_id: string;
         answer: unknown;
+        answer_index?: number;
     }[];
     application_type: "FORM" | "DOCUMENT";
 }
