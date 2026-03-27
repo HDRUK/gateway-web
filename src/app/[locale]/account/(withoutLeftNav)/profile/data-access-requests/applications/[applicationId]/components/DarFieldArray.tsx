@@ -150,7 +150,7 @@ const DarFieldArray = ({
                                         `${arrayName}.${fieldIndex}.${arrayField.question_id}`,
                                         arrayField.component ?? "",
                                         arrayField.question_id,
-                                        arrayIndex
+                                        fieldIndex
                                     ),
                                     `${field.id}-${arrayField.question_id}`
                                 )}

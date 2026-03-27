@@ -97,6 +97,7 @@ interface DarApplicationResponses {
         | string
         | { value: UploadedFileMetadataValue }
         | { value: UploadedFileMetadataValue[] }
+        | null
         | undefined;
     project_title?: string;
 }

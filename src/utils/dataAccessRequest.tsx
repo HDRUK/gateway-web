@@ -286,24 +286,33 @@ const createFileUploadConfig = (
         ...(isResearcher &&
             removeUploadedFile && {
                 onFileRemove: async fileId => {
-                    const prev = getValues(formPath);
                     const response = await removeUploadedFile(fileId);
 
-                    if (response && prev && typeof prev === "object") {
-                        const prevValue = prev.value;
-
-                        if (Array.isArray(prevValue)) {
-                            setValue(formPath, {
-                                value: prevValue.filter(v => v.uuid !== fileId),
-                            });
-                        } else {
-                            setValue(formPath, undefined);
-                        }
+                    if (!response) {
+                        return;
                     }
 
-                    revalidateCacheAction(
-                        `${CACHE_DAR_ANSWERS}${applicationId}`
-                    );
+                    const current = getValues(formPath);
+                    const currentValue =
+                        current && typeof current === "object"
+                            ? current.value
+                            : undefined;
+
+                    if (Array.isArray(currentValue)) {
+                        setValue(
+                            formPath,
+                            {
+                                value: currentValue.filter(
+                                    v => v.uuid !== fileId
+                                ),
+                            },
+                            {
+                                shouldValidate: true,
+                            }
+                        );
+                    } else {
+                        setValue(formPath, null);
+                    }
                 },
             }),
         allowReuploading: true,
