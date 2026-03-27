@@ -44,6 +44,10 @@ const EditIntegrationForm = () => {
         intId: string;
     }>();
 
+    const roundToQuarter = (minute: string) => {
+        const rounded = Math.round(parseInt(minute, 10) / 15) * 15 % 60;
+        return rounded.toString().padStart(2, "0");
+    };
     const { data: integration } = useGet<Integration>(
         `${apis.teamsV1Url}/${params?.teamId}/federations/${params?.intId}`,
         { shouldFetch: !!params?.teamId && !!params?.intId }
@@ -93,6 +97,7 @@ const EditIntegrationForm = () => {
             run_time_hour: integration.run_time_hour
                 .toString()
                 .padStart(2, "0"),
+            run_time_minute: roundToQuarter(integration.run_time_minute),
             notifications: integration?.notifications?.map(
                 (notification: { user_id: number }) => notification.user_id
             ),
@@ -184,7 +189,6 @@ const EditIntegrationForm = () => {
                             })),
                         };
                     }
-
                     return field;
                 })
                 /* Remove 'auth_secret_key' field if 'auth_type' is set to "NO_AUTH"  */
