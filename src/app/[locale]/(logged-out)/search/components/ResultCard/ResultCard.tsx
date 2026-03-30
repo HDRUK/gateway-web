@@ -134,6 +134,7 @@ const ResultCard = ({
             isDarEnabled: team.is_question_bank,
             hasPublishedDarTemplate: team.has_published_dar_template,
             url: `/${RouteName.DATASET_ITEM}/${datasetId}`,
+            teamName: team.name,
             modalHeader: team.dar_modal_header,
             modalContent: team.dar_modal_content,
             modalFooter: team.dar_modal_footer,
