@@ -66,6 +66,7 @@ const formFields = [
         name: { minute: "run_time_minute", hour: "run_time_hour" },
         info: "Set the hour the synchronisations will take place daily, in 24-hr format",
         component: inputComponents.TextTime,
+        minProps: {values: ["00", "15", "30", "45"]},
     },
     {
         label: "Base URL",
