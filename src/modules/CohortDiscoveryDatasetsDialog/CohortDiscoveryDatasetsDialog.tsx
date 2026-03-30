@@ -15,6 +15,7 @@ import Loading from "@/components/Loading";
 import Table from "@/components/Table";
 import useDialog from "@/hooks/useDialog";
 import theme from "@/config/theme";
+import { NHS_SDE_FILTER } from "@/consts/cohortDiscovery";
 import { OpenInNewIcon } from "@/consts/icons";
 import { RouteName } from "@/consts/routeName";
 import { getPopulationSize } from "@/utils/search";
@@ -25,10 +26,12 @@ const CURRENT_DOMAIN = process.env.NEXT_PUBLIC_GATEWAY_URL;
 
 interface CohortDiscoveryDatasetsDialogProps {
     data: SearchResultDataset[];
+    nhsSdeOnly?: boolean;
 }
 
 const CohortDiscoveryDatasetsDialog = ({
     data,
+    nhsSdeOnly,
 }: CohortDiscoveryDatasetsDialogProps) => {
     const { hideDialog } = useDialog();
     const t = useTranslations(TRANSLATION_PATH);
@@ -134,7 +137,11 @@ const CohortDiscoveryDatasetsDialog = ({
                 sx={{ p: 3, pt: 1, justifyContent: "flex-start" }}>
                 <Button onClick={() => hideDialog()}>{t("closeButton")}</Button>
                 <Button
-                    href={`${CURRENT_DOMAIN}/${RouteName.SEARCH}?type=${SearchCategory.DATASETS}&isCohortDiscovery=isCohortDiscovery`}
+                    href={
+                        nhsSdeOnly
+                            ? `${CURRENT_DOMAIN}/${RouteName.SEARCH}?type=${SearchCategory.DATASETS}&isCohortDiscovery=isCohortDiscovery&dataProviderColl=${NHS_SDE_FILTER}`
+                            : `${CURRENT_DOMAIN}/${RouteName.SEARCH}?type=${SearchCategory.DATASETS}&isCohortDiscovery=isCohortDiscovery`
+                    }
                     variant="outlined"
                     color="secondary"
                     target="_blank"
