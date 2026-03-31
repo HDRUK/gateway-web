@@ -56,19 +56,18 @@ jobs:
         run: |
           git fetch origin main
           git reset --hard origin/main
-         
+
       - name: Read VERSION file
         id: getversion
         run: |
-          sed -n 's/^appVersion:\(.*\)/\1/p' < "chart/gateway-web/Chart.yaml" > "version"
-          echo "version=$(sed 's/.*\"\(.*\)\".*/\1/g' "version")" >> "$GITHUB_OUTPUT"                   
+          VERSION=$(awk -F'"' '/^appVersion:/ {print $2}' chart/gateway-web/Chart.yaml)
+          echo "version=${VERSION}" >> "$GITHUB_OUTPUT"
 
       - name: Merge changes from main to dev
         env:
           GITHUB_TOKEN: ${{ steps.generate-deployment-token.outputs.token }}
           RELEASE_VERSION: ${{ steps.getversion.outputs.version }}
         run: |
-          rm -f version
           git fetch origin dev
           git checkout dev
           git merge --squash origin/main || true
@@ -97,8 +96,8 @@ jobs:
       - name: Read VERSION file
         id: getversion
         run: |
-          sed -n 's/^appVersion:\(.*\)/\1/p' < "chart/gateway-web/Chart.yaml" > "version"
-          echo "version=$(sed 's/.*\"\(.*\)\".*/\1/g' "version")" >> "$GITHUB_OUTPUT" 
+          VERSION=$(awk -F'"' '/^appVersion:/ {print $2}' chart/gateway-web/Chart.yaml)
+          echo "version=${VERSION}" >> "$GITHUB_OUTPUT"
 
       - name: Google Auth
         id: auth
