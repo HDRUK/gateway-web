@@ -1,3 +1,14 @@
+## [2.35.0](https://github.com/HDRUK/gateway-web/compare/v2.34.1...v2.35.0) (2026-03-31)
+
+### ✨ Features
+
+* **GAT-7966:** updated semantic pipeline when merge back to dev (#1498) ([d3f5083](https://github.com/HDRUK/gateway-web/commit/d3f508381f2efccebf52844597175ae4d7dde554)), closes [GAT-7966](GAT-7966)
+* **GAT-8095:** Add dataset aliases to dataset landing page (#1499) ([394ffa0](https://github.com/HDRUK/gateway-web/commit/394ffa04a0fea092008dafeaaa66e3bb4f0b1cd0)), closes [GAT-8095](GAT-8095)
+* **GAT-8122:** Metrics (#1503) ([bf63c0e](https://github.com/HDRUK/gateway-web/commit/bf63c0e2f8b9d1e2cc32327261c41177cd353513)), closes [GAT-8122](GAT-8122)
+* **GAT-8122:** Statistics home banner and page (#1502) ([b04559b](https://github.com/HDRUK/gateway-web/commit/b04559b3bf8d47b6fb7d57c68d0cf9cdc43be50b)), closes [GAT-8122](GAT-8122)
+* **GAT-8488:** Allow DAR Manager to create file based template (#1505) ([555554f](https://github.com/HDRUK/gateway-web/commit/555554fcff0efb485c2d9044f4fb357a863b7224)), closes [GAT-8488](GAT-8488)
+* **GAT-8678:** Update nhs sde link (#1500) ([ff8ace2](https://github.com/HDRUK/gateway-web/commit/ff8ace214aa31c14c7304d2c676ec77c5469ce0a)), closes [GAT-8678](GAT-8678)
+
 ## [2.34.1](https://github.com/HDRUK/gateway-web/compare/v2.34.0...v2.34.1) (2026-03-24)
 
 ### 🐛 Bug Fixes
