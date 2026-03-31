@@ -172,12 +172,7 @@ const EmailNotifications = ({ permissions, team }: EmailNotificationsProps) => {
         <Form id="action-bar-form" onSubmit={handleSubmit(submitForm)}>
             <Paper>
                 <Box>
-                    <Typography
-                        sx={{
-                            fontWeight: 500,
-                            fontSize: "18px",
-                            marginBottom: "12px",
-                        }}>
+                    <Typography variant="h2" component="h1">
                         Email notifications
                     </Typography>
                     <Typography

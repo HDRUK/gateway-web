@@ -791,6 +791,31 @@ const DarIcon = createSvgIcon(
     "DarIcon"
 );
 
+const EmailIcon = createSvgIcon(
+    <svg
+        width="24"
+        height="24"
+        viewBox="0 0 24 24"
+        fill="none"
+        xmlns="http://www.w3.org/2000/svg">
+        <path
+            d="M2 12.9091V18.3636C2 18.8458 2.19156 19.3083 2.53253 19.6493C2.87351 19.9903 3.33597 20.1818 3.81818 20.1818H20.1818C20.664 20.1818 21.1265 19.9903 21.4675 19.6493C21.8084 19.3083 22 18.8458 22 18.3636V12.9091"
+            stroke="currentColor"
+            strokeWidth="1.7"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+        />
+        <path
+            d="M22 8.36363V5.63636C22 5.15415 21.8084 4.69168 21.4675 4.35071C21.1265 4.00973 20.664 3.81818 20.1818 3.81818H3.81818C3.33597 3.81818 2.87351 4.00973 2.53253 4.35071C2.19156 4.69168 2 5.15415 2 5.63636V8.36363L12 13.8182L22 8.36363Z"
+            stroke="currentColor"
+            strokeWidth="1.7"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+        />
+    </svg>,
+    "EmailIcon"
+);
+
 export {
     BookmarksOutlinedIcon,
     BookmarkBorderIcon,
@@ -830,4 +855,5 @@ export {
     ReUploadIcon,
     TeamMembersIcon,
     DarIcon,
+    EmailIcon,
 };
