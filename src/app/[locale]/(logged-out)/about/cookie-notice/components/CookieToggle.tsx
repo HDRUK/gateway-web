@@ -1,8 +1,10 @@
 "use client";
 
 import Button from "@/components/Button";
+import { useTranslations } from "@/mocks/next-intl";
 
 export default function CookieToggle() {
+    const t = useTranslations("pages.about.cookies");
     return (
         <>
             <Button
@@ -11,7 +13,7 @@ export default function CookieToggle() {
                         window.Optanon.ToggleInfoDisplay();
                     }
                 }}>
-                Cookie settings
+                {t("settings")}
             </Button>
         </>
     );

@@ -239,6 +239,9 @@
             "accessibilityStatement": {
                 "title": "Accessibility Statement",
                 "subTitle": "We are committed to creating an accessible experience for all users"
+            },
+            "cookies": {
+                "settings": "Cookie settings"
             }
         },
         "account": {
