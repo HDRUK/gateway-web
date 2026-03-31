@@ -69,8 +69,8 @@ const DarEnquiryDialog = ({
     const dialogTitle =
         modalHeader ||
         (isDarEnabled ? t("titleEnabled") : t("titleNotEnabled"));
-    console.log(modalContent);
-    return (
+
+        return (
         <Dialog title={dialogTitle}>
             <MuiDialogContent>
                 {modalContent ? (<Box mb={2}><MarkDownSanitizedWithHtml content={modalContent} /></Box>
