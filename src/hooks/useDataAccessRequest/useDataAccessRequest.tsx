@@ -26,6 +26,7 @@ interface ShowDARApplicationModalProps {
     isDarEnabled: boolean;
     hasPublishedDarTemplate: boolean;
     url: string;
+    teamName: string;
     modalHeader: string | null;
     modalContent: string | null;
     modalFooter: string | null;
@@ -93,6 +94,7 @@ const useDataAccessRequest = () => {
             onFeasibilityEnquiryClick,
             isDarEnabled,
             hasPublishedDarTemplate,
+            teamName,
             modalHeader,
             modalContent,
             modalFooter,
@@ -134,6 +136,7 @@ const useDataAccessRequest = () => {
                 onFeasibilityEnquiryClick,
                 isDarEnabled,
                 hasPublishedDarTemplate,
+                teamName,
                 modalHeader,
                 modalContent,
                 modalFooter,

@@ -25,6 +25,7 @@ export interface DarEnquiryDialogProps {
     isDarEnabled: boolean;
     hasPublishedDarTemplate: boolean;
     url: string;
+    teamName: string;
     modalHeader?: string;
     modalContent?: string;
     modalFooter?: string;
@@ -41,6 +42,7 @@ const DarEnquiryDialog = ({
     createDARApplication,
     isDarEnabled,
     hasPublishedDarTemplate,
+    teamName,
     modalHeader,
     modalContent,
     modalFooter,
@@ -82,6 +84,7 @@ const DarEnquiryDialog = ({
                 {!isDarEnabled && (
                     <Typography>
                         {t.rich("messageNotEnabledOtherInstructions", {
+                            dataCustodian: () => (teamName),
                             generalEnquiryLink: () => (
                                 <Button
                                     aria-label="general"
