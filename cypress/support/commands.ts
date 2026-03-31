@@ -32,11 +32,28 @@ Cypress.Commands.add("login", (user: string) => {
     });
 });
 
+Cypress.Commands.add("waitForApiIdle", () => {
+    let pending = 0;
+
+    cy.intercept(
+        { method: "GET", url: `${Cypress.env("API_URL")}/**` },
+        req => {
+            pending++;
+            req.continue(() => {
+                pending--;
+            });
+        }
+    );
+
+    cy.wrap(null, { timeout: 10000 }).should(() => expect(pending).to.equal(0));
+});
+
 declare global {
     namespace Cypress {
         interface Chainable {
             checkA11yPage: () => void;
             login: (user: string) => void;
+            waitForApiIdle: () => void;
         }
     }
 }

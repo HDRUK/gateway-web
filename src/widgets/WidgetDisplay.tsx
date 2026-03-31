@@ -11,6 +11,7 @@ import {
     ScriptItem,
     DataUseItem,
 } from "@/interfaces/Widget";
+import CohortDiscoveryButton from "@/components/CohortDiscoveryButton";
 import theme, { colors } from "@/config/theme";
 import { FULL_GATEWAY_URL } from "@/consts/urls";
 import CategoryMenu from "./components/CategoryMenu";
@@ -138,17 +139,9 @@ export default function WidgetDisplay({
                             </Typography>
                             {TRANSLATIONS.footerDesc}
                         </Typography>
-                        <Button
-                            href={`${FULL_GATEWAY_URL}/about/cohort-discovery`}
-                            target="_blank"
-                            sx={{
-                                backgroundColor: colors.white,
-                                flexShrink: 0,
-                            }}
-                            color="greyCustom"
-                            disableElevation>
-                            {TRANSLATIONS.cohortButton}
-                        </Button>
+                        <CohortDiscoveryButton
+                            showDatasetExplanatoryTooltip
+                        />
                     </Box>
                 )}
             </Box>

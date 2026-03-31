@@ -6,6 +6,7 @@ const TOOL_NAME = "NEW_TOOL";
 const createTool = () => {
     cy.visit(`/${RouteName.ACCOUNT}/${RouteName.PROFILE}`);
     cy.get('[href="/account/profile/tools"]').click();
+    cy.waitForApiIdle();
     cy.contains("button", "Add new").click();
 
     cy.get('input[name="name"]').type(TOOL_NAME);

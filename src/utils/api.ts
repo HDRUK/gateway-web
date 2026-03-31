@@ -30,6 +30,7 @@ import { Dataset } from "@/interfaces/Dataset";
 import { Filter } from "@/interfaces/Filter";
 import { FormHydrationSchema } from "@/interfaces/FormHydration";
 import { Keyword } from "@/interfaces/Keyword";
+import { MetricsResponse } from "@/interfaces/Metrics";
 import { NetworkSummary } from "@/interfaces/NetworkSummary";
 import { PaginationType } from "@/interfaces/Pagination";
 import { Publication } from "@/interfaces/Publication";
@@ -837,6 +838,11 @@ async function getNetworkCustodiansEntities(id: string, options?: GetOptions) {
     return datasets;
 }
 
+async function getMetrics(options?: GetOptions) {
+    const metrics = await get<MetricsResponse>(`${apis.metricsV2Url}`, options);
+    return metrics;
+}
+
 export {
     getApplication,
     getCohort,
@@ -883,4 +889,5 @@ export {
     getNetworkCustodiansSummary,
     getNetworkCustodiansDatasets,
     getNetworkCustodiansEntities,
+    getMetrics,
 };

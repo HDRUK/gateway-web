@@ -591,6 +591,15 @@ const theme = createTheme({
                 },
             },
         },
+        MuiCardContent: {
+            styleOverrides: {
+                root: ({ theme: _theme }) => ({
+                    "&:last-child": {
+                        paddingBottom: _theme.spacing(2),
+                    },
+                }),
+            },
+        },
         MuiDialogTitle: {
             styleOverrides: {
                 root: {

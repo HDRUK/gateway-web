@@ -82,4 +82,5 @@ export enum RouteName {
     MISSION_AND_PURPOSE = "/about/our-mission-and-purpose",
     RESEARCHERS = "/about/researchers-innovators",
     WIDGETS = "widgets",
+    STATISTICS = "statistics",
 }
