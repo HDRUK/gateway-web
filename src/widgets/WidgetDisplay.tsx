@@ -11,7 +11,6 @@ import {
     ScriptItem,
     DataUseItem,
 } from "@/interfaces/Widget";
-import CohortDiscoveryButton from "@/components/CohortDiscoveryButton";
 import theme, { colors } from "@/config/theme";
 import { FULL_GATEWAY_URL } from "@/consts/urls";
 import CategoryMenu from "./components/CategoryMenu";
@@ -31,6 +30,9 @@ const TRANSLATIONS = {
 };
 
 type WidgetDisplayProps = { data: WidgetEntityData; isIframe?: boolean };
+
+const isValidColor = (value?: string) =>
+    typeof value === "string" && value.trim() !== "#" && value.trim() !== "";
 
 export default function WidgetDisplay({
     data,
@@ -54,29 +56,58 @@ export default function WidgetDisplay({
     const resultsByType = useResultsByType(data, searchValue);
     const widgetContainer = useRef<HTMLDivElement | null>(null);
 
-    const branding = useMemo<WidgetBranding>(() => ({
-        primary: branding_primary ?? undefined,
-        secondary: branding_secondary ?? undefined,
-        neutral: branding_neutral ?? undefined,
-    }), [branding_primary, branding_secondary, branding_neutral]);
+    const branding = useMemo<WidgetBranding>(
+        () => ({
+            primary: isValidColor(branding_primary)
+                ? branding_primary
+                : undefined,
+            secondary: isValidColor(branding_secondary)
+                ? branding_secondary
+                : undefined,
+            neutral: isValidColor(branding_neutral)
+                ? branding_neutral
+                : undefined,
+        }),
+        [branding_primary, branding_secondary, branding_neutral]
+    );
 
     const renderedContent = useMemo(() => {
-    const results = resultsByType[entityType];
+        const results = resultsByType[entityType];
 
-    switch (entityType) {
-        case "datasets":
-            return <DatasetsList items={results as DatasetItem[]} branding={branding} />;
-        case "collections":
-            return <CollectionsGrid items={results as CollectionItem[]} branding={branding} />;
-        case "scripts":
-            return <ScriptsList items={results as ScriptItem[]} branding={branding} />;
-        default:
-            return <DataUsesList items={results as DataUseItem[]} branding={branding} />;
-    }
-}, [entityType, resultsByType, branding]);
+        switch (entityType) {
+            case "datasets":
+                return (
+                    <DatasetsList
+                        items={results as DatasetItem[]}
+                        branding={branding}
+                    />
+                );
+            case "collections":
+                return (
+                    <CollectionsGrid
+                        items={results as CollectionItem[]}
+                        branding={branding}
+                    />
+                );
+            case "scripts":
+                return (
+                    <ScriptsList
+                        items={results as ScriptItem[]}
+                        branding={branding}
+                    />
+                );
+            default:
+                return (
+                    <DataUsesList
+                        items={results as DataUseItem[]}
+                        branding={branding}
+                    />
+                );
+        }
+    }, [entityType, resultsByType, branding]);
 
     const filteredMenuCategories = useMemo(
-    () => CATEGORIES.filter(category => data?.[category].length > 0),
+        () => CATEGORIES.filter(category => data?.[category].length > 0),
         [data]
     );
 
@@ -139,9 +170,17 @@ export default function WidgetDisplay({
                             </Typography>
                             {TRANSLATIONS.footerDesc}
                         </Typography>
-                        <CohortDiscoveryButton
-                            showDatasetExplanatoryTooltip
-                        />
+                        <Button
+                            href={`${FULL_GATEWAY_URL}/about/cohort-discovery`}
+                            target="_blank"
+                            sx={{
+                                backgroundColor: colors.white,
+                                flexShrink: 0,
+                            }}
+                            color="greyCustom"
+                            disableElevation>
+                            {TRANSLATIONS.cohortButton}
+                        </Button>
                     </Box>
                 )}
             </Box>
