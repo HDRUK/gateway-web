@@ -4,13 +4,13 @@ run-name: ${{ github.actor }} triggered deploy to DEV pipeline
 on:
   push:
     branches:
-      - "dev"
+      - "fix/widgets"
 
 env:
   PROJECT_ID: "${{ secrets.PROJECT_ID }}"
   GAR_LOCATION: "${{ secrets.GAR_LOCATION }}"
-  SLACK_WEBHOOK_URL: '${{ secrets.SLACK_WEBHOOK_URL}}'
-  SLACK_CHANNEL: '${{ secrets.GITHUBACTIONS_SLACK_CHANNEL }}'
+  SLACK_WEBHOOK_URL: "${{ secrets.SLACK_WEBHOOK_URL}}"
+  SLACK_CHANNEL: "${{ secrets.GITHUBACTIONS_SLACK_CHANNEL }}"
 
 jobs:
   build:
@@ -24,13 +24,13 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
         with:
-          ref: "dev"
+          ref: "fix/widgets"
 
       - name: Read VERSION file
         id: getversion
         run: |
           sed -n 's/^appVersion:\(.*\)/\1/p' < "chart/gateway-web/Chart.yaml" > "version"
-          echo "version=$(sed 's/.*\"\(.*\)\".*/\1/g' "version")" >> "$GITHUB_OUTPUT" 
+          echo "version=$(sed 's/.*\"\(.*\)\".*/\1/g' "version")" >> "$GITHUB_OUTPUT"
 
       - name: Google Auth
         id: auth
@@ -73,7 +73,7 @@ jobs:
         id: checkout
         uses: actions/checkout@v4
         with:
-          ref: "dev"
+          ref: "fix/widgets"
 
       - name: Google Auth
         id: auth
@@ -87,7 +87,7 @@ jobs:
         id: getversion
         run: |
           sed -n 's/^appVersion:\(.*\)/\1/p' < "chart/gateway-web/Chart.yaml" > "version"
-          echo "version=$(sed 's/.*\"\(.*\)\".*/\1/g' "version")" >> "$GITHUB_OUTPUT"           
+          echo "version=$(sed 's/.*\"\(.*\)\".*/\1/g' "version")" >> "$GITHUB_OUTPUT"
 
       - name: Deploy to Cloud Run
         uses: actions-hub/gcloud@540.0.0
