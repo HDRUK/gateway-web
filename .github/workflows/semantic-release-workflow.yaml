@@ -68,6 +68,7 @@ jobs:
           GITHUB_TOKEN: ${{ steps.generate-deployment-token.outputs.token }}
           RELEASE_VERSION: ${{ steps.getversion.outputs.version }}
         run: |
+          rm -f version
           git fetch origin dev
           git checkout dev
           git merge --squash origin/main || true
