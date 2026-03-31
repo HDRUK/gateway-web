@@ -15,6 +15,7 @@ type ComponentTypes =
     | "FileUpload"
     | "FileUploadMultiple"
     | "DocumentExchange"
-    | "HexColourField";
+    | "HexColourField"
+    | "ArrayField";
 
 export type { ComponentTypes };

@@ -103,7 +103,10 @@ const buildProperties = (fields: DarApplicationQuestion[]) => {
     const props: Record<number | string, unknown> = {};
 
     const processField = (field: DarApplicationQuestion) => {
-        if (field.component === "ArrayField" && field.fields?.length) {
+        if (
+            field.component === inputComponents.ArrayField &&
+            field.fields?.length
+        ) {
             const arrayKey = field.title;
 
             props[arrayKey] = {
