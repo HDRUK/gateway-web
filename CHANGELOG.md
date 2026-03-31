@@ -1,3 +1,15 @@
+## [2.35.2](https://github.com/HDRUK/gateway-web/compare/v2.35.1...v2.35.2) (2026-03-31)
+
+### 🐛 Bug Fixes
+
+* **GAT-0000:** fixing pipeline error (#1515) ([10a3839](https://github.com/HDRUK/gateway-web/commit/10a3839e1943745fc5c20a6766ad7e9621a465d6)), closes [GAT-0000](GAT-0000)
+
+## [2.35.1](https://github.com/HDRUK/gateway-web/compare/v2.35.0...v2.35.1) (2026-03-31)
+
+### 🐛 Bug Fixes
+
+* **GAT-8702:** Widgets failing to load (#1514) ([912ff61](https://github.com/HDRUK/gateway-web/commit/912ff616924e505edc77318412df15b4d1854d1d)), closes [GAT-8702](GAT-8702)
+
 ## [2.35.0](https://github.com/HDRUK/gateway-web/compare/v2.34.1...v2.35.0) (2026-03-31)
 
 ### ✨ Features
