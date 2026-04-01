@@ -1691,7 +1691,7 @@
             }
         },
         "RequestNhseSdeAccessButton": {
-            "label": "Request access to NHS SDE Network datasets",
+            "label": "Request registration with the NHS Research SDE Network",
             "temporaryLabel": "Learn more about the SDE Network"
         },
         "IndicateNhseSdeAccessButton": {
