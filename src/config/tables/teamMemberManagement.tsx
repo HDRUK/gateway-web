@@ -1,10 +1,7 @@
-/* eslint-disable */
-import { useMemo } from "react";
-import { Box, FormControlLabel, FormGroup } from "@mui/material";
-import { Table, createColumnHelper } from "@tanstack/react-table";
+import { Box } from "@mui/material";
+import { createColumnHelper } from "@tanstack/react-table";
 import { IconType } from "@/interfaces/Ui";
 import { User } from "@/interfaces/User";
-import StyledCheckbox from "@/components/StyledCheckbox";
 import TooltipIcon from "@/components/TooltipIcon";
 import PermissionDescriptions from "@/modules/PermissionDescriptions";
 import {
@@ -15,92 +12,67 @@ import {
     ROLE_CUSTODIAN_METADATA_MANAGER,
     ROLE_CUSTODIAN_TEAM_ADMIN,
     ROLE_CUSTODIAN_COHORT_MANAGER,
-    rolesMeta,
 } from "@/consts/roles";
+import PermissionCheckboxes from "@/app/[locale]/account/team/[teamId]/(withLeftNav)/team-management/components/PermissionCheckboxes";
 import TableActionCell from "@/app/[locale]/account/team/[teamId]/(withLeftNav)/team-management/components/TableActionCell";
 
-interface CheckboxesCellProps {
-    row: { original: User; index: number };
-    translations: { [key: string]: string };
-    permissions: { [key: string]: boolean };
-    checkboxes: { name: string; disabled: boolean }[];
-    table: Table<User>;
-}
-
-const CheckboxesCell = ({
-    row: { index, original },
-    table,
-    checkboxes,
-    permissions,
-    translations,
-}: CheckboxesCellProps) => {
-    const { roles } = original;
-
-    const isLastRole = useMemo(
-        () => roles?.filter(role => role.enabled).length === 1,
-        [roles]
-    );
-
-    const lastRoleMessage = permissions["roles.cta.update"]
-        ? translations.lastRoleAdminMessage
-        : translations.lastRoleMessage;
-
-    const checkboxesHydrated = useMemo(() => {
-        return checkboxes.map(checkbox => {
-            const value = !!roles?.find(role => role.name === checkbox.name)
-                ?.enabled;
-            return {
-                name: checkbox.name,
-                disabled: value && isLastRole ? true : checkbox.disabled,
-                value,
-                title:
-                    value && isLastRole
-                        ? lastRoleMessage
-                        : checkbox.disabled
-                        ? translations.noPermission
-                        : "",
-            };
-        });
-    }, [roles, checkboxes]);
-
-    const handleUpdate = (name: string, value: boolean) => {
-        const filteredRoles = roles.filter(role => role.name !== name);
-
-        table.options.meta?.updateData(index, "roles", [
-            ...filteredRoles,
-            {
-                name,
-                enabled: value,
-            },
-        ]);
-    };
-
-    return (
-        <FormGroup>
-            {checkboxesHydrated.map(checkbox => (
-                <FormControlLabel
-                    key={checkbox.name}
-                    label={rolesMeta[checkbox.name].label}
-                    title={checkbox.title}
-                    control={
-                        <StyledCheckbox
-                            disabled={checkbox.disabled}
-                            sx={{ "& .MuiSvgIcon-root": { fontSize: 28 } }}
-                            name={checkbox.name}
-                            checked={checkbox.value}
-                            value={checkbox.value}
-                            onChange={e =>
-                                handleUpdate(checkbox.name, e.target.checked)
-                            }
-                        />
-                    }
-                />
-            ))}
-        </FormGroup>
-    );
-};
-
 const columnHelper = createColumnHelper<User>();
+
+export const ROLE_SECTIONS = [
+    {
+        id: "team",
+        label: "teamHeader",
+        roles: [
+            {
+                name: ROLE_CUSTODIAN_TEAM_ADMIN,
+                permission: "roles.cta.update",
+            },
+            {
+                name: ROLE_CUSTODIAN_DEVELOPER,
+                permission: "roles.dev.update",
+            },
+        ],
+    },
+    {
+        id: "dataAccessRequest",
+        label: "darHeader",
+        roles: [
+            {
+                name: ROLE_CUSTODIAN_DAR_MANAGER,
+                permission: "roles.dar-m.update",
+            },
+            {
+                name: ROLE_CUSTODIAN_DAR_REVIEWER,
+                permission: "roles.dar-r.update",
+            },
+        ],
+    },
+    {
+        id: "cohortDiscoveryAdmin",
+        label: "cohortDiscoveryHeader",
+        feature: "isCohortDiscoveryServiceEnabled",
+        roles: [
+            {
+                name: ROLE_CUSTODIAN_COHORT_MANAGER,
+                permission: null,
+            },
+        ],
+    },
+    {
+        id: "metaData",
+        label: "metaDataHeader",
+        roles: [
+            {
+                name: ROLE_CUSTODIAN_METADATA_MANAGER,
+                permission: "roles.mdm.update",
+            },
+            {
+                name: ROLE_CUSTODIAN_METADATA_EDITOR,
+                permission: "roles.mde.update",
+            },
+        ],
+    },
+];
 
 const getColumns = ({
     translations,
@@ -116,161 +88,67 @@ const getColumns = ({
         icon: IconType;
     }[];
     features: { [key: string]: boolean };
-}) => [
-    columnHelper.display({
-        id: "name",
-        header: () => <Box textAlign="left">{translations.nameHeader}</Box>,
-        cell: ({ row }) => {
-            return row.original.firstname
-                ? `${row.original.firstname} ${row.original.lastname}`
-                : row.original.name;
-        },
-    }),
-    columnHelper.display({
-        id: "team",
-        header: () => (
-            <TooltipIcon
-                label={translations.teamHeader}
-                content={
-                    <PermissionDescriptions
-                        roles={[
-                            ROLE_CUSTODIAN_TEAM_ADMIN,
-                            ROLE_CUSTODIAN_DEVELOPER,
-                        ]}
-                    />
-                }
-            />
-        ),
-        cell: props => (
-            <CheckboxesCell
-                {...props}
-                translations={translations}
-                permissions={permissions}
-                checkboxes={[
-                    {
-                        name: ROLE_CUSTODIAN_TEAM_ADMIN,
-                        disabled: !permissions["roles.cta.update"],
-                    },
-                    {
-                        name: ROLE_CUSTODIAN_DEVELOPER,
-                        disabled: !permissions["roles.dev.update"],
-                    },
-                ]}
-            />
-        ),
-    }),
-    columnHelper.display({
-        id: "dataAccessRequest",
-        header: () => (
-            <TooltipIcon
-                label={translations.darHeader}
-                content={
-                    <PermissionDescriptions
-                        roles={[
-                            ROLE_CUSTODIAN_DAR_MANAGER,
-                            ROLE_CUSTODIAN_DAR_REVIEWER,
-                        ]}
-                    />
-                }
-            />
-        ),
-        cell: props => (
-            <CheckboxesCell
-                {...props}
-                translations={translations}
-                permissions={permissions}
-                checkboxes={[
-                    {
-                        name: ROLE_CUSTODIAN_DAR_MANAGER,
-                        disabled: !permissions["roles.dar-m.update"],
-                    },
-                    {
-                        name: ROLE_CUSTODIAN_DAR_REVIEWER,
-                        disabled: !permissions["roles.dar-r.update"],
-                    },
-                ]}
-            />
-        ),
-    }),
-    ...(features["isCohortDiscoveryServiceEnabled"]
-        ? [
-              columnHelper.display({
-                  id: "cohortDiscoveryAdmin",
-                  header: () => (
-                      <TooltipIcon
-                          label={translations.cohortDiscoveryHeader}
-                          content={
-                              <PermissionDescriptions
-                                  roles={[ROLE_CUSTODIAN_COHORT_MANAGER]}
-                              />
-                          }
-                      />
-                  ),
-                  cell: props => (
-                      <CheckboxesCell
-                          {...props}
-                          translations={translations}
-                          permissions={permissions}
-                          checkboxes={[
-                              {
-                                  name: ROLE_CUSTODIAN_COHORT_MANAGER,
-                                  disabled: false, //!permissions["roles.dar-m.update"],
-                              },
-                          ]}
-                      />
-                  ),
-              }),
-          ]
-        : []),
-    columnHelper.display({
-        id: "metaData",
-        header: () => (
-            <TooltipIcon
-                label={translations.metaDataHeader}
-                content={
-                    <PermissionDescriptions
-                        roles={[
-                            ROLE_CUSTODIAN_METADATA_MANAGER,
-                            ROLE_CUSTODIAN_METADATA_EDITOR,
-                        ]}
-                    />
-                }
-            />
-        ),
-        cell: props => (
-            <CheckboxesCell
-                {...props}
-                translations={translations}
-                permissions={permissions}
-                checkboxes={[
-                    {
-                        name: ROLE_CUSTODIAN_METADATA_MANAGER,
-                        disabled: !permissions["roles.mdm.update"],
-                    },
-                    {
-                        name: ROLE_CUSTODIAN_METADATA_EDITOR,
-                        disabled: !permissions["roles.mde.update"],
-                    },
-                ]}
-            />
-        ),
-    }),
-    ...(permissions["team-members.delete"]
-        ? [
-              columnHelper.display({
-                  id: "furtherActions",
-                  header: () => (
-                      <Box textAlign="left">{translations.actionsHeader}</Box>
-                  ),
-                  size: 40,
-                  cell: ({ row: { original } }) => {
-                      return (
+}) => {
+    const roleColumns = ROLE_SECTIONS.filter(section =>
+        section.feature ? features[section.feature] : true
+    ).map(section =>
+        columnHelper.display({
+            id: section.id,
+            header: () => (
+                <TooltipIcon
+                    label={translations[section.label]}
+                    content={
+                        <PermissionDescriptions
+                            roles={section.roles.map(r => r.name)}
+                        />
+                    }
+                />
+            ),
+            cell: props => (
+                <PermissionCheckboxes
+                    {...props}
+                    translations={translations}
+                    permissions={permissions}
+                    checkboxes={section.roles.map(role => ({
+                        name: role.name,
+                        disabled: role.permission
+                            ? !permissions[role.permission]
+                            : false,
+                    }))}
+                />
+            ),
+        })
+    );
+
+    return [
+        columnHelper.display({
+            id: "name",
+            header: () => <Box textAlign="left">{translations.nameHeader}</Box>,
+            cell: ({ row }) =>
+                row.original.firstname
+                    ? `${row.original.firstname} ${row.original.lastname}`
+                    : row.original.name,
+        }),
+
+        ...roleColumns,
+
+        ...(permissions["team-members.delete"]
+            ? [
+                  columnHelper.display({
+                      id: "furtherActions",
+                      header: () => (
+                          <Box textAlign="left">
+                              {translations.actionsHeader}
+                          </Box>
+                      ),
+                      size: 40,
+                      cell: ({ row: { original } }) => (
                           <TableActionCell user={original} actions={actions} />
-                      );
-                  },
-              }),
-          ]
-        : []),
-];
+                      ),
+                  }),
+              ]
+            : []),
+    ];
+};
 
 export { getColumns };
