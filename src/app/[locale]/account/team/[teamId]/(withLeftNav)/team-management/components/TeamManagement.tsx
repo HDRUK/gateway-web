@@ -5,14 +5,12 @@ import Box from "@/components/Box";
 import BoxContainer from "@/components/BoxContainer";
 import Button from "@/components/Button";
 import Paper from "@/components/Paper";
-import Tabs from "@/components/Tabs";
 import Typography from "@/components/Typography";
 import useDialog from "@/hooks/useDialog";
 import { useNewMembersOnTop } from "@/hooks/useNewMembersOnTop";
 import { CUSTOMER_PORTAL_REPORT_BUG_URL } from "@/config/hrefs";
 import { AddIcon } from "@/consts/icons";
 import AddTeamMemberDialog from "./AddTeamMemberDialog";
-import EmailNotifications from "./EmailNotifications";
 import TeamMembers from "./TeamMembers";
 
 export default function TeamManagement({
@@ -24,27 +22,6 @@ export default function TeamManagement({
 }) {
     const { showDialog } = useDialog();
     const { teamMembers, onAddNewMembers } = useNewMembersOnTop(team);
-
-    const tabsList = [
-        {
-            label: "Members",
-            value: "members",
-            content: (
-                <TeamMembers
-                    teamId={team.id}
-                    permissions={permissions}
-                    teamMembers={teamMembers}
-                />
-            ),
-        },
-        {
-            label: "Notifications",
-            value: "notifications",
-            content: (
-                <EmailNotifications team={team} permissions={permissions} />
-            ),
-        },
-    ];
 
     return (
         <BoxContainer sx={{ gap: 0 }}>
@@ -83,12 +60,14 @@ export default function TeamManagement({
                     </Box>
                 </Box>
             </Paper>
-            <Tabs
-                centered
-                tabs={tabsList}
-                tabBoxSx={{ padding: 0 }}
-                rootBoxSx={{ padding: 0 }}
-            />
+
+            <Box sx={{ p: 0, mt: 2 }}>
+                <TeamMembers
+                    teamId={team.id}
+                    permissions={permissions}
+                    teamMembers={teamMembers}
+                />
+            </Box>
         </BoxContainer>
     );
 }
