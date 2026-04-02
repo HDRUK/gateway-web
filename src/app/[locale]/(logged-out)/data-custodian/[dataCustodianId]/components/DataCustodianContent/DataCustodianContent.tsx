@@ -185,43 +185,26 @@ async function DataCustodianContent({
                         </Box>
                     ))}
                     <Box
-                        // sx={{
-                        //     display: "flex",
-                        //     alignItems: "center",
-                        //     justifyContent: "center",
-
-                        // }}
-                        // sx={{
-                        //     position: "relative",
-                        //     width: {
-                        //         mobile: "100%",
-                        //         laptop: 400,
-                        //     },
-                        //     // aspectRatio: "1 / 1", // 👈 keeps it square
-                        // }}>
                         sx={{
-                            position: "relative",
-                            width: "auto",
-                            maxHeight: 400,
-                            // maxWidth: 400,
-
-                            maxWidth: { mobile: "100%", laptop: 400 },
-
-                            height: "auto",
+                            display: "flex",
+                            alignItems: "center",
+                            justifyContent: "center",
                         }}>
                         <Image
-                            // width={400}
-                            // height={250}
+                            width={400}
+                            height={400}
                             alt={teamSummary.name}
                             src={
                                 teamSummary?.team_logo ||
                                 StaticImages.BASE.placeholder
                             }
-                            fill
                             style={{
+                                width: "100%",
+                                height: "auto",
+                                maxWidth: 400,
+                                maxHeight: 400,
                                 objectFit: "contain",
                             }}
-                            // style={AspectRatioImage}
                         />
                     </Box>
                     <DataCustodianLinks data={data} sx={{ mb: 2 }} />
