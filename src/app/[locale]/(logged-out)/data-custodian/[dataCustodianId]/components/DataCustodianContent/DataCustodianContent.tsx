@@ -13,7 +13,6 @@ import TooltipIcon from "@/components/TooltipIcon";
 import Typography from "@/components/Typography";
 import apis from "@/config/apis";
 import { StaticImages } from "@/config/images";
-import { AspectRatioImage } from "@/consts/image";
 import { formatDate } from "@/utils/date";
 import { DataCustodianField, DataCustodianSection } from "../../config";
 
@@ -186,20 +185,43 @@ async function DataCustodianContent({
                         </Box>
                     ))}
                     <Box
+                        // sx={{
+                        //     display: "flex",
+                        //     alignItems: "center",
+                        //     justifyContent: "center",
+
+                        // }}
+                        // sx={{
+                        //     position: "relative",
+                        //     width: {
+                        //         mobile: "100%",
+                        //         laptop: 400,
+                        //     },
+                        //     // aspectRatio: "1 / 1", // 👈 keeps it square
+                        // }}>
                         sx={{
-                            display: "flex",
-                            alignItems: "center",
-                            justifyContent: "space-between",
+                            position: "relative",
+                            width: "auto",
+                            maxHeight: 400,
+                            // maxWidth: 400,
+
+                            maxWidth: { mobile: "100%", laptop: 400 },
+
+                            height: "auto",
                         }}>
                         <Image
-                            width={400}
-                            height={250}
+                            // width={400}
+                            // height={250}
                             alt={teamSummary.name}
                             src={
                                 teamSummary?.team_logo ||
                                 StaticImages.BASE.placeholder
                             }
-                            style={AspectRatioImage}
+                            fill
+                            style={{
+                                objectFit: "contain",
+                            }}
+                            // style={AspectRatioImage}
                         />
                     </Box>
                     <DataCustodianLinks data={data} sx={{ mb: 2 }} />
