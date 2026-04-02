@@ -2,7 +2,6 @@ import { Fragment, Suspense } from "react";
 import { Skeleton } from "@mui/material";
 import { get, isEmpty } from "lodash";
 import { getTranslations } from "next-intl/server";
-import Image from "next/image";
 import { notFound } from "next/navigation";
 import Box from "@/components/Box";
 import Chip from "@/components/Chip";
@@ -12,8 +11,6 @@ import { DataCustodianEntitiesSkeleton } from "@/components/Skeletons/Skeletons"
 import Typography from "@/components/Typography";
 import ActiveListSidebar from "@/modules/ActiveListSidebar";
 import apis from "@/config/apis";
-import { StaticImages } from "@/config/images";
-import { AspectRatioImage } from "@/consts/image";
 import { getTeamInfo } from "@/utils/api";
 import metaData from "@/utils/metadata";
 import ActionBar from "./components/ActionBar";
@@ -82,30 +79,15 @@ export default async function DataCustodianItemPage({
                             cohortDiscoverySupport.supportsCohortDiscovery
                         }
                     />
-                    <Box sx={{ ml: 2, mt: 2 }}>
-                        <Box sx={{ display: "flex", alignItems: "center", pt: 0, justifyContent: "space-between", p: 0}}>
-                            <Box sx={{ mb: 1, p: 0 }}>
-                                <Typography variant="h1" sx={{ ml: 2, mt: 2 }}>
-                                    {infoData.name}
-                                </Typography>
-                            </Box>
-                            <Image
-                                width={554}
-                                height={250}
-                                alt={infoData.name}
-                                src={
-                                    infoData?.team_logo ||
-                                    StaticImages.BASE.placeholder
-                                }
-                                style={AspectRatioImage}
-                            />
-                        </Box>
+                    <Box sx={{ ml: 2, mt: 2, pb: 0 }}>
+                        <Typography variant="h1">{infoData.name}</Typography>
                     </Box>
                     <Box
                         sx={{
                             display: "flex",
                             flexDirection: "column",
                             gap: 2,
+                            pt: 0,
                         }}>
                         <Suspense
                             fallback={
@@ -114,6 +96,7 @@ export default async function DataCustodianItemPage({
                             <DataCustodianContent
                                 dataCustodianId={dataCustodianId}
                                 populatedSections={populatedSections}
+                                teamSummary={infoData}
                             />
                             {!!infoData.aliases?.length && (
                                 <Fragment key="custodian_alias">
