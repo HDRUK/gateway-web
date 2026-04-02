@@ -198,6 +198,7 @@ async function DataCustodianContent({
                                 teamSummary?.team_logo ||
                                 StaticImages.BASE.placeholder
                             }
+                            sizes="(max-width: 768px) 100vw, 400px"
                             style={{
                                 width: "100%",
                                 height: "auto",
