@@ -1,6 +1,7 @@
 import { ReactElement } from "react";
 import { get } from "lodash";
 import { getTranslations } from "next-intl/server";
+import Image from "next/image";
 import { FieldType } from "@/interfaces/FieldType";
 import { TeamSummary } from "@/interfaces/TeamSummary";
 import Box from "@/components/Box";
@@ -11,6 +12,7 @@ import { MarkDownSanitizedWithHtml } from "@/components/MarkDownSanitizedWithHTM
 import Paper from "@/components/Paper";
 import TooltipIcon from "@/components/TooltipIcon";
 import Typography from "@/components/Typography";
+import { StaticImages } from "@/config/images";
 import { formatDate } from "@/utils/date";
 import { DataCustodianField, DataCustodianSection } from "../../config";
 
@@ -21,9 +23,11 @@ const TOOLTIP_SUFFIX = "Tooltip";
 async function DataCustodianContent({
     summaryPromise,
     populatedSections,
+    teamSummary,
 }: {
     summaryPromise: Promise<TeamSummary>;
     populatedSections: DataCustodianSection[];
+    teamSummary: TeamSummary;
 }): Promise<ReactElement> {
     const data = await summaryPromise;
 
@@ -165,6 +169,30 @@ async function DataCustodianContent({
                                 })}
                             </Box>
                         ))}
+                        <Box
+                            sx={{
+                                display: "flex",
+                                alignItems: "center",
+                                justifyContent: "center",
+                            }}>
+                            <Image
+                                width={400}
+                                height={400}
+                                alt={teamSummary.name}
+                                src={
+                                    teamSummary?.team_logo ||
+                                    StaticImages.BASE.placeholder
+                                }
+                                sizes="(max-width: 768px) 100vw, 400px"
+                                style={{
+                                    width: "100%",
+                                    height: "auto",
+                                    maxWidth: 400,
+                                    maxHeight: 400,
+                                    objectFit: "contain",
+                                }}
+                            />
+                        </Box>
                         <DataCustodianLinks data={data} sx={{ mb: 2 }} />
                     </Paper>
                 </Box>

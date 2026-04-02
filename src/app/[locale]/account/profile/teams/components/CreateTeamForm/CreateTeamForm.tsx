@@ -455,9 +455,7 @@ const CreateTeamForm = () => {
                                         ? t(
                                               `${TRANSLATION_PATH_CREATE}.addImageSuccess`
                                           )
-                                        : t(
-                                              `${TRANSLATION_PATH_CREATE}.aspectRatioInfo`
-                                          )
+                                        : undefined
                                 }
                             />
 

@@ -82,14 +82,4 @@ describe("validateImageDimensions", () => {
             ImageValidationError.SIZE
         );
     });
-
-    it("returns ImageValidationError.RATIO for invalid ratio", async () => {
-        mockWidth = 1000;
-        mockHeight = 300;
-        const file = new File(["dummy"], "test.jpg", { type: "image/jpeg" });
-
-        await expect(validateImageDimensions(file)).rejects.toBe(
-            ImageValidationError.RATIO
-        );
-    });
 });
