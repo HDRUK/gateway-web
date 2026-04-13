@@ -4,10 +4,10 @@ import { MetricsResponse } from "@/interfaces/Metrics";
 
 const metricKeys = [
     "datasets",
-    "dataCustodians",
-    "dur",
-    "cohort",
-    "scripts",
+    "custodians",
+    "durs",
+    "datasetCohortRequest",
+    "tools",
     "publications",
     "custodianNetworks",
     "collections",
