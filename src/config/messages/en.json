@@ -226,7 +226,7 @@
                 "userDeclaration": "User Declaration",
                 "userDeclarationAdditional": "All users of the Cohort Discovery are required to accept the declaration below.",
                 "statementIntro": "I confirm that my use of the tool will be for the sole purpose of understanding the size of populations relevant to a particular research question and that any resulting study or clinical trial will be for public benefit as defined by the National Data Guardian.",
-                "statement1": "I acknowledge that:<list><item>Any subsequent access to the data for research purposes (including publications) willbe subject to the relevant data access processes of the data custodian(s).</item><item>Some data custodians do not allow results from queries on their data to be visible to commercial organisations and the tool will not show results from queries run by commercial users in these cases.</item></list>",
+                "statement1": "I acknowledge that:<list><item>Any subsequent access to the data for research purposes (including publications) will be subject to the relevant data access processes of the data custodian(s).</item><item>Some data custodians do not allow results from queries on their data to be visible to commercial organisations and the tool will not show results from queries run by commercial users in these cases.</item></list>",
                 "statement2": "I will not:<list><item>Share, publish or communicate the results or findings from the tool in any way, with the exception of sharing results with collaborators working on a research study or clinical trial and in support of an application for research funding for an eligible research study or clinical trial.</item><item>Use the results for marketing or policy development.</item></list>",
                 "statementOutro": "I understand that my access to the tool may be terminated if I do not comply with the above.",
                 "checkboxLabel": "I have read and agree to the user declaration"
@@ -1635,10 +1635,10 @@
             "title": "Gateway Statistics",
             "backtoHomepage": "Go to Homepage",
             "datasets": "Datasets",
-            "dataCustodians": "Data custodians",
-            "dur": "Data Uses / Research Projects",
-            "cohort": "Cohort Discovery Datasets",
-            "scripts": "Analysis Scripts & Software",
+            "custodians": "Data custodians",
+            "durs": "Data Uses / Research Projects",
+            "datasetCohortRequest": "Cohort Discovery Datasets",
+            "tools": "Analysis Scripts & Software",
             "publications": "Publications",
             "custodianNetworks": "Data Custodian Networks",
             "collections": "Collections"
