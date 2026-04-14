@@ -1,10 +1,7 @@
 import { FormHydration, FormHydrationField } from "@/interfaces/FormHydration";
-import {
-    DarApplicationApprovalStatus,
-    DarApplicationStatus,
-} from "@/consts/dataAccess";
 import { ComponentTypes } from "./ComponentTypes";
-import { UploadedFileMetadata } from "./FileUpload";
+import { DarTeamApplication } from "./DataAccessRequestApplication";
+import { UploadedFileMetadata, UploadedFileMetadataValue } from "./FileUpload";
 
 interface DarQuestion {
     id: number | string;
@@ -76,7 +73,8 @@ interface DarApplicationAnswer {
     application_id: number;
     question_id: number;
     contributor_id: number;
-    answer: string | string[];
+    answer: unknown;
+    answer_index?: number;
 }
 
 interface DarTemplateCountResponse {
@@ -90,24 +88,16 @@ interface DarApplication {
     project_title: string;
     applicant_id: number;
     submission_date: string;
-    teams: {
-        approval_status: DarApplicationApprovalStatus;
-        created_at: string;
-        dar_application_id: number;
-        id: number;
-        review_id: number;
-        submission_status: DarApplicationStatus;
-        team_id: number;
-        updated_at: string;
-    }[];
+    teams: DarTeamApplication[];
     application_type: "FORM" | "DOCUMENT";
 }
 
 interface DarApplicationResponses {
     [key: string]:
         | string
-        | { value: UploadedFileMetadata }
-        | { value: UploadedFileMetadata[] }
+        | { value: UploadedFileMetadataValue }
+        | { value: UploadedFileMetadataValue[] }
+        | null
         | undefined;
     project_title?: string;
 }

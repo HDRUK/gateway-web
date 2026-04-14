@@ -15,6 +15,7 @@ import {
     CloudUploadIcon,
     TeamMembersIcon,
     DarIcon,
+    EmailIcon,
 } from "@/consts/icons";
 import { ROLE_HDRUK_SUPERADMIN } from "@/consts/roles";
 import { RouteName } from "@/consts/routeName";
@@ -137,6 +138,15 @@ const getTeamNav = (
                       icon: navIcon(TeamMembersIcon),
                       label: "Team members",
                       href: `/${RouteName.ACCOUNT}/${RouteName.TEAM}/${teamId}/${RouteName.TEAM_MANAGEMENT}`,
+                  },
+              ]
+            : []),
+        ...(permissions["roles.read"]
+            ? [
+                  {
+                      icon: navIcon(EmailIcon),
+                      label: "Notifications",
+                      href: `/${RouteName.ACCOUNT}/${RouteName.TEAM}/${teamId}/${RouteName.NOTIFICATIONS}`,
                   },
               ]
             : []),

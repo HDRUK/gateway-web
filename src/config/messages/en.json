@@ -226,7 +226,7 @@
                 "userDeclaration": "User Declaration",
                 "userDeclarationAdditional": "All users of the Cohort Discovery are required to accept the declaration below.",
                 "statementIntro": "I confirm that my use of the tool will be for the sole purpose of understanding the size of populations relevant to a particular research question and that any resulting study or clinical trial will be for public benefit as defined by the National Data Guardian.",
-                "statement1": "I acknowledge that:<list><item>Any subsequent access to the data for research purposes (including publications) willbe subject to the relevant data access processes of the data custodian(s).</item><item>Some data custodians do not allow results from queries on their data to be visible to commercial organisations and the tool will not show results from queries run by commercial users in these cases.</item></list>",
+                "statement1": "I acknowledge that:<list><item>Any subsequent access to the data for research purposes (including publications) will be subject to the relevant data access processes of the data custodian(s).</item><item>Some data custodians do not allow results from queries on their data to be visible to commercial organisations and the tool will not show results from queries run by commercial users in these cases.</item></list>",
                 "statement2": "I will not:<list><item>Share, publish or communicate the results or findings from the tool in any way, with the exception of sharing results with collaborators working on a research study or clinical trial and in support of an application for research funding for an eligible research study or clinical trial.</item><item>Use the results for marketing or policy development.</item></list>",
                 "statementOutro": "I understand that my access to the tool may be terminated if I do not comply with the above.",
                 "checkboxLabel": "I have read and agree to the user declaration"
@@ -239,6 +239,9 @@
             "accessibilityStatement": {
                 "title": "Accessibility Statement",
                 "subTitle": "We are committed to creating an accessible experience for all users"
+            },
+            "cookies": {
+                "settings": "Cookie settings"
             }
         },
         "account": {
@@ -1632,10 +1635,10 @@
             "title": "Gateway Statistics",
             "backtoHomepage": "Go to Homepage",
             "datasets": "Datasets",
-            "dataCustodians": "Data custodians",
-            "dur": "Data Uses / Research Projects",
-            "cohort": "Cohort Discovery Datasets",
-            "scripts": "Analysis Scripts & Software",
+            "custodians": "Data custodians",
+            "durs": "Data Uses / Research Projects",
+            "datasetCohortRequest": "Cohort Discovery Datasets",
+            "tools": "Analysis Scripts & Software",
             "publications": "Publications",
             "custodianNetworks": "Data Custodian Networks",
             "collections": "Collections"
@@ -1691,7 +1694,7 @@
             }
         },
         "RequestNhseSdeAccessButton": {
-            "label": "Request access to NHS SDE Network datasets",
+            "label": "Request registration with the NHS Research SDE Network",
             "temporaryLabel": "Learn more about the SDE Network"
         },
         "IndicateNhseSdeAccessButton": {
@@ -1849,7 +1852,7 @@
                 "titleEnabled": "Start a Data Access Request",
                 "titleNotEnabled": "Data access requests not enabled for this Data Custodian",
                 "messageNotEnabled": "The Data Custodian for this dataset has not yet enabled data access requests via the Gateway. Please select the Access Information button below to proceed to the dataset metadata page.",
-                "messageNotEnabledOtherInstructions": "Alternatively contact the Data Custodian using the <generalEnquiryLink></generalEnquiryLink> or <feasabilityEnquiryLink></feasabilityEnquiryLink> forms and they will contact you to discuss your requirements and guide you through their data access request process.",
+                "messageNotEnabledOtherInstructions": "Alternatively contact <dataCustodian></dataCustodian> using the <generalEnquiryLink></generalEnquiryLink> or <feasabilityEnquiryLink></feasabilityEnquiryLink> forms and they will contact you to discuss your requirements and guide you through their data access request process.",
                 "requestAccessButton": "Request Access",
                 "accessInformationButton": "Access information",
                 "feasibilityEnquiryLink": "feasibility enquiry",

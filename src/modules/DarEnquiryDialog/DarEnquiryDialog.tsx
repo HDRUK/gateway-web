@@ -1,6 +1,6 @@
 "use client";
 
-import { Button } from "@mui/material";
+import { Box, Button } from "@mui/material";
 import MuiDialogActions from "@mui/material/DialogActions";
 import MuiDialogContent from "@mui/material/DialogContent";
 import { useTranslations } from "next-intl";
@@ -25,6 +25,7 @@ export interface DarEnquiryDialogProps {
     isDarEnabled: boolean;
     hasPublishedDarTemplate: boolean;
     url: string;
+    teamName: string;
     modalHeader?: string;
     modalContent?: string;
     modalFooter?: string;
@@ -41,6 +42,7 @@ const DarEnquiryDialog = ({
     createDARApplication,
     isDarEnabled,
     hasPublishedDarTemplate,
+    teamName,
     modalHeader,
     modalContent,
     modalFooter,
@@ -68,11 +70,11 @@ const DarEnquiryDialog = ({
         modalHeader ||
         (isDarEnabled ? t("titleEnabled") : t("titleNotEnabled"));
 
-    return (
+        return (
         <Dialog title={dialogTitle}>
             <MuiDialogContent>
-                {modalContent ? (
-                    <MarkDownSanitizedWithHtml content={modalContent} />
+                {modalContent ? (<Box mb={2}><MarkDownSanitizedWithHtml content={modalContent} /></Box>
+
                 ) : (
                     <Typography mb={2}>{t("messageNotEnabled")}</Typography>
                 )}
@@ -82,6 +84,7 @@ const DarEnquiryDialog = ({
                 {!isDarEnabled && (
                     <Typography>
                         {t.rich("messageNotEnabledOtherInstructions", {
+                            dataCustodian: () => (teamName),
                             generalEnquiryLink: () => (
                                 <Button
                                     aria-label="general"

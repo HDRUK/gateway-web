@@ -577,7 +577,7 @@ async function getDarTeamApplication(
     teamId: string
 ): Promise<DataAccessRequestApplication | null> {
     return get<DataAccessRequestApplication>(
-        `${apis.teamsV1UrlIP}/${teamId}/dar/applications/${applicationId}`,
+        `${apis.teamsV1UrlIP}/${teamId}/dar/applications/${applicationId}?group_arrays=true`,
         {
             cache: {
                 tags: [CACHE_DAR, `${CACHE_DAR_APPLICATION}${applicationId}`],
@@ -591,7 +591,7 @@ async function getDarApplicationUser(
     userId: string
 ): Promise<DataAccessRequestApplication | null> {
     return get<DataAccessRequestApplication>(
-        `${apis.usersV1UrlIP}/${userId}/dar/applications/${applicationId}`,
+        `${apis.usersV1UrlIP}/${userId}/dar/applications/${applicationId}?group_arrays=true`,
         {
             cache: {
                 tags: [CACHE_DAR, `${CACHE_DAR_APPLICATION}${applicationId}`],
@@ -603,8 +603,8 @@ async function getDarApplicationUser(
 async function getDarAnswersTeam(
     applicationId: string,
     teamId: string
-): Promise<DarTemplateCountResponse> {
-    return get<DarTemplateCountResponse>(
+): Promise<DarApplicationAnswer[]> {
+    return get<DarApplicationAnswer[]>(
         `${apis.teamsV1UrlIP}/${teamId}/dar/applications/${applicationId}/answers`,
         {
             cache: {

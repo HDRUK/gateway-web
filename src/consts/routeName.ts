@@ -83,4 +83,5 @@ export enum RouteName {
     RESEARCHERS = "/about/researchers-innovators",
     WIDGETS = "widgets",
     STATISTICS = "statistics",
+    NOTIFICATIONS = "notifications",
 }

@@ -84,16 +84,16 @@ describe("LeftNav", () => {
         );
 
         const links = getAllByRole("link");
-        expect(links).toHaveLength(4);
+        expect(links).toHaveLength(5);
 
         expect(within(links[0]).getByText("Team members")).toBeInTheDocument();
         expect(
-            within(links[1]).getByText("Custom Integrations")
+            within(links[2]).getByText("Custom Integrations")
         ).toBeInTheDocument();
         expect(
-            within(links[2]).getByText("Predefined Integrations")
+            within(links[3]).getByText("Predefined Integrations")
         ).toBeInTheDocument();
-        expect(within(links[3]).getByText("Help")).toBeInTheDocument();
+        expect(within(links[4]).getByText("Help")).toBeInTheDocument();
     });
 
     it("closes the profile navigation and creates cookie", () => {

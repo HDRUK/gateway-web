@@ -1,0 +1,38 @@
+import ProtectedAccountRoute from "@/components/ProtectedAccountRoute";
+import { ROLE_CUSTODIAN_DEVELOPER } from "@/consts/roles";
+import { getTeam, getUser } from "@/utils/api";
+import metaData, { noFollowRobots } from "@/utils/metadata";
+import { getPermissions } from "@/utils/permissions";
+import { getTeamUser } from "@/utils/user";
+import EmailNotifications from "./components/EmailNotifications";
+
+export const metadata = metaData(
+    {
+        title: "Notifications - My Account",
+        description: "",
+    },
+    noFollowRobots
+);
+export default async function NotificationsPage({
+    params,
+}: {
+    params: Promise<{ teamId: string }>;
+}) {
+    const { teamId } = await params;
+    const user = await getUser();
+    const team = await getTeam(teamId);
+    const teamUser = getTeamUser(team?.users, user?.id);
+    const permissions = getPermissions(user.roles, teamUser?.roles);
+    const isOnlyDev =
+        teamUser?.roles?.length === 1 &&
+        teamUser.roles[0]?.name === ROLE_CUSTODIAN_DEVELOPER;
+
+    return (
+        <ProtectedAccountRoute
+            permissions={permissions}
+            pagePermissions={["roles.read"]}
+            allowDevOnly={isOnlyDev}>
+            <EmailNotifications team={team} permissions={permissions} />
+        </ProtectedAccountRoute>
+    );
+}

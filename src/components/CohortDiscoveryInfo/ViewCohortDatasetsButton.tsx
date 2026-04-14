@@ -8,9 +8,9 @@ import CohortDiscoveryDatasetsDialog from "@/modules/CohortDiscoveryDatasetsDial
 import useDialog from "@/hooks/useDialog";
 import usePost from "@/hooks/usePost";
 import apis from "@/config/apis";
+import { NHS_SDE_FILTER } from "@/consts/cohortDiscovery";
 
 const TRANSLATION_PATH = "pages.about.cohortDiscovery";
-const NHS_SDE_FILTER = "The NHS Research Secure Data Environment (SDE) Network";
 
 const ViewCohortDatasetsButton = ({
     nhsSdeOnly = false,
@@ -55,7 +55,9 @@ const ViewCohortDatasetsButton = ({
         <Button
             variant="outlined"
             color="secondary"
-            onClick={() => showDialog(CohortDiscoveryDatasetsDialog, { data })}
+            onClick={() =>
+                showDialog(CohortDiscoveryDatasetsDialog, { data, nhsSdeOnly })
+            }
             sx={{ alignSelf: "flex-start", mt: 1 }}>
             {nhsSdeOnly ? t("viewDatasetsNHS") : t("viewDatasets")}
         </Button>

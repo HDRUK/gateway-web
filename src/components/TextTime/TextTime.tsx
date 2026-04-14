@@ -12,8 +12,8 @@ export interface TextTimeProps<TFieldValues extends FieldValues, TName> {
     required?: boolean;
     disabled?: boolean;
     label: string;
-    hourProps?: { disabled?: boolean };
-    minProps?: { disabled?: boolean };
+    hourProps?: { disabled?: boolean, values?: number[], };
+    minProps?: { disabled?: boolean, values?: number[], };
     horizontalForm?: boolean;
     control: Control<TFieldValues>;
 }
@@ -54,6 +54,9 @@ const TextTime = <
         ].filter(e => e !== undefined);
     }, [hourError, minutesError]);
 
+    const hours = hourProps.values ? hourProps.values : hourOptions;
+    const mins = minProps.values ? minProps.values : minuteOptions;
+
     return (
         <FormInputWrapper
             horizontalForm={horizontalForm}
@@ -71,7 +74,7 @@ const TextTime = <
                     size="small"
                     name={name.hour}
                     type="number">
-                    {hourOptions.map(hour => (
+                    {hours.map(hour => (
                         <MenuItem key={hour} value={hour}>
                             {hour}
                         </MenuItem>
@@ -84,7 +87,7 @@ const TextTime = <
                     size="small"
                     name={name.minute}
                     type="number">
-                    {minuteOptions.map(minute => (
+                    {mins.map(minute => (
                         <MenuItem key={minute} value={minute}>
                             {minute}
                         </MenuItem>

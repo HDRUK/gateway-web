@@ -1,6 +1,7 @@
 "use client";
 
 import { useCallback, useEffect, useMemo, useState } from "react";
+import { useMediaQuery, useTheme } from "@mui/material";
 import { useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
 import { useSWRConfig } from "swr";
@@ -24,6 +25,7 @@ import {
     getDifferences,
 } from "@/utils/userRoles";
 import { useFeatures } from "@/providers/FeatureProvider";
+import TeamCard from "../TeamCard";
 
 interface TeamMembersProps {
     teamMembers: User[];
@@ -36,6 +38,10 @@ const TeamMembers = ({
     permissions,
     teamId,
 }: TeamMembersProps) => {
+    const theme = useTheme();
+
+    const isMobileOrTablet = useMediaQuery(theme.breakpoints.down("laptop"));
+
     const t = useTranslations(
         "pages.account.team.teamManagement.components.TeamMembers"
     );
@@ -56,6 +62,21 @@ const TeamMembers = ({
     );
 
     const { showBar, hideBar } = useActionBar();
+
+    const teamTranslations = useMemo(
+        () => ({
+            lastRoleAdminMessage: t("lastRoleAdminMessage"),
+            lastRoleMessage: t("lastRoleMessage"),
+            noPermission: t("noPermission"),
+            nameHeader: t("columns.name"),
+            actionsHeader: t("columns.actions"),
+            teamHeader: t("columns.team"),
+            darHeader: t("columns.dar"),
+            metaDataHeader: t("columns.metadata"),
+            cohortDiscoveryHeader: t("columns.cohortDiscovery"),
+        }),
+        [t]
+    );
 
     const submitForm = useCallback(async () => {
         if (!rolesToUpdate) return;
@@ -164,19 +185,9 @@ const TeamMembers = ({
             permissions,
             actions,
             features,
-            translations: {
-                lastRoleAdminMessage: t("lastRoleAdminMessage"),
-                lastRoleMessage: t("lastRoleMessage"),
-                noPermission: t("noPermission"),
-                nameHeader: t("columns.name"),
-                actionsHeader: t("columns.actions"),
-                teamHeader: t("columns.team"),
-                darHeader: t("columns.dar"),
-                metaDataHeader: t("columns.metadata"),
-                cohortDiscoveryHeader: t("columns.cohortDiscovery"),
-            },
+            translations: teamTranslations,
         });
-    }, [actions, features, permissions, t]);
+    }, [actions, features, permissions, teamTranslations]);
 
     const handleUpdate = async (updatedUsers: User[]) => {
         setTableRows(updatedUsers);
@@ -213,14 +224,27 @@ const TeamMembers = ({
         );
 
     return (
-        <Paper>
-            <Table<User>
-                columns={columns}
-                onUpdate={handleUpdate}
-                rows={tableRows}
-                pinHeader
-            />
-        </Paper>
+        <>
+            {isMobileOrTablet ? (
+                <TeamCard
+                    translations={teamTranslations}
+                    users={tableRows}
+                    actions={actions}
+                    features={features}
+                    permissions={permissions}
+                    onUpdate={handleUpdate}
+                />
+            ) : (
+                <Paper>
+                    <Table<User>
+                        columns={columns}
+                        onUpdate={handleUpdate}
+                        rows={tableRows}
+                        pinHeader
+                    />
+                </Paper>
+            )}
+        </>
     );
 };
 
