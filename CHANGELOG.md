@@ -1,3 +1,19 @@
+## [2.36.0](https://github.com/HDRUK/gateway-web/compare/v2.35.2...v2.36.0) (2026-04-14)
+
+### ✨ Features
+
+* **GAT-7284:** DAR array groups (#1507) ([fd038d3](https://github.com/HDRUK/gateway-web/commit/fd038d329f29e4f8b4b20ff91b507614d305f67c)), closes [GAT-7284](GAT-7284)
+* **GAT-8388:** Split team notifications into seperate page (#1513) ([5969498](https://github.com/HDRUK/gateway-web/commit/5969498f2a0c4659391da773b87e626f0afd38e4)), closes [GAT-8388](GAT-8388)
+* **GAT-8469:** Added cookie notice button (#1516) ([ec425dc](https://github.com/HDRUK/gateway-web/commit/ec425dcec7b80dd55161521a73549985091c9c8f)), closes [GAT-8469](GAT-8469)
+* **GAT-8634:** Add padding to paragraph (#1512) ([e4e0302](https://github.com/HDRUK/gateway-web/commit/e4e03028515a1d4c696f237a43c0aca8cfb4efb8)), closes [GAT-8634](GAT-8634)
+* **GAT-8634:** Update default DAR footer to include Data Custodian name (#1510) ([278d046](https://github.com/HDRUK/gateway-web/commit/278d046d9453a675788826ebea3a38d9f1878af7)), closes [GAT-8634](GAT-8634)
+
+### 🐛 Bug Fixes
+
+* **GAT-8580:** Cohort discovery button now applies NHS SDE filter correctly  (#1509) ([22f5fa3](https://github.com/HDRUK/gateway-web/commit/22f5fa3a9c086f48aa5a874e696138be513d8861)), closes [GAT-8580](GAT-8580)
+* **GAT-8696:** Update NHS Button copy (#1518) ([929d28f](https://github.com/HDRUK/gateway-web/commit/929d28f5933060530792e17aa85cc950e0894e46)), closes [GAT-8696](GAT-8696)
+* **GAT-8750:** Gateway Statistics Page is not showing all stats (#1520) ([a050c2f](https://github.com/HDRUK/gateway-web/commit/a050c2f0d6fb1bd10852160eefca0e5a443a55e6)), closes [GAT-8750](GAT-8750) [Gateway](Gateway)
+
 ## [2.35.2](https://github.com/HDRUK/gateway-web/compare/v2.35.1...v2.35.2) (2026-03-31)
 
 ### 🐛 Bug Fixes
