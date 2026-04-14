@@ -47,7 +47,10 @@ export async function GET() {
                         claims: authUser,
                     },
                 },
-                { status: 200 }
+                {
+                    status: 200,
+                    headers: { "Cache-Control": "private, max-age=60" },
+                }
             );
         } catch (error) {
             throw new Error("We have been unable to log you in");
