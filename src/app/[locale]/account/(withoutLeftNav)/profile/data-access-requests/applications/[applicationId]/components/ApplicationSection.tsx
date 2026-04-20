@@ -56,6 +56,7 @@ import {
     formatDarAnswers,
     formatDarQuestion,
     getVisibleQuestionIds,
+    isSelected,
 } from "@/utils/dataAccessRequest";
 import { formatDate } from "@/utils/date";
 import {
@@ -157,14 +158,31 @@ const ApplicationSection = ({
 
     const projectTitle = watch(PROJECT_TITLE_FIELD);
 
+    const filteredData = useMemo(() => {
+        return (
+            questions
+                ?.filter(field => !field.is_child)
+                .map(field => formatDarQuestion(field)) || []
+        );
+    }, [questions]);
+
     const updateGuidanceText = (fieldName: string) => {
         setSelectedField(fieldName);
 
         const baseName = fieldName.split(".").pop() ?? fieldName;
 
-        const guidance = [...questions, ...beforeYouBeginFormFields]?.find(
-            question => question.title === baseName
-        )?.guidance;
+        const topLevelGuidance = [
+            ...questions,
+            ...beforeYouBeginFormFields,
+        ]?.find(question => question.title === baseName)?.guidance;
+
+        const childGuidance = filteredData
+            .flatMap(field =>
+                (field.options ?? []).flatMap(option => option.children ?? [])
+            )
+            .find(child => child.name === baseName)?.guidance;
+
+        const guidance = topLevelGuidance ?? childGuidance;
 
         if (!guidance) {
             setGuidanceText(undefined);
@@ -179,14 +197,6 @@ const ApplicationSection = ({
             setGuidanceText(parsedGuidance.documentElement.innerHTML);
         }
     };
-
-    const filteredData = useMemo(() => {
-        return (
-            questions
-                ?.filter(field => !field.is_child)
-                .map(field => formatDarQuestion(field)) || []
-        );
-    }, [questions]);
 
     const watchAll = watch();
 
@@ -406,8 +416,10 @@ const ApplicationSection = ({
                     {field.options.flatMap(
                         option =>
                             option.children?.map(child =>
-                                watchAll[field.question_id.toString()] ===
-                                option.label ? (
+                                isSelected(
+                                    watchAll[field.question_id.toString()],
+                                    option.label
+                                ) ? (
                                     <Fragment key={child.question_id}>
                                         <Box
                                             sx={{
