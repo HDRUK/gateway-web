@@ -1,5 +1,5 @@
 import { useForm } from "react-hook-form";
-import { render, screen } from "@/utils/testUtils";
+import { fireEvent, render, screen } from "@/utils/testUtils";
 import CheckboxGroup from "./CheckboxGroup";
 
 describe("CheckboxGroup", () => {
@@ -43,5 +43,45 @@ describe("CheckboxGroup", () => {
             const checkboxElement = screen.getByText(checkbox.label);
             expect(checkboxElement).toBeInTheDocument();
         });
+    });
+
+    it("stores values as an array when multiple is true", () => {
+        const checkboxes = [
+            { value: "red", label: "Option1" },
+            { value: "blue", label: "Option2" },
+            { value: "yellow", label: "Option3" },
+        ];
+
+        let latestValues: { colours?: string[] } = {};
+
+        const Component = () => {
+            const { control, getValues, watch } = useForm<{
+                colours: string[];
+            }>({
+                defaultValues: { colours: [] },
+            });
+            watch();
+            latestValues = getValues();
+            return (
+                <CheckboxGroup
+                    name="colours"
+                    label="Colours"
+                    checkboxes={checkboxes}
+                    control={control}
+                    multiple
+                />
+            );
+        };
+
+        render(<Component />);
+
+        fireEvent.click(screen.getByLabelText("Option1"));
+        expect(latestValues.colours).toEqual(["red"]);
+
+        fireEvent.click(screen.getByLabelText("Option2"));
+        expect(latestValues.colours).toEqual(["red", "blue"]);
+
+        fireEvent.click(screen.getByLabelText("Option1"));
+        expect(latestValues.colours).toEqual(["blue"]);
     });
 });
