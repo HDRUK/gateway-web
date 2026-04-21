@@ -101,6 +101,7 @@ const CheckboxGroup = <
                                 )}
                                 onChange={() => toggleValue(checkbox.value)}
                                 onBlur={field.onBlur}
+                                disabled={disabled}
                                 key={checkbox.label}
                                 sx={checkboxSx}
                                 formControlSx={formControlSx}
@@ -111,6 +112,7 @@ const CheckboxGroup = <
                                 name={checkbox.value}
                                 control={control}
                                 key={checkbox.label}
+                                disabled={disabled}
                                 sx={checkboxSx}
                                 formControlSx={formControlSx}
                                 {...rest}

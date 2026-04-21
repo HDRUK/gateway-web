@@ -54,6 +54,7 @@ const excludedQuestionFields = beforeYouBeginFormFields.map(
 const getFieldType = (componentType: ComponentTypes): string => {
     switch (componentType) {
         case "CheckboxGroup":
+            return "array";
         case "CheckboxRow":
         case "SwitchInline":
             return "boolean";
@@ -73,6 +74,8 @@ const buildFieldType = (field: DarApplicationQuestion) => ({
     label: field.title,
     required: !!field.required,
     errors: {},
+    ...(field.component === inputComponents.CheckboxGroup &&
+        !!field.required && { minItems: 1 }),
     ...field.validations,
     properties:
         field.component === inputComponents.FileUpload ||
