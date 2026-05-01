@@ -46,10 +46,6 @@ export async function GET() {
                         user: json.data,
                         claims: authUser,
                     },
-                },
-                {
-                    status: 200,
-                    headers: { "Cache-Control": "private, max-age=60" },
                 }
             );
         } catch (error) {
