@@ -328,28 +328,34 @@ const Search = ({ filters, schema }: SearchProps) => {
         [pathname, router, updateQueryString]
     );
 
-    const updatePathMultiple = (params: Record<string, string>) => {
-        const currentParams = new URLSearchParams(searchParams?.toString());
+    const updatePathMultiple = useCallback(
+        (params: Record<string, string>) => {
+            const currentParams = new URLSearchParams(searchParams?.toString());
 
-        Object.entries(params).forEach(([key, value]) => {
-            if (value === undefined) {
-                currentParams.delete(key);
-            } else {
-                currentParams.set(key, value);
-            }
-        });
+            Object.entries(params).forEach(([key, value]) => {
+                if (value === undefined) {
+                    currentParams.delete(key);
+                } else {
+                    currentParams.set(key, value);
+                }
+            });
 
-        const newPath = `${pathname}?${currentParams.toString()}`;
-        router.push(newPath, { scroll: false });
-    };
+            const newPath = `${pathname}?${currentParams.toString()}`;
+            router.push(newPath, { scroll: false });
+        },
+        [pathname, router, searchParams]
+    );
 
-    const onQuerySubmit = async (data: FieldValues) => {
-        setQueryParams({ ...queryParams, ...data, [PAGE_FIELD]: "1" });
-        updatePathMultiple({
-            [QUERY_FIELD]: data.query,
-            [PAGE_FIELD]: "1",
-        });
-    };
+    const onQuerySubmit = useCallback(
+        async (data: FieldValues) => {
+            setQueryParams({ ...queryParams, ...data, [PAGE_FIELD]: "1" });
+            updatePathMultiple({
+                [QUERY_FIELD]: data.query,
+                [PAGE_FIELD]: "1",
+            });
+        },
+        [queryParams, updatePathMultiple]
+    );
 
     const onSortChange = async (selectedValue: string) => {
         if (selectedValue === queryParams.sort) return;
@@ -419,7 +425,11 @@ const Search = ({ filters, schema }: SearchProps) => {
     );
 
     useEffect(() => {
-        mutate();
+        // Fixes the weird re-jiggling of the search results upon navigating
+        // back to the page.
+        if (!data) {
+            mutate();
+        }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 

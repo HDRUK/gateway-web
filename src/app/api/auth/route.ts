@@ -46,8 +46,7 @@ export async function GET() {
                         user: json.data,
                         claims: authUser,
                     },
-                },
-                { status: 200 }
+                }
             );
         } catch (error) {
             throw new Error("We have been unable to log you in");
