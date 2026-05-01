@@ -112,10 +112,8 @@ const UploadFile = ({
     });
 
     const value = fieldProps.value?.value;
-    const existingFilename = !allowMultipleFiles && value?.filename;
 
     const errorMessages = {
-        [ImageValidationError.RATIO]: t("imageAspectRatioError"),
         [ImageValidationError.SIZE]: t("imageDimensionsError"),
         default: t("imageError"),
     };
