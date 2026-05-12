@@ -10,7 +10,6 @@ jobs:
   release:
     uses: HDRUK/github-actions-templates/.github/workflows/docker-build.yaml@main
     with:
-      gar_name: dta-web
       environments: '["preprod","prod"]'
       docker_build_args: >
         --build-arg NEXT_PUBLIC_API_V1_URL=${{ vars.NEXT_PUBLIC_API_V1_URL }} 
