@@ -7,33 +7,45 @@ on:
       - dev
 
 jobs:
+  setup:
+    runs-on: ubuntu-latest
+    environment: dev
+    outputs:
+      docker_build_args: ${{ steps.args.outputs.docker_build_args }}
+    steps:
+      - id: args
+        run: |
+          ARGS=""
+          ARGS+="--build-arg NEXT_PUBLIC_API_V1_URL=${{ vars.NEXT_PUBLIC_API_V1_URL }} "
+          ARGS+="--build-arg NEXT_PUBLIC_API_V1_IP_URL=${{ vars.NEXT_PUBLIC_API_V1_IP_URL }} "
+          ARGS+="--build-arg NEXT_PUBLIC_API_V2_URL=${{ vars.NEXT_PUBLIC_API_V2_URL }} "
+          ARGS+="--build-arg NEXT_PUBLIC_API_V2_IP_URL=${{ vars.NEXT_PUBLIC_API_V2_IP_URL }} "
+          ARGS+="--build-arg NEXT_PUBLIC_API_VERSION=${{ vars.NEXT_PUBLIC_API_VERSION }} "
+          ARGS+="--build-arg NEXT_PUBLIC_API_BASE_URL=${{ vars.NEXT_PUBLIC_API_BASE_URL }} "
+          ARGS+="--build-arg NEXT_PUBLIC_WORDPRESS_API_URL=${{ vars.NEXT_PUBLIC_WORDPRESS_API_URL }} "
+          ARGS+="--build-arg NEXT_PUBLIC_SERVICE_DESK_URL=${{ vars.NEXT_PUBLIC_SERVICE_DESK_URL }} "
+          ARGS+="--build-arg NEXT_PUBLIC_GATEWAY_URL=${{ vars.NEXT_PUBLIC_GATEWAY_URL }} "
+          ARGS+="--build-arg NEXT_PUBLIC_HOTJAR_ID=${{ vars.NEXT_PUBLIC_HOTJAR_ID }} "
+          ARGS+="--build-arg NEXT_PUBLIC_SCHEMA_NAME=${{ vars.NEXT_PUBLIC_SCHEMA_NAME }} "
+          ARGS+="--build-arg TRASER_SERVICE_URL=${{ vars.TRASER_SERVICE_URL }} "
+          ARGS+="--build-arg NEXT_PUBLIC_SCHEMA_VERSION=${{ vars.NEXT_PUBLIC_SCHEMA_VERSION }} "
+          ARGS+="--build-arg NEXT_PUBLIC_SCHEMA_BRANCH=${{ vars.NEXT_PUBLIC_SCHEMA_BRANCH }} "
+          ARGS+="--build-arg NEXT_PUBLIC_GTM_ID=${{ vars.NEXT_PUBLIC_GTM_ID }} "
+          ARGS+="--build-arg NEXT_PUBLIC_OA_APP_ID=${{ vars.NEXT_PUBLIC_OA_APP_ID }} "
+          ARGS+="--build-arg NEXT_PUBLIC_MEDIA_DOMAIN=${{ vars.NEXT_PUBLIC_MEDIA_DOMAIN }} "
+          ARGS+="--build-arg NEXT_PUBLIC_MEDIA_STATIC_URL=${{ vars.NEXT_PUBLIC_MEDIA_STATIC_URL }} "
+          ARGS+="--build-arg NEXT_PUBLIC_PREDEFINED_INTEGRATION_OVERVIEW_URL=${{ vars.NEXT_PUBLIC_PREDEFINED_INTEGRATION_OVERVIEW_URL }} "
+          ARGS+="--build-arg NEXT_PUBLIC_CONFLUENCE_URL=${{ vars.NEXT_PUBLIC_CONFLUENCE_URL }} "
+          ARGS+="--build-arg NEXT_PUBLIC_CUSTOM_INTEGRATION_OVERVIEW_URL=${{ vars.NEXT_PUBLIC_CUSTOM_INTEGRATION_OVERVIEW_URL }}"
+          echo "docker_build_args=$ARGS" >> "$GITHUB_OUTPUT"
+
   build:
+    needs: setup
     uses: HDRUK/github-actions-templates/.github/workflows/docker-build.yaml@main
     with:
       chart_path: chart/gateway-web/Chart.yaml
-      environments: '["dev"]'
-      docker_build_args: >
-        --build-arg NEXT_PUBLIC_API_V1_URL=${{ vars.NEXT_PUBLIC_API_V1_URL }} 
-        --build-arg NEXT_PUBLIC_API_V1_IP_URL=${{ vars.NEXT_PUBLIC_API_V1_IP_URL }} 
-        --build-arg NEXT_PUBLIC_API_V2_URL=${{ vars.NEXT_PUBLIC_API_V2_URL }} 
-        --build-arg NEXT_PUBLIC_API_V2_IP_URL=${{ vars.NEXT_PUBLIC_API_V2_IP_URL }} 
-        --build-arg NEXT_PUBLIC_API_VERSION=${{ vars.NEXT_PUBLIC_API_VERSION}} 
-        --build-arg NEXT_PUBLIC_API_BASE_URL=${{ vars.NEXT_PUBLIC_API_BASE_URL }} 
-        --build-arg NEXT_PUBLIC_WORDPRESS_API_URL=${{ vars.NEXT_PUBLIC_WORDPRESS_API_URL }} 
-        --build-arg NEXT_PUBLIC_SERVICE_DESK_URL=${{ vars.NEXT_PUBLIC_SERVICE_DESK_URL }} 
-        --build-arg NEXT_PUBLIC_GATEWAY_URL=${{ vars.NEXT_PUBLIC_GATEWAY_URL }} 
-        --build-arg NEXT_PUBLIC_HOTJAR_ID=${{ vars.NEXT_PUBLIC_HOTJAR_ID }} 
-        --build-arg NEXT_PUBLIC_SCHEMA_NAME=${{ vars.NEXT_PUBLIC_SCHEMA_NAME }} 
-        --build-arg TRASER_SERVICE_URL=${{ vars.TRASER_SERVICE_URL }} 
-        --build-arg NEXT_PUBLIC_SCHEMA_VERSION=${{ vars.NEXT_PUBLIC_SCHEMA_VERSION }} 
-        --build-arg NEXT_PUBLIC_SCHEMA_BRANCH=${{ vars.NEXT_PUBLIC_SCHEMA_BRANCH }} 
-        --build-arg NEXT_PUBLIC_GTM_ID=${{ vars.NEXT_PUBLIC_GTM_ID }} 
-        --build-arg NEXT_PUBLIC_OA_APP_ID=${{ vars.NEXT_PUBLIC_OA_APP_ID }} 
-        --build-arg NEXT_PUBLIC_MEDIA_DOMAIN=${{ vars.NEXT_PUBLIC_MEDIA_DOMAIN }} 
-        --build-arg NEXT_PUBLIC_MEDIA_STATIC_URL=${{ vars.NEXT_PUBLIC_MEDIA_STATIC_URL }} 
-        --build-arg NEXT_PUBLIC_PREDEFINED_INTEGRATION_OVERVIEW_URL=${{ vars.NEXT_PUBLIC_PREDEFINED_INTEGRATION_OVERVIEW_URL }} 
-        --build-arg NEXT_PUBLIC_CONFLUENCE_URL=${{ vars.NEXT_PUBLIC_CONFLUENCE_URL }} 
-        --build-arg NEXT_PUBLIC_CUSTOM_INTEGRATION_OVERVIEW_URL=${{ vars.NEXT_PUBLIC_CUSTOM_INTEGRATION_OVERVIEW_URL }}
+      environment: dev
+      docker_build_args: ${{ needs.setup.outputs.docker_build_args }}
     secrets: inherit
 
   deploy:
