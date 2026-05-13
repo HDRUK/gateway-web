@@ -18,5 +18,6 @@ docker_build(
 k8s_yaml('chart/' + cfg.get('name') + '/' + cfg.get('name') + '.yaml')
 k8s_resource(
     cfg.get('name'),
-    port_forwards=3000
+    port_forwards=3000,
+    labels=["WEB"]
 )
