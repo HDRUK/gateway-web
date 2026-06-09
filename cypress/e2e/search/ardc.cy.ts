@@ -1,12 +1,16 @@
-/**
- * Requires the `V2/Search/Aggregation` Pennant feature flag to be active
- * in the test environment.
- */
-
+const FEATURE_FLAG = "V2/Search/Aggregation";
 const HDRUK_URL = "/search?type=datasets&q=asthma";
 const ARDC_URL = "/search?type=datasets&dataSource=ARDC";
 
-describe("Search - ARDC external sources", () => {
+// TODO: unskip once backend renames feature flag to remove '/' from "V2/Search/Aggregation"
+describe.skip("Search - ARDC external sources", () => {
+    before(() => {
+        cy.setFeatureFlag(FEATURE_FLAG, true);
+    });
+
+    after(() => {
+        cy.setFeatureFlag(FEATURE_FLAG, false);
+    });
     it("shows PartnerResourcesBanner on the HDRUK tab when ARDC has results", () => {
         cy.waitForApiIdle();
         cy.visit(HDRUK_URL);
@@ -24,6 +28,4 @@ describe("Search - ARDC external sources", () => {
             0
         );
     });
-
-
 });
