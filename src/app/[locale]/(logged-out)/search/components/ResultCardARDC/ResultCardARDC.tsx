@@ -89,7 +89,7 @@ const ResultCardARDC = ({ result, providerLogo }: ResultCardARDCProps) => {
                                 />
                             </Typography>
                         </Box>
-                        {!isMobileOrTablet && (
+                        {providerLogo && (
                             <Box
                                 component="img"
                                 src={providerLogo}
