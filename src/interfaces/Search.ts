@@ -232,6 +232,7 @@ export interface SearchQueryParams {
     per_page: string;
     type: SearchCategory;
     source: string | undefined;
+    dataSource: string | undefined;
     [FILTER_DATA_USE_TITLES]: string[] | undefined;
     [FILTER_PUBLISHER_NAME]: string[] | undefined;
     [FILTER_COLLECTION_NAME]: string[] | undefined;
@@ -259,3 +260,36 @@ export interface SearchQueryParams {
 }
 
 export type CountType = { [key: string]: number };
+
+export interface SearchResultARDC {
+    id: string;
+    slug: string;
+    display_title?: string;
+    title?: string;
+    group?: string;
+    list_description?: string;
+    description?: string;
+}
+
+export interface SearchAggregationProviderResult {
+    provider_logo: string | null;
+    about: string | null;
+    hits: SearchResultARDC[] | SearchResultDataset[];
+    total: number;
+    aggregations: Aggregations | [];
+    ids: string[];
+}
+
+export interface SearchAggregationData {
+    query: string;
+    type: string;
+    results: {
+        HDRUK?: SearchAggregationProviderResult;
+        ARDC?: SearchAggregationProviderResult;
+    };
+}
+
+export interface SearchAggregationResponse {
+    message: string;
+    data: SearchAggregationData;
+}

@@ -28,11 +28,14 @@ import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { Filter } from "@/interfaces/Filter";
 import { Library } from "@/interfaces/Library";
 import {
+    Aggregations,
     SavedSearchPayload,
+    SearchAggregationData,
     SearchCategory,
     SearchPaginationType,
     SearchQueryParams,
     SearchResult,
+    SearchResultARDC,
     SearchResultCollection,
     SearchResultDataProvider,
     SearchResultDataUse,
@@ -116,6 +119,7 @@ import {
     CloseIcon,
     DownloadIcon,
     FilterAltOutlinedIcon,
+    OpenInNewIcon,
     PanelExpandIcon,
     TableIcon,
 } from "@/consts/icons";
@@ -128,11 +132,14 @@ import {
     pickOnlyFilters,
 } from "@/utils/filters";
 import { getAllParams, getSaveSearchFilters } from "@/utils/search";
+import { useFeatures } from "@/providers/FeatureProvider";
 import useAddLibraryModal from "../../hooks/useAddLibraryModal";
 import DataCustodianNetwork from "../DataCustodianNetwork";
 import FilterChips from "../FilterChips";
 import FilterPanel from "../FilterPanel";
+import PartnerResourcesBanner from "../PartnerResourcesBanner";
 import ResultCard from "../ResultCard";
+import ResultCardARDC from "../ResultCardARDC";
 import ResultCardCollection from "../ResultCardCollection";
 import ResultCardDataProvider from "../ResultCardDataProviders";
 import ResultCardDataUse from "../ResultCardDataUse";
@@ -145,8 +152,11 @@ import { ActionBar, ResultLimitText } from "./Search.styles";
 
 const TRANSLATION_PATH = "pages.search";
 const STATIC_FILTER_SOURCE = "source";
+const STATIC_FILTER_DATA_SOURCE = "dataSource";
 const GATEWAY_SOURCE_FIELD = "GAT";
 const EUROPE_PMC_SOURCE_FIELD = "FED";
+const HDRUK_SOURCE_VALUE = "HDRUK";
+const ARDC_SOURCE_VALUE = "ARDC";
 
 interface SearchProps {
     filters: Filter[];
@@ -169,6 +179,7 @@ const filterSidebarStyles = {
 
 const Search = ({ filters, schema }: SearchProps) => {
     const { showDialog, hideDialog } = useDialog();
+    const { isExternalSourcesEnabled } = useFeatures();
     const [isDownloading, setIsDownloading] = useState(false);
     const [hasSearched, setHasSearched] = useState(false);
     const router = useRouter();
@@ -234,6 +245,8 @@ const Search = ({ filters, schema }: SearchProps) => {
         [STATIC_FILTER_SOURCE]:
             getParamString(STATIC_FILTER_SOURCE) ||
             searchFormConfig.defaultValues.source,
+        [STATIC_FILTER_DATA_SOURCE]:
+            getParamString(STATIC_FILTER_DATA_SOURCE) || HDRUK_SOURCE_VALUE,
         [PMC_TYPE_FIELD]: getParamString(PMC_TYPE_FIELD),
         [FILTER_DATA_USE_TITLES]: getParamArray(FILTER_DATA_USE_TITLES),
         [FILTER_PUBLISHER_NAME]: getParamArray(FILTER_PUBLISHER_NAME),
@@ -383,9 +396,13 @@ const Search = ({ filters, schema }: SearchProps) => {
         queryParams
     );
 
+    const isDatasets = queryParams.type === SearchCategory.DATASETS;
+    const dataSource = queryParams.dataSource || HDRUK_SOURCE_VALUE;
+    const isExternalSourceSelected = dataSource !== HDRUK_SOURCE_VALUE;
+
     const {
-        data,
-        isLoading: isSearching,
+        data: v1Data,
+        isLoading: isV1Searching,
         mutate,
     } = usePostSwr<SearchPaginationType<SearchResult>>(
         `${apis.searchV1Url}/${queryParams.type}?view_type=mini&per_page=${
@@ -403,13 +420,65 @@ const Search = ({ filters, schema }: SearchProps) => {
             keepPreviousData: true,
             withPagination: true,
             shouldFetch:
-                forceSearch ||
-                queryParams.type !== SearchCategory.PUBLICATIONS ||
-                queryParams.source === GATEWAY_SOURCE_FIELD ||
-                (queryParams.source === EUROPE_PMC_SOURCE_FIELD &&
-                    !!queryParams.query),
+                (!isDatasets || !isExternalSourcesEnabled) &&
+                (forceSearch ||
+                    queryParams.type !== SearchCategory.PUBLICATIONS ||
+                    queryParams.source === GATEWAY_SOURCE_FIELD ||
+                    (queryParams.source === EUROPE_PMC_SOURCE_FIELD &&
+                        !!queryParams.query)),
         }
     );
+
+    const {
+        data: v2Data,
+        isLoading: isV2Searching,
+        mutate: mutateV2,
+    } = usePostSwr<SearchAggregationData>(
+        apis.searchV2AggregationUrl,
+        {
+            query: queryParams.query || undefined,
+            type: "datasets",
+            sort: queryParams.sort,
+            per_page: queryParams.per_page,
+            page: queryParams.page,
+            view_type: "mini",
+            ...pickedFilters,
+        },
+        {
+            keepPreviousData: true,
+            shouldFetch: isDatasets && isExternalSourcesEnabled,
+        }
+    );
+
+    const isSearching =
+        isDatasets && isExternalSourcesEnabled ? isV2Searching : isV1Searching;
+
+    const data = (() => {
+        if (!isDatasets || !isExternalSourcesEnabled) return v1Data;
+        // undefined = still loading; null = API error → show empty state
+        if (v2Data === undefined) return undefined;
+
+        const providerResult =
+            v2Data?.results?.[dataSource as "HDRUK" | "ARDC"];
+        const perPage = parseInt(queryParams.per_page, 10);
+        const page = parseInt(queryParams.page, 10);
+        const total = providerResult?.total ?? 0;
+        const aggregations = Array.isArray(providerResult?.aggregations)
+            ? undefined
+            : (providerResult?.aggregations as Aggregations | undefined);
+
+        return {
+            list: (providerResult?.hits ?? []) as SearchResult[],
+            elastic_total: total,
+            total,
+            aggregations,
+            lastPage: Math.max(1, Math.ceil(total / perPage)),
+            from: (page - 1) * perPage + 1,
+            to: Math.min(page * perPage, total),
+            currentPage: page,
+            path: `search/${queryParams.type}`,
+        };
+    })();
 
     useEffect(() => {
         fireGTMEvent({
@@ -427,8 +496,11 @@ const Search = ({ filters, schema }: SearchProps) => {
     useEffect(() => {
         // Fixes the weird re-jiggling of the search results upon navigating
         // back to the page.
-        if (!data) {
+        if (!v1Data) {
             mutate();
+        }
+        if (isExternalSourcesEnabled && !v2Data) {
+            mutateV2();
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
@@ -469,6 +541,7 @@ const Search = ({ filters, schema }: SearchProps) => {
             [FILTER_CONTAINS_BIOSAMPLES]: undefined,
             [FILTER_MATERIAL_TYPE]: undefined,
             [STATIC_FILTER_SOURCE]: searchFormConfig.defaultValues.source,
+            [STATIC_FILTER_DATA_SOURCE]: HDRUK_SOURCE_VALUE,
             [PMC_TYPE_FIELD]: undefined,
             [FILTER_FORMAT_STANDARDS]: undefined,
             [FILTER_COHORT_DISCOVERY]: undefined,
@@ -579,6 +652,16 @@ const Search = ({ filters, schema }: SearchProps) => {
 
         switch (queryParams.type) {
             case SearchCategory.DATASETS:
+                if (isExternalSourceSelected) {
+                    const ardcResult = result as unknown as SearchResultARDC;
+                    return (
+                        <ResultCardARDC
+                            result={ardcResult}
+                            key={ardcResult.id}
+                            providerLogo={v2Data?.results?.ARDC?.provider_logo}
+                        />
+                    );
+                }
                 return (
                     <ResultCard
                         result={result as SearchResultDataset}
@@ -628,7 +711,10 @@ const Search = ({ filters, schema }: SearchProps) => {
     });
 
     const renderResults = () =>
-        resultsView === ViewType.TABLE && !isMobile && !isTabletOrLaptop ? (
+        resultsView === ViewType.TABLE &&
+        !isMobile &&
+        !isTabletOrLaptop &&
+        !isExternalSourceSelected ? (
             <ResultsTable
                 results={data?.list as SearchResultDataset[]}
                 showLibraryModal={showLibraryModal}
@@ -880,14 +966,31 @@ const Search = ({ filters, schema }: SearchProps) => {
                     });
                 }}
                 aggregations={data?.aggregations}
+                dataSource={dataSource}
+                providerCounts={{
+                    HDRUK: v2Data?.results?.HDRUK?.total ?? 0,
+                    ARDC: v2Data?.results?.ARDC?.total ?? 0,
+                }}
                 updateStaticFilter={(filterName: string, value: string) => {
-                    setQueryParams({
-                        ...queryParams,
-                        [filterName]: value,
-                        [FILTER_DATA_SET_TITLES]: undefined,
-                        query: "",
-                    });
-                    updatePath(filterName, value);
+                    if (filterName === STATIC_FILTER_DATA_SOURCE) {
+                        setQueryParams({
+                            ...queryParams,
+                            [filterName]: value,
+                            [PAGE_FIELD]: "1",
+                        });
+                        updatePathMultiple({
+                            [filterName]: value,
+                            [PAGE_FIELD]: "1",
+                        });
+                    } else {
+                        setQueryParams({
+                            ...queryParams,
+                            [filterName]: value,
+                            [FILTER_DATA_SET_TITLES]: undefined,
+                            query: "",
+                        });
+                        updatePath(filterName, value);
+                    }
                 }}
                 getParamString={getParamString}
                 showEuropePmcModal={europePmcModalAction}
@@ -902,9 +1005,12 @@ const Search = ({ filters, schema }: SearchProps) => {
         getParamString,
         queryParams,
         resetQueryParamState,
+        schema,
         selectedFilters,
         updatePath,
         updatePathMultiple,
+        v2Data?.results?.ARDC?.total,
+        v2Data?.results?.HDRUK?.total,
     ]);
 
     const toggleFilterDrawer =
@@ -1196,13 +1302,17 @@ const Search = ({ filters, schema }: SearchProps) => {
                                     "aria-label": "filter controls",
                                     role: "region",
                                 })}>
-                                <FilterChips
-                                    selectedFilters={selectedFilters}
-                                    handleDelete={removeFilter}
-                                    filterCategory={
-                                        FILTER_TYPE_MAPPING[queryParams.type]
-                                    }
-                                />
+                                {!isExternalSourceSelected && (
+                                    <FilterChips
+                                        selectedFilters={selectedFilters}
+                                        handleDelete={removeFilter}
+                                        filterCategory={
+                                            FILTER_TYPE_MAPPING[
+                                                queryParams.type
+                                            ]
+                                        }
+                                    />
+                                )}
                                 {isMobile && (
                                     <Button
                                         variant="outlined"
@@ -1278,24 +1388,28 @@ const Search = ({ filters, schema }: SearchProps) => {
                                                 </Box>
                                                 {!excludedDownloadSearchCategories.includes(
                                                     queryParams.type
-                                                ) && (
-                                                    <Button
-                                                        onClick={() =>
-                                                            !isDownloading &&
-                                                            downloadSearchResults()
-                                                        }
-                                                        variant="contained"
-                                                        color="greyCustom"
-                                                        startIcon={
-                                                            <DownloadIcon color="primary" />
-                                                        }
-                                                        disabled={
-                                                            isDownloading ||
-                                                            !data?.list?.length
-                                                        }>
-                                                        {t("downloadResults")}
-                                                    </Button>
-                                                )}
+                                                ) &&
+                                                    !isExternalSourceSelected && (
+                                                        <Button
+                                                            onClick={() =>
+                                                                !isDownloading &&
+                                                                downloadSearchResults()
+                                                            }
+                                                            variant="contained"
+                                                            color="greyCustom"
+                                                            startIcon={
+                                                                <DownloadIcon color="primary" />
+                                                            }
+                                                            disabled={
+                                                                isDownloading ||
+                                                                !data?.list
+                                                                    ?.length
+                                                            }>
+                                                            {t(
+                                                                "downloadResults"
+                                                            )}
+                                                        </Button>
+                                                    )}
                                                 <Button
                                                     variant="contained"
                                                     color="greyCustom"
@@ -1307,31 +1421,32 @@ const Search = ({ filters, schema }: SearchProps) => {
                                                     {t("saveSearch")}
                                                 </Button>
                                                 {queryParams.type ===
-                                                    SearchCategory.DATASETS && (
-                                                    <Button
-                                                        variant="outlined"
-                                                        color="secondary"
-                                                        onClick={
-                                                            handleToggleView
-                                                        }
-                                                        startIcon={
-                                                            resultsView ===
-                                                            ViewType.LIST ? (
-                                                                <FormatListBulletedIcon color="success" />
-                                                            ) : (
-                                                                <TableIcon color="success" />
-                                                            )
-                                                        }>
-                                                        {resultsView ===
-                                                        ViewType.LIST
-                                                            ? t(
-                                                                  "components.Search.toggleLabelTable"
-                                                              )
-                                                            : t(
-                                                                  "components.Search.toggleLabelList"
-                                                              )}
-                                                    </Button>
-                                                )}
+                                                    SearchCategory.DATASETS &&
+                                                    !isExternalSourceSelected && (
+                                                        <Button
+                                                            variant="outlined"
+                                                            color="secondary"
+                                                            onClick={
+                                                                handleToggleView
+                                                            }
+                                                            startIcon={
+                                                                resultsView ===
+                                                                ViewType.LIST ? (
+                                                                    <FormatListBulletedIcon color="success" />
+                                                                ) : (
+                                                                    <TableIcon color="success" />
+                                                                )
+                                                            }>
+                                                            {resultsView ===
+                                                            ViewType.LIST
+                                                                ? t(
+                                                                      "components.Search.toggleLabelTable"
+                                                                  )
+                                                                : t(
+                                                                      "components.Search.toggleLabelList"
+                                                                  )}
+                                                        </Button>
+                                                    )}
                                             </Box>
                                         )}
                                         {(isMobile || isTabletOrLaptop) && (
@@ -1352,26 +1467,27 @@ const Search = ({ filters, schema }: SearchProps) => {
 
                                                 {!excludedDownloadSearchCategories.includes(
                                                     queryParams.type
-                                                ) && (
-                                                    <Tooltip
-                                                        title={t(
-                                                            "downloadResults"
-                                                        )}>
-                                                        <IconButton
-                                                            color="primary"
-                                                            onClick={() =>
-                                                                !isDownloading &&
-                                                                downloadSearchResults()
-                                                            }
-                                                            disabled={
-                                                                isDownloading ||
-                                                                !data?.list
-                                                                    ?.length
-                                                            }>
-                                                            <DownloadIcon />
-                                                        </IconButton>
-                                                    </Tooltip>
-                                                )}
+                                                ) &&
+                                                    !isExternalSourceSelected && (
+                                                        <Tooltip
+                                                            title={t(
+                                                                "downloadResults"
+                                                            )}>
+                                                            <IconButton
+                                                                color="primary"
+                                                                onClick={() =>
+                                                                    !isDownloading &&
+                                                                    downloadSearchResults()
+                                                                }
+                                                                disabled={
+                                                                    isDownloading ||
+                                                                    !data?.list
+                                                                        ?.length
+                                                                }>
+                                                                <DownloadIcon />
+                                                            </IconButton>
+                                                        </Tooltip>
+                                                    )}
                                                 <Tooltip
                                                     title={t("saveSearch")}>
                                                     <IconButton
@@ -1452,6 +1568,22 @@ const Search = ({ filters, schema }: SearchProps) => {
                                                               2
                                                           )}`,
                                             }}>
+                                            {isExternalSourceSelected && (
+                                                <Box
+                                                    sx={{
+                                                        display: "flex",
+                                                        alignItems: "center",
+                                                        gap: 1,
+                                                        mb: 2,
+                                                    }}>
+                                                    <OpenInNewIcon fontSize="small" />
+                                                    <Typography variant="body2">
+                                                        {t(
+                                                            "partnerDatasetsNewTab"
+                                                        )}
+                                                    </Typography>
+                                                </Box>
+                                            )}
                                             {renderResults()}
                                         </Box>
                                     </>
@@ -1471,6 +1603,31 @@ const Search = ({ filters, schema }: SearchProps) => {
                                     updatePath(PAGE_FIELD, page.toString());
                                 }}
                             />
+
+                            {!isSearching &&
+                                isDatasets &&
+                                !isExternalSourceSelected &&
+                                isExternalSourcesEnabled && (
+                                    <PartnerResourcesBanner
+                                        count={
+                                            v2Data?.results?.ARDC?.total ?? 0
+                                        }
+                                        providerLogo={
+                                            v2Data?.results?.ARDC?.provider_logo
+                                        }
+                                        onViewPartnerResources={() => {
+                                            setQueryParams({
+                                                ...queryParams,
+                                                dataSource: ARDC_SOURCE_VALUE,
+                                                [PAGE_FIELD]: "1",
+                                            });
+                                            updatePathMultiple({
+                                                dataSource: ARDC_SOURCE_VALUE,
+                                                [PAGE_FIELD]: "1",
+                                            });
+                                        }}
+                                    />
+                                )}
                         </Box>
                     </Box>
                 </Box>
