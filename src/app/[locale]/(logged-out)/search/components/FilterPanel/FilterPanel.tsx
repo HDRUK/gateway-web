@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import { useForm } from "react-hook-form";
 import { get } from "lodash";
 import { useTranslations } from "next-intl";
@@ -472,6 +472,20 @@ const FilterPanel = ({
         setFilterQueryParams([], filterSection, [], subfilterSection);
     };
 
+    const handleRadioChange = useCallback(
+        (filterName: string, value: string) => {
+            setStaticFilterValues(prev => ({
+                ...prev,
+                [filterName]: { [value]: true },
+            }));
+            updateStaticFilter(filterName, value);
+            if (filterName === STATIC_FILTER_SOURCE && value === EUROPE_PMC_SOURCE_FIELD) {
+                showEuropePmcModal();
+            }
+        },
+        [updateStaticFilter, showEuropePmcModal]
+    );
+
     const resetAllFilters = () => {
         setFilterValues(EMPTY_FILTERS);
 
@@ -665,17 +679,9 @@ const FilterPanel = ({
                 return (
                     <FilterSectionRadio
                         filterItem={filterItem}
-                        handleRadioChange={value => {
-                            setStaticFilterValues(prev => ({
-                                ...prev,
-                                [label]: { [value]: true },
-                            }));
-                            updateStaticFilter(label, value);
-
-                            if (value === EUROPE_PMC_SOURCE_FIELD) {
-                                showEuropePmcModal();
-                            }
-                        }}
+                        handleRadioChange={value =>
+                            handleRadioChange(label, value)
+                        }
                         value={
                             Object.keys(
                                 staticFilterValues[STATIC_FILTER_SOURCE]
@@ -687,16 +693,9 @@ const FilterPanel = ({
                 return (
                     <FilterSectionRadio
                         filterItem={filterItem}
-                        handleRadioChange={value => {
-                            setStaticFilterValues(prev => ({
-                                ...prev,
-                                [STATIC_FILTER_DATA_SOURCE]: { [value]: true },
-                            }));
-                            updateStaticFilter(
-                                STATIC_FILTER_DATA_SOURCE,
-                                value
-                            );
-                        }}
+                        handleRadioChange={value =>
+                            handleRadioChange(STATIC_FILTER_DATA_SOURCE, value)
+                        }
                         value={
                             Object.keys(
                                 staticFilterValues[

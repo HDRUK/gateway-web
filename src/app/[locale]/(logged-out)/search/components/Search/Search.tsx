@@ -1,14 +1,11 @@
 "use client";
 
 import {
-    startTransition,
-    useCallback,
     useEffect,
     useMemo,
     useRef,
     useState,
 } from "react";
-import { FieldValues } from "react-hook-form";
 import { BookmarkBorder } from "@mui/icons-material";
 import FormatListBulletedIcon from "@mui/icons-material/FormatListBulleted";
 import {
@@ -24,11 +21,10 @@ import {
 } from "@mui/material";
 import Cookies from "js-cookie";
 import { useTranslations } from "next-intl";
-import { usePathname, useRouter, useSearchParams } from "next/navigation";
+import { useRouter } from "next/navigation";
 import { Filter } from "@/interfaces/Filter";
 import { Library } from "@/interfaces/Library";
 import {
-    Aggregations,
     SavedSearchPayload,
     SearchAggregationData,
     SearchCategory,
@@ -74,34 +70,15 @@ import useSidebar from "@/hooks/useSidebar";
 import apis from "@/config/apis";
 import config from "@/config/config";
 import {
-    FILTER_ACCESS_SERVICE,
-    FILTER_COLLECTION_NAME,
-    FILTER_CONTAINS_BIOSAMPLES,
-    FILTER_DATA_PROVIDER,
-    FILTER_DATA_CUSTODIAN_NETWORK,
     FILTER_DATA_SET_TITLES,
     FILTER_DATA_TYPE,
     FILTER_DATA_SUBTYPE,
-    FILTER_DATA_USE_TITLES,
     FILTER_DATE_RANGE,
-    FILTER_FORMAT_STANDARDS,
-    FILTER_GEOGRAPHIC_LOCATION,
-    FILTER_MATERIAL_TYPE,
-    FILTER_ORGANISATION_NAME,
-    FILTER_COLLECTION_NAMES,
-    FILTER_POPULATION_SIZE,
-    FILTER_PROGRAMMING_LANGUAGE,
     FILTER_PUBLICATION_DATE,
-    FILTER_PUBLICATION_TYPE,
-    FILTER_PUBLISHER_NAME,
-    FILTER_SECTOR,
-    FILTER_TYPE_CATEGORY,
     filtersList,
-    FILTER_COHORT_DISCOVERY,
 } from "@/config/forms/filters";
-import searchFormConfig, {
+import {
     PAGE_FIELD,
-    PMC_TYPE_FIELD,
     QUERY_FIELD,
     SORT_FIELD,
     TYPE_FIELD,
@@ -125,7 +102,11 @@ import {
 } from "@/consts/icons";
 import { PostLoginActions } from "@/consts/postLoginActions";
 import { RouteName } from "@/consts/routeName";
-import { FILTER_TYPE_MAPPING } from "@/consts/search";
+import {
+    ARDC_SOURCE_VALUE,
+    FILTER_TYPE_MAPPING,
+    HDRUK_SOURCE_VALUE,
+} from "@/consts/search";
 import {
     cleanSearchFilters,
     getAllSelectedFilters,
@@ -134,6 +115,9 @@ import {
 import { getAllParams, getSaveSearchFilters } from "@/utils/search";
 import { useFeatures } from "@/providers/FeatureProvider";
 import useAddLibraryModal from "../../hooks/useAddLibraryModal";
+import { useQueryParams } from "../../hooks/useQueryParams";
+import { useSearchData } from "../../hooks/useSearchData";
+import { useStaticFilterUpdate } from "../../hooks/useStaticFilterUpdate";
 import DataCustodianNetwork from "../DataCustodianNetwork";
 import FilterChips from "../FilterChips";
 import FilterPanel from "../FilterPanel";
@@ -149,14 +133,13 @@ import ResultsList from "../ResultsList";
 import ResultsTable from "../ResultsTable";
 import Sort from "../Sort";
 import { ActionBar, ResultLimitText } from "./Search.styles";
+import {
+    EUROPE_PMC_SOURCE_FIELD,
+    GATEWAY_SOURCE_FIELD,
+    STATIC_FILTER_SOURCE,
+} from "../../constants";
 
 const TRANSLATION_PATH = "pages.search";
-const STATIC_FILTER_SOURCE = "source";
-const STATIC_FILTER_DATA_SOURCE = "dataSource";
-const GATEWAY_SOURCE_FIELD = "GAT";
-const EUROPE_PMC_SOURCE_FIELD = "FED";
-const HDRUK_SOURCE_VALUE = "HDRUK";
-const ARDC_SOURCE_VALUE = "ARDC";
 
 interface SearchProps {
     filters: Filter[];
@@ -182,13 +165,24 @@ const Search = ({ filters, schema }: SearchProps) => {
     const { isExternalSourcesEnabled } = useFeatures();
     const [isDownloading, setIsDownloading] = useState(false);
     const [hasSearched, setHasSearched] = useState(false);
-    const router = useRouter();
-    const pathname = usePathname();
-    const searchParams = useSearchParams();
+    const {
+        queryParams,
+        setQueryParams,
+        pathname,
+        searchParams,
+        getParamString,
+        updatePath,
+        updatePathMultiple,
+        removeArrayQueryAndPush,
+        onQuerySubmit,
+        onSortChange,
+        resetQueryParamState,
+    } = useQueryParams();
     const t = useTranslations(TRANSLATION_PATH);
     const fireGTMEvent = useGTMEvent();
     const { showDARApplicationModal } = useDataAccessRequest();
 
+    const router = useRouter();
     const { isLoggedIn, user } = useAuth();
     const { showSidebar } = useSidebar();
     const theme = useTheme();
@@ -208,74 +202,11 @@ const Search = ({ filters, schema }: SearchProps) => {
         ? `${pathname}?${searchParams.toString()}`
         : pathname;
 
-    const getParamString = (paramName: string) => {
-        return searchParams?.get(paramName)?.toString();
-    };
-
-    const getParamArray = (paramName: string, allowEmptyStrings?: boolean) => {
-        const param = searchParams?.get(paramName)?.split("|");
-        return allowEmptyStrings ? param : param?.filter(filter => !!filter);
-    };
-
     const [resultsView, setResultsView] = useState(
         getParamString(VIEW_FIELD) ||
             Cookies.get(config.VIEW_TYPE) ||
             ViewType.TABLE
     );
-
-    const updateQueryString = useCallback(
-        (name: string, value: string) => {
-            const params = new URLSearchParams(searchParams?.toString());
-            params.set(name, value);
-
-            return params.toString();
-        },
-        [searchParams]
-    );
-
-    const [queryParams, setQueryParams] = useState<SearchQueryParams>({
-        query:
-            getParamString(QUERY_FIELD) || searchFormConfig.defaultValues.query,
-        sort: getParamString(SORT_FIELD) || searchFormConfig.defaultValues.sort,
-        page: getParamString(PAGE_FIELD) || "1",
-        per_page: "25",
-        type:
-            (getParamString(TYPE_FIELD) as SearchCategory) ||
-            SearchCategory.DATASETS,
-        [STATIC_FILTER_SOURCE]:
-            getParamString(STATIC_FILTER_SOURCE) ||
-            searchFormConfig.defaultValues.source,
-        [STATIC_FILTER_DATA_SOURCE]:
-            getParamString(STATIC_FILTER_DATA_SOURCE) || HDRUK_SOURCE_VALUE,
-        [PMC_TYPE_FIELD]: getParamString(PMC_TYPE_FIELD),
-        [FILTER_DATA_USE_TITLES]: getParamArray(FILTER_DATA_USE_TITLES),
-        [FILTER_PUBLISHER_NAME]: getParamArray(FILTER_PUBLISHER_NAME),
-        [FILTER_COLLECTION_NAME]: getParamArray(FILTER_COLLECTION_NAME),
-        [FILTER_COLLECTION_NAMES]: getParamArray(FILTER_COLLECTION_NAMES),
-        [FILTER_GEOGRAPHIC_LOCATION]: getParamArray(FILTER_GEOGRAPHIC_LOCATION),
-        [FILTER_DATE_RANGE]: getParamArray(FILTER_DATE_RANGE, true),
-        [FILTER_ORGANISATION_NAME]: getParamArray(FILTER_ORGANISATION_NAME),
-        [FILTER_DATA_SET_TITLES]: getParamArray(FILTER_DATA_SET_TITLES),
-        [FILTER_DATA_TYPE]: getParamArray(FILTER_DATA_TYPE),
-        [FILTER_DATA_SUBTYPE]: getParamArray(FILTER_DATA_SUBTYPE),
-        [FILTER_PUBLICATION_DATE]: getParamArray(FILTER_PUBLICATION_DATE, true),
-        [FILTER_PUBLICATION_TYPE]: getParamArray(FILTER_PUBLICATION_TYPE),
-        [FILTER_SECTOR]: getParamArray(FILTER_SECTOR),
-        [FILTER_DATA_PROVIDER]: getParamArray(FILTER_DATA_PROVIDER),
-        [FILTER_DATA_CUSTODIAN_NETWORK]: getParamArray(
-            FILTER_DATA_CUSTODIAN_NETWORK
-        ),
-        [FILTER_ACCESS_SERVICE]: getParamArray(FILTER_ACCESS_SERVICE),
-        [FILTER_POPULATION_SIZE]: getParamArray(FILTER_POPULATION_SIZE),
-        [FILTER_PROGRAMMING_LANGUAGE]: getParamArray(
-            FILTER_PROGRAMMING_LANGUAGE
-        ),
-        [FILTER_TYPE_CATEGORY]: getParamArray(FILTER_TYPE_CATEGORY),
-        [FILTER_CONTAINS_BIOSAMPLES]: getParamArray(FILTER_CONTAINS_BIOSAMPLES),
-        [FILTER_MATERIAL_TYPE]: getParamArray(FILTER_MATERIAL_TYPE),
-        [FILTER_FORMAT_STANDARDS]: getParamArray(FILTER_FORMAT_STANDARDS),
-        [FILTER_COHORT_DISCOVERY]: getParamArray(FILTER_COHORT_DISCOVERY),
-    });
 
     const [datasetNamesArray, setDatasetNamesArray] = useState<string[]>([]);
 
@@ -315,71 +246,6 @@ const Search = ({ filters, schema }: SearchProps) => {
             setResultsView(viewType);
         }
     }, [queryParams.type, resultsView]);
-
-    const removeArrayQueryAndPush = (paramKey: string, paramValue: string) => {
-        const currentParams = new URLSearchParams(searchParams?.toString());
-
-        const newParams = new URLSearchParams(
-            Array.from(currentParams.entries()).filter(
-                ([key, value]) => !(key === paramKey && value === paramValue)
-            )
-        );
-
-        router.push(`?${newParams.toString()}`, {
-            scroll: false,
-        });
-    };
-
-    const updatePath = useCallback(
-        (key: string, value: string) => {
-            startTransition(() => {
-                router.push(`${pathname}?${updateQueryString(key, value)}`, {
-                    scroll: false,
-                });
-            });
-        },
-        [pathname, router, updateQueryString]
-    );
-
-    const updatePathMultiple = useCallback(
-        (params: Record<string, string>) => {
-            const currentParams = new URLSearchParams(searchParams?.toString());
-
-            Object.entries(params).forEach(([key, value]) => {
-                if (value === undefined) {
-                    currentParams.delete(key);
-                } else {
-                    currentParams.set(key, value);
-                }
-            });
-
-            const newPath = `${pathname}?${currentParams.toString()}`;
-            router.push(newPath, { scroll: false });
-        },
-        [pathname, router, searchParams]
-    );
-
-    const onQuerySubmit = useCallback(
-        async (data: FieldValues) => {
-            setQueryParams({ ...queryParams, ...data, [PAGE_FIELD]: "1" });
-            updatePathMultiple({
-                [QUERY_FIELD]: data.query,
-                [PAGE_FIELD]: "1",
-            });
-        },
-        [queryParams, updatePathMultiple]
-    );
-
-    const onSortChange = async (selectedValue: string) => {
-        if (selectedValue === queryParams.sort) return;
-
-        setQueryParams({
-            ...queryParams,
-            sort: selectedValue,
-        });
-
-        updatePath(SORT_FIELD, selectedValue);
-    };
 
     const selectedFilters = useMemo(
         () => getAllSelectedFilters(queryParams),
@@ -453,32 +319,16 @@ const Search = ({ filters, schema }: SearchProps) => {
     const isSearching =
         isDatasets && isExternalSourcesEnabled ? isV2Searching : isV1Searching;
 
-    const data = (() => {
-        if (!isDatasets || !isExternalSourcesEnabled) return v1Data;
-        // undefined = still loading; null = API error → show empty state
-        if (v2Data === undefined) return undefined;
-
-        const providerResult =
-            v2Data?.results?.[dataSource as "HDRUK" | "ARDC"];
-        const perPage = parseInt(queryParams.per_page, 10);
-        const page = parseInt(queryParams.page, 10);
-        const total = providerResult?.total ?? 0;
-        const aggregations = Array.isArray(providerResult?.aggregations)
-            ? undefined
-            : (providerResult?.aggregations as Aggregations | undefined);
-
-        return {
-            list: (providerResult?.hits ?? []) as SearchResult[],
-            elastic_total: total,
-            total,
-            aggregations,
-            lastPage: Math.max(1, Math.ceil(total / perPage)),
-            from: (page - 1) * perPage + 1,
-            to: Math.min(page * perPage, total),
-            currentPage: page,
-            path: `search/${queryParams.type}`,
-        };
-    })();
+    const data = useSearchData({
+        isDatasets,
+        isExternalSourcesEnabled,
+        v1Data,
+        v2Data,
+        dataSource,
+        perPage: queryParams.per_page,
+        page: queryParams.page,
+        type: queryParams.type,
+    });
 
     useEffect(() => {
         fireGTMEvent({
@@ -510,43 +360,6 @@ const Search = ({ filters, schema }: SearchProps) => {
         `${apis.librariesV1Url}?per_page=-1`,
         { shouldFetch: isLoggedIn }
     );
-
-    // Reset query param state when tab is changed
-    const resetQueryParamState = (selectedType: SearchCategory) => {
-        setQueryParams({
-            query: queryParams.query,
-            sort: searchFormConfig.defaultValues.sort,
-            page: "1",
-            per_page: "25",
-            type: selectedType,
-            [FILTER_DATA_USE_TITLES]: undefined,
-            [FILTER_PUBLISHER_NAME]: undefined,
-            [FILTER_COLLECTION_NAME]: undefined,
-            [FILTER_COLLECTION_NAMES]: undefined,
-            [FILTER_GEOGRAPHIC_LOCATION]: undefined,
-            [FILTER_DATE_RANGE]: undefined,
-            [FILTER_ORGANISATION_NAME]: undefined,
-            [FILTER_DATA_SET_TITLES]: undefined,
-            [FILTER_DATA_TYPE]: undefined,
-            [FILTER_DATA_SUBTYPE]: undefined,
-            [FILTER_PUBLICATION_DATE]: undefined,
-            [FILTER_PUBLICATION_TYPE]: undefined,
-            [FILTER_SECTOR]: undefined,
-            [FILTER_DATA_PROVIDER]: undefined,
-            [FILTER_DATA_CUSTODIAN_NETWORK]: undefined,
-            [FILTER_ACCESS_SERVICE]: undefined,
-            [FILTER_POPULATION_SIZE]: undefined,
-            [FILTER_PROGRAMMING_LANGUAGE]: undefined,
-            [FILTER_TYPE_CATEGORY]: undefined,
-            [FILTER_CONTAINS_BIOSAMPLES]: undefined,
-            [FILTER_MATERIAL_TYPE]: undefined,
-            [STATIC_FILTER_SOURCE]: searchFormConfig.defaultValues.source,
-            [STATIC_FILTER_DATA_SOURCE]: HDRUK_SOURCE_VALUE,
-            [PMC_TYPE_FIELD]: undefined,
-            [FILTER_FORMAT_STANDARDS]: undefined,
-            [FILTER_COHORT_DISCOVERY]: undefined,
-        });
-    };
 
     const categoryTabs = [
         {
@@ -831,6 +644,12 @@ const Search = ({ filters, schema }: SearchProps) => {
         }
     };
 
+    const handleUpdateStaticFilter = useStaticFilterUpdate({
+        setQueryParams,
+        updatePath,
+        updatePathMultiple,
+    });
+
     const handleToggleView = () => {
         return resultsView === ViewType.LIST
             ? handleChangeView(ViewType.TABLE)
@@ -971,27 +790,7 @@ const Search = ({ filters, schema }: SearchProps) => {
                     HDRUK: v2Data?.results?.HDRUK?.total ?? 0,
                     ARDC: v2Data?.results?.ARDC?.total ?? 0,
                 }}
-                updateStaticFilter={(filterName: string, value: string) => {
-                    if (filterName === STATIC_FILTER_DATA_SOURCE) {
-                        setQueryParams({
-                            ...queryParams,
-                            [filterName]: value,
-                            [PAGE_FIELD]: "1",
-                        });
-                        updatePathMultiple({
-                            [filterName]: value,
-                            [PAGE_FIELD]: "1",
-                        });
-                    } else {
-                        setQueryParams({
-                            ...queryParams,
-                            [filterName]: value,
-                            [FILTER_DATA_SET_TITLES]: undefined,
-                            query: "",
-                        });
-                        updatePath(filterName, value);
-                    }
-                }}
+                updateStaticFilter={handleUpdateStaticFilter}
                 getParamString={getParamString}
                 showEuropePmcModal={europePmcModalAction}
                 resetQueryParamState={resetQueryParamState}
@@ -1007,7 +806,7 @@ const Search = ({ filters, schema }: SearchProps) => {
         resetQueryParamState,
         schema,
         selectedFilters,
-        updatePath,
+        handleUpdateStaticFilter,
         updatePathMultiple,
         v2Data?.results?.ARDC?.total,
         v2Data?.results?.HDRUK?.total,
