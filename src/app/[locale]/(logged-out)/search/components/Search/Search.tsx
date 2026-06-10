@@ -218,10 +218,10 @@ const Search = ({ filters, schema }: SearchProps) => {
         queryParams
     );
 
-    const allSearchParams = getAllParams(searchParams);
     const forceSearch = searchParams?.get("force") !== null;
 
     useEffect(() => {
+        const allSearchParams = getAllParams(searchParams);
         const keys = Object.keys(allSearchParams).filter(
             (key: string) => allSearchParams[key] !== ""
         );
@@ -234,7 +234,7 @@ const Search = ({ filters, schema }: SearchProps) => {
                 keys.every(element => ["type", "view"].includes(element))
             )
         );
-    }, [allSearchParams]);
+    }, [searchParams]);
 
     useEffect(() => {
         const viewType =
@@ -799,6 +799,7 @@ const Search = ({ filters, schema }: SearchProps) => {
         );
     }, [
         data?.aggregations,
+        dataSource,
         europePmcModalAction,
         filters,
         getParamString,
@@ -807,6 +808,7 @@ const Search = ({ filters, schema }: SearchProps) => {
         schema,
         selectedFilters,
         handleUpdateStaticFilter,
+        setQueryParams,
         updatePathMultiple,
         v2Data?.results?.ARDC?.total,
         v2Data?.results?.HDRUK?.total,
