@@ -265,7 +265,8 @@ const Search = ({ filters, schema }: SearchProps) => {
 
     const isDatasets = queryParams.type === SearchCategory.DATASETS;
     const dataSource = queryParams.dataSource || HDRUK_SOURCE_VALUE;
-    const isExternalSourceSelected = dataSource !== HDRUK_SOURCE_VALUE;
+    const isExternalSourceSelected =
+        isExternalSourcesEnabled && dataSource !== HDRUK_SOURCE_VALUE;
 
     const {
         data: v1Data,
