@@ -45,6 +45,7 @@ import {
 import { SOURCE_GAT } from "@/config/forms/search";
 import { colors } from "@/config/theme";
 import { INCLUDE_UNREPORTED } from "@/consts/filters";
+import { ARDC_SOURCE_VALUE, HDRUK_SOURCE_VALUE } from "@/consts/search";
 import {
     formatBucketCounts,
     groupByType,
@@ -81,8 +82,7 @@ const STATIC_FILTER_SOURCE_OBJECT = {
     value: "",
 };
 const STATIC_FILTER_DATA_SOURCE = "dataSource";
-const HDRUK_SOURCE_VALUE = "HDRUK";
-const ARDC_SOURCE_VALUE = "ARDC";
+
 const FILTER_ORDERING: { [key: string]: Array<string> } = {
     dataset: [
         STATIC_FILTER_DATA_SOURCE,
@@ -195,7 +195,7 @@ const FilterPanel = ({
     showEuropePmcModal: () => void;
     resetQueryParamState: (selectedType: SearchCategory) => void;
     schemadefs;
-    providerCounts?: { [key: string]: number };
+    providerCounts?: { [key: string]: number | null };
     dataSource?: string;
 }) => {
     const t = useTranslations(`${TRANSLATION_PATH}.${filterCategory}`);

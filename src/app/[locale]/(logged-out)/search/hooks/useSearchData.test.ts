@@ -17,11 +17,16 @@ const makeV2Data = (
     provider: string,
     overrides: Record<string, unknown> = {}
 ) => ({
+    query: "test",
+    type: "datasets",
     results: {
         [provider]: {
             hits: [],
             total: 0,
-            aggregations: {},
+            aggregations: [] as [],
+            provider_logo: null,
+            about: null,
+            ids: [],
             ...overrides,
         },
     },
@@ -72,13 +77,25 @@ describe("useSearchData", () => {
 
         it("returns data for the ARDC provider when dataSource is ARDC", () => {
             const v2Data = {
+                query: "test",
+                type: "datasets",
                 results: {
                     [ARDC_SOURCE_VALUE]: {
-                        hits: [{ id: "3" }],
+                        hits: [{ id: "3", slug: "slug-3" }],
                         total: 10,
-                        aggregations: {},
+                        aggregations: [] as [],
+                        provider_logo: null,
+                        about: null,
+                        ids: [],
                     },
-                    [HDRUK_SOURCE_VALUE]: { hits: [], total: 0, aggregations: {} },
+                    [HDRUK_SOURCE_VALUE]: {
+                        hits: [],
+                        total: 0,
+                        aggregations: [] as [],
+                        provider_logo: null,
+                        about: null,
+                        ids: [],
+                    },
                 },
             };
             const { result } = renderHook(() =>

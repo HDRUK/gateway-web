@@ -34,6 +34,6 @@ export const isRQuestEnabled = flag({
 });
 
 export const isExternalSourcesEnabled = flag({
-    key: "V2/Search/Aggregation",
+    key: "V2_SearchAggregation",
     adapter,
 });

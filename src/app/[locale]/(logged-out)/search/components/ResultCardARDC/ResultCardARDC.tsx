@@ -79,6 +79,7 @@ const ResultCardARDC = ({ result, providerLogo }: ResultCardARDCProps) => {
                                 </Typography>
                             )}
                             <Typography
+                                component="div"
                                 sx={{
                                     color: colors.grey800,
                                     mt: 0.5,

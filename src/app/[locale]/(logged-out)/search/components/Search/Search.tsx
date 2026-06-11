@@ -117,6 +117,7 @@ import { useFeatures } from "@/providers/FeatureProvider";
 import useAddLibraryModal from "../../hooks/useAddLibraryModal";
 import { useQueryParams } from "../../hooks/useQueryParams";
 import { useSearchData } from "../../hooks/useSearchData";
+import useLoadExternalData from "../../hooks/useLoadExternalData";
 import { useStaticFilterUpdate } from "../../hooks/useStaticFilterUpdate";
 import DataCustodianNetwork from "../DataCustodianNetwork";
 import FilterChips from "../FilterChips";
@@ -297,7 +298,7 @@ const Search = ({ filters, schema }: SearchProps) => {
 
     const {
         data: v2Data,
-        isLoading: isV2Searching,
+        isValidating: isV2Searching,
         mutate: mutateV2,
     } = usePostSwr<SearchAggregationData>(
         apis.searchV2AggregationUrl,
@@ -316,14 +317,26 @@ const Search = ({ filters, schema }: SearchProps) => {
         }
     );
 
+    const { externalResults, isPolling: isExternalPolling } =
+        useLoadExternalData(v2Data, isDatasets && isExternalSourcesEnabled);
+
+    const ardcResult = externalResults[ARDC_SOURCE_VALUE] ?? null;
+
+    const v2DataWithExternal = useMemo(() => {
+        if (!v2Data || !Object.keys(externalResults).length) return v2Data;
+        return { ...v2Data, results: { ...v2Data.results, ...externalResults } };
+    }, [v2Data, externalResults]);
+
     const isSearching =
-        isDatasets && isExternalSourcesEnabled ? isV2Searching : isV1Searching;
+        isDatasets && isExternalSourcesEnabled
+            ? isV2Searching || (isExternalSourceSelected && isExternalPolling)
+            : isV1Searching;
 
     const data = useSearchData({
         isDatasets,
         isExternalSourcesEnabled,
         v1Data,
-        v2Data,
+        v2Data: v2DataWithExternal,
         dataSource,
         perPage: queryParams.per_page,
         page: queryParams.page,
@@ -466,12 +479,12 @@ const Search = ({ filters, schema }: SearchProps) => {
         switch (queryParams.type) {
             case SearchCategory.DATASETS:
                 if (isExternalSourceSelected) {
-                    const ardcResult = result as unknown as SearchResultARDC;
+                    const ardcItem = result as unknown as SearchResultARDC;
                     return (
                         <ResultCardARDC
-                            result={ardcResult}
-                            key={ardcResult.id}
-                            providerLogo={v2Data?.results?.ARDC?.provider_logo}
+                            result={ardcItem}
+                            key={ardcItem.id}
+                            providerLogo={ardcResult?.provider_logo ?? undefined}
                         />
                     );
                 }
@@ -788,7 +801,7 @@ const Search = ({ filters, schema }: SearchProps) => {
                 dataSource={dataSource}
                 providerCounts={{
                     HDRUK: v2Data?.results?.HDRUK?.total ?? 0,
-                    ARDC: v2Data?.results?.ARDC?.total ?? 0,
+                    ARDC: isExternalPolling ? null : ardcResult?.total ?? 0,
                 }}
                 updateStaticFilter={handleUpdateStaticFilter}
                 getParamString={getParamString}
@@ -810,7 +823,7 @@ const Search = ({ filters, schema }: SearchProps) => {
         handleUpdateStaticFilter,
         setQueryParams,
         updatePathMultiple,
-        v2Data?.results?.ARDC?.total,
+        ardcResult?.total,
         v2Data?.results?.HDRUK?.total,
     ]);
 
@@ -1405,16 +1418,16 @@ const Search = ({ filters, schema }: SearchProps) => {
                                 }}
                             />
 
-                            {!isSearching &&
-                                isDatasets &&
+                            {isDatasets &&
                                 !isExternalSourceSelected &&
                                 isExternalSourcesEnabled && (
                                     <PartnerResourcesBanner
-                                        count={
-                                            v2Data?.results?.ARDC?.total ?? 0
+                                        isLoading={
+                                            isSearching || isExternalPolling
                                         }
+                                        count={ardcResult?.total ?? 0}
                                         providerLogo={
-                                            v2Data?.results?.ARDC?.provider_logo
+                                            ardcResult?.provider_logo ?? undefined
                                         }
                                         onViewPartnerResources={() => {
                                             setQueryParams({

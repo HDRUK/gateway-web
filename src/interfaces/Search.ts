@@ -24,6 +24,7 @@ import {
     FILTER_COHORT_DISCOVERY,
 } from "@/config/forms/filters";
 import { PMC_TYPE_FIELD } from "@/config/forms/search";
+import { DataSource } from "@/consts/search";
 import { Metadata } from "./Dataset";
 import { Bucket } from "./Filter";
 import { Highlight } from "./HighlightDataset";
@@ -283,10 +284,15 @@ export interface SearchAggregationProviderResult {
 export interface SearchAggregationData {
     query: string;
     type: string;
-    results: {
-        HDRUK?: SearchAggregationProviderResult;
-        ARDC?: SearchAggregationProviderResult;
-    };
+    pending?: string[];
+    token?: string;
+    token_ttl?: number;
+    results: Partial<Record<DataSource, SearchAggregationProviderResult>>;
+}
+
+export interface SearchPollData {
+    results: Partial<Record<DataSource, SearchAggregationProviderResult>>;
+    pending?: string[];
 }
 
 export interface SearchAggregationResponse {

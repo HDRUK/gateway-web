@@ -12,16 +12,20 @@ const ARDC_FALLBACK_LOGO =
 
 interface PartnerResourcesBannerProps {
     count: number;
+    isLoading?: boolean;
     providerLogo?: string | null;
     onViewPartnerResources: () => void;
 }
 
 const PartnerResourcesBanner = ({
     count,
+    isLoading,
     providerLogo,
     onViewPartnerResources,
 }: PartnerResourcesBannerProps) => {
     const t = useTranslations(TRANSLATION_PATH);
+
+    if (isLoading) return null;
 
     return (
         <Paper

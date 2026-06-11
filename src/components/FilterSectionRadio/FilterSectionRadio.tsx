@@ -1,6 +1,6 @@
 "use client";
 
-import { Box } from "@mui/material";
+import { Box, CircularProgress } from "@mui/material";
 import { FormControlLabel, RadioGroup } from "@mui/material";
 import { BucketCheckbox } from "@/interfaces/Filter";
 import StyledRadio from "@/components/StyledRadio";
@@ -10,7 +10,7 @@ interface FilterSectionRadioProps {
     filterItem: { label: string; value: string; buckets: BucketCheckbox[] };
     handleRadioChange: (key: string) => void;
     value?: string;
-    counts?: { [key: string]: number };
+    counts?: { [key: string]: number | null };
 }
 const FilterSectionRadio = ({
     filterItem,
@@ -42,9 +42,13 @@ const FilterSectionRadio = ({
                                         width: "100%",
                                     }}>
                                     {radio.label}
-                                    <Typography>
-                                        {counts[radio.value]}
-                                    </Typography>
+                                    {counts[radio.value] === null ? (
+                                        <CircularProgress size={14} />
+                                    ) : (
+                                        <Typography>
+                                            {counts[radio.value]}
+                                        </Typography>
+                                    )}
                                 </Box>
                             ) : (
                                 radio.label
