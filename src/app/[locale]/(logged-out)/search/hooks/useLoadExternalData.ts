@@ -1,25 +1,27 @@
 "use client";
 
 import { useState } from "react";
-import apis from "@/config/apis";
-import { DataSource } from "@/consts/search";
-import useGet from "@/hooks/useGet";
 import {
     SearchAggregationData,
     SearchAggregationProviderResult,
     SearchPollData,
 } from "@/interfaces/Search";
+import useGet from "@/hooks/useGet";
+import apis from "@/config/apis";
+import { DataSource } from "@/consts/search";
 
 const useLoadExternalData = (
     v2Data: SearchAggregationData | undefined,
     enabled: boolean
 ): {
-    externalResults: Partial<Record<DataSource, SearchAggregationProviderResult>>;
+    externalResults: Partial<
+        Record<DataSource, SearchAggregationProviderResult>
+    >;
     isPolling: boolean;
 } => {
     const token = v2Data?.token ?? null;
     const query = v2Data?.query ?? "";
-    const type  = v2Data?.type  ?? "";
+    const type = v2Data?.type ?? "";
 
     const [cache, setCache] = useState<{
         query: string;
@@ -42,10 +44,14 @@ const useLoadExternalData = (
             refreshInterval: 500,
             errorNotificationsOn: false,
             onSuccess: data => {
+                if (!data) {
+                    setPolledToken(token);
+                    return;
+                }
                 const allResolved =
-                    Array.isArray(data?.pending) && data.pending.length === 0;
+                    Array.isArray(data.pending) && data.pending.length === 0;
                 if (allResolved) {
-                    setCache({ query, type, results: data?.results ?? {} });
+                    setCache({ query, type, results: data.results ?? {} });
                     setPolledToken(token);
                 }
             },

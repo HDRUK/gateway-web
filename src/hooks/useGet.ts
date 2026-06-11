@@ -20,7 +20,7 @@ interface Options<T> {
     refreshInterval?: number;
     fallbackData?: T;
     revalidateOnMount?: boolean;
-    onSuccess?: (data: T) => void;
+    onSuccess?: (data: T | undefined) => void;
     onError?: (error: unknown) => void;
 }
 
@@ -67,7 +67,14 @@ const useGet = <T>(url: string | null, options?: Options<T>): Response<T> => {
     const { data, mutate, isLoading } = useSWR<T | undefined>(
         shouldFetch ? url : null,
         fetcher,
-        { keepPreviousData, refreshInterval, fallbackData, revalidateOnMount, onSuccess, onError }
+        {
+            keepPreviousData,
+            refreshInterval,
+            fallbackData,
+            revalidateOnMount,
+            ...(onSuccess && { onSuccess }),
+            ...(onError && { onError }),
+        }
     );
 
     return {

@@ -1420,7 +1420,10 @@ const Search = ({ filters, schema }: SearchProps) => {
 
                             {isDatasets &&
                                 !isExternalSourceSelected &&
-                                isExternalSourcesEnabled && (
+                                isExternalSourcesEnabled &&
+                                ((ardcResult?.total ?? 0) > 0 ||
+                                    isSearching ||
+                                    isExternalPolling) && (
                                     <PartnerResourcesBanner
                                         isLoading={
                                             isSearching || isExternalPolling
