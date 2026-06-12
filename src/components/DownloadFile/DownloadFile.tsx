@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { SxProps } from "@mui/material";
+import { ButtonProps } from "@/components/Button/Button";
 import { FileExport } from "@/interfaces/FileExport";
 import useGet from "@/hooks/useGet";
 import { downloadFile } from "@/utils/download";
@@ -9,9 +10,15 @@ export interface DownloadFileProps {
     apiPath: string;
     buttonText: string;
     buttonSx?: SxProps;
+    variant?: ButtonProps["variant"];
 }
 
-const DownloadFile = ({ apiPath, buttonText, buttonSx }: DownloadFileProps) => {
+const DownloadFile = ({
+    apiPath,
+    buttonText,
+    buttonSx,
+    variant,
+}: DownloadFileProps) => {
     const [triggerFetch, setTriggerFetch] = useState(false);
     const download = useGet<FileExport>(apiPath, {
         shouldFetch: triggerFetch,
@@ -25,7 +32,7 @@ const DownloadFile = ({ apiPath, buttonText, buttonSx }: DownloadFileProps) => {
         setTriggerFetch(false);
     }
     return (
-        <DownloadButton onClick={handleDownload} sx={buttonSx}>
+        <DownloadButton onClick={handleDownload} sx={buttonSx} variant={variant}>
             {buttonText}
         </DownloadButton>
     );

@@ -9,6 +9,7 @@ import {
     CohortRequestUser,
 } from "@/interfaces/CohortRequest";
 import { ReducedCollection } from "@/interfaces/Collection";
+import { DashboardEntity, DashboardEntityCount } from "@/interfaces/Dashboard";
 import {
     DarApplicationAnswer,
     DarTemplate,
@@ -843,6 +844,22 @@ async function getMetrics(options?: GetOptions) {
     return metrics;
 }
 
+async function getDashboardEntityCount(
+    teamId: string,
+    entity: DashboardEntity,
+    startDate?: string,
+    endDate?: string
+): Promise<DashboardEntityCount> {
+    const params = new URLSearchParams();
+    if (startDate) params.set("startDate", startDate);
+    if (endDate) params.set("endDate", endDate);
+    const query = params.toString() ? `?${params.toString()}` : "";
+    return get<DashboardEntityCount>(
+        `${apis.teamsV3UrlIP}/${teamId}/dashboard/${entity}/count${query}`,
+        { suppressError: true }
+    );
+}
+
 export {
     getApplication,
     getCohort,
@@ -890,4 +907,5 @@ export {
     getNetworkCustodiansDatasets,
     getNetworkCustodiansEntities,
     getMetrics,
+    getDashboardEntityCount,
 };
