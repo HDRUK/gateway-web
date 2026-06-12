@@ -43,6 +43,8 @@ import FilterAltIcon from "@mui/icons-material/FilterAlt";
 import FilterAltOffIcon from "@mui/icons-material/FilterAltOff";
 import FilterAltOutlinedIcon from "@mui/icons-material/FilterAltOutlined";
 import FolderSharedOutlinedIcon from "@mui/icons-material/FolderSharedOutlined";
+import CalendarMonthOutlinedIcon from "@mui/icons-material/CalendarMonthOutlined";
+import GridViewOutlinedIcon from "@mui/icons-material/GridViewOutlined";
 import GroupsIcon from "@mui/icons-material/Groups";
 import GroupsOutlinedIcon from "@mui/icons-material/GroupsOutlined";
 import HandymanOutlinedIcon from "@mui/icons-material/HandymanOutlined";
@@ -162,4 +164,6 @@ export {
     VisibilityOutlinedIcon,
     ErrorIcon,
     ArrowUpwardIcon,
+    GridViewOutlinedIcon,
+    CalendarMonthOutlinedIcon,
 };
