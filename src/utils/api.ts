@@ -855,8 +855,7 @@ async function getDashboardEntityCount(
     if (endDate) params.set("endDate", endDate);
     const query = params.toString() ? `?${params.toString()}` : "";
     return get<DashboardEntityCount>(
-        `${apis.teamsV3UrlIP}/${teamId}/dashboard/${entity}/count${query}`,
-        { suppressError: true }
+        `${apis.teamsV3UrlIP}/${teamId}/dashboard/${entity}/count${query}`
     );
 }
 
