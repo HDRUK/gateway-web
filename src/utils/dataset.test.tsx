@@ -1,4 +1,5 @@
 import {
+    escapeMarkdownUnderscores,
     formatTextDelimiter,
     formatYearStat,
     hasValidValue,
@@ -67,6 +68,28 @@ describe("Dataset utils", () => {
 
         it("returns true for string array values", () => {
             expect(hasValidValue(["value"])).toEqual(true);
+        });
+    });
+
+    describe("escapeMarkdownUnderscores", () => {
+        it("escapes underscores within a word", () => {
+            expect(escapeMarkdownUnderscores("UPRN_ID")).toEqual("UPRN\\_ID");
+        });
+
+        it("escapes multiple word-internal underscores", () => {
+            expect(escapeMarkdownUnderscores("UPRN_ID_CODE")).toEqual(
+                "UPRN\\_ID\\_CODE"
+            );
+        });
+
+        it("does not escape leading or trailing underscores", () => {
+            expect(escapeMarkdownUnderscores("_italic_")).toEqual("_italic_");
+        });
+
+        it("leaves plain text unchanged", () => {
+            expect(escapeMarkdownUnderscores("no underscores here")).toEqual(
+                "no underscores here"
+            );
         });
     });
 

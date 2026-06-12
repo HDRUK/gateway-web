@@ -20,7 +20,12 @@ import TooltipText from "@/components/TooltipText";
 import Typography from "@/components/Typography";
 import useModal from "@/hooks/useModal";
 import { RouteName } from "@/consts/routeName";
-import { formatTextWithLinks, splitStringList } from "@/utils/dataset";
+import {
+    escapeMarkdownUnderscores,
+    formatTextDelimiter,
+    formatTextWithLinks,
+    splitStringList,
+} from "@/utils/dataset";
 import { formatDate } from "@/utils/date";
 import { decodeHtmlEntity } from "@/utils/general";
 import {
@@ -42,6 +47,7 @@ const TRANSLATION_PATH = "common";
 const DOI_URL = "https://doi.org/";
 const DOI_NAME_PATH = "metadata.metadata.summary.doiName";
 const FOLLOWUP_PATH = "metadata.metadata.coverage.followUp";
+const CITATION_PATH = "metadata.metadata.accessibility.usage.resourceCreator";
 
 const columnHelper = createColumnHelper<Observation>();
 
@@ -165,7 +171,10 @@ const DatasetContent = ({
 
             default: {
                 return (
-                    <MarkDownSanitizedWithHtml content={value} wrapper="span" />
+                    <MarkDownSanitizedWithHtml
+                        content={escapeMarkdownUnderscores(value.toString())}
+                        wrapper="span"
+                    />
                 );
             }
         }
@@ -287,6 +296,13 @@ const DatasetContent = ({
                                         value = value
                                             .toString()
                                             .replace(/>/g, "`>`");
+                                    }
+
+                                    // Citation requirements can arrive as a ;,; delimited list
+                                    if (field.path === CITATION_PATH) {
+                                        value = formatTextDelimiter(
+                                            value as string
+                                        ) as string;
                                     }
 
                                     if (!field.label) {

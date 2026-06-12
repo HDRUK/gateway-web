@@ -73,6 +73,9 @@ const getLatestVersions = (dataset_versions: VersionItem[]): VersionItem[] => {
     return Object.values(groupedByDatasetID);
 };
 
+const escapeMarkdownUnderscores = (text: string) =>
+    text.replace(/(\S)_(\S)/g, "$1\\_$2");
+
 const formatTextWithLinks = (text: string | string[] | number) => {
     if (typeof text === "number") {
         return text.toLocaleString();
@@ -99,7 +102,7 @@ const formatTextWithLinks = (text: string | string[] | number) => {
             </Link>
         ) : (
             <MarkDownSanitizedWithHtml
-                content={segment}
+                content={escapeMarkdownUnderscores(segment)}
                 wrapper="span"
                 key={`markdown_${index}`}
             />
@@ -123,6 +126,7 @@ const formatTextDelimiter = (text: string | string[] | number) => {
 };
 
 export {
+    escapeMarkdownUnderscores,
     formatYearStat,
     getLatestVersion,
     getLatestVersions,
