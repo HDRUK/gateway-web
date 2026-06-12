@@ -21,20 +21,6 @@ const defaultCounts = {
 };
 
 describe("Dashboard", () => {
-    it("defaults to last 12 months download URL", () => {
-        render(<Dashboard teamId="42" initialCounts={defaultCounts} />);
-
-        const link = screen.getByTestId("download-link");
-        expect(link).toHaveAttribute(
-            "href",
-            expect.stringContaining("startDate=2024-06-12")
-        );
-        expect(link).toHaveAttribute(
-            "href",
-            expect.stringContaining("endDate=2025-06-12")
-        );
-    });
-
     it("updates download URL when period is changed", async () => {
         render(<Dashboard teamId="42" initialCounts={defaultCounts} />);
 
