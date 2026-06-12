@@ -1,7 +1,7 @@
 import { faker } from "@faker-js/faker";
 import { RouteName } from "../../src/consts/routeName";
 
-const PUBLICATION_NAME = "NEW_PUBLICATION";
+const PUBLICATION_NAME = "NEW PUBLICATION";
 
 const createPublication = () => {
     cy.visit(`/${RouteName.ACCOUNT}/${RouteName.PROFILE}`);
