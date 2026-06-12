@@ -107,6 +107,9 @@ const formatTextWithLinks = (text: string | string[] | number) => {
     );
 };
 
+const escapeMarkdownUnderscores = (text: string) =>
+    text.replace(/(\S)_(\S)/g, "$1\\_$2");
+
 const formatTextDelimiter = (text: string | string[] | number) => {
     try {
         return Array.isArray(text)
@@ -123,6 +126,7 @@ const formatTextDelimiter = (text: string | string[] | number) => {
 };
 
 export {
+    escapeMarkdownUnderscores,
     formatYearStat,
     getLatestVersion,
     getLatestVersions,
