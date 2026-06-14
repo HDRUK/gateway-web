@@ -20,8 +20,6 @@ jobs:
           ARGS+="--build-arg NEXT_PUBLIC_API_V1_IP_URL=${{ vars.NEXT_PUBLIC_API_V1_IP_URL }} "
           ARGS+="--build-arg NEXT_PUBLIC_API_V2_URL=${{ vars.NEXT_PUBLIC_API_V2_URL }} "
           ARGS+="--build-arg NEXT_PUBLIC_API_V2_IP_URL=${{ vars.NEXT_PUBLIC_API_V2_IP_URL }} "
-          ARGS+="--build-arg NEXT_PUBLIC_API_V2_URL=${{ vars.NEXT_PUBLIC_API_V3_URL }} "
-          ARGS+="--build-arg NEXT_PUBLIC_API_V2_IP_URL=${{ vars.NEXT_PUBLIC_API_V3_IP_URL }} "
           ARGS+="--build-arg NEXT_PUBLIC_API_V3_URL=${{ vars.NEXT_PUBLIC_API_V3_URL }} "
           ARGS+="--build-arg NEXT_PUBLIC_API_V3_IP_URL=${{ vars.NEXT_PUBLIC_API_V3_IP_URL }} "
           ARGS+="--build-arg NEXT_PUBLIC_API_VERSION=${{ vars.NEXT_PUBLIC_API_VERSION }} "

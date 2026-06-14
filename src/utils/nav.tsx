@@ -16,7 +16,6 @@ import {
     TeamMembersIcon,
     DarIcon,
     EmailIcon,
-    GridViewOutlinedIcon,
 } from "@/consts/icons";
 import { ROLE_HDRUK_SUPERADMIN } from "@/consts/roles";
 import { RouteName } from "@/consts/routeName";
@@ -133,11 +132,11 @@ const getTeamNav = (
     const { isWidgetsEnabled } = features;
 
     return [
-        {
-            icon: navIcon(GridViewOutlinedIcon),
-            label: "Dashboard",
-            href: `/${RouteName.ACCOUNT}/${RouteName.TEAM}/${teamId}/${RouteName.DASHBOARD}`,
-        },
+        // {
+        //     icon: navIcon(GridViewOutlinedIcon),
+        //     label: "Dashboard",
+        //     href: `/${RouteName.ACCOUNT}/${RouteName.TEAM}/${teamId}/${RouteName.DASHBOARD}`,
+        // },
         ...(permissions["roles.read"]
             ? [
                   {
