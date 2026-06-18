@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import { useForm } from "react-hook-form";
 import { get } from "lodash";
 import { useTranslations } from "next-intl";
@@ -45,6 +45,7 @@ import {
 import { SOURCE_GAT } from "@/config/forms/search";
 import { colors } from "@/config/theme";
 import { INCLUDE_UNREPORTED } from "@/consts/filters";
+import { ARDC_SOURCE_VALUE, HDRUK_SOURCE_VALUE } from "@/consts/search";
 import {
     formatBucketCounts,
     groupByType,
@@ -52,6 +53,7 @@ import {
     transformQueryFiltersToForm,
 } from "@/utils/filters";
 import { getSubtypeOptionsFromSchema } from "@/utils/getSubtypeOptionsFromSchema";
+import { useFeatures } from "@/providers/FeatureProvider";
 import { ClearButton } from "../ClearFilterButton/ClearFilterButton.styles";
 import DateRangeFilter from "../DateRangeFilter";
 import FilterSectionInlineSwitch from "../FilterSectionInlineSwitch";
@@ -79,8 +81,11 @@ const STATIC_FILTER_SOURCE_OBJECT = {
     label: STATIC_FILTER_SOURCE,
     value: "",
 };
+const STATIC_FILTER_DATA_SOURCE = "dataSource";
+
 const FILTER_ORDERING: { [key: string]: Array<string> } = {
     dataset: [
+        STATIC_FILTER_DATA_SOURCE,
         FILTER_CONTAINS_BIOSAMPLES,
         FILTER_COHORT_DISCOVERY,
         FILTER_DATA_TYPE,
@@ -172,6 +177,8 @@ const FilterPanel = ({
     showEuropePmcModal,
     resetQueryParamState,
     schemadefs,
+    providerCounts,
+    dataSource,
 }: {
     filterCategory: string;
     selectedFilters: { [filter: string]: string[] | undefined };
@@ -188,9 +195,12 @@ const FilterPanel = ({
     showEuropePmcModal: () => void;
     resetQueryParamState: (selectedType: SearchCategory) => void;
     schemadefs;
+    providerCounts?: { [key: string]: number | null };
+    dataSource?: string;
 }) => {
     const t = useTranslations(`${TRANSLATION_PATH}.${filterCategory}`);
     const tRoot = useTranslations(TRANSLATION_PATH);
+    const { isExternalSourcesEnabled } = useFeatures();
 
     const searchParams = useSearchParams();
     const pathname = usePathname();
@@ -205,6 +215,10 @@ const FilterPanel = ({
         {
             [STATIC_FILTER_SOURCE]: {
                 [getParamString(STATIC_FILTER_SOURCE) || SOURCE_GAT]: true,
+            },
+            [STATIC_FILTER_DATA_SOURCE]: {
+                [getParamString(STATIC_FILTER_DATA_SOURCE) ||
+                HDRUK_SOURCE_VALUE]: true,
             },
         }
     );
@@ -221,13 +235,20 @@ const FilterPanel = ({
 
     useEffect(() => {
         if (filterCategory === FILTER_CATEGORY_PUBLICATIONS) {
-            setStaticFilterValues({
+            setStaticFilterValues(prev => ({
+                ...prev,
                 [STATIC_FILTER_SOURCE]: {
                     [getParamString(STATIC_FILTER_SOURCE) || SOURCE_GAT]: true,
                 },
-            });
+            }));
         }
-    }, [filterCategory]);
+        if (filterCategory === FILTER_CATEGORY_DATASETS && dataSource) {
+            setStaticFilterValues(prev => ({
+                ...prev,
+                [STATIC_FILTER_DATA_SOURCE]: { [dataSource]: true },
+            }));
+        }
+    }, [filterCategory, dataSource]);
 
     // useForm applys to the search fields above each filter (other components, such as checkboxes/map are controlled)
     const { control, setValue } = useForm<{
@@ -272,10 +293,41 @@ const FilterPanel = ({
             formattedFilters.unshift(STATIC_FILTER_SOURCE_OBJECT);
         }
 
+        if (
+            isExternalSourcesEnabled &&
+            filterCategory === FILTER_CATEGORY_DATASETS
+        ) {
+            const dataSourceBuckets = [
+                {
+                    value: HDRUK_SOURCE_VALUE,
+                    label: "Health Data Research Gateway",
+                },
+                {
+                    value: ARDC_SOURCE_VALUE,
+                    label: "External data portals",
+                },
+            ];
+            formattedFilters.unshift({
+                buckets: dataSourceBuckets,
+                label: STATIC_FILTER_DATA_SOURCE,
+                value: "",
+            });
+        }
+
         // If the selected source is 'Search Online Publications' then remove the 'Dataset' filter
-        if (staticFilterValues.source.FED) {
+        if (staticFilterValues.source?.FED) {
             formattedFilters = formattedFilters.filter(
                 filterItem => filterItem.label !== FILTER_DATA_SET_TITLES
+            );
+        }
+
+        // If 'External data portals' is selected, hide all dataset filters (ARDC has no aggregations)
+        if (
+            isExternalSourcesEnabled &&
+            staticFilterValues[STATIC_FILTER_DATA_SOURCE]?.[ARDC_SOURCE_VALUE]
+        ) {
+            formattedFilters = formattedFilters.filter(
+                filterItem => filterItem.label === STATIC_FILTER_DATA_SOURCE
             );
         }
 
@@ -317,13 +369,27 @@ const FilterPanel = ({
                         };
                     });
 
-                    formattedFilters[ffIndex].buckets = dataTypeFilters;
+                    formattedFilters = [
+                        ...formattedFilters.slice(0, ffIndex),
+                        {
+                            ...formattedFilters[ffIndex],
+                            buckets: dataTypeFilters,
+                        },
+                        ...formattedFilters.slice(ffIndex + 1),
+                    ];
                 }
             }
         }
 
         return formattedFilters;
-    }, [filterCategory, filterSourceData, staticFilterValues, aggregations]);
+    }, [
+        filterCategory,
+        filterSourceData,
+        staticFilterValues,
+        aggregations,
+        isExternalSourcesEnabled,
+        schemadefs,
+    ]);
     const [maximised, setMaximised] = useState<string[]>([]);
 
     const handleUpdateMap = (mapValue: SelectedType) => {
@@ -405,6 +471,20 @@ const FilterPanel = ({
 
         setFilterQueryParams([], filterSection, [], subfilterSection);
     };
+
+    const handleRadioChange = useCallback(
+        (filterName: string, value: string) => {
+            setStaticFilterValues(prev => ({
+                ...prev,
+                [filterName]: { [value]: true },
+            }));
+            updateStaticFilter(filterName, value);
+            if (filterName === STATIC_FILTER_SOURCE && value === EUROPE_PMC_SOURCE_FIELD) {
+                showEuropePmcModal();
+            }
+        },
+        [updateStaticFilter, showEuropePmcModal]
+    );
 
     const resetAllFilters = () => {
         setFilterValues(EMPTY_FILTERS);
@@ -599,22 +679,33 @@ const FilterPanel = ({
                 return (
                     <FilterSectionRadio
                         filterItem={filterItem}
-                        handleRadioChange={value => {
-                            setStaticFilterValues(prev => ({
-                                ...prev,
-                                [label]: { [value]: true },
-                            }));
-                            updateStaticFilter(label, value);
-
-                            if (value === EUROPE_PMC_SOURCE_FIELD) {
-                                showEuropePmcModal();
-                            }
-                        }}
+                        handleRadioChange={value =>
+                            handleRadioChange(label, value)
+                        }
                         value={
                             Object.keys(
                                 staticFilterValues[STATIC_FILTER_SOURCE]
                             )[0]
                         }
+                    />
+                );
+            case STATIC_FILTER_DATA_SOURCE:
+                return (
+                    <FilterSectionRadio
+                        filterItem={filterItem}
+                        handleRadioChange={value =>
+                            handleRadioChange(STATIC_FILTER_DATA_SOURCE, value)
+                        }
+                        value={
+                            Object.keys(
+                                staticFilterValues[
+                                    STATIC_FILTER_DATA_SOURCE
+                                ] || {
+                                    [HDRUK_SOURCE_VALUE]: true,
+                                }
+                            )[0]
+                        }
+                        counts={providerCounts}
                     />
                 );
             case FILTER_GEOGRAPHIC_LOCATION:
@@ -746,14 +837,17 @@ const FilterPanel = ({
                 }}>
                 <Typography variant="h2">{tRoot("filterResults")}</Typography>
 
-                {!isQueryEmpty(selectedFilters) && (
-                    <ClearButton
-                        variant="link"
-                        onClick={resetAllFilters}
-                        sx={{ m: 0 }}>
-                        {tRoot("clearAll")}
-                    </ClearButton>
-                )}
+                {!isQueryEmpty(selectedFilters) &&
+                    !staticFilterValues[STATIC_FILTER_DATA_SOURCE]?.[
+                        ARDC_SOURCE_VALUE
+                    ] && (
+                        <ClearButton
+                            variant="link"
+                            onClick={resetAllFilters}
+                            sx={{ m: 0 }}>
+                            {tRoot("clearAll")}
+                        </ClearButton>
+                    )}
             </Box>
 
             {filterItems.sort(getFilterSortOrder).map(filterItem => {
@@ -800,6 +894,8 @@ const FilterPanel = ({
                 }
 
                 const isPublicationSource = label === STATIC_FILTER_SOURCE;
+                const isStaticRadioFilter =
+                    isPublicationSource || label === STATIC_FILTER_DATA_SOURCE;
 
                 const filterCount = filterValues[label] &&
                     !!Object.entries(filterValues[label]).length && (
@@ -827,7 +923,7 @@ const FilterPanel = ({
                                 mt: 0.5,
                                 mb: 0.5,
                             },
-                            ...(isPublicationSource && {
+                            ...(isStaticRadioFilter && {
                                 ".MuiAccordionSummary-expandIconWrapper": {
                                     opacity: 0,
                                 },
@@ -838,7 +934,7 @@ const FilterPanel = ({
                             }),
                         }}
                         expanded={
-                            maximised.includes(label) || isPublicationSource
+                            maximised.includes(label) || isStaticRadioFilter
                         }
                         tooltip={t(`${label}${TOOLTIP_SUFFIX}`)}
                         heading={

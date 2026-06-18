@@ -22,26 +22,20 @@ import { getShortenedText } from "@/utils/string";
 import ClearFilterButton from "@/app/[locale]/(logged-out)/search/components/ClearFilterButton";
 import HTMLContent from "../HTMLContent";
 
-interface FilterSectionProps<TFieldValues extends FieldValues, TName> {
+interface FilterSectionProps<TFieldValues extends FieldValues> {
     filterItem: { label: string; value: string; buckets: BucketCheckbox[] };
     control: Control<TFieldValues>;
-    filterSection: TName;
+    filterSection: string;
     noFilterLabel?: string;
     placeholder?: string;
     checkboxValues: { [key: string]: boolean };
     counts?: CountType;
     countsDisabled: boolean;
     handleCheckboxChange: (updates: { [key: string]: boolean }) => void;
-    setValue: (
-        name: keyof TFieldValues,
-        value: UseFormSetValue<TFieldValues>
-    ) => void;
+    setValue: UseFormSetValue<TFieldValues>;
     resetFilterSection: () => void;
 }
-const FilterSection = <
-    TFieldValues extends FieldValues,
-    TName extends Path<TFieldValues>
->({
+const FilterSection = <TFieldValues extends FieldValues>({
     filterItem,
     filterSection,
     control,
@@ -53,11 +47,11 @@ const FilterSection = <
     handleCheckboxChange,
     setValue,
     resetFilterSection,
-}: FilterSectionProps<TFieldValues, TName>) => {
+}: FilterSectionProps<TFieldValues>) => {
     const t = useTranslations("components.FilterSection");
     const { field } = useController({
         control,
-        name: filterSection,
+        name: filterSection as Path<TFieldValues>,
     });
 
     const checkboxes = useMemo(() => {
@@ -125,7 +119,7 @@ const FilterSection = <
         <>
             <TextField
                 control={control}
-                name={filterSection}
+                name={filterSection as Path<TFieldValues>}
                 label=""
                 placeholder={placeholder || t("placeholder")}
                 icon={SearchIcon}

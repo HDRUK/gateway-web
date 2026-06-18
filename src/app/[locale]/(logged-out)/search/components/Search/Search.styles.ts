@@ -7,7 +7,6 @@ export const ActionBar = styled(Box)(({ theme }) => ({
     alignItems: "center",
     padding: "1em",
     width: "100%",
-    maxWidth: 1440,
     textAlign: "left",
 
     [theme.breakpoints.down("tablet")]: {
