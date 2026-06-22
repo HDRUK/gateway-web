@@ -40,7 +40,7 @@ describe("Collection - draft", () => {
     it("should create a new draft collection", () => {
         cy.intercept(
             "POST",
-            `${Cypress.env("API_URL")}/api/v2/users/34/collections`
+            `${Cypress.env("API_URL")}/api/v2/users/*/collections`
         ).as("createCollection");
 
         createCollection();
