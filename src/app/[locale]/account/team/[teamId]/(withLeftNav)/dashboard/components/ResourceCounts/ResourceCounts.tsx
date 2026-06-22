@@ -1,6 +1,6 @@
 "use client";
 
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useCallback, useLayoutEffect, useRef, useState } from "react";
 import {
     Checkbox,
     IconButton,
@@ -12,8 +12,8 @@ import { useTranslations } from "next-intl";
 import { DashboardEntity, DashboardEntityCount } from "@/interfaces/Dashboard";
 import Box from "@/components/Box";
 import Typography from "@/components/Typography";
-import { ArrowBackIosNewIcon, ArrowForwardIosIcon } from "@/consts/icons";
 import { colors } from "@/config/theme";
+import { ArrowBackIosNewIcon, ArrowForwardIosIcon } from "@/consts/icons";
 import ResourceCard from "./ResourceCard";
 import { CardsTrack, CardsWrapper } from "./ResourceCounts.styles";
 
@@ -74,10 +74,15 @@ const ResourceCounts = ({
         });
     }, []);
 
-    useEffect(() => {
+    useLayoutEffect(() => {
+        const track = trackRef.current;
+        if (!track) return;
+
         updateScrollState();
-        window.addEventListener("resize", updateScrollState);
-        return () => window.removeEventListener("resize", updateScrollState);
+
+        const observer = new ResizeObserver(updateScrollState);
+        observer.observe(track);
+        return () => observer.disconnect();
     }, [updateScrollState, selected]);
 
     const handleArrowClick = (direction: 1 | -1) => {
