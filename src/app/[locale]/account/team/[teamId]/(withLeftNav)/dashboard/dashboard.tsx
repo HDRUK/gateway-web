@@ -5,12 +5,14 @@ import { Select, MenuItem, InputAdornment } from "@mui/material";
 import { useTranslations } from "next-intl";
 import { DashboardEntityCount } from "@/interfaces/Dashboard";
 import Box from "@/components/Box";
+import BoxContainer from "@/components/BoxContainer";
 import DownloadFile from "@/components/DownloadFile";
 import Paper from "@/components/Paper";
 import Typography from "@/components/Typography";
 import apis from "@/config/apis";
 import { CalendarMonthOutlinedIcon } from "@/consts/icons";
 import { formatDate } from "@/utils/date";
+import ResourceCounts from "./components/ResourceCounts/ResourceCounts";
 
 interface DashboardCounts {
     datasets: DashboardEntityCount;
@@ -51,47 +53,61 @@ const Dashboard = ({ teamId, initialCounts }: DashboardProps) => {
     const downloadUrl = `${apis.apiV3Url}/teams/${teamId}/dashboard/download/csv?startDate=${startDate}&endDate=${endDate}`;
 
     return (
-        <Paper>
-            <Box
-                sx={{
-                    display: "flex",
-                    justifyContent: "space-between",
-                    alignItems: "flex-start",
-                    flexWrap: "wrap",
-                    gap: 2,
-                }}>
-                <Box>
-                    <Typography variant="h2">{t("title")}</Typography>
-                    <Typography>{t("text")}</Typography>
+        <BoxContainer
+            sx={{ gap: 2, gridTemplateColumns: "minmax(0, 1fr)" }}>
+            <Paper>
+                <Box
+                    sx={{
+                        display: "flex",
+                        justifyContent: "space-between",
+                        alignItems: "flex-start",
+                        flexWrap: "wrap",
+                        gap: 2,
+                    }}>
+                    <Box>
+                        <Typography variant="h2" component="h1">
+                            {t("title")}
+                        </Typography>
+                        <Typography>{t("text")}</Typography>
+                    </Box>
+                    <Box sx={{ display: "flex", alignItems: "center", gap: 2 }}>
+                        <Select
+                            size="small"
+                            value={period}
+                            onChange={e => setPeriod(e.target.value)}
+                            inputProps={{ "aria-label": t("choosePeriod") }}
+                            startAdornment={
+                                <InputAdornment position="start">
+                                    <CalendarMonthOutlinedIcon
+                                        sx={{ fontSize: 18 }}
+                                    />
+                                </InputAdornment>
+                            }
+                            sx={{ minWidth: 180 }}>
+                            {PERIODS.map(({ value }) => (
+                                <MenuItem key={value} value={value}>
+                                    {t(`periods.${value}`)}
+                                </MenuItem>
+                            ))}
+                        </Select>
+                        <DownloadFile
+                            apiPath={downloadUrl}
+                            buttonText={t("download")}
+                            buttonSx={{ mb: 0 }}
+                            variant="contained"
+                        />
+                    </Box>
                 </Box>
-                <Box sx={{ display: "flex", alignItems: "center", gap: 2 }}>
-                    <Select
-                        size="small"
-                        value={period}
-                        onChange={e => setPeriod(e.target.value)}
-                        startAdornment={
-                            <InputAdornment position="start">
-                                <CalendarMonthOutlinedIcon
-                                    sx={{ fontSize: 18 }}
-                                />
-                            </InputAdornment>
-                        }
-                        sx={{ minWidth: 180 }}>
-                        {PERIODS.map(({ value }) => (
-                            <MenuItem key={value} value={value}>
-                                {t(`periods.${value}`)}
-                            </MenuItem>
-                        ))}
-                    </Select>
-                    <DownloadFile
-                        apiPath={downloadUrl}
-                        buttonText={t("download")}
-                        buttonSx={{ mb: 0 }}
-                        variant="contained"
-                    />
-                </Box>
-            </Box>
-        </Paper>
+            </Paper>
+            <Paper>
+                <ResourceCounts
+                    teamId={teamId}
+                    startDate={startDate}
+                    endDate={endDate}
+                    initialCounts={initialCounts}
+                />
+            </Paper>
+        </BoxContainer>
     );
 };
 
