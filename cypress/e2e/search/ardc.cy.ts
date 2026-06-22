@@ -2,7 +2,7 @@ const FEATURE_FLAG = "V2_SearchAggregation";
 const HDRUK_URL = "/search?type=datasets&q=asthma";
 const ARDC_URL = "/search?type=datasets&dataSource=ARDC";
 
-describe.skip("Search - ARDC external sources", () => {
+describe("Search - ARDC external sources", () => {
     before(() => {
         cy.setFeatureFlag(FEATURE_FLAG, true);
     });

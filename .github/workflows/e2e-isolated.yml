@@ -96,6 +96,7 @@ env:
   CUST_ADMIN_1_EMAIL: "CypressTeamAdmin@hdruk.ac.uk"
   METADATA_MANAGER_EMAIL: "CypressMetaDataManager@hdruk.ac.uk"
   DAR_MANAGER_AND_METADATA_MANAGER_EMAIL: "CypressDarMetadataManager@hdruk.ac.uk"
+  SUPERUSER_EMAIL: "CypressSuperUser@hdruk.ac.uk"
 
 jobs:
   e2e-tests:

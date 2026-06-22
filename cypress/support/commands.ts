@@ -49,7 +49,7 @@ Cypress.Commands.add("waitForApiIdle", () => {
 });
 
 Cypress.Commands.add("setFeatureFlag", (name: string, enabled: boolean) => {
-    const email = Cypress.env("DEV_EMAIL");
+    const email = Cypress.env("SUPERUSER_EMAIL");
     const password = Cypress.env("TEST_USER_PASSWORD");
 
     cy.request({
