@@ -50,7 +50,7 @@ describe("Analysis Scripts & Software - draft", () => {
     it("should create a new active tool", () => {
         cy.intercept(
             "POST",
-            `${Cypress.env("API_URL")}/api/v2/users/34/tools`
+            `${Cypress.env("API_URL")}/api/v2/users/*/tools`
         ).as("createTool");
 
         createTool();

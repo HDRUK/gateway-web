@@ -24,7 +24,9 @@ describe("Dashboard", () => {
     it("updates download URL when period is changed", async () => {
         render(<Dashboard teamId="42" initialCounts={defaultCounts} />);
 
-        fireEvent.mouseDown(screen.getByRole("combobox"));
+        fireEvent.mouseDown(
+            screen.getByRole("combobox", { name: "Choose time period" })
+        );
         fireEvent.click(screen.getByRole("option", { name: "Last 3 months" }));
 
         await waitFor(() => {

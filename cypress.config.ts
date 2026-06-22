@@ -22,6 +22,7 @@ export default defineConfig({
                 process.env.DAR_MANAGER_AND_METADATA_MANAGER_EMAIL,
             API_URL: process.env.APP_URL,
             TEST_USER_PASSWORD: process.env.TEST_USER_PASSWORD,
+            SUPERUSER_EMAIL: process.env.SUPERUSER_EMAIL,
         },
         async setupNodeEvents(on, config) {
             on("before:browser:launch", (browser, launchOptions) => {
