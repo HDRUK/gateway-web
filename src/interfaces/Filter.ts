@@ -47,7 +47,8 @@ export type FilterKey =
     | "organisationSector"
     | "fundersAndSponsors"
     | "dataSubType"
-    | "publisherName";
+    | "publisherName"
+    | "dataSource";
 
 export type DateRange = {
     minYear: string;

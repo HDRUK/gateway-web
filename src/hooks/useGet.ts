@@ -20,6 +20,8 @@ interface Options<T> {
     refreshInterval?: number;
     fallbackData?: T;
     revalidateOnMount?: boolean;
+    onSuccess?: (data: T | undefined) => void;
+    onError?: (error: unknown) => void;
 }
 
 const useGet = <T>(url: string | null, options?: Options<T>): Response<T> => {
@@ -34,6 +36,8 @@ const useGet = <T>(url: string | null, options?: Options<T>): Response<T> => {
         refreshInterval = false,
         fallbackData,
         revalidateOnMount,
+        onSuccess,
+        onError,
     } = options || {};
 
     const t = useTranslations("api");
@@ -63,7 +67,14 @@ const useGet = <T>(url: string | null, options?: Options<T>): Response<T> => {
     const { data, mutate, isLoading } = useSWR<T | undefined>(
         shouldFetch ? url : null,
         fetcher,
-        { keepPreviousData, refreshInterval, fallbackData, revalidateOnMount }
+        {
+            keepPreviousData,
+            refreshInterval,
+            fallbackData,
+            revalidateOnMount,
+            ...(onSuccess && { onSuccess }),
+            ...(onError && { onError }),
+        }
     );
 
     return {

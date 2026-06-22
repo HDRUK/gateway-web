@@ -1,5 +1,11 @@
 import { InputHTMLAttributes } from "react";
-import { Control, FieldValues, Path, useController } from "react-hook-form";
+import {
+    Control,
+    FieldValues,
+    Path,
+    UseFormSetValue,
+    useController,
+} from "react-hook-form";
 import { SerializedStyles } from "@emotion/react";
 import {
     InputAdornment,
@@ -17,7 +23,7 @@ export interface TextFieldBaseProps<TFieldValues extends FieldValues, TName> {
     info?: string;
     extraInfo?: string;
     icon?: IconType;
-    setValue?: (name: keyof TFieldValues, value: unknown) => void;
+    setValue?: UseFormSetValue<TFieldValues>;
     name: TName;
     multiline?: boolean;
     horizontalForm?: boolean;

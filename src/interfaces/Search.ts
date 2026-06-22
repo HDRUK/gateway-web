@@ -24,6 +24,7 @@ import {
     FILTER_COHORT_DISCOVERY,
 } from "@/config/forms/filters";
 import { PMC_TYPE_FIELD } from "@/config/forms/search";
+import { DataSource } from "@/consts/search";
 import { Metadata } from "./Dataset";
 import { Bucket } from "./Filter";
 import { Highlight } from "./HighlightDataset";
@@ -232,6 +233,7 @@ export interface SearchQueryParams {
     per_page: string;
     type: SearchCategory;
     source: string | undefined;
+    dataSource: string | undefined;
     [FILTER_DATA_USE_TITLES]: string[] | undefined;
     [FILTER_PUBLISHER_NAME]: string[] | undefined;
     [FILTER_COLLECTION_NAME]: string[] | undefined;
@@ -259,3 +261,41 @@ export interface SearchQueryParams {
 }
 
 export type CountType = { [key: string]: number };
+
+export interface SearchResultARDC {
+    id: string;
+    slug: string;
+    display_title?: string;
+    title?: string;
+    group?: string;
+    list_description?: string;
+    description?: string;
+}
+
+export interface SearchAggregationProviderResult {
+    provider_logo: string | null;
+    about: string | null;
+    hits: SearchResultARDC[] | SearchResultDataset[];
+    total: number;
+    aggregations: Aggregations | [];
+    ids: string[];
+}
+
+export interface SearchAggregationData {
+    query: string;
+    type: string;
+    pending?: string[];
+    token?: string;
+    token_ttl?: number;
+    results: Partial<Record<DataSource, SearchAggregationProviderResult>>;
+}
+
+export interface SearchPollData {
+    results: Partial<Record<DataSource, SearchAggregationProviderResult>>;
+    pending?: string[];
+}
+
+export interface SearchAggregationResponse {
+    message: string;
+    data: SearchAggregationData;
+}

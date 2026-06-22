@@ -1,14 +1,11 @@
 "use client";
 
 import {
-    startTransition,
-    useCallback,
     useEffect,
     useMemo,
     useRef,
     useState,
 } from "react";
-import { FieldValues } from "react-hook-form";
 import { BookmarkBorder } from "@mui/icons-material";
 import FormatListBulletedIcon from "@mui/icons-material/FormatListBulleted";
 import {
@@ -24,15 +21,17 @@ import {
 } from "@mui/material";
 import Cookies from "js-cookie";
 import { useTranslations } from "next-intl";
-import { usePathname, useRouter, useSearchParams } from "next/navigation";
+import { useRouter } from "next/navigation";
 import { Filter } from "@/interfaces/Filter";
 import { Library } from "@/interfaces/Library";
 import {
     SavedSearchPayload,
+    SearchAggregationData,
     SearchCategory,
     SearchPaginationType,
     SearchQueryParams,
     SearchResult,
+    SearchResultARDC,
     SearchResultCollection,
     SearchResultDataProvider,
     SearchResultDataUse,
@@ -71,34 +70,15 @@ import useSidebar from "@/hooks/useSidebar";
 import apis from "@/config/apis";
 import config from "@/config/config";
 import {
-    FILTER_ACCESS_SERVICE,
-    FILTER_COLLECTION_NAME,
-    FILTER_CONTAINS_BIOSAMPLES,
-    FILTER_DATA_PROVIDER,
-    FILTER_DATA_CUSTODIAN_NETWORK,
     FILTER_DATA_SET_TITLES,
     FILTER_DATA_TYPE,
     FILTER_DATA_SUBTYPE,
-    FILTER_DATA_USE_TITLES,
     FILTER_DATE_RANGE,
-    FILTER_FORMAT_STANDARDS,
-    FILTER_GEOGRAPHIC_LOCATION,
-    FILTER_MATERIAL_TYPE,
-    FILTER_ORGANISATION_NAME,
-    FILTER_COLLECTION_NAMES,
-    FILTER_POPULATION_SIZE,
-    FILTER_PROGRAMMING_LANGUAGE,
     FILTER_PUBLICATION_DATE,
-    FILTER_PUBLICATION_TYPE,
-    FILTER_PUBLISHER_NAME,
-    FILTER_SECTOR,
-    FILTER_TYPE_CATEGORY,
     filtersList,
-    FILTER_COHORT_DISCOVERY,
 } from "@/config/forms/filters";
-import searchFormConfig, {
+import {
     PAGE_FIELD,
-    PMC_TYPE_FIELD,
     QUERY_FIELD,
     SORT_FIELD,
     TYPE_FIELD,
@@ -116,23 +96,35 @@ import {
     CloseIcon,
     DownloadIcon,
     FilterAltOutlinedIcon,
+    OpenInNewIcon,
     PanelExpandIcon,
     TableIcon,
 } from "@/consts/icons";
 import { PostLoginActions } from "@/consts/postLoginActions";
 import { RouteName } from "@/consts/routeName";
-import { FILTER_TYPE_MAPPING } from "@/consts/search";
+import {
+    ARDC_SOURCE_VALUE,
+    FILTER_TYPE_MAPPING,
+    HDRUK_SOURCE_VALUE,
+} from "@/consts/search";
 import {
     cleanSearchFilters,
     getAllSelectedFilters,
     pickOnlyFilters,
 } from "@/utils/filters";
 import { getAllParams, getSaveSearchFilters } from "@/utils/search";
+import { useFeatures } from "@/providers/FeatureProvider";
 import useAddLibraryModal from "../../hooks/useAddLibraryModal";
+import { useQueryParams } from "../../hooks/useQueryParams";
+import { useSearchData } from "../../hooks/useSearchData";
+import useLoadExternalData from "../../hooks/useLoadExternalData";
+import { useStaticFilterUpdate } from "../../hooks/useStaticFilterUpdate";
 import DataCustodianNetwork from "../DataCustodianNetwork";
 import FilterChips from "../FilterChips";
 import FilterPanel from "../FilterPanel";
+import PartnerResourcesBanner from "../PartnerResourcesBanner";
 import ResultCard from "../ResultCard";
+import ResultCardARDC from "../ResultCardARDC";
 import ResultCardCollection from "../ResultCardCollection";
 import ResultCardDataProvider from "../ResultCardDataProviders";
 import ResultCardDataUse from "../ResultCardDataUse";
@@ -142,11 +134,13 @@ import ResultsList from "../ResultsList";
 import ResultsTable from "../ResultsTable";
 import Sort from "../Sort";
 import { ActionBar, ResultLimitText } from "./Search.styles";
+import {
+    EUROPE_PMC_SOURCE_FIELD,
+    GATEWAY_SOURCE_FIELD,
+    STATIC_FILTER_SOURCE,
+} from "../../constants";
 
 const TRANSLATION_PATH = "pages.search";
-const STATIC_FILTER_SOURCE = "source";
-const GATEWAY_SOURCE_FIELD = "GAT";
-const EUROPE_PMC_SOURCE_FIELD = "FED";
 
 interface SearchProps {
     filters: Filter[];
@@ -169,15 +163,27 @@ const filterSidebarStyles = {
 
 const Search = ({ filters, schema }: SearchProps) => {
     const { showDialog, hideDialog } = useDialog();
+    const { isExternalSourcesEnabled } = useFeatures();
     const [isDownloading, setIsDownloading] = useState(false);
     const [hasSearched, setHasSearched] = useState(false);
-    const router = useRouter();
-    const pathname = usePathname();
-    const searchParams = useSearchParams();
+    const {
+        queryParams,
+        setQueryParams,
+        pathname,
+        searchParams,
+        getParamString,
+        updatePath,
+        updatePathMultiple,
+        removeArrayQueryAndPush,
+        onQuerySubmit,
+        onSortChange,
+        resetQueryParamState,
+    } = useQueryParams();
     const t = useTranslations(TRANSLATION_PATH);
     const fireGTMEvent = useGTMEvent();
     const { showDARApplicationModal } = useDataAccessRequest();
 
+    const router = useRouter();
     const { isLoggedIn, user } = useAuth();
     const { showSidebar } = useSidebar();
     const theme = useTheme();
@@ -197,72 +203,11 @@ const Search = ({ filters, schema }: SearchProps) => {
         ? `${pathname}?${searchParams.toString()}`
         : pathname;
 
-    const getParamString = (paramName: string) => {
-        return searchParams?.get(paramName)?.toString();
-    };
-
-    const getParamArray = (paramName: string, allowEmptyStrings?: boolean) => {
-        const param = searchParams?.get(paramName)?.split("|");
-        return allowEmptyStrings ? param : param?.filter(filter => !!filter);
-    };
-
     const [resultsView, setResultsView] = useState(
         getParamString(VIEW_FIELD) ||
             Cookies.get(config.VIEW_TYPE) ||
             ViewType.TABLE
     );
-
-    const updateQueryString = useCallback(
-        (name: string, value: string) => {
-            const params = new URLSearchParams(searchParams?.toString());
-            params.set(name, value);
-
-            return params.toString();
-        },
-        [searchParams]
-    );
-
-    const [queryParams, setQueryParams] = useState<SearchQueryParams>({
-        query:
-            getParamString(QUERY_FIELD) || searchFormConfig.defaultValues.query,
-        sort: getParamString(SORT_FIELD) || searchFormConfig.defaultValues.sort,
-        page: getParamString(PAGE_FIELD) || "1",
-        per_page: "25",
-        type:
-            (getParamString(TYPE_FIELD) as SearchCategory) ||
-            SearchCategory.DATASETS,
-        [STATIC_FILTER_SOURCE]:
-            getParamString(STATIC_FILTER_SOURCE) ||
-            searchFormConfig.defaultValues.source,
-        [PMC_TYPE_FIELD]: getParamString(PMC_TYPE_FIELD),
-        [FILTER_DATA_USE_TITLES]: getParamArray(FILTER_DATA_USE_TITLES),
-        [FILTER_PUBLISHER_NAME]: getParamArray(FILTER_PUBLISHER_NAME),
-        [FILTER_COLLECTION_NAME]: getParamArray(FILTER_COLLECTION_NAME),
-        [FILTER_COLLECTION_NAMES]: getParamArray(FILTER_COLLECTION_NAMES),
-        [FILTER_GEOGRAPHIC_LOCATION]: getParamArray(FILTER_GEOGRAPHIC_LOCATION),
-        [FILTER_DATE_RANGE]: getParamArray(FILTER_DATE_RANGE, true),
-        [FILTER_ORGANISATION_NAME]: getParamArray(FILTER_ORGANISATION_NAME),
-        [FILTER_DATA_SET_TITLES]: getParamArray(FILTER_DATA_SET_TITLES),
-        [FILTER_DATA_TYPE]: getParamArray(FILTER_DATA_TYPE),
-        [FILTER_DATA_SUBTYPE]: getParamArray(FILTER_DATA_SUBTYPE),
-        [FILTER_PUBLICATION_DATE]: getParamArray(FILTER_PUBLICATION_DATE, true),
-        [FILTER_PUBLICATION_TYPE]: getParamArray(FILTER_PUBLICATION_TYPE),
-        [FILTER_SECTOR]: getParamArray(FILTER_SECTOR),
-        [FILTER_DATA_PROVIDER]: getParamArray(FILTER_DATA_PROVIDER),
-        [FILTER_DATA_CUSTODIAN_NETWORK]: getParamArray(
-            FILTER_DATA_CUSTODIAN_NETWORK
-        ),
-        [FILTER_ACCESS_SERVICE]: getParamArray(FILTER_ACCESS_SERVICE),
-        [FILTER_POPULATION_SIZE]: getParamArray(FILTER_POPULATION_SIZE),
-        [FILTER_PROGRAMMING_LANGUAGE]: getParamArray(
-            FILTER_PROGRAMMING_LANGUAGE
-        ),
-        [FILTER_TYPE_CATEGORY]: getParamArray(FILTER_TYPE_CATEGORY),
-        [FILTER_CONTAINS_BIOSAMPLES]: getParamArray(FILTER_CONTAINS_BIOSAMPLES),
-        [FILTER_MATERIAL_TYPE]: getParamArray(FILTER_MATERIAL_TYPE),
-        [FILTER_FORMAT_STANDARDS]: getParamArray(FILTER_FORMAT_STANDARDS),
-        [FILTER_COHORT_DISCOVERY]: getParamArray(FILTER_COHORT_DISCOVERY),
-    });
 
     const [datasetNamesArray, setDatasetNamesArray] = useState<string[]>([]);
 
@@ -274,10 +219,10 @@ const Search = ({ filters, schema }: SearchProps) => {
         queryParams
     );
 
-    const allSearchParams = getAllParams(searchParams);
     const forceSearch = searchParams?.get("force") !== null;
 
     useEffect(() => {
+        const allSearchParams = getAllParams(searchParams);
         const keys = Object.keys(allSearchParams).filter(
             (key: string) => allSearchParams[key] !== ""
         );
@@ -290,7 +235,7 @@ const Search = ({ filters, schema }: SearchProps) => {
                 keys.every(element => ["type", "view"].includes(element))
             )
         );
-    }, [allSearchParams]);
+    }, [searchParams]);
 
     useEffect(() => {
         const viewType =
@@ -302,71 +247,6 @@ const Search = ({ filters, schema }: SearchProps) => {
             setResultsView(viewType);
         }
     }, [queryParams.type, resultsView]);
-
-    const removeArrayQueryAndPush = (paramKey: string, paramValue: string) => {
-        const currentParams = new URLSearchParams(searchParams?.toString());
-
-        const newParams = new URLSearchParams(
-            Array.from(currentParams.entries()).filter(
-                ([key, value]) => !(key === paramKey && value === paramValue)
-            )
-        );
-
-        router.push(`?${newParams.toString()}`, {
-            scroll: false,
-        });
-    };
-
-    const updatePath = useCallback(
-        (key: string, value: string) => {
-            startTransition(() => {
-                router.push(`${pathname}?${updateQueryString(key, value)}`, {
-                    scroll: false,
-                });
-            });
-        },
-        [pathname, router, updateQueryString]
-    );
-
-    const updatePathMultiple = useCallback(
-        (params: Record<string, string>) => {
-            const currentParams = new URLSearchParams(searchParams?.toString());
-
-            Object.entries(params).forEach(([key, value]) => {
-                if (value === undefined) {
-                    currentParams.delete(key);
-                } else {
-                    currentParams.set(key, value);
-                }
-            });
-
-            const newPath = `${pathname}?${currentParams.toString()}`;
-            router.push(newPath, { scroll: false });
-        },
-        [pathname, router, searchParams]
-    );
-
-    const onQuerySubmit = useCallback(
-        async (data: FieldValues) => {
-            setQueryParams({ ...queryParams, ...data, [PAGE_FIELD]: "1" });
-            updatePathMultiple({
-                [QUERY_FIELD]: data.query,
-                [PAGE_FIELD]: "1",
-            });
-        },
-        [queryParams, updatePathMultiple]
-    );
-
-    const onSortChange = async (selectedValue: string) => {
-        if (selectedValue === queryParams.sort) return;
-
-        setQueryParams({
-            ...queryParams,
-            sort: selectedValue,
-        });
-
-        updatePath(SORT_FIELD, selectedValue);
-    };
 
     const selectedFilters = useMemo(
         () => getAllSelectedFilters(queryParams),
@@ -383,9 +263,14 @@ const Search = ({ filters, schema }: SearchProps) => {
         queryParams
     );
 
+    const isDatasets = queryParams.type === SearchCategory.DATASETS;
+    const dataSource = queryParams.dataSource || HDRUK_SOURCE_VALUE;
+    const isExternalSourceSelected =
+        isExternalSourcesEnabled && dataSource !== HDRUK_SOURCE_VALUE;
+
     const {
-        data,
-        isLoading: isSearching,
+        data: v1Data,
+        isLoading: isV1Searching,
         mutate,
     } = usePostSwr<SearchPaginationType<SearchResult>>(
         `${apis.searchV1Url}/${queryParams.type}?view_type=mini&per_page=${
@@ -403,13 +288,61 @@ const Search = ({ filters, schema }: SearchProps) => {
             keepPreviousData: true,
             withPagination: true,
             shouldFetch:
-                forceSearch ||
-                queryParams.type !== SearchCategory.PUBLICATIONS ||
-                queryParams.source === GATEWAY_SOURCE_FIELD ||
-                (queryParams.source === EUROPE_PMC_SOURCE_FIELD &&
-                    !!queryParams.query),
+                (!isDatasets || !isExternalSourcesEnabled) &&
+                (forceSearch ||
+                    queryParams.type !== SearchCategory.PUBLICATIONS ||
+                    queryParams.source === GATEWAY_SOURCE_FIELD ||
+                    (queryParams.source === EUROPE_PMC_SOURCE_FIELD &&
+                        !!queryParams.query)),
         }
     );
+
+    const {
+        data: v2Data,
+        isValidating: isV2Searching,
+        mutate: mutateV2,
+    } = usePostSwr<SearchAggregationData>(
+        apis.searchV2AggregationUrl,
+        {
+            query: queryParams.query || undefined,
+            type: "datasets",
+            sort: queryParams.sort,
+            per_page: queryParams.per_page,
+            page: queryParams.page,
+            view_type: "mini",
+            ...pickedFilters,
+        },
+        {
+            keepPreviousData: true,
+            shouldFetch: isDatasets && isExternalSourcesEnabled,
+        }
+    );
+
+    const { externalResults, isPolling: isExternalPolling } =
+        useLoadExternalData(v2Data, isDatasets && isExternalSourcesEnabled);
+
+    const ardcResult = externalResults[ARDC_SOURCE_VALUE] ?? null;
+
+    const v2DataWithExternal = useMemo(() => {
+        if (!v2Data || !Object.keys(externalResults).length) return v2Data;
+        return { ...v2Data, results: { ...v2Data.results, ...externalResults } };
+    }, [v2Data, externalResults]);
+
+    const isSearching =
+        isDatasets && isExternalSourcesEnabled
+            ? isV2Searching || (isExternalSourceSelected && isExternalPolling)
+            : isV1Searching;
+
+    const data = useSearchData({
+        isDatasets,
+        isExternalSourcesEnabled,
+        v1Data,
+        v2Data: v2DataWithExternal,
+        dataSource,
+        perPage: queryParams.per_page,
+        page: queryParams.page,
+        type: queryParams.type,
+    });
 
     useEffect(() => {
         fireGTMEvent({
@@ -427,8 +360,11 @@ const Search = ({ filters, schema }: SearchProps) => {
     useEffect(() => {
         // Fixes the weird re-jiggling of the search results upon navigating
         // back to the page.
-        if (!data) {
+        if (!v1Data) {
             mutate();
+        }
+        if (isExternalSourcesEnabled && !v2Data) {
+            mutateV2();
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
@@ -438,42 +374,6 @@ const Search = ({ filters, schema }: SearchProps) => {
         `${apis.librariesV1Url}?per_page=-1`,
         { shouldFetch: isLoggedIn }
     );
-
-    // Reset query param state when tab is changed
-    const resetQueryParamState = (selectedType: SearchCategory) => {
-        setQueryParams({
-            query: queryParams.query,
-            sort: searchFormConfig.defaultValues.sort,
-            page: "1",
-            per_page: "25",
-            type: selectedType,
-            [FILTER_DATA_USE_TITLES]: undefined,
-            [FILTER_PUBLISHER_NAME]: undefined,
-            [FILTER_COLLECTION_NAME]: undefined,
-            [FILTER_COLLECTION_NAMES]: undefined,
-            [FILTER_GEOGRAPHIC_LOCATION]: undefined,
-            [FILTER_DATE_RANGE]: undefined,
-            [FILTER_ORGANISATION_NAME]: undefined,
-            [FILTER_DATA_SET_TITLES]: undefined,
-            [FILTER_DATA_TYPE]: undefined,
-            [FILTER_DATA_SUBTYPE]: undefined,
-            [FILTER_PUBLICATION_DATE]: undefined,
-            [FILTER_PUBLICATION_TYPE]: undefined,
-            [FILTER_SECTOR]: undefined,
-            [FILTER_DATA_PROVIDER]: undefined,
-            [FILTER_DATA_CUSTODIAN_NETWORK]: undefined,
-            [FILTER_ACCESS_SERVICE]: undefined,
-            [FILTER_POPULATION_SIZE]: undefined,
-            [FILTER_PROGRAMMING_LANGUAGE]: undefined,
-            [FILTER_TYPE_CATEGORY]: undefined,
-            [FILTER_CONTAINS_BIOSAMPLES]: undefined,
-            [FILTER_MATERIAL_TYPE]: undefined,
-            [STATIC_FILTER_SOURCE]: searchFormConfig.defaultValues.source,
-            [PMC_TYPE_FIELD]: undefined,
-            [FILTER_FORMAT_STANDARDS]: undefined,
-            [FILTER_COHORT_DISCOVERY]: undefined,
-        });
-    };
 
     const categoryTabs = [
         {
@@ -579,6 +479,16 @@ const Search = ({ filters, schema }: SearchProps) => {
 
         switch (queryParams.type) {
             case SearchCategory.DATASETS:
+                if (isExternalSourceSelected) {
+                    const ardcItem = result as unknown as SearchResultARDC;
+                    return (
+                        <ResultCardARDC
+                            result={ardcItem}
+                            key={ardcItem.id}
+                            providerLogo={ardcResult?.provider_logo ?? undefined}
+                        />
+                    );
+                }
                 return (
                     <ResultCard
                         result={result as SearchResultDataset}
@@ -628,7 +538,10 @@ const Search = ({ filters, schema }: SearchProps) => {
     });
 
     const renderResults = () =>
-        resultsView === ViewType.TABLE && !isMobile && !isTabletOrLaptop ? (
+        resultsView === ViewType.TABLE &&
+        !isMobile &&
+        !isTabletOrLaptop &&
+        !isExternalSourceSelected ? (
             <ResultsTable
                 results={data?.list as SearchResultDataset[]}
                 showLibraryModal={showLibraryModal}
@@ -744,6 +657,12 @@ const Search = ({ filters, schema }: SearchProps) => {
             });
         }
     };
+
+    const handleUpdateStaticFilter = useStaticFilterUpdate({
+        setQueryParams,
+        updatePath,
+        updatePathMultiple,
+    });
 
     const handleToggleView = () => {
         return resultsView === ViewType.LIST
@@ -880,15 +799,12 @@ const Search = ({ filters, schema }: SearchProps) => {
                     });
                 }}
                 aggregations={data?.aggregations}
-                updateStaticFilter={(filterName: string, value: string) => {
-                    setQueryParams({
-                        ...queryParams,
-                        [filterName]: value,
-                        [FILTER_DATA_SET_TITLES]: undefined,
-                        query: "",
-                    });
-                    updatePath(filterName, value);
+                dataSource={dataSource}
+                providerCounts={{
+                    HDRUK: v2Data?.results?.HDRUK?.total ?? 0,
+                    ARDC: isExternalPolling ? null : ardcResult?.total ?? 0,
                 }}
+                updateStaticFilter={handleUpdateStaticFilter}
                 getParamString={getParamString}
                 showEuropePmcModal={europePmcModalAction}
                 resetQueryParamState={resetQueryParamState}
@@ -897,14 +813,19 @@ const Search = ({ filters, schema }: SearchProps) => {
         );
     }, [
         data?.aggregations,
+        dataSource,
         europePmcModalAction,
         filters,
         getParamString,
         queryParams,
         resetQueryParamState,
+        schema,
         selectedFilters,
-        updatePath,
+        handleUpdateStaticFilter,
+        setQueryParams,
         updatePathMultiple,
+        ardcResult?.total,
+        v2Data?.results?.HDRUK?.total,
     ]);
 
     const toggleFilterDrawer =
@@ -1196,13 +1117,17 @@ const Search = ({ filters, schema }: SearchProps) => {
                                     "aria-label": "filter controls",
                                     role: "region",
                                 })}>
-                                <FilterChips
-                                    selectedFilters={selectedFilters}
-                                    handleDelete={removeFilter}
-                                    filterCategory={
-                                        FILTER_TYPE_MAPPING[queryParams.type]
-                                    }
-                                />
+                                {!isExternalSourceSelected && (
+                                    <FilterChips
+                                        selectedFilters={selectedFilters}
+                                        handleDelete={removeFilter}
+                                        filterCategory={
+                                            FILTER_TYPE_MAPPING[
+                                                queryParams.type
+                                            ]
+                                        }
+                                    />
+                                )}
                                 {isMobile && (
                                     <Button
                                         variant="outlined"
@@ -1278,24 +1203,28 @@ const Search = ({ filters, schema }: SearchProps) => {
                                                 </Box>
                                                 {!excludedDownloadSearchCategories.includes(
                                                     queryParams.type
-                                                ) && (
-                                                    <Button
-                                                        onClick={() =>
-                                                            !isDownloading &&
-                                                            downloadSearchResults()
-                                                        }
-                                                        variant="contained"
-                                                        color="greyCustom"
-                                                        startIcon={
-                                                            <DownloadIcon color="primary" />
-                                                        }
-                                                        disabled={
-                                                            isDownloading ||
-                                                            !data?.list?.length
-                                                        }>
-                                                        {t("downloadResults")}
-                                                    </Button>
-                                                )}
+                                                ) &&
+                                                    !isExternalSourceSelected && (
+                                                        <Button
+                                                            onClick={() =>
+                                                                !isDownloading &&
+                                                                downloadSearchResults()
+                                                            }
+                                                            variant="contained"
+                                                            color="greyCustom"
+                                                            startIcon={
+                                                                <DownloadIcon color="primary" />
+                                                            }
+                                                            disabled={
+                                                                isDownloading ||
+                                                                !data?.list
+                                                                    ?.length
+                                                            }>
+                                                            {t(
+                                                                "downloadResults"
+                                                            )}
+                                                        </Button>
+                                                    )}
                                                 <Button
                                                     variant="contained"
                                                     color="greyCustom"
@@ -1307,31 +1236,32 @@ const Search = ({ filters, schema }: SearchProps) => {
                                                     {t("saveSearch")}
                                                 </Button>
                                                 {queryParams.type ===
-                                                    SearchCategory.DATASETS && (
-                                                    <Button
-                                                        variant="outlined"
-                                                        color="secondary"
-                                                        onClick={
-                                                            handleToggleView
-                                                        }
-                                                        startIcon={
-                                                            resultsView ===
-                                                            ViewType.LIST ? (
-                                                                <FormatListBulletedIcon color="success" />
-                                                            ) : (
-                                                                <TableIcon color="success" />
-                                                            )
-                                                        }>
-                                                        {resultsView ===
-                                                        ViewType.LIST
-                                                            ? t(
-                                                                  "components.Search.toggleLabelTable"
-                                                              )
-                                                            : t(
-                                                                  "components.Search.toggleLabelList"
-                                                              )}
-                                                    </Button>
-                                                )}
+                                                    SearchCategory.DATASETS &&
+                                                    !isExternalSourceSelected && (
+                                                        <Button
+                                                            variant="outlined"
+                                                            color="secondary"
+                                                            onClick={
+                                                                handleToggleView
+                                                            }
+                                                            startIcon={
+                                                                resultsView ===
+                                                                ViewType.LIST ? (
+                                                                    <FormatListBulletedIcon color="success" />
+                                                                ) : (
+                                                                    <TableIcon color="success" />
+                                                                )
+                                                            }>
+                                                            {resultsView ===
+                                                            ViewType.LIST
+                                                                ? t(
+                                                                      "components.Search.toggleLabelTable"
+                                                                  )
+                                                                : t(
+                                                                      "components.Search.toggleLabelList"
+                                                                  )}
+                                                        </Button>
+                                                    )}
                                             </Box>
                                         )}
                                         {(isMobile || isTabletOrLaptop) && (
@@ -1352,26 +1282,27 @@ const Search = ({ filters, schema }: SearchProps) => {
 
                                                 {!excludedDownloadSearchCategories.includes(
                                                     queryParams.type
-                                                ) && (
-                                                    <Tooltip
-                                                        title={t(
-                                                            "downloadResults"
-                                                        )}>
-                                                        <IconButton
-                                                            color="primary"
-                                                            onClick={() =>
-                                                                !isDownloading &&
-                                                                downloadSearchResults()
-                                                            }
-                                                            disabled={
-                                                                isDownloading ||
-                                                                !data?.list
-                                                                    ?.length
-                                                            }>
-                                                            <DownloadIcon />
-                                                        </IconButton>
-                                                    </Tooltip>
-                                                )}
+                                                ) &&
+                                                    !isExternalSourceSelected && (
+                                                        <Tooltip
+                                                            title={t(
+                                                                "downloadResults"
+                                                            )}>
+                                                            <IconButton
+                                                                color="primary"
+                                                                onClick={() =>
+                                                                    !isDownloading &&
+                                                                    downloadSearchResults()
+                                                                }
+                                                                disabled={
+                                                                    isDownloading ||
+                                                                    !data?.list
+                                                                        ?.length
+                                                                }>
+                                                                <DownloadIcon />
+                                                            </IconButton>
+                                                        </Tooltip>
+                                                    )}
                                                 <Tooltip
                                                     title={t("saveSearch")}>
                                                     <IconButton
@@ -1452,6 +1383,22 @@ const Search = ({ filters, schema }: SearchProps) => {
                                                               2
                                                           )}`,
                                             }}>
+                                            {isExternalSourceSelected && (
+                                                <Box
+                                                    sx={{
+                                                        display: "flex",
+                                                        alignItems: "center",
+                                                        gap: 1,
+                                                        mb: 2,
+                                                    }}>
+                                                    <OpenInNewIcon fontSize="small" />
+                                                    <Typography variant="body2">
+                                                        {t(
+                                                            "partnerDatasetsNewTab"
+                                                        )}
+                                                    </Typography>
+                                                </Box>
+                                            )}
                                             {renderResults()}
                                         </Box>
                                     </>
@@ -1471,6 +1418,34 @@ const Search = ({ filters, schema }: SearchProps) => {
                                     updatePath(PAGE_FIELD, page.toString());
                                 }}
                             />
+
+                            {isDatasets &&
+                                !isExternalSourceSelected &&
+                                isExternalSourcesEnabled &&
+                                ((ardcResult?.total ?? 0) > 0 ||
+                                    isSearching ||
+                                    isExternalPolling) && (
+                                    <PartnerResourcesBanner
+                                        isLoading={
+                                            isSearching || isExternalPolling
+                                        }
+                                        count={ardcResult?.total ?? 0}
+                                        providerLogo={
+                                            ardcResult?.provider_logo ?? undefined
+                                        }
+                                        onViewPartnerResources={() => {
+                                            setQueryParams({
+                                                ...queryParams,
+                                                dataSource: ARDC_SOURCE_VALUE,
+                                                [PAGE_FIELD]: "1",
+                                            });
+                                            updatePathMultiple({
+                                                dataSource: ARDC_SOURCE_VALUE,
+                                                [PAGE_FIELD]: "1",
+                                            });
+                                        }}
+                                    />
+                                )}
                         </Box>
                     </Box>
                 </Box>
