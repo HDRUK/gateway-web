@@ -256,6 +256,9 @@
                     "last_3_months": "Last 3 months",
                     "last_month": "Last month"
                 },
+                "datasetViews": {
+                    "title": "Dataset views"
+                },
                 "resources": {
                     "title": "Your resources",
                     "chooseResources": "Choose resources",
