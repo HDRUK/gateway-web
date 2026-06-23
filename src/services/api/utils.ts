@@ -8,14 +8,14 @@ interface ErrorNotificationProps {
     props: NotificationOptions;
     status?: number;
     error?: Error;
-    method: "delete" | "post" | "put" | "get" | "patch";
+    method: "delete" | "post" | "put" | "get" | "patch"
 }
 
 const errorNotification = ({
     error,
     method,
     status,
-    props,
+    props
 }: ErrorNotificationProps) => {
     const { t, ...notificationProps } = props;
 
