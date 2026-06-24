@@ -266,6 +266,14 @@
                     "showMost": "Show most views",
                     "viewsLabel": "Views"
                 },
+                "otherViews": {
+                    "title": "Other views",
+                    "loading": "Loading other views",
+                    "labels": {
+                        "collections": "Collections",
+                        "dataCustodian": "Data Custodian page"
+                    }
+                },
                 "resources": {
                     "title": "Your resources",
                     "chooseResources": "Choose resources",
