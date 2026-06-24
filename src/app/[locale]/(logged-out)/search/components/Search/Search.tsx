@@ -1403,21 +1403,23 @@ const Search = ({ filters, schema }: SearchProps) => {
                                         </Box>
                                     </>
                                 )}
-                            <Pagination
-                                isLoading={isSearching}
-                                page={parseInt(queryParams.page, 10)}
-                                count={data?.lastPage}
-                                onChange={(
-                                    e: React.ChangeEvent<unknown>,
-                                    page: number
-                                ) => {
-                                    setQueryParams({
-                                        ...queryParams,
-                                        page: page.toString(),
-                                    });
-                                    updatePath(PAGE_FIELD, page.toString());
-                                }}
-                            />
+                            {!isExternalSourceSelected && (
+                                <Pagination
+                                    isLoading={isSearching}
+                                    page={parseInt(queryParams.page, 10)}
+                                    count={data?.lastPage}
+                                    onChange={(
+                                        e: React.ChangeEvent<unknown>,
+                                        page: number
+                                    ) => {
+                                        setQueryParams({
+                                            ...queryParams,
+                                            page: page.toString(),
+                                        });
+                                        updatePath(PAGE_FIELD, page.toString());
+                                    }}
+                                />
+                            )}
 
                             {isDatasets &&
                                 !isExternalSourceSelected &&
