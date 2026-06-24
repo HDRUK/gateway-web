@@ -9,6 +9,7 @@ import BoxContainer from "@/components/BoxContainer";
 import DownloadFile from "@/components/DownloadFile";
 import Paper from "@/components/Paper";
 import Typography from "@/components/Typography";
+import DatasetViewsBarWidget from "@/modules/DatasetViewsBarWidget/DatasetViewsBarWidget";
 import DatasetViewsWidget from "@/modules/DatasetViewsWidget/DatasetViewsWidget";
 import apis from "@/config/apis";
 import { CalendarMonthOutlinedIcon } from "@/consts/icons";
@@ -110,11 +111,19 @@ const Dashboard = ({ teamId, initialCounts }: DashboardProps) => {
             <Box
                 sx={{
                     display: "grid",
-                    gridTemplateColumns: "repeat(3, 1fr)",
+                    gridTemplateColumns: {
+                        mobile: "1fr",
+                        laptop: "repeat(3, 1fr)",
+                    },
                     gap: 2,
                     p: 0,
                 }}>
                 <DatasetViewsWidget
+                    teamId={teamId}
+                    startDate={startDate}
+                    endDate={endDate}
+                />
+                <DatasetViewsBarWidget
                     teamId={teamId}
                     startDate={startDate}
                     endDate={endDate}

@@ -259,6 +259,13 @@
                 "datasetViews": {
                     "title": "Dataset views"
                 },
+                "datasetViewsBar": {
+                    "mostTitle": "Most Dataset Views",
+                    "leastTitle": "Least Dataset Views",
+                    "showLeast": "Show least views",
+                    "showMost": "Show most views",
+                    "viewsLabel": "Views"
+                },
                 "resources": {
                     "title": "Your resources",
                     "chooseResources": "Choose resources",
