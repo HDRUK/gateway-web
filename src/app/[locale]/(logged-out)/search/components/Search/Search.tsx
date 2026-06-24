@@ -1,11 +1,6 @@
 "use client";
 
-import {
-    useEffect,
-    useMemo,
-    useRef,
-    useState,
-} from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { BookmarkBorder } from "@mui/icons-material";
 import FormatListBulletedIcon from "@mui/icons-material/FormatListBulleted";
 import {
@@ -114,10 +109,15 @@ import {
 } from "@/utils/filters";
 import { getAllParams, getSaveSearchFilters } from "@/utils/search";
 import { useFeatures } from "@/providers/FeatureProvider";
+import {
+    EUROPE_PMC_SOURCE_FIELD,
+    GATEWAY_SOURCE_FIELD,
+    STATIC_FILTER_SOURCE,
+} from "../../constants";
 import useAddLibraryModal from "../../hooks/useAddLibraryModal";
+import useLoadExternalData from "../../hooks/useLoadExternalData";
 import { useQueryParams } from "../../hooks/useQueryParams";
 import { useSearchData } from "../../hooks/useSearchData";
-import useLoadExternalData from "../../hooks/useLoadExternalData";
 import { useStaticFilterUpdate } from "../../hooks/useStaticFilterUpdate";
 import DataCustodianNetwork from "../DataCustodianNetwork";
 import FilterChips from "../FilterChips";
@@ -134,11 +134,6 @@ import ResultsList from "../ResultsList";
 import ResultsTable from "../ResultsTable";
 import Sort from "../Sort";
 import { ActionBar, ResultLimitText } from "./Search.styles";
-import {
-    EUROPE_PMC_SOURCE_FIELD,
-    GATEWAY_SOURCE_FIELD,
-    STATIC_FILTER_SOURCE,
-} from "../../constants";
 
 const TRANSLATION_PATH = "pages.search";
 
@@ -268,6 +263,10 @@ const Search = ({ filters, schema }: SearchProps) => {
     const isExternalSourceSelected =
         isExternalSourcesEnabled && dataSource !== HDRUK_SOURCE_VALUE;
 
+    const ardcSearchUrl = `https://researchdata.edu.au/search/#!/rows=15/sort=score%20desc/class=collection/q=${encodeURIComponent(
+        queryParams.query || ""
+    )}/p=1/`;
+
     const {
         data: v1Data,
         isLoading: isV1Searching,
@@ -325,7 +324,10 @@ const Search = ({ filters, schema }: SearchProps) => {
 
     const v2DataWithExternal = useMemo(() => {
         if (!v2Data || !Object.keys(externalResults).length) return v2Data;
-        return { ...v2Data, results: { ...v2Data.results, ...externalResults } };
+        return {
+            ...v2Data,
+            results: { ...v2Data.results, ...externalResults },
+        };
     }, [v2Data, externalResults]);
 
     const isSearching =
@@ -485,7 +487,9 @@ const Search = ({ filters, schema }: SearchProps) => {
                         <ResultCardARDC
                             result={ardcItem}
                             key={ardcItem.id}
-                            providerLogo={ardcResult?.provider_logo ?? undefined}
+                            providerLogo={
+                                ardcResult?.provider_logo ?? undefined
+                            }
                         />
                     );
                 }
@@ -1400,6 +1404,27 @@ const Search = ({ filters, schema }: SearchProps) => {
                                                 </Box>
                                             )}
                                             {renderResults()}
+                                            {isExternalSourceSelected && (
+                                                <Box
+                                                    sx={{
+                                                        display: "flex",
+                                                        mt: 2,
+                                                    }}>
+                                                    <Button
+                                                        variant="outlined"
+                                                        color="secondary"
+                                                        href={ardcSearchUrl}
+                                                        target="_blank"
+                                                        rel="noopener noreferrer"
+                                                        endIcon={
+                                                            <OpenInNewIcon fontSize="small" />
+                                                        }>
+                                                        {t(
+                                                            "viewAllPartnerResults"
+                                                        )}
+                                                    </Button>
+                                                </Box>
+                                            )}
                                         </Box>
                                     </>
                                 )}
@@ -1433,7 +1458,8 @@ const Search = ({ filters, schema }: SearchProps) => {
                                         }
                                         count={ardcResult?.total ?? 0}
                                         providerLogo={
-                                            ardcResult?.provider_logo ?? undefined
+                                            ardcResult?.provider_logo ??
+                                            undefined
                                         }
                                         onViewPartnerResources={() => {
                                             setQueryParams({
