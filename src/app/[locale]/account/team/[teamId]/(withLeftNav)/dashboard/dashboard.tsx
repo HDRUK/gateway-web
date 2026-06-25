@@ -11,6 +11,7 @@ import Paper from "@/components/Paper";
 import Typography from "@/components/Typography";
 import DatasetViewsBarWidget from "@/modules/DatasetViewsBarWidget/DatasetViewsBarWidget";
 import DatasetViewsWidget from "@/modules/DatasetViewsWidget/DatasetViewsWidget";
+import EnquiriesWidget from "@/modules/EnquiriesWidget/EnquiriesWidget";
 import OtherViewsWidget from "@/modules/OtherViewsWidget/OtherViewsWidget";
 import apis from "@/config/apis";
 import { CalendarMonthOutlinedIcon } from "@/consts/icons";
@@ -130,6 +131,11 @@ const Dashboard = ({ teamId, initialCounts }: DashboardProps) => {
                     endDate={endDate}
                 />
                 <OtherViewsWidget
+                    teamId={teamId}
+                    startDate={startDate}
+                    endDate={endDate}
+                />
+                <EnquiriesWidget
                     teamId={teamId}
                     startDate={startDate}
                     endDate={endDate}
