@@ -263,9 +263,9 @@ const Search = ({ filters, schema }: SearchProps) => {
     const isExternalSourceSelected =
         isExternalSourcesEnabled && dataSource !== HDRUK_SOURCE_VALUE;
 
-    const ardcSearchUrl = `https://researchdata.edu.au/search/#!/rows=15/sort=score%20desc/class=collection/q=${encodeURIComponent(
-        queryParams.query || ""
-    )}/p=1/`;
+    const ardcSearchUrl = `https://researchdata.edu.au/health/search?filter-type=all-fields${
+        queryParams.query ? `&q=${encodeURIComponent(queryParams.query)}` : ""
+    }`;
 
     const {
         data: v1Data,
