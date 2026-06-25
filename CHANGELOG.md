@@ -1,3 +1,22 @@
+## [2.37.0](https://github.com/HDRUK/gateway-web/compare/v2.36.0...v2.37.0) (2026-06-25)
+
+### ✨ Features
+
+* **GAT-8500:** Add initial dashboard page (#1535) ([e279b1d](https://github.com/HDRUK/gateway-web/commit/e279b1d3b7e00b91d85938276f3e97ad1492481b)), closes [GAT-8500](undefinedGAT-8500)
+* **GAT-8500:** Hide dashboard nav link (#1537) ([dc3a03c](https://github.com/HDRUK/gateway-web/commit/dc3a03cadb86b63a13b6ed3f5a5f7df847e03199)), closes [GAT-8500](undefinedGAT-8500)
+* **GAT-8501:** Add entity counts (#1538) ([3d09e81](https://github.com/HDRUK/gateway-web/commit/3d09e813b0dfc1d1d2a5465376fe5b99d6b2e3ab)), closes [GAT-8501](undefinedGAT-8501)
+* **GAT-8737:** Optimisations and fixes. (#1521) ([12869cf](https://github.com/HDRUK/gateway-web/commit/12869cfc6be1b9b8174dea8080b059d8a205dee1)), closes [GAT-8737](undefinedGAT-8737)
+* **GAT-8796:** Display partner results on Datasets page (#1534) ([9c1c402](https://github.com/HDRUK/gateway-web/commit/9c1c4025ae12bed54170e5cb30f23bc8480f67cb)), closes [GAT-8796](undefinedGAT-8796)
+
+### 🐛 Bug Fixes
+
+* **GAT-8736:** fix dar checkbox group values (#1523) ([3ab12c8](https://github.com/HDRUK/gateway-web/commit/3ab12c8711a66e19e36f71f11bf8d96bda516a77))
+* **GAT-8736:** Fix submission of dar with new checkbox group value (#1525) ([f73bf65](https://github.com/HDRUK/gateway-web/commit/f73bf653965d0744db271b6b57ed015b4f05546d))
+* **GAT-8812:** removed gar name  (#1528) ([7406447](https://github.com/HDRUK/gateway-web/commit/7406447e2454d77925bb6d388d1c3ce79f18367b)), closes [GAT-8812](undefinedGAT-8812)
+* **GAT-8812:** updated semantic pipeline (#1532) ([199339d](https://github.com/HDRUK/gateway-web/commit/199339df8bdb2925e6780332075983c7ee30561d)), closes [GAT-8812](undefinedGAT-8812)
+* **GAT-8812:** Updated workflow pipelines to use reusable pipelines (#1527) ([bbd2b5c](https://github.com/HDRUK/gateway-web/commit/bbd2b5c53723b1d7b81edd23f6f3383aa5e39a5c)), closes [GAT-8812](undefinedGAT-8812)
+* **GAT-8923:** Fix rendering (#1536) ([a7f4469](https://github.com/HDRUK/gateway-web/commit/a7f4469e20d79012915b8511e25d91a5c57db90d))
+
 ## [2.36.0](https://github.com/HDRUK/gateway-web/compare/v2.35.2...v2.36.0) (2026-04-14)
 
 ### ✨ Features
