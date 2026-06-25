@@ -245,6 +245,39 @@
             }
         },
         "account": {
+            "dashboard": {
+                "title": "Dashboard",
+                "text": "Here's the latest activity from researchers accessing your Gateway resources.",
+                "download": "Download",
+                "choosePeriod": "Choose time period",
+                "periods": {
+                    "last_12_months": "Last 12 months",
+                    "last_6_months": "Last 6 months",
+                    "last_3_months": "Last 3 months",
+                    "last_month": "Last month"
+                },
+                "resources": {
+                    "title": "Your resources",
+                    "chooseResources": "Choose resources",
+                    "addedThisPeriod": "{count} added this period",
+                    "scrollLeft": "Show previous resources",
+                    "scrollRight": "Show more resources",
+                    "labels": {
+                        "datasets": "Datasets",
+                        "datauses": "Data Uses",
+                        "tools": "Analysis Scripts",
+                        "publications": "Publications",
+                        "collections": "Collections",
+                        "gmiApiDatasets": "GMI/API Datasets",
+                        "cohortDiscoveryDatasets": "Cohort Discovery Datasets",
+                        "widgets": "Widgets",
+                        "linkages": "Linkages",
+                        "generalEnquiries": "General Enquiries",
+                        "feasibilityEnquiries": "Feasibility Enquiries",
+                        "dataAccessRequests": "Data Access Requests"
+                    }
+                }
+            },
             "profile": {
                 "title": "Your profile",
                 "text": "Use this form to register an account and update your account on the Gateway",
@@ -1126,6 +1159,7 @@
             "downloadStarted": "Your download has started",
             "dur": "Data Uses / Research Projects",
             "data_custodians": "Data Custodians",
+            "partnerDatasetsNewTab": "Partner Datasets will open up in a new tab on our Partner site",
             "loadingAriaLabel": "Loading search results",
             "saveSearch": "Save search",
             "filtersApplied": "{count, plural, =0 {No filters applied} =1 {# filter applied} other {# filters applied}}",
@@ -1133,6 +1167,11 @@
                 "Search": {
                     "toggleLabelTable": "Switch to table view",
                     "toggleLabelList": "Switch to list view"
+                },
+                "PartnerResourcesBanner": {
+                    "partnerResources": "Partner resources",
+                    "partnerResourcesBanner": "You can also view resources from our international partners",
+                    "viewPartnerResources": "View partner resources"
                 },
                 "FilterPanel": {
                     "clearFilter": "Clear filter",
@@ -1167,7 +1206,9 @@
                             "sampleAvailability": "Material type",
                             "sampleAvailabilityTooltip": "BioSamples associated with the dataset",
                             "formatAndStandards": "Data standard",
-                            "formatAndStandardsTooltip": "Standardised data models the dataset is stored in or transformed to, such as OMOP or FHIR."
+                            "formatAndStandardsTooltip": "Standardised data models the dataset is stored in or transformed to, such as OMOP or FHIR.",
+                            "dataSource": "Source",
+                            "dataSourceTooltip": "Switch between Health Data Research Gateway datasets and external data portals"
                         },
                         "dataUseRegister": {
                             "publisherName": "Data Custodian",

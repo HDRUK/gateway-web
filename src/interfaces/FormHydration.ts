@@ -16,6 +16,7 @@ export interface FormHydrationField {
     info?: string | null;
     disabled?: boolean;
     key?: string;
+    multiple?: boolean;
 }
 
 export interface FormHydrationItems {

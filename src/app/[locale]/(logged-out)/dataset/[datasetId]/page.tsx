@@ -1,6 +1,5 @@
 import { get, isEmpty, pick, some } from "lodash";
 import { notFound } from "next/navigation";
-import { Dataset } from "@/interfaces/Dataset";
 import Box from "@/components/Box";
 import BoxContainer from "@/components/BoxContainer";
 import LayoutDataItemPage from "@/components/LayoutDataItemPage";
@@ -44,25 +43,18 @@ export default async function DatasetItemPage({
 }) {
     const { datasetId } = await params;
 
-    const data = await getDataset(datasetId, SCHEMA_NAME, SCHEMA_VERSION, {
-        suppressError: true,
-    });
+    const [data, googleRecommendedDataset] = await Promise.all([
+        getDataset(datasetId, SCHEMA_NAME, SCHEMA_VERSION, {
+            suppressError: true,
+        }),
+        getDataset(datasetId, "SchemaOrg", "GoogleRecommended").catch(
+            () => undefined
+        ),
+    ]);
 
     // Note that the status check is only required under v1 - under v2, we can use
     // an endpoint that will not show the data if not active
     if (!data || data?.status !== DataStatus.ACTIVE) notFound();
-
-    let googleRecommendedDataset: Dataset | undefined;
-
-    try {
-        googleRecommendedDataset = await getDataset(
-            datasetId,
-            "SchemaOrg",
-            "GoogleRecommended"
-        );
-    } catch (_e) {
-        // Intentionally left empty
-    }
 
     const datasetVersion = data?.versions?.[0];
 

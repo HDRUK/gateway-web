@@ -1,7 +1,7 @@
 import { faker } from "@faker-js/faker";
 import { RouteName } from "../../src/consts/routeName";
 
-const PUBLICATION_NAME = "NEW_PUBLICATION";
+const PUBLICATION_NAME = "NEW PUBLICATION";
 
 const createPublication = () => {
     cy.visit(`/${RouteName.ACCOUNT}/${RouteName.PROFILE}`);
@@ -49,7 +49,7 @@ describe("Publication - draft", () => {
     it("should create a new draft publication", () => {
         cy.intercept(
             "POST",
-            `${Cypress.env("API_URL")}/api/v2/users/34/publications`
+            `${Cypress.env("API_URL")}/api/v2/users/*/publications`
         ).as("createPublication");
 
         createPublication();

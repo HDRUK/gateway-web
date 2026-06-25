@@ -5,6 +5,7 @@ import { CheckboxProps as MuiCheckboxProps } from "@mui/material/Checkbox";
 import Box from "@/components/Box";
 import BoxContainer from "@/components/BoxContainer";
 import Checkbox from "@/components/Checkbox";
+import CheckboxControlled from "@/components/CheckboxControlled";
 import FormInputWrapper from "@/components/FormInputWrapper";
 
 export interface CheckboxGroupProps<TFieldValues extends FieldValues, TName>
@@ -22,6 +23,7 @@ export interface CheckboxGroupProps<TFieldValues extends FieldValues, TName>
     control: Control<TFieldValues>;
     checkboxSx?: SxProps;
     formControlSx?: SxProps;
+    multiple?: boolean;
 }
 
 const CheckboxGroup = <
@@ -42,6 +44,7 @@ const CheckboxGroup = <
     control,
     checkboxSx,
     formControlSx,
+    multiple = false,
     ...rest
 }: CheckboxGroupProps<TFieldValues, TName>) => {
     const {
@@ -51,6 +54,19 @@ const CheckboxGroup = <
         name,
         control,
     });
+
+    const selectedValues: string[] = Array.isArray(field.value)
+        ? (field.value as string[])
+        : [];
+
+    const toggleValue = (value: string) => {
+        field.onChange(
+            selectedValues.includes(value)
+                ? selectedValues.filter(v => v !== value)
+                : [...selectedValues, value]
+        );
+    };
+
     return (
         <FormInputWrapper
             label={label}
@@ -75,15 +91,34 @@ const CheckboxGroup = <
                 }}>
                 {checkboxes.map(checkbox => (
                     <Box key={`${checkbox.label}-wrapper`} sx={{ p: 0, m: 0 }}>
-                        <Checkbox
-                            name={checkbox.value}
-                            control={control}
-                            key={checkbox.label}
-                            sx={checkboxSx}
-                            formControlSx={formControlSx}
-                            {...rest}
-                            {...checkbox}
-                        />
+                        {multiple ? (
+                            <CheckboxControlled
+                                name={checkbox.value}
+                                label={checkbox.label}
+                                count={checkbox.count}
+                                checked={selectedValues.includes(
+                                    checkbox.value
+                                )}
+                                onChange={() => toggleValue(checkbox.value)}
+                                onBlur={field.onBlur}
+                                disabled={disabled}
+                                key={checkbox.label}
+                                sx={checkboxSx}
+                                formControlSx={formControlSx}
+                                {...rest}
+                            />
+                        ) : (
+                            <Checkbox
+                                name={checkbox.value}
+                                control={control}
+                                key={checkbox.label}
+                                disabled={disabled}
+                                sx={checkboxSx}
+                                formControlSx={formControlSx}
+                                {...rest}
+                                {...checkbox}
+                            />
+                        )}
                     </Box>
                 ))}
             </BoxContainer>

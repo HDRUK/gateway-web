@@ -7,7 +7,10 @@ import {
     DarApplicationResponses,
     DarFormattedField,
 } from "@/interfaces/DataAccessRequest";
-import { FileUploadFields } from "@/interfaces/FileUpload";
+import {
+    FileUploadFields,
+    UploadedFileMetadataValue,
+} from "@/interfaces/FileUpload";
 import apis from "@/config/apis";
 import { inputComponents } from "@/config/forms";
 import { CACHE_DAR_ANSWERS } from "@/consts/cache";
@@ -76,9 +79,14 @@ const getVisibleQuestionIds = (
 
             // Non array field
             const children =
-                field.options?.find(
-                    opt => opt.label === parentValues[field.question_id]
-                )?.children ?? [];
+                field.options
+                    ?.filter(opt =>
+                        isSelected(
+                            parentValues[field.question_id] as string,
+                            opt.label
+                        )
+                    )
+                    .flatMap(opt => opt.children ?? []) ?? [];
 
             return [
                 String(field.question_id),
@@ -117,6 +125,7 @@ const formatDarQuestion = (
         })),
     }),
     ...(field.component === inputComponents.CheckboxGroup && {
+        multiple: true,
         checkboxes: field.options?.map(option => ({
             label: option.label,
             value: option.label,
@@ -362,6 +371,25 @@ type DarAnswer = {
 
 const questionIsVisible = (qid: string, ids: string[]) => ids.includes(qid);
 
+const hasAnswer = (
+    value:
+        | string
+        | { value: UploadedFileMetadataValue }
+        | { value: UploadedFileMetadataValue[] }
+        | null
+        | undefined
+) => {
+    if (value === null || value === undefined) {
+        return false;
+    }
+
+    if (typeof value === "boolean" || typeof value === "number") {
+        return true;
+    }
+
+    return !isEmpty(value);
+};
+
 const buildDarAnswers = (
     values: DarApplicationResponses,
     questions: DarApplicationQuestion[],
@@ -383,7 +411,7 @@ const buildDarAnswers = (
                                     `${arrayName}.${answer_index}.${qid}`,
                                     visibleQuestionIds
                                 ) &&
-                                !isEmpty(answer)
+                                hasAnswer(answer)
                         )
                         .map(([qid, answer]) => ({
                             question_id: qid,
@@ -416,7 +444,7 @@ const buildDarAnswers = (
         }))
         .filter(
             a =>
-                !isEmpty(a.answer) &&
+                hasAnswer(a.answer) &&
                 !excludedQuestionFields.includes(a.question_id) &&
                 !arrayChildQuestionIds.has(a.question_id) &&
                 questionIsVisible(a.question_id.toString(), visibleQuestionIds)

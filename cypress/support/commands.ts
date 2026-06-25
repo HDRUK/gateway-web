@@ -48,12 +48,31 @@ Cypress.Commands.add("waitForApiIdle", () => {
     cy.wrap(null, { timeout: 10000 }).should(() => expect(pending).to.equal(0));
 });
 
+Cypress.Commands.add("setFeatureFlag", (name: string, enabled: boolean) => {
+    const email = Cypress.env("SUPERUSER_EMAIL");
+    const password = Cypress.env("TEST_USER_PASSWORD");
+
+    cy.request({
+        method: "POST",
+        url: API_URL,
+        body: { email, password },
+    }).then(({ body }) => {
+        cy.request({
+            method: "PUT",
+            url: Cypress.env("API_URL") + `/api/v1/features/${name}`,
+            headers: { Authorization: `Bearer ${body.access_token}` },
+            body: { enabled },
+        });
+    });
+});
+
 declare global {
     namespace Cypress {
         interface Chainable {
             checkA11yPage: () => void;
             login: (user: string) => void;
             waitForApiIdle: () => void;
+            setFeatureFlag: (name: string, enabled: boolean) => void;
         }
     }
 }

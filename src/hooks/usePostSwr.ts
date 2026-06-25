@@ -8,6 +8,7 @@ interface Response<T> {
     data: T | undefined;
     error: Error | undefined;
     isLoading: boolean;
+    isValidating: boolean;
     mutate: KeyedMutator<T>;
 }
 
@@ -39,7 +40,7 @@ const usePostSwr = <T>(
     } = options || {};
     const t = useTranslations("api");
 
-    const { data, error, mutate, isLoading } = useSWR<T>(
+    const { data, error, mutate, isLoading, isValidating } = useSWR<T>(
         shouldFetch ? [url, formData] : null,
         () => {
             return apiService.postRequest<T>(url, formData, {
@@ -68,6 +69,7 @@ const usePostSwr = <T>(
     return {
         error,
         isLoading,
+        isValidating,
         data,
         mutate,
     };

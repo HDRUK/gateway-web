@@ -10,9 +10,17 @@ const apiV2IPUrl =
         ? process.env.NEXT_PUBLIC_API_V2_IP_URL
         : process.env.NEXT_PUBLIC_API_V2_URL;
 
+const apiV3Url = process.env.NEXT_PUBLIC_API_V3_URL;
+const apiV3IPUrl =
+    process.env.NODE_ENV === "development"
+        ? process.env.NEXT_PUBLIC_API_V3_IP_URL
+        : process.env.NEXT_PUBLIC_API_V3_URL;
+
 const apis = {
     apiV1Url,
     apiV1IPUrl,
+    apiV3Url,
+    apiV3IPUrl,
     features: `${apiV1IPUrl}/features`,
     logoutInternalUrl: "/api/logout",
     signInInternalUrl: "/api/signIn",
@@ -60,9 +68,13 @@ const apis = {
     teamsV1UrlIP: `${apiV1IPUrl}/teams`,
     teamsV2Url: `${apiV2Url}/teams`,
     teamsV2UrlIP: `${apiV2IPUrl}/teams`,
+    teamsV3Url: `${apiV3Url}/teams`,
+    teamsV3UrlIP: `${apiV3IPUrl}/teams`,
     teamsSearchV1Url: `${apiV1Url}/teams/search`,
     wordPressApiUrl: `${process.env.NEXT_PUBLIC_WORDPRESS_API_URL}`,
     searchV1Url: `${apiV1Url}/search`,
+    searchV2AggregationUrl: `${apiV2Url}/search/aggregation`,
+    searchV2AggregationResultsUrl: `${apiV2Url}/search/aggregation/results`,
     saveSearchesV1Url: `${apiV1Url}/saved_searches`,
     collectionsV2Url: `${apiV2Url}/collections`,
     collectionsV2UrlIP: `${apiV2IPUrl}/collections`,

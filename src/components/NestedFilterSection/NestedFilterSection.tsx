@@ -151,10 +151,10 @@ const NestedCheckboxes = <
     );
 };
 
-interface NestedFilterSectionProps<TFieldValues extends FieldValues, TName> {
+interface NestedFilterSectionProps<TFieldValues extends FieldValues> {
     filterItem: { label: string; value: string; buckets: BucketCheckbox[] };
     control: Control<TFieldValues>;
-    filterSection: TName;
+    filterSection: string;
     noFilterLabel?: string;
     placeholder?: string;
     checkboxValues: { [key: string]: boolean };
@@ -165,16 +165,10 @@ interface NestedFilterSectionProps<TFieldValues extends FieldValues, TName> {
     handleCheckboxChange: (updates: {
         [key: string]: boolean | { [key: string]: boolean };
     }) => void;
-    setValue: (
-        name: keyof TFieldValues,
-        value: UseFormSetValue<TFieldValues>
-    ) => void;
+    setValue: UseFormSetValue<TFieldValues>;
     resetFilterSection: () => void;
 }
-const NestedFilterSection = <
-    TFieldValues extends FieldValues,
-    TName extends Path<TFieldValues>
->({
+const NestedFilterSection = <TFieldValues extends FieldValues>({
     filterItem,
     filterSection,
     control,
@@ -188,11 +182,11 @@ const NestedFilterSection = <
     handleCheckboxChange,
     setValue,
     resetFilterSection,
-}: NestedFilterSectionProps<TFieldValues, TName>) => {
+}: NestedFilterSectionProps<TFieldValues>) => {
     const t = useTranslations("components.NestedFilterSection");
     const { field } = useController({
         control,
-        name: filterSection,
+        name: filterSection as Path<TFieldValues>,
     });
 
     const checkboxes = useMemo(() => {
@@ -233,7 +227,7 @@ const NestedFilterSection = <
         <>
             <TextField
                 control={control}
-                name={filterSection}
+                name={filterSection as Path<TFieldValues>}
                 label=""
                 placeholder={placeholder || t("placeholder")}
                 icon={SearchIcon}

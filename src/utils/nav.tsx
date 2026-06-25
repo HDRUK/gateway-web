@@ -132,6 +132,11 @@ const getTeamNav = (
     const { isWidgetsEnabled } = features;
 
     return [
+        // {
+        //     icon: navIcon(GridViewOutlinedIcon),
+        //     label: "Dashboard",
+        //     href: `/${RouteName.ACCOUNT}/${RouteName.TEAM}/${teamId}/${RouteName.DASHBOARD}`,
+        // },
         ...(permissions["roles.read"]
             ? [
                   {

@@ -1,18 +1,22 @@
 "use client";
 
+import { Box, CircularProgress } from "@mui/material";
 import { FormControlLabel, RadioGroup } from "@mui/material";
 import { BucketCheckbox } from "@/interfaces/Filter";
 import StyledRadio from "@/components/StyledRadio";
+import Typography from "@/components/Typography";
 
 interface FilterSectionRadioProps {
     filterItem: { label: string; value: string; buckets: BucketCheckbox[] };
     handleRadioChange: (key: string) => void;
     value?: string;
+    counts?: { [key: string]: number | null };
 }
 const FilterSectionRadio = ({
     filterItem,
     handleRadioChange,
     value,
+    counts,
 }: FilterSectionRadioProps) => {
     const { buckets } = filterItem;
 
@@ -26,7 +30,30 @@ const FilterSectionRadio = ({
                     <FormControlLabel
                         value={radio.value}
                         control={<StyledRadio />}
-                        label={radio.label}
+                        sx={{ width: "100%" }}
+                        label={
+                            counts !== undefined &&
+                            counts[radio.value] !== undefined ? (
+                                <Box
+                                    sx={{
+                                        display: "flex",
+                                        flexDirection: "row",
+                                        justifyContent: "space-between",
+                                        width: "100%",
+                                    }}>
+                                    {radio.label}
+                                    {counts[radio.value] === null ? (
+                                        <CircularProgress size={14} />
+                                    ) : (
+                                        <Typography>
+                                            {counts[radio.value]}
+                                        </Typography>
+                                    )}
+                                </Box>
+                            ) : (
+                                radio.label
+                            )
+                        }
                         key={radio.label}
                     />
                 ))}
