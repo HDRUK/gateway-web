@@ -274,6 +274,15 @@
                         "dataCustodian": "Data Custodian page"
                     }
                 },
+                "enquiries": {
+                    "title": "Enquiries and requests",
+                    "loading": "Loading enquiries and requests",
+                    "labels": {
+                        "generalEnquiries": "General enquiries",
+                        "feasibilityEnquiries": "Feasibility enquiries",
+                        "dataAccessRequests": "Data Access Requests"
+                    }
+                },
                 "resources": {
                     "title": "Your resources",
                     "chooseResources": "Choose resources",
