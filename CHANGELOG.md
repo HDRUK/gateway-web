@@ -1,3 +1,38 @@
+## [2.37.0](https://github.com/HDRUK/gateway-web/compare/v2.36.0...v2.37.0) (2026-06-25)
+
+### ✨ Features
+
+* **GAT-8500:** Add initial dashboard page (#1535) ([e279b1d](https://github.com/HDRUK/gateway-web/commit/e279b1d3b7e00b91d85938276f3e97ad1492481b)), closes [GAT-8500](undefinedGAT-8500)
+* **GAT-8500:** Hide dashboard nav link (#1537) ([dc3a03c](https://github.com/HDRUK/gateway-web/commit/dc3a03cadb86b63a13b6ed3f5a5f7df847e03199)), closes [GAT-8500](undefinedGAT-8500)
+* **GAT-8501:** Add entity counts (#1538) ([3d09e81](https://github.com/HDRUK/gateway-web/commit/3d09e813b0dfc1d1d2a5465376fe5b99d6b2e3ab)), closes [GAT-8501](undefinedGAT-8501)
+* **GAT-8737:** Optimisations and fixes. (#1521) ([12869cf](https://github.com/HDRUK/gateway-web/commit/12869cfc6be1b9b8174dea8080b059d8a205dee1)), closes [GAT-8737](undefinedGAT-8737)
+* **GAT-8796:** Display partner results on Datasets page (#1534) ([9c1c402](https://github.com/HDRUK/gateway-web/commit/9c1c4025ae12bed54170e5cb30f23bc8480f67cb)), closes [GAT-8796](undefinedGAT-8796)
+
+### 🐛 Bug Fixes
+
+* **GAT-8736:** fix dar checkbox group values (#1523) ([3ab12c8](https://github.com/HDRUK/gateway-web/commit/3ab12c8711a66e19e36f71f11bf8d96bda516a77))
+* **GAT-8736:** Fix submission of dar with new checkbox group value (#1525) ([f73bf65](https://github.com/HDRUK/gateway-web/commit/f73bf653965d0744db271b6b57ed015b4f05546d))
+* **GAT-8812:** removed gar name  (#1528) ([7406447](https://github.com/HDRUK/gateway-web/commit/7406447e2454d77925bb6d388d1c3ce79f18367b)), closes [GAT-8812](undefinedGAT-8812)
+* **GAT-8812:** updated semantic pipeline (#1532) ([199339d](https://github.com/HDRUK/gateway-web/commit/199339df8bdb2925e6780332075983c7ee30561d)), closes [GAT-8812](undefinedGAT-8812)
+* **GAT-8812:** Updated workflow pipelines to use reusable pipelines (#1527) ([bbd2b5c](https://github.com/HDRUK/gateway-web/commit/bbd2b5c53723b1d7b81edd23f6f3383aa5e39a5c)), closes [GAT-8812](undefinedGAT-8812)
+* **GAT-8923:** Fix rendering (#1536) ([a7f4469](https://github.com/HDRUK/gateway-web/commit/a7f4469e20d79012915b8511e25d91a5c57db90d))
+
+## [2.36.0](https://github.com/HDRUK/gateway-web/compare/v2.35.2...v2.36.0) (2026-04-14)
+
+### ✨ Features
+
+* **GAT-7284:** DAR array groups (#1507) ([fd038d3](https://github.com/HDRUK/gateway-web/commit/fd038d329f29e4f8b4b20ff91b507614d305f67c)), closes [GAT-7284](GAT-7284)
+* **GAT-8388:** Split team notifications into seperate page (#1513) ([5969498](https://github.com/HDRUK/gateway-web/commit/5969498f2a0c4659391da773b87e626f0afd38e4)), closes [GAT-8388](GAT-8388)
+* **GAT-8469:** Added cookie notice button (#1516) ([ec425dc](https://github.com/HDRUK/gateway-web/commit/ec425dcec7b80dd55161521a73549985091c9c8f)), closes [GAT-8469](GAT-8469)
+* **GAT-8634:** Add padding to paragraph (#1512) ([e4e0302](https://github.com/HDRUK/gateway-web/commit/e4e03028515a1d4c696f237a43c0aca8cfb4efb8)), closes [GAT-8634](GAT-8634)
+* **GAT-8634:** Update default DAR footer to include Data Custodian name (#1510) ([278d046](https://github.com/HDRUK/gateway-web/commit/278d046d9453a675788826ebea3a38d9f1878af7)), closes [GAT-8634](GAT-8634)
+
+### 🐛 Bug Fixes
+
+* **GAT-8580:** Cohort discovery button now applies NHS SDE filter correctly  (#1509) ([22f5fa3](https://github.com/HDRUK/gateway-web/commit/22f5fa3a9c086f48aa5a874e696138be513d8861)), closes [GAT-8580](GAT-8580)
+* **GAT-8696:** Update NHS Button copy (#1518) ([929d28f](https://github.com/HDRUK/gateway-web/commit/929d28f5933060530792e17aa85cc950e0894e46)), closes [GAT-8696](GAT-8696)
+* **GAT-8750:** Gateway Statistics Page is not showing all stats (#1520) ([a050c2f](https://github.com/HDRUK/gateway-web/commit/a050c2f0d6fb1bd10852160eefca0e5a443a55e6)), closes [GAT-8750](GAT-8750) [Gateway](Gateway)
+
 ## [2.35.2](https://github.com/HDRUK/gateway-web/compare/v2.35.1...v2.35.2) (2026-03-31)
 
 ### 🐛 Bug Fixes
