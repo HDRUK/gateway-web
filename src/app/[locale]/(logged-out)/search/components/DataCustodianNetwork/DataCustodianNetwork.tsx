@@ -69,8 +69,11 @@ const DataCustodianNetwork = ({
     );
 
     useEffect(() => {
-        mutate();
-    }, [searchParams, mutate]);
+        if (!data) {
+            mutate();
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
 
     return (
         <Box sx={{ mb: 1, p: 0 }}>
