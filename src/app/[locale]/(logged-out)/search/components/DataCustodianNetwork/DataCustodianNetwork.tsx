@@ -62,9 +62,6 @@ const DataCustodianNetwork = ({
         {
             query: searchParams.query,
             filters: dataCustodianFilters,
-        },
-        {
-            revalidateOnMount: true,
         }
     );
 

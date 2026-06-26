@@ -291,28 +291,26 @@ const Search = ({ filters, schema }: SearchProps) => {
                     queryParams.source === GATEWAY_SOURCE_FIELD ||
                     (queryParams.source === EUROPE_PMC_SOURCE_FIELD &&
                         !!queryParams.query)),
-            revalidateOnMount: true,
         }
     );
 
     const { data: v2Data, isValidating: isV2Searching } =
         usePostSwr<SearchAggregationData>(
-        apis.searchV2AggregationUrl,
-        {
-            query: queryParams.query || undefined,
-            type: "datasets",
-            sort: queryParams.sort,
-            per_page: queryParams.per_page,
-            page: queryParams.page,
-            view_type: "mini",
-            ...pickedFilters,
-        },
-        {
-            keepPreviousData: true,
-            shouldFetch: isDatasets && isExternalSourcesEnabled,
-            revalidateOnMount: true,
-        }
-    );
+            apis.searchV2AggregationUrl,
+            {
+                query: queryParams.query || undefined,
+                type: "datasets",
+                sort: queryParams.sort,
+                per_page: queryParams.per_page,
+                page: queryParams.page,
+                view_type: "mini",
+                ...pickedFilters,
+            },
+            {
+                keepPreviousData: true,
+                shouldFetch: isDatasets && isExternalSourcesEnabled,
+            }
+        );
 
     const { externalResults, isPolling: isExternalPolling } =
         useLoadExternalData(v2Data, isDatasets && isExternalSourcesEnabled);
