@@ -58,7 +58,7 @@ const usePostSwr = <T>(
         {
             keepPreviousData,
             revalidateOnFocus: false,
-            revalidateOnMount: false,
+            revalidateIfStale: false,
             revalidateOnReconnect: false,
             refreshWhenOffline: false,
             refreshWhenHidden: false,
