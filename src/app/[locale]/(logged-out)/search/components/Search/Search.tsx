@@ -267,11 +267,9 @@ const Search = ({ filters, schema }: SearchProps) => {
         queryParams.query ? `&q=${encodeURIComponent(queryParams.query)}` : ""
     }`;
 
-    const {
-        data: v1Data,
-        isLoading: isV1Searching,
-        mutate,
-    } = usePostSwr<SearchPaginationType<SearchResult>>(
+    const { data: v1Data, isLoading: isV1Searching } = usePostSwr<
+        SearchPaginationType<SearchResult>
+    >(
         `${apis.searchV1Url}/${queryParams.type}?view_type=mini&per_page=${
             queryParams.per_page
         }&page=${queryParams.page}&sort=${queryParams.sort}${
@@ -293,14 +291,12 @@ const Search = ({ filters, schema }: SearchProps) => {
                     queryParams.source === GATEWAY_SOURCE_FIELD ||
                     (queryParams.source === EUROPE_PMC_SOURCE_FIELD &&
                         !!queryParams.query)),
+            revalidateOnMount: true,
         }
     );
 
-    const {
-        data: v2Data,
-        isValidating: isV2Searching,
-        mutate: mutateV2,
-    } = usePostSwr<SearchAggregationData>(
+    const { data: v2Data, isValidating: isV2Searching } =
+        usePostSwr<SearchAggregationData>(
         apis.searchV2AggregationUrl,
         {
             query: queryParams.query || undefined,
@@ -314,6 +310,7 @@ const Search = ({ filters, schema }: SearchProps) => {
         {
             keepPreviousData: true,
             shouldFetch: isDatasets && isExternalSourcesEnabled,
+            revalidateOnMount: true,
         }
     );
 
@@ -358,18 +355,6 @@ const Search = ({ filters, schema }: SearchProps) => {
         apis.saveSearchesV1Url,
         { itemName: "Saved search" }
     );
-
-    useEffect(() => {
-        // Fixes the weird re-jiggling of the search results upon navigating
-        // back to the page.
-        if (!v1Data) {
-            mutate();
-        }
-        if (isExternalSourcesEnabled && !v2Data) {
-            mutateV2();
-        }
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, []);
 
     // Update the list of libraries
     const { data: libraryData, mutate: mutateLibraries } = useGet<Library[]>(

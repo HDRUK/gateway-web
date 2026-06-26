@@ -21,6 +21,7 @@ interface Options {
     successNotificationsOn?: boolean;
     itemName?: string;
     action?: ReactNode;
+    revalidateOnMount?: boolean;
 }
 
 const usePostSwr = <T>(
@@ -37,6 +38,7 @@ const usePostSwr = <T>(
         errorNotificationsOn,
         withPagination = false,
         shouldFetch = true,
+        revalidateOnMount = false,
     } = options || {};
     const t = useTranslations("api");
 
@@ -58,7 +60,7 @@ const usePostSwr = <T>(
         {
             keepPreviousData,
             revalidateOnFocus: false,
-            revalidateOnMount: false,
+            revalidateOnMount,
             revalidateOnReconnect: false,
             refreshWhenOffline: false,
             refreshWhenHidden: false,
