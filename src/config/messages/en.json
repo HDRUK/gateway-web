@@ -283,6 +283,18 @@
                         "dataAccessRequests": "Data Access Requests"
                     }
                 },
+                "improveUsage": {
+                    "title": "Improve your usage",
+                    "previousLabel": "Previous tip",
+                    "nextLabel": "Next tip",
+                    "tips": {
+                        "demographicMetadata": "Adding demographic metadata (e.g. age, sex, ethnicity, geography) makes your datasets far more <b>discoverable and usable</b>, helping researchers quickly assess relevance and feasibility — which leads to <b>more appropriate, higher-quality data access requests and greater research impact,</b> while reducing unnecessary enquiries.",
+                        "metadataDescriptions": "Provide clear, high-quality metadata descriptions (including data coverage, linkage, and update frequency) — this helps researchers understand your dataset upfront, leading to <b>more targeted access requests, fewer back-and-forth queries, and a smoother approval process,</b> ultimately saving time for both custodians and applicants."
+                    }
+                },
+                "learnMore": {
+                    "title": "Learn more about the Gateway"
+                },
                 "resources": {
                     "title": "Your resources",
                     "chooseResources": "Choose resources",

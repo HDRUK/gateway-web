@@ -5,6 +5,7 @@ import AddAPhotoIcon from "@mui/icons-material/AddAPhoto";
 import AdminPanelSettingsIcon from "@mui/icons-material/AdminPanelSettings";
 import AppsIcon from "@mui/icons-material/Apps";
 import ArchiveIcon from "@mui/icons-material/Archive";
+import ArrowBack from "@mui/icons-material/ArrowBack";
 import ArrowBackIosNewIcon from "@mui/icons-material/ArrowBackIosNew";
 import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
 import ArrowDropUpIcon from "@mui/icons-material/ArrowDropUp";
@@ -85,6 +86,7 @@ export * from "./customIcons";
 
 export {
     OpenInNewIcon,
+    ArrowBack,
     ArrowForward,
     AppsIcon,
     FilterAltOffIcon,
