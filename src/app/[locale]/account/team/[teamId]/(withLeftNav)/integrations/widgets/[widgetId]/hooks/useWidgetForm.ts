@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useMemo, useState } from "react";
-import { useForm, UseFormReturn } from "react-hook-form";
+import { Resolver, useForm, UseFormReturn } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
@@ -65,50 +65,64 @@ export default function useWidgetForm(
             has_datasets:
                 templateType === CUSTODIAN || templateType === DATASETS
                     ? true
-                    : widget?.included_datasets?.length,
+                    : !!widget?.included_datasets?.length,
             has_data_custodians: true,
             has_datauses:
                 templateType === CUSTODIAN || templateType === DATA_USES
                     ? true
-                    : widget?.included_data_uses?.length,
+                    : !!widget?.included_data_uses?.length,
             has_scripts:
                 templateType === CUSTODIAN
                     ? true
-                    : widget?.included_scripts?.length,
+                    : !!widget?.included_scripts?.length,
             has_collections:
                 templateType === CUSTODIAN
                     ? true
-                    : widget?.included_collections?.length,
+                    : !!widget?.included_collections?.length,
         }),
         [defaultCustodians, templateType, widget]
     );
 
-    const form = useForm({
+    const form = useForm<Widget>({
         defaultValues: initialDefaults,
         resolver: yupResolver(
-            yup.object({
-                data_custodian_entities_ids: yup
-                    .array()
-                    .of(yup.string())
-                    .label(t("dataCustodians"))
-                    .min(
-                        1,
-                        ({ label, path }) =>
-                            `${label || path} must have at least 1 item`
-                    )
-                    .max(DATA_CUSTODIAN_LIMIT),
-                permitted_domains: yup
-                    .array()
-                    .of(yup.string().url(t("validUrl")))
-                    .label(t("permittedDomains"))
-                    .min(
-                        1,
-                        ({ label, path }) =>
-                            `${label || path} must have at least 1 item`
-                    ),
-                widget_name: yup.string().required().label(t("widgetName")),
-            })
-        ),
+            yup
+                .object({
+                    data_custodian_entities_ids: yup
+                        .array()
+                        .of(yup.string())
+                        .label(t("dataCustodians"))
+                        .min(
+                            1,
+                            ({ label, path }) =>
+                                `${label || path} must have at least 1 item`
+                        )
+                        .max(DATA_CUSTODIAN_LIMIT),
+                    permitted_domains: yup
+                        .array()
+                        .of(yup.string().url(t("validUrl")))
+                        .label(t("permittedDomains"))
+                        .min(
+                            1,
+                            ({ label, path }) =>
+                                `${label || path} must have at least 1 item`
+                        ),
+                    widget_name: yup.string().required().label(t("widgetName")),
+                })
+                .test(
+                    "at-least-one-entity-type",
+                    t("entityTypeRequired"),
+                    value => {
+                        const v = value as Partial<Widget>;
+                        return Boolean(
+                            v.has_datasets ||
+                                v.has_datauses ||
+                                v.has_scripts ||
+                                v.has_collections
+                        );
+                    }
+                )
+        ) as unknown as Resolver<Widget>,
     });
 
     useEffect(() => {

@@ -53,7 +53,13 @@ const WidgetPreview = ({ teamId, widgetId }: WidgetPreviewProps) => {
 
     const generateWidgetCode = useMemo(() => {
         if (data) {
-            return `<div style="position: relative; width: ${data?.widget.size_width}${data?.widget.unit}; height: ${data?.widget.size_height}${data?.widget.unit}; max-width: 100%;"><iframe title="HDR Gateway Widget" src="${WIDGET_CODE_PATH}${teamId}-${widgetId}" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: 0;" allowfullscreen="true"></iframe></div>`;
+            const { size_width, size_height, unit, keep_proportions } =
+                data.widget;
+
+            const wrapperSizing = keep_proportions
+                ? `width: ${size_width}${unit}; aspect-ratio: ${size_width} / ${size_height};`
+                : `width: ${size_width}${unit}; height: ${size_height}${unit};`;
+            return `<div style="position: relative; ${wrapperSizing} max-width: 100%;"><iframe title="HDR Gateway Widget" src="${WIDGET_CODE_PATH}${teamId}-${widgetId}" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: 0;" allowfullscreen="true"></iframe></div>`;
         }
         return "";
     }, [data, teamId, widgetId]);
@@ -71,7 +77,7 @@ const WidgetPreview = ({ teamId, widgetId }: WidgetPreviewProps) => {
                         mobile: 12,
                         laptop: 9,
                     }}
-                    sx={{ overflow: "hidden" }}>
+                    sx={{ minWidth: 0, overflow: "auto" }}>
                     {data ? <WidgetDisplay data={data} /> : <Loading />}
                 </Grid>
                 <Grid
@@ -93,7 +99,7 @@ const WidgetPreview = ({ teamId, widgetId }: WidgetPreviewProps) => {
                             padding: theme.spacing(2),
                         }}
                         aria-label="Widget code"
-                        defaultValue={generateWidgetCode}
+                        value={generateWidgetCode}
                         readOnly
                     />
                     <Button
