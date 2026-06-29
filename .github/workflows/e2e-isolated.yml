@@ -131,6 +131,16 @@ jobs:
           REDIS_PASSWORD: mypassword
 
     steps:
+      - name: Generate GitHub App token
+        id: generate-deployment-token
+        uses: actions/create-github-app-token@v2
+        with:
+          app-id: ${{ secrets.DEPLOY_APP_ID }}
+          private-key: ${{ secrets.DEPLOY_APP_PRIVATE_KEY }}
+          owner: HDRUK
+          repositories: |
+            ${{ github.event.repository.name }}
+            
       - name: Install MailDev
         run: npm install -g maildev
 
@@ -141,16 +151,9 @@ jobs:
 
       - name: Checkout web
         uses: actions/checkout@v4
-      
-      - name: Generate GitHub App token
-        id: generate-deployment-token
-        uses: actions/create-github-app-token@v2
         with:
-          app-id: ${{ secrets.DEPLOY_APP_ID }}
-          private-key: ${{ secrets.DEPLOY_APP_PRIVATE_KEY }}
-          owner: HDRUK
-          repositories: |
-            ${{ github.event.repository.name }}
+          token:  ${{ steps.generate-deployment-token.outputs.token }}
+          fetch-depth: 0
 
       - name: Setup Go
         uses: actions/setup-go@v5
@@ -178,9 +181,13 @@ jobs:
           restore-keys: e2e-composer-
 
       - name: Install Composer deps
+        env:
+          COMPOSER_HOME: /tmp/composer
         run: |
+          mkdir -p /tmp/composer
+          printf '%s' '{"github-oauth":{"github.com":"${{ steps.generate-deployment-token.outputs.token }}"}}' > /tmp/composer/auth.json
           cd gateway-api
-          composer install --no-interaction --prefer-dist
+          composer install --no-interaction --prefer-dist --optimize-autoloader
 
       - name: Configure Laravel .env + run migrations/seed
         run: |
