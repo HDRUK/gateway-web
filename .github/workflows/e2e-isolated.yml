@@ -179,6 +179,7 @@ jobs:
           path: gateway-api/vendor
           key: e2e-composer-${{ hashFiles('gateway-api/composer.lock') }}
           restore-keys: e2e-composer-
+          fetch-depth: 0
 
       - name: Install Composer deps
         env:
