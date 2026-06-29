@@ -108,6 +108,26 @@ export default function useWidgetForm(
                                 `${label || path} must have at least 1 item`
                         ),
                     widget_name: yup.string().required().label(t("widgetName")),
+                    included_datasets: yup.array().when("has_datasets", {
+                        is: true,
+                        then: schema =>
+                            schema.min(1, t("includedDatasetsRequired")),
+                    }),
+                    included_data_uses: yup.array().when("has_datauses", {
+                        is: true,
+                        then: schema =>
+                            schema.min(1, t("includedDataUsesRequired")),
+                    }),
+                    included_scripts: yup.array().when("has_scripts", {
+                        is: true,
+                        then: schema =>
+                            schema.min(1, t("includedScriptsRequired")),
+                    }),
+                    included_collections: yup.array().when("has_collections", {
+                        is: true,
+                        then: schema =>
+                            schema.min(1, t("includedCollectionsRequired")),
+                    }),
                 })
                 .test(
                     "at-least-one-entity-type",
