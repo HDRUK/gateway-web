@@ -1,6 +1,6 @@
 "use client";
 
-import { FormProvider, UseFormReturn } from "react-hook-form";
+import { FormProvider, UseFormReturn, useWatch } from "react-hook-form";
 import { Typography } from "@mui/material";
 import { useTranslations } from "next-intl";
 import { Unit, Widget } from "@/interfaces/Widget";
@@ -48,11 +48,18 @@ const WidgetConfigForm = ({
     const t = useTranslations(TRANSLATION_PATH);
     const { control, handleSubmit, watch, setValue, formState } = form;
 
+    const [hasDatasets, hasDatauses, hasScripts, hasCollections] = useWatch({
+        control,
+        name: [
+            "has_datasets",
+            "has_datauses",
+            "has_scripts",
+            "has_collections",
+        ],
+    });
+
     const hasEntityType =
-        watch("has_datasets") ||
-        watch("has_datauses") ||
-        watch("has_scripts") ||
-        watch("has_collections");
+        hasDatasets || hasDatauses || hasScripts || hasCollections;
 
     const unitOptions: { value: Unit; label: string }[] = Object.values(
         Unit
