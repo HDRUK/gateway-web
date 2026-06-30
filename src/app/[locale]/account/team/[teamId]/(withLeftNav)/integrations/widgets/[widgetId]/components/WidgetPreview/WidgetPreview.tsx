@@ -53,9 +53,7 @@ const WidgetPreview = ({ teamId, widgetId }: WidgetPreviewProps) => {
 
     const generateWidgetCode = useMemo(() => {
         if (data) {
-            const { size_width, size_height, unit } = data.widget;
-
-            return `<div style="position: relative; width: ${size_width}${unit}; height: ${size_height}${unit}; max-width: 100%;"><iframe title="HDR Gateway Widget" src="${WIDGET_CODE_PATH}${teamId}-${widgetId}" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: 0;" allowfullscreen="true"></iframe></div>`;
+            return `<div style="position: relative; width: ${data?.widget.size_width}${data?.widget.unit}; height: ${data?.widget.size_height}${data?.widget.unit}; max-width: 100%;"><iframe title="HDR Gateway Widget" src="${WIDGET_CODE_PATH}${teamId}-${widgetId}" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: 0;" allowfullscreen="true"></iframe></div>`;
         }
         return "";
     }, [data, teamId, widgetId]);
@@ -73,7 +71,7 @@ const WidgetPreview = ({ teamId, widgetId }: WidgetPreviewProps) => {
                         mobile: 12,
                         laptop: 9,
                     }}
-                    sx={{ minWidth: 0, overflow: "auto" }}>
+                    sx={{ overflow: "hidden" }}>
                     {data ? <WidgetDisplay data={data} /> : <Loading />}
                 </Grid>
                 <Grid
@@ -95,7 +93,7 @@ const WidgetPreview = ({ teamId, widgetId }: WidgetPreviewProps) => {
                             padding: theme.spacing(2),
                         }}
                         aria-label="Widget code"
-                        value={generateWidgetCode}
+                        defaultValue={generateWidgetCode}
                         readOnly
                     />
                     <Button
