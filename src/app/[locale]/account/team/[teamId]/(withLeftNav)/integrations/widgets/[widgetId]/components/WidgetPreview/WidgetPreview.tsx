@@ -53,13 +53,9 @@ const WidgetPreview = ({ teamId, widgetId }: WidgetPreviewProps) => {
 
     const generateWidgetCode = useMemo(() => {
         if (data) {
-            const { size_width, size_height, unit, keep_proportions } =
-                data.widget;
+            const { size_width, size_height, unit } = data.widget;
 
-            const wrapperSizing = keep_proportions
-                ? `width: ${size_width}${unit}; aspect-ratio: ${size_width} / ${size_height};`
-                : `width: ${size_width}${unit}; height: ${size_height}${unit};`;
-            return `<div style="position: relative; ${wrapperSizing} max-width: 100%;"><iframe title="HDR Gateway Widget" src="${WIDGET_CODE_PATH}${teamId}-${widgetId}" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: 0;" allowfullscreen="true"></iframe></div>`;
+            return `<div style="position: relative; width: ${size_width}${unit}; height: ${size_height}${unit}; max-width: 100%;"><iframe title="HDR Gateway Widget" src="${WIDGET_CODE_PATH}${teamId}-${widgetId}" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: 0;" allowfullscreen="true"></iframe></div>`;
         }
         return "";
     }, [data, teamId, widgetId]);

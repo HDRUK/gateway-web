@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { Resolver, useForm, UseFormReturn } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useTranslations } from "next-intl";
@@ -155,6 +155,37 @@ export default function useWidgetForm(
     useEffect(() => {
         form.reset(initialDefaults, { keepValues: true });
     }, [initialDefaults]);
+
+    // "Keep proportions" links the size inputs: editing width updates height to
+    // keep the ratio, and vice versa (e.g. 400x200, set width 500 -> height 250).
+    const keepProportions = form.watch("keep_proportions");
+    const width = Number(form.watch("size_width"));
+    const height = Number(form.watch("size_height"));
+    const prevSize = useRef({ width, height });
+
+    useEffect(() => {
+        const prev = prevSize.current;
+        prevSize.current = { width, height };
+
+        // Only adjust when locked, values are valid, and exactly one dimension
+        // changed. Changing both at once (a size preset) just re-bases the ratio.
+        if (!keepProportions || !width || !height || !prev.width || !prev.height)
+            return;
+        const widthChanged = width !== prev.width;
+        if (widthChanged === (height !== prev.height)) return;
+
+        if (widthChanged) {
+            const newHeight = Math.round((prev.height * width) / prev.width);
+            prevSize.current = { width, height: newHeight };
+            if (newHeight !== height)
+                form.setValue("size_height", newHeight, { shouldDirty: true });
+        } else {
+            const newWidth = Math.round((prev.width * height) / prev.height);
+            prevSize.current = { width: newWidth, height };
+            if (newWidth !== width)
+                form.setValue("size_width", newWidth, { shouldDirty: true });
+        }
+    }, [keepProportions, width, height, form]);
 
     const createWidget = usePost<Widget>(
         `${apis.teamsV1Url}/${teamId}/widgets`,
