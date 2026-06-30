@@ -23,6 +23,7 @@ import {
     isCohortDiscoveryServiceEnabled,
     isRQuestEnabled,
     isExternalSourcesEnabled,
+    isCustodianDashboardEnabled,
 } from "@/flags";
 import ActionBarProvider from "@/providers/ActionBarProvider";
 import CohortRedirectProvider from "@/providers/CohortRedirectProvider";
@@ -73,6 +74,8 @@ export default async function RootLayout(props: {
         isRQuestEnabled: (await isRQuestEnabled()) as boolean,
         isExternalSourcesEnabled:
             (await isExternalSourcesEnabled()) as boolean,
+        isCustodianDashboardEnabled:
+            (await isCustodianDashboardEnabled()) as boolean,
     };
 
     if (includeBanners) {
