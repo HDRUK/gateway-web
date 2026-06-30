@@ -13,7 +13,7 @@ import Link from "@/components/Link";
 import Typography from "@/components/Typography";
 import { colors } from "@/config/theme";
 
-const ARDC_BASE_URL = "https://researchdata.edu.au";
+const ARDC_BASE_URL = "https://researchdata.edu.au/health/view";
 
 interface ResultCardARDCProps {
     result: SearchResultARDC;
@@ -27,9 +27,7 @@ const ResultCardARDC = ({ result, providerLogo }: ResultCardARDCProps) => {
     const title = result.display_title || result.title || "";
     const organisation = result.group;
     const description = result.list_description || result.description || "";
-    const href = result.slug
-        ? `${ARDC_BASE_URL}/${result.slug}`
-        : ARDC_BASE_URL;
+    const href = result.id ? `${ARDC_BASE_URL}/${result.id}` : ARDC_BASE_URL;
 
     return (
         <ListItem
