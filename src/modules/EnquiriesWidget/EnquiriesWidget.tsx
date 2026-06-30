@@ -53,19 +53,19 @@ const EnquiriesWidget = ({
         {
             key: "generalEnquiries",
             label: t("labels.generalEnquiries"),
-            count: generalEnquiries?.total,
+            count: generalEnquiries?.total_by_interval,
         },
         {
             key: "feasibilityEnquiries",
             label: t("labels.feasibilityEnquiries"),
-            count: feasibilityEnquiries?.total,
+            count: feasibilityEnquiries?.total_by_interval,
         },
         ...(isDarEnabled
             ? [
                   {
                       key: "dataAccessRequests",
                       label: t("labels.dataAccessRequests"),
-                      count: dataAccessRequests?.total,
+                      count: dataAccessRequests?.total_by_interval,
                   },
               ]
             : []),

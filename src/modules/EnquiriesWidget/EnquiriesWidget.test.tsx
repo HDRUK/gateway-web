@@ -34,7 +34,7 @@ describe("EnquiriesWidget", () => {
                 res(
                     ctx.status(200),
                     ctx.json({
-                        data: { total: GENERAL_ENQUIRIES, total_by_interval: 0 },
+                        data: { total: 0, total_by_interval: GENERAL_ENQUIRIES },
                     })
                 )
             ),
@@ -45,8 +45,8 @@ describe("EnquiriesWidget", () => {
                         ctx.status(200),
                         ctx.json({
                             data: {
-                                total: FEASIBILITY_ENQUIRIES,
-                                total_by_interval: 0,
+                                total: 0,
+                                total_by_interval: FEASIBILITY_ENQUIRIES,
                             },
                         })
                     )
@@ -58,8 +58,8 @@ describe("EnquiriesWidget", () => {
                         ctx.status(200),
                         ctx.json({
                             data: {
-                                total: DATA_ACCESS_REQUESTS,
-                                total_by_interval: 0,
+                                total: 0,
+                                total_by_interval: DATA_ACCESS_REQUESTS,
                             },
                         })
                     )
@@ -85,7 +85,7 @@ describe("EnquiriesWidget", () => {
         server.use(
             teamHandler(true),
             rest.get(`${dashboardUrl}/general-enquires/count`, (_req, res, ctx) =>
-                res(ctx.status(200), ctx.json({ data: { total: null } }))
+                res(ctx.status(200), ctx.json({ data: { total_by_interval: null } }))
             ),
             rest.get(
                 `${dashboardUrl}/fesability-enquires/count`,
@@ -94,8 +94,8 @@ describe("EnquiriesWidget", () => {
                         ctx.status(200),
                         ctx.json({
                             data: {
-                                total: FEASIBILITY_ENQUIRIES,
-                                total_by_interval: 0,
+                                total: 0,
+                                total_by_interval: FEASIBILITY_ENQUIRIES,
                             },
                         })
                     )
@@ -103,7 +103,7 @@ describe("EnquiriesWidget", () => {
             rest.get(
                 `${dashboardUrl}/data-access-requests/count`,
                 (_req, res, ctx) =>
-                    res(ctx.status(200), ctx.json({ data: { total: null } }))
+                    res(ctx.status(200), ctx.json({ data: { total_by_interval: null } }))
             )
         );
 
@@ -124,7 +124,7 @@ describe("EnquiriesWidget", () => {
                 res(
                     ctx.status(200),
                     ctx.json({
-                        data: { total: GENERAL_ENQUIRIES, total_by_interval: 0 },
+                        data: { total: 0, total_by_interval: GENERAL_ENQUIRIES },
                     })
                 )
             ),
@@ -135,8 +135,8 @@ describe("EnquiriesWidget", () => {
                         ctx.status(200),
                         ctx.json({
                             data: {
-                                total: FEASIBILITY_ENQUIRIES,
-                                total_by_interval: 0,
+                                total: 0,
+                                total_by_interval: FEASIBILITY_ENQUIRIES,
                             },
                         })
                     )
