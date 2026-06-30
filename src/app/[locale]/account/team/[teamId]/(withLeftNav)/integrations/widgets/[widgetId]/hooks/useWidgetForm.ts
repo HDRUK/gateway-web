@@ -17,6 +17,29 @@ import { BRANDING_DEFAULTS, DATA_CUSTODIAN_LIMIT, TabValues } from "../const";
 
 const TRANSLATION_PATH = `pages.account.team.widgets.edit`;
 
+const ENTITY_TYPES = [
+    {
+        toggle: "has_datasets",
+        field: "included_datasets",
+        message: "includedDatasetsRequired",
+    },
+    {
+        toggle: "has_datauses",
+        field: "included_data_uses",
+        message: "includedDataUsesRequired",
+    },
+    {
+        toggle: "has_scripts",
+        field: "included_scripts",
+        message: "includedScriptsRequired",
+    },
+    {
+        toggle: "has_collections",
+        field: "included_collections",
+        message: "includedCollectionsRequired",
+    },
+] as const;
+
 export default function useWidgetForm(
     teamId: string,
     teamNames: TeamNames[],
@@ -108,39 +131,23 @@ export default function useWidgetForm(
                                 `${label || path} must have at least 1 item`
                         ),
                     widget_name: yup.string().required().label(t("widgetName")),
-                    included_datasets: yup.array().when("has_datasets", {
-                        is: true,
-                        then: schema =>
-                            schema.min(1, t("includedDatasetsRequired")),
-                    }),
-                    included_data_uses: yup.array().when("has_datauses", {
-                        is: true,
-                        then: schema =>
-                            schema.min(1, t("includedDataUsesRequired")),
-                    }),
-                    included_scripts: yup.array().when("has_scripts", {
-                        is: true,
-                        then: schema =>
-                            schema.min(1, t("includedScriptsRequired")),
-                    }),
-                    included_collections: yup.array().when("has_collections", {
-                        is: true,
-                        then: schema =>
-                            schema.min(1, t("includedCollectionsRequired")),
-                    }),
+                    ...Object.fromEntries(
+                        ENTITY_TYPES.map(({ toggle, field, message }) => [
+                            field,
+                            yup.array().when(toggle, {
+                                is: true,
+                                then: schema => schema.min(1, t(message)),
+                            }),
+                        ])
+                    ),
                 })
                 .test(
                     "at-least-one-entity-type",
                     t("entityTypeRequired"),
-                    value => {
-                        const v = value as Partial<Widget>;
-                        return Boolean(
-                            v.has_datasets ||
-                                v.has_datauses ||
-                                v.has_scripts ||
-                                v.has_collections
-                        );
-                    }
+                    value =>
+                        ENTITY_TYPES.some(
+                            ({ toggle }) => (value as Partial<Widget>)[toggle]
+                        )
                 )
         ) as unknown as Resolver<Widget>,
     });
