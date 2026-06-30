@@ -257,14 +257,16 @@
                     "last_month": "Last month"
                 },
                 "datasetViews": {
-                    "title": "Dataset views"
+                    "title": "Dataset views",
+                    "noData": "No data to display"
                 },
                 "datasetViewsBar": {
                     "mostTitle": "Most Dataset Views",
                     "leastTitle": "Least Dataset Views",
                     "showLeast": "Show least views",
                     "showMost": "Show most views",
-                    "viewsLabel": "Views"
+                    "viewsLabel": "Views",
+                    "noData": "No data to display"
                 },
                 "otherViews": {
                     "title": "Other views",
