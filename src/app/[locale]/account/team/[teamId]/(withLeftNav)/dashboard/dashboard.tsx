@@ -9,6 +9,10 @@ import BoxContainer from "@/components/BoxContainer";
 import DownloadFile from "@/components/DownloadFile";
 import Paper from "@/components/Paper";
 import Typography from "@/components/Typography";
+import DatasetViewsBarWidget from "@/modules/DatasetViewsBarWidget/DatasetViewsBarWidget";
+import DatasetViewsWidget from "@/modules/DatasetViewsWidget/DatasetViewsWidget";
+import EnquiriesWidget from "@/modules/EnquiriesWidget/EnquiriesWidget";
+import OtherViewsWidget from "@/modules/OtherViewsWidget/OtherViewsWidget";
 import apis from "@/config/apis";
 import { CalendarMonthOutlinedIcon } from "@/consts/icons";
 import { formatDate } from "@/utils/date";
@@ -40,8 +44,8 @@ const getPeriodDates = (period: string) => {
     const months = PERIODS.find(p => p.value === period)?.months ?? 12;
     start.setMonth(start.getMonth() - months);
     return {
-        startDate: formatDate(start, "YYYY-MM-DD"),
-        endDate: formatDate(end, "YYYY-MM-DD"),
+        startDate: formatDate(start, "YYYY-MM-DD") ?? "",
+        endDate: formatDate(end, "YYYY-MM-DD") ?? "",
     };
 };
 
@@ -53,8 +57,7 @@ const Dashboard = ({ teamId, initialCounts }: DashboardProps) => {
     const downloadUrl = `${apis.apiV3Url}/teams/${teamId}/dashboard/download/csv?startDate=${startDate}&endDate=${endDate}`;
 
     return (
-        <BoxContainer
-            sx={{ gap: 2, gridTemplateColumns: "minmax(0, 1fr)" }}>
+        <BoxContainer sx={{ gap: 2, gridTemplateColumns: "minmax(0, 1fr)" }}>
             <Paper>
                 <Box
                     sx={{
@@ -107,6 +110,37 @@ const Dashboard = ({ teamId, initialCounts }: DashboardProps) => {
                     initialCounts={initialCounts}
                 />
             </Paper>
+            <Box
+                sx={{
+                    display: "grid",
+                    gridTemplateColumns: {
+                        mobile: "1fr",
+                        laptop: "repeat(3, 1fr)",
+                    },
+                    gap: 2,
+                    p: 0,
+                }}>
+                <DatasetViewsWidget
+                    teamId={teamId}
+                    startDate={startDate}
+                    endDate={endDate}
+                />
+                <DatasetViewsBarWidget
+                    teamId={teamId}
+                    startDate={startDate}
+                    endDate={endDate}
+                />
+                <OtherViewsWidget
+                    teamId={teamId}
+                    startDate={startDate}
+                    endDate={endDate}
+                />
+                <EnquiriesWidget
+                    teamId={teamId}
+                    startDate={startDate}
+                    endDate={endDate}
+                />
+            </Box>
         </BoxContainer>
     );
 };

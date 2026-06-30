@@ -304,7 +304,7 @@ const FilterPanel = ({
                 },
                 {
                     value: ARDC_SOURCE_VALUE,
-                    label: "External data portals",
+                    label: "Partner portals",
                 },
             ];
             formattedFilters.unshift({
@@ -479,7 +479,10 @@ const FilterPanel = ({
                 [filterName]: { [value]: true },
             }));
             updateStaticFilter(filterName, value);
-            if (filterName === STATIC_FILTER_SOURCE && value === EUROPE_PMC_SOURCE_FIELD) {
+            if (
+                filterName === STATIC_FILTER_SOURCE &&
+                value === EUROPE_PMC_SOURCE_FIELD
+            ) {
                 showEuropePmcModal();
             }
         },

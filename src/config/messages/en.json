@@ -213,7 +213,7 @@
         "releases": {
             "noResults": "There are no releases for {year}",
             "heading": "Welcome to our Gateway release summary page!",
-            "description1": "Here, you can learn more about the Gateway's newest features, improvements, and updates, through periodic summaries that are designed to be more digestible than our full ticket by ticket release notes. If you are interested in the detail, our full release notes can be accessed <githubLink>here</githubLink>. Our Technology Team is committed to continuously enhancing the Gateway, delivering regular updates and improvements through agile, user-focused development. Explore each <githubLink>detailed release</githubLink> to discover how the Gateway is evolving, or await the higher level summaries that we aim to publish every eight weeks (covering the previous four releases).",
+            "description1": "Here, you can learn more about the Gateway's newest features, improvements, and updates, through periodic summaries that are designed to be more digestible than our full ticket by ticket release notes. If you are interested in the detail, our full release notes can be accessed <githubLink>here</githubLink>. Our Technology Team is committed to continuously enhancing the Gateway, delivering regular updates and improvements through agile, user-focused development. Explore each <githubLink>detailed release</githubLink> to discover how the Gateway is evolving, or await the higher level summaries that we aim to publish once per quarter.",
             "description2": "To learn more about what is planned on our development roadmap please see the 'What next?' section <researchersLink>here</researchersLink>. If you would like to share feedback or suggest improvements to add to the Gateway roadmap, please contact us through our <supportLink>Support Centre</supportLink>."
         },
         "about": {
@@ -255,6 +255,33 @@
                     "last_6_months": "Last 6 months",
                     "last_3_months": "Last 3 months",
                     "last_month": "Last month"
+                },
+                "datasetViews": {
+                    "title": "Dataset views"
+                },
+                "datasetViewsBar": {
+                    "mostTitle": "Most Dataset Views",
+                    "leastTitle": "Least Dataset Views",
+                    "showLeast": "Show least views",
+                    "showMost": "Show most views",
+                    "viewsLabel": "Views"
+                },
+                "otherViews": {
+                    "title": "Other views",
+                    "loading": "Loading other views",
+                    "labels": {
+                        "collections": "Collections",
+                        "dataCustodian": "Data Custodian page"
+                    }
+                },
+                "enquiries": {
+                    "title": "Enquiries and requests",
+                    "loading": "Loading enquiries and requests",
+                    "labels": {
+                        "generalEnquiries": "General enquiries",
+                        "feasibilityEnquiries": "Feasibility enquiries",
+                        "dataAccessRequests": "Data Access Requests"
+                    }
                 },
                 "resources": {
                     "title": "Your resources",
@@ -1159,7 +1186,8 @@
             "downloadStarted": "Your download has started",
             "dur": "Data Uses / Research Projects",
             "data_custodians": "Data Custodians",
-            "partnerDatasetsNewTab": "Partner Datasets will open up in a new tab on our Partner site",
+            "partnerDatasetsNewTab": "Partner Datasets will open up in a new tab on our Partner's site",
+            "viewAllPartnerResults": "View all results on ARDC",
             "loadingAriaLabel": "Loading search results",
             "saveSearch": "Save search",
             "filtersApplied": "{count, plural, =0 {No filters applied} =1 {# filter applied} other {# filters applied}}",
