@@ -1,3 +1,19 @@
+## [2.38.0](https://github.com/HDRUK/gateway-web/compare/v2.37.0...v2.38.0) (2026-06-30)
+
+### ✨ Features
+
+* **GAT-550:** add other views chart (#1546) ([2f2d34c](https://github.com/HDRUK/gateway-web/commit/2f2d34c3c14c394c54549c0318c8e01acb07447e)), closes [GAT-550](undefinedGAT-550)
+* **GAT-8503:** Add dataset views widget (#1540) ([e9846b4](https://github.com/HDRUK/gateway-web/commit/e9846b44df441188a4ff07a420e8c40c6f246aae)), closes [GAT-8503](undefinedGAT-8503)
+* **GAT-8505:** Add most / least dataset view chart (#1542) ([1e81321](https://github.com/HDRUK/gateway-web/commit/1e81321bc1486e6efa25a1225d0381dce2f4a9cf)), closes [GAT-8505](undefinedGAT-8505) [most](undefinedost)
+* **GAT-8509:** Add Enquiries widget (#1548) ([215814a](https://github.com/HDRUK/gateway-web/commit/215814a45d5f484d766aa3c7cb83cd448eaba50e)), closes [GAT-8509](undefinedGAT-8509)
+* **GAT-9042:** Tweaks to external portal search (#1545) ([3d91da8](https://github.com/HDRUK/gateway-web/commit/3d91da802f0fe2c885025cee4b7e9cab256bcc00)), closes [GAT-9042](undefinedGAT-9042)
+* **GAT-9042:** Update search url (#1547) ([d66a8a7](https://github.com/HDRUK/gateway-web/commit/d66a8a78bfd17a6591fb3b21f52bf318cb26d44f)), closes [GAT-9042](undefinedGAT-9042)
+* **GAT-9043:** hide pagination on external search (#1544) ([1bd3c1d](https://github.com/HDRUK/gateway-web/commit/1bd3c1dcc7caf24d57104b43ba018b11817ffbe5)), closes [GAT-9043](undefinedGAT-9043)
+
+### 🐛 Bug Fixes
+
+* **GAT-8997:** removed duplicate args from the pipelines (#1543) ([893c702](https://github.com/HDRUK/gateway-web/commit/893c702e70f9b90c5486e31d38615d90f2746b82)), closes [GAT-8997](undefinedGAT-8997)
+
 ## [2.37.0](https://github.com/HDRUK/gateway-web/compare/v2.36.0...v2.37.0) (2026-06-25)
 
 ### ✨ Features
