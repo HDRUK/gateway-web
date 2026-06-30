@@ -152,9 +152,10 @@ export default function useWidgetForm(
         ) as unknown as Resolver<Widget>,
     });
 
+    const initialDefaultsKey = JSON.stringify(initialDefaults);
     useEffect(() => {
-        form.reset(initialDefaults, { keepValues: true });
-    }, [initialDefaults]);
+        form.reset(JSON.parse(initialDefaultsKey), { keepValues: true });
+    }, [initialDefaultsKey, form]);
 
     // "Keep proportions" links the size inputs: editing width updates height to
     // keep the ratio, and vice versa (e.g. 400x200, set width 500 -> height 250).
