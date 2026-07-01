@@ -72,6 +72,7 @@ const DatasetMindMap = ({
                 let action: (() => void) | null = null;
                 let hidden = false;
                 let cohort = false;
+                let { label } = node.data;
 
                 const { title } = data.metadata.metadata.summary;
                 const safeTitle = encodeURIComponent(title);
@@ -101,6 +102,9 @@ const DatasetMindMap = ({
                     href = `${node.data.href}&datasetTitles=${safeTitle}`;
                 } else if (node.id === "node-dataCustodian") {
                     href = `/data-custodian/${teamId}`;
+                    label =
+                        data.metadata.metadata.summary.dataCustodian?.name ||
+                        node.data.label;
                 } else if (node.id === "node-curatedPublications") {
                     const entityCount = linkageCounts.publications_using;
                     if (!entityCount) {
@@ -156,6 +160,7 @@ const DatasetMindMap = ({
                     ...node,
                     data: {
                         ...node.data,
+                        label,
                         href,
                         action,
                         hidden,
