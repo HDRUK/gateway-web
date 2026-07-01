@@ -247,6 +247,11 @@ const FilterPanel = ({
                 ...prev,
                 [STATIC_FILTER_DATA_SOURCE]: { [dataSource]: true },
             }));
+        } else if (filterCategory !== FILTER_CATEGORY_DATASETS) {
+            setStaticFilterValues(prev => ({
+                ...prev,
+                [STATIC_FILTER_DATA_SOURCE]: { [HDRUK_SOURCE_VALUE]: true },
+            }));
         }
     }, [filterCategory, dataSource]);
 
@@ -324,6 +329,7 @@ const FilterPanel = ({
         // If 'External data portals' is selected, hide all dataset filters (ARDC has no aggregations)
         if (
             isExternalSourcesEnabled &&
+            filterCategory === FILTER_CATEGORY_DATASETS &&
             staticFilterValues[STATIC_FILTER_DATA_SOURCE]?.[ARDC_SOURCE_VALUE]
         ) {
             formattedFilters = formattedFilters.filter(

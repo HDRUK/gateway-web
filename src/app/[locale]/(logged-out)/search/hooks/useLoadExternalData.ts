@@ -12,7 +12,8 @@ import { DataSource } from "@/consts/search";
 
 const useLoadExternalData = (
     v2Data: SearchAggregationData | undefined,
-    enabled: boolean
+    enabled: boolean,
+    isValidating = false
 ): {
     externalResults: Partial<
         Record<DataSource, SearchAggregationProviderResult>
@@ -34,7 +35,12 @@ const useLoadExternalData = (
         cache?.query === query && cache?.type === type ? cache.results : null;
 
     const alreadyPolled = !!token && polledToken === token;
-    const shouldPoll = enabled && !!token && !alreadyPolled && !cachedResults;
+    const shouldPoll =
+        enabled &&
+        !isValidating &&
+        !!token &&
+        !alreadyPolled &&
+        !cachedResults;
 
     // Dependent SWR — key is null until token exists; refreshInterval drives polling
     useGet<SearchPollData>(

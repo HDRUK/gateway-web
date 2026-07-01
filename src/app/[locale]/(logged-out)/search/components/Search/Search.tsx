@@ -262,6 +262,7 @@ const Search = ({ filters, schema }: SearchProps) => {
     const dataSource = queryParams.dataSource || HDRUK_SOURCE_VALUE;
     const isExternalSourceSelected =
         isExternalSourcesEnabled && dataSource !== HDRUK_SOURCE_VALUE;
+    const externalSearchEnabled = isDatasets && isExternalSourcesEnabled;
 
     const ardcSearchUrl = `https://researchdata.edu.au/health/search?filter-type=all-fields${
         queryParams.query ? `&q=${encodeURIComponent(queryParams.query)}` : ""
@@ -285,7 +286,7 @@ const Search = ({ filters, schema }: SearchProps) => {
             keepPreviousData: true,
             withPagination: true,
             shouldFetch:
-                (!isDatasets || !isExternalSourcesEnabled) &&
+                !externalSearchEnabled &&
                 (forceSearch ||
                     queryParams.type !== SearchCategory.PUBLICATIONS ||
                     queryParams.source === GATEWAY_SOURCE_FIELD ||
@@ -308,12 +309,13 @@ const Search = ({ filters, schema }: SearchProps) => {
             },
             {
                 keepPreviousData: true,
-                shouldFetch: isDatasets && isExternalSourcesEnabled,
+                shouldFetch: externalSearchEnabled,
+                revalidateOnMount: true,
             }
         );
 
     const { externalResults, isPolling: isExternalPolling } =
-        useLoadExternalData(v2Data, isDatasets && isExternalSourcesEnabled);
+        useLoadExternalData(v2Data, externalSearchEnabled, isV2Searching);
 
     const ardcResult = externalResults[ARDC_SOURCE_VALUE] ?? null;
 
