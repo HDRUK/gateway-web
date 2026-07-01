@@ -11,8 +11,18 @@ const navigateToDatasetCreation = () => {
     cy.contains("button", "Manually input metadata").click();
 };
 
+const selectOption = (opener: () => void, optionIndex = 0) => {
+    opener();
+    cy.get('[role="listbox"] [role="option"]').should(
+        "have.length.greaterThan",
+        0
+    );
+    cy.get('[role="listbox"] [role="option"]').eq(optionIndex).click();
+};
+
 const completeDatasetForm = () => {
     cy.get('input[type="checkbox"][name="Health and disease"]').check();
+    cy.waitForApiIdle();
     clickNextButton();
     cy.get("input#Title").type(NAME);
     cy.get('textarea[name="Dataset abstract"]').type(
@@ -23,27 +33,27 @@ const completeDatasetForm = () => {
     clickNextButton();
     cy.get('input[name="Geographic coverage"]').type("GB");
     clickNextButton();
-    cy.get('[role="combobox"][aria-label="Publishing frequency"]').click();
-    cy.get('[role="listbox"] [role="option"]').first().click();
+    selectOption(() =>
+        cy.get('[role="combobox"][aria-label="Publishing frequency"]').click()
+    );
     cy.get('[data-testid="Start\\ date-date"]').within(() => {
         cy.get('span[role="spinbutton"][aria-label="Day"]')
             .click()
             .type("12032026");
     });
-    cy.get('[role="combobox"][aria-label="Time lag"]').click();
-    cy.get('[role="listbox"] [role="option"]').first().click();
+    selectOption(() =>
+        cy.get('[role="combobox"][aria-label="Time lag"]').click()
+    );
     clickNextButton();
-    cy.get('[name="Data use limitation"] input').click();
-    cy.get('[role="listbox"] [role="option"]').eq(1).click();
+    selectOption(() => cy.get('[name="Data use limitation"] input').click(), 1);
     cy.get('[name="Data use limitation"] [aria-label="Clear"]').click();
-    cy.get('[name="Data use limitation"] input').click();
-    cy.get('[role="listbox"] [role="option"]').first().click();
+    selectOption(() => cy.get('[name="Data use limitation"] input').click());
     cy.get('textarea[name="Access rights"]').type(faker.random.alphaNumeric(5));
-    cy.get('[name="Controlled vocabulary"]').click();
-    cy.get('[role="listbox"] [role="option"]').first().click();
+    selectOption(() => cy.get('[name="Controlled vocabulary"]').click());
 
-    cy.get('[name="Alignment with standardised data models"]').click();
-    cy.get('[role="listbox"] [role="option"]').first().click();
+    selectOption(() =>
+        cy.get('[name="Alignment with standardised data models"]').click()
+    );
     cy.get('[name="Format"]')
         .click()
         .type(faker.random.alphaNumeric(5))
@@ -59,10 +69,19 @@ beforeEach(() => {
 
 describe("Dataset - creation", () => {
     it("should create a new active dataset", () => {
+        cy.intercept("POST", "**/teams/*/datasets*").as("createDataset");
+
         navigateToDatasetCreation();
         completeDatasetForm();
         cy.contains("button", "Make active").click();
-        cy.contains("Dataset successfully created");
+
+        cy.contains("There are some missing fields").should("not.exist");
+
+        cy.wait("@createDataset")
+            .its("response.statusCode")
+            .should("be.oneOf", [200, 201]);
+
+        cy.contains("Dataset successfully created", { timeout: 15000 });
     });
 });
 

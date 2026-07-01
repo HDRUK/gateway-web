@@ -1,7 +1,7 @@
 "use client";
 
-import { useEffect, useMemo, useState } from "react";
-import { useForm, UseFormReturn } from "react-hook-form";
+import { useEffect, useMemo, useRef, useState } from "react";
+import { Resolver, useForm, UseFormReturn } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
@@ -16,6 +16,29 @@ import { CUSTODIAN, DATA_USES, DATASETS } from "@/consts/translation";
 import { BRANDING_DEFAULTS, DATA_CUSTODIAN_LIMIT, TabValues } from "../const";
 
 const TRANSLATION_PATH = `pages.account.team.widgets.edit`;
+
+const ENTITY_TYPES = [
+    {
+        toggle: "has_datasets",
+        field: "included_datasets",
+        message: "includedDatasetsRequired",
+    },
+    {
+        toggle: "has_datauses",
+        field: "included_data_uses",
+        message: "includedDataUsesRequired",
+    },
+    {
+        toggle: "has_scripts",
+        field: "included_scripts",
+        message: "includedScriptsRequired",
+    },
+    {
+        toggle: "has_collections",
+        field: "included_collections",
+        message: "includedCollectionsRequired",
+    },
+] as const;
 
 export default function useWidgetForm(
     teamId: string,
@@ -65,55 +88,105 @@ export default function useWidgetForm(
             has_datasets:
                 templateType === CUSTODIAN || templateType === DATASETS
                     ? true
-                    : widget?.included_datasets?.length,
+                    : !!widget?.included_datasets?.length,
             has_data_custodians: true,
             has_datauses:
                 templateType === CUSTODIAN || templateType === DATA_USES
                     ? true
-                    : widget?.included_data_uses?.length,
+                    : !!widget?.included_data_uses?.length,
             has_scripts:
                 templateType === CUSTODIAN
                     ? true
-                    : widget?.included_scripts?.length,
+                    : !!widget?.included_scripts?.length,
             has_collections:
                 templateType === CUSTODIAN
                     ? true
-                    : widget?.included_collections?.length,
+                    : !!widget?.included_collections?.length,
         }),
         [defaultCustodians, templateType, widget]
     );
 
-    const form = useForm({
+    const form = useForm<Widget>({
         defaultValues: initialDefaults,
         resolver: yupResolver(
-            yup.object({
-                data_custodian_entities_ids: yup
-                    .array()
-                    .of(yup.string())
-                    .label(t("dataCustodians"))
-                    .min(
-                        1,
-                        ({ label, path }) =>
-                            `${label || path} must have at least 1 item`
-                    )
-                    .max(DATA_CUSTODIAN_LIMIT),
-                permitted_domains: yup
-                    .array()
-                    .of(yup.string().url(t("validUrl")))
-                    .label(t("permittedDomains"))
-                    .min(
-                        1,
-                        ({ label, path }) =>
-                            `${label || path} must have at least 1 item`
+            yup
+                .object({
+                    data_custodian_entities_ids: yup
+                        .array()
+                        .of(yup.string())
+                        .label(t("dataCustodians"))
+                        .min(
+                            1,
+                            ({ label, path }) =>
+                                `${label || path} must have at least 1 item`
+                        )
+                        .max(DATA_CUSTODIAN_LIMIT),
+                    permitted_domains: yup
+                        .array()
+                        .of(yup.string().url(t("validUrl")))
+                        .label(t("permittedDomains"))
+                        .min(
+                            1,
+                            ({ label, path }) =>
+                                `${label || path} must have at least 1 item`
+                        ),
+                    widget_name: yup.string().required().label(t("widgetName")),
+                    ...Object.fromEntries(
+                        ENTITY_TYPES.map(({ toggle, field, message }) => [
+                            field,
+                            yup.array().when(toggle, {
+                                is: true,
+                                then: schema => schema.min(1, t(message)),
+                            }),
+                        ])
                     ),
-                widget_name: yup.string().required().label(t("widgetName")),
-            })
-        ),
+                })
+                .test(
+                    "at-least-one-entity-type",
+                    t("entityTypeRequired"),
+                    value =>
+                        ENTITY_TYPES.some(
+                            ({ toggle }) => (value as Partial<Widget>)[toggle]
+                        )
+                )
+        ) as unknown as Resolver<Widget>,
     });
 
+    const initialDefaultsKey = JSON.stringify(initialDefaults);
     useEffect(() => {
-        form.reset(initialDefaults, { keepValues: true });
-    }, [initialDefaults]);
+        form.reset(JSON.parse(initialDefaultsKey), { keepValues: true });
+    }, [initialDefaultsKey, form]);
+
+    // "Keep proportions" links the size inputs: editing width updates height to
+    // keep the ratio, and vice versa (e.g. 400x200, set width 500 -> height 250).
+    const keepProportions = form.watch("keep_proportions");
+    const width = Number(form.watch("size_width"));
+    const height = Number(form.watch("size_height"));
+    const prevSize = useRef({ width, height });
+
+    useEffect(() => {
+        const prev = prevSize.current;
+        prevSize.current = { width, height };
+
+        // Only adjust when locked, values are valid, and exactly one dimension
+        // changed. Changing both at once (a size preset) just re-bases the ratio.
+        if (!keepProportions || !width || !height || !prev.width || !prev.height)
+            return;
+        const widthChanged = width !== prev.width;
+        if (widthChanged === (height !== prev.height)) return;
+
+        if (widthChanged) {
+            const newHeight = Math.round((prev.height * width) / prev.width);
+            prevSize.current = { width, height: newHeight };
+            if (newHeight !== height)
+                form.setValue("size_height", newHeight, { shouldDirty: true });
+        } else {
+            const newWidth = Math.round((prev.width * height) / prev.height);
+            prevSize.current = { width: newWidth, height };
+            if (newWidth !== width)
+                form.setValue("size_width", newWidth, { shouldDirty: true });
+        }
+    }, [keepProportions, width, height, form]);
 
     const createWidget = usePost<Widget>(
         `${apis.teamsV1Url}/${teamId}/widgets`,

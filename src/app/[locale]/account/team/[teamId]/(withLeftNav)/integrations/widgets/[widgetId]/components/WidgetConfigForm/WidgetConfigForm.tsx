@@ -1,17 +1,22 @@
 "use client";
 
-import { FormProvider, UseFormReturn } from "react-hook-form";
+import { FormProvider, UseFormReturn, useWatch } from "react-hook-form";
 import { Typography } from "@mui/material";
 import { useTranslations } from "next-intl";
 import { Unit, Widget } from "@/interfaces/Widget";
 import Box from "@/components/Box";
 import Button from "@/components/Button";
 import Form from "@/components/Form";
+import FormError from "@/components/FormError";
 import InputWrapper from "@/components/InputWrapper";
 import Paper from "@/components/Paper";
 import { inputComponents } from "@/config/forms";
 import { colors } from "@/config/theme";
-import { BRANDING_DEFAULTS, BRANDING_NHS, DATA_CUSTODIAN_LIMIT } from "../../const";
+import {
+    BRANDING_DEFAULTS,
+    BRANDING_NHS,
+    DATA_CUSTODIAN_LIMIT,
+} from "../../const";
 import { getChipLabel, isOptionEqualToValue } from "../../utils";
 
 const TRANSLATION_PATH = `pages.account.team.widgets.edit`;
@@ -41,7 +46,20 @@ const WidgetConfigForm = ({
     onSubmit,
 }: WidgetConfigFormProps) => {
     const t = useTranslations(TRANSLATION_PATH);
-    const { control, handleSubmit, watch, setValue } = form;
+    const { control, handleSubmit, watch, setValue, formState } = form;
+
+    const [hasDatasets, hasDatauses, hasScripts, hasCollections] = useWatch({
+        control,
+        name: [
+            "has_datasets",
+            "has_datauses",
+            "has_scripts",
+            "has_collections",
+        ],
+    });
+
+    const hasEntityType =
+        hasDatasets || hasDatauses || hasScripts || hasCollections;
 
     const unitOptions: { value: Unit; label: string }[] = Object.values(
         Unit
@@ -295,6 +313,11 @@ const WidgetConfigForm = ({
                     options: unitOptions,
                     inline: true,
                 },
+                {
+                    name: "keep_proportions",
+                    label: t("keepProportions"),
+                    component: inputComponents.Checkbox,
+                },
             ],
         },
         {
@@ -439,6 +462,16 @@ const WidgetConfigForm = ({
                                     </Box>
                                 ) : null
                             )}
+                            {section.section === "Content" &&
+                                formState.submitCount > 0 &&
+                                !hasEntityType && (
+                                    <FormError
+                                        error={{
+                                            type: "required",
+                                            message: t("entityTypeRequired"),
+                                        }}
+                                    />
+                                )}
                         </>
                     ))}
                     <Box
