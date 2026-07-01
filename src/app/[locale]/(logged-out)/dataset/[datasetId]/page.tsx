@@ -3,9 +3,11 @@ import { notFound } from "next/navigation";
 import Box from "@/components/Box";
 import BoxContainer from "@/components/BoxContainer";
 import LayoutDataItemPage from "@/components/LayoutDataItemPage";
+import Link from "@/components/Link";
 import Typography from "@/components/Typography";
 import ActiveListSidebar from "@/modules/ActiveListSidebar";
 import { DataStatus } from "@/consts/application";
+import { RouteName } from "@/consts/routeName";
 import { getDataset } from "@/utils/api";
 import { getLatestVersion } from "@/utils/dataset";
 import metaData from "@/utils/metadata";
@@ -90,6 +92,16 @@ export default async function DatasetItemPage({
         name: datasetVersion.metadata?.metadata?.summary?.title,
     };
 
+    const dataCustodianName = get(
+        datasetVersion,
+        "metadata.metadata.summary.dataCustodian.name"
+    );
+
+    const dataCustodianId = get(
+        datasetVersion,
+        "metadata.metadata.summary.dataCustodian.identifier"
+    );
+
     return (
         <LayoutDataItemPage
             navigation={<ActiveListSidebar items={activeLinkList} />}
@@ -104,14 +116,34 @@ export default async function DatasetItemPage({
                         }}>
                         {datasetStats && (
                             <Box sx={{ p: 0, gap: 2 }}>
-                                <Typography
-                                    variant="h2"
-                                    sx={{ pt: 0.5, pb: 0.5 }}>
-                                    {
-                                        datasetVersion.metadata?.metadata
-                                            ?.summary?.title
-                                    }
-                                </Typography>
+                                <Box
+                                    sx={{
+                                        display: "flex",
+                                        flexWrap: "wrap",
+                                        alignItems: "baseline",
+                                        gap: 1,
+                                        pt: 0.5,
+                                        pb: 0.5,
+                                    }}>
+                                    <Typography variant="h2">
+                                        {
+                                            datasetVersion.metadata?.metadata
+                                                ?.summary?.title
+                                        }
+                                    </Typography>
+                                    {dataCustodianName && dataCustodianId && (
+                                        <>
+                                            <Typography variant="h2">
+                                                -
+                                            </Typography>
+                                            <Link
+                                                variant="h2"
+                                                href={`/${RouteName.DATA_CUSTODIANS_ITEM}/${dataCustodianId}`}>
+                                                {dataCustodianName}
+                                            </Link>
+                                        </>
+                                    )}
+                                </Box>
                                 <Box
                                     sx={{
                                         overflow: "hidden",

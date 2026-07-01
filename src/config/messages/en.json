@@ -1562,6 +1562,7 @@
                     "isMemberOf": "Similar Datasets ({ count })"
                 },
                 "Sources": {
+                    "dataCustodian": "Data Custodian",
                     "datasetTypes": "Dataset Types",
                     "datasetSubtypes": "Dataset Sub-types",
                     "collectionSources": "Collection Sources",
