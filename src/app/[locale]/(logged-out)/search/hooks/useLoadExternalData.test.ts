@@ -193,6 +193,52 @@ describe("useLoadExternalData", () => {
             expect(result.current.isPolling).toBe(true);
             expect(result.current.externalResults).toEqual({});
         });
+
+        it("serves a revisited query from cache instead of re-polling its expired token", () => {
+            const emptyResolved: SearchAggregationData = {
+                query: "",
+                type: "datasets",
+                token: "tok-empty",
+                pending: [],
+                results: { [ARDC_SOURCE_VALUE]: ardcResult },
+            };
+            let v2Data: SearchAggregationData = {
+                ...emptyResolved,
+                pending: [ARDC_SOURCE_VALUE],
+                results: {},
+            };
+            const { result, rerender } = renderHook(() =>
+                useLoadExternalData(v2Data, true)
+            );
+
+            // Resolve the no-query search
+            act(() => capturedOnSuccess?.(emptyResolved));
+
+            // Run a different query and resolve it (overwrites nothing now)
+            v2Data = { ...baseV2Data, token: "tok-asthma" };
+            rerender();
+            act(() =>
+                capturedOnSuccess?.({
+                    ...baseV2Data,
+                    token: "tok-asthma",
+                    pending: [],
+                    results: { [ARDC_SOURCE_VALUE]: ardcResult },
+                })
+            );
+
+            // Clear the query: SWR replays the cached no-query response (expired token)
+            v2Data = {
+                ...emptyResolved,
+                pending: [ARDC_SOURCE_VALUE],
+                results: {},
+            };
+            rerender();
+
+            expect(result.current.isPolling).toBe(false);
+            expect(result.current.externalResults[ARDC_SOURCE_VALUE]).toEqual(
+                ardcResult
+            );
+        });
     });
 
     describe("isValidating guard", () => {

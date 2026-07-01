@@ -23,16 +23,14 @@ const useLoadExternalData = (
     const token = v2Data?.token ?? null;
     const query = v2Data?.query ?? "";
     const type = v2Data?.type ?? "";
+    const cacheKey = `${query}|${type}`;
 
-    const [cache, setCache] = useState<{
-        query: string;
-        type: string;
-        results: Partial<Record<DataSource, SearchAggregationProviderResult>>;
-    } | null>(null);
+    const [cache, setCache] = useState<
+        Record<string, Partial<Record<DataSource, SearchAggregationProviderResult>>>
+    >({});
     const [polledToken, setPolledToken] = useState<string | null>(null);
 
-    const cachedResults =
-        cache?.query === query && cache?.type === type ? cache.results : null;
+    const cachedResults = cache[cacheKey] ?? null;
 
     const alreadyPolled = !!token && polledToken === token;
     const shouldPoll =
@@ -57,7 +55,10 @@ const useLoadExternalData = (
                 const allResolved =
                     Array.isArray(data.pending) && data.pending.length === 0;
                 if (allResolved) {
-                    setCache({ query, type, results: data.results ?? {} });
+                    setCache(prev => ({
+                        ...prev,
+                        [cacheKey]: data.results ?? {},
+                    }));
                     setPolledToken(token);
                 }
             },
