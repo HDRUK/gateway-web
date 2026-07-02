@@ -1,5 +1,6 @@
 "use client";
 
+import { useCallback } from "react";
 import { FormProvider, UseFormReturn, useWatch } from "react-hook-form";
 import { Typography } from "@mui/material";
 import { useTranslations } from "next-intl";
@@ -16,13 +17,20 @@ import {
     BRANDING_DEFAULTS,
     BRANDING_NHS,
     DATA_CUSTODIAN_LIMIT,
+    SIZE_PRESETS,
 } from "../../const";
 import { getChipLabel, isOptionEqualToValue } from "../../utils";
 
 const TRANSLATION_PATH = `pages.account.team.widgets.edit`;
 
+const BRANDING_PRESETS = [
+    { labelKey: "brandingUseDefaults", palette: BRANDING_DEFAULTS },
+    { labelKey: "brandingUseNHS", palette: BRANDING_NHS },
+] as const;
+
 interface WidgetConfigFormProps {
     form: UseFormReturn<Widget>;
+    applyPreset: (width: number, height: number) => void;
     teamId: string;
     teamNameOptions: { value: string; label: string }[];
     formatEntityOptions: (
@@ -39,6 +47,7 @@ interface WidgetConfigFormProps {
 
 const WidgetConfigForm = ({
     form,
+    applyPreset,
     teamId,
     teamNameOptions,
     formatEntityOptions,
@@ -60,6 +69,15 @@ const WidgetConfigForm = ({
 
     const hasEntityType =
         hasDatasets || hasDatauses || hasScripts || hasCollections;
+
+    const applyBranding = useCallback(
+        (palette: (typeof BRANDING_PRESETS)[number]["palette"]) => {
+            Object.entries(palette).forEach(([field, value]) =>
+                setValue(field as keyof Widget, value, { shouldDirty: true })
+            );
+        },
+        [setValue]
+    );
 
     const unitOptions: { value: Unit; label: string }[] = Object.values(
         Unit
@@ -240,54 +258,15 @@ const WidgetConfigForm = ({
                     <Typography fontSize={16}>{t("size")}</Typography>
                     <Typography>{t("sizeInfo")}</Typography>
                     <Box sx={{ display: "flex", p: 0, gap: 3, mb: 2 }}>
-                        <Button
-                            onClick={() => {
-                                setValue("size_width", 600, {
-                                    shouldDirty: true,
-                                });
-                                setValue("size_height", 740, {
-                                    shouldDirty: true,
-                                });
-                                setValue("unit", Unit.PX, {
-                                    shouldDirty: true,
-                                });
-                            }}
-                            variant="link"
-                            sx={{ color: colors.green700 }}>
-                            {t("sizeLarge")}
-                        </Button>
-                        <Button
-                            onClick={() => {
-                                setValue("size_width", 400, {
-                                    shouldDirty: true,
-                                });
-                                setValue("size_height", 592, {
-                                    shouldDirty: true,
-                                });
-                                setValue("unit", Unit.PX, {
-                                    shouldDirty: true,
-                                });
-                            }}
-                            variant="link"
-                            sx={{ color: colors.green700 }}>
-                            {t("sizeMedium")}
-                        </Button>
-                        <Button
-                            onClick={() => {
-                                setValue("size_width", 300, {
-                                    shouldDirty: true,
-                                });
-                                setValue("size_height", 444, {
-                                    shouldDirty: true,
-                                });
-                                setValue("unit", Unit.PX, {
-                                    shouldDirty: true,
-                                });
-                            }}
-                            variant="link"
-                            sx={{ color: colors.green700 }}>
-                            {t("sizeSmall")}
-                        </Button>
+                        {SIZE_PRESETS.map(({ labelKey, width, height }) => (
+                            <Button
+                                key={labelKey}
+                                onClick={() => applyPreset(width, height)}
+                                variant="link"
+                                sx={{ color: colors.green700 }}>
+                                {t(labelKey)}
+                            </Button>
+                        ))}
                     </Box>
                 </>
             ),
@@ -327,50 +306,15 @@ const WidgetConfigForm = ({
                 <>
                     <Typography>{t("brandingInfo")}</Typography>
                     <Box sx={{ display: "flex", p: 0, gap: 3, mb: 2 }}>
-                        <Button
-                            onClick={() => {
-                                setValue(
-                                    "branding_primary",
-                                    BRANDING_DEFAULTS.branding_primary,
-                                    { shouldDirty: true }
-                                );
-                                setValue(
-                                    "branding_secondary",
-                                    BRANDING_DEFAULTS.branding_secondary,
-                                    { shouldDirty: true }
-                                );
-                                setValue(
-                                    "branding_neutral",
-                                    BRANDING_DEFAULTS.branding_neutral,
-                                    { shouldDirty: true }
-                                );
-                            }}
-                            variant="link"
-                            sx={{ color: colors.green700 }}>
-                            {t("brandingUseDefaults")}
-                        </Button>
-                        <Button
-                            onClick={() => {
-                                setValue(
-                                    "branding_primary",
-                                    BRANDING_NHS.branding_primary,
-                                    { shouldDirty: true }
-                                );
-                                setValue(
-                                    "branding_secondary",
-                                    BRANDING_NHS.branding_secondary,
-                                    { shouldDirty: true }
-                                );
-                                setValue(
-                                    "branding_neutral",
-                                    BRANDING_NHS.branding_neutral,
-                                    { shouldDirty: true }
-                                );
-                            }}
-                            variant="link"
-                            sx={{ color: colors.green700 }}>
-                            {t("brandingUseNHS")}
-                        </Button>
+                        {BRANDING_PRESETS.map(({ labelKey, palette }) => (
+                            <Button
+                                key={labelKey}
+                                onClick={() => applyBranding(palette)}
+                                variant="link"
+                                sx={{ color: colors.green700 }}>
+                                {t(labelKey)}
+                            </Button>
+                        ))}
                     </Box>
                 </>
             ),
