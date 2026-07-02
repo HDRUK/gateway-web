@@ -257,14 +257,16 @@
                     "last_month": "Last month"
                 },
                 "datasetViews": {
-                    "title": "Dataset views"
+                    "title": "Dataset views",
+                    "noData": "No data to display"
                 },
                 "datasetViewsBar": {
                     "mostTitle": "Most Dataset Views",
                     "leastTitle": "Least Dataset Views",
                     "showLeast": "Show least views",
                     "showMost": "Show most views",
-                    "viewsLabel": "Views"
+                    "viewsLabel": "Views",
+                    "noData": "No data to display"
                 },
                 "otherViews": {
                     "title": "Other views",
@@ -282,6 +284,18 @@
                         "feasibilityEnquiries": "Feasibility enquiries",
                         "dataAccessRequests": "Data Access Requests"
                     }
+                },
+                "improveUsage": {
+                    "title": "Improve your usage",
+                    "previousLabel": "Previous tip",
+                    "nextLabel": "Next tip",
+                    "tips": {
+                        "demographicMetadata": "Adding demographic metadata (e.g. age, sex, ethnicity, geography) makes your datasets far more <b>discoverable and usable</b>, helping researchers quickly assess relevance and feasibility — which leads to <b>more appropriate, higher-quality data access requests and greater research impact,</b> while reducing unnecessary enquiries.",
+                        "metadataDescriptions": "Provide clear, high-quality metadata descriptions (including data coverage, linkage, and update frequency) — this helps researchers understand your dataset upfront, leading to <b>more targeted access requests, fewer back-and-forth queries, and a smoother approval process,</b> ultimately saving time for both custodians and applicants."
+                    }
+                },
+                "learnMore": {
+                    "title": "Learn more about the Gateway"
                 },
                 "resources": {
                     "title": "Your resources",
@@ -983,6 +997,11 @@
                         "permittedDomains": "Permitted domains",
                         "permittedDomainInfo": "If you have multiple environments, like a dev & preprod, it may be useful to add these in here too, like: https://web.preprod.hdruk.cloud (without the trailing slash)",
                         "validUrl": "Each item must be a valid URL",
+                        "entityTypeRequired": "Select at least one entity type to include in your widget",
+                        "includedDatasetsRequired": "Select at least one item under Datasets & BioSamples",
+                        "includedDataUsesRequired": "Select at least one item under Data Uses / Research Projects",
+                        "includedScriptsRequired": "Select at least one item under Analysis Scripts & Software",
+                        "includedCollectionsRequired": "Select at least one item under Collections",
                         "widget": "Widget",
                         "widgetName": "Widget name",
                         "size": "What size do you want your widget?",
@@ -990,6 +1009,7 @@
                         "sizeLarge": "Large (600 x 740px)",
                         "sizeMedium": "Medium (400 x 592px)",
                         "sizeSmall": "Small (300 x 444px)",
+                        "keepProportions": "Keep proportions",
                         "brandingInfo": "You might want to use your own brand colours within our widgets. Note: This information will be saved against your team profile, so can be reused in future.",
                         "brandingUseDefaults": "Use Defaults",
                         "brandingUseNHS": "Use NHS Brand Colours",

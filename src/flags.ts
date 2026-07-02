@@ -37,3 +37,8 @@ export const isExternalSourcesEnabled = flag({
     key: "V2_SearchAggregation",
     adapter,
 });
+
+export const isCustodianDashboardEnabled = flag({
+    key: "V3_CustodianDashboard",
+    adapter,
+});

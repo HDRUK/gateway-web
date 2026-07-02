@@ -1,7 +1,7 @@
 "use client";
 
-import { useEffect, useMemo, useState } from "react";
-import { useForm, UseFormReturn } from "react-hook-form";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { Resolver, useForm, UseFormReturn } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
@@ -13,9 +13,37 @@ import usePost from "@/hooks/usePost";
 import apis from "@/config/apis";
 import { RouteName } from "@/consts/routeName";
 import { CUSTODIAN, DATA_USES, DATASETS } from "@/consts/translation";
-import { BRANDING_DEFAULTS, DATA_CUSTODIAN_LIMIT, TabValues } from "../const";
+import {
+    BRANDING_DEFAULTS,
+    DATA_CUSTODIAN_LIMIT,
+    SIZE_PRESETS,
+    TabValues,
+} from "../const";
 
 const TRANSLATION_PATH = `pages.account.team.widgets.edit`;
+
+const ENTITY_TYPES = [
+    {
+        toggle: "has_datasets",
+        field: "included_datasets",
+        message: "includedDatasetsRequired",
+    },
+    {
+        toggle: "has_datauses",
+        field: "included_data_uses",
+        message: "includedDataUsesRequired",
+    },
+    {
+        toggle: "has_scripts",
+        field: "included_scripts",
+        message: "includedScriptsRequired",
+    },
+    {
+        toggle: "has_collections",
+        field: "included_collections",
+        message: "includedCollectionsRequired",
+    },
+] as const;
 
 export default function useWidgetForm(
     teamId: string,
@@ -30,6 +58,7 @@ export default function useWidgetForm(
         dirtyFields: Partial<Record<keyof Widget, boolean>>
     ) => Promise<void>;
     setWidgetId: React.Dispatch<React.SetStateAction<number | undefined>>;
+    applyPreset: (width: number, height: number) => void;
 } {
     const t = useTranslations(TRANSLATION_PATH);
     const { push } = useRouter();
@@ -56,64 +85,155 @@ export default function useWidgetForm(
             include_search_bar:
                 templateType === DATASETS || templateType === DATA_USES,
             include_cohort_link: false,
-            size_width: 600,
-            size_height: 740,
+            size_width: SIZE_PRESETS[0].width,
+            size_height: SIZE_PRESETS[0].height,
             unit: Unit.PX,
             widget_name: "",
             ...BRANDING_DEFAULTS,
             ...widget,
+            branding_primary:
+                widget?.branding_primary || BRANDING_DEFAULTS.branding_primary,
+            branding_secondary:
+                widget?.branding_secondary ||
+                BRANDING_DEFAULTS.branding_secondary,
+            branding_neutral:
+                widget?.branding_neutral || BRANDING_DEFAULTS.branding_neutral,
             has_datasets:
                 templateType === CUSTODIAN || templateType === DATASETS
                     ? true
-                    : widget?.included_datasets?.length,
+                    : !!widget?.included_datasets?.length,
             has_data_custodians: true,
             has_datauses:
                 templateType === CUSTODIAN || templateType === DATA_USES
                     ? true
-                    : widget?.included_data_uses?.length,
+                    : !!widget?.included_data_uses?.length,
             has_scripts:
                 templateType === CUSTODIAN
                     ? true
-                    : widget?.included_scripts?.length,
+                    : !!widget?.included_scripts?.length,
             has_collections:
                 templateType === CUSTODIAN
                     ? true
-                    : widget?.included_collections?.length,
+                    : !!widget?.included_collections?.length,
         }),
         [defaultCustodians, templateType, widget]
     );
 
-    const form = useForm({
+    const form = useForm<Widget>({
         defaultValues: initialDefaults,
         resolver: yupResolver(
-            yup.object({
-                data_custodian_entities_ids: yup
-                    .array()
-                    .of(yup.string())
-                    .label(t("dataCustodians"))
-                    .min(
-                        1,
-                        ({ label, path }) =>
-                            `${label || path} must have at least 1 item`
-                    )
-                    .max(DATA_CUSTODIAN_LIMIT),
-                permitted_domains: yup
-                    .array()
-                    .of(yup.string().url(t("validUrl")))
-                    .label(t("permittedDomains"))
-                    .min(
-                        1,
-                        ({ label, path }) =>
-                            `${label || path} must have at least 1 item`
+            yup
+                .object({
+                    data_custodian_entities_ids: yup
+                        .array()
+                        .of(yup.string())
+                        .label(t("dataCustodians"))
+                        .min(
+                            1,
+                            ({ label, path }) =>
+                                `${label || path} must have at least 1 item`
+                        )
+                        .max(DATA_CUSTODIAN_LIMIT),
+                    permitted_domains: yup
+                        .array()
+                        .of(yup.string().url(t("validUrl")))
+                        .label(t("permittedDomains"))
+                        .min(
+                            1,
+                            ({ label, path }) =>
+                                `${label || path} must have at least 1 item`
+                        ),
+                    widget_name: yup.string().required().label(t("widgetName")),
+                    ...Object.fromEntries(
+                        ENTITY_TYPES.map(({ toggle, field, message }) => [
+                            field,
+                            yup.array().when(toggle, {
+                                is: true,
+                                then: schema => schema.min(1, t(message)),
+                            }),
+                        ])
                     ),
-                widget_name: yup.string().required().label(t("widgetName")),
-            })
-        ),
+                })
+                .test(
+                    "at-least-one-entity-type",
+                    t("entityTypeRequired"),
+                    value =>
+                        ENTITY_TYPES.some(
+                            ({ toggle }) => (value as Partial<Widget>)[toggle]
+                        )
+                )
+        ) as unknown as Resolver<Widget>,
     });
 
+    const initialDefaultsKey = JSON.stringify(initialDefaults);
     useEffect(() => {
-        form.reset(initialDefaults, { keepValues: true });
-    }, [initialDefaults]);
+        form.reset(JSON.parse(initialDefaultsKey), { keepValues: true });
+    }, [initialDefaultsKey, form]);
+
+    // "Keep proportions" links the size inputs: editing width updates height to
+    // keep the ratio, and vice versa (e.g. 400x200, set width 500 -> height 250).
+    const keepProportions = form.watch("keep_proportions");
+    const width = Number(form.watch("size_width"));
+    const height = Number(form.watch("size_height"));
+    const prevSize = useRef({ width, height });
+    const ratio = useRef(1);
+    const prevLocked = useRef(false);
+
+    useEffect(() => {
+        const prev = prevSize.current;
+        prevSize.current = { width, height };
+
+        const lockJustEnabled = keepProportions && !prevLocked.current;
+        prevLocked.current = keepProportions;
+
+        if (!keepProportions || !width || !height) return;
+
+        // Capture the locked ratio when the lock is switched on
+        if (lockJustEnabled) {
+            ratio.current = width / height;
+            return;
+        }
+
+        if (!prev.width || !prev.height) return;
+
+        const widthChanged = width !== prev.width;
+        const heightChanged = height !== prev.height;
+        // ...and re-base it when both dimensions change at once (a size preset).
+        if (widthChanged && heightChanged) {
+            ratio.current = width / height;
+            return;
+        }
+        if (!widthChanged && !heightChanged) return;
+
+        // Deriving from the locked ratio (not the previous values) stops rounding
+        // drift from intermediate keystrokes, e.g. typing "1000" passing through
+        // width 1 collapsing the ratio to 1:1.
+        if (widthChanged) {
+            const newHeight = Math.round(width / ratio.current);
+            prevSize.current = { width, height: newHeight };
+            if (newHeight !== height)
+                form.setValue("size_height", newHeight, { shouldDirty: true });
+        } else {
+            const newWidth = Math.round(height * ratio.current);
+            prevSize.current = { width: newWidth, height };
+            if (newWidth !== width)
+                form.setValue("size_width", newWidth, { shouldDirty: true });
+        }
+    }, [keepProportions, width, height, form]);
+
+    // Selecting a predefined size re-bases the ratio to it. Pre-seeding the ref
+    // means the effect above sees no single-axis change and leaves the preset as-is,
+    // even when the preset shares a dimension with the current size.
+    const applyPreset = useCallback(
+        (presetWidth: number, presetHeight: number) => {
+            prevSize.current = { width: presetWidth, height: presetHeight };
+            ratio.current = presetWidth / presetHeight;
+            form.setValue("size_width", presetWidth, { shouldDirty: true });
+            form.setValue("size_height", presetHeight, { shouldDirty: true });
+            form.setValue("unit", Unit.PX, { shouldDirty: true });
+        },
+        [form]
+    );
 
     const createWidget = usePost<Widget>(
         `${apis.teamsV1Url}/${teamId}/widgets`,
@@ -173,5 +293,5 @@ export default function useWidgetForm(
         }
     };
 
-    return { form, widgetId, onSubmit, setWidgetId };
+    return { form, widgetId, onSubmit, setWidgetId, applyPreset };
 }
