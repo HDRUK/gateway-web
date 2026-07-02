@@ -31,7 +31,7 @@ const WidgetCreator = ({ widget, teamId, teamNames }: WidgetCreatorProps) => {
 
     const templateType = searchParams.get("template");
 
-    const { form, widgetId, onSubmit } = useWidgetForm(
+    const { form, widgetId, onSubmit, applyPreset } = useWidgetForm(
         teamId,
         teamNames,
         widget,
@@ -92,6 +92,7 @@ const WidgetCreator = ({ widget, teamId, teamNames }: WidgetCreatorProps) => {
                     content: (
                         <WidgetConfigForm
                             form={form}
+                            applyPreset={applyPreset}
                             onSubmit={handleSubmitAndPreview}
                             formatEntityOptions={formatEntityOptions}
                             selectAllOptions={selectAllOptions}
