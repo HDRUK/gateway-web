@@ -1,5 +1,6 @@
 "use client";
 
+import { useCallback } from "react";
 import { FormProvider, UseFormReturn, useWatch } from "react-hook-form";
 import { Typography } from "@mui/material";
 import { useTranslations } from "next-intl";
@@ -68,6 +69,15 @@ const WidgetConfigForm = ({
 
     const hasEntityType =
         hasDatasets || hasDatauses || hasScripts || hasCollections;
+
+    const applyBranding = useCallback(
+        (palette: (typeof BRANDING_PRESETS)[number]["palette"]) => {
+            Object.entries(palette).forEach(([field, value]) =>
+                setValue(field as keyof Widget, value, { shouldDirty: true })
+            );
+        },
+        [setValue]
+    );
 
     const unitOptions: { value: Unit; label: string }[] = Object.values(
         Unit
@@ -299,16 +309,7 @@ const WidgetConfigForm = ({
                         {BRANDING_PRESETS.map(({ labelKey, palette }) => (
                             <Button
                                 key={labelKey}
-                                onClick={() =>
-                                    Object.entries(palette).forEach(
-                                        ([field, value]) =>
-                                            setValue(
-                                                field as keyof Widget,
-                                                value,
-                                                { shouldDirty: true }
-                                            )
-                                    )
-                                }
+                                onClick={() => applyBranding(palette)}
                                 variant="link"
                                 sx={{ color: colors.green700 }}>
                                 {t(labelKey)}
