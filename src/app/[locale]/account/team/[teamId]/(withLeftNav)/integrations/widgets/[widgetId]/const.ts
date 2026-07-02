@@ -7,6 +7,12 @@ export const DATA_CUSTODIAN_LIMIT = 25;
 
 export const WIDGET_ID_CREATE = "create";
 
+export const SIZE_PRESETS = [
+    { labelKey: "sizeLarge", width: 600, height: 740 },
+    { labelKey: "sizeMedium", width: 400, height: 592 },
+    { labelKey: "sizeSmall", width: 300, height: 444 },
+] as const;
+
 export const BRANDING_DEFAULTS = {
     branding_primary: "#475DA7",
     branding_secondary: "#2C8267",

@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { Resolver, useForm, UseFormReturn } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useTranslations } from "next-intl";
@@ -13,7 +13,12 @@ import usePost from "@/hooks/usePost";
 import apis from "@/config/apis";
 import { RouteName } from "@/consts/routeName";
 import { CUSTODIAN, DATA_USES, DATASETS } from "@/consts/translation";
-import { BRANDING_DEFAULTS, DATA_CUSTODIAN_LIMIT, TabValues } from "../const";
+import {
+    BRANDING_DEFAULTS,
+    DATA_CUSTODIAN_LIMIT,
+    SIZE_PRESETS,
+    TabValues,
+} from "../const";
 
 const TRANSLATION_PATH = `pages.account.team.widgets.edit`;
 
@@ -53,6 +58,7 @@ export default function useWidgetForm(
         dirtyFields: Partial<Record<keyof Widget, boolean>>
     ) => Promise<void>;
     setWidgetId: React.Dispatch<React.SetStateAction<number | undefined>>;
+    applyPreset: (width: number, height: number) => void;
 } {
     const t = useTranslations(TRANSLATION_PATH);
     const { push } = useRouter();
@@ -79,12 +85,19 @@ export default function useWidgetForm(
             include_search_bar:
                 templateType === DATASETS || templateType === DATA_USES,
             include_cohort_link: false,
-            size_width: 600,
-            size_height: 740,
+            size_width: SIZE_PRESETS[0].width,
+            size_height: SIZE_PRESETS[0].height,
             unit: Unit.PX,
             widget_name: "",
             ...BRANDING_DEFAULTS,
             ...widget,
+            branding_primary:
+                widget?.branding_primary || BRANDING_DEFAULTS.branding_primary,
+            branding_secondary:
+                widget?.branding_secondary ||
+                BRANDING_DEFAULTS.branding_secondary,
+            branding_neutral:
+                widget?.branding_neutral || BRANDING_DEFAULTS.branding_neutral,
             has_datasets:
                 templateType === CUSTODIAN || templateType === DATASETS
                     ? true
@@ -163,30 +176,64 @@ export default function useWidgetForm(
     const width = Number(form.watch("size_width"));
     const height = Number(form.watch("size_height"));
     const prevSize = useRef({ width, height });
+    const ratio = useRef(1);
+    const prevLocked = useRef(false);
 
     useEffect(() => {
         const prev = prevSize.current;
         prevSize.current = { width, height };
 
-        // Only adjust when locked, values are valid, and exactly one dimension
-        // changed. Changing both at once (a size preset) just re-bases the ratio.
-        if (!keepProportions || !width || !height || !prev.width || !prev.height)
-            return;
-        const widthChanged = width !== prev.width;
-        if (widthChanged === (height !== prev.height)) return;
+        const lockJustEnabled = keepProportions && !prevLocked.current;
+        prevLocked.current = keepProportions;
 
+        if (!keepProportions || !width || !height) return;
+
+        // Capture the locked ratio when the lock is switched on
+        if (lockJustEnabled) {
+            ratio.current = width / height;
+            return;
+        }
+
+        if (!prev.width || !prev.height) return;
+
+        const widthChanged = width !== prev.width;
+        const heightChanged = height !== prev.height;
+        // ...and re-base it when both dimensions change at once (a size preset).
+        if (widthChanged && heightChanged) {
+            ratio.current = width / height;
+            return;
+        }
+        if (!widthChanged && !heightChanged) return;
+
+        // Deriving from the locked ratio (not the previous values) stops rounding
+        // drift from intermediate keystrokes, e.g. typing "1000" passing through
+        // width 1 collapsing the ratio to 1:1.
         if (widthChanged) {
-            const newHeight = Math.round((prev.height * width) / prev.width);
+            const newHeight = Math.round(width / ratio.current);
             prevSize.current = { width, height: newHeight };
             if (newHeight !== height)
                 form.setValue("size_height", newHeight, { shouldDirty: true });
         } else {
-            const newWidth = Math.round((prev.width * height) / prev.height);
+            const newWidth = Math.round(height * ratio.current);
             prevSize.current = { width: newWidth, height };
             if (newWidth !== width)
                 form.setValue("size_width", newWidth, { shouldDirty: true });
         }
     }, [keepProportions, width, height, form]);
+
+    // Selecting a predefined size re-bases the ratio to it. Pre-seeding the ref
+    // means the effect above sees no single-axis change and leaves the preset as-is,
+    // even when the preset shares a dimension with the current size.
+    const applyPreset = useCallback(
+        (presetWidth: number, presetHeight: number) => {
+            prevSize.current = { width: presetWidth, height: presetHeight };
+            ratio.current = presetWidth / presetHeight;
+            form.setValue("size_width", presetWidth, { shouldDirty: true });
+            form.setValue("size_height", presetHeight, { shouldDirty: true });
+            form.setValue("unit", Unit.PX, { shouldDirty: true });
+        },
+        [form]
+    );
 
     const createWidget = usePost<Widget>(
         `${apis.teamsV1Url}/${teamId}/widgets`,
@@ -246,5 +293,5 @@ export default function useWidgetForm(
         }
     };
 
-    return { form, widgetId, onSubmit, setWidgetId };
+    return { form, widgetId, onSubmit, setWidgetId, applyPreset };
 }

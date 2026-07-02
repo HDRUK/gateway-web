@@ -1,5 +1,7 @@
 import { act, waitFor } from "@testing-library/react";
+import { Widget } from "@/interfaces/Widget";
 import { renderHook } from "@/utils/testUtils";
+import { BRANDING_DEFAULTS } from "../const";
 import useWidgetForm from "./useWidgetForm";
 
 describe("useWidgetForm — keep proportions", () => {
@@ -70,6 +72,110 @@ describe("useWidgetForm — keep proportions", () => {
         act(() => result.current.form.setValue("size_width", 500));
         await waitFor(() =>
             expect(result.current.form.getValues("size_height")).toBe(250)
+        );
+    });
+
+    it("applies a preset that shares a dimension without overriding it", async () => {
+        const { result } = setup();
+        enableLock(result.current.form);
+
+        // Width edit re-bases height to keep the ratio: 740 * 400 / 600 = 493.
+        act(() => result.current.form.setValue("size_width", 400));
+        await waitFor(() =>
+            expect(result.current.form.getValues("size_height")).toBe(493)
+        );
+
+        // Preset shares the width (400) — must still apply 400 x 592 exactly.
+        act(() => result.current.applyPreset(400, 592));
+        await waitFor(() => {
+            expect(result.current.form.getValues("size_width")).toBe(400);
+            expect(result.current.form.getValues("size_height")).toBe(592);
+        });
+
+        // Subsequent single-axis edit follows the preset's new ratio.
+        act(() => result.current.form.setValue("size_width", 800));
+        await waitFor(() =>
+            expect(result.current.form.getValues("size_height")).toBe(1184)
+        );
+    });
+
+    it("does not let intermediate keystrokes corrupt the locked ratio", async () => {
+        const { result } = setup();
+        act(() => result.current.applyPreset(600, 740));
+        enableLock(result.current.form);
+
+        // Typing "1000" passes through 1; height collapses with it...
+        act(() => result.current.form.setValue("size_width", 1));
+        await waitFor(() =>
+            expect(result.current.form.getValues("size_height")).toBe(1)
+        );
+
+        // ...but the locked 600:740 ratio still applies to the final value.
+        act(() => result.current.form.setValue("size_width", 1000));
+        // 740 * 1000 / 600 = 1233.33 -> 1233 (not 1000)
+        await waitFor(() =>
+            expect(result.current.form.getValues("size_height")).toBe(1233)
+        );
+    });
+});
+
+describe("useWidgetForm — branding defaults", () => {
+    it("defaults the branding colours for a new widget", () => {
+        const { result } = renderHook(() =>
+            useWidgetForm("1", [], undefined, null)
+        );
+        expect(result.current.form.getValues("branding_primary")).toBe(
+            BRANDING_DEFAULTS.branding_primary
+        );
+        expect(result.current.form.getValues("branding_secondary")).toBe(
+            BRANDING_DEFAULTS.branding_secondary
+        );
+        expect(result.current.form.getValues("branding_neutral")).toBe(
+            BRANDING_DEFAULTS.branding_neutral
+        );
+    });
+
+    it("falls back to default colours when a saved widget has none", () => {
+        const widget = {
+            id: 1,
+            widget_name: "Test",
+            branding_primary: null,
+            branding_secondary: undefined,
+            branding_neutral: "",
+        } as unknown as Widget;
+        const { result } = renderHook(() =>
+            useWidgetForm("1", [], widget, null)
+        );
+        expect(result.current.form.getValues("branding_primary")).toBe(
+            BRANDING_DEFAULTS.branding_primary
+        );
+        expect(result.current.form.getValues("branding_secondary")).toBe(
+            BRANDING_DEFAULTS.branding_secondary
+        );
+        expect(result.current.form.getValues("branding_neutral")).toBe(
+            BRANDING_DEFAULTS.branding_neutral
+        );
+    });
+
+    it("keeps a saved widget's own branding colours", () => {
+        const widget = {
+            id: 1,
+            widget_name: "Test",
+            branding_primary: "#111111",
+            branding_secondary: "#222222",
+            branding_neutral: "#333333",
+        } as unknown as Widget;
+        const { result } = renderHook(() =>
+            useWidgetForm("1", [], widget, null)
+        );
+        expect(result.current.form.getValues("branding_primary")).toBe(
+            "#111111"
+        );
+        expect(result.current.form.getValues("branding_secondary")).toBe(
+            "#222222"
+        );
+        expect(result.current.form.getValues("branding_neutral")).toBe(
+            "#333333"
         );
     });
 });
