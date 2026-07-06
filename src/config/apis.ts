@@ -48,6 +48,8 @@ const apis = {
     permissionsV1Url: `${apiV1Url}/permissions`,
     datasetsV2Url: `${apiV2Url}/datasets`,
     datasetsV2UrlIP: `${apiV2IPUrl}/datasets`,
+    datasetsV3Url: `${apiV3Url}/datasets`,
+    datasetsV3UrlIP: `${apiV3IPUrl}/datasets`,
     datasetsExportV1Url: `${apiV1Url}/datasets/export`,
     datasetsExportMetadataV1Url: `${apiV1Url}/datasets/export_metadata`,
     structuralMetadataExportV1Url: `${apiV1Url}/datasets/export/mock?type=template_dataset_structural_metadata`,

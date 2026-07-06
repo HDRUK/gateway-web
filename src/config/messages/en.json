@@ -1588,7 +1588,8 @@
                     "datasetTypes": "Dataset Types",
                     "datasetSubtypes": "Dataset Sub-types",
                     "collectionSources": "Collection Sources",
-                    "noCollectionSources": "No collection sources listed"
+                    "noCollectionSources": "No collection sources listed",
+                    "schemaVersion": "Schema Version"
                 }
             }
         },

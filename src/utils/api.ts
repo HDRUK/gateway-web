@@ -444,7 +444,7 @@ async function getDataset(
     schemaVersion?: string,
     options?: GetOptions
 ): Promise<Dataset> {
-    const baseUrl = `${apis.datasetsV2UrlIP}/${datasetId}`;
+    const baseUrl = `${apis.datasetsV3UrlIP}/${datasetId}`;
     const params = new URLSearchParams();
 
     if (schemaModel && schemaVersion) {
