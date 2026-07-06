@@ -205,6 +205,7 @@ export default async function DatasetItemPage({
                                 }}>
                                 <Sources
                                     data={datasetVersion.metadata.metadata}
+                                    gwdmVersion={datasetVersion.metadata.gwdmVersion}
                                 />
                                 {data?.linkages && (
                                     <Linkages linkages={data.linkages} />
