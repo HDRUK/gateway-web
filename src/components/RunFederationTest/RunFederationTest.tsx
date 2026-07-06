@@ -1,6 +1,9 @@
 /** @jsxImportSource @emotion/react */
 import { ReactNode } from "react";
-import { FederationRunResponse } from "@/interfaces/Federation";
+import {
+    FederationTestResponse,
+    FederationTestStatus,
+} from "@/interfaces/Federation";
 import Box from "@/components/Box";
 import Button from "@/components/Button";
 import TickCrossIcon from "@/components/TickCrossIcon";
@@ -11,10 +14,10 @@ import Link from "../Link";
 import * as styles from "./RunFederationTest.styles";
 
 interface RunFederationTestProps {
-    onRun: () => void;
-    status: "NOT_RUN" | "IS_RUNNING" | "RUN_COMPLETE" | "TESTED_IS_TRUE";
+    onTest: () => void;
+    status: FederationTestStatus;
     isEnabled?: boolean;
-    runResponse?: FederationRunResponse;
+    runResponse?: FederationTestResponse;
 }
 
 const Container = ({ children }: { children: ReactNode }) => {
@@ -32,12 +35,12 @@ const Container = ({ children }: { children: ReactNode }) => {
 };
 
 const RunFederationTest = ({
-    status = "NOT_RUN",
+    status = FederationTestStatus.NOT_RUN,
     runResponse,
-    onRun,
+    onTest,
     isEnabled = false,
 }: RunFederationTestProps) => {
-    if (status === "IS_RUNNING") {
+    if (status === FederationTestStatus.IS_RUNNING) {
         return (
             <Container>
                 <Typography css={styles.loading}>
@@ -47,7 +50,7 @@ const RunFederationTest = ({
         );
     }
 
-    if (status === "RUN_COMPLETE" && runResponse) {
+    if (status === FederationTestStatus.RUN_COMPLETE && runResponse) {
         return (
             <Container>
                 <Box
@@ -113,7 +116,7 @@ const RunFederationTest = ({
     }
 
     const message =
-        status === "TESTED_IS_TRUE"
+        status === FederationTestStatus.TESTED_IS_TRUE
             ? "Integration tested successfully"
             : isEnabled
             ? "A test must be carried out before you can enable this configuration"
@@ -142,7 +145,7 @@ const RunFederationTest = ({
                         color: "inherit",
                     })}
                     disabled={!isEnabled}
-                    onClick={() => onRun()}>
+                    onClick={() => onTest()}>
                     Run test
                 </Button>
             </Box>

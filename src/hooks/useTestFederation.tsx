@@ -1,7 +1,11 @@
 import { useEffect, useState } from "react";
 import { Control, useWatch } from "react-hook-form";
 import { isEqual, pick } from "lodash";
-import { Federation, FederationRunResponse } from "@/interfaces/Federation";
+import {
+    Federation,
+    FederationTestResponse,
+    FederationTestStatus,
+} from "@/interfaces/Federation";
 import { Integration, IntegrationForm } from "@/interfaces/Integration";
 import usePost from "@/hooks/usePost";
 import apis from "@/config/apis";
@@ -16,7 +20,7 @@ export const watchFederationKeys = [
     "notifications",
 ];
 
-interface useRunFederationProps {
+interface useTestFederationProps {
     teamId: string;
     integration: Integration | undefined;
     reset: () => void;
@@ -29,7 +33,7 @@ interface useRunFederationProps {
     tested: boolean;
 }
 
-const useRunFederation = ({
+const useTestFederation = ({
     teamId,
     integration,
     reset,
@@ -37,14 +41,14 @@ const useRunFederation = ({
     tested,
     setValue,
     getValues,
-}: useRunFederationProps) => {
-    const [runStatus, setRunStatus] = useState<
-        "NOT_RUN" | "IS_RUNNING" | "RUN_COMPLETE" | "TESTED_IS_TRUE"
-    >("NOT_RUN");
+}: useTestFederationProps) => {
+    const [testStatus, setTestStatus] = useState<FederationTestStatus>(
+        FederationTestStatus.NOT_RUN
+    );
 
     const [testedConfig, setTestedConfig] = useState<Federation>();
 
-    const [runResponse, setRunResponse] = useState<FederationRunResponse>();
+    const [testResponse, setTestResponse] = useState<FederationTestResponse>();
 
     const fieldsToWatch = useWatch({
         control,
@@ -71,7 +75,7 @@ const useRunFederation = ({
 
         const configChanges = !isEqual(updatedForm, testedConfig);
         if (configChanges) {
-            setRunStatus("NOT_RUN");
+            setTestStatus(FederationTestStatus.NOT_RUN);
             setValue("tested", false);
             setValue("enabled", false);
         }
@@ -80,9 +84,9 @@ const useRunFederation = ({
 
     useEffect(() => {
         if (!tested && !integration) return;
-        if (runStatus !== "NOT_RUN") return;
+        if (testStatus !== FederationTestStatus.NOT_RUN) return;
         if (integration?.tested || tested) {
-            setRunStatus("TESTED_IS_TRUE");
+            setTestStatus(FederationTestStatus.TESTED_IS_TRUE);
         }
     }, [integration, tested, reset, setValue]);
 
@@ -94,10 +98,10 @@ const useRunFederation = ({
         }
     );
 
-    const handleRun = async () => {
+    const handleTest = async () => {
         if (!integration) return;
 
-        setRunStatus("IS_RUNNING");
+        setTestStatus(FederationTestStatus.IS_RUNNING);
 
         const payload = pick(
             getValues(),
@@ -111,24 +115,24 @@ const useRunFederation = ({
 
         const response = (await runFederationTest(
             updatedPayload
-        )) as unknown as FederationRunResponse;
+        )) as unknown as FederationTestResponse;
 
-        /* Send 'runStatus' to show correct section within run component */
-        setRunStatus("RUN_COMPLETE");
+        /* Send 'testStatus' to show correct section within run component */
+        setTestStatus(FederationTestStatus.RUN_COMPLETE);
 
         /* Update 'tested' property on integration form data */
         setValue("tested", response.success);
 
-        /* Send run response to be rendered within run component */
-        setRunResponse(response);
+        /* Send test response to be rendered within run component */
+        setTestResponse(response);
     };
 
     return {
-        runStatus,
+        testStatus,
         setTestedConfig,
-        runResponse,
-        handleRun,
+        testResponse,
+        handleTest,
     };
 };
 
-export default useRunFederation;
+export default useTestFederation;

@@ -23,9 +23,9 @@ import useGet from "@/hooks/useGet";
 import useGetTeam from "@/hooks/useGetTeam";
 import usePost from "@/hooks/usePost";
 import usePut from "@/hooks/usePut";
-import useRunFederation, {
+import useTestFederation, {
     watchFederationKeys,
-} from "@/hooks/useRunFederation";
+} from "@/hooks/useTestFederation";
 import { useUnsavedChanges } from "@/hooks/useUnsavedChanges";
 import apis from "@/config/apis";
 import {
@@ -72,8 +72,8 @@ const EditIntegrationForm = () => {
         defaultValues: integrationDefaultValues,
     });
 
-    const { runStatus, setTestedConfig, runResponse, handleRun } =
-        useRunFederation({
+    const { testStatus, setTestedConfig, testResponse, handleTest } =
+        useTestFederation({
             teamId: params?.teamId || "",
             integration: integration || {
                 ...integrationDefaultValues,
@@ -255,10 +255,10 @@ const EditIntegrationForm = () => {
                     </Paper>
                     <Box sx={{ p: 0, flex: 1 }}>
                         <RunFederationTest
-                            status={runStatus}
-                            runResponse={runResponse}
+                            status={testStatus}
+                            runResponse={testResponse}
                             isEnabled={formState.isValid}
-                            onRun={handleRun}
+                            onTest={handleTest}
                         />
                     </Box>
                 </Box>

@@ -1,10 +1,10 @@
 import { rest } from "msw";
-import { FederationRunResponse } from "@/interfaces/Federation";
+import { FederationTestResponse } from "@/interfaces/Federation";
 import { Integration } from "@/interfaces/Integration";
 import { PaginationType } from "@/interfaces/Pagination";
 import apis from "@/config/apis";
 import {
-    federationsResponseV1,
+    federationTestResponseV1,
     integrationV1,
     integrationsV1,
 } from "@/mocks/data/integration";
@@ -101,11 +101,11 @@ const postIntegrationV1 = ({
 };
 
 interface PostFedResponse {
-    data: FederationRunResponse;
+    data: FederationTestResponse;
 }
 
 const postFederationsTestV1 = ({
-    data = federationsResponseV1,
+    data = federationTestResponseV1,
     teamId = teamV1.id,
     status = 200,
 }) => {
