@@ -1,3 +1,23 @@
+## [2.39.0](https://github.com/HDRUK/gateway-web/compare/v2.38.0...v2.39.0) (2026-07-06)
+
+### ✨ Features
+
+* **GAT-8281:** Add missing elements from initial widget build (#1557) ([d586189](https://github.com/HDRUK/gateway-web/commit/d58618958c2488aad4c7e4eb94e670715216ff4e)), closes [GAT-8281](undefinedGAT-8281)
+* **GAT-8281:** Widget improvements (#1564) ([8789366](https://github.com/HDRUK/gateway-web/commit/87893660b8f63c963c62e19ff41a0a77c15a162e)), closes [GAT-8281](undefinedGAT-8281)
+* **GAT-8281:** Widget improvements (#1564) (#1565) ([71dd321](https://github.com/HDRUK/gateway-web/commit/71dd321bf405bec372a61b14d88ecd075b8fec39)), closes [GAT-8281](undefinedGAT-8281)
+* **GAT-8513:** Add Learn More and Improve Usage widgets (#1550) ([19091ec](https://github.com/HDRUK/gateway-web/commit/19091ec70910725123726575af541c9867a2a061)), closes [GAT-8513](undefinedGAT-8513)
+* **GAT-9060:** Wrap dashboard page behind feature flag (#1558) ([a1884b6](https://github.com/HDRUK/gateway-web/commit/a1884b6dc6f8e05168777a3a33cec00868f4856d)), closes [GAT-9060](undefinedGAT-9060)
+* **GAT-9062:** Search improvements (#1560) ([2a4649a](https://github.com/HDRUK/gateway-web/commit/2a4649ae097530f628daab2cde9ffe694e7d886e)), closes [GAT-9062](undefinedGAT-9062)
+* **GAT-9062:** Search improvements (#1560) (#1561) ([95f6a94](https://github.com/HDRUK/gateway-web/commit/95f6a945b462d90b891cf0ab42bde492ab923eef)), closes [GAT-9062](undefinedGAT-9062)
+* **GAT-9062:** Update ardc link href (#1555) ([2ae60ba](https://github.com/HDRUK/gateway-web/commit/2ae60ba2b0f05204ef3f6f455e31ccdc052eaf1c)), closes [GAT-9062](undefinedGAT-9062)
+
+### 🐛 Bug Fixes
+
+* **GAT-0000:** Fix dashboard view/enquiry counts (#1554) ([f7b0d29](https://github.com/HDRUK/gateway-web/commit/f7b0d293aefda12891b5fb2cb30e1c18d12a1bcd))
+* **GAT-8668:** Prevent Data Custodian Network search double-counting in analytics (#1551) ([b727e6a](https://github.com/HDRUK/gateway-web/commit/b727e6a042199a8f8388d6751371758102f2b08a)), closes [GAT-8668](undefinedGAT-8668)
+* **GAT-8762:** Correct BioSamples metadata key in results table (#1553) ([cd46f4b](https://github.com/HDRUK/gateway-web/commit/cd46f4b0a5314c30d35dfc4cedd4bdf324b3704a)), closes [GAT-8762](undefinedGAT-8762) [BioSamples](undefinedoSamples)
+* **GAT-9057:** added pipeline for automated Jira release to the registry apps (#1552) ([9b4d2ed](https://github.com/HDRUK/gateway-web/commit/9b4d2edf46783668b87607b4606fda585d300533)), closes [GAT-9057](undefinedGAT-9057)
+
 ## [2.38.0](https://github.com/HDRUK/gateway-web/compare/v2.37.0...v2.38.0) (2026-06-30)
 
 ### ✨ Features
