@@ -1,4 +1,3 @@
-import { useEffect } from "react";
 import { useTranslations } from "next-intl";
 import { SearchResultDataCustodianCol } from "@/interfaces/Search";
 import Box from "@/components/Box";
@@ -58,19 +57,13 @@ const DataCustodianNetwork = ({
 
     const dataCustodianFilters = generateDataCustodianFilters();
 
-    const { data, mutate, isLoading } = usePostSwr<
-        SearchResultDataCustodianCol[]
-    >(
+    const { data, isLoading } = usePostSwr<SearchResultDataCustodianCol[]>(
         `${apis.searchV1Url}/data_custodian_networks?view_type=mini&per_page=${SEARCH_PER_PAGE}`,
         {
             query: searchParams.query,
             filters: dataCustodianFilters,
         }
     );
-
-    useEffect(() => {
-        mutate();
-    }, [searchParams, mutate]);
 
     return (
         <Box sx={{ mb: 1, p: 0 }}>

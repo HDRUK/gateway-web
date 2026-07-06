@@ -1,5 +1,7 @@
+import { notFound } from "next/navigation";
 import metaData, { noFollowRobots } from "@/utils/metadata";
 import { getDashboardEntityCount } from "@/utils/api";
+import { isCustodianDashboardEnabled } from "@/flags";
 import Dashboard from "./dashboard";
 
 export const metadata = metaData(
@@ -16,6 +18,10 @@ export default async function DashboardPage({
     params: Promise<{ teamId: string }>;
 }) {
     const { teamId } = await params;
+
+    if (!(await isCustodianDashboardEnabled())) {
+        return notFound();
+    }
 
     const [datasets, datauses, tools, collections, publications] =
         await Promise.all([

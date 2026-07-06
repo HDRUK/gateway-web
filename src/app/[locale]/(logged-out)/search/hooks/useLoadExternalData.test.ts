@@ -169,7 +169,6 @@ describe("useLoadExternalData", () => {
 
             act(() => capturedOnSuccess?.(resolvedPollData));
 
-            // New token, same query+type (e.g. filter change)
             v2Data = { ...baseV2Data, token: "tok-2" };
             rerender();
 
@@ -193,6 +192,73 @@ describe("useLoadExternalData", () => {
 
             expect(result.current.isPolling).toBe(true);
             expect(result.current.externalResults).toEqual({});
+        });
+
+        it("serves a revisited query from cache instead of re-polling its expired token", () => {
+            const emptyResolved: SearchAggregationData = {
+                query: "",
+                type: "datasets",
+                token: "tok-empty",
+                pending: [],
+                results: { [ARDC_SOURCE_VALUE]: ardcResult },
+            };
+            let v2Data: SearchAggregationData = {
+                ...emptyResolved,
+                pending: [ARDC_SOURCE_VALUE],
+                results: {},
+            };
+            const { result, rerender } = renderHook(() =>
+                useLoadExternalData(v2Data, true)
+            );
+
+            // Resolve the no-query search
+            act(() => capturedOnSuccess?.(emptyResolved));
+
+            // Run a different query and resolve it (overwrites nothing now)
+            v2Data = { ...baseV2Data, token: "tok-asthma" };
+            rerender();
+            act(() =>
+                capturedOnSuccess?.({
+                    ...baseV2Data,
+                    token: "tok-asthma",
+                    pending: [],
+                    results: { [ARDC_SOURCE_VALUE]: ardcResult },
+                })
+            );
+
+            // Clear the query: SWR replays the cached no-query response (expired token)
+            v2Data = {
+                ...emptyResolved,
+                pending: [ARDC_SOURCE_VALUE],
+                results: {},
+            };
+            rerender();
+
+            expect(result.current.isPolling).toBe(false);
+            expect(result.current.externalResults[ARDC_SOURCE_VALUE]).toEqual(
+                ardcResult
+            );
+        });
+    });
+
+    describe("isValidating guard", () => {
+        it("does not poll while the aggregation is (re)validating", () => {
+            renderHook(() => useLoadExternalData(baseV2Data, true, true));
+
+            const [, options] = mockUseGet.mock.calls[0];
+            expect(options.shouldFetch).toBe(false);
+        });
+
+        it("polls once validation finishes", () => {
+            let isValidating = true;
+            const { rerender } = renderHook(() =>
+                useLoadExternalData(baseV2Data, true, isValidating)
+            );
+            expect(mockUseGet.mock.calls.at(-1)?.[1].shouldFetch).toBe(false);
+
+            isValidating = false;
+            rerender();
+            expect(mockUseGet.mock.calls.at(-1)?.[1].shouldFetch).toBe(true);
         });
     });
 });

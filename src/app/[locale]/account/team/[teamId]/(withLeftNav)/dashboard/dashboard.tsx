@@ -12,6 +12,8 @@ import Typography from "@/components/Typography";
 import DatasetViewsBarWidget from "@/modules/DatasetViewsBarWidget/DatasetViewsBarWidget";
 import DatasetViewsWidget from "@/modules/DatasetViewsWidget/DatasetViewsWidget";
 import EnquiriesWidget from "@/modules/EnquiriesWidget/EnquiriesWidget";
+import ImproveYourUsageWidget from "@/modules/ImproveYourUsageWidget/ImproveYourUsageWidget";
+import LearnMoreWidget from "@/modules/LearnMoreWidget/LearnMoreWidget";
 import OtherViewsWidget from "@/modules/OtherViewsWidget/OtherViewsWidget";
 import apis from "@/config/apis";
 import { CalendarMonthOutlinedIcon } from "@/consts/icons";
@@ -140,6 +142,8 @@ const Dashboard = ({ teamId, initialCounts }: DashboardProps) => {
                     startDate={startDate}
                     endDate={endDate}
                 />
+                <LearnMoreWidget />
+                <ImproveYourUsageWidget />
             </Box>
         </BoxContainer>
     );

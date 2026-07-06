@@ -30,7 +30,7 @@ const PUBLISHERS_ID = "metadata.summary.publisher.gatewayId";
 const COHORT_DISCOVERY_PATH = "isCohortDiscovery";
 const ACCESS_SERVICE_PATH =
     "metadata.accessibility.access.accessServiceCategory";
-const CONTAINS_TISSUE_PATH = "metadata.additional.containsTissue";
+const CONTAINS_BIOSAMPLES_PATH = "metadata.additional.containsBioSamples";
 const STRUCTURAL_METADATA_PATH = "metadata.additional.hasTechnicalMetadata";
 
 const columnHelper = createColumnHelper<SearchResultDataset>();
@@ -228,12 +228,12 @@ const getColumns = ({
     }),
 
     columnHelper.display({
-        id: "containsTissue",
+        id: "containsBioSamples",
         cell: ({ row: { original } }) => {
-            const containsTissue = get(original, CONTAINS_TISSUE_PATH);
+            const containsBioSamples = get(original, CONTAINS_BIOSAMPLES_PATH);
             return (
                 <div style={{ textAlign: "center" }}>
-                    {containsTissue ? <CheckIcon color="primary" /> : "-"}
+                    {containsBioSamples ? <CheckIcon color="primary" /> : "-"}
                 </div>
             );
         },

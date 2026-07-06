@@ -16,6 +16,7 @@ import {
     TeamMembersIcon,
     DarIcon,
     EmailIcon,
+    GridViewOutlinedIcon,
 } from "@/consts/icons";
 import { ROLE_HDRUK_SUPERADMIN } from "@/consts/roles";
 import { RouteName } from "@/consts/routeName";
@@ -129,14 +130,18 @@ const getTeamNav = (
     teamId: string | undefined,
     features: { [key: string]: boolean }
 ): LeftNavItem[] => {
-    const { isWidgetsEnabled } = features;
+    const { isWidgetsEnabled, isCustodianDashboardEnabled } = features;
 
     return [
-        // {
-        //     icon: navIcon(GridViewOutlinedIcon),
-        //     label: "Dashboard",
-        //     href: `/${RouteName.ACCOUNT}/${RouteName.TEAM}/${teamId}/${RouteName.DASHBOARD}`,
-        // },
+        ...(isCustodianDashboardEnabled
+            ? [
+                  {
+                      icon: navIcon(GridViewOutlinedIcon),
+                      label: "Dashboard",
+                      href: `/${RouteName.ACCOUNT}/${RouteName.TEAM}/${teamId}/${RouteName.DASHBOARD}`,
+                  },
+              ]
+            : []),
         ...(permissions["roles.read"]
             ? [
                   {

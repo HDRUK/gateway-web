@@ -19,10 +19,13 @@ describe("OtherViewsWidget", () => {
     it("falls back to 0 when an endpoint returns no count", async () => {
         server.use(
             rest.get(`${dashboardUrl}/collections/views`, (_req, res, ctx) =>
-                res(ctx.status(200), ctx.json({ data: null }))
+                res(ctx.status(200), ctx.json({ data: [] }))
             ),
             rest.get(`${dashboardUrl}/datacustodians/views`, (_req, res, ctx) =>
-                res(ctx.status(200), ctx.json({ data: DATA_CUSTODIAN_VIEWS }))
+                res(
+                    ctx.status(200),
+                    ctx.json({ data: [{ counter: DATA_CUSTODIAN_VIEWS }] })
+                )
             )
         );
 

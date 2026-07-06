@@ -145,8 +145,9 @@ const DatasetViewsBarWidget = ({
     const entries = (data ?? []).slice(0, MAX_BARS);
     const title = isTop ? t("mostTitle") : t("leastTitle");
 
+    const barCount = entries.length || MAX_BARS;
     const chartHeight =
-        entries.length * BAND_SIZE + CHART_MARGIN.top + CHART_MARGIN.bottom;
+        barCount * BAND_SIZE + CHART_MARGIN.top + CHART_MARGIN.bottom;
 
     const handleBarClick = (_event: MouseEvent, barData: BarItemIdentifier) => {
         const entry = entries[barData.dataIndex];
@@ -157,10 +158,11 @@ const DatasetViewsBarWidget = ({
 
     if (isLoading && entries.length === 0) {
         return (
-            <Paper sx={{ p: 2 }}>
+            <Paper sx={{ p: 2, height: "100%" }}>
                 <Skeleton
                     variant="rectangular"
-                    height={chartHeight}
+                    height="100%"
+                    sx={{ minHeight: chartHeight }}
                     aria-label={title}
                 />
             </Paper>
@@ -178,7 +180,22 @@ const DatasetViewsBarWidget = ({
             <Box sx={{ pt: 2, px: 2 }}>
                 <Typography variant="h2">{title}</Typography>
             </Box>
-            <BarChart
+            {entries.length === 0 ? (
+                <Box
+                    sx={{
+                        flex: 1,
+                        display: "flex",
+                        alignItems: "center",
+                        justifyContent: "center",
+                        minHeight: chartHeight,
+                        px: 2,
+                    }}>
+                    <Typography sx={{ color: "text.secondary" }}>
+                        {t("noData")}
+                    </Typography>
+                </Box>
+            ) : (
+                <BarChart
                 layout="horizontal"
                 yAxis={[
                     {
@@ -231,7 +248,8 @@ const DatasetViewsBarWidget = ({
                         filter: "none",
                     },
                 }}
-            />
+                />
+            )}
             <Box sx={{ px: 2, mt: "auto", pb: 0 }}>
                 <MuiLink
                     component="button"

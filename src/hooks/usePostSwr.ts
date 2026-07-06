@@ -21,6 +21,7 @@ interface Options {
     successNotificationsOn?: boolean;
     itemName?: string;
     action?: ReactNode;
+    revalidateOnMount?: boolean;
 }
 
 const usePostSwr = <T>(
@@ -37,13 +38,14 @@ const usePostSwr = <T>(
         errorNotificationsOn,
         withPagination = false,
         shouldFetch = true,
+        revalidateOnMount,
     } = options || {};
     const t = useTranslations("api");
 
     const { data, error, mutate, isLoading, isValidating } = useSWR<T>(
         shouldFetch ? [url, formData] : null,
-        () => {
-            return apiService.postRequest<T>(url, formData, {
+        () =>
+            apiService.postRequest<T>(url, formData, {
                 notificationOptions: {
                     localeKey,
                     itemName,
@@ -53,16 +55,16 @@ const usePostSwr = <T>(
                     action,
                 },
                 withPagination,
-            });
-        },
+            }) as Promise<T>,
         {
             keepPreviousData,
             revalidateOnFocus: false,
-            revalidateOnMount: false,
+            revalidateIfStale: false,
             revalidateOnReconnect: false,
             refreshWhenOffline: false,
             refreshWhenHidden: false,
             refreshInterval: 0,
+            revalidateOnMount,
         }
     );
 

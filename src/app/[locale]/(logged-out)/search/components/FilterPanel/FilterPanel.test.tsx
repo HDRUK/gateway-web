@@ -186,6 +186,32 @@ describe("FilterPanel", () => {
         expect(accordions).toHaveLength(0);
     });
 
+    it("still renders filters and Clear all after switching away from datasets while ARDC was selected", () => {
+        const { useFeatures } = require("@/providers/FeatureProvider");
+        useFeatures.mockReturnValue({ isExternalSourcesEnabled: true });
+
+        const { rerender } = render(
+            <FilterPanel
+                {...defaultProps}
+                filterCategory="dataset"
+                dataSource="ARDC"
+            />
+        );
+
+        rerender(
+            <FilterPanel
+                {...defaultProps}
+                filterCategory="tool"
+                dataSource="HDRUK"
+            />
+        );
+
+        expect(
+            screen.getByRole("button", { name: "typeCategory" })
+        ).toBeInTheDocument();
+        expect(screen.getByText("clearAll")).toBeInTheDocument();
+    });
+
     it("calls resetQueryParamState when clear all filters is clicked", () => {
         render(
             <FilterPanel

@@ -15,7 +15,7 @@ const MONTHLY_THRESHOLD_DAYS = 180;
 const WEEKLY_THRESHOLD_DAYS = 30;
 const CHART_HEIGHT = 280;
 const CHART_XAXIS_HEIGHT = 40;
-const CHART_MARGIN = { top: 0, right: 32, bottom: 0, left: 8 } as const;
+const CHART_MARGIN = { top: 16, right: 32, bottom: 0, left: 8 } as const;
 
 interface DatasetViewsPoint {
     date: string;
@@ -78,8 +78,12 @@ const DatasetViewsWidget = ({
 
     if (isLoading) {
         return (
-            <Paper sx={{ p: 2 }}>
-                <Skeleton variant="rectangular" height={CHART_HEIGHT} />
+            <Paper sx={{ p: 2, height: "100%" }}>
+                <Skeleton
+                    variant="rectangular"
+                    height="100%"
+                    sx={{ minHeight: CHART_HEIGHT }}
+                />
             </Paper>
         );
     }
@@ -98,28 +102,43 @@ const DatasetViewsWidget = ({
                     {total.toLocaleString()} {t("title")}
                 </Typography>
             </Box>
-            <LineChart
-                xAxis={[
-                    {
-                        scaleType: "point",
-                        data: points.map(p =>
-                            formatDateLabel(p.date, granularity)
-                        ),
-                        height: CHART_XAXIS_HEIGHT,
-                    },
-                ]}
-                series={[
-                    {
-                        data: points.map(p => p.counter),
-                        color: palette.primary.main,
-                        showMark: true,
-                    },
-                ]}
-                height={CHART_HEIGHT}
-                grid={{ horizontal: true }}
-                margin={CHART_MARGIN}
-                sx={{ width: "100%" }}
-            />
+            {points.length === 0 ? (
+                <Box
+                    sx={{
+                        display: "flex",
+                        alignItems: "center",
+                        justifyContent: "center",
+                        height: CHART_HEIGHT,
+                        px: 2,
+                    }}>
+                    <Typography sx={{ color: "text.secondary" }}>
+                        {t("noData")}
+                    </Typography>
+                </Box>
+            ) : (
+                <LineChart
+                    xAxis={[
+                        {
+                            scaleType: "point",
+                            data: points.map(p =>
+                                formatDateLabel(p.date, granularity)
+                            ),
+                            height: CHART_XAXIS_HEIGHT,
+                        },
+                    ]}
+                    series={[
+                        {
+                            data: points.map(p => p.counter),
+                            color: palette.primary.main,
+                            showMark: true,
+                        },
+                    ]}
+                    height={CHART_HEIGHT}
+                    grid={{ horizontal: true }}
+                    margin={CHART_MARGIN}
+                    sx={{ width: "100%" }}
+                />
+            )}
         </Paper>
     );
 };

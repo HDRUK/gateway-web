@@ -25,6 +25,11 @@ export interface Widget {
     unit: Unit;
     keep_proportions: boolean;
     widget_name: string;
+    has_datasets?: boolean;
+    has_datauses?: boolean;
+    has_scripts?: boolean;
+    has_collections?: boolean;
+    has_data_custodians?: boolean;
     permitted_domains: string[];
     branding_primary?: string;
     branding_secondary?: string;

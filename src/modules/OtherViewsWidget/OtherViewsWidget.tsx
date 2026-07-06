@@ -7,6 +7,10 @@ import apis from "@/config/apis";
 
 const TRANSLATION_PATH = "pages.account.dashboard.otherViews";
 
+interface ViewCount {
+    counter: number;
+}
+
 interface OtherViewsWidgetProps {
     teamId: string;
     startDate: string;
@@ -24,9 +28,9 @@ const OtherViewsWidget = ({
     const dashboardUrl = `${apis.teamsV3Url}/${teamId}/dashboard`;
 
     const { data: collectionsViews, isLoading: collectionsLoading } =
-        useGet<number>(`${dashboardUrl}/collections/views?${params}`, {});
+        useGet<ViewCount[]>(`${dashboardUrl}/collections/views?${params}`, {});
     const { data: dataCustodianViews, isLoading: dataCustodianLoading } =
-        useGet<number>(`${dashboardUrl}/datacustodians/views?${params}`, {});
+        useGet<ViewCount[]>(`${dashboardUrl}/datacustodians/views?${params}`, {});
 
     const isLoading = collectionsLoading || dataCustodianLoading;
 
@@ -34,12 +38,12 @@ const OtherViewsWidget = ({
         {
             key: "collections",
             label: t("labels.collections"),
-            count: collectionsViews,
+            count: collectionsViews?.[0]?.counter,
         },
         {
             key: "dataCustodian",
             label: t("labels.dataCustodian"),
-            count: dataCustodianViews,
+            count: dataCustodianViews?.[0]?.counter,
         },
     ];
 
