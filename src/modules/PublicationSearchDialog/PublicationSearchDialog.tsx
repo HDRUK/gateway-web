@@ -109,7 +109,7 @@ const PublicationSearchDialog = ({
 
     const { data: datasetData = [], isLoading: isLoadingDatasets } = useGet<
         Dataset[]
-    >(`${apis.datasetsV2Url}?${new URLSearchParams(searchParams)}`, {
+    >(`${apis.datasetsV3Url}?${new URLSearchParams(searchParams)}`, {
         shouldFetch: hasMinimumSearchCharLength(searchParams.title),
     });
 
