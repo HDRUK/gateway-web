@@ -1,6 +1,6 @@
 import { AuthType } from "./Integration";
 
-interface FederationRunResponse {
+interface FederationTestResponse {
     status: number;
     success: boolean;
     title: string;
@@ -16,4 +16,11 @@ interface Federation {
     run_time_hour: number;
 }
 
-export type { FederationRunResponse, Federation };
+export enum FederationTestStatus {
+    NOT_RUN = "NOT_RUN",
+    IS_RUNNING = "IS_RUNNING",
+    RUN_COMPLETE = "RUN_COMPLETE",
+    TESTED_IS_TRUE = "TESTED_IS_TRUE",
+}
+
+export type { FederationTestResponse, Federation };

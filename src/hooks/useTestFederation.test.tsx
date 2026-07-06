@@ -1,12 +1,13 @@
 import { useForm } from "react-hook-form";
-import useRunFederation from "@/hooks/useRunFederation";
+import { FederationTestStatus } from "@/interfaces/Federation";
+import useTestFederation from "@/hooks/useTestFederation";
 import { act, renderHook, waitFor } from "@/utils/testUtils";
 import { integrationV1 } from "@/mocks/data/integration";
 import { teamV1 } from "@/mocks/data/team";
 import { postFederationsTestV1 } from "@/mocks/handlers/integration";
 import { server } from "@/mocks/server";
 
-describe("useRunFederation", () => {
+describe("useTestFederation", () => {
     const teamId = teamV1.id.toString();
 
     it("should return the `NOT_RUN` status on first load when `tested` is false", async () => {
@@ -15,7 +16,7 @@ describe("useRunFederation", () => {
             useForm({ defaultValues: mockIntegration })
         );
         const { result } = renderHook(() =>
-            useRunFederation({
+            useTestFederation({
                 teamId,
                 integration: mockIntegration,
                 control: formResult.current.control,
@@ -26,9 +27,9 @@ describe("useRunFederation", () => {
         );
         await waitFor(() => {
             expect(result.current).toEqual({
-                handleRun: expect.any(Function),
-                runResponse: undefined,
-                runStatus: "NOT_RUN",
+                handleTest: expect.any(Function),
+                testResponse: undefined,
+                testStatus: FederationTestStatus.NOT_RUN,
                 setTestedConfig: expect.any(Function),
             });
         });
@@ -40,7 +41,7 @@ describe("useRunFederation", () => {
             useForm({ defaultValues: mockIntegration })
         );
         const { result } = renderHook(() =>
-            useRunFederation({
+            useTestFederation({
                 teamId,
                 integration: mockIntegration,
                 control: formResult.current.control,
@@ -51,20 +52,20 @@ describe("useRunFederation", () => {
         );
         await waitFor(() => {
             expect(result.current).toEqual({
-                handleRun: expect.any(Function),
-                runResponse: undefined,
-                runStatus: "TESTED_IS_TRUE",
+                handleTest: expect.any(Function),
+                testResponse: undefined,
+                testStatus: FederationTestStatus.TESTED_IS_TRUE,
                 setTestedConfig: expect.any(Function),
             });
         });
     });
     it("should return the `RUN_COMPLETE` following api call", async () => {
-        const runResponse = {
+        const testResponse = {
             success: false,
             status: 404,
             title: "Test failed",
         };
-        server.use(postFederationsTestV1({ data: runResponse }));
+        server.use(postFederationsTestV1({ data: testResponse }));
 
         const mockIntegration = { ...integrationV1, tested: true };
 
@@ -72,7 +73,7 @@ describe("useRunFederation", () => {
             useForm({ defaultValues: mockIntegration })
         );
         const { result } = renderHook(() =>
-            useRunFederation({
+            useTestFederation({
                 teamId,
                 integration: mockIntegration,
                 control: formResult.current.control,
@@ -83,14 +84,14 @@ describe("useRunFederation", () => {
         );
 
         act(() => {
-            result.current.handleRun();
+            result.current.handleTest();
         });
 
         await waitFor(() => {
             expect(result.current).toEqual({
-                handleRun: expect.any(Function),
-                runResponse,
-                runStatus: "RUN_COMPLETE",
+                handleTest: expect.any(Function),
+                testResponse,
+                testStatus: FederationTestStatus.RUN_COMPLETE,
                 setTestedConfig: expect.any(Function),
             });
         });

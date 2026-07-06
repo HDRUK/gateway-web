@@ -1,5 +1,5 @@
 import { faker } from "@faker-js/faker";
-import { FederationRunResponse } from "@/interfaces/Federation";
+import { FederationTestResponse } from "@/interfaces/Federation";
 import {
     Integration,
     FederationType,
@@ -34,7 +34,9 @@ const generateIntegrationV1 = (data = {}): Integration => {
     };
 };
 
-const generateFederationResponseV1 = (data = {}): FederationRunResponse => {
+const generateFederationTestResponseV1 = (
+    data = {}
+): FederationTestResponse => {
     const success = faker.datatype.boolean();
     return {
         success,
@@ -49,7 +51,7 @@ const generateIntegrationsV1 = (n = 3): Integration[] => {
 };
 
 const integrationV1 = generateIntegrationV1();
-const federationsResponseV1 = generateFederationResponseV1();
+const federationTestResponseV1 = generateFederationTestResponseV1();
 const integrationsV1 = generateIntegrationsV1();
 
 export {
@@ -57,5 +59,5 @@ export {
     generateIntegrationV1,
     integrationsV1,
     integrationV1,
-    federationsResponseV1,
+    federationTestResponseV1,
 };
