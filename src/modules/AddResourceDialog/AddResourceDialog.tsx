@@ -102,7 +102,7 @@ const AddDatasetDialog = ({
 
     const { data: datasetData, isLoading: isLoadingDatasets } = useGet<
         Dataset[]
-    >(`${apis.datasetsV2Url}?${new URLSearchParams(queryParams)}`, {
+    >(`${apis.datasetsV3Url}?${new URLSearchParams(queryParams)}`, {
         shouldFetch: resourceType === ResourceType.DATASET,
     });
 
