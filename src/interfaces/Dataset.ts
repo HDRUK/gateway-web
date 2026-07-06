@@ -59,6 +59,7 @@ interface Metadata {
         description: string;
         doiName: string;
         keywords: string[];
+        datasetAliases?: string | string[] | null;
         shortTitle: string;
         title: string;
         populationSize: number | null;
