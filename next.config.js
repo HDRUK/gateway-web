@@ -45,6 +45,15 @@ const nextConfig = {
                 hostname: "storage.googleapis.com",
                 pathname: "/hdr-gw-wordpress-prod/**",
             },
+            ...(process.env.NODE_ENV === "development"
+                ? [
+                      {
+                          protocol: "http",
+                          hostname: "localhost",
+                          pathname: "/**",
+                      },
+                  ]
+                : []),
         ],
     },
     async headers() {

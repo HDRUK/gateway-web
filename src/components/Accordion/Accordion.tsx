@@ -1,4 +1,4 @@
-import { ReactElement, ReactNode } from "react";
+import { ElementType, ReactElement, ReactNode } from "react";
 import { Tooltip } from "@mui/material";
 import MuiAccordion, {
     AccordionProps as MuiAccordionProps,
@@ -18,6 +18,7 @@ export interface AccordionProps
     iconLeft?: boolean;
     expandIcon?: IconType;
     tooltip?: string;
+    headingComponent?: ElementType;
 }
 
 const tooltipWrapper = (tooltip: string) => (children: ReactElement) =>
@@ -40,12 +41,29 @@ const Accordion = ({
     expandIcon,
     sx,
     tooltip,
+    headingComponent = "h3",
+    slotProps,
+    id,
     ...restProps
 }: AccordionProps) => {
     const Icon = expandIcon || ChevronThinIcon;
 
+    const summaryId = id ? `${id}-header` : undefined;
+    const regionId = id ? `${id}-content` : undefined;
+
     return (
         <MuiAccordion
+            id={id}
+            slotProps={{
+                ...slotProps,
+                heading: { component: headingComponent },
+                ...(id && {
+                    region: {
+                        "aria-labelledby": summaryId,
+                        id: regionId,
+                    },
+                }),
+            }}
             sx={{
                 background: "transparent",
                 boxShadow: "none",
@@ -58,6 +76,13 @@ const Accordion = ({
                 "&.MuiAccordion-root.Mui-disabled": {
                     background: "transparent",
                 },
+                ".MuiAccordionSummary-root.Mui-expanded": {
+                    minHeight: "48px",
+                },
+                ".MuiAccordionSummary-content.Mui-expanded": {
+                    marginTop: 1.5,
+                    marginBottom: 1.5,
+                },
                 ...(variant === "underline" && {
                     borderBottom: "1px solid rgba(0, 0, 0, 0.12)",
                     "&:first-of-type, &:last-of-type": {
@@ -68,13 +93,15 @@ const Accordion = ({
                     "&.MuiAccordion-root:before": {
                         height: 0,
                     },
-                    ".MuiAccordionSummary-content": {
-                        marginTop: 1,
-                        marginBottom: 1,
-                    },
-                    ".MuiAccordionSummary-root": {
-                        minHeight: "auto",
-                    },
+                    ".MuiAccordionSummary-content, .MuiAccordionSummary-content.Mui-expanded":
+                        {
+                            marginTop: 1,
+                            marginBottom: 1,
+                        },
+                    ".MuiAccordionSummary-root, .MuiAccordionSummary-root.Mui-expanded":
+                        {
+                            minHeight: "auto",
+                        },
                 }),
                 ...(iconLeft && {
                     ".MuiAccordionSummary-root .MuiAccordionSummary-content": {
@@ -88,6 +115,8 @@ const Accordion = ({
                 requiresWrapper={!!tooltip}
                 wrapper={tooltipWrapper(tooltip || "")}>
                 <MuiAccordionSummary
+                    id={summaryId}
+                    aria-controls={regionId}
                     expandIcon={
                         <Icon
                             fontSize={!heading ? "large" : "medium"}

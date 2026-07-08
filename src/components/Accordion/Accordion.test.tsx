@@ -25,6 +25,26 @@ describe("Accordion", () => {
         expect(screen.getByText(contents)).toBeInTheDocument();
     });
 
+    it("gives the region a unique accessible name when an id is provided", () => {
+        render(
+            <Accordion
+                id="anchor1"
+                heading={heading}
+                contents={contents}
+                defaultExpanded
+            />
+        );
+
+        const region = screen.getByRole("region");
+        expect(region).toHaveAttribute("aria-labelledby", "anchor1-header");
+        expect(region).toHaveAttribute("id", "anchor1-content");
+        expect(region).toHaveAccessibleName(heading);
+        expect(screen.getByRole("button", { name: heading })).toHaveAttribute(
+            "id",
+            "anchor1-header"
+        );
+    });
+
     it("displays accordion arrow icon on left", async () => {
         const wrapper = render(
             <Accordion heading={heading} contents={contents} iconLeft />

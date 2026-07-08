@@ -5,7 +5,9 @@ import theme from "@/config/theme";
 
 
 
-export const Wrapper = styled(Box)<{ disableSticky?: boolean }>(({ disableSticky }) => ({
+export const Wrapper = styled(Box, {
+    shouldForwardProp: prop => prop !== "disableSticky",
+})<{ disableSticky?: boolean }>(({ disableSticky }) => ({
     ...(disableSticky ? {} : {
         position: "sticky",
         top: 0,

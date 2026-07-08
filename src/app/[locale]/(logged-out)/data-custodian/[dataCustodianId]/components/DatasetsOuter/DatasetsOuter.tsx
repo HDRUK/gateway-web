@@ -1,31 +1,29 @@
 import { ReactElement } from "react";
+import { TeamSummary } from "@/interfaces/TeamSummary";
 import Box from "@/components/Box";
 import DatasetsContent from "@/components/DatasetsContent";
-import apis from "@/config/apis";
+import { getTeamDatasetsSummary } from "@/utils/api";
 
 const TRANSLATION_PATH = "pages.dataCustodian";
 
 export default async function DatasetsOuter({
     dataCustodianId,
+    summaryPromise,
     startIndex,
 }: {
-    dataCustodianId: number;
+    dataCustodianId: string;
+    summaryPromise: Promise<TeamSummary>;
     startIndex: number;
 }): Promise<ReactElement> {
-    const resp = await fetch(
-        `${apis.teamsV1UrlIP}/${dataCustodianId}/datasets_summary`,
-        {
-            next: {
+    const [data, summary] = await Promise.all([
+        getTeamDatasetsSummary(dataCustodianId, {
+            cache: {
+                tags: [`custodian_datasets_summary-${dataCustodianId}`],
                 revalidate: 180,
-                tags: ["all", `custodian_datasets_summary-${dataCustodianId}`],
             },
-            cache: "force-cache",
-        }
-    );
-    if (!resp.ok) {
-        throw new Error("Failed to fetch custodian data");
-    }
-    const { data } = await resp.json();
+        }),
+        summaryPromise,
+    ]);
 
     return (
         <Box
@@ -37,6 +35,7 @@ export default async function DatasetsOuter({
             }}>
             <DatasetsContent
                 datasets={data.datasets}
+                associatedDatasets={summary.associated_datasets ?? []}
                 anchorIndex={startIndex + 1}
                 translationPath={TRANSLATION_PATH}
             />

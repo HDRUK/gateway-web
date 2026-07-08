@@ -97,7 +97,9 @@ export const MarkDownSanitizedWithHtml = ({
 
     return (
         <Wrapper style={styles}>
-            <Markdown options={{ overrides }}>{parsedContent}</Markdown>
+            {isLoaded ? (
+                <Markdown options={{ overrides }}>{parsedContent}</Markdown>
+            ) : null}
         </Wrapper>
     );
 };
