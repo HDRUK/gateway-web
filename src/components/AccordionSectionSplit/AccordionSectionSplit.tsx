@@ -17,10 +17,10 @@ export interface AccordionSectionSplitProps
     extends Omit<AccordionProps, "contents"> {
     ownedHeading: string;
     ownedCount: number;
-    associatedHeading: string;
-    associatedCount: number;
+    associatedHeading?: string;
+    associatedCount?: number;
     ownedContents: ReactElement[];
-    associatedContents: ReactElement[];
+    associatedContents?: ReactElement[];
     cardHeight?: number;
     visibleRows?: number;
     disableCardWrapper?: boolean;
@@ -33,10 +33,10 @@ export default function AccordionSectionSplit({
     heading,
     ownedHeading,
     ownedCount,
-    associatedHeading,
-    associatedCount,
+    associatedHeading = "",
+    associatedCount = 0,
     ownedContents,
-    associatedContents,
+    associatedContents = [],
     cardHeight = DEFAULT_CARD_HEIGHT,
     visibleRows = DEFAULT_VISIBLE_ROWS,
     disableCardWrapper = false,

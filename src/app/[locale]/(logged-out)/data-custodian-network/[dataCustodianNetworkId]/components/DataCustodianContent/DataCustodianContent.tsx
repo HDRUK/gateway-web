@@ -31,9 +31,7 @@ export default function DataCustodianContent({
         durs_count,
     }: DataCustodians) => (
         <Fragment key={`data-custodian-${id}`}>
-            <Link
-                href={`/${RouteName.DATA_CUSTODIANS_ITEM}/${id}`}
-                style={{ textDecoration: "none" }}>
+            <Link href={`/${RouteName.DATA_CUSTODIANS_ITEM}/${id}`}>
                 {name}
             </Link>
             <table>
@@ -71,11 +69,8 @@ export default function DataCustodianContent({
             heading={t("title")}
             ownedHeading={t("title")}
             ownedCount={dataCustodians.length}
-            associatedHeading=""
-            associatedCount={0}
             defaultExpanded={dataCustodians.length > 0}
             ownedContents={dataCustodians.map(renderCard)}
-            associatedContents={[]}
         />
     );
 }
