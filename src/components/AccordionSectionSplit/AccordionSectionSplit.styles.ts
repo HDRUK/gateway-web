@@ -5,19 +5,19 @@ import AccordionCard from "@/components/AccordionSection/AccordionCard";
 const GAP = 2;
 const MOBILE_VISIBLE_ROWS = 2;
 
-export const SplitWrapper = styled("div", {
-    shouldForwardProp: prop => prop !== "columns",
-})<{ columns: number }>(({ theme, columns }) => ({
-    display: "grid",
-    gridTemplateColumns: "1fr",
-    gap: theme.spacing(GAP),
-    alignItems: "stretch",
-    ...(columns > 1 && {
-        [theme.breakpoints.up("tablet")]: {
-            gridTemplateColumns: "1fr 1fr",
-        },
-    }),
-}));
+export const SplitWrapper = styled("div")<{ columnCount: number }>(
+    ({ theme, columnCount }) => ({
+        display: "grid",
+        gridTemplateColumns: "1fr",
+        gap: theme.spacing(GAP),
+        alignItems: "stretch",
+        ...(columnCount > 1 && {
+            [theme.breakpoints.up("tablet")]: {
+                gridTemplateColumns: "1fr 1fr",
+            },
+        }),
+    })
+);
 
 export const Pane = styled("div")(({ theme }) => ({
     display: "flex",

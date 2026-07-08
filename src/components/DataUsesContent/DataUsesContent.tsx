@@ -1,7 +1,7 @@
 "use client";
 
 import { Fragment } from "react";
-import { Link } from "@mui/material";
+import { Link, Typography } from "@mui/material";
 import { useTranslations } from "next-intl";
 import { NetworkDur } from "@/interfaces/DataCustodianNetwork";
 import AccordionSectionSplit from "@/components/AccordionSectionSplit";
@@ -44,7 +44,7 @@ export default function DataUsesContent({
                     {team.name}
                 </Link>
             )}
-            <div>{organisation_name}</div>
+            <Typography variant="body2">{organisation_name}</Typography>
         </Fragment>
     );
 

@@ -69,7 +69,7 @@ export default function AccordionSectionSplit({
                 </Typography>
             }
             contents={
-                <SplitWrapper columns={panes.length}>
+                <SplitWrapper columnCount={panes.length}>
                     {panes.map(pane => (
                         <Pane key={pane.heading}>
                             <PaneHeading>
