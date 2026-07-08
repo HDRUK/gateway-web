@@ -1,9 +1,12 @@
 import { Alias } from "@/interfaces/Alias";
-import { Collection } from "@/interfaces/Collection";
-import { DataUse } from "@/interfaces/DataUse";
+import {
+    NetworkCollection,
+    NetworkDataset,
+    NetworkDur,
+    NetworkPublication,
+    NetworkTool,
+} from "@/interfaces/DataCustodianNetwork";
 import { DataCustodianDataset } from "@/interfaces/Dataset";
-import { Publication } from "@/interfaces/Publication";
-import { Tool } from "@/interfaces/Tool";
 
 interface TeamSummary {
     id: number;
@@ -13,10 +16,15 @@ interface TeamSummary {
     is_provider: boolean;
     introduction: string | null;
     datasets: DataCustodianDataset[];
-    durs: DataUse[];
-    tools: Tool[];
-    publications: Publication[];
-    collections: Collection[];
+    durs: NetworkDur[];
+    tools: NetworkTool[];
+    publications: NetworkPublication[];
+    collections: NetworkCollection[];
+    associated_datasets: NetworkDataset[];
+    associated_durs: NetworkDur[];
+    associated_tools: NetworkTool[];
+    associated_publications: NetworkPublication[];
+    associated_collections: NetworkCollection[];
     url: string | null;
     service: string[] | null;
     aliases?: Alias[];

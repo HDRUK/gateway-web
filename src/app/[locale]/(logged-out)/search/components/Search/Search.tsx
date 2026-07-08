@@ -271,9 +271,13 @@ const Search = ({ filters, schema }: SearchProps) => {
     const { data: v1Data, isLoading: isV1Searching } = usePostSwr<
         SearchPaginationType<SearchResult>
     >(
-        `${apis.searchV1Url}/${queryParams.type}?view_type=mini&per_page=${
-            queryParams.per_page
-        }&page=${queryParams.page}&sort=${queryParams.sort}${
+        `${apis.searchV1Url}/${queryParams.type}?${
+            queryParams.type === SearchCategory.PUBLICATIONS
+                ? ``
+                : `view_type=mini&`
+        }per_page=${queryParams.per_page}&page=${queryParams.page}&sort=${
+            queryParams.sort
+        }${
             queryParams.type === SearchCategory.PUBLICATIONS
                 ? `&${STATIC_FILTER_SOURCE}=${queryParams.source}`
                 : ``

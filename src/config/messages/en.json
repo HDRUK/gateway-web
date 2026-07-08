@@ -1447,21 +1447,31 @@
                     "cohortDiscoveryDisabled": "This data custodian does not support Cohort Discovery"
                 },
                 "CollectionsContent": {
-                    "heading": "Collections ({ length })"
+                    "title": "Collections",
+                    "heading": "Collections ({ length })",
+                    "associatedHeading": "Associated collections"
                 },
                 "DatasetsContent": {
+                    "title": "Datasets",
                     "heading": "Datasets ({ length })",
+                    "associatedHeading": "Associated datasets",
                     "populationSize": "Dataset population size: { length }",
                     "unknownString": "Unknown"
                 },
                 "DatausesContent": {
-                    "heading": "Data Uses ({ length })"
+                    "title": "Data uses",
+                    "heading": "Data Uses ({ length })",
+                    "associatedHeading": "Associated data uses"
                 },
                 "PublicationsContent": {
-                    "heading": "Publications ({ length })"
+                    "title": "Publications",
+                    "heading": "Publications ({ length })",
+                    "associatedHeading": "Associated publications"
                 },
                 "ToolsContent": {
-                    "heading": "Analysis Scripts & Software ({ length })"
+                    "title": "Analysis scripts, tools and software",
+                    "heading": "Analysis Scripts & Software ({ length })",
+                    "associatedHeading": "Associated analysis scripts, tools and software"
                 },
                 "ServiceOfferingsContent": {
                     "heading": "Service offerings ({ length })"

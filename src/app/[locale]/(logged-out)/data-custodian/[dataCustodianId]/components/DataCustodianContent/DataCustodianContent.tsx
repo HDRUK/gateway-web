@@ -1,8 +1,8 @@
 import { ReactElement } from "react";
 import { get } from "lodash";
 import { getTranslations } from "next-intl/server";
-import { DataProvider } from "@/interfaces/DataProvider";
 import { FieldType } from "@/interfaces/FieldType";
+import { TeamSummary } from "@/interfaces/TeamSummary";
 import Box from "@/components/Box";
 import BoxContainer from "@/components/BoxContainer";
 import DataCustodianLinks from "@/components/DataCustodianLinks";
@@ -11,7 +11,6 @@ import { MarkDownSanitizedWithHtml } from "@/components/MarkDownSanitizedWithHTM
 import Paper from "@/components/Paper";
 import TooltipIcon from "@/components/TooltipIcon";
 import Typography from "@/components/Typography";
-import apis from "@/config/apis";
 import { formatDate } from "@/utils/date";
 import { DataCustodianField, DataCustodianSection } from "../../config";
 
@@ -20,30 +19,17 @@ const DATE_FORMAT = "DD/MM/YYYY";
 const TOOLTIP_SUFFIX = "Tooltip";
 
 async function DataCustodianContent({
-    dataCustodianId,
+    summaryPromise,
     populatedSections,
 }: {
-    dataCustodianId: number;
+    summaryPromise: Promise<TeamSummary>;
     populatedSections: DataCustodianSection[];
 }): Promise<ReactElement> {
-    const resp = await fetch(
-        `${apis.teamsV1UrlIP}/${dataCustodianId}/summary`,
-        {
-            next: {
-                revalidate: 180,
-                tags: ["all", `custodian_datasets-${dataCustodianId}`],
-            },
-            cache: "force-cache",
-        }
-    );
-    if (!resp.ok) {
-        throw new Error("Failed to fetch custodian data");
-    }
-    const { data } = await resp.json();
+    const data = await summaryPromise;
 
     const t = await getTranslations(TRANSLATION_PATH);
 
-    const getValue = (data: DataProvider, field: DataCustodianField) => {
+    const getValue = (data: TeamSummary, field: DataCustodianField) => {
         const value = get(data, field.path);
 
         return value || t("notAvailable");
