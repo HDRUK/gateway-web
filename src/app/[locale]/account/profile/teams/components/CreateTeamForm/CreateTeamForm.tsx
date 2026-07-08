@@ -25,6 +25,7 @@ import usePatch from "@/hooks/usePatch";
 import usePost from "@/hooks/usePost";
 import { useUnsavedChanges } from "@/hooks/useUnsavedChanges";
 import notificationService from "@/services/notification";
+import { revalidateCacheAction } from "@/app/actions/revalidateCacheAction";
 import apis from "@/config/apis";
 import {
     questionBankField,
@@ -278,6 +279,9 @@ const CreateTeamForm = () => {
             } else {
                 result = await editTeam(params.teamId, formattedFormData);
                 if (result) {
+                    await revalidateCacheAction(
+                        `custodian_summary-${params.teamId}`
+                    );
                     push(Routes.ACCOUNT_TEAMS);
                 } else {
                     setIsSaving(false);
@@ -429,6 +433,10 @@ const CreateTeamForm = () => {
                                         ...getValues(),
                                         team_logo: response?.file_location,
                                     });
+
+                                    await revalidateCacheAction(
+                                        `custodian_summary-${createdTeamId}`
+                                    );
 
                                     push(Routes.ACCOUNT_TEAMS);
                                 }}
