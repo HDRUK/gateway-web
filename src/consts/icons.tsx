@@ -15,6 +15,7 @@ import ArrowLeftIcon from "@mui/icons-material/ArrowLeft";
 import ArrowRightIcon from "@mui/icons-material/ArrowRight";
 import ArrowUpwardIcon from "@mui/icons-material/ArrowUpward";
 import ArticleIcon from "@mui/icons-material/Article";
+import AutorenewIcon from "@mui/icons-material/Autorenew";
 import BackupIcon from "@mui/icons-material/Backup";
 import BookmarkIcon from "@mui/icons-material/Bookmark";
 import CancelIcon from "@mui/icons-material/Cancel";
@@ -107,6 +108,7 @@ export {
     ArrowRightIcon,
     ArrowLeftIcon,
     AccountCircleIcon,
+    AutorenewIcon,
     BackupIcon,
     AdminPanelSettingsIcon,
     SupervisorAccountIcon,

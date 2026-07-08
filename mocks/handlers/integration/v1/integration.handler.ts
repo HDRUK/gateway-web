@@ -124,9 +124,36 @@ const postFederationsTestV1 = ({
     );
 };
 
+interface getFederationRunProps {
+    teamId?: number;
+    federationId?: number;
+    status?: number;
+}
+
+const getFederationRunV1 = ({
+    teamId = teamV1.id,
+    federationId = integrationV1.id,
+    status = 200,
+}: getFederationRunProps = {}) => {
+    return rest.get(
+        `${apis.teamsV1Url}/${teamId}/federations/${federationId}/run`,
+        (req, res, ctx) => {
+            if (status !== 200) {
+                return res(
+                    ctx.status(status),
+                    ctx.json(`Request failed with status code ${status}`)
+                );
+            }
+
+            return res(ctx.status(status), ctx.json({ message: "OK" }));
+        }
+    );
+};
+
 export {
     getIntegrationV1,
     getIntegrationsV1,
     postIntegrationV1,
     postFederationsTestV1,
+    getFederationRunV1,
 };

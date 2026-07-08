@@ -23,4 +23,10 @@ export enum FederationTestStatus {
     TESTED_IS_TRUE = "TESTED_IS_TRUE",
 }
 
+export enum FederationRunStatus {
+    IDLE = "IDLE",
+    RUNNING = "RUNNING",
+    COMPLETE = "COMPLETE",
+}
+
 export type { FederationTestResponse, Federation };
