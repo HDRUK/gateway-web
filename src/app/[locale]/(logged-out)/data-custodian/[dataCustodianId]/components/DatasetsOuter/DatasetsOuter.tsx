@@ -18,8 +18,10 @@ export default async function DatasetsOuter({
     const [data, summary] = await Promise.all([
         getTeamDatasetsSummary(dataCustodianId, {
             cache: {
-                tags: [`custodian_datasets_summary-${dataCustodianId}`],
-                revalidate: 180,
+                tags: [
+                    "custodian_datasets_summary",
+                    `custodian_datasets_summary-${dataCustodianId}`,
+                ],
             },
         }),
         summaryPromise,

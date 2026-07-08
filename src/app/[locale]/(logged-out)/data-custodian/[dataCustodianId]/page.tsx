@@ -13,6 +13,7 @@ import Typography from "@/components/Typography";
 import ActiveListSidebar from "@/modules/ActiveListSidebar";
 import apis from "@/config/apis";
 import { StaticImages } from "@/config/images";
+import { DEFAULT_CACHE_REVALIDATE } from "@/consts/cache";
 import { AspectRatioImage } from "@/consts/image";
 import { getTeamInfo, getTeamSummary } from "@/utils/api";
 import metaData from "@/utils/metadata";
@@ -46,10 +47,13 @@ export default async function DataCustodianItemPage({
         `${apis.teamsV1UrlIP}/${dataCustodianId}/datasets_cohort_discovery`,
         {
             next: {
-                revalidate: 180,
-                tags: ["all", `custodian_datasets-${dataCustodianId}`],
+                revalidate: DEFAULT_CACHE_REVALIDATE,
+                tags: [
+                    "all",
+                    "custodian_datasets",
+                    `custodian_datasets-${dataCustodianId}`,
+                ],
             },
-            cache: "force-cache",
         }
     );
     if (!resp.ok) {
@@ -59,8 +63,10 @@ export default async function DataCustodianItemPage({
 
     const summaryPromise = getTeamSummary(dataCustodianId, {
         cache: {
-            tags: [`custodian_summary-${dataCustodianId}`],
-            revalidate: 180,
+            tags: [
+                "custodian_summary",
+                `custodian_summary-${dataCustodianId}`,
+            ],
         },
     });
 

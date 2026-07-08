@@ -53,6 +53,7 @@ import {
     CACHE_DAR_APPLICATION,
     CACHE_DAR_ANSWERS,
     CACHE_DAR_REVIEWS,
+    DEFAULT_CACHE_REVALIDATE,
 } from "@/consts/cache";
 import { getUserFromToken } from "@/utils/cookies";
 import { getSessionCookie } from "./getSessionCookie";
@@ -81,7 +82,7 @@ async function get<T>(
         ? {
               next: {
                   tags: [...cache.tags, "all"],
-                  revalidate: cache.revalidate || 2 * 60 * 60,
+                  revalidate: cache.revalidate || DEFAULT_CACHE_REVALIDATE,
               },
           }
         : undefined;
