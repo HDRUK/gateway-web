@@ -26,7 +26,6 @@ interface ResultTableProps {
 
 const CONFORMS_TO_PATH = "metadata.accessibility.formatAndStandards.conformsTo";
 const PUBLISHER_NAME_PATH = "metadata.summary.publisher.name";
-const PUBLISHERS_ID = "metadata.summary.publisher.gatewayId";
 const COHORT_DISCOVERY_PATH = "isCohortDiscovery";
 const ACCESS_SERVICE_PATH =
     "metadata.accessibility.access.accessServiceCategory";
@@ -90,8 +89,7 @@ const getColumns = ({
     columnHelper.display({
         id: "dataProvider",
         cell: ({ row: { original } }) => {
-            const dataCustodianId = get(original, PUBLISHERS_ID);
-            // if the below is false, its because the api has failed to find the team id based off the original uid for gatewayId
+            const dataCustodianId = original.team?.id;
             const isNumber = !Number.isNaN(Number(dataCustodianId));
             const linkHref = `/${RouteName.DATA_CUSTODIANS_ITEM}/${dataCustodianId}`;
 
