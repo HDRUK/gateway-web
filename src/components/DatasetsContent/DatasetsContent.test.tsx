@@ -1,14 +1,19 @@
 import { NetworkDataset } from "@/interfaces/DataCustodianNetwork";
+import { DataCustodianDataset } from "@/interfaces/Dataset";
 import { render, screen } from "@/utils/testUtils";
 import DatasetsContent from "./DatasetsContent";
 
-const makeDataset = (id: number, teamId: string): NetworkDataset => ({
+const makeDataset = (
+    id: number,
+    teamId: string
+): NetworkDataset & DataCustodianDataset => ({
     id,
     user_id: 1,
     team_id: teamId,
     title: `Dataset ${id}`,
     populationSize: 1000,
     datasetType: "Registry",
+    is_cohort_discovery: false,
     team: { id: Number(teamId), name: `Team ${teamId}` },
 });
 
