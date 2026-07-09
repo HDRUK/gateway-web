@@ -11,6 +11,7 @@ import {
     CohortDiscoveryIcon,
     CollectionsIcon,
     DataAccessRequestIcon,
+    DataCustodiansIcon,
     DataUseIcon,
     PublicationIcon,
     ToolIcon,
@@ -60,6 +61,11 @@ export default function MeetTheTeam() {
             icon: (
                 <DataAccessRequestIcon aria-hidden="true" focusable="false" />
             ),
+        },
+        {
+            heading: t("representingResearchGroupTitle"),
+            link: RouteName.DATA_CUSTODIAN_GETTING_STARTED,
+            icon: <DataCustodiansIcon aria-hidden="true" focusable="false" />,
         },
         {
             heading: t("researcherTitle"),
