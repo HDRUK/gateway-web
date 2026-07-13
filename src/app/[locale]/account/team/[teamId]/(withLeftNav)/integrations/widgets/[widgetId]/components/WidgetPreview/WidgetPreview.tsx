@@ -4,7 +4,7 @@ import { useMemo } from "react";
 import { Grid, TextareaAutosize, Typography } from "@mui/material";
 import { useTranslations } from "next-intl";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
-import { WidgetResponse } from "@/interfaces/Widget";
+import { WidgetEntityData } from "@/interfaces/Widget";
 import Box from "@/components/Box";
 import Button from "@/components/Button";
 import Loading from "@/components/Loading";
@@ -16,6 +16,7 @@ import theme, { colors } from "@/config/theme";
 import { RouteName } from "@/consts/routeName";
 import WidgetDisplay from "@/widgets/WidgetDisplay";
 import { TabValues } from "../../const";
+import { generateCspDirective, generateWidgetCode } from "./utils";
 
 interface WidgetPreviewProps {
     teamId?: string;
@@ -24,8 +25,7 @@ interface WidgetPreviewProps {
 }
 
 const TRANSLATION_PATH = `pages.account.team.widgets.preview`;
-const WIDGET_CODE_PATH = `${process.env.NEXT_PUBLIC_GATEWAY_URL}/widgets/`;
-const CURRENT_DOMAIN = process.env.NEXT_PUBLIC_GATEWAY_URL;
+const GATEWAY_URL = process.env.NEXT_PUBLIC_GATEWAY_URL!;
 
 const WidgetPreview = ({ teamId, widgetId }: WidgetPreviewProps) => {
     const router = useRouter();
@@ -39,10 +39,9 @@ const WidgetPreview = ({ teamId, widgetId }: WidgetPreviewProps) => {
         router.push(`${pathname}?${params.toString()}`, { scroll: false });
     };
 
-    const cspHost = new URL(WIDGET_CODE_PATH).host;
-    const currentUrl = new URL(CURRENT_DOMAIN!).host;
+    const currentUrl = new URL(GATEWAY_URL).host;
 
-    const { data } = useGet<WidgetResponse>(
+    const { data } = useGet<WidgetEntityData>(
         `${apis.teamsV1Url}/${teamId}/widgets/${widgetId}/data?domain_origin=${currentUrl}`
     );
 
@@ -51,12 +50,16 @@ const WidgetPreview = ({ teamId, widgetId }: WidgetPreviewProps) => {
         notificationService.apiSuccess(t("codeCopied"));
     };
 
-    const generateWidgetCode = useMemo(() => {
-        if (data) {
-            return `<div style="position: relative; width: ${data?.widget.size_width}${data?.widget.unit}; height: ${data?.widget.size_height}${data?.widget.unit}; max-width: 100%;"><iframe title="HDR Gateway Widget" src="${WIDGET_CODE_PATH}${teamId}-${widgetId}" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: 0;" allowfullscreen="true"></iframe></div>`;
-        }
-        return "";
-    }, [data, teamId, widgetId]);
+    const widgetCode = useMemo(
+        () =>
+            generateWidgetCode({
+                data,
+                teamId,
+                widgetId,
+                gatewayUrl: GATEWAY_URL,
+            }),
+        [data, teamId, widgetId]
+    );
 
     return (
         <Paper sx={{ p: 3 }}>
@@ -93,11 +96,11 @@ const WidgetPreview = ({ teamId, widgetId }: WidgetPreviewProps) => {
                             padding: theme.spacing(2),
                         }}
                         aria-label="Widget code"
-                        defaultValue={generateWidgetCode}
+                        defaultValue={widgetCode}
                         readOnly
                     />
                     <Button
-                        onClick={() => copyToClipboard(generateWidgetCode)}
+                        onClick={() => copyToClipboard(widgetCode)}
                         sx={{ mt: 1 }}>
                         {t("copyCode")}
                     </Button>
@@ -117,7 +120,7 @@ const WidgetPreview = ({ teamId, widgetId }: WidgetPreviewProps) => {
                             padding: theme.spacing(2),
                         }}
                         aria-label="Widget code"
-                        defaultValue={`frame-src 'self' ${cspHost};`}
+                        defaultValue={generateCspDirective(GATEWAY_URL)}
                         readOnly
                     />
                 </Grid>
