@@ -123,4 +123,23 @@ describe("WidgetDisplay", () => {
       screen.queryByText(/Want to dig deeper/i)
     ).not.toBeInTheDocument();
   });
+
+  /**
+   * WIDGET EMBED CONTRACT
+   *
+   * The hosted /widgets/[slug] page passes the API payload straight into
+   * WidgetDisplay, so the component must keep rendering from this exact data
+   * shape. If this fails, deployed widgets embedded in third-party sites
+   * would break.
+   */
+  it("renders end-to-end from the widget data payload shape", () => {
+    mockHook.mockImplementation(
+      jest.requireActual("./hooks/useResultsByType").default
+    );
+
+    render(<WidgetDisplay data={mockData} isIframe />);
+
+    expect(screen.getByTestId("widget-display")).toBeInTheDocument();
+    expect(screen.getByText("Dataset 1")).toBeInTheDocument();
+  });
 });
