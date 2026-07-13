@@ -69,7 +69,7 @@ function renderError(message: string) {
     <html lang="en">
       <body>
         <ThemeRegistry isIframe>
-          {message}
+          <div data-testid="widget-error">{message}</div>
         </ThemeRegistry>
       </body>
     </html>

@@ -113,6 +113,7 @@ export default function WidgetDisplay({
 
     return (
         <Box
+            data-testid="widget-display"
             sx={{
                 width: isIframe ? "100%" : `${size_width}${unit}`,
                 height: `${size_height}${unit}`,
