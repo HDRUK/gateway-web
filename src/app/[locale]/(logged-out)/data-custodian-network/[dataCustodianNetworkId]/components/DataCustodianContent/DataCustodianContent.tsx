@@ -1,7 +1,7 @@
 "use client";
 
 import { Fragment } from "react";
-import { Link } from "@mui/material";
+import { Link, Typography } from "@mui/material";
 import { useTranslations } from "next-intl";
 import { DataProvider as DataCustodians } from "@/interfaces/DataProvider";
 import AccordionSectionSplit from "@/components/AccordionSectionSplit";
@@ -41,15 +41,21 @@ export default function DataCustodianContent({
                     display: "grid",
                     gridTemplateColumns: "repeat(2, 1fr)",
                 }}>
-                <div>{t("datasets", { length: datasets_count ?? 0 })}</div>
-                <div>{t("datause", { length: durs_count ?? 0 })}</div>
-                <div>{t("tools", { length: tools_count ?? 0 })}</div>
-                <div>
+                <Typography>
+                    {t("datasets", { length: datasets_count ?? 0 })}
+                </Typography>
+                <Typography>
+                    {t("datause", { length: durs_count ?? 0 })}
+                </Typography>
+                <Typography>
+                    {t("tools", { length: tools_count ?? 0 })}
+                </Typography>
+                <Typography>
                     {t("publications", { length: publications_count ?? 0 })}
-                </div>
-                <div>
+                </Typography>
+                <Typography>
                     {t("collections", { length: collections_count ?? 0 })}
-                </div>
+                </Typography>
             </Box>
         </Fragment>
     );
