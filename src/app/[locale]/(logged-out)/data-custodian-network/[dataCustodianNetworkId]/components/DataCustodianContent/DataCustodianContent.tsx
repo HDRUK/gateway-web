@@ -5,6 +5,7 @@ import { Link } from "@mui/material";
 import { useTranslations } from "next-intl";
 import { DataProvider as DataCustodians } from "@/interfaces/DataProvider";
 import AccordionSectionSplit from "@/components/AccordionSectionSplit";
+import Box from "@/components/Box";
 import { RouteName } from "@/consts/routeName";
 
 const TRANSLATION_PATH =
@@ -34,31 +35,22 @@ export default function DataCustodianContent({
             <Link href={`/${RouteName.DATA_CUSTODIANS_ITEM}/${id}`}>
                 {name}
             </Link>
-            <table>
-                <tbody>
-                    <tr>
-                        <td>{`${t("datasets", {
-                            length: datasets_count,
-                        })}`}</td>
-                        <td>{`${t("datause", {
-                            length: durs_count,
-                        })}`}</td>
-                    </tr>
-                    <tr>
-                        <td>{`${t("tools", {
-                            length: tools_count,
-                        })}`}</td>
-                        <td>{`${t("publications", {
-                            length: publications_count,
-                        })}`}</td>
-                    </tr>
-                    <tr>
-                        <td>{`${t("collections", {
-                            length: collections_count,
-                        })}`}</td>
-                    </tr>
-                </tbody>
-            </table>
+            <Box
+                sx={{
+                    p: 0,
+                    display: "grid",
+                    gridTemplateColumns: "repeat(2, 1fr)",
+                }}>
+                <div>{t("datasets", { length: datasets_count ?? 0 })}</div>
+                <div>{t("datause", { length: durs_count ?? 0 })}</div>
+                <div>{t("tools", { length: tools_count ?? 0 })}</div>
+                <div>
+                    {t("publications", { length: publications_count ?? 0 })}
+                </div>
+                <div>
+                    {t("collections", { length: collections_count ?? 0 })}
+                </div>
+            </Box>
         </Fragment>
     );
 
