@@ -1,5 +1,7 @@
-import { DatasetsSummaryData } from "@/interfaces/DataCustodianNetwork";
-import { FilterValues } from "@/interfaces/Filter";
+import {
+    DatasetsSummaryData,
+    NetworkDataset,
+} from "@/interfaces/DataCustodianNetwork";
 import Box from "@/components/Box";
 import DatasetsContent from "@/components/DatasetsContent";
 
@@ -7,9 +9,11 @@ const TRANSLATION_PATH = "pages.dataCustodianNetwork";
 
 export default function DatasetsOuter({
     datasets,
+    associatedDatasets,
     selectedTeamIds,
 }: {
     datasets: DatasetsSummaryData;
+    associatedDatasets: NetworkDataset[];
     selectedTeamIds: Set<string>;
 }) {
     return (
@@ -22,6 +26,7 @@ export default function DatasetsOuter({
             }}>
             <DatasetsContent
                 datasets={datasets.datasets}
+                associatedDatasets={associatedDatasets}
                 anchorIndex={2}
                 translationPath={TRANSLATION_PATH}
                 selectedTeamIds={selectedTeamIds}
