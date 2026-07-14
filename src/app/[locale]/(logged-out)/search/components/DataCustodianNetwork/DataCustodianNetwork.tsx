@@ -1,5 +1,8 @@
 import { useTranslations } from "next-intl";
-import { SearchResultDataCustodianCol } from "@/interfaces/Search";
+import {
+    SearchAggregationData,
+    SearchResultDataCustodianCol,
+} from "@/interfaces/Search";
 import Box from "@/components/Box";
 import CardStacked from "@/components/CardStacked";
 import CardStackedSkeleton from "@/components/CardStacked/CardStackedSkeleton";
@@ -9,6 +12,8 @@ import usePostSwr from "@/hooks/usePostSwr";
 import apis from "@/config/apis";
 import { StaticImages } from "@/config/images";
 import { RouteName } from "@/consts/routeName";
+import { HDRUK_SOURCE_VALUE } from "@/consts/search";
+import { useFeatures } from "@/providers/FeatureProvider";
 import ResultsList from "../ResultsList";
 
 interface FiltersType {
@@ -39,6 +44,7 @@ const DataCustodianNetwork = ({
     searchParams = {},
 }: DataCustodianNetworkProps) => {
     const t = useTranslations(TRANSLATION_PATH);
+    const { isTypesenseSearchEnabled } = useFeatures();
 
     const generateDataCustodianFilters = ():
         | DataCustodianNetworkFilterType
@@ -57,13 +63,38 @@ const DataCustodianNetwork = ({
 
     const dataCustodianFilters = generateDataCustodianFilters();
 
-    const { data, isLoading } = usePostSwr<SearchResultDataCustodianCol[]>(
+    const { data: v1Data, isLoading: isV1Loading } = usePostSwr<
+        SearchResultDataCustodianCol[]
+    >(
         `${apis.searchV1Url}/data_custodian_networks?view_type=mini&per_page=${SEARCH_PER_PAGE}`,
         {
             query: searchParams.query,
             filters: dataCustodianFilters,
-        }
+        },
+        { shouldFetch: !isTypesenseSearchEnabled }
     );
+
+    const { data: v2Data, isLoading: isV2Loading } =
+        usePostSwr<SearchAggregationData>(
+            apis.searchV2AggregationUrl,
+            {
+                type: "data_custodian_networks",
+                query: searchParams.query,
+                page: 1,
+                per_page: SEARCH_PER_PAGE,
+                sort: "name:desc",
+                filters: dataCustodianFilters ?? {},
+                view_type: "mini",
+            },
+            { shouldFetch: !!isTypesenseSearchEnabled }
+        );
+
+    const data = isTypesenseSearchEnabled
+        ? (v2Data?.results?.[HDRUK_SOURCE_VALUE]?.hits as
+              | SearchResultDataCustodianCol[]
+              | undefined)
+        : v1Data;
+    const isLoading = isTypesenseSearchEnabled ? isV2Loading : isV1Loading;
 
     return (
         <Box sx={{ mb: 1, p: 0 }}>
