@@ -19,11 +19,17 @@ on:
 env:
   SLACK_WEBHOOK_URL: '${{ secrets.SLACK_WEBHOOK_URL}}'
   SLACK_CHANNEL: '${{ secrets.GITHUBACTIONS_SLACK_CHANNEL }}'
-  CANARY_PAGE_URL: "https://hdr-gateway-wordpress-prod-5orcbz5z4q-ew.a.run.app/widget-canary/"
+  CANARY_PAGE_URL: '${{ vars.CANARY_PAGE_URL }}'
 
 jobs:
   widget-canary:
     runs-on: ubuntu-latest
+    environment: |-
+      ${{
+         github.ref_name == 'dev' && 'dev'
+      || github.base_ref == 'dev' && 'dev'
+      ||                             'release'
+      }}
     steps:
       - name: Check external widget embed
         run: |
