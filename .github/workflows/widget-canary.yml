@@ -24,6 +24,12 @@ env:
 jobs:
   widget-canary:
     runs-on: ubuntu-latest
+    environment: |-
+      ${{
+         github.ref_name == 'dev' && 'dev'
+      || github.base_ref == 'dev' && 'dev'
+      ||                             'release'
+      }}
     steps:
       - name: Check external widget embed
         run: |
