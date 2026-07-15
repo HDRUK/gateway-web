@@ -96,6 +96,61 @@ describe("WidgetDisplay", () => {
     expect(screen.getByText("Collection 1")).toBeInTheDocument();
     });
 
+  it("defaults to the first non-empty category when datasets are empty", () => {
+    const noDatasets: WidgetEntityData = {
+      ...mockData,
+      datasets: [],
+    };
+
+    mockHook.mockReturnValue({
+      datasets: [],
+      collections,
+      scripts,
+      data_uses: dataUses,
+    });
+
+    render(<WidgetDisplay data={noDatasets} />);
+
+    expect(
+      screen.getByRole("button", {
+        name: /open to show search type options/i,
+      })
+    ).toHaveTextContent("Data Uses / Research Projects");
+    expect(
+      screen.queryByText("Datasets & Biosamples")
+    ).not.toBeInTheDocument();
+    expect(screen.getByText("Data Use 1")).toBeInTheDocument();
+  });
+
+  it("shows a no-data message and no nav when all categories are empty", () => {
+    const empty: WidgetEntityData = {
+      ...mockData,
+      datasets: [],
+      collections: [],
+      scripts: [],
+      data_uses: [],
+    };
+
+    mockHook.mockReturnValue({
+      datasets: [],
+      collections: [],
+      scripts: [],
+      data_uses: [],
+    });
+
+    render(<WidgetDisplay data={empty} />);
+
+    expect(
+      screen.getByText(/No data was selected for this widget/i)
+    ).toBeInTheDocument();
+
+    expect(
+      screen.queryByRole("button", {
+        name: /open to show search type options/i,
+      })
+    ).not.toBeInTheDocument();
+  });
+
   it("updates search input", () => {
     render(<WidgetDisplay data={mockData} />);
 
