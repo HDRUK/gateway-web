@@ -67,7 +67,7 @@ describe("useSearchData", () => {
             ...baseProps,
             isDatasets: false,
             isExternalSourcesEnabled: false,
-            isTypesensePublications: true,
+            isTypesenseSearch: true,
             type: "publications",
         };
 
@@ -92,12 +92,55 @@ describe("useSearchData", () => {
             expect(result.current).toBeUndefined();
         });
 
-        it("returns v1Data when isTypesensePublications is false", () => {
+        it("returns v1Data when isTypesenseSearch is false", () => {
             const v1Data = { list: [], total: 2 } as never;
             const { result } = renderHook(() =>
                 useSearchData({
                     ...publicationProps,
-                    isTypesensePublications: false,
+                    isTypesenseSearch: false,
+                    v1Data,
+                })
+            );
+            expect(result.current).toBe(v1Data);
+        });
+    });
+
+    describe("typesense data custodians", () => {
+        const dataCustodianProps = {
+            ...baseProps,
+            isDatasets: false,
+            isExternalSourcesEnabled: false,
+            isTypesenseSearch: true,
+            type: "data_custodians",
+        };
+
+        it("returns normalised data custodian data from the HDRUK provider", () => {
+            const hits = [{ _id: "1", name: "Team A", team_logo: "" }];
+            const v2Data = {
+                ...makeV2Data(HDRUK_SOURCE_VALUE, { hits, total: 1 }),
+                type: "data_custodians",
+            };
+            const { result } = renderHook(() =>
+                useSearchData({ ...dataCustodianProps, v2Data })
+            );
+            expect(result.current?.list).toEqual(hits);
+            expect(result.current?.total).toBe(1);
+            expect(result.current?.path).toBe("search/data_custodians");
+        });
+
+        it("returns undefined while v2Data is loading", () => {
+            const { result } = renderHook(() =>
+                useSearchData({ ...dataCustodianProps, v2Data: undefined })
+            );
+            expect(result.current).toBeUndefined();
+        });
+
+        it("returns v1Data when isTypesenseSearch is false", () => {
+            const v1Data = { list: [], total: 2 } as never;
+            const { result } = renderHook(() =>
+                useSearchData({
+                    ...dataCustodianProps,
+                    isTypesenseSearch: false,
                     v1Data,
                 })
             );

@@ -10,7 +10,7 @@ import { DataSource, HDRUK_SOURCE_VALUE } from "@/consts/search";
 export const useSearchData = ({
     isDatasets,
     isExternalSourcesEnabled,
-    isTypesensePublications = false,
+    isTypesenseSearch = false,
     v1Data,
     v2Data,
     dataSource,
@@ -20,7 +20,7 @@ export const useSearchData = ({
 }: {
     isDatasets: boolean;
     isExternalSourcesEnabled: boolean;
-    isTypesensePublications?: boolean;
+    isTypesenseSearch?: boolean;
     v1Data: SearchPaginationType<SearchResult> | undefined;
     v2Data: SearchAggregationData | undefined;
     dataSource: string;
@@ -30,12 +30,12 @@ export const useSearchData = ({
 }) => {
     return useMemo(() => {
         const useV2 =
-            (isDatasets && isExternalSourcesEnabled) || isTypesensePublications;
+            (isDatasets && isExternalSourcesEnabled) || isTypesenseSearch;
 
         if (!useV2) return v1Data;
         if (v2Data === undefined) return undefined;
 
-        const source = isTypesensePublications
+        const source = isTypesenseSearch
             ? HDRUK_SOURCE_VALUE
             : (dataSource as DataSource);
         const providerResult = v2Data?.results?.[source];
@@ -60,7 +60,7 @@ export const useSearchData = ({
     }, [
         isDatasets,
         isExternalSourcesEnabled,
-        isTypesensePublications,
+        isTypesenseSearch,
         v1Data,
         v2Data,
         dataSource,

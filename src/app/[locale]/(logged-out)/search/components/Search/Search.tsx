@@ -261,14 +261,17 @@ const Search = ({ filters, schema }: SearchProps) => {
 
     const isDatasets = queryParams.type === SearchCategory.DATASETS;
     const isPublications = queryParams.type === SearchCategory.PUBLICATIONS;
+    const isDataCustodians =
+        queryParams.type === SearchCategory.DATA_CUSTODIANS;
     const dataSource = queryParams.dataSource || HDRUK_SOURCE_VALUE;
     const isExternalSourceSelected =
         isExternalSourcesEnabled && dataSource !== HDRUK_SOURCE_VALUE;
     const externalSearchEnabled = isDatasets && isExternalSourcesEnabled;
-    const typesensePublications =
+    const isTypesenseSearch =
         !!isTypesenseSearchEnabled &&
-        isPublications &&
-        queryParams.source === GATEWAY_SOURCE_FIELD;
+        (isDataCustodians ||
+            (isPublications &&
+                queryParams.source === GATEWAY_SOURCE_FIELD));
 
     const ardcSearchUrl = `https://researchdata.edu.au/health/search?filter-type=all-fields${
         queryParams.query ? `&q=${encodeURIComponent(queryParams.query)}` : ""
@@ -297,7 +300,7 @@ const Search = ({ filters, schema }: SearchProps) => {
             withPagination: true,
             shouldFetch:
                 !externalSearchEnabled &&
-                !typesensePublications &&
+                !isTypesenseSearch &&
                 (forceSearch ||
                     !isPublications ||
                     queryParams.source === GATEWAY_SOURCE_FIELD ||
@@ -315,7 +318,7 @@ const Search = ({ filters, schema }: SearchProps) => {
                 sort: queryParams.sort,
                 per_page: queryParams.per_page,
                 page: queryParams.page,
-                ...(isPublications
+                ...(isTypesenseSearch
                     ? {
                           filters: {
                               [FILTER_TYPE_MAPPING[queryParams.type]]:
@@ -326,7 +329,7 @@ const Search = ({ filters, schema }: SearchProps) => {
             },
             {
                 keepPreviousData: true,
-                shouldFetch: externalSearchEnabled || typesensePublications,
+                shouldFetch: externalSearchEnabled || isTypesenseSearch,
                 revalidateOnMount: true,
             }
         );
@@ -345,14 +348,14 @@ const Search = ({ filters, schema }: SearchProps) => {
     }, [v2Data, externalResults]);
 
     const isSearching =
-        externalSearchEnabled || typesensePublications
+        externalSearchEnabled || isTypesenseSearch
             ? isV2Searching || (isExternalSourceSelected && isExternalPolling)
             : isV1Searching;
 
     const data = useSearchData({
         isDatasets,
         isExternalSourcesEnabled,
-        isTypesensePublications: typesensePublications,
+        isTypesenseSearch,
         v1Data,
         v2Data: v2DataWithExternal,
         dataSource,
