@@ -5,11 +5,12 @@ import {
     SearchPaginationType,
     SearchResult,
 } from "@/interfaces/Search";
-import { DataSource } from "@/consts/search";
+import { DataSource, HDRUK_SOURCE_VALUE } from "@/consts/search";
 
 export const useSearchData = ({
     isDatasets,
     isExternalSourcesEnabled,
+    isTypesensePublications = false,
     v1Data,
     v2Data,
     dataSource,
@@ -19,6 +20,7 @@ export const useSearchData = ({
 }: {
     isDatasets: boolean;
     isExternalSourcesEnabled: boolean;
+    isTypesensePublications?: boolean;
     v1Data: SearchPaginationType<SearchResult> | undefined;
     v2Data: SearchAggregationData | undefined;
     dataSource: string;
@@ -27,10 +29,16 @@ export const useSearchData = ({
     type: string;
 }) => {
     return useMemo(() => {
-        if (!isDatasets || !isExternalSourcesEnabled) return v1Data;
+        const useV2 =
+            (isDatasets && isExternalSourcesEnabled) || isTypesensePublications;
+
+        if (!useV2) return v1Data;
         if (v2Data === undefined) return undefined;
 
-        const providerResult = v2Data?.results?.[dataSource as DataSource];
+        const source = isTypesensePublications
+            ? HDRUK_SOURCE_VALUE
+            : (dataSource as DataSource);
+        const providerResult = v2Data?.results?.[source];
         const perPageInt = parseInt(perPage, 10);
         const pageInt = parseInt(page, 10);
         const total = providerResult?.total ?? 0;
@@ -52,6 +60,7 @@ export const useSearchData = ({
     }, [
         isDatasets,
         isExternalSourcesEnabled,
+        isTypesensePublications,
         v1Data,
         v2Data,
         dataSource,

@@ -278,7 +278,8 @@ export interface SearchAggregationProviderResult {
     hits:
         | SearchResultARDC[]
         | SearchResultDataset[]
-        | SearchResultDataCustodianCol[];
+        | SearchResultDataCustodianCol[]
+        | SearchResultPublication[];
     total: number;
     aggregations: Aggregations | [];
     ids: string[];
