@@ -64,8 +64,6 @@ import {
     renderFormHydrationField,
 } from "@/utils/formHydration";
 import { updateDarApplicationAnswersAction } from "@/app/actions/updateDarApplicationAnswers";
-import { updateDarApplicationTeamAction } from "@/app/actions/updateDarApplicationTeam";
-import { updateDarApplicationUserAction } from "@/app/actions/updateDarApplicationUser";
 import notFound from "@/app/not-found";
 import { DarActionBar } from "./DarActionBar";
 import DarFieldArray from "./DarFieldArray";
@@ -212,7 +210,9 @@ const ApplicationSection = ({
                 ? formData[PROJECT_TITLE_FIELD]
                 : getValues(PROJECT_TITLE_FIELD),
             applicant_id: data.applicant_id,
-            submission_status: DarApplicationStatus.DRAFT,
+            submission_status: formData
+                ? DarApplicationStatus.SUBMITTED
+                : DarApplicationStatus.DRAFT,
         };
 
         const values = formData ?? getValues();
@@ -224,48 +224,34 @@ const ApplicationSection = ({
             excludedQuestionFields
         );
 
-        if (formData) {
-            const [resAnswers, resApplication] = await Promise.all([
-                updateDarApplicationAnswersAction(applicationId, userId, {
-                    ...applicationData,
-                    answers,
-                }),
-                isResearcher
-                    ? updateDarApplicationUserAction(applicationId, userId, {
-                          submission_status: DarApplicationStatus.SUBMITTED,
-                      })
-                    : teamId &&
-                      updateDarApplicationTeamAction(applicationId, teamId, {
-                          submission_status: DarApplicationStatus.SUBMITTED,
-                      }),
-            ]);
+        const resAnswers = await updateDarApplicationAnswersAction(
+            applicationId,
+            userId,
+            {
+                ...applicationData,
+                answers,
+            }
+        );
 
-            if (resAnswers && resApplication) {
+        if (formData) {
+            if (resAnswers) {
+                notificationService.apiSuccess(
+                    "Data Access Request submitted successfully"
+                );
                 push(
                     `/${RouteName.ACCOUNT}/${RouteName.PROFILE}/${RouteName.DATA_ACCESS_REQUESTS}/${RouteName.APPLICATIONS}`
                 );
             } else {
                 notificationService.apiError("Failed to submit application");
             }
-        } else {
-            const resAnswers = await updateDarApplicationAnswersAction(
-                applicationId,
-                userId,
-                {
-                    ...applicationData,
-                    answers,
-                }
+        } else if (resAnswers) {
+            notificationService.apiSuccess(
+                "Successfully updated Data Access Request"
             );
-
-            if (resAnswers) {
-                notificationService.apiSuccess(
-                    "Successfully updated Data Access Request"
-                );
-            } else {
-                notificationService.apiError(
-                    "Failed to update Data Access Request"
-                );
-            }
+        } else {
+            notificationService.apiError(
+                "Failed to update Data Access Request"
+            );
         }
     };
 
@@ -277,6 +263,10 @@ const ApplicationSection = ({
         await saveApplication();
     };
 
+    const handleInvalidSubmit = () => {
+        notificationService.apiError(t("missingRequiredFields"));
+    };
+
     const handleManageApplication = () => {
         showDialog(DarManageDialog, { darApplicationEndpoint, applicationId });
     };
@@ -286,6 +276,12 @@ const ApplicationSection = ({
         (isResearcher &&
             teamApplication &&
             teamApplication?.approval_status !== null);
+
+    const isApplicationEditable =
+        !teamApplication ||
+        (teamApplication?.approval_status === null &&
+            teamApplication.submission_status !==
+                DarApplicationStatus.SUBMITTED);
 
     const renderSectionHeader = (field: DarFormattedField) => (
         <>
@@ -566,8 +562,12 @@ const ApplicationSection = ({
                         teamId={teamId}
                         userId={userId}
                         saveDraftOnClick={handleSaveAsDraft}
-                        submitOnClick={handleSubmit(handleSave)}
+                        submitOnClick={handleSubmit(
+                            handleSave,
+                            handleInvalidSubmit
+                        )}
                         isResearcher={isResearcher}
+                        showSaveDraft={isApplicationEditable}
                         manageApplicationOnStatus={handleManageApplication}
                     />
 
@@ -799,14 +799,12 @@ const ApplicationSection = ({
                         )}
 
                         <Box sx={{ gap: 1, p: 0, display: "flex" }}>
-                            {isResearcher &&
-                                (!teamApplication ||
-                                    (teamApplication?.approval_status ===
-                                        null &&
-                                        teamApplication.submission_status !==
-                                            DarApplicationStatus.SUBMITTED)) && (
+                            {isResearcher && isApplicationEditable && (
                                     <Button
-                                        onClick={handleSubmit(handleSave)}
+                                        onClick={handleSubmit(
+                                            handleSave,
+                                            handleInvalidSubmit
+                                        )}
                                         type="submit"
                                         variant="outlined"
                                         color="secondary">

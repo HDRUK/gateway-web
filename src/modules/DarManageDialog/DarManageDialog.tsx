@@ -13,6 +13,7 @@ import Form from "@/components/Form";
 import InputWrapper from "@/components/InputWrapper";
 import Typography from "@/components/Typography";
 import useModal from "@/hooks/useModal";
+import notificationService from "@/services/notification";
 import { inputComponents } from "@/config/forms";
 import { colors } from "@/config/theme";
 import { CACHE_DAR_REVIEWS } from "@/consts/cache";
@@ -86,12 +87,15 @@ const DarManageDialog = ({ applicationId }: DarManageDialogProps) => {
             payload
         );
 
-        revalidateCacheAction(`${CACHE_DAR_REVIEWS}${applicationId}`);
+        await revalidateCacheAction(`${CACHE_DAR_REVIEWS}${applicationId}`);
 
         hideModal();
 
         if (updateResponse) {
+            notificationService.apiSuccess(t("statusUpdateSuccess"));
             push(redirectUrl);
+        } else {
+            notificationService.apiError(t("statusUpdateError"));
         }
     };
 
