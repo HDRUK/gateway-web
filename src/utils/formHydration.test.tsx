@@ -1,6 +1,10 @@
 import { buildYup } from "schema-to-yup";
 import { FormHydrationValidation } from "@/interfaces/FormHydration";
-import { formGetFieldsCompletedCount, generateValidationRules } from "./formHydration";
+import {
+    formGenerateLegendItems,
+    formGetFieldsCompletedCount,
+    generateValidationRules,
+} from "./formHydration";
 
 const buildYupSchema = (validationFields: FormHydrationValidation[]) =>
     buildYup({
@@ -153,5 +157,58 @@ describe("generateValidationRules", () => {
         expect(() =>
             schema.validateSync({ Category: ["A"] })
         ).not.toThrow();
+    });
+});
+
+describe("formGenerateLegendItems", () => {
+    const section = "enrichmentAndLinkage";
+    const sectionFields = [
+        {
+            title: "Tools",
+            is_array_form: false,
+            description: "",
+            location: "enrichmentAndLinkage.tools",
+            guidance: "",
+            field: {
+                component: "Autocomplete",
+                name: "Tools",
+                required: false,
+                hidden: false,
+            },
+        },
+    ];
+
+    // activeSectionName === section short-circuits formGetSectionStatus to
+    // ACTIVE, so this test only exercises the clearErrors behaviour we care about.
+    const runLegend = async (dirtyFields: Record<string, boolean>) => {
+        const clearErrors = jest.fn();
+        const trigger = jest.fn(() => Promise.resolve(false));
+        const getValues = jest.fn();
+
+        await formGenerateLegendItems(
+            [section],
+            section,
+            true,
+            sectionFields,
+            clearErrors,
+            getValues,
+            trigger,
+            false,
+            dirtyFields
+        );
+
+        return clearErrors;
+    };
+
+    it("does not clear the error for a field the user has already touched", async () => {
+        const clearErrors = await runLegend({ Tools: true });
+
+        expect(clearErrors).not.toHaveBeenCalled();
+    });
+
+    it("clears the probe-validation error for a field the user hasn't touched", async () => {
+        const clearErrors = await runLegend({});
+
+        expect(clearErrors).toHaveBeenCalledWith(["Tools"]);
     });
 });
