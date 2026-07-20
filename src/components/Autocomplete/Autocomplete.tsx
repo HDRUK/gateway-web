@@ -1,11 +1,5 @@
-import { ReactNode, useState } from "react";
-import {
-    Control,
-    FieldError,
-    FieldValues,
-    Path,
-    useController,
-} from "react-hook-form";
+import { ReactNode } from "react";
+import { Control, FieldValues, Path, useController } from "react-hook-form";
 import ClearIcon from "@mui/icons-material/Clear";
 import {
     FilterOptionsState,
@@ -23,7 +17,6 @@ import { IconType } from "@/interfaces/Ui";
 import FormInputWrapper from "@/components/FormInputWrapper";
 import Loading from "../Loading";
 import Typography from "../Typography";
-import { validateFormat } from "./utils";
 
 export type ValueType = string | number;
 export type OptionsType = {
@@ -60,7 +53,6 @@ export interface AutocompleteProps<T extends FieldValues> {
     clearIcon?: boolean;
     chipColor?: keyof ChipPropsColorOverrides;
     maxLabelLength?: number;
-    format?: string;
 }
 
 interface SearchOptions {
@@ -94,7 +86,6 @@ const Autocomplete = <T extends FieldValues>(props: AutocompleteProps<T>) => {
         clearIcon = false,
         chipColor,
         maxLabelLength = 40,
-        format,
         ...restProps
     } = props;
 
@@ -105,8 +96,6 @@ const Autocomplete = <T extends FieldValues>(props: AutocompleteProps<T>) => {
         name,
         control,
     });
-
-    const [formatError, setFormatError] = useState<FieldError>();
     const filterOptions = (
         searchOptions: SearchOptions[],
         params: FilterOptionsState<SearchOptions>
@@ -137,7 +126,7 @@ const Autocomplete = <T extends FieldValues>(props: AutocompleteProps<T>) => {
             horizontalForm={horizontalForm}
             info={info}
             extraInfo={extraInfo}
-            error={error || formatError}
+            error={error}
             disabled={disabled}
             required={required}>
             <MuiAutocomplete
@@ -239,29 +228,6 @@ const Autocomplete = <T extends FieldValues>(props: AutocompleteProps<T>) => {
                         newValue = value;
                     }
 
-                    if (freeSolo && format && Array.isArray(newValue)) {
-                        const previousValues: ValueType[] = Array.isArray(
-                            field.value
-                        )
-                            ? (field.value as ValueType[])
-                            : [];
-                        const addedValues = newValue.filter(
-                            v => !previousValues.includes(v)
-                        );
-                        const invalidMessage = addedValues
-                            .map(v => validateFormat(format, v))
-                            .find(message => message !== null);
-
-                        if (invalidMessage) {
-                            setFormatError({
-                                type: "format",
-                                message: invalidMessage,
-                            });
-                            return;
-                        }
-                    }
-
-                    setFormatError(undefined);
                     field.onChange(newValue);
                 }}
                 {...(canCreate && {

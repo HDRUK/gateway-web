@@ -294,10 +294,11 @@ const CreateDataset = ({
                     transformedObject[title] = {
                         ...rest,
                         required,
+                        of,
                         min: 1,
                     };
                 } else {
-                    transformedObject[title] = { ...rest, required };
+                    transformedObject[title] = { ...rest, required, of };
                 }
             });
 
