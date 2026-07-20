@@ -34,6 +34,7 @@ interface DarFormHeaderProps {
     submitOnClick: () => Promise<void> | void | undefined;
     manageApplicationOnStatus: () => Promise<void> | void | undefined;
     isResearcher: boolean;
+    showSaveDraft: boolean;
 }
 
 const DarActionBar = ({
@@ -44,6 +45,7 @@ const DarActionBar = ({
     submitOnClick,
     manageApplicationOnStatus,
     isResearcher,
+    showSaveDraft,
 }: DarFormHeaderProps) => {
     const idTitle = `DAR Application ${applicationId}`;
     const t = useTranslations(TRANSLATION_PATH);
@@ -151,9 +153,13 @@ const DarActionBar = ({
                 sx={{ my: 2, ml: 2 }}>
                 {isResearcher ? (
                     <>
-                        <Button color="greyCustom" onClick={saveDraftOnClick}>
-                            {t("saveDraft")}
-                        </Button>
+                        {showSaveDraft && (
+                            <Button
+                                color="greyCustom"
+                                onClick={saveDraftOnClick}>
+                                {t("saveDraft")}
+                            </Button>
+                        )}
                         <Button color="primary" onClick={submitOnClick}>
                             {t("submitApplication")}
                         </Button>

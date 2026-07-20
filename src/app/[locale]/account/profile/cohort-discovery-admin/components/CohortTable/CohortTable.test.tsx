@@ -9,6 +9,8 @@ const requests = [
     generateCohortRequestV1({
         request_status: "APPROVED",
         nhse_sde_request_status: "IN PROCESS",
+        created_at: "2025-01-15T00:00:00.000Z",
+        updated_at: "2025-06-20T00:00:00.000Z",
     }),
     generateCohortRequestV1({
         request_status: "REJECTED",
