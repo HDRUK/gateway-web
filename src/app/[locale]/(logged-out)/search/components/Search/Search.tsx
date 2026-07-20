@@ -318,14 +318,8 @@ const Search = ({ filters, schema }: SearchProps) => {
                 sort: queryParams.sort,
                 per_page: queryParams.per_page,
                 page: queryParams.page,
-                ...(isTypesenseSearch
-                    ? {
-                          filters: {
-                              [FILTER_TYPE_MAPPING[queryParams.type]]:
-                                  pickedFilters,
-                          },
-                      }
-                    : { view_type: "mini", ...pickedFilters }),
+                ...(isTypesenseSearch ? {} : { view_type: "mini" }),
+                ...pickedFilters,
             },
             {
                 keepPreviousData: true,
