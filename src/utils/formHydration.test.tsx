@@ -1,4 +1,13 @@
-import { formGetFieldsCompletedCount } from "./formHydration";
+import { buildYup } from "schema-to-yup";
+import { FormHydrationValidation } from "@/interfaces/FormHydration";
+import { formGetFieldsCompletedCount, generateValidationRules } from "./formHydration";
+
+const buildYupSchema = (validationFields: FormHydrationValidation[]) =>
+    buildYup({
+        title: "Metadata form",
+        type: "object",
+        properties: generateValidationRules(validationFields),
+    });
 
 const schemaFields = [
     {
@@ -82,5 +91,67 @@ describe("formGetFieldsCompletedCount", () => {
         expect(formGetFieldsCompletedCount(schemaFields, getValues, true)).toBe(
             100
         );
+    });
+});
+
+describe("generateValidationRules", () => {
+    // Shape confirmed against the real HDRUK 4.0.0 form_hydration response for
+    // "Tools" (an optional list of URL strings) - see GAT-9237.
+    const toolsValidation: FormHydrationValidation[] = [
+        {
+            title: "Tools",
+            type: "array",
+            required: false,
+            of: {
+                title: "Tools",
+                type: "string",
+                required: false,
+                format: "url",
+            },
+        },
+    ];
+
+    it("rejects a non-URL value in an optional url-format array field", () => {
+        const schema = buildYupSchema(toolsValidation);
+
+        expect(() =>
+            schema.validateSync({ Tools: ["das"] })
+        ).toThrow(/must be a valid URL/);
+    });
+
+    it("accepts a valid URL in an optional url-format array field", () => {
+        const schema = buildYupSchema(toolsValidation);
+
+        expect(() =>
+            schema.validateSync({ Tools: ["https://example.com"] })
+        ).not.toThrow();
+    });
+
+    it("accepts an empty array for an optional url-format array field", () => {
+        const schema = buildYupSchema(toolsValidation);
+
+        expect(() => schema.validateSync({ Tools: [] })).not.toThrow();
+    });
+
+    it("still enforces at least one value for a required array field", () => {
+        const requiredEnumValidation: FormHydrationValidation[] = [
+            {
+                title: "Category",
+                type: "array",
+                required: true,
+                of: {
+                    title: "Category",
+                    type: "string",
+                    required: true,
+                    enum: ["A", "B"],
+                },
+            },
+        ];
+        const schema = buildYupSchema(requiredEnumValidation);
+
+        expect(() => schema.validateSync({ Category: [] })).toThrow();
+        expect(() =>
+            schema.validateSync({ Category: ["A"] })
+        ).not.toThrow();
     });
 });

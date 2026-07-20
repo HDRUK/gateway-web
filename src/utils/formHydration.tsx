@@ -340,6 +340,38 @@ const formatValidationItems = (items: Partial<FormHydrationValidation>[]) => ({
         ),
 });
 
+const generateValidationRules = (validationFields: FormHydrationValidation[]) => {
+    const transformedObject: Record<
+        string,
+        Omit<FormHydrationValidation, "title">
+    > = {};
+
+    validationFields.forEach(field => {
+        const { title, items, required, of, ...rest } = field;
+
+        if (items && Array.isArray(items)) {
+            // When field has an items array, convert to formatted object (used for field arrays)
+            transformedObject[title] = {
+                ...rest,
+                required,
+                items: formatValidationItems(items),
+            };
+        } else if (of && required) {
+            // Ensure required array of enums requires at least 1 value
+            transformedObject[title] = {
+                ...rest,
+                required,
+                of,
+                min: 1,
+            };
+        } else {
+            transformedObject[title] = { ...rest, required, of };
+        }
+    });
+
+    return transformedObject;
+};
+
 const convertRevisionsToArray = (data: {
     revisions: Revision | Revision[] | null;
 }) => {
@@ -583,6 +615,7 @@ export {
     hasVisibleFieldsForLocation,
     renderFormHydrationField,
     formatValidationItems,
+    generateValidationRules,
     formGetFieldsCompletedCount,
     mapFormFieldsForSubmission,
     mapExistingDatasetToFormFields,
