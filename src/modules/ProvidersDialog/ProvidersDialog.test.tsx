@@ -20,7 +20,7 @@ describe("ProvidersDialog", () => {
     });
     it("should render azure link", async () => {
         render(<ProvidersDialog />);
-        const azureButton = screen.getByText("Sign in with Azure", {
+        const azureButton = screen.getByText("Sign in with Microsoft", {
             exact: false,
         });
         expect(azureButton).toBeInTheDocument();

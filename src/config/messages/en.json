@@ -1981,13 +1981,19 @@
                 "title": "Sign in or create an account",
                 "signIn": "Sign in with username",
                 "socialProviders": {
-                    "azure": "Azure",
+                    "azure": "Microsoft",
                     "linkedIn": "LinkedIn",
                     "google": "Google",
-                    "openAthens": "institution"
+                    "openAthens": "your institute"
                 },
                 "intro1": "Anyone can search and view datasets, collections and other resources with or without an account. Creating an account allows you to:",
-                "intro2": "You can sign in or create a Gateway account with any of the organisations below, simply click your preferred organisation and follow the on-screen instructions:",
+                "bulletEnquiries": "Submit data access enquiries and applications",
+                "bulletCollections": "Add your own collections, papers and other resources",
+                "bulletCohortDiscovery": "Use the Cohort Discovery advanced search tool",
+                "preferredAccessTitle": "<bold>Preferred Access</bold> (including <bold>Cohort Discovery</bold>)",
+                "preferredAccessText": "You can sign in using one of the supported sign-in options below to access the full platform experience, including Cohort Discovery and all associated features.",
+                "notPreferredAccessTitle": "<bold>Not Preferred Access</bold>",
+                "notPreferredAccessText": "You can sign in using one of the supported sign-in options below to access the core Gateway features but <highlight>excludes Cohort Discovery</highlight> and all associated features.",
                 "suggestAnother": "Suggest another identity provider",
                 "selectAnother": "Select another provider"
             },

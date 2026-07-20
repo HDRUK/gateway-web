@@ -45,18 +45,11 @@ const ProvidersDialog = () => {
 
                         <BulletList
                             items={[
-                                {
-                                    label: "Submit data access enquiries and applications",
-                                },
-                                {
-                                    label: "Add your collections and other resources",
-                                },
-                                {
-                                    label: "Use the Cohort Discovery advanced search tool (requires institutional or Azure logins)",
-                                },
+                                { label: t("bulletEnquiries") },
+                                { label: t("bulletCollections") },
+                                { label: t("bulletCohortDiscovery") },
                             ]}
                         />
-                        <p>{t("intro2")}</p>
                         <ProviderLinks
                             showInstitution={() =>
                                 setInstitutionSelectVisible(true)
