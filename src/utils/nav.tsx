@@ -17,6 +17,7 @@ import {
     DarIcon,
     EmailIcon,
     GridViewOutlinedIcon,
+    AdminPanelSettingsIcon,
 } from "@/consts/icons";
 import { ROLE_HDRUK_SUPERADMIN } from "@/consts/roles";
 import { RouteName } from "@/consts/routeName";
@@ -48,9 +49,9 @@ const getProfileNav = (
         ...(roles?.some(role => role.name === ROLE_HDRUK_SUPERADMIN)
             ? [
                   {
-                      icon: navIcon(DataUseIcon),
-                      label: "Feature Flags",
-                      href: `/${RouteName.ACCOUNT}/${RouteName.PROFILE}/${RouteName.FEATURES}`,
+                      icon: navIcon(AdminPanelSettingsIcon),
+                      label: "Admin Panel",
+                      href: `/${RouteName.ACCOUNT}/${RouteName.PROFILE}/${RouteName.SEARCH_ADMIN}`,
                   },
               ]
             : []),
