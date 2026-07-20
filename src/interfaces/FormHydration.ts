@@ -12,6 +12,7 @@ export interface FormHydrationField {
     required?: boolean;
     hidden?: boolean;
     placeholder?: string | null;
+    format?: string;
     showClearButton?: boolean;
     info?: string | null;
     disabled?: boolean;

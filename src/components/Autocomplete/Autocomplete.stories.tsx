@@ -59,3 +59,27 @@ export const CreateChips: Story = {
     },
     render: props => <WrapperComponent {...props} />,
 };
+
+export const CreateChipsWithUrlFormat: Story = {
+    name: "CreateChips (format: url)",
+    args: {
+        name: "tools",
+        placeholder: "https://example.com",
+        createLabel: "Add ",
+        selectOnFocus: true,
+        clearOnBlur: true,
+        handleHomeEndKeys: true,
+        freeSolo: true,
+        multiple: true,
+        canCreate: true,
+        format: "url",
+    },
+    render: props => <WrapperComponent {...props} />,
+    parameters: {
+        docs: {
+            description: {
+                story: "Typing a non-URL value and pressing enter is rejected with an inline error instead of being added as a chip. Typing a valid URL (e.g. https://example.com) is accepted.",
+            },
+        },
+    },
+};
