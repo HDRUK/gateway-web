@@ -1,4 +1,17 @@
-import { formGetFieldsCompletedCount } from "./formHydration";
+import { buildYup } from "schema-to-yup";
+import { FormHydrationValidation } from "@/interfaces/FormHydration";
+import {
+    formGenerateLegendItems,
+    formGetFieldsCompletedCount,
+    generateValidationRules,
+} from "./formHydration";
+
+const buildYupSchema = (validationFields: FormHydrationValidation[]) =>
+    buildYup({
+        title: "Metadata form",
+        type: "object",
+        properties: generateValidationRules(validationFields),
+    });
 
 const schemaFields = [
     {
@@ -82,5 +95,120 @@ describe("formGetFieldsCompletedCount", () => {
         expect(formGetFieldsCompletedCount(schemaFields, getValues, true)).toBe(
             100
         );
+    });
+});
+
+describe("generateValidationRules", () => {
+    // Shape confirmed against the real HDRUK 4.0.0 form_hydration response for
+    // "Tools" (an optional list of URL strings) - see GAT-9237.
+    const toolsValidation: FormHydrationValidation[] = [
+        {
+            title: "Tools",
+            type: "array",
+            required: false,
+            of: {
+                title: "Tools",
+                type: "string",
+                required: false,
+                format: "url",
+            },
+        },
+    ];
+
+    it("rejects a non-URL value in an optional url-format array field", () => {
+        const schema = buildYupSchema(toolsValidation);
+
+        expect(() =>
+            schema.validateSync({ Tools: ["das"] })
+        ).toThrow(/must be a valid URL/);
+    });
+
+    it("accepts a valid URL in an optional url-format array field", () => {
+        const schema = buildYupSchema(toolsValidation);
+
+        expect(() =>
+            schema.validateSync({ Tools: ["https://example.com"] })
+        ).not.toThrow();
+    });
+
+    it("accepts an empty array for an optional url-format array field", () => {
+        const schema = buildYupSchema(toolsValidation);
+
+        expect(() => schema.validateSync({ Tools: [] })).not.toThrow();
+    });
+
+    it("still enforces at least one value for a required array field", () => {
+        const requiredEnumValidation: FormHydrationValidation[] = [
+            {
+                title: "Category",
+                type: "array",
+                required: true,
+                of: {
+                    title: "Category",
+                    type: "string",
+                    required: true,
+                    enum: ["A", "B"],
+                },
+            },
+        ];
+        const schema = buildYupSchema(requiredEnumValidation);
+
+        expect(() => schema.validateSync({ Category: [] })).toThrow();
+        expect(() =>
+            schema.validateSync({ Category: ["A"] })
+        ).not.toThrow();
+    });
+});
+
+describe("formGenerateLegendItems", () => {
+    const section = "enrichmentAndLinkage";
+    const sectionFields = [
+        {
+            title: "Tools",
+            is_array_form: false,
+            description: "",
+            location: "enrichmentAndLinkage.tools",
+            guidance: "",
+            field: {
+                component: "Autocomplete",
+                name: "Tools",
+                required: false,
+                hidden: false,
+            },
+        },
+    ];
+
+    // activeSectionName === section short-circuits formGetSectionStatus to
+    // ACTIVE, so this test only exercises the clearErrors behaviour we care about.
+    const runLegend = async (dirtyFields: Record<string, boolean>) => {
+        const clearErrors = jest.fn();
+        const trigger = jest.fn(() => Promise.resolve(false));
+        const getValues = jest.fn();
+
+        await formGenerateLegendItems(
+            [section],
+            section,
+            true,
+            sectionFields,
+            clearErrors,
+            getValues,
+            trigger,
+            false,
+            dirtyFields
+        );
+
+        return clearErrors;
+    };
+
+    it("does not clear the error for a field the user has already touched", async () => {
+        const clearErrors = await runLegend({ Tools: true });
+
+        expect(clearErrors).not.toHaveBeenCalled();
+    });
+
+    it("clears the probe-validation error for a field the user hasn't touched", async () => {
+        const clearErrors = await runLegend({});
+
+        expect(clearErrors).toHaveBeenCalledWith(["Tools"]);
     });
 });

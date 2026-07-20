@@ -180,18 +180,25 @@ const formGetSectionStatus = (
     return LegendStatus.VALID;
 };
 
+const getSectionFieldNames = (
+    schemaFields: FormHydration[],
+    section: string
+): string | string[] => {
+    const allSectionFields = formGetAllSectionFields(schemaFields, section);
+    const isArrayForm = allSectionFields[0]?.is_array_form;
+    return isArrayForm
+        ? allSectionFields[0].title
+        : allSectionFields
+              .filter(schemaField => !schemaField?.field?.hidden)
+              .map(field => field.title);
+};
+
 const formValidateSection = async (
     schemaFields: FormHydration[],
     section: string,
     trigger: UseFormTrigger<FieldValues>
 ) => {
-    const allSectionFields = formGetAllSectionFields(schemaFields, section);
-    const isArrayForm = allSectionFields[0]?.is_array_form;
-    const fields = isArrayForm
-        ? allSectionFields[0].title
-        : allSectionFields
-              .filter(schemaField => !schemaField?.field?.hidden)
-              .map(field => field.title);
+    const fields = getSectionFieldNames(schemaFields, section);
 
     return await trigger(fields, { shouldFocus: false });
 };
@@ -227,9 +234,22 @@ const formGenerateLegendItems = async (
                 ? await formValidateSection(schemaFields, section, trigger)
                 : false;
 
-            // Reset form error state
+            // Reset probe-validation errors, but keep errors for fields the
+            // user has actually touched (dirty) so they don't vanish on nav
             if (!submissionRequested) {
-                clearErrors();
+                const sectionFieldNames = getSectionFieldNames(
+                    schemaFields,
+                    section
+                );
+                const namesToClear = (
+                    Array.isArray(sectionFieldNames)
+                        ? sectionFieldNames
+                        : [sectionFieldNames]
+                ).filter(name => !dirtyFields[name]);
+
+                if (namesToClear.length) {
+                    clearErrors(namesToClear);
+                }
             }
 
             // Get status of section
@@ -339,6 +359,38 @@ const formatValidationItems = (items: Partial<FormHydrationValidation>[]) => ({
             []
         ),
 });
+
+const generateValidationRules = (validationFields: FormHydrationValidation[]) => {
+    const transformedObject: Record<
+        string,
+        Omit<FormHydrationValidation, "title">
+    > = {};
+
+    validationFields.forEach(field => {
+        const { title, items, required, of, ...rest } = field;
+
+        if (items && Array.isArray(items)) {
+            // When field has an items array, convert to formatted object (used for field arrays)
+            transformedObject[title] = {
+                ...rest,
+                required,
+                items: formatValidationItems(items),
+            };
+        } else if (of && required) {
+            // Ensure required array of enums requires at least 1 value
+            transformedObject[title] = {
+                ...rest,
+                required,
+                of,
+                min: 1,
+            };
+        } else {
+            transformedObject[title] = { ...rest, required, of };
+        }
+    });
+
+    return transformedObject;
+};
 
 const convertRevisionsToArray = (data: {
     revisions: Revision | Revision[] | null;
@@ -583,6 +635,7 @@ export {
     hasVisibleFieldsForLocation,
     renderFormHydrationField,
     formatValidationItems,
+    generateValidationRules,
     formGetFieldsCompletedCount,
     mapFormFieldsForSubmission,
     mapExistingDatasetToFormFields,

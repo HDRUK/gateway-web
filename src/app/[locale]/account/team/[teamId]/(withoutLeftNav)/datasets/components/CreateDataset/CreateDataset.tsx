@@ -21,10 +21,7 @@ import {
     NewDataset,
     StructuralMetadata,
 } from "@/interfaces/Dataset";
-import {
-    FormHydrationSchema,
-    FormHydrationValidation,
-} from "@/interfaces/FormHydration";
+import { FormHydrationSchema } from "@/interfaces/FormHydration";
 import { LegendItem } from "@/interfaces/FormLegend";
 import { Team } from "@/interfaces/Team";
 import { Defs } from "@/interfaces/V4Schema";
@@ -78,7 +75,7 @@ import {
     isLastSection,
     mapFormFieldsForSubmission,
     renderFormHydrationField,
-    formatValidationItems,
+    generateValidationRules,
 } from "@/utils/formHydration";
 import { capitalise, decodeHtmlEntity, splitCamelcase } from "@/utils/general";
 import IntroScreen from "../IntroScreen";
@@ -272,40 +269,6 @@ const CreateDataset = ({
         setExistingFormData(mappedFormData);
     }, [dataset, isLoading]);
 
-    const generateValidationRules = useMemo(
-        () => (validationFields: FormHydrationValidation[]) => {
-            const transformedObject: Record<
-                string,
-                Omit<FormHydrationValidation, "title">
-            > = {};
-
-            validationFields.forEach(field => {
-                const { title, items, required, of, ...rest } = field;
-
-                if (items && Array.isArray(items)) {
-                    // When field has an items array, convert to formatted object (used for field arrays)
-                    transformedObject[title] = {
-                        ...rest,
-                        required,
-                        items: formatValidationItems(items),
-                    };
-                } else if (of && required) {
-                    // Ensure required array of enums requires at least 1 value
-                    transformedObject[title] = {
-                        ...rest,
-                        required,
-                        min: 1,
-                    };
-                } else {
-                    transformedObject[title] = { ...rest, required };
-                }
-            });
-
-            return transformedObject;
-        },
-        []
-    );
-
     const [selectedFormSection, setSelectedFormSection] = useState<string>("");
     const [isSaving, setIsSaving] = useState<boolean>(false);
     const [guidanceText, setGuidanceText] = useState<string>();
@@ -333,7 +296,7 @@ const CreateDataset = ({
                     ? generateValidationRules(currentFormJSON.validation)
                     : {},
             },
-        [currentFormJSON.validation, generateValidationRules, isDraft]
+        [currentFormJSON.validation, isDraft]
     );
 
     const yupSchema = buildYup(generatedYupValidation);
