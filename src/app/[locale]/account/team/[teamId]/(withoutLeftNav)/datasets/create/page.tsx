@@ -51,9 +51,6 @@ export default async function CreateDatasetPage({
             formJSON.defaultValues["Organisation Logo"] = encodeURI(orgImage);
         }
     }
-
-    console.log(formJSON.schema_fields.filter(f => f.title === "Tools"));
-
     return (
         <ProtectedAccountRoute
             permissions={permissions}

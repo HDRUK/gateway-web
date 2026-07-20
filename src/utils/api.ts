@@ -544,13 +544,6 @@ async function getFormHydration(
     dataTypes?: string[],
     teamId?: string
 ): Promise<FormHydrationSchema> {
-    console.log(
-        `${
-            apis.formHydrationV1UrlIP
-        }?name=${schemaName}&version=${schemaVersion}&dataTypes=${
-            dataTypes || []
-        }${teamId && `&team_id=${teamId}`}`
-    );
     return get<FormHydrationSchema>(
         `${
             apis.formHydrationV1UrlIP
