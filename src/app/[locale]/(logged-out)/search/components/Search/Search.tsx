@@ -261,17 +261,14 @@ const Search = ({ filters, schema }: SearchProps) => {
 
     const isDatasets = queryParams.type === SearchCategory.DATASETS;
     const isPublications = queryParams.type === SearchCategory.PUBLICATIONS;
-    const isDataCustodians =
-        queryParams.type === SearchCategory.DATA_CUSTODIANS;
     const dataSource = queryParams.dataSource || HDRUK_SOURCE_VALUE;
     const isExternalSourceSelected =
         isExternalSourcesEnabled && dataSource !== HDRUK_SOURCE_VALUE;
     const externalSearchEnabled = isDatasets && isExternalSourcesEnabled;
     const isTypesenseSearch =
         !!isTypesenseSearchEnabled &&
-        (isDataCustodians ||
-            (isPublications &&
-                queryParams.source === GATEWAY_SOURCE_FIELD));
+        !isDatasets &&
+        (!isPublications || queryParams.source === GATEWAY_SOURCE_FIELD);
 
     const ardcSearchUrl = `https://researchdata.edu.au/health/search?filter-type=all-fields${
         queryParams.query ? `&q=${encodeURIComponent(queryParams.query)}` : ""
