@@ -73,7 +73,7 @@ exports[`ProviderLinks should match snapshot 1`] = `
             class="MuiBox-root mui-style-1tkaydf"
           >
             <img
-              alt="Microsoft"
+              alt="Azure"
               data-nimg="1"
               decoding="async"
               height="20"
@@ -84,7 +84,7 @@ exports[`ProviderLinks should match snapshot 1`] = `
               width="20"
             />
             Sign in with 
-            Microsoft
+            Azure
           </span>
         </button>
       </div>
