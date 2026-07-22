@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo } from "react";
+import { useMemo, useState } from "react";
 import { Divider, Skeleton, Switch } from "@mui/material";
 import Box from "@/components/Box";
 import Paper from "@/components/Paper";
@@ -17,6 +17,8 @@ interface Feature {
 
 export default function FeatureFlagsTable({ userId }: { userId?: string }) {
     const url = userId ? `${apis.features}/users/${userId}` : apis.features;
+
+    const [editingEnabled, setEditingEnabled] = useState(false);
 
     const { data, isLoading, mutate } = useGet<FeatureFlagsResponse>(url);
 
@@ -52,6 +54,24 @@ export default function FeatureFlagsTable({ userId }: { userId?: string }) {
 
     return (
         <Paper variant="outlined">
+            <Box
+                sx={{
+                    p: 2,
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "space-between",
+                    gap: 2,
+                    bgcolor: "grey.50",
+                }}>
+                <Typography sx={{ fontWeight: 500 }}>
+                    Enable editing
+                </Typography>
+                <Switch
+                    checked={editingEnabled}
+                    onChange={() => setEditingEnabled(prev => !prev)}
+                />
+            </Box>
+            <Divider />
             {features.map((feature, index) => (
                 <Box key={feature.name}>
                     <Box
@@ -66,6 +86,7 @@ export default function FeatureFlagsTable({ userId }: { userId?: string }) {
                             {feature.name}
                         </Typography>
                         <Switch
+                            disabled={!editingEnabled}
                             checked={!!feature.value}
                             onChange={() =>
                                 toggle(feature.name, null).then(mutate)
