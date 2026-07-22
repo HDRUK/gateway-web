@@ -15,7 +15,7 @@ describe("ProviderLinks", () => {
             <ProviderLinks showInstitution={() => console.log("show inst")} />
         );
 
-        expect(screen.getByAltText("Microsoft")).toBeInTheDocument();
+        expect(screen.getByAltText("Azure")).toBeInTheDocument();
         expect(screen.getByAltText("LinkedIn")).toBeInTheDocument();
         expect(screen.getByAltText("Google")).toBeInTheDocument();
         expect(screen.getByTitle("your institute")).toBeInTheDocument();

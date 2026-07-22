@@ -1981,7 +1981,7 @@
                 "title": "Sign in or create an account",
                 "signIn": "Sign in with username",
                 "socialProviders": {
-                    "azure": "Microsoft",
+                    "azure": "Azure",
                     "linkedIn": "LinkedIn",
                     "google": "Google",
                     "openAthens": "your institute"
