@@ -158,7 +158,8 @@ const filterSidebarStyles = {
 
 const Search = ({ filters, schema }: SearchProps) => {
     const { showDialog, hideDialog } = useDialog();
-    const { isExternalSourcesEnabled } = useFeatures();
+    const { isExternalSourcesEnabled, isTypesenseSearchEnabled } =
+        useFeatures();
     const [isDownloading, setIsDownloading] = useState(false);
     const [hasSearched, setHasSearched] = useState(false);
     const {
@@ -259,10 +260,15 @@ const Search = ({ filters, schema }: SearchProps) => {
     );
 
     const isDatasets = queryParams.type === SearchCategory.DATASETS;
+    const isPublications = queryParams.type === SearchCategory.PUBLICATIONS;
     const dataSource = queryParams.dataSource || HDRUK_SOURCE_VALUE;
     const isExternalSourceSelected =
         isExternalSourcesEnabled && dataSource !== HDRUK_SOURCE_VALUE;
     const externalSearchEnabled = isDatasets && isExternalSourcesEnabled;
+    const isTypesenseSearch =
+        !!isTypesenseSearchEnabled &&
+        !isDatasets &&
+        (!isPublications || queryParams.source === GATEWAY_SOURCE_FIELD);
 
     const ardcSearchUrl = `https://researchdata.edu.au/health/search?filter-type=all-fields${
         queryParams.query ? `&q=${encodeURIComponent(queryParams.query)}` : ""
@@ -291,8 +297,9 @@ const Search = ({ filters, schema }: SearchProps) => {
             withPagination: true,
             shouldFetch:
                 !externalSearchEnabled &&
+                !isTypesenseSearch &&
                 (forceSearch ||
-                    queryParams.type !== SearchCategory.PUBLICATIONS ||
+                    !isPublications ||
                     queryParams.source === GATEWAY_SOURCE_FIELD ||
                     (queryParams.source === EUROPE_PMC_SOURCE_FIELD &&
                         !!queryParams.query)),
@@ -304,16 +311,16 @@ const Search = ({ filters, schema }: SearchProps) => {
             apis.searchV2AggregationUrl,
             {
                 query: queryParams.query || undefined,
-                type: "datasets",
+                type: queryParams.type,
                 sort: queryParams.sort,
                 per_page: queryParams.per_page,
                 page: queryParams.page,
-                view_type: "mini",
+                ...(isTypesenseSearch ? {} : { view_type: "mini" }),
                 ...pickedFilters,
             },
             {
                 keepPreviousData: true,
-                shouldFetch: externalSearchEnabled,
+                shouldFetch: externalSearchEnabled || isTypesenseSearch,
                 revalidateOnMount: true,
             }
         );
@@ -332,13 +339,14 @@ const Search = ({ filters, schema }: SearchProps) => {
     }, [v2Data, externalResults]);
 
     const isSearching =
-        isDatasets && isExternalSourcesEnabled
+        externalSearchEnabled || isTypesenseSearch
             ? isV2Searching || (isExternalSourceSelected && isExternalPolling)
             : isV1Searching;
 
     const data = useSearchData({
         isDatasets,
         isExternalSourcesEnabled,
+        isTypesenseSearch,
         v1Data,
         v2Data: v2DataWithExternal,
         dataSource,
@@ -685,11 +693,6 @@ const Search = ({ filters, schema }: SearchProps) => {
         SearchCategory.DATA_CUSTODIANS,
         SearchCategory.COLLECTIONS,
     ];
-
-    const isPublications = useMemo(
-        () => queryParams.type === SearchCategory.PUBLICATIONS,
-        [queryParams.type]
-    );
 
     const isEuropePmcSearch = useMemo(
         () => queryParams.source === EUROPE_PMC_SOURCE_FIELD,

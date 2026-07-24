@@ -38,6 +38,11 @@ export const isExternalSourcesEnabled = flag({
     adapter,
 });
 
+export const isTypesenseSearchEnabled = flag({
+    key: "TypesenseSearch",
+    adapter,
+});
+
 export const isCustodianDashboardEnabled = flag({
     key: "V3_CustodianDashboard",
     adapter,
