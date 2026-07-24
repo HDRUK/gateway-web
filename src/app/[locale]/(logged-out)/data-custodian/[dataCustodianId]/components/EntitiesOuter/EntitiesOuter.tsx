@@ -1,34 +1,21 @@
 import { ReactElement } from "react";
+import { TeamSummary } from "@/interfaces/TeamSummary";
 import Box from "@/components/Box";
 import CollectionsContent from "@/components/CollectionsContent";
 import DataUsesContent from "@/components/DataUsesContent";
 import PublicationsContent from "@/components/PublicationsContent";
 import ToolsContent from "@/components/ToolsContent";
-import apis from "@/config/apis";
 
 const TRANSLATION_PATH = "pages.dataCustodian";
 
 export default async function EntitiesOuter({
-    dataCustodianId,
+    summaryPromise,
     startIndex,
 }: {
-    dataCustodianId: number;
+    summaryPromise: Promise<TeamSummary>;
     startIndex: number;
 }): Promise<ReactElement> {
-    const resp = await fetch(
-        `${apis.teamsV1UrlIP}/${dataCustodianId}/summary`,
-        {
-            next: {
-                revalidate: 180,
-                tags: ["all", `custodian_entities_summary-${dataCustodianId}`],
-            },
-            cache: "force-cache",
-        }
-    );
-    if (!resp.ok) {
-        throw new Error("Failed to fetch custodian data");
-    }
-    const { data } = await resp.json();
+    const data = await summaryPromise;
 
     return (
         <Box
@@ -40,21 +27,25 @@ export default async function EntitiesOuter({
             }}>
             <CollectionsContent
                 collections={data.collections}
+                associatedCollections={data.associated_collections ?? []}
                 anchorIndex={startIndex + 2}
                 translationPath={TRANSLATION_PATH}
             />
             <ToolsContent
                 tools={data.tools}
+                associatedTools={data.associated_tools ?? []}
                 anchorIndex={startIndex + 3}
                 translationPath={TRANSLATION_PATH}
             />
             <DataUsesContent
                 datauses={data.durs}
+                associatedDatauses={data.associated_durs ?? []}
                 anchorIndex={startIndex + 4}
                 translationPath={TRANSLATION_PATH}
             />
             <PublicationsContent
                 publications={data.publications}
+                associatedPublications={data.associated_publications ?? []}
                 anchorIndex={startIndex + 5}
                 translationPath={TRANSLATION_PATH}
             />

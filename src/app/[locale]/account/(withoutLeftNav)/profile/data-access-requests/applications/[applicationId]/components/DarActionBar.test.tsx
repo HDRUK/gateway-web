@@ -8,6 +8,7 @@ const defaultProps = {
     submitOnClick: jest.fn(),
     manageApplicationOnStatus: jest.fn(),
     isResearcher: true,
+    showSaveDraft: true,
 };
 
 const mockData = {
@@ -54,5 +55,22 @@ describe("DarActionBar", () => {
         render(<DarActionBar {...defaultProps} />);
         expect(await screen.findByText("Dataset Alpha")).toBeInTheDocument();
         expect(await screen.findByText("Dataset Beta")).toBeInTheDocument();
+    });
+
+    it("renders the save draft button when showSaveDraft is true", async () => {
+        mockFetch(mockData);
+        render(<DarActionBar {...defaultProps} />);
+        expect(
+            await screen.findByRole("button", { name: "Save draft" })
+        ).toBeInTheDocument();
+    });
+
+    it("does not render the save draft button when showSaveDraft is false", async () => {
+        mockFetch(mockData);
+        render(<DarActionBar {...defaultProps} showSaveDraft={false} />);
+        expect(await screen.findByText("My Research Project")).toBeInTheDocument();
+        expect(
+            screen.queryByRole("button", { name: "Save draft" })
+        ).not.toBeInTheDocument();
     });
 })

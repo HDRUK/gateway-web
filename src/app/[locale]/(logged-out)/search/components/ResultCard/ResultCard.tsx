@@ -29,6 +29,7 @@ import { CohortIcon, SpeechBubbleIcon } from "@/consts/customIcons";
 import { ChevronThinIcon } from "@/consts/icons";
 import { PostLoginActions } from "@/consts/postLoginActions";
 import { RouteName } from "@/consts/routeName";
+import { formatTextDelimiter } from "@/utils/dataset";
 import { getDateRange, getPopulationSize } from "@/utils/search";
 import { Highlight, ResultTitle } from "./ResultCard.styles";
 
@@ -241,6 +242,7 @@ const ResultCard = ({
         highlight?.abstract?.[0] ??
         highlight?.description?.[0] ??
         metadata.summary.abstract;
+    const datasetAliases = metadata.summary.datasetAliases;
     const dataCustodianId = metadata.summary.publisher.gatewayId;
     // if the below is false, its because the api has failed to find the team id based off the original uid for gatewayId
     const isNumber = !Number.isNaN(dataCustodianId);
@@ -417,6 +419,15 @@ const ResultCard = ({
                                     __html: formattedText,
                                 }}
                             />
+                            {!!datasetAliases?.length && (
+                                <Typography
+                                    variant="body2"
+                                    color="text.gray"
+                                    sx={{ mb: 1.5 }}>
+                                    {t("matchedAliases")}:{" "}
+                                    {formatTextDelimiter(datasetAliases)}
+                                </Typography>
+                            )}
                             <Box
                                 sx={{
                                     p: 0,

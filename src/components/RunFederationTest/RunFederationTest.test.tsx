@@ -1,14 +1,15 @@
+import { FederationTestStatus } from "@/interfaces/Federation";
 import { render, screen, waitFor } from "@/utils/testUtils";
 import RunFederationTest from "./RunFederationTest";
 
 describe("RunFederationTest", () => {
-    const onRun = jest.fn();
+    const onTest = jest.fn();
 
     it("should render `Integration tested successfully` message if component is not enabled", async () => {
         render(
             <RunFederationTest
-                onRun={onRun}
-                status="TESTED_IS_TRUE"
+                onTest={onTest}
+                status={FederationTestStatus.TESTED_IS_TRUE}
                 isEnabled
                 runResponse={undefined}
             />
@@ -26,8 +27,8 @@ describe("RunFederationTest", () => {
     it("should render 'incomplete required fields' message and disable run button", async () => {
         render(
             <RunFederationTest
-                onRun={onRun}
-                status="NOT_RUN"
+                onTest={onTest}
+                status={FederationTestStatus.NOT_RUN}
                 isEnabled={false}
                 runResponse={undefined}
             />
@@ -45,8 +46,8 @@ describe("RunFederationTest", () => {
     it("should render 'test must be carried out' message if not not run", async () => {
         render(
             <RunFederationTest
-                onRun={onRun}
-                status="NOT_RUN"
+                onTest={onTest}
+                status={FederationTestStatus.NOT_RUN}
                 isEnabled
                 runResponse={undefined}
             />
@@ -64,8 +65,8 @@ describe("RunFederationTest", () => {
     it("should render loading message when isRunning is true", async () => {
         render(
             <RunFederationTest
-                onRun={onRun}
-                status="IS_RUNNING"
+                onTest={onTest}
+                status={FederationTestStatus.IS_RUNNING}
                 isEnabled
                 runResponse={undefined}
             />
@@ -86,8 +87,8 @@ describe("RunFederationTest", () => {
 
         render(
             <RunFederationTest
-                onRun={onRun}
-                status="RUN_COMPLETE"
+                onTest={onTest}
+                status={FederationTestStatus.RUN_COMPLETE}
                 isEnabled
                 runResponse={runResponse}
             />
@@ -113,8 +114,8 @@ describe("RunFederationTest", () => {
         };
         render(
             <RunFederationTest
-                onRun={onRun}
-                status="RUN_COMPLETE"
+                onTest={onTest}
+                status={FederationTestStatus.RUN_COMPLETE}
                 isEnabled
                 runResponse={runResponse}
             />

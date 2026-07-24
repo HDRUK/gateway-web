@@ -816,7 +816,24 @@ const EmailIcon = createSvgIcon(
     "EmailIcon"
 );
 
+const InstituteIcon = createSvgIcon(
+    <svg
+        width="20"
+        height="20"
+        viewBox="0 0 20 20"
+        fill="none"
+        xmlns="http://www.w3.org/2000/svg">
+        <path
+            d="M2.6364 15.795V10.9093M7.5455 15.795V10.9093M12.4546 15.795V10.9093M17.3636 15.795V10.9093M1 18.2378H19M10 1.13785L1 6.02356V8.46642H19V6.02356L10 1.13785Z"
+            stroke="currentColor"
+            strokeWidth="2"
+        />
+    </svg>,
+    "InstituteIcon"
+);
+
 export {
+    InstituteIcon,
     BookmarksOutlinedIcon,
     BookmarkBorderIcon,
     SpeechBubbleIcon,

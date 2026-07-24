@@ -3,100 +3,166 @@
 exports[`ProviderLinks should match snapshot 1`] = `
 <div>
   <div
-    class="MuiBox-root mui-style-1uxy81i"
+    class="MuiBox-root mui-style-old1by"
   >
-    <button
-      class="MuiButtonBase-root MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorPrimary MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorPrimary mui-style-14ilbmx-MuiButtonBase-root-MuiButton-root"
-      tabindex="0"
-      type="button"
+    <div
+      class="MuiBox-root mui-style-hp0c5l"
     >
-      <span
-        class="MuiBox-root mui-style-16zk172"
+      <h4
+        class="MuiTypography-root MuiTypography-h4 mui-style-1hry5sm-MuiTypography-root"
       >
-        <img
-          alt="Google"
-          data-nimg="1"
-          decoding="async"
-          height="20"
-          loading="lazy"
-          src="/_next/image?url=%2Fimages%2Flogos%2Fgoogle-logo.png&w=48&q=75"
-          srcset="/_next/image?url=%2Fimages%2Flogos%2Fgoogle-logo.png&w=32&q=75 1x, /_next/image?url=%2Fimages%2Flogos%2Fgoogle-logo.png&w=48&q=75 2x"
-          style="color: transparent;"
-          width="20"
-        />
-        Sign in with 
-        Google
-      </span>
-    </button>
-    <button
-      class="MuiButtonBase-root MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorPrimary MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorPrimary mui-style-14ilbmx-MuiButtonBase-root-MuiButton-root"
-      tabindex="0"
-      type="button"
+        <span
+          class="MuiBox-root mui-style-1w7ybou"
+        >
+          Preferred Access
+        </span>
+         (including 
+        <span
+          class="MuiBox-root mui-style-1w7ybou"
+        >
+          Cohort Discovery
+        </span>
+        )
+      </h4>
+      <p
+        class="MuiTypography-root MuiTypography-body2 mui-style-1hw0f9c-MuiTypography-root"
+      >
+        You can sign in using one of the supported sign-in options below to access the full platform experience, including Cohort Discovery and all associated features.
+      </p>
+      <div
+        class="MuiBox-root mui-style-1k5ajcd"
+      >
+        <button
+          class="MuiButtonBase-root MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorPrimary MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorPrimary mui-style-14ilbmx-MuiButtonBase-root-MuiButton-root"
+          tabindex="0"
+          type="button"
+        >
+          <span
+            class="MuiBox-root mui-style-1tkaydf"
+          >
+            <svg
+              class="MuiSvgIcon-root MuiSvgIcon-fontSizeSmall mui-style-wr9cpa-MuiSvgIcon-root"
+              data-testid="InstituteIconIcon"
+              fill="none"
+              focusable="false"
+              height="20"
+              role="img"
+              viewBox="0 0 20 20"
+              width="20"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M2.6364 15.795V10.9093M7.5455 15.795V10.9093M12.4546 15.795V10.9093M17.3636 15.795V10.9093M1 18.2378H19M10 1.13785L1 6.02356V8.46642H19V6.02356L10 1.13785Z"
+                stroke="currentColor"
+                stroke-width="2"
+              />
+              <title>
+                your institute
+              </title>
+            </svg>
+            Sign in with 
+            your institute
+          </span>
+        </button>
+        <button
+          class="MuiButtonBase-root MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorPrimary MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorPrimary mui-style-14ilbmx-MuiButtonBase-root-MuiButton-root"
+          tabindex="0"
+          type="button"
+        >
+          <span
+            class="MuiBox-root mui-style-1tkaydf"
+          >
+            <img
+              alt="Azure"
+              data-nimg="1"
+              decoding="async"
+              height="20"
+              loading="lazy"
+              src="/_next/image?url=%2Fimages%2Flogos%2Fmicrosoft-logo.png&w=48&q=75"
+              srcset="/_next/image?url=%2Fimages%2Flogos%2Fmicrosoft-logo.png&w=32&q=75 1x, /_next/image?url=%2Fimages%2Flogos%2Fmicrosoft-logo.png&w=48&q=75 2x"
+              style="color: transparent;"
+              width="20"
+            />
+            Sign in with 
+            Azure
+          </span>
+        </button>
+      </div>
+    </div>
+    <div
+      class="MuiBox-root mui-style-hp0c5l"
     >
-      <span
-        class="MuiBox-root mui-style-16zk172"
+      <h4
+        class="MuiTypography-root MuiTypography-h4 mui-style-1hry5sm-MuiTypography-root"
       >
-        <img
-          alt="institution"
-          data-nimg="1"
-          decoding="async"
-          height="20"
-          loading="lazy"
-          src="/_next/image?url=%2Fimages%2Flogos%2Fopenathens-logo.png&w=48&q=75"
-          srcset="/_next/image?url=%2Fimages%2Flogos%2Fopenathens-logo.png&w=32&q=75 1x, /_next/image?url=%2Fimages%2Flogos%2Fopenathens-logo.png&w=48&q=75 2x"
-          style="color: transparent;"
-          width="20"
-        />
-        Sign in with 
-        institution
-      </span>
-    </button>
-    <button
-      class="MuiButtonBase-root MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorPrimary MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorPrimary mui-style-14ilbmx-MuiButtonBase-root-MuiButton-root"
-      tabindex="0"
-      type="button"
-    >
-      <span
-        class="MuiBox-root mui-style-16zk172"
+        <span
+          class="MuiBox-root mui-style-1w7ybou"
+        >
+          Not Preferred Access
+        </span>
+      </h4>
+      <p
+        class="MuiTypography-root MuiTypography-body2 mui-style-1hw0f9c-MuiTypography-root"
       >
-        <img
-          alt="LinkedIn"
-          data-nimg="1"
-          decoding="async"
-          height="20"
-          loading="lazy"
-          src="/_next/image?url=%2Fimages%2Flogos%2FlinkedIn-logo.png&w=48&q=75"
-          srcset="/_next/image?url=%2Fimages%2Flogos%2FlinkedIn-logo.png&w=32&q=75 1x, /_next/image?url=%2Fimages%2Flogos%2FlinkedIn-logo.png&w=48&q=75 2x"
-          style="color: transparent;"
-          width="20"
-        />
-        Sign in with 
-        LinkedIn
-      </span>
-    </button>
-    <button
-      class="MuiButtonBase-root MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorPrimary MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorPrimary mui-style-14ilbmx-MuiButtonBase-root-MuiButton-root"
-      tabindex="0"
-      type="button"
-    >
-      <span
-        class="MuiBox-root mui-style-16zk172"
+        You can sign in using one of the supported sign-in options below to access the core Gateway features but 
+        <span
+          class="MuiBox-root mui-style-j9gea7"
+        >
+          excludes Cohort Discovery
+        </span>
+         and all associated features.
+      </p>
+      <div
+        class="MuiBox-root mui-style-1k5ajcd"
       >
-        <img
-          alt="Azure"
-          data-nimg="1"
-          decoding="async"
-          height="20"
-          loading="lazy"
-          src="/_next/image?url=%2Fimages%2Flogos%2Fmicrosoft-logo.png&w=48&q=75"
-          srcset="/_next/image?url=%2Fimages%2Flogos%2Fmicrosoft-logo.png&w=32&q=75 1x, /_next/image?url=%2Fimages%2Flogos%2Fmicrosoft-logo.png&w=48&q=75 2x"
-          style="color: transparent;"
-          width="20"
-        />
-        Sign in with 
-        Azure
-      </span>
-    </button>
+        <button
+          class="MuiButtonBase-root MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorPrimary MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorPrimary mui-style-14ilbmx-MuiButtonBase-root-MuiButton-root"
+          tabindex="0"
+          type="button"
+        >
+          <span
+            class="MuiBox-root mui-style-1tkaydf"
+          >
+            <img
+              alt="Google"
+              data-nimg="1"
+              decoding="async"
+              height="20"
+              loading="lazy"
+              src="/_next/image?url=%2Fimages%2Flogos%2Fgoogle-logo.png&w=48&q=75"
+              srcset="/_next/image?url=%2Fimages%2Flogos%2Fgoogle-logo.png&w=32&q=75 1x, /_next/image?url=%2Fimages%2Flogos%2Fgoogle-logo.png&w=48&q=75 2x"
+              style="color: transparent;"
+              width="20"
+            />
+            Sign in with 
+            Google
+          </span>
+        </button>
+        <button
+          class="MuiButtonBase-root MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorPrimary MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorPrimary mui-style-14ilbmx-MuiButtonBase-root-MuiButton-root"
+          tabindex="0"
+          type="button"
+        >
+          <span
+            class="MuiBox-root mui-style-1tkaydf"
+          >
+            <img
+              alt="LinkedIn"
+              data-nimg="1"
+              decoding="async"
+              height="20"
+              loading="lazy"
+              src="/_next/image?url=%2Fimages%2Flogos%2FlinkedIn-logo.png&w=48&q=75"
+              srcset="/_next/image?url=%2Fimages%2Flogos%2FlinkedIn-logo.png&w=32&q=75 1x, /_next/image?url=%2Fimages%2Flogos%2FlinkedIn-logo.png&w=48&q=75 2x"
+              style="color: transparent;"
+              width="20"
+            />
+            Sign in with 
+            LinkedIn
+          </span>
+        </button>
+      </div>
+    </div>
   </div>
 </div>
 `;

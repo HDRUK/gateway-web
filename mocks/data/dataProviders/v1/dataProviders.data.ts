@@ -3,7 +3,7 @@ import { DataProvider } from "@/interfaces/DataProvider";
 
 const generateDataProviderV1 = (data = {}): DataProvider => {
     return {
-        name: faker.datatype.string(),
+        name: faker.company.name(),
         _id: faker.datatype.uuid(),
         ...data,
     };

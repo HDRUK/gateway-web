@@ -144,6 +144,7 @@ export const colors = {
     purple500: "#475da7",
     purple700: "#384B91",
     purple900: "#29235C",
+    teal700: "#017397",
     darkGreen50: "#DEF0F0",
     darkGreen100: "#ADDAD9",
     yellow400: "#F4E751",

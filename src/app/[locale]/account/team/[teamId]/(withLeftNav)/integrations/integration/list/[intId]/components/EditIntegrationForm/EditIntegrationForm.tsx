@@ -1,12 +1,13 @@
 "use client";
 
-import { useEffect, useMemo } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { Stack, Typography } from "@mui/material";
 import { pick } from "lodash";
+import { useTranslations } from "next-intl";
 import { useParams, useRouter } from "next/navigation";
-import { Federation } from "@/interfaces/Federation";
+import { Federation, FederationRunStatus } from "@/interfaces/Federation";
 import {
     Integration,
     IntegrationForm,
@@ -19,13 +20,14 @@ import InputWrapper from "@/components/InputWrapper";
 import Paper from "@/components/Paper";
 import RunFederationTest from "@/components/RunFederationTest";
 import SwitchInline from "@/components/SwitchInline";
+import { AutorenewIcon, CheckIcon } from "@/consts/icons";
 import useGet from "@/hooks/useGet";
 import useGetTeam from "@/hooks/useGetTeam";
 import usePost from "@/hooks/usePost";
 import usePut from "@/hooks/usePut";
-import useRunFederation, {
+import useTestFederation, {
     watchFederationKeys,
-} from "@/hooks/useRunFederation";
+} from "@/hooks/useTestFederation";
 import { useUnsavedChanges } from "@/hooks/useUnsavedChanges";
 import apis from "@/config/apis";
 import {
@@ -35,10 +37,12 @@ import {
     integrationValidationSchema,
 } from "@/config/forms/integration";
 import { RouteName } from "@/consts/routeName";
+import apiService from "@/services/api";
 import { requiresSecretKey } from "@/utils/integrations";
 
 const EditIntegrationForm = () => {
     const { push } = useRouter();
+    const t = useTranslations("api");
     const params = useParams<{
         teamId: string;
         intId: string;
@@ -72,8 +76,8 @@ const EditIntegrationForm = () => {
         defaultValues: integrationDefaultValues,
     });
 
-    const { runStatus, setTestedConfig, runResponse, handleRun } =
-        useRunFederation({
+    const { testStatus, setTestedConfig, testResponse, handleTest } =
+        useTestFederation({
             teamId: params?.teamId || "",
             integration: integration || {
                 ...integrationDefaultValues,
@@ -160,7 +164,51 @@ const EditIntegrationForm = () => {
     };
 
     const tested = watch("tested");
+    const enabled = watch("enabled");
     const auth_type = watch("auth_type");
+
+    const [runNowStatus, setRunNowStatus] = useState<FederationRunStatus>(
+        FederationRunStatus.IDLE
+    );
+    const revertTimeoutRef = useRef<ReturnType<typeof setTimeout>>();
+
+    useEffect(() => {
+        return () => clearTimeout(revertTimeoutRef.current);
+    }, []);
+
+    const MIN_RUNNING_DISPLAY_MS = 600;
+
+    const handleRunNow = async () => {
+        setRunNowStatus(FederationRunStatus.RUNNING);
+
+        const minDisplay = new Promise(resolve =>
+            setTimeout(resolve, MIN_RUNNING_DISPLAY_MS)
+        );
+        const [response] = await Promise.all([
+            apiService.getRequest(
+                `${apis.teamsV1Url}/${params?.teamId}/federations/${params?.intId}/run`,
+                {
+                    notificationOptions: {
+                        itemName: "Integration",
+                        t,
+                    },
+                }
+            ),
+            minDisplay,
+        ]);
+
+        setRunNowStatus(
+            response !== null
+                ? FederationRunStatus.COMPLETE
+                : FederationRunStatus.IDLE
+        );
+        if (response !== null) {
+            revertTimeoutRef.current = setTimeout(
+                () => setRunNowStatus(FederationRunStatus.IDLE),
+                3000
+            );
+        }
+    };
 
     /* unregister 'auth_secret_key' if 'auth_type' is set to "NO_AUTH" */
     useEffect(() => {
@@ -255,10 +303,10 @@ const EditIntegrationForm = () => {
                     </Paper>
                     <Box sx={{ p: 0, flex: 1 }}>
                         <RunFederationTest
-                            status={runStatus}
-                            runResponse={runResponse}
+                            status={testStatus}
+                            runResponse={testResponse}
                             isEnabled={formState.isValid}
-                            onRun={handleRun}
+                            onTest={handleTest}
                         />
                     </Box>
                 </Box>
@@ -268,7 +316,33 @@ const EditIntegrationForm = () => {
                     padding={0}
                     display="flex"
                     justifyContent="end"
+                    gap={2}
                     marginBottom={10}>
+                    <Button
+                        type="button"
+                        variant="outlined"
+                        color="success"
+                        disabled={
+                            !isEditing ||
+                            formState.isDirty ||
+                            !tested ||
+                            !enabled ||
+                            runNowStatus === FederationRunStatus.RUNNING
+                        }
+                        startIcon={
+                            runNowStatus === FederationRunStatus.RUNNING ? (
+                                <AutorenewIcon />
+                            ) : runNowStatus === FederationRunStatus.COMPLETE ? (
+                                <CheckIcon />
+                            ) : undefined
+                        }
+                        onClick={handleRunNow}>
+                        {runNowStatus === FederationRunStatus.RUNNING
+                            ? "Running"
+                            : runNowStatus === FederationRunStatus.COMPLETE
+                            ? "Complete"
+                            : "Run now"}
+                    </Button>
                     <Button type="submit">Save configuration</Button>
                 </Box>
             </Paper>

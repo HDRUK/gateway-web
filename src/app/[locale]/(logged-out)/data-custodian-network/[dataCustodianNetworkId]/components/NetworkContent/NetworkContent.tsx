@@ -41,21 +41,29 @@ const NetworkContent = ({
             }}>
             <DataUsesContent
                 datauses={activeDataUses}
+                associatedDatauses={entitiesSummaryData.associated_durs ?? []}
                 anchorIndex={3}
                 translationPath={TRANSLATION_PATH}
             />
             <ToolsContent
                 tools={activeTools}
+                associatedTools={entitiesSummaryData.associated_tools ?? []}
                 anchorIndex={4}
                 translationPath={TRANSLATION_PATH}
             />
             <PublicationsContent
                 publications={activePublications}
+                associatedPublications={
+                    entitiesSummaryData.associated_publications ?? []
+                }
                 anchorIndex={5}
                 translationPath={TRANSLATION_PATH}
             />
             <CollectionsContent
                 collections={activeCollections}
+                associatedCollections={
+                    entitiesSummaryData.associated_collections ?? []
+                }
                 anchorIndex={6}
                 translationPath={TRANSLATION_PATH}
             />

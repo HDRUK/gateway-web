@@ -1,7 +1,7 @@
 "use client";
 
 import { Divider } from "@mui/material";
-import { isEqual } from "lodash";
+import { get, isEqual } from "lodash";
 import { useTranslations } from "next-intl";
 import { Metadata } from "@/interfaces/Dataset";
 import Paper from "@/components/Paper";
@@ -29,6 +29,8 @@ const Sources = ({ data }: SourcesProps) => {
     // This is using HDRUK schema so it's not collectionSituation as in the GWDM case
     const { collectionSource } = data.provenance.origin;
 
+    const dataCustodianName = get(data, "summary.dataCustodian.name");
+
     return (
         <Paper sx={{ borderRadius: 2, p: 2 }}>
             <Typography variant="h4">
@@ -45,6 +47,14 @@ const Sources = ({ data }: SourcesProps) => {
                 )}
 
             <Divider sx={{ my: 1 }} />
+
+            {dataCustodianName && (
+                <Typography variant="h4">
+                    <b>{`${t("dataCustodian")}: `}</b>
+                    {dataCustodianName}
+                </Typography>
+            )}
+
             <Typography variant="h4">
                 <b>{`${t("collectionSources")}: `}</b>
                 {collectionSource

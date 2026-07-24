@@ -27,6 +27,7 @@ const TRANSLATIONS = {
     footerDesc:
         "Cohort Discovery indentifies relevant populations across datasets",
     cohortButton: "Open Cohort Discovery",
+    noData: "No data was selected for this widget",
 };
 
 type WidgetDisplayProps = { data: WidgetEntityData; isIframe?: boolean };
@@ -71,10 +72,29 @@ export default function WidgetDisplay({
         [branding_primary, branding_secondary, branding_neutral]
     );
 
-    const renderedContent = useMemo(() => {
-        const results = resultsByType[entityType];
+    const filteredMenuCategories = useMemo(
+        () => CATEGORIES.filter(category => data?.[category].length > 0),
+        [data]
+    );
 
-        switch (entityType) {
+    const activeType = filteredMenuCategories.includes(entityType)
+        ? entityType
+        : filteredMenuCategories[0];
+
+    const renderedContent = useMemo(() => {
+        if (!activeType) {
+            return (
+                <Box sx={{ p: 4, textAlign: "center" }}>
+                    <Typography variant="subtitle1" component="p">
+                        {TRANSLATIONS.noData}
+                    </Typography>
+                </Box>
+            );
+        }
+
+        const results = resultsByType[activeType];
+
+        switch (activeType) {
             case "datasets":
                 return (
                     <DatasetsList
@@ -104,15 +124,11 @@ export default function WidgetDisplay({
                     />
                 );
         }
-    }, [entityType, resultsByType, branding]);
-
-    const filteredMenuCategories = useMemo(
-        () => CATEGORIES.filter(category => data?.[category].length > 0),
-        [data]
-    );
+    }, [activeType, resultsByType, branding]);
 
     return (
         <Box
+            data-testid="widget-display"
             sx={{
                 width: isIframe ? "100%" : `${size_width}${unit}`,
                 height: `${size_height}${unit}`,
@@ -136,15 +152,17 @@ export default function WidgetDisplay({
                     branding={branding}
                 />
 
-                <CategoryMenu
-                    value={entityType}
-                    options={filteredMenuCategories}
-                    onChange={setEntityType}
-                    menuAnchor={menuAnchor}
-                    setMenuAnchor={setMenuAnchor}
-                    containerRef={widgetContainer}
-                    branding={branding}
-                />
+                {activeType && (
+                    <CategoryMenu
+                        value={activeType}
+                        options={filteredMenuCategories}
+                        onChange={setEntityType}
+                        menuAnchor={menuAnchor}
+                        setMenuAnchor={setMenuAnchor}
+                        containerRef={widgetContainer}
+                        branding={branding}
+                    />
+                )}
 
                 <Box sx={{ flex: 1, overflow: "auto", mb: 1, p: 0 }}>
                     {renderedContent}

@@ -59,6 +59,7 @@ interface Metadata {
         description: string;
         doiName: string;
         keywords: string[];
+        datasetAliases?: string | string[] | null;
         shortTitle: string;
         title: string;
         populationSize: number | null;
@@ -219,6 +220,8 @@ interface DataCustodianDataset {
     title?: string;
     name?: string;
     datasetType: string;
+    team_id?: string;
+    team?: { id: number; name: string };
 }
 
 interface NewDataset extends Omit<Dataset, "versions" | "id"> {

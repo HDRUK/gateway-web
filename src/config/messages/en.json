@@ -195,6 +195,7 @@
             "metadataOnboardingTitle": "Metadata Onboarding and Integrations",
             "durTitle": "Exploring Data Uses / Research Projects",
             "darTitle": "Submitting Enquiries and Data Access Requests",
+            "representingResearchGroupTitle": "Representing a Research Group",
             "researcherTitle": "Researcher FAQs",
             "uploadingPublicationsTitle": "Uploading Publications ",
             "cohortDiscoveryTitle": "Using Cohort Discovery",
@@ -1330,6 +1331,7 @@
                     "populationSizeNotReported": "not reported",
                     "populationSize": "Dataset population size",
                     "dateLabel": "Date range",
+                    "matchedAliases": "Matched aliases",
                     "leadOrganisation": "Lead Organisation",
                     "leadOrganisationTooltip": "The name of the legal entity that signs the contract to access the data",
                     "datasets": "Datasets",
@@ -1446,21 +1448,31 @@
                     "cohortDiscoveryDisabled": "This data custodian does not support Cohort Discovery"
                 },
                 "CollectionsContent": {
-                    "heading": "Collections ({ length })"
+                    "title": "Collections",
+                    "heading": "Collections ({ length })",
+                    "associatedHeading": "Associated collections"
                 },
                 "DatasetsContent": {
+                    "title": "Datasets",
                     "heading": "Datasets ({ length })",
+                    "associatedHeading": "Associated datasets",
                     "populationSize": "Dataset population size: { length }",
                     "unknownString": "Unknown"
                 },
                 "DatausesContent": {
-                    "heading": "Data Uses ({ length })"
+                    "title": "Data uses",
+                    "heading": "Data Uses ({ length })",
+                    "associatedHeading": "Associated data uses"
                 },
                 "PublicationsContent": {
-                    "heading": "Publications ({ length })"
+                    "title": "Publications",
+                    "heading": "Publications ({ length })",
+                    "associatedHeading": "Associated publications"
                 },
                 "ToolsContent": {
-                    "heading": "Analysis Scripts & Software ({ length })"
+                    "title": "Analysis scripts, tools and software",
+                    "heading": "Analysis Scripts & Software ({ length })",
+                    "associatedHeading": "Associated analysis scripts, tools and software"
                 },
                 "ServiceOfferingsContent": {
                     "heading": "Service offerings ({ length })"
@@ -1485,7 +1497,7 @@
                     "heading": "Introduction"
                 },
                 "DataCustodianContent": {
-                    "heading": "Data Custodians ({ length })",
+                    "title": "Data Custodian",
                     "datasets": "Datasets ({ length })",
                     "datause": "Data Use ({ length })",
                     "tools": "Tools ({ length })",
@@ -1493,24 +1505,34 @@
                     "collections": "Collections ({ length })"
                 },
                 "DatasetsContent": {
+                    "title": "Datasets",
                     "heading": "Datasets ({ length })",
+                    "associatedHeading": "Associated datasets",
                     "populationSize": "Dataset population size: { length }",
                     "unknownString": "Unknown"
                 },
                 "DatausesContent": {
-                    "heading": "Data Uses ({ length })"
+                    "title": "Data uses",
+                    "heading": "Data Uses ({ length })",
+                    "associatedHeading": "Associated data uses"
                 },
                 "PublicationsContent": {
-                    "heading": "Publications ({ length })"
+                    "title": "Publications",
+                    "heading": "Publications ({ length })",
+                    "associatedHeading": "Associated publications"
                 },
                 "ToolsContent": {
-                    "heading": "Analysis Scripts & Software ({ length })"
+                    "title": "Analysis scripts, tools and software",
+                    "heading": "Analysis Scripts & Software ({ length })",
+                    "associatedHeading": "Associated analysis scripts, tools and software"
                 },
                 "ServiceOfferingsContent": {
                     "heading": "Service offerings ({ length })"
                 },
                 "CollectionsContent": {
-                    "heading": "Collections ({ length })"
+                    "title": "Collections",
+                    "heading": "Collections ({ length })",
+                    "associatedHeading": "Associated collections"
                 }
             }
         },
@@ -1562,6 +1584,7 @@
                     "isMemberOf": "Similar Datasets ({ count })"
                 },
                 "Sources": {
+                    "dataCustodian": "Data Custodian",
                     "datasetTypes": "Dataset Types",
                     "datasetSubtypes": "Dataset Sub-types",
                     "collectionSources": "Collection Sources",
@@ -1961,10 +1984,16 @@
                     "azure": "Azure",
                     "linkedIn": "LinkedIn",
                     "google": "Google",
-                    "openAthens": "institution"
+                    "openAthens": "your institute"
                 },
                 "intro1": "Anyone can search and view datasets, collections and other resources with or without an account. Creating an account allows you to:",
-                "intro2": "You can sign in or create a Gateway account with any of the organisations below, simply click your preferred organisation and follow the on-screen instructions:",
+                "bulletEnquiries": "Submit data access enquiries and applications",
+                "bulletCollections": "Add your own collections, papers and other resources",
+                "bulletCohortDiscovery": "Use the Cohort Discovery advanced search tool",
+                "preferredAccessTitle": "<bold>Preferred Access</bold> (including <bold>Cohort Discovery</bold>)",
+                "preferredAccessText": "You can sign in using one of the supported sign-in options below to access the full platform experience, including Cohort Discovery and all associated features.",
+                "notPreferredAccessTitle": "<bold>Not Preferred Access</bold>",
+                "notPreferredAccessText": "You can sign in using one of the supported sign-in options below to access the core Gateway features but <highlight>excludes Cohort Discovery</highlight> and all associated features.",
                 "suggestAnother": "Suggest another identity provider",
                 "selectAnother": "Select another provider"
             },
@@ -2089,7 +2118,9 @@
                 "rejectedButtonText": "Reject",
                 "changeStatus": "Change Application Status",
                 "intro": "Use the options below to log your decision about this application.",
-                "defaultDraftMessage": "This is an automated notification that the application has been changed from 'In review' to 'Draft' status. No comment has been added by the Data Custodian."
+                "defaultDraftMessage": "This is an automated notification that the application has been changed from 'In review' to 'Draft' status. No comment has been added by the Data Custodian.",
+                "statusUpdateSuccess": "Application status updated successfully",
+                "statusUpdateError": "Failed to update application status"
             },
             "DarActionDialog": {
                 "actionPermanent": "I understand this action is permanent",

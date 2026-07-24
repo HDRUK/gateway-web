@@ -1,0 +1,88 @@
+name: Widget embed canary
+
+# Checks a real external page (the public HDRUK WordPress site) that embeds a
+# production widget. Broken embeds fail on sites we do not monitor — this is
+# the only signal for production regressions (infra headers, flag flips, CDN).
+#
+# Prerequisite: a canary widget exists on production with the WordPress origin
+# in its permitted_domains, and its snippet is embedded on the page below.
+
+on:
+  workflow_dispatch:
+    inputs:
+      page_url:
+        description: "External page embedding the canary widget"
+        required: false
+  schedule:
+    - cron: "0 6 * * *"
+
+env:
+  SLACK_WEBHOOK_URL: '${{ secrets.SLACK_WEBHOOK_URL}}'
+  SLACK_CHANNEL: '${{ secrets.GITHUBACTIONS_SLACK_CHANNEL }}'
+  CANARY_PAGE_URL: '${{ vars.CANARY_PAGE_URL }}'
+
+jobs:
+  widget-canary:
+    runs-on: ubuntu-latest
+    environment: |-
+      ${{
+         github.ref_name == 'dev' && 'dev'
+      || github.base_ref == 'dev' && 'dev'
+      ||                             'release'
+      }}
+    steps:
+      - name: Check external widget embed
+        run: |
+          set -euo pipefail
+
+          PAGE_URL="${{ inputs.page_url || env.CANARY_PAGE_URL }}"
+          echo "Checking canary page: $PAGE_URL"
+
+          PAGE_ORIGIN=$(python3 -c "from urllib.parse import urlparse; import sys; u = urlparse(sys.argv[1]); print(f'{u.scheme}://{u.netloc}')" "$PAGE_URL")
+
+          curl -fsSL "$PAGE_URL" -o page.html
+
+          IFRAME_SRC=$(grep -oE 'src="[^"]*/widgets/[0-9]+-[0-9]+"' page.html | head -1 | sed 's/^src="//; s/"$//')
+          if [ -z "$IFRAME_SRC" ]; then
+            echo "::error::No widget iframe found on $PAGE_URL — has the embed been removed?"
+            exit 1
+          fi
+          echo "Found widget iframe: $IFRAME_SRC"
+
+          # Fetch the hosted widget page exactly as the browser framing it
+          # would: with the external site's origin as referer.
+          HTTP_STATUS=$(curl -sSL -D headers.txt -H "Referer: $PAGE_ORIGIN/" "$IFRAME_SRC" -o widget.html -w "%{http_code}")
+          if [ "$HTTP_STATUS" != "200" ]; then
+            echo "::error::Hosted widget page returned HTTP $HTTP_STATUS for $IFRAME_SRC"
+            exit 1
+          fi
+
+          if grep -qi '^x-frame-options' headers.txt; then
+            echo "::error::X-Frame-Options is being sent on the hosted widget page — this blocks every third-party embed"
+            exit 1
+          fi
+          if grep -i '^content-security-policy' headers.txt | grep -qi 'frame-ancestors'; then
+            echo "::error::A frame-ancestors CSP is being sent on the hosted widget page — this blocks every third-party embed"
+            exit 1
+          fi
+
+          if grep -q 'data-testid="widget-error"' widget.html; then
+            echo "::error::The hosted widget page rendered an error state:"
+            grep -o 'data-testid="widget-error">[^<]*' widget.html || true
+            exit 1
+          fi
+          if ! grep -q 'data-testid="widget-display"' widget.html; then
+            echo "::error::The hosted widget page did not render the widget content"
+            exit 1
+          fi
+
+          echo "✅ Canary widget renders correctly from $PAGE_ORIGIN"
+
+      - name: Run Notification
+        uses: act10ns/slack@v1
+        with:
+          status: ${{ job.status }}
+          steps: ${{ toJson(steps) }}
+          channel: ${{ env.SLACK_CHANNEL }}
+          message: Widget embed canary check ${{ job.status }}
+        if: failure()

@@ -22,8 +22,12 @@ export default function DarStatusTracker({
     statuses,
 }: DarStatusTrackerProps) {
     const t = useTranslations(TRANSLATION_PATH);
+    const orderedStatuses = statuses.includes(DarApplicationStatus.DRAFT)
+        ? statuses
+        : [DarApplicationStatus.DRAFT, ...statuses];
+
     const formattedStatuses = [
-        ...statuses,
+        ...orderedStatuses,
         approvalStatus &&
         approvalStatus !== DarApplicationApprovalStatus.FEEDBACK
             ? approvalStatus
@@ -53,6 +57,10 @@ export default function DarStatusTracker({
                     mb: 3,
                 }}>
                 {formattedStatuses.map((status, index) => {
+                    if (status === DarApplicationStatus.DRAFT) {
+                        return null;
+                    }
+
                     const isActive = index === activeIndex;
                     const isFuture = index > activeIndex;
 

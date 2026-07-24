@@ -32,7 +32,12 @@ export default function AccordionSection({
             variant="plain"
             noIndent
             elevation={0}
-            heading={<Typography variant="h3">{heading}</Typography>}
+            headingComponent="h2"
+            heading={
+                <Typography variant="h3" component="span">
+                    {heading}
+                </Typography>
+            }
             contents={
                 <>
                     <BoxContainer

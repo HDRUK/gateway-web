@@ -13,8 +13,9 @@ import Typography from "@/components/Typography";
 import ActiveListSidebar from "@/modules/ActiveListSidebar";
 import apis from "@/config/apis";
 import { StaticImages } from "@/config/images";
+import { DEFAULT_CACHE_REVALIDATE } from "@/consts/cache";
 import { AspectRatioImage } from "@/consts/image";
-import { getTeamInfo } from "@/utils/api";
+import { getTeamInfo, getTeamSummary } from "@/utils/api";
 import metaData from "@/utils/metadata";
 import ActionBar from "./components/ActionBar";
 import DataCustodianContent from "./components/DataCustodianContent";
@@ -46,16 +47,28 @@ export default async function DataCustodianItemPage({
         `${apis.teamsV1UrlIP}/${dataCustodianId}/datasets_cohort_discovery`,
         {
             next: {
-                revalidate: 180,
-                tags: ["all", `custodian_datasets-${dataCustodianId}`],
+                revalidate: DEFAULT_CACHE_REVALIDATE,
+                tags: [
+                    "all",
+                    "custodian_datasets",
+                    `custodian_datasets-${dataCustodianId}`,
+                ],
             },
-            cache: "force-cache",
         }
     );
     if (!resp.ok) {
         throw new Error("Failed to fetch custodian data");
     }
     const { data: cohortDiscoverySupport } = await resp.json();
+
+    const summaryPromise = getTeamSummary(dataCustodianId, {
+        cache: {
+            tags: [
+                "custodian_summary",
+                `custodian_summary-${dataCustodianId}`,
+            ],
+        },
+    });
 
     const populatedSections = dataCustodianFields.filter(section =>
         section.fields.some(field => !isEmpty(get(infoData, field.path)))
@@ -82,10 +95,17 @@ export default async function DataCustodianItemPage({
                             cohortDiscoverySupport.supportsCohortDiscovery
                         }
                     />
-                    <Box sx={{ ml: 2, mt: 2 }}>
-                        <Box sx={{ display: "flex", alignItems: "center", pt: 0, justifyContent: "space-between", p: 0}}>
+                    <Box>
+                        <Box
+                            sx={{
+                                display: "flex",
+                                alignItems: "center",
+                                pt: 0,
+                                justifyContent: "space-between",
+                                p: 0,
+                            }}>
                             <Box sx={{ mb: 1, p: 0 }}>
-                                <Typography variant="h1" sx={{ ml: 2, mt: 2 }}>
+                                <Typography variant="h1" sx={{ mt: 2, mb: 0 }}>
                                     {infoData.name}
                                 </Typography>
                             </Box>
@@ -106,13 +126,14 @@ export default async function DataCustodianItemPage({
                             display: "flex",
                             flexDirection: "column",
                             gap: 2,
+                            p: 0,
                         }}>
                         <Suspense
                             fallback={
                                 <Skeleton variant="rectangular" height={200} />
                             }>
                             <DataCustodianContent
-                                dataCustodianId={dataCustodianId}
+                                summaryPromise={summaryPromise}
                                 populatedSections={populatedSections}
                             />
                             {!!infoData.aliases?.length && (
@@ -137,13 +158,14 @@ export default async function DataCustodianItemPage({
                         <Suspense
                             fallback={<SectionSkeleton title="Datasets" />}>
                             <DatasetsOuter
-                                dataCustodianId={+dataCustodianId}
+                                dataCustodianId={dataCustodianId}
+                                summaryPromise={summaryPromise}
                                 startIndex={populatedSections.length}
                             />
                         </Suspense>
                         <Suspense fallback={<DataCustodianEntitiesSkeleton />}>
                             <EntitiesOuter
-                                dataCustodianId={+dataCustodianId}
+                                summaryPromise={summaryPromise}
                                 startIndex={populatedSections.length}
                             />
                         </Suspense>
