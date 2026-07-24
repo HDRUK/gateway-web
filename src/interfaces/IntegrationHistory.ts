@@ -1,7 +1,15 @@
-interface IntegrationHistory {
-    run_time: string;
-    success: boolean;
-    message?: string;
+interface FailedDataset {
+    pid: string;
+    message: string;
 }
 
-export type { IntegrationHistory };
+interface IntegrationHistory {
+    job_uuid: string;
+    started_at: string;
+    finished_at: string;
+    status: "success" | "failed";
+    message: string | null;
+    failed_datasets: FailedDataset[];
+}
+
+export type { IntegrationHistory, FailedDataset };
