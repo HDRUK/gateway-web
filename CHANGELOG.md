@@ -1,3 +1,25 @@
+## [2.40.0](https://github.com/HDRUK/gateway-web/compare/v2.39.0...v2.40.0) (2026-07-24)
+
+### ✨ Features
+
+* **GAT-7563:** Data Custodian Network = Split owned/associated content (#1569) ([7e462ff](https://github.com/HDRUK/gateway-web/commit/7e462ff8d1589d2a3d34ebefed1a225211c0c4cf)), closes [GAT-7563](undefinedGAT-7563)
+* **GAT-7564:** Data custodian associated resources (#1567) ([45e9c1d](https://github.com/HDRUK/gateway-web/commit/45e9c1da229c5c4e03694d102575c7ffda8c7297)), closes [GAT-7564](undefinedGAT-7564)
+* **GAT-7604:** Data custodian display tweaks (#1562) ([82b222c](https://github.com/HDRUK/gateway-web/commit/82b222c3e7430d1ff6e0dc65a465ff145ae348cd)), closes [GAT-7604](undefinedGAT-7604)
+* **GAT-8094:** Display dataset aliases (#1566) ([65e819a](https://github.com/HDRUK/gateway-web/commit/65e819a05c9440a3834ec22f307488721aac5764)), closes [GAT-8094](undefinedGAT-8094)
+* **GAT-8131:** Widget test harness (#1573) ([ac6fda3](https://github.com/HDRUK/gateway-web/commit/ac6fda325a3166df8975e951e5304539048a1992)), closes [GAT-8131](undefinedGAT-8131)
+* **GAT-8478:** Add support link (#1571) ([c51fa80](https://github.com/HDRUK/gateway-web/commit/c51fa800ec87edd22ff07fa8105b6fb8dd182e9b)), closes [GAT-8478](undefinedGAT-8478)
+* **GAT-8709:** Fix confusing naming for running a fedaration test. ([6aedd84](https://github.com/HDRUK/gateway-web/commit/6aedd84ab0c888eaeed13cc5ff33dbc09b11508c))
+* **GAT-8724:** Update dataset filter order (#1576) ([71843f9](https://github.com/HDRUK/gateway-web/commit/71843f9890af782f7ea5689e28690d2b37d5336b)), closes [GAT-8724](undefinedGAT-8724)
+* **GAT-8798:** Added run now button for integrations ([f944277](https://github.com/HDRUK/gateway-web/commit/f9442777ae9e20efb06cd2bcf11630845b30a5ff)), closes [GAT-8798](undefinedGAT-8798)
+* **GAT-8821:** Correct DAR dialog & save draft logic (#1578) ([04eace6](https://github.com/HDRUK/gateway-web/commit/04eace6b2831d47b077ffe34d22130e479b3b985)), closes [GAT-8821](undefinedGAT-8821)
+* **GAT-9193:** Update sign-in modal design (#1581) ([ee76b95](https://github.com/HDRUK/gateway-web/commit/ee76b95c2305e36e0752fbe1a00cb6357bcdfdb1)), closes [GAT-9193](undefinedGAT-9193)
+* **GAT-9193:** Update wording (#1582) ([68ae7bb](https://github.com/HDRUK/gateway-web/commit/68ae7bb1b84cc4433e4dbf342e9f5bf71d0b2296)), closes [GAT-9193](undefinedGAT-9193)
+
+### 🐛 Bug Fixes
+
+* **GAT-8754:** Fix empty widget preview state (#1577) ([a827c08](https://github.com/HDRUK/gateway-web/commit/a827c086bb5da4403d3b7cd7eb79493644df4af2))
+* **GAT-9237:** bug in the onboarding form for tools (#1579) ([2071ecb](https://github.com/HDRUK/gateway-web/commit/2071ecb6e692d70fcf5219678310e2cb8ecb0cf9)), closes [GAT-9237](undefinedGAT-9237)
+
 ## [2.39.0](https://github.com/HDRUK/gateway-web/compare/v2.38.0...v2.39.0) (2026-07-06)
 
 ### ✨ Features
