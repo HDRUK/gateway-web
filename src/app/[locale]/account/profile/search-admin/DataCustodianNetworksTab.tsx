@@ -1,6 +1,7 @@
 "use client";
 
 import { useMemo, useState } from "react";
+import { useTranslations } from "next-intl";
 import { Divider, Skeleton } from "@mui/material";
 import Box from "@/components/Box";
 import Paper from "@/components/Paper";
@@ -18,13 +19,22 @@ import { GlobalDialogContextProps } from "@/providers/DialogProvider";
 import DataCustodianNetworkForm from "./DataCustodianNetworkForm";
 import DeleteDataCustodianNetworkDialog from "./DeleteDataCustodianNetworkDialog";
 
+export enum ViewMode {
+    LIST = "list",
+    CREATE = "create",
+    EDIT = "edit",
+}
+
 type View =
-    | { mode: "list" }
-    | { mode: "create" }
-    | { mode: "edit"; networkId: number };
+    | { mode: ViewMode.LIST }
+    | { mode: ViewMode.CREATE }
+    | { mode: ViewMode.EDIT; networkId: number };
+
+const TRANSLATION_PATH = "pages.account.profile.searchAdmin";
 
 export default function DataCustodianNetworksTab() {
-    const [view, setView] = useState<View>({ mode: "list" });
+    const t = useTranslations(TRANSLATION_PATH);
+    const [view, setView] = useState<View>({ mode: ViewMode.LIST });
     const { showDialog } = useDialog() as GlobalDialogContextProps;
 
     const { data, isLoading, mutate } = useGet<
@@ -43,27 +53,27 @@ export default function DataCustodianNetworksTab() {
         });
     };
 
-    if (view.mode === "create") {
+    if (view.mode === ViewMode.CREATE) {
         return (
             <DataCustodianNetworkForm
                 onDone={() => {
-                    setView({ mode: "list" });
+                    setView({ mode: ViewMode.LIST });
                     mutate();
                 }}
-                onCancel={() => setView({ mode: "list" })}
+                onCancel={() => setView({ mode: ViewMode.LIST })}
             />
         );
     }
 
-    if (view.mode === "edit") {
+    if (view.mode === ViewMode.EDIT) {
         return (
             <DataCustodianNetworkForm
                 networkId={view.networkId}
                 onDone={() => {
-                    setView({ mode: "list" });
+                    setView({ mode: ViewMode.LIST });
                     mutate();
                 }}
-                onCancel={() => setView({ mode: "list" })}
+                onCancel={() => setView({ mode: ViewMode.LIST })}
             />
         );
     }
@@ -80,11 +90,13 @@ export default function DataCustodianNetworksTab() {
                     p: 0,
                     mb: 2,
                 }}>
-                <Typography variant="h3">Data Custodian Networks</Typography>
+                <Typography variant="h3">
+                    {t("dataCustodianNetworksTitle")}
+                </Typography>
                 <Button
                     size="small"
-                    onClick={() => setView({ mode: "create" })}>
-                    Create network
+                    onClick={() => setView({ mode: ViewMode.CREATE })}>
+                    {t("createNetwork")}
                 </Button>
             </Box>
 
@@ -98,7 +110,7 @@ export default function DataCustodianNetworksTab() {
             {!isLoading && networks.length === 0 && (
                 <Paper variant="outlined" sx={{ p: 2 }}>
                     <Typography variant="body2" color="text.secondary">
-                        No Data Custodian Networks found.
+                        {t("noNetworksFound")}
                     </Typography>
                 </Paper>
             )}
@@ -124,11 +136,9 @@ export default function DataCustodianNetworksTab() {
                                     <Typography
                                         variant="body2"
                                         color="text.secondary">
-                                        {network.teams?.length ?? 0} member
-                                        team
-                                        {network.teams?.length === 1
-                                            ? ""
-                                            : "s"}
+                                        {t("memberTeamCount", {
+                                            count: network.teams?.length ?? 0,
+                                        })}
                                     </Typography>
                                 </Box>
                                 <Box
@@ -141,8 +151,8 @@ export default function DataCustodianNetworksTab() {
                                     <Chip
                                         label={
                                             network.enabled
-                                                ? "Enabled"
-                                                : "Disabled"
+                                                ? t("enabled")
+                                                : t("disabled")
                                         }
                                         color={
                                             network.enabled
@@ -154,18 +164,18 @@ export default function DataCustodianNetworksTab() {
                                     <ActionMenu
                                         actions={[
                                             {
-                                                label: "Edit",
+                                                label: t("edit"),
                                                 icon: EditIcon,
                                                 action: () =>
                                                     setView({
-                                                        mode: "edit",
+                                                        mode: ViewMode.EDIT,
                                                         networkId: Number(
                                                             network.id
                                                         ),
                                                     }),
                                             },
                                             {
-                                                label: "Delete",
+                                                label: t("delete"),
                                                 icon: DeleteForeverIcon,
                                                 action: () =>
                                                     handleDelete(network),

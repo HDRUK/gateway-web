@@ -1,6 +1,7 @@
 "use client";
 
 import { useMemo, useState } from "react";
+import { useTranslations } from "next-intl";
 import { Divider, Skeleton, Switch } from "@mui/material";
 import Box from "@/components/Box";
 import Paper from "@/components/Paper";
@@ -10,12 +11,15 @@ import usePut from "@/hooks/usePut";
 import apis from "@/config/apis";
 import { FeatureFlagsResponse } from "@/utils/gatewayFlagAdapter";
 
+const TRANSLATION_PATH = "pages.account.profile.searchAdmin";
+
 interface Feature {
     name: string;
     value: boolean;
 }
 
 export default function FeatureFlagsTable({ userId }: { userId?: string }) {
+    const t = useTranslations(TRANSLATION_PATH);
     const url = userId ? `${apis.features}/users/${userId}` : apis.features;
 
     const [editingEnabled, setEditingEnabled] = useState(false);
@@ -46,7 +50,7 @@ export default function FeatureFlagsTable({ userId }: { userId?: string }) {
         return (
             <Paper variant="outlined" sx={{ p: 2 }}>
                 <Typography variant="body2" color="text.secondary">
-                    No feature flags found.
+                    {t("noFeatureFlags")}
                 </Typography>
             </Paper>
         );
@@ -64,7 +68,7 @@ export default function FeatureFlagsTable({ userId }: { userId?: string }) {
                     bgcolor: "grey.50",
                 }}>
                 <Typography sx={{ fontWeight: 500 }}>
-                    Enable editing
+                    {t("enableEditing")}
                 </Typography>
                 <Switch
                     checked={editingEnabled}

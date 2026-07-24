@@ -1,5 +1,6 @@
 "use client";
 
+import { useTranslations } from "next-intl";
 import MuiDialogActions from "@mui/material/DialogActions";
 import MuiDialogContent from "@mui/material/DialogContent";
 import Button from "@/components/Button";
@@ -9,6 +10,8 @@ import useDelete from "@/hooks/useDelete";
 import useDialog from "@/hooks/useDialog";
 import apis from "@/config/apis";
 import { GlobalDialogContextProps } from "@/providers/DialogProvider";
+
+const TRANSLATION_PATH = "modules.dialogs.DeleteDataCustodianNetworkDialog";
 
 interface DeleteDataCustodianNetworkDialogProps {
     networkId: number;
@@ -21,6 +24,7 @@ const DeleteDataCustodianNetworkDialog = ({
     networkName,
     callback,
 }: DeleteDataCustodianNetworkDialogProps) => {
+    const t = useTranslations(TRANSLATION_PATH);
     const { hideDialog } = useDialog() as GlobalDialogContextProps;
 
     const deleteNetwork = useDelete(apis.dataCustodianNetworkV2Url, {
@@ -41,11 +45,10 @@ const DeleteDataCustodianNetworkDialog = ({
     };
 
     return (
-        <Dialog title="Delete network" showCloseButton={false}>
+        <Dialog title={t("title")} showCloseButton={false}>
             <MuiDialogContent>
                 <Typography>
-                    Are you sure you want to delete &quot;{networkName}
-                    &quot;? This cannot be undone.
+                    {t("message", { NETWORK_NAME: networkName })}
                 </Typography>
             </MuiDialogContent>
             <MuiDialogActions>
@@ -54,10 +57,10 @@ const DeleteDataCustodianNetworkDialog = ({
                     autoFocus
                     color="secondary"
                     onClick={onCancel}>
-                    Cancel
+                    {t("cancelButton")}
                 </Button>
                 <Button color="error" onClick={handleDelete}>
-                    Delete
+                    {t("confirmButton")}
                 </Button>
             </MuiDialogActions>
         </Dialog>

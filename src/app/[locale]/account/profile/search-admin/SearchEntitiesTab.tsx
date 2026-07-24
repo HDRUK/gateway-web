@@ -1,6 +1,7 @@
 "use client";
 
 import { useMemo } from "react";
+import { useTranslations } from "next-intl";
 import { Alert, Skeleton } from "@mui/material";
 import { KeyedMutator } from "swr";
 import Box from "@/components/Box";
@@ -12,6 +13,8 @@ import useDialog from "@/hooks/useDialog";
 import { AdminSearchStatusResponse } from "@/interfaces/AdminSearch";
 import { GlobalDialogContextProps } from "@/providers/DialogProvider";
 import ReindexConfirmDialog from "./ReindexConfirmDialog";
+
+const TRANSLATION_PATH = "pages.account.profile.searchAdmin";
 
 // Rough eligible-document threshold above which a full drop+reimport is
 // slow enough to warrant flagging before the admin clicks Reindex (datasets/
@@ -30,6 +33,7 @@ export default function SearchEntitiesTab({
     isLoading,
     mutate,
 }: SearchEntitiesTabProps) {
+    const t = useTranslations(TRANSLATION_PATH);
     const { showDialog } = useDialog() as GlobalDialogContextProps;
 
     const entities = useMemo(() => data?.entities ?? [], [data]);
@@ -50,11 +54,7 @@ export default function SearchEntitiesTab({
     return (
         <Box sx={{ p: 0 }}>
             <Alert severity="info" sx={{ mb: 2 }}>
-                Reindexing drops and recreates a collection from scratch.
-                Small entities finish in seconds, but larger ones (datasets,
-                data use register, publications) can take a minute or two to
-                fully re-import — this page won&apos;t update automatically,
-                so use Refresh status to check progress.
+                {t("reindexInfo")}
             </Alert>
 
             <Box
@@ -67,9 +67,9 @@ export default function SearchEntitiesTab({
                     p: 0,
                     mb: 2,
                 }}>
-                <Typography variant="h3">Search entities</Typography>
+                <Typography variant="h3">{t("searchEntitiesTitle")}</Typography>
                 <Button size="small" variant="outlined" onClick={() => mutate()}>
-                    Refresh status
+                    {t("refreshStatus")}
                 </Button>
             </Box>
 
@@ -136,8 +136,8 @@ export default function SearchEntitiesTab({
                                     <Chip
                                         label={
                                             row.collectionExists
-                                                ? "Exists"
-                                                : "Missing"
+                                                ? t("collectionExists")
+                                                : t("collectionMissing")
                                         }
                                         color={
                                             row.collectionExists
@@ -160,7 +160,9 @@ export default function SearchEntitiesTab({
                                         variant="body2"
                                         color="text.secondary"
                                         sx={{ wordBreak: "break-word" }}>
-                                        Collection: {row.collection}
+                                        {t("collectionLabel", {
+                                            COLLECTION: row.collection,
+                                        })}
                                     </Typography>
 
                                     <Box
@@ -172,14 +174,18 @@ export default function SearchEntitiesTab({
                                             flexWrap: "wrap",
                                         }}>
                                         <Typography variant="body2">
-                                            {row.documentCount} indexed /{" "}
-                                            {row.eligibleCount} eligible
+                                            {t("documentCounts", {
+                                                DOCUMENT_COUNT:
+                                                    row.documentCount,
+                                                ELIGIBLE_COUNT:
+                                                    row.eligibleCount,
+                                            })}
                                         </Typography>
                                         <Chip
                                             label={
                                                 inSync
-                                                    ? "In sync"
-                                                    : "Needs reindex"
+                                                    ? t("inSync")
+                                                    : t("needsReindex")
                                             }
                                             color={
                                                 inSync ? "success" : "warning"
@@ -191,7 +197,9 @@ export default function SearchEntitiesTab({
                                     <Typography
                                         variant="body2"
                                         color="text.secondary">
-                                        {row.databaseCount} rows in DB total
+                                        {t("databaseCount", {
+                                            DATABASE_COUNT: row.databaseCount,
+                                        })}
                                     </Typography>
 
                                     <Box sx={{ p: 0 }}>
@@ -199,7 +207,7 @@ export default function SearchEntitiesTab({
                                             variant="body2"
                                             color="text.secondary"
                                             sx={{ mb: 0.5 }}>
-                                            Facet fields
+                                            {t("facetFields")}
                                         </Typography>
                                         {facetFields.length > 0 ? (
                                             <Box
@@ -222,7 +230,7 @@ export default function SearchEntitiesTab({
                                             <Typography
                                                 variant="body2"
                                                 color="text.secondary">
-                                                None configured
+                                                {t("noFacetFields")}
                                             </Typography>
                                         )}
                                     </Box>
@@ -233,8 +241,7 @@ export default function SearchEntitiesTab({
                                                 variant="body2"
                                                 color="warning.main"
                                                 sx={{ mb: 1 }}>
-                                                Large entity — reindexing can
-                                                take a minute or two.
+                                                {t("largeEntityWarning")}
                                             </Typography>
                                         )}
                                         <Button
@@ -248,7 +255,7 @@ export default function SearchEntitiesTab({
                                                     isLarge
                                                 )
                                             }>
-                                            Reindex
+                                            {t("reindexButton")}
                                         </Button>
                                     </Box>
                                 </Box>

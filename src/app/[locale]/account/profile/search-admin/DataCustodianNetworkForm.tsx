@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useMemo, useState } from "react";
+import { useTranslations } from "next-intl";
 import { FormProvider, useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { Option } from "@/interfaces/Option";
@@ -35,6 +36,8 @@ interface DataCustodianNetworkFormProps {
     onCancel: () => void;
 }
 
+const TRANSLATION_PATH = "pages.account.profile.searchAdmin";
+
 const updateOptions = (prevOptions: Option[], newOptions: Option[]) => {
     const existingIds = prevOptions.map(option => option.value);
     const additions = newOptions.filter(
@@ -55,6 +58,7 @@ export default function DataCustodianNetworkForm({
     onDone,
     onCancel,
 }: DataCustodianNetworkFormProps) {
+    const t = useTranslations(TRANSLATION_PATH);
     const isEditing = !!networkId;
     const [isSaving, setIsSaving] = useState(false);
     const [searchName, setSearchName] = useState("");
@@ -174,13 +178,13 @@ export default function DataCustodianNetworkForm({
                         }}>
                         <Typography variant="h3">
                             {isEditing
-                                ? "Edit Data Custodian Network"
-                                : "Create Data Custodian Network"}
+                                ? t("editNetworkTitle")
+                                : t("createNetworkTitle")}
                         </Typography>
                         <InputWrapper
                             control={control}
                             {...dataCustodianNetworkEnabledField}
-                            label="Enabled"
+                            label={t("enabled")}
                             formControlSx={{ mb: 0 }}
                         />
                     </Box>
@@ -210,10 +214,10 @@ export default function DataCustodianNetworkForm({
                             variant="outlined"
                             onClick={onCancel}
                             disabled={isSaving}>
-                            Cancel
+                            {t("cancel")}
                         </Button>
                         <Button type="submit" disabled={isSaving}>
-                            {isEditing ? "Save changes" : "Create network"}
+                            {isEditing ? t("saveChanges") : t("createNetwork")}
                         </Button>
                     </Box>
                 </Paper>

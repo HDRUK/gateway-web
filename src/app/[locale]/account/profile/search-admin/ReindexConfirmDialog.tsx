@@ -1,5 +1,6 @@
 "use client";
 
+import { useTranslations } from "next-intl";
 import MuiDialogActions from "@mui/material/DialogActions";
 import MuiDialogContent from "@mui/material/DialogContent";
 import Button from "@/components/Button";
@@ -10,6 +11,8 @@ import useDialog from "@/hooks/useDialog";
 import apis from "@/config/apis";
 import notificationService from "@/services/notification";
 import { GlobalDialogContextProps } from "@/providers/DialogProvider";
+
+const TRANSLATION_PATH = "modules.dialogs.ReindexConfirmDialog";
 
 interface ReindexConfirmDialogProps {
     entity: string;
@@ -24,6 +27,7 @@ const ReindexConfirmDialog = ({
     isLarge,
     callback,
 }: ReindexConfirmDialogProps) => {
+    const t = useTranslations(TRANSLATION_PATH);
     const { hideDialog } = useDialog() as GlobalDialogContextProps;
 
     const reindex = usePost<{ entity: string }>(apis.adminSearchReindexV1Url, {
@@ -36,7 +40,7 @@ const ReindexConfirmDialog = ({
 
         if (result) {
             notificationService.success(
-                `Reindex queued for "${collection}". This runs in the background — refresh the status table in a few minutes to see updated counts.`
+                t("queuedNotification", { COLLECTION: collection })
             );
 
             if (typeof callback === "function") {
@@ -50,18 +54,14 @@ const ReindexConfirmDialog = ({
     };
 
     return (
-        <Dialog title="Reindex search collection" showCloseButton={false}>
+        <Dialog title={t("title")} showCloseButton={false}>
             <MuiDialogContent>
                 <Typography sx={{ mb: isLarge ? 2 : 0 }}>
-                    This will drop and recreate the &quot;{collection}&quot;
-                    Typesense collection and re-import all records from the
-                    database. This is a heavy, asynchronous operation and
-                    cannot be undone. Are you sure you want to continue?
+                    {t("message", { COLLECTION: collection })}
                 </Typography>
                 {isLarge && (
                     <Typography color="warning.main">
-                        This is a large entity — the full re-import can take
-                        a minute or two to complete.
+                        {t("largeEntityWarning")}
                     </Typography>
                 )}
             </MuiDialogContent>
@@ -71,11 +71,11 @@ const ReindexConfirmDialog = ({
                     autoFocus
                     color="secondary"
                     onClick={onCancel}>
-                    Cancel
+                    {t("cancelButton")}
                 </Button>
 
                 <Button color="error" onClick={handleConfirm}>
-                    Reindex
+                    {t("confirmButton")}
                 </Button>
             </MuiDialogActions>
         </Dialog>

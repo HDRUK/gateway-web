@@ -536,6 +536,41 @@
                     "entityType": {
                         "label": "Entity Type"
                     }
+                },
+                "searchAdmin": {
+                    "title": "Admin Panel",
+                    "text": "Monitor and manage the Typesense search indexes and application feature flags.",
+                    "featureFlagsTab": "Feature flags",
+                    "searchEntitiesTab": "Search entities",
+                    "dataCustodianNetworksTab": "Data Custodian Networks",
+                    "enableEditing": "Enable editing",
+                    "noFeatureFlags": "No feature flags found.",
+                    "reindexInfo": "Reindexing drops and recreates a collection from scratch. Small entities finish in seconds, but larger ones (datasets, data use register, publications) can take a minute or two to fully re-import — this page won't update automatically, so use Refresh status to check progress.",
+                    "searchEntitiesTitle": "Search entities",
+                    "refreshStatus": "Refresh status",
+                    "collectionExists": "Exists",
+                    "collectionMissing": "Missing",
+                    "collectionLabel": "Collection: {COLLECTION}",
+                    "documentCounts": "{DOCUMENT_COUNT} indexed / {ELIGIBLE_COUNT} eligible",
+                    "inSync": "In sync",
+                    "needsReindex": "Needs reindex",
+                    "databaseCount": "{DATABASE_COUNT} rows in DB total",
+                    "facetFields": "Facet fields",
+                    "noFacetFields": "None configured",
+                    "largeEntityWarning": "Large entity — reindexing can take a minute or two.",
+                    "reindexButton": "Reindex",
+                    "dataCustodianNetworksTitle": "Data Custodian Networks",
+                    "createNetwork": "Create network",
+                    "noNetworksFound": "No Data Custodian Networks found.",
+                    "memberTeamCount": "{count, plural, one {# member team} other {# member teams}}",
+                    "enabled": "Enabled",
+                    "disabled": "Disabled",
+                    "edit": "Edit",
+                    "delete": "Delete",
+                    "editNetworkTitle": "Edit Data Custodian Network",
+                    "createNetworkTitle": "Create Data Custodian Network",
+                    "cancel": "Cancel",
+                    "saveChanges": "Save changes"
                 }
             },
             "team": {
@@ -2008,6 +2043,20 @@
             "DeleteTeamDialog": {
                 "title": "Delete a Team",
                 "message": "Are you sure you want to delete {TEAM_NAME}?",
+                "confirmButton": "Delete",
+                "cancelButton": "Cancel"
+            },
+            "ReindexConfirmDialog": {
+                "title": "Reindex search collection",
+                "message": "This will drop and recreate the \"{COLLECTION}\" Typesense collection and re-import all records from the database. This is a heavy, asynchronous operation and cannot be undone. Are you sure you want to continue?",
+                "largeEntityWarning": "This is a large entity — the full re-import can take a minute or two to complete.",
+                "queuedNotification": "Reindex queued for \"{COLLECTION}\". This runs in the background — refresh the status table in a few minutes to see updated counts.",
+                "confirmButton": "Reindex",
+                "cancelButton": "Cancel"
+            },
+            "DeleteDataCustodianNetworkDialog": {
+                "title": "Delete network",
+                "message": "Are you sure you want to delete \"{NETWORK_NAME}\"? This cannot be undone.",
                 "confirmButton": "Delete",
                 "cancelButton": "Cancel"
             },
