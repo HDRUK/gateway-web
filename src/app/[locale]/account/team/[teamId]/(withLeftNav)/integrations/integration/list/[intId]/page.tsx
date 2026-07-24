@@ -8,7 +8,7 @@ import { getTeam, getUser } from "@/utils/api";
 import metaData, { noFollowRobots } from "@/utils/metadata";
 import { getPermissions } from "@/utils/permissions";
 import { getTeamUser } from "@/utils/user";
-import EditIntegrationForm from "./components/EditIntegrationForm";
+import IntegrationTabs from "./components/IntegrationTabs";
 
 export const metadata = metaData(
     {
@@ -45,7 +45,7 @@ export default async function TeamEditIntegrationPage({
                     <Typography>{t("helper")}</Typography>
                 </Box>
             </Paper>
-            <EditIntegrationForm />
+            <IntegrationTabs />
         </ProtectedAccountRoute>
     );
 }
