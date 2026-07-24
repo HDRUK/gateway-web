@@ -2,6 +2,7 @@
 
 import { createSvgIcon } from "@mui/material";
 import { styled, Theme } from "@mui/material/styles";
+import { colors } from "@/config/theme";
 
 type checkboxSizes = "small" | "medium" | "large";
 
@@ -84,6 +85,24 @@ const CheckboxIndeterminateIcon = styled(CheckboxIcon)(({ theme, size }) => ({
         backgroundColor: theme.palette.secondary.dark,
     },
 }));
+
+const checklistTickIcon = `url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><path fill='${colors.green700.replace(
+    "#",
+    "%23"
+)}' d='M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2m-2 15-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8z'/></svg>")`;
+
+const checklistCrossIcon = `url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><path fill='${colors.red700.replace(
+    "#",
+    "%23"
+)}' d='M12 2C6.47 2 2 6.47 2 12s4.47 10 10 10 10-4.47 10-10S17.53 2 12 2m5 13.59L15.59 17 12 13.41 8.41 17 7 15.59 10.59 12 7 8.41 8.41 7 12 10.59 15.59 7 17 8.41 13.41 12z'/></svg>")`;
+
+const checklistWarningIcon = `url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><path fill='${colors.red700.replace(
+    "#",
+    "%23"
+)}' d='M12 5.99 19.53 19H4.47zM12 2 1 21h22z'/><path fill='${colors.red700.replace(
+    "#",
+    "%23"
+)}' d='M13 16h-2v2h2zm0-6h-2v5h2z'/></svg>")`;
 
 const RemoveFilterIcon = createSvgIcon(
     <svg
@@ -873,4 +892,7 @@ export {
     TeamMembersIcon,
     DarIcon,
     EmailIcon,
+    checklistTickIcon,
+    checklistCrossIcon,
+    checklistWarningIcon,
 };

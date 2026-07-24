@@ -1935,6 +1935,7 @@
         },
         "CohortDiscoveryInfo": {
             "title": "Cohort Discovery",
+            "whatCanIDo": "What can I do in Cohort Discovery?",
             "step1": "Firstly, request access through the NHS website",
             "step2": "Once approved, select this button",
             "learnAbout": "Learn about Cohort Discovery and gain access to the service",

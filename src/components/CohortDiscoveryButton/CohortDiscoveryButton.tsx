@@ -32,6 +32,8 @@ const TRANSLATION_PATH = "components.CohortDiscoveryButton";
 export interface CohortDiscoveryButtonProps {
     showDatasetExplanatoryTooltip?: boolean | null;
     color?: ButtonProps["color"];
+    variant?: ButtonProps["variant"];
+    sx?: SxProps;
     wrapperSx?: SxProps;
     tooltipOverride?: string | null;
     hrefOverride?: string;
@@ -44,6 +46,8 @@ export interface CohortDiscoveryButtonProps {
 const CohortDiscoveryButton = ({
     showDatasetExplanatoryTooltip,
     color = "primary",
+    variant,
+    sx,
     wrapperSx,
     tooltipOverride,
     hrefOverride,
@@ -348,8 +352,9 @@ const CohortDiscoveryButton = ({
                     onClick={handleClick}
                     data-testid={DATA_TEST_ID}
                     color={color}
+                    variant={variant}
                     disabled={isLoading || isDisabled}
-                    sx={{ width: "100%" }}
+                    sx={{ width: "100%", ...sx }}
                     {...restProps}>
                     {isLoading ? (
                         <CircularProgress size={20} color="inherit" />
