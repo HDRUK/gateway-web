@@ -54,7 +54,9 @@ const StepList = ({ steps }: { steps: CmsStep[] }) => (
                         )}
                     </StepMarker>
                     <StepContent>
-                        <StepTitle variant="h4">{step.stepTitle}</StepTitle>
+                        <StepTitle variant="h3" component="h2">
+                            {step.stepTitle}
+                        </StepTitle>
                         {step.stepText && (
                             <HTMLContent content={step.stepText} />
                         )}

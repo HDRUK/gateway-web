@@ -4,9 +4,9 @@ import { styled } from "@mui/material";
 import Typography from "@/components/Typography";
 import { colors } from "@/config/theme";
 import {
-    checklistTickIcon as tickIcon,
-    checklistCrossIcon as crossIcon,
-    checklistWarningIcon as warningIcon,
+    ChecklistTickIcon as tickIcon,
+    ChecklistCrossIcon as crossIcon,
+    ChecklistWarningIcon as warningIcon,
 } from "@/consts/customIcons";
 
 const MARKER_SIZE = 40;
@@ -14,13 +14,8 @@ const MARKER_RAISE = 8;
 const INLINE_ICON_SIZE = "1.1em";
 const INLINE_ICON_OFFSET = "0.15em";
 
-const inlineIcon = (icon: string) => ({
+const iconBackground = (icon: string) => ({
     content: "''",
-    position: "absolute",
-    left: 0,
-    top: INLINE_ICON_OFFSET,
-    width: INLINE_ICON_SIZE,
-    height: INLINE_ICON_SIZE,
     backgroundImage: icon,
     backgroundSize: "contain",
     backgroundRepeat: "no-repeat",
@@ -97,16 +92,29 @@ export const StepContent = styled("div")(({ theme }) => ({
         position: "relative",
         paddingLeft: theme.spacing(3.5),
         marginBottom: theme.spacing(0.75),
-        "&::before": inlineIcon(tickIcon),
+        "&::before": {
+            ...iconBackground(tickIcon),
+            position: "absolute",
+            left: 0,
+            top: INLINE_ICON_OFFSET,
+            width: INLINE_ICON_SIZE,
+            height: INLINE_ICON_SIZE,
+        },
     },
     "& ul.checklist.cross li::before, & ul.checklist li.cross::before": {
         backgroundImage: crossIcon,
     },
     "& .warning": {
-        position: "relative",
-        paddingLeft: theme.spacing(3.5),
+        display: "flex",
+        alignItems: "center",
+        gap: theme.spacing(1),
         color: colors.red700,
-        "&::before": inlineIcon(warningIcon),
+        "&::before": {
+            ...iconBackground(warningIcon),
+            flexShrink: 0,
+            width: theme.spacing(2.5),
+            height: theme.spacing(2.5),
+        },
     },
 }));
 
