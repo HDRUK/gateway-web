@@ -2027,7 +2027,7 @@
                 "bulletCohortDiscovery": "Use the Cohort Discovery advanced search tool",
                 "preferredAccessTitle": "<bold>Preferred Access</bold> (including <bold>Cohort Discovery</bold>)",
                 "preferredAccessText": "You can sign in using one of the supported sign-in options below to access the full platform experience, including Cohort Discovery and all associated features.",
-                "notPreferredAccessTitle": "<bold>Not Preferred Access</bold>",
+                "notPreferredAccessTitle": "<bold>Non-preferred Access</bold>",
                 "notPreferredAccessText": "You can sign in using one of the supported sign-in options below to access the core Gateway features but <highlight>excludes Cohort Discovery</highlight> and all associated features.",
                 "suggestAnother": "Suggest another identity provider",
                 "selectAnother": "Select another provider"

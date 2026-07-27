@@ -21,7 +21,7 @@ describe("ProviderLinks", () => {
         expect(screen.getByTitle("your institute")).toBeInTheDocument();
     });
 
-    it("should render preferred and not preferred access sections", async () => {
+    it("should render preferred and non preferred access sections", async () => {
         render(
             <ProviderLinks showInstitution={() => console.log("show inst")} />
         );
@@ -32,7 +32,7 @@ describe("ProviderLinks", () => {
             })
         ).toBeInTheDocument();
         expect(
-            screen.getByRole("heading", { name: "Not Preferred Access" })
+            screen.getByRole("heading", { name: "Non-preferred Access" })
         ).toBeInTheDocument();
     });
 });
