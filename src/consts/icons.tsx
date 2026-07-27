@@ -51,6 +51,7 @@ import GroupsIcon from "@mui/icons-material/Groups";
 import GroupsOutlinedIcon from "@mui/icons-material/GroupsOutlined";
 import HandymanOutlinedIcon from "@mui/icons-material/HandymanOutlined";
 import HelpIcon from "@mui/icons-material/Help";
+import HistoryIcon from "@mui/icons-material/History";
 import HelpOutlineIcon from "@mui/icons-material/HelpOutline";
 import HelpOutlineOutlinedIcon from "@mui/icons-material/HelpOutlineOutlined";
 import IndeterminateCheckBoxSharpIcon from "@mui/icons-material/IndeterminateCheckBoxSharp";
@@ -61,6 +62,7 @@ import LockIcon from "@mui/icons-material/Lock";
 import MenuIcon from "@mui/icons-material/Menu";
 import OpenInNewIcon from "@mui/icons-material/OpenInNew";
 import PersonOutlineOutlinedIcon from "@mui/icons-material/PersonOutlineOutlined";
+import PlayArrowIcon from "@mui/icons-material/PlayArrow";
 import PriorityHighIcon from "@mui/icons-material/PriorityHigh";
 import QueryBuilderOutlinedIcon from "@mui/icons-material/QueryBuilderOutlined";
 import QuestionAnswerIcon from "@mui/icons-material/QuestionAnswer";
@@ -170,4 +172,6 @@ export {
     ArrowUpwardIcon,
     GridViewOutlinedIcon,
     CalendarMonthOutlinedIcon,
+    HistoryIcon,
+    PlayArrowIcon,
 };
