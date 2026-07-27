@@ -16,6 +16,7 @@ interface Integration {
     run_time_minute: string;
     enabled: boolean;
     tested: boolean;
+    last_run_at: string | null;
     notifications: Notification[] | undefined;
 }
 

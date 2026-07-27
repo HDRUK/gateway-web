@@ -22,6 +22,9 @@ const generateIntegrationV1 = (data = {}): Integration => {
         created_at: faker.date
             .between("2020-01-01T00:00:00.000Z", "2020-03-01T00:00:00.000Z")
             .toISOString(),
+        last_run_at: faker.date
+            .between("2020-01-01T00:00:00.000Z", "2020-03-01T00:00:00.000Z")
+            .toISOString(),
         auth_secret_key: faker.datatype.string(),
         endpoint_baseurl: faker.datatype.string(),
         endpoint_datasets: faker.datatype.string(),
