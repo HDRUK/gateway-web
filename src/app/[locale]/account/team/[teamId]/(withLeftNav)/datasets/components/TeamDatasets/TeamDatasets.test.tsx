@@ -117,4 +117,37 @@ describe("TeamDatasets", () => {
             ).toBeInTheDocument();
         });
     });
+
+    it("should carry the draft status and duplicate flag through to the duplicate action's link", async () => {
+        const mockDatasets = [
+            generateDatasetForTeamV1("1.0", {
+                create_origin: "MANUAL",
+                status: "DRAFT",
+            }),
+        ];
+        server.use(getTeamDatasetsV2(mockDatasets));
+        render(
+            <TeamDatasets
+                permissions={{
+                    "datasets.update": true,
+                    "datasets.create": true,
+                }}
+                teamId="1"
+            />
+        );
+
+        await waitFor(() => {
+            const duplicateLink = screen.getByRole("link", {
+                name: "Duplicate dataset metadata",
+            });
+            expect(duplicateLink).toHaveAttribute(
+                "href",
+                expect.stringContaining("duplicate=true")
+            );
+            expect(duplicateLink).toHaveAttribute(
+                "href",
+                expect.stringContaining("status=DRAFT")
+            );
+        });
+    });
 });

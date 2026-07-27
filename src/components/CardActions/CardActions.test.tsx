@@ -1,12 +1,11 @@
-import { DataStatus } from "@/consts/application";
 import { EditIcon, ArchiveIcon } from "@/consts/icons";
 import { render, screen, fireEvent, within } from "@/utils/testUtils";
-import CardActions from "./CardActions";
+import CardActions, { CardAction } from "./CardActions";
 
 describe("CardActions", () => {
     const mockAction = jest.fn();
 
-    const actions = [
+    const actions: CardAction[] = [
         {
             label: "First item",
             icon: EditIcon,
@@ -18,14 +17,16 @@ describe("CardActions", () => {
             action: mockAction,
         },
         {
-            label: "Third item duplicate",
+            label: "Third item",
             icon: ArchiveIcon,
             href: "/duplicate/path",
+            query: { duplicate: "true" },
         },
         {
-            label: "Fourth item preview",
+            label: "Fourth item",
             icon: ArchiveIcon,
             href: "/preview/path",
+            query: { tab: "preview" },
         },
     ];
 
@@ -65,12 +66,10 @@ describe("CardActions", () => {
         expect(mockAction).toHaveBeenCalledWith(1);
     });
 
-    it("should tag on duplicate if label contains duplicate", async () => {
+    it("should apply an action's own query params to its link", async () => {
         render(<CardActions id={10} actions={actions} />);
 
-        const dupLink = screen.getByRole("link", {
-            name: "Third item duplicate",
-        });
+        const dupLink = screen.getByRole("link", { name: "Third item" });
         expect(dupLink).toHaveAttribute(
             "href",
             expect.stringContaining("/duplicate/path")
@@ -79,33 +78,37 @@ describe("CardActions", () => {
             "href",
             expect.stringContaining("duplicate=true")
         );
-    });
 
-    it("should tag on preview if label contains preview", async () => {
-        render(<CardActions id={5} actions={actions} />);
-
-        const previewLink = screen.getByRole("link", {
-            name: "Fourth item preview",
-        });
-        expect(previewLink).toHaveAttribute(
-            "href",
-            expect.stringContaining("/preview/path")
-        );
+        const previewLink = screen.getByRole("link", { name: "Fourth item" });
         expect(previewLink).toHaveAttribute(
             "href",
             expect.stringContaining("tab=preview")
         );
     });
 
-    it("adds status=DRAFT when status is DRAFT", () => {
+    it("applies the shared query prop to every href action", () => {
         render(
-            <CardActions id={2} actions={actions} status={DataStatus.DRAFT} />
+            <CardActions
+                id={2}
+                actions={actions}
+                query={{ status: "DRAFT" }}
+            />
         );
 
         const firstLink = screen.getByRole("link", { name: "First item" });
         expect(firstLink).toHaveAttribute(
             "href",
             expect.stringContaining("status=DRAFT")
+        );
+
+        const dupLink = screen.getByRole("link", { name: "Third item" });
+        expect(dupLink).toHaveAttribute(
+            "href",
+            expect.stringContaining("status=DRAFT")
+        );
+        expect(dupLink).toHaveAttribute(
+            "href",
+            expect.stringContaining("duplicate=true")
         );
     });
 });

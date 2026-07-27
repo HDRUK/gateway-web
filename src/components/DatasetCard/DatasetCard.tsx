@@ -7,6 +7,7 @@ import Paper from "@/components/Paper";
 import Typography from "@/components/Typography";
 import { colors } from "@/config/theme";
 import { nonManualDatasetCardActions } from "@/consts/actions";
+import { DataStatus } from "@/consts/application";
 import { getLatestVersion } from "@/utils/dataset";
 import { formatDate } from "@/utils/date";
 import CardActions from "../CardActions";
@@ -108,7 +109,11 @@ const DatasetCard = ({ dataset, actions }: DatasetCardProps) => {
                                 : nonManualDatasetCardActions
                         }
                         id={dataset.id}
-                        status={dataset.status}
+                        query={
+                            dataset.status === DataStatus.DRAFT
+                                ? { status: DataStatus.DRAFT }
+                                : undefined
+                        }
                     />
                 </Box>
             </Box>

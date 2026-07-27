@@ -59,6 +59,7 @@ const WidgetList = ({ permissions, teamId }: WidgetListProps) => {
                       href: `/${RouteName.ACCOUNT}/${RouteName.TEAM}/${params.teamId}/${RouteName.INTEGRATIONS}/${RouteName.WIDGETS}`,
                       icon: EyeIcon,
                       label: t("actions.preview.label"),
+                      query: { tab: "preview" },
                   },
               ]
             : []),

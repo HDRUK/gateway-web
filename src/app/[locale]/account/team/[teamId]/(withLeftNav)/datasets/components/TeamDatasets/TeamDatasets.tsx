@@ -185,6 +185,7 @@ const TeamDatasets = ({ permissions, teamId }: TeamDatasetsProps) => {
                       href: `/${RouteName.ACCOUNT}/${RouteName.TEAM}/${params?.teamId}/${RouteName.DATASETS}`,
                       icon: ContentCopyIcon,
                       label: t("actions.duplicate.label"),
+                      query: { duplicate: "true" },
                   },
               ]
             : []),

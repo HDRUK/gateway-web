@@ -5,6 +5,7 @@ import Box from "@/components/Box";
 import Paper from "@/components/Paper";
 import Typography from "@/components/Typography";
 import theme, { colors } from "@/config/theme";
+import { DataStatus } from "@/consts/application";
 import { formatDate } from "@/utils/date";
 import CardActions from "../CardActions";
 import KeyValueList from "../KeyValueList";
@@ -142,7 +143,11 @@ const CollectionCard = ({ collection, actions }: CollectionCardProps) => {
                     <CardActions
                         actions={actions}
                         id={collection.id}
-                        status={collection.status}
+                        query={
+                            collection.status === DataStatus.DRAFT
+                                ? { status: DataStatus.DRAFT }
+                                : undefined
+                        }
                     />
                 </Box>
             </Box>
