@@ -32,7 +32,7 @@ describe("ProviderLinks", () => {
             })
         ).toBeInTheDocument();
         expect(
-            screen.getByRole("heading", { name: "Non-Preferred Access" })
+            screen.getByRole("heading", { name: "Non-preferred Access" })
         ).toBeInTheDocument();
     });
 });
