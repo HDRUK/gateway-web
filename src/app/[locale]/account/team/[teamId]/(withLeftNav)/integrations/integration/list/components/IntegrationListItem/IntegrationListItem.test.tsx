@@ -64,6 +64,35 @@ describe("IntegrationListItem", () => {
         expect(screen.getByText("Disabled")).toBeInTheDocument();
     });
 
+    it("should show a 'Disabled on error' status and the failure reason when the integration has failed", async () => {
+        render(
+            <IntegrationListItem
+                index={1}
+                integration={{
+                    ...integration,
+                    enabled: false,
+                    error: true,
+                    error_text: "Connection timed out",
+                }}
+            />
+        );
+
+        expect(screen.getByText("Disabled on error")).toBeInTheDocument();
+        expect(screen.getByText("Error:")).toBeInTheDocument();
+        expect(screen.getByText("Connection timed out")).toBeInTheDocument();
+    });
+
+    it("should not show an Error row when the integration has not failed", async () => {
+        render(
+            <IntegrationListItem
+                index={1}
+                integration={{ ...integration, error: false, error_text: null }}
+            />
+        );
+
+        expect(screen.queryByText("Error:")).not.toBeInTheDocument();
+    });
+
     it("should link the Edit action to the integration's detail page", async () => {
         render(<IntegrationListItem index={1} integration={integration} />);
 

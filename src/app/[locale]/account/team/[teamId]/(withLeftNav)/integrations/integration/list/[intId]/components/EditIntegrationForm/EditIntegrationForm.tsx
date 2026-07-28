@@ -3,7 +3,7 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { Stack, Typography } from "@mui/material";
+import { Alert, Stack, Typography } from "@mui/material";
 import { pick } from "lodash";
 import { useTranslations } from "next-intl";
 import { useParams, useRouter } from "next/navigation";
@@ -277,6 +277,9 @@ const EditIntegrationForm = () => {
                         display: "flex",
                         flexDirection: "column",
                     }}>
+                    {integration?.error && (
+                        <Alert severity="error">{integration.error_text}</Alert>
+                    )}
                     <Paper sx={{ p: 1 }}>
                         <Box sx={{ display: "flex", justifyContent: "center" }}>
                             <Stack
