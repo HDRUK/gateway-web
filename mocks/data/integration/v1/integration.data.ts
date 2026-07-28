@@ -32,6 +32,8 @@ const generateIntegrationV1 = (data = {}): Integration => {
         run_time_hour: faker.datatype.number(),
         enabled: faker.datatype.boolean(),
         tested: faker.datatype.boolean(),
+        error: false,
+        error_text: null,
         notifications: [],
         id: faker.datatype.number(),
         ...data,

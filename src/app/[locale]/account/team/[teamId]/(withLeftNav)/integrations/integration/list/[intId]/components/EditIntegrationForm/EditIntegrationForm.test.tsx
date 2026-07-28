@@ -37,6 +37,39 @@ describe("EditIntegrationForm", () => {
         expect(allSelects[0]).toHaveClass("Mui-disabled");
     });
 
+    it("should show an error alert with the failure reason when the integration has failed", async () => {
+        const mockIntegration = {
+            ...integrationV1,
+            id: 2,
+            error: true,
+            error_text: "Connection timed out",
+        };
+        server.use(getIntegrationV1({ data: mockIntegration }));
+
+        await act(() => render(<EditIntegrationForm />));
+
+        expect(
+            await screen.findByText("Connection timed out")
+        ).toBeInTheDocument();
+    });
+
+    it("should not show an error alert when the integration has not failed", async () => {
+        const mockIntegration = {
+            ...integrationV1,
+            id: 2,
+            error: false,
+            error_text: null,
+        };
+        server.use(getIntegrationV1({ data: mockIntegration }));
+
+        await act(() => render(<EditIntegrationForm />));
+
+        expect(
+            await screen.findByDisplayValue(mockIntegration.endpoint_baseurl)
+        ).toBeInTheDocument();
+        expect(screen.queryByRole("alert")).not.toBeInTheDocument();
+    });
+
     it("should run the 'Run now' button through Run now -> Running -> Complete -> Run now", async () => {
         const mockIntegration = {
             ...integrationV1,
