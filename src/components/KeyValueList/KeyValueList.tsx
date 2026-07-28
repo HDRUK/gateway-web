@@ -4,7 +4,7 @@ import Box from "../Box";
 import Typography from "../Typography";
 
 interface KeyValueListProps {
-    rows: { key: string; value: ReactNode }[];
+    rows: { key: string; value: ReactNode; color?: string }[];
 }
 
 const KeyValueList = ({ rows }: KeyValueListProps) => {
@@ -25,12 +25,14 @@ const KeyValueList = ({ rows }: KeyValueListProps) => {
                     }}>
                     <Typography
                         sx={{
-                            color: colors.grey500,
+                            color: row.color || colors.grey500,
                             fontSize: 13,
                         }}>
                         {row.key}:
                     </Typography>
-                    <Typography component="div" sx={{ fontSize: 13 }}>
+                    <Typography
+                        component="div"
+                        sx={{ fontSize: 13, color: row.color }}>
                         {row.value}
                     </Typography>
                 </Box>
