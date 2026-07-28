@@ -98,7 +98,7 @@ exports[`ProviderLinks should match snapshot 1`] = `
         <span
           class="MuiBox-root mui-style-1w7ybou"
         >
-          Not Preferred Access
+          Non-preferred Access
         </span>
       </h4>
       <p

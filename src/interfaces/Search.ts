@@ -275,7 +275,11 @@ export interface SearchResultARDC {
 export interface SearchAggregationProviderResult {
     provider_logo: string | null;
     about: string | null;
-    hits: SearchResultARDC[] | SearchResultDataset[];
+    hits:
+        | SearchResultARDC[]
+        | SearchResultDataset[]
+        | SearchResultDataCustodianCol[]
+        | SearchResultPublication[];
     total: number;
     aggregations: Aggregations | [];
     ids: string[];

@@ -23,6 +23,7 @@ import {
     isCohortDiscoveryServiceEnabled,
     isRQuestEnabled,
     isExternalSourcesEnabled,
+    isTypesenseSearchEnabled,
     isCustodianDashboardEnabled,
 } from "@/flags";
 import ActionBarProvider from "@/providers/ActionBarProvider";
@@ -74,6 +75,8 @@ export default async function RootLayout(props: {
         isRQuestEnabled: (await isRQuestEnabled()) as boolean,
         isExternalSourcesEnabled:
             (await isExternalSourcesEnabled()) as boolean,
+        isTypesenseSearchEnabled:
+            (await isTypesenseSearchEnabled()) as boolean,
         isCustodianDashboardEnabled:
             (await isCustodianDashboardEnabled()) as boolean,
     };
