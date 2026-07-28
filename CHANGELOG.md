@@ -1,3 +1,11 @@
+## [2.41.0](https://github.com/HDRUK/gateway-web/compare/v2.40.0...v2.41.0) (2026-07-28)
+
+### ✨ Features
+
+* **GAT-9190:** add History tab to integration detail page ([e4e964f](https://github.com/HDRUK/gateway-web/commit/e4e964fcb8be6b3a900093fbce55a56479f92df1)), closes [GAT-9190](undefinedGAT-9190)
+* **GAT-9202:** Typesense search and superadmin panel (#1575) ([19b201e](https://github.com/HDRUK/gateway-web/commit/19b201e5c517b109f4e9a76f4282bfa8d40a447f)), closes [GAT-9202](undefinedGAT-9202)
+* **GAT-9287:** copy update (#1586) ([d630ba0](https://github.com/HDRUK/gateway-web/commit/d630ba00862a55c3c3aa4d51ab8764d485dbd3f1)), closes [GAT-9287](undefinedGAT-9287)
+
 ## [2.40.0](https://github.com/HDRUK/gateway-web/compare/v2.39.0...v2.40.0) (2026-07-24)
 
 ### ✨ Features
