@@ -21,6 +21,21 @@ jest.mock("@/components/CohortDiscoveryButton", () => ({
     ),
 }));
 
+jest.mock("../../../components/ProfileForm", () => ({
+    __esModule: true,
+    default: ({
+        submitLabel,
+        onSaved,
+    }: {
+        submitLabel?: string;
+        onSaved?: () => void;
+    }) => (
+        <button type="button" onClick={onSaved}>
+            {submitLabel ?? "Save"}
+        </button>
+    ),
+}));
+
 const baseStatus = {
     requestStatus: null,
     requestExpiry: null,
@@ -53,6 +68,26 @@ describe("CohortAccessStepper", () => {
         );
 
         expect(screen.getByText("Review Your Profile")).toBeInTheDocument();
+        expect(screen.getByText("Terms and Conditions")).toBeInTheDocument();
+    });
+
+    it("advances past the profile step to terms when the profile is saved", async () => {
+        render(<CohortAccessStepper />);
+
+        await userEvent.click(
+            screen.getByRole("button", { name: "Apply for Cohort Discovery" })
+        );
+
+        const saveButton = screen.getByRole("button", {
+            name: "Save & continue",
+        });
+        expect(saveButton).toBeInTheDocument();
+
+        await userEvent.click(saveButton);
+
+        expect(
+            screen.queryByRole("button", { name: "Save & continue" })
+        ).not.toBeInTheDocument();
         expect(screen.getByText("Terms and Conditions")).toBeInTheDocument();
     });
 

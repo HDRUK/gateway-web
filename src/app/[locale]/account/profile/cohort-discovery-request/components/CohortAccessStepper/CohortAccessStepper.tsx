@@ -1,6 +1,7 @@
 "use client";
 
-import { useState } from "react";
+import { ReactNode, useState } from "react";
+import CheckCircleIcon from "@mui/icons-material/CheckCircle";
 import QueryBuilderIcon from "@mui/icons-material/QueryBuilder";
 import { Box } from "@mui/material";
 import { useTranslations } from "next-intl";
@@ -18,12 +19,15 @@ import { statusMapping, STEP_STATE } from "@/consts/cohortDiscovery";
 import { RouteName } from "@/consts/routeName";
 import { differenceInDays } from "@/utils/date";
 import { capitalise } from "@/utils/general";
+import ProfileForm from "@/app/[locale]/account/profile/components/ProfileForm";
 import { CircleState, StepNode, StepTitle } from "../Stepper";
 
 const TRANSLATION_PATH = "pages.account.profile.cohortDiscovery.stepper";
 const RESOLVED_STATUSES = ["APPROVED", "REJECTED", "EXPIRED", "BANNED"];
 
 const INFO_HREF = `/${RouteName.ABOUT}/${RouteName.COHORT_DISCOVERY}`;
+const TERMS_HREF =
+    "https://digital.nhs.uk/data-and-information/research-powered-by-data/registration-service";
 
 interface CohortAccessStepperProps {
     autoOpen?: boolean;
@@ -44,6 +48,7 @@ const CohortAccessStepper = ({
     } = useCohortStatus(user?.id);
 
     const [expanded, setExpanded] = useState<boolean | null>(null);
+    const [activeSubStep, setActiveSubStep] = useState(0);
 
     const started = expanded === null ? autoOpen && !requestStatus : expanded;
 
@@ -70,6 +75,31 @@ const CohortAccessStepper = ({
         isApproved && requestExpiry
             ? differenceInDays(requestExpiry, new Date())
             : null;
+
+    const checklist: { key: string }[] = [
+        { key: "checklistEmail" },
+        { key: "checklistOrcid" },
+        { key: "checklistSector" },
+        { key: "checklistRole" },
+    ];
+
+    const richTags = {
+        warn: (chunks: ReactNode) => (
+            <Typography component="span" color={colors.red600}>
+                {chunks}
+            </Typography>
+        ),
+        note: (chunks: ReactNode) => (
+            <Typography component="span" color={colors.grey600}>
+                {chunks}
+            </Typography>
+        ),
+        terms: (chunks: ReactNode) => (
+            <Link href={TERMS_HREF} target="_blank" rel="noopener noreferrer">
+                {chunks}
+            </Link>
+        ),
+    };
 
     const loading = userLoading || statusLoading || !hasFetched;
 
@@ -150,19 +180,75 @@ const CohortAccessStepper = ({
                                 ) : (
                                     <Box sx={{ mt: 3 }}>
                                         <StepNode
-                                            circleState="active"
+                                            circleState={
+                                                activeSubStep >= 1
+                                                    ? STEP_STATE.COMPLETE
+                                                    : STEP_STATE.ACTIVE
+                                            }
                                             label="1.1"
                                             small>
                                             <StepTitle small>
                                                 {t("reviewProfileTitle")}
                                             </StepTitle>
+                                            {activeSubStep === 0 && (
+                                                <>
+                                                    <Typography
+                                                        sx={{ mt: 1, mb: 1 }}>
+                                                        {t("reviewProfileIntro")}
+                                                    </Typography>
+                                                    <Box sx={{ mb: 2 }}>
+                                                        {checklist.map(item => (
+                                                            <Box
+                                                                key={item.key}
+                                                                sx={{
+                                                                    display:
+                                                                        "flex",
+                                                                    alignItems:
+                                                                        "flex-start",
+                                                                    gap: 1,
+                                                                    mb: 0.5,
+                                                                }}>
+                                                                <CheckCircleIcon
+                                                                    sx={{
+                                                                        color: colors.green400,
+                                                                        fontSize: 20,
+                                                                        mt: 0.25,
+                                                                        flexShrink: 0,
+                                                                    }}
+                                                                />
+                                                                <Typography component="div">
+                                                                    {t.rich(
+                                                                        item.key,
+                                                                        richTags
+                                                                    )}
+                                                                </Typography>
+                                                            </Box>
+                                                        ))}
+                                                    </Box>
+                                                    <ProfileForm
+                                                        hideKeepingUpdated
+                                                        submitLabel={t(
+                                                            "profileContinueButton"
+                                                        )}
+                                                        onSaved={() =>
+                                                            setActiveSubStep(1)
+                                                        }
+                                                    />
+                                                </>
+                                            )}
                                         </StepNode>
                                         <StepNode
-                                            circleState="locked"
+                                            circleState={
+                                                activeSubStep >= 1
+                                                    ? STEP_STATE.ACTIVE
+                                                    : STEP_STATE.LOCKED
+                                            }
                                             label="1.2"
                                             small
                                             isLast>
-                                            <StepTitle small muted>
+                                            <StepTitle
+                                                small
+                                                muted={activeSubStep < 1}>
                                                 {t("termsStepTitle")}
                                             </StepTitle>
                                         </StepNode>
