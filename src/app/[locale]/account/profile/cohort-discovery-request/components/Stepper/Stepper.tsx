@@ -4,7 +4,7 @@ import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import { Box } from "@mui/material";
 import Typography from "@/components/Typography";
 import { colors } from "@/config/theme";
-import { STEP_STATE } from "@/app/[locale]/account/profile/cohort-discovery-request/components/Stepper/config";
+import { STEP_STATE } from "@/consts/cohortDiscovery";
 import { CircleState, connectorSx, getCircleSx } from "./Stepper.styles";
 
 export const StepNode = ({
