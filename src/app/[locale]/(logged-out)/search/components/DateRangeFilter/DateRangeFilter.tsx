@@ -78,7 +78,7 @@ const DateRangeFilter = ({
         <>
             <DateFilterWrapper>
                 <DatePickerControlled
-                    formControlSx={{ mb: 0, maxWidth: "140px" }}
+                    formControlSx={{ mb: 0, maxWidth: "130px" }}
                     sx={{ mt: 0 }}
                     label=""
                     name={MIN_YEAR_FIELD}
@@ -99,7 +99,7 @@ const DateRangeFilter = ({
                 />
                 {` ${t("to")} `}
                 <DatePickerControlled
-                    formControlSx={{ mb: 0, maxWidth: "140px" }}
+                    formControlSx={{ mb: 0, maxWidth: "130px" }}
                     sx={{ mt: 0 }}
                     label=""
                     name={MAX_YEAR_FIELD}

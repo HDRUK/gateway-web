@@ -4,7 +4,7 @@ export const DateFilterWrapper = styled("div")(({ theme }) => ({
     display: "flex",
     alignItems: "center",
     gap: theme.spacing(1),
-
+    flexWrap: "wrap",
     [theme.breakpoints.down("desktop")]: {
         flexDirection: "column",
     },
