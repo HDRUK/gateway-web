@@ -45,7 +45,10 @@ const CohortRequestTermsDialog = () => {
 
     const { hideDialog, store } = useDialog();
     const { dialogProps } = store as unknown as {
-        dialogProps: { cmsContent: templateRepeatFields };
+        dialogProps: {
+            cmsContent: templateRepeatFields;
+            onSubmitted?: () => void;
+        };
     };
 
     const hasAcceptedTerms = watch("hasAccepted");
@@ -61,10 +64,15 @@ const CohortRequestTermsDialog = () => {
     const handleSuccess = () => {
         hideDialog();
         showDialog(CohortTermsSuccessDialog, {
-            onClose: () =>
-                push(
-                    `/${RouteName.ACCOUNT}/${RouteName.PROFILE}/${RouteName.COHORT_DISCOVERY_REQUEST}`
-                ),
+            onClose: () => {
+                if (dialogProps?.onSubmitted) {
+                    dialogProps.onSubmitted();
+                } else {
+                    push(
+                        `/${RouteName.ACCOUNT}/${RouteName.PROFILE}/${RouteName.COHORT_DISCOVERY_REQUEST}`
+                    );
+                }
+            },
         });
     };
 

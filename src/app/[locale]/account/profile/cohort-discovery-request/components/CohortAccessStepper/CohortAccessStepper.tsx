@@ -5,6 +5,7 @@ import CheckCircleIcon from "@mui/icons-material/CheckCircle";
 import QueryBuilderIcon from "@mui/icons-material/QueryBuilder";
 import { Box } from "@mui/material";
 import { useTranslations } from "next-intl";
+import { templateRepeatFields } from "@/interfaces/Cms";
 import Button from "@/components/Button";
 import Chip from "@/components/Chip";
 import CohortDiscoveryButton from "@/components/CohortDiscoveryButton";
@@ -14,12 +15,15 @@ import Paper from "@/components/Paper";
 import Typography from "@/components/Typography";
 import useAuth from "@/hooks/useAuth";
 import { useCohortStatus } from "@/hooks/useCohortStatus";
+import useDialog from "@/hooks/useDialog";
 import { colors } from "@/config/theme";
 import { statusMapping, STEP_STATE } from "@/consts/cohortDiscovery";
 import { RouteName } from "@/consts/routeName";
 import { differenceInDays } from "@/utils/date";
 import { capitalise } from "@/utils/general";
 import ProfileForm from "@/app/[locale]/account/profile/components/ProfileForm";
+import CohortRequestTermsDialog from "../CohortRequestTermsDialog";
+import CohortUserDeclaration from "../CohortUserDeclaration";
 import { CircleState, StepNode, StepTitle } from "../Stepper";
 
 const TRANSLATION_PATH = "pages.account.profile.cohortDiscovery.stepper";
@@ -30,10 +34,12 @@ const TERMS_HREF =
     "https://digital.nhs.uk/data-and-information/research-powered-by-data/registration-service";
 
 interface CohortAccessStepperProps {
+    cmsContent: templateRepeatFields;
     autoOpen?: boolean;
 }
 
 const CohortAccessStepper = ({
+    cmsContent,
     autoOpen = false,
 }: CohortAccessStepperProps) => {
     const t = useTranslations(TRANSLATION_PATH);
@@ -45,7 +51,9 @@ const CohortAccessStepper = ({
         requestExpiry,
         isLoading: statusLoading,
         hasFetched,
+        refetch,
     } = useCohortStatus(user?.id);
+    const { showDialog } = useDialog();
 
     const [expanded, setExpanded] = useState<boolean | null>(null);
     const [activeSubStep, setActiveSubStep] = useState(0);
@@ -75,6 +83,17 @@ const CohortAccessStepper = ({
         isApproved && requestExpiry
             ? differenceInDays(requestExpiry, new Date())
             : null;
+
+    const openTerms = () =>
+        showDialog(CohortRequestTermsDialog, {
+            cmsContent,
+            onSubmitted: refetch,
+        });
+
+    const cancelApplication = () => {
+        setExpanded(false);
+        setActiveSubStep(0);
+    };
 
     const checklist: { key: string }[] = [
         { key: "checklistEmail" },
@@ -251,6 +270,16 @@ const CohortAccessStepper = ({
                                                 muted={activeSubStep < 1}>
                                                 {t("termsStepTitle")}
                                             </StepTitle>
+                                            {activeSubStep >= 1 && (
+                                                <Box sx={{ mt: 1 }}>
+                                                    <CohortUserDeclaration
+                                                        onSubmit={openTerms}
+                                                        onCancel={
+                                                            cancelApplication
+                                                        }
+                                                    />
+                                                </Box>
+                                            )}
                                         </StepNode>
                                     </Box>
                                 )}
