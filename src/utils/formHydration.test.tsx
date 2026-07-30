@@ -1,9 +1,14 @@
 import { buildYup } from "schema-to-yup";
-import { FormHydrationValidation } from "@/interfaces/FormHydration";
+import { Metadata } from "@/interfaces/Dataset";
+import {
+    FormHydration,
+    FormHydrationValidation,
+} from "@/interfaces/FormHydration";
 import {
     formGenerateLegendItems,
     formGetFieldsCompletedCount,
     generateValidationRules,
+    mapFormFieldsForSubmission,
 } from "./formHydration";
 
 const buildYupSchema = (validationFields: FormHydrationValidation[]) =>
@@ -118,9 +123,9 @@ describe("generateValidationRules", () => {
     it("rejects a non-URL value in an optional url-format array field", () => {
         const schema = buildYupSchema(toolsValidation);
 
-        expect(() =>
-            schema.validateSync({ Tools: ["das"] })
-        ).toThrow(/must be a valid URL/);
+        expect(() => schema.validateSync({ Tools: ["das"] })).toThrow(
+            /must be a valid URL/
+        );
     });
 
     it("accepts a valid URL in an optional url-format array field", () => {
@@ -154,9 +159,66 @@ describe("generateValidationRules", () => {
         const schema = buildYupSchema(requiredEnumValidation);
 
         expect(() => schema.validateSync({ Category: [] })).toThrow();
-        expect(() =>
-            schema.validateSync({ Category: ["A"] })
-        ).not.toThrow();
+        expect(() => schema.validateSync({ Category: ["A"] })).not.toThrow();
+    });
+});
+
+describe("mapFormFieldsForSubmission", () => {
+    // A minimal schema for a single field that lives outside the provenance
+    // section, so a "partial draft" produces formattedFormData with no
+    // provenance branch at all - the exact condition that used to throw.
+    const schema = [
+        {
+            title: "Title",
+            is_array_form: false,
+            location: "summary.title",
+            field: {
+                component: "TextField",
+                name: "Title",
+                required: true,
+                hidden: false,
+            },
+        },
+    ] as unknown as FormHydration[];
+
+    const submit = (formData: Record<string, unknown>) =>
+        mapFormFieldsForSubmission(formData as unknown as Metadata, schema) as {
+            provenance?: { origin?: { datasetType?: unknown } };
+        };
+
+    it("does not throw when the provenance section is empty (partial draft)", () => {
+        expect(() => submit({ Title: "A partial draft" })).not.toThrow();
+    });
+
+    it("defaults datasetType to an empty array when Dataset Type Array is absent", () => {
+        const result = submit({ Title: "A partial draft" });
+
+        expect(result.provenance?.origin?.datasetType).toEqual([]);
+    });
+
+    it("maps Dataset Type Array into provenance.origin.datasetType when provenance is otherwise empty", () => {
+        const result = submit({
+            "Dataset Type Array": [
+                {
+                    "Dataset type": "Health and disease",
+                    "Dataset subtypes": ["Cancer"],
+                },
+            ],
+        });
+
+        expect(result.provenance?.origin?.datasetType).toEqual([
+            { name: "Health and disease", subTypes: ["Cancer"] },
+        ]);
+    });
+
+    it("defaults subTypes to an empty array when Dataset subtypes is missing", () => {
+        const result = submit({
+            "Dataset Type Array": [{ "Dataset type": "Health and disease" }],
+        });
+
+        expect(result.provenance?.origin?.datasetType).toEqual([
+            { name: "Health and disease", subTypes: [] },
+        ]);
     });
 });
 
