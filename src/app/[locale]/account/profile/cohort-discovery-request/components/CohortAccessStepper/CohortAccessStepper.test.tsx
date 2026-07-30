@@ -1,8 +1,10 @@
 import userEvent from "@testing-library/user-event";
+import { templateRepeatFields } from "@/interfaces/Cms";
 import CohortAccessStepper from "./CohortAccessStepper";
 import { render, screen } from "@/utils/testUtils";
 
 const mockUseCohortStatus = jest.fn();
+const mockShowDialog = jest.fn();
 
 jest.mock("@/hooks/useAuth", () => ({
     __esModule: true,
@@ -12,6 +14,11 @@ jest.mock("@/hooks/useAuth", () => ({
 jest.mock("@/hooks/useCohortStatus", () => ({
     __esModule: true,
     useCohortStatus: () => mockUseCohortStatus(),
+}));
+
+jest.mock("@/hooks/useDialog", () => ({
+    __esModule: true,
+    default: () => ({ showDialog: mockShowDialog }),
 }));
 
 jest.mock("@/components/CohortDiscoveryButton", () => ({
@@ -36,6 +43,27 @@ jest.mock("../../../components/ProfileForm", () => ({
     ),
 }));
 
+jest.mock("../CohortUserDeclaration", () => ({
+    __esModule: true,
+    default: ({ onSubmit }: { onSubmit: () => void }) => (
+        <button type="button" onClick={onSubmit}>
+            submit-declaration
+        </button>
+    ),
+}));
+
+jest.mock("../CohortRequestTermsDialog", () => ({
+    __esModule: true,
+    default: () => null,
+}));
+
+const cmsContent: templateRepeatFields = {
+    title: "T",
+    subTitle: "S",
+    description: "D",
+    contents: [],
+};
+
 const baseStatus = {
     requestStatus: null,
     requestExpiry: null,
@@ -45,13 +73,17 @@ const baseStatus = {
     refetch: jest.fn(),
 };
 
+const renderStepper = () =>
+    render(<CohortAccessStepper cmsContent={cmsContent} />);
+
 describe("CohortAccessStepper", () => {
     beforeEach(() => {
         mockUseCohortStatus.mockReturnValue(baseStatus);
+        mockShowDialog.mockClear();
     });
 
     it("shows the Apply button and the outer steps when there is no request", () => {
-        render(<CohortAccessStepper />);
+        renderStepper();
 
         expect(
             screen.getByRole("button", { name: "Apply for Cohort Discovery" })
@@ -61,7 +93,7 @@ describe("CohortAccessStepper", () => {
     });
 
     it("reveals the profile and terms sub-steps once Apply is clicked", async () => {
-        render(<CohortAccessStepper />);
+        renderStepper();
 
         await userEvent.click(
             screen.getByRole("button", { name: "Apply for Cohort Discovery" })
@@ -72,23 +104,41 @@ describe("CohortAccessStepper", () => {
     });
 
     it("advances past the profile step to terms when the profile is saved", async () => {
-        render(<CohortAccessStepper />);
+        renderStepper();
 
         await userEvent.click(
             screen.getByRole("button", { name: "Apply for Cohort Discovery" })
         );
-
-        const saveButton = screen.getByRole("button", {
-            name: "Save & continue",
-        });
-        expect(saveButton).toBeInTheDocument();
-
-        await userEvent.click(saveButton);
+        await userEvent.click(
+            screen.getByRole("button", { name: "Save & continue" })
+        );
 
         expect(
             screen.queryByRole("button", { name: "Save & continue" })
         ).not.toBeInTheDocument();
         expect(screen.getByText("Terms and Conditions")).toBeInTheDocument();
+    });
+
+    it("opens the terms dialog when the declaration is submitted", async () => {
+        renderStepper();
+
+        await userEvent.click(
+            screen.getByRole("button", { name: "Apply for Cohort Discovery" })
+        );
+        await userEvent.click(
+            screen.getByRole("button", { name: "Save & continue" })
+        );
+        await userEvent.click(
+            screen.getByRole("button", { name: "submit-declaration" })
+        );
+
+        expect(mockShowDialog).toHaveBeenCalledWith(
+            expect.anything(),
+            expect.objectContaining({
+                cmsContent,
+                onSubmitted: expect.any(Function),
+            })
+        );
     });
 
     it("shows a Pending chip and the review step once a request exists", () => {
@@ -97,7 +147,7 @@ describe("CohortAccessStepper", () => {
             requestStatus: "PENDING",
         });
 
-        render(<CohortAccessStepper />);
+        renderStepper();
 
         expect(screen.getByText("Pending")).toBeInTheDocument();
         expect(screen.getByText("Application Review")).toBeInTheDocument();
@@ -112,7 +162,7 @@ describe("CohortAccessStepper", () => {
             requestStatus: "APPROVED",
         });
 
-        render(<CohortAccessStepper />);
+        renderStepper();
 
         expect(screen.getByText("Approved")).toBeInTheDocument();
         expect(
@@ -130,7 +180,7 @@ describe("CohortAccessStepper", () => {
             hasFetched: false,
         });
 
-        render(<CohortAccessStepper />);
+        renderStepper();
 
         expect(screen.queryByText("Application Review")).not.toBeInTheDocument();
     });

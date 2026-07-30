@@ -4,6 +4,7 @@ import { useMemo } from "react";
 import { Grid, Link, Typography } from "@mui/material";
 import { useTranslations } from "next-intl";
 import { useSearchParams } from "next/navigation";
+import { templateRepeatFields } from "@/interfaces/Cms";
 import Box from "@/components/Box";
 import Chip from "@/components/Chip";
 import Container from "@/components/Container";
@@ -19,7 +20,11 @@ import { capitalise } from "@/utils/general";
 import { useFeatures } from "@/providers/FeatureProvider";
 import CohortAccessStepper from "../CohortAccessStepper";
 
-export default function CohortDiscoveryCoverPage() {
+export default function CohortDiscoveryCoverPage({
+    cmsContent,
+}: {
+    cmsContent: templateRepeatFields;
+}) {
     const t = useTranslations("pages.account.profile.cohortDiscovery");
     const { isNhsSdeApplicationsEnabled } = useFeatures();
     const { user, isLoading: loadingUser } = useAuth();
@@ -48,7 +53,10 @@ export default function CohortDiscoveryCoverPage() {
                 direction="row"
                 alignItems="stretch">
                 <Grid size={12}>
-                    <CohortAccessStepper autoOpen={autoOpen} />
+                    <CohortAccessStepper
+                        cmsContent={cmsContent}
+                        autoOpen={autoOpen}
+                    />
                 </Grid>
                 <Grid size={{ mobile: 12, laptop: 8 }}>
                     <Paper
