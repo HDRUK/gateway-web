@@ -19,7 +19,11 @@ import { LegendItem, LegendStatus } from "@/interfaces/FormLegend";
 import InputWrapper from "@/components/InputWrapper";
 import { inputComponents } from "@/config/forms";
 import {
+    DATASET_SUBTYPES,
+    DATASET_TYPE,
+    DATASET_TYPE_ARRAY,
     INITIAL_FORM_SECTION,
+    PROVENANCE_ORIGIN_DATASET_TYPE_PATH,
     SUBMISSON_FORM_SECTION,
 } from "@/consts/createDataset";
 import { getLastSplitPart } from "./string";
@@ -464,10 +468,10 @@ const mapFormFieldsForSubmission = (
 
     set(
         formattedFormData,
-        "provenance.origin.datasetType",
-        (formData["Dataset Type Array"] ?? []).map(item => ({
-            name: item["Dataset type"],
-            subTypes: item["Dataset subtypes"] ?? [],
+        PROVENANCE_ORIGIN_DATASET_TYPE_PATH,
+        (formData[DATASET_TYPE_ARRAY] ?? []).map(item => ({
+            name: item[DATASET_TYPE],
+            subTypes: item[DATASET_SUBTYPES] ?? [],
         }))
     );
     const cleanUndefinedObjects = (
