@@ -1,6 +1,9 @@
 import { buildYup } from "schema-to-yup";
 import { Metadata } from "@/interfaces/Dataset";
-import { FormHydration, FormHydrationValidation } from "@/interfaces/FormHydration";
+import {
+    FormHydration,
+    FormHydrationValidation,
+} from "@/interfaces/FormHydration";
 import {
     formGenerateLegendItems,
     formGetFieldsCompletedCount,
@@ -120,9 +123,9 @@ describe("generateValidationRules", () => {
     it("rejects a non-URL value in an optional url-format array field", () => {
         const schema = buildYupSchema(toolsValidation);
 
-        expect(() =>
-            schema.validateSync({ Tools: ["das"] })
-        ).toThrow(/must be a valid URL/);
+        expect(() => schema.validateSync({ Tools: ["das"] })).toThrow(
+            /must be a valid URL/
+        );
     });
 
     it("accepts a valid URL in an optional url-format array field", () => {
@@ -156,9 +159,7 @@ describe("generateValidationRules", () => {
         const schema = buildYupSchema(requiredEnumValidation);
 
         expect(() => schema.validateSync({ Category: [] })).toThrow();
-        expect(() =>
-            schema.validateSync({ Category: ["A"] })
-        ).not.toThrow();
+        expect(() => schema.validateSync({ Category: ["A"] })).not.toThrow();
     });
 });
 
@@ -185,9 +186,6 @@ describe("mapFormFieldsForSubmission", () => {
             provenance?: { origin?: { datasetType?: unknown } };
         };
 
-    // Root cause (see form hydration fix): a partial draft with an empty
-    // provenance section meant formattedFormData.provenance was undefined, so
-    // reading .origin threw an unhandled rejection and no request was sent.
     it("does not throw when the provenance section is empty (partial draft)", () => {
         expect(() => submit({ Title: "A partial draft" })).not.toThrow();
     });
