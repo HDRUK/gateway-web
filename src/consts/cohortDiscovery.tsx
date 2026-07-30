@@ -21,10 +21,18 @@ const NHS_SDE_FILTER = "The NHS Research Secure Data Environment (SDE) Network";
 const COHORT_DISCOVERY_EXPIRY_WARNING_DAYS = 166;
 const COHORT_DISCOVERY_SDE_EXPIRY_WARNING_DAYS = 1770;
 
+const STEP_STATE = {
+    COMPLETE: "complete",
+    ACTIVE: "active",
+    LOCKED: "locked",
+    PENDING: "pending",
+} as const;
+
 export {
     statusMapping,
     NHSSDEStatusMapping,
     COHORT_DISCOVERY_EXPIRY_WARNING_DAYS,
     COHORT_DISCOVERY_SDE_EXPIRY_WARNING_DAYS,
     NHS_SDE_FILTER,
+    STEP_STATE,
 };

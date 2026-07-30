@@ -1,3 +1,4 @@
+import { getCohortTermsAndConditions } from "@/utils/cms";
 import metaData, { noFollowRobots } from "@/utils/metadata";
 import CohortDiscoveryCoverPage from "./components/CohortDiscoveryCoverPage";
 
@@ -9,6 +10,13 @@ export const metadata = metaData(
     noFollowRobots
 );
 
-const CohortDiscoveryPage = async () => <CohortDiscoveryCoverPage />;
+const CohortDiscoveryPage = async () => {
+    const content = await getCohortTermsAndConditions();
+    const {
+        template: { repeatfields },
+    } = content;
+
+    return <CohortDiscoveryCoverPage cmsContent={repeatfields} />;
+};
 
 export default CohortDiscoveryPage;

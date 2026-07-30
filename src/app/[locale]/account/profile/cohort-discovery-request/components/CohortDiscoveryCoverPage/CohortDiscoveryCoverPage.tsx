@@ -1,13 +1,12 @@
 "use client";
 
 import { useMemo } from "react";
-import QueryBuilderIcon from "@mui/icons-material/QueryBuilder";
 import { Grid, Link, Typography } from "@mui/material";
 import { useTranslations } from "next-intl";
 import { useSearchParams } from "next/navigation";
+import { templateRepeatFields } from "@/interfaces/Cms";
 import Box from "@/components/Box";
 import Chip from "@/components/Chip";
-import CohortDiscoveryButton from "@/components/CohortDiscoveryButton";
 import Container from "@/components/Container";
 import IndicateNhseSdeAccessButton from "@/components/IndicateNhseSdeAccessButton";
 import { MarkDownSanitizedWithHtml } from "@/components/MarkDownSanitizedWithHTML";
@@ -16,35 +15,28 @@ import RequestNhseSdeAccessButton from "@/components/RequestNhseSdeAccessButton"
 import useAuth from "@/hooks/useAuth";
 import { useCohortStatus } from "@/hooks/useCohortStatus";
 import { colors } from "@/config/theme";
-import { NHSSDEStatusMapping, statusMapping } from "@/consts/cohortDiscovery";
-import { RouteName } from "@/consts/routeName";
-import { differenceInDays } from "@/utils/date";
+import { NHSSDEStatusMapping } from "@/consts/cohortDiscovery";
 import { capitalise } from "@/utils/general";
 import { useFeatures } from "@/providers/FeatureProvider";
+import CohortAccessStepper from "../CohortAccessStepper";
 
-export default function CohortDiscoveryCoverPage() {
+export default function CohortDiscoveryCoverPage({
+    cmsContent,
+}: {
+    cmsContent: templateRepeatFields;
+}) {
     const t = useTranslations("pages.account.profile.cohortDiscovery");
     const { isNhsSdeApplicationsEnabled } = useFeatures();
     const { user, isLoading: loadingUser } = useAuth();
-    const {
-        requestExpiry,
-        requestStatus,
-        nhseSdeRequestStatus,
-        isLoading,
-        refetch,
-    } = useCohortStatus(user?.id);
+    const { nhseSdeRequestStatus, isLoading, refetch } = useCohortStatus(
+        user?.id
+    );
 
     const searchParams = useSearchParams();
 
     const autoOpen = useMemo(() => {
         return searchParams?.get("open") === "true";
     }, [searchParams]);
-
-    const daysRemaining =
-        requestStatus === "APPROVED" && requestExpiry
-            ? // eslint-disable-next-line react-hooks/purity
-              differenceInDays(requestExpiry, Date.now())
-            : null;
 
     const loading = loadingUser || isLoading;
 
@@ -60,62 +52,11 @@ export default function CohortDiscoveryCoverPage() {
                 columnSpacing={2}
                 direction="row"
                 alignItems="stretch">
-                <Grid size={{ mobile: 12, laptop: 8 }}>
-                    <Paper
-                        sx={{
-                            bgcolor: "white",
-                            px: { mobile: 3, laptop: 8 },
-                            py: { mobile: 2, laptop: 6 },
-                        }}>
-                        <Typography variant="h1">{t("accessTitle")}</Typography>
-                        <Box sx={{ display: "flex", px: 0, pt: 0, gap: 2 }}>
-                            {requestStatus && (
-                                <>
-                                    <Chip
-                                        size="small"
-                                        label={capitalise(requestStatus)}
-                                        color={statusMapping[requestStatus]}
-                                    />
-
-                                    {requestStatus === "APPROVED" && (
-                                        <>
-                                            <QueryBuilderIcon
-                                                sx={{ color: colors.grey600 }}
-                                            />
-                                            <Typography
-                                                sx={{
-                                                    color: colors.grey600,
-                                                    alignContent: "center",
-                                                }}>
-                                                {daysRemaining}{" "}
-                                                {t("daysRemaining")}
-                                            </Typography>
-                                        </>
-                                    )}
-                                </>
-                            )}
-                        </Box>
-                        <Typography color={colors.grey700} sx={{ pb: 2 }}>
-                            {t("accessText1")}
-                        </Typography>
-                    </Paper>
-                </Grid>
-                <Grid size={{ mobile: 12, laptop: 4 }}>
-                    <Paper
-                        sx={{
-                            bgcolor: "white",
-                            height: "100%",
-                            display: "flex",
-                            alignItems: "center",
-                            justifyContent: "center",
-                            p: 2,
-                        }}>
-                        <CohortDiscoveryButton
-                            autoOpen={autoOpen}
-                            hrefOverride={`/${RouteName.ACCOUNT}/${RouteName.PROFILE}/${RouteName.COHORT_DISCOVERY_REGISTER}`}
-                            wrapperSx={{ width: "100%" }}
-                        />
-                    </Paper>
+                <Grid size={12}>
+                    <CohortAccessStepper
+                        cmsContent={cmsContent}
+                        autoOpen={autoOpen}
+                    />
                 </Grid>
                 <Grid size={{ mobile: 12, laptop: 8 }}>
                     <Paper
