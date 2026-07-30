@@ -462,12 +462,14 @@ const mapFormFieldsForSubmission = (
         set(formattedFormData, key, value);
     });
 
-    formattedFormData.provenance.origin.datasetType = formData[
-        "Dataset Type Array"
-    ].map(item => ({
-        name: item["Dataset type"],
-        subTypes: item["Dataset subtypes"] ?? [],
-    }));
+    set(
+        formattedFormData,
+        "provenance.origin.datasetType",
+        (formData["Dataset Type Array"] ?? []).map(item => ({
+            name: item["Dataset type"],
+            subTypes: item["Dataset subtypes"] ?? [],
+        }))
+    );
     const cleanUndefinedObjects = (
         obj: Record<string, unknown>
     ): Record<string, unknown> | undefined => {
