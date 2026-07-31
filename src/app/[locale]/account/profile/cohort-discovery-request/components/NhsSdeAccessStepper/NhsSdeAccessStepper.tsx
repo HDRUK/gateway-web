@@ -98,32 +98,17 @@ const NhsSdeAccessStepper = () => {
         return STEP_STATE.PENDING;
     };
 
-    const badge =
-        cdsApproved && approvalRequested
-            ? {
-                  label: t("badgePending"),
-                  bg: colors.grey600,
-                  fg: colors.white,
-              }
-            : cdsApproved && (inProcess || (applied && !nhs))
-            ? {
-                  label: t("badgeAwaitingAction"),
-                  bg: colors.orange,
-                  fg: colors.white,
-              }
-            : cdsApproved && isApproved
-            ? {
-                  label: capitalise(nhs),
-                  bg: colors.green400,
-                  fg: colors.white,
-              }
-            : cdsApproved && isResolvedNeg
-            ? {
-                  label: capitalise(nhs),
-                  bg: colors.red700,
-                  fg: colors.white,
-              }
-            : null;
+    const badge = !cdsApproved
+        ? null
+        : approvalRequested
+        ? { label: t("badgePending"), bg: colors.grey600 }
+        : inProcess || (applied && !nhs)
+        ? { label: t("badgeAwaitingAction"), bg: colors.orange }
+        : isApproved
+        ? { label: capitalise(nhs), bg: colors.green400 }
+        : isResolvedNeg
+        ? { label: capitalise(nhs), bg: colors.red700 }
+        : null;
 
     const openConfirmModal = () => {
         showModal({
@@ -278,7 +263,7 @@ const NhsSdeAccessStepper = () => {
                             <Chip
                                 size="small"
                                 label={badge.label}
-                                sx={{ bgcolor: badge.bg, color: badge.fg }}
+                                sx={{ bgcolor: badge.bg, color: colors.white }}
                             />
                         </Box>
                     )}
