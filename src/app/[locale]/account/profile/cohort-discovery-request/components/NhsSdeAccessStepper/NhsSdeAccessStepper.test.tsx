@@ -211,4 +211,48 @@ describe("NhsSdeAccessStepper", () => {
 
         expect(screen.getByText("Approved")).toBeInTheDocument();
     });
+
+    it("shows a capitalised badge and no active-step actions when the NHS request is rejected", () => {
+        mockUseCohortStatus.mockReturnValue({
+            ...baseStatus,
+            requestStatus: "APPROVED",
+            nhseSdeRequestStatus: "REJECTED",
+        });
+
+        renderStepper();
+
+        expect(screen.getByText("Rejected")).toBeInTheDocument();
+        expect(
+            screen.queryByRole("button", {
+                name: "Open NHS SDE Registration Form",
+            })
+        ).not.toBeInTheDocument();
+        expect(
+            screen.queryByRole("button", {
+                name: "I confirm I have been approved by the NHS Research SDE",
+            })
+        ).not.toBeInTheDocument();
+    });
+
+    it("reveals step 2 with the registration form once the user opts in from step 1", async () => {
+        mockUseCohortStatus.mockReturnValue({
+            ...baseStatus,
+            requestStatus: "APPROVED",
+        });
+
+        renderStepper();
+
+        await userEvent.click(
+            screen.getByRole("button", {
+                name: "Apply for NHS Research SDE Cohort Data Access",
+            })
+        );
+
+        expect(screen.getByText("Awaiting Action")).toBeInTheDocument();
+        expect(
+            screen.getByRole("button", {
+                name: "Open NHS SDE Registration Form",
+            })
+        ).toBeInTheDocument();
+    });
 });
