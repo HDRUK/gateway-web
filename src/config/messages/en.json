@@ -362,7 +362,18 @@
                     "nhseSdeText1": "This service gives approved researchers, access to the additional NHS Research SDE Network datasets and subsequently those with approved projects secure access to NHS data. You must also have approved access to Cohort Discovery service to access the NHS Research SDE Network datasets.",
                     "nhseSdeText2": "By selecting ‘Confirm approval by the NHS Research SDE’, you are confirming that you have been approved by the NHS Research SDE validation service and you are consenting to HDR UK sharing your email address with the NHS Research SDE team solely for the purpose of verifying your approval status.  \nPlease note: this step involves manual validation by NHS Research SDE validation team and may take up to 10 working days. You will receive an email notification once your access to the additional datasets in cohort discovery has been granted.",
                     "nhseSdeTemporaryText": "To access SDE Network data, users must first be validated by the SDE Network. This validation process is currently in its pilot phase, with the full service expected to be operational by October 2025. In the meantime, if you would like to be added to the list for validation once the service goes live, please email <mailto>england.data.healthresearch@nhs.net</mailto>",
-                    "nhsExpiry": "SDE access is limited by access to Gateway Cohort Discovery"
+                    "nhsExpiry": "SDE access is limited by access to Gateway Cohort Discovery",
+                    "nhsStepper": {
+                        "title": "Optional NHS Research SDE Cohort Data Access",
+                        "moreInfo": "More information about this service can be found <link>here</link>",
+                        "step1Title": "Existing Cohort Discovery Access",
+                        "applyButton": "Apply for NHS Research SDE Cohort Data Access",
+                        "appliedText": "Your application for NHS Research SDE Cohort Data Access has started.",
+                        "step2Title": "Complete NHS SDE Validation Form",
+                        "step3Title": "Submit NHS SDE Validation Status to HDRUK",
+                        "step4Title": "Application Review",
+                        "step5Title": "Access Decision"
+                    }
                 },
                 "dataAccessRequests": {
                     "applications": {
