@@ -1,23 +1,41 @@
 "use client";
 
 import { ReactNode, useState } from "react";
+import WarningAmberIcon from "@mui/icons-material/WarningAmber";
+import { Box } from "@mui/material";
 import { useTranslations } from "next-intl";
 import Button from "@/components/Button";
+import Chip from "@/components/Chip";
+import IndicateNhseSdeAccessButton from "@/components/IndicateNhseSdeAccessButton";
 import Link from "@/components/Link";
 import Loading from "@/components/Loading";
 import Paper from "@/components/Paper";
+import RequestNhseSdeAccessButton from "@/components/RequestNhseSdeAccessButton";
 import Typography from "@/components/Typography";
 import useAuth from "@/hooks/useAuth";
 import { useCohortStatus } from "@/hooks/useCohortStatus";
+import useModal from "@/hooks/useModal";
+import usePost from "@/hooks/usePost";
+import apis from "@/config/apis";
 import { colors } from "@/config/theme";
-import { STEP_STATE } from "@/consts/cohortDiscovery";
+import {
+    COHORT_STATUS,
+    NHS_SDE_NEGATIVE_STATUSES,
+    NHS_SDE_STATUS,
+    STEP_STATE,
+} from "@/consts/cohortDiscovery";
 import { RouteName } from "@/consts/routeName";
+import { capitalise } from "@/utils/general";
+import { revalidateCacheAction } from "@/app/actions/revalidateCacheAction";
 import { useFeatures } from "@/providers/FeatureProvider";
 import { CircleState, StepNode, StepTitle } from "../Stepper";
 
 const TRANSLATION_PATH = "pages.account.profile.cohortDiscovery.nhsStepper";
 const ABOUT_HREF = `/${RouteName.ABOUT}/${RouteName.COHORT_DISCOVERY}`;
 const MORE_INFO_HREF = `${ABOUT_HREF}?tab=nhs-sde-network`;
+const HOW_TO_HREF = `${ABOUT_HREF}?tab=how-to-request-access`;
+const REGISTRATION_INFO_URL =
+    "https://digital.nhs.uk/data-and-information/research-powered-by-data/sde-network";
 
 const NhsSdeAccessStepper = () => {
     const t = useTranslations(TRANSLATION_PATH);
@@ -27,14 +45,109 @@ const NhsSdeAccessStepper = () => {
     const { isNhsSdeApplicationsEnabled } = useFeatures();
     const {
         requestStatus,
+        nhseSdeRequestStatus,
         isLoading: statusLoading,
         hasFetched,
+        refetch,
     } = useCohortStatus(user?.id);
+    const { showModal } = useModal();
 
     const [applied, setApplied] = useState(false);
+    const [formCompleted, setFormCompleted] = useState(false);
+
+    const indicateUrl = `${apis.cohortRequestsV1Url}/user/${user?.id}/indicate_nhse_access`;
+    const submitIndicate = usePost(indicateUrl, {
+        successNotificationsOn: false,
+    });
 
     const loading = userLoading || statusLoading || !hasFetched;
-    const cdsApproved = requestStatus === "APPROVED";
+
+    const cdsApproved = requestStatus === COHORT_STATUS.APPROVED;
+    const nhs = nhseSdeRequestStatus;
+    const isApproved = nhs === NHS_SDE_STATUS.APPROVED;
+    const inProcess = nhs === NHS_SDE_STATUS.IN_PROCESS;
+    const approvalRequested = nhs === NHS_SDE_STATUS.APPROVAL_REQUESTED;
+    const isResolvedNeg =
+        !!nhs && (NHS_SDE_NEGATIVE_STATUSES as string[]).includes(nhs);
+
+    const activeStep = (() => {
+        if (!cdsApproved) return 1;
+        switch (nhs) {
+            case NHS_SDE_STATUS.APPROVED:
+                return 6;
+            case NHS_SDE_STATUS.REJECTED:
+            case NHS_SDE_STATUS.EXPIRED:
+            case NHS_SDE_STATUS.BANNED:
+            case NHS_SDE_STATUS.SUSPENDED:
+                return 5;
+            case NHS_SDE_STATUS.APPROVAL_REQUESTED:
+                return 4;
+            case NHS_SDE_STATUS.IN_PROCESS:
+                return formCompleted ? 3 : 2;
+            default:
+                return applied ? 2 : 1;
+        }
+    })();
+
+    const circleFor = (index: number): CircleState =>
+        index < activeStep
+            ? STEP_STATE.COMPLETE
+            : index === activeStep
+            ? STEP_STATE.ACTIVE
+            : STEP_STATE.PENDING;
+
+    const step1State: CircleState = cdsApproved
+        ? STEP_STATE.COMPLETE
+        : STEP_STATE.LOCKED;
+    const step2State = circleFor(2);
+    const step3State = circleFor(3);
+    const step4State = circleFor(4);
+    const step5State = circleFor(5);
+
+    const badge =
+        cdsApproved && approvalRequested
+            ? {
+                  label: t("badgePending"),
+                  bg: colors.grey600,
+                  fg: colors.white,
+              }
+            : cdsApproved && (inProcess || (applied && !nhs))
+            ? {
+                  label: t("badgeAwaitingAction"),
+                  bg: colors.orange,
+                  fg: colors.white,
+              }
+            : cdsApproved && isApproved
+            ? {
+                  label: capitalise(nhs),
+                  bg: colors.green400,
+                  fg: colors.white,
+              }
+            : cdsApproved && isResolvedNeg
+            ? {
+                  label: capitalise(nhs),
+                  bg: colors.red700,
+                  fg: colors.white,
+              }
+            : null;
+
+    const openConfirmModal = () => {
+        showModal({
+            title: t("modalTitle"),
+            content: <Typography>{t("modalBody")}</Typography>,
+            showCancel: true,
+            showConfirm: true,
+            cancelText: t("modalCancel"),
+            confirmText: t("modalConfirm"),
+            onSuccess: async () => {
+                const result = await submitIndicate({});
+                if (result) {
+                    revalidateCacheAction(`cohort-user-${user?.id}`);
+                    refetch();
+                }
+            },
+        });
+    };
 
     const steps: {
         label: string;
@@ -45,50 +158,121 @@ const NhsSdeAccessStepper = () => {
     }[] = [
         {
             label: "1",
-            state: cdsApproved ? STEP_STATE.COMPLETE : STEP_STATE.LOCKED,
+            state: step1State,
             titleKey: "step1Title",
             muted: false,
-            extra: cdsApproved
-                ? applied
-                    ? (
-                          <Typography color={colors.grey600} sx={{ mt: 1 }}>
-                              {t("appliedText")}
-                          </Typography>
-                      )
-                    : (
-                          <Button
-                              variant="outlined"
-                              color="secondary"
-                              sx={{ mt: 1 }}
-                              onClick={() => setApplied(true)}>
-                              {t("applyButton")}
-                          </Button>
-                      )
-                : undefined,
+            extra: (
+                <>
+                    {!cdsApproved && (
+                        <Typography
+                            component="div"
+                            color={colors.grey600}
+                            sx={{ whiteSpace: "pre-line" }}>
+                            {t.rich("step1Text", {
+                                link: chunks => (
+                                    <Link href={HOW_TO_HREF}>{chunks}</Link>
+                                ),
+                            })}
+                        </Typography>
+                    )}
+                    {cdsApproved && !nhs && !applied && (
+                        <Button
+                            variant="outlined"
+                            color="secondary"
+                            sx={{ mt: 1 }}
+                            onClick={() => setApplied(true)}>
+                            {t("applyButton")}
+                        </Button>
+                    )}
+                </>
+            ),
         },
         {
             label: "2",
-            state: STEP_STATE.LOCKED,
+            state: step2State,
             titleKey: "step2Title",
-            muted: true,
+            muted: step2State === STEP_STATE.PENDING,
+            extra: step2State === STEP_STATE.ACTIVE && (
+                <>
+                    <Box
+                        sx={{
+                            display: "flex",
+                            gap: 2,
+                            mt: 1,
+                            mb: 2,
+                            flexWrap: "wrap",
+                        }}>
+                        <RequestNhseSdeAccessButton
+                            variant="outlined"
+                            color="secondary"
+                            label={t("openFormButton")}
+                            refetchCohort={refetch}
+                        />
+                        {inProcess && (
+                            <Button
+                                color="greyCustom"
+                                onClick={() => setFormCompleted(true)}>
+                                {t("confirmFormButton")}
+                            </Button>
+                        )}
+                    </Box>
+                    <Typography component="div" color={colors.grey600}>
+                        {t.rich("step2Text", {
+                            link: chunks => (
+                                <Link
+                                    href={REGISTRATION_INFO_URL}
+                                    target="_blank"
+                                    rel="noopener noreferrer">
+                                    {chunks}
+                                </Link>
+                            ),
+                        })}
+                    </Typography>
+                    <Box
+                        sx={{
+                            display: "flex",
+                            alignItems: "center",
+                            gap: 1,
+                            mt: 1,
+                        }}>
+                        <WarningAmberIcon
+                            sx={{ color: colors.red700, fontSize: 18 }}
+                        />
+                        <Typography color={colors.red700}>
+                            {t("step2Warning")}
+                        </Typography>
+                    </Box>
+                </>
+            ),
         },
         {
             label: "3",
-            state: STEP_STATE.LOCKED,
+            state: step3State,
             titleKey: "step3Title",
-            muted: true,
+            muted: step3State === STEP_STATE.PENDING,
+            extra: step3State === STEP_STATE.ACTIVE && (
+                <>
+                    <Typography color={colors.grey600} sx={{ mt: 1, mb: 2 }}>
+                        {t("step3Text")}
+                    </Typography>
+                    <IndicateNhseSdeAccessButton
+                        label={t("indicateButton")}
+                        action={openConfirmModal}
+                    />
+                </>
+            ),
         },
         {
             label: "4",
-            state: STEP_STATE.LOCKED,
+            state: step4State,
             titleKey: "step4Title",
-            muted: true,
+            muted: step4State === STEP_STATE.PENDING,
         },
         {
             label: "5",
-            state: STEP_STATE.LOCKED,
+            state: step5State,
             titleKey: "step5Title",
-            muted: true,
+            muted: step5State === STEP_STATE.PENDING,
         },
     ];
 
@@ -113,6 +297,16 @@ const NhsSdeAccessStepper = () => {
                 </Typography>
             ) : (
                 <>
+                    {badge && (
+                        <Box sx={{ mb: 3 }}>
+                            <Chip
+                                size="small"
+                                label={badge.label}
+                                sx={{ bgcolor: badge.bg, color: badge.fg }}
+                            />
+                        </Box>
+                    )}
+
                     {steps.map((step, i) => (
                         <StepNode
                             key={step.label}
