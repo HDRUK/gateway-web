@@ -89,20 +89,14 @@ const NhsSdeAccessStepper = () => {
         }
     })();
 
-    const circleFor = (index: number): CircleState =>
-        index < activeStep
-            ? STEP_STATE.COMPLETE
-            : index === activeStep
-            ? STEP_STATE.ACTIVE
-            : STEP_STATE.PENDING;
-
-    const step1State: CircleState = cdsApproved
-        ? STEP_STATE.COMPLETE
-        : STEP_STATE.LOCKED;
-    const step2State = circleFor(2);
-    const step3State = circleFor(3);
-    const step4State = circleFor(4);
-    const step5State = circleFor(5);
+    const circleFor = (index: number): CircleState => {
+        if (index === 1) {
+            return cdsApproved ? STEP_STATE.COMPLETE : STEP_STATE.LOCKED;
+        }
+        if (index < activeStep) return STEP_STATE.COMPLETE;
+        if (index === activeStep) return STEP_STATE.ACTIVE;
+        return STEP_STATE.PENDING;
+    };
 
     const badge =
         cdsApproved && approvalRequested
@@ -150,18 +144,12 @@ const NhsSdeAccessStepper = () => {
     };
 
     const steps: {
-        label: string;
-        state: CircleState;
         titleKey: string;
-        muted: boolean;
-        extra?: ReactNode;
+        extra?: (state: CircleState) => ReactNode;
     }[] = [
         {
-            label: "1",
-            state: step1State,
             titleKey: "step1Title",
-            muted: false,
-            extra: (
+            extra: () => (
                 <>
                     {!cdsApproved && (
                         <Typography
@@ -188,11 +176,8 @@ const NhsSdeAccessStepper = () => {
             ),
         },
         {
-            label: "2",
-            state: step2State,
             titleKey: "step2Title",
-            muted: step2State === STEP_STATE.PENDING,
-            extra: step2State === STEP_STATE.ACTIVE && (
+            extra: state => state === STEP_STATE.ACTIVE && (
                 <>
                     <Box
                         sx={{
@@ -246,11 +231,8 @@ const NhsSdeAccessStepper = () => {
             ),
         },
         {
-            label: "3",
-            state: step3State,
             titleKey: "step3Title",
-            muted: step3State === STEP_STATE.PENDING,
-            extra: step3State === STEP_STATE.ACTIVE && (
+            extra: state => state === STEP_STATE.ACTIVE && (
                 <>
                     <Typography color={colors.grey600} sx={{ mt: 1, mb: 2 }}>
                         {t("step3Text")}
@@ -263,16 +245,10 @@ const NhsSdeAccessStepper = () => {
             ),
         },
         {
-            label: "4",
-            state: step4State,
             titleKey: "step4Title",
-            muted: step4State === STEP_STATE.PENDING,
         },
         {
-            label: "5",
-            state: step5State,
             titleKey: "step5Title",
-            muted: step5State === STEP_STATE.PENDING,
         },
     ];
 
@@ -307,18 +283,23 @@ const NhsSdeAccessStepper = () => {
                         </Box>
                     )}
 
-                    {steps.map((step, i) => (
-                        <StepNode
-                            key={step.label}
-                            circleState={step.state}
-                            label={step.label}
-                            isLast={i === steps.length - 1}>
-                            <StepTitle muted={step.muted}>
-                                {t(step.titleKey)}
-                            </StepTitle>
-                            {step.extra}
-                        </StepNode>
-                    ))}
+                    {steps.map((step, i) => {
+                        const label = `${i + 1}`;
+                        const state = circleFor(i + 1);
+                        return (
+                            <StepNode
+                                key={label}
+                                circleState={state}
+                                label={label}
+                                isLast={i === steps.length - 1}>
+                                <StepTitle
+                                    muted={state === STEP_STATE.PENDING}>
+                                    {t(step.titleKey)}
+                                </StepTitle>
+                                {step.extra && step.extra(state)}
+                            </StepNode>
+                        );
+                    })}
                 </>
             )}
         </Paper>
