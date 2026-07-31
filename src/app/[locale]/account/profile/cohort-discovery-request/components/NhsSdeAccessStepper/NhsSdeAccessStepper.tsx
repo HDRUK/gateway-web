@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { ReactNode, useState } from "react";
 import { useTranslations } from "next-intl";
 import Button from "@/components/Button";
 import Link from "@/components/Link";
@@ -36,13 +36,61 @@ const NhsSdeAccessStepper = () => {
     const loading = userLoading || statusLoading || !hasFetched;
     const cdsApproved = requestStatus === "APPROVED";
 
-    const step1State: CircleState = cdsApproved
-        ? STEP_STATE.COMPLETE
-        : STEP_STATE.LOCKED;
-    const step2State: CircleState = STEP_STATE.LOCKED;
-    const step3State: CircleState = STEP_STATE.LOCKED;
-    const step4State: CircleState = STEP_STATE.LOCKED;
-    const step5State: CircleState = STEP_STATE.LOCKED;
+    const steps: {
+        label: string;
+        state: CircleState;
+        titleKey: string;
+        muted: boolean;
+        extra?: ReactNode;
+    }[] = [
+        {
+            label: "1",
+            state: cdsApproved ? STEP_STATE.COMPLETE : STEP_STATE.LOCKED,
+            titleKey: "step1Title",
+            muted: false,
+            extra: cdsApproved
+                ? applied
+                    ? (
+                          <Typography color={colors.grey600} sx={{ mt: 1 }}>
+                              {t("appliedText")}
+                          </Typography>
+                      )
+                    : (
+                          <Button
+                              variant="outlined"
+                              color="secondary"
+                              sx={{ mt: 1 }}
+                              onClick={() => setApplied(true)}>
+                              {t("applyButton")}
+                          </Button>
+                      )
+                : undefined,
+        },
+        {
+            label: "2",
+            state: STEP_STATE.LOCKED,
+            titleKey: "step2Title",
+            muted: true,
+        },
+        {
+            label: "3",
+            state: STEP_STATE.LOCKED,
+            titleKey: "step3Title",
+            muted: true,
+        },
+        {
+            label: "4",
+            state: STEP_STATE.LOCKED,
+            titleKey: "step4Title",
+            muted: true,
+        },
+        {
+            label: "5",
+            state: STEP_STATE.LOCKED,
+            titleKey: "step5Title",
+            muted: true,
+        },
+    ];
 
     return (
         <Paper sx={{ bgcolor: "white", p: { mobile: 3, laptop: 4 } }}>
@@ -65,39 +113,18 @@ const NhsSdeAccessStepper = () => {
                 </Typography>
             ) : (
                 <>
-                    <StepNode circleState={step1State} label="1">
-                        <StepTitle>{t("step1Title")}</StepTitle>
-                        {cdsApproved && !applied && (
-                            <Button
-                                variant="outlined"
-                                color="secondary"
-                                sx={{ mt: 1 }}
-                                onClick={() => setApplied(true)}>
-                                {t("applyButton")}
-                            </Button>
-                        )}
-                        {cdsApproved && applied && (
-                            <Typography color={colors.grey600} sx={{ mt: 1 }}>
-                                {t("appliedText")}
-                            </Typography>
-                        )}
-                    </StepNode>
-
-                    <StepNode circleState={step2State} label="2">
-                        <StepTitle muted>{t("step2Title")}</StepTitle>
-                    </StepNode>
-
-                    <StepNode circleState={step3State} label="3">
-                        <StepTitle muted>{t("step3Title")}</StepTitle>
-                    </StepNode>
-
-                    <StepNode circleState={step4State} label="4">
-                        <StepTitle muted>{t("step4Title")}</StepTitle>
-                    </StepNode>
-
-                    <StepNode circleState={step5State} label="5" isLast>
-                        <StepTitle muted>{t("step5Title")}</StepTitle>
-                    </StepNode>
+                    {steps.map((step, i) => (
+                        <StepNode
+                            key={step.label}
+                            circleState={step.state}
+                            label={step.label}
+                            isLast={i === steps.length - 1}>
+                            <StepTitle muted={step.muted}>
+                                {t(step.titleKey)}
+                            </StepTitle>
+                            {step.extra}
+                        </StepNode>
+                    ))}
                 </>
             )}
         </Paper>
