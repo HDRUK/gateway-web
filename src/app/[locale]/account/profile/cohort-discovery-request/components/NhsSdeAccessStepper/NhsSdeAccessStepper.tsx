@@ -67,8 +67,7 @@ const NhsSdeAccessStepper = () => {
     const isApproved = nhs === NHS_SDE_STATUS.APPROVED;
     const inProcess = nhs === NHS_SDE_STATUS.IN_PROCESS;
     const approvalRequested = nhs === NHS_SDE_STATUS.APPROVAL_REQUESTED;
-    const isResolvedNeg =
-        !!nhs && (NHS_SDE_NEGATIVE_STATUSES as string[]).includes(nhs);
+    const isResolvedNeg = !!nhs && NHS_SDE_NEGATIVE_STATUSES.includes(nhs);
 
     const activeStep = (() => {
         if (!cdsApproved) return 1;
