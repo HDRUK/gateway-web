@@ -37,6 +37,15 @@ const HOW_TO_HREF = `${ABOUT_HREF}?tab=how-to-request-access`;
 const REGISTRATION_INFO_URL =
     "https://digital.nhs.uk/data-and-information/research-powered-by-data/sde-network";
 
+const STEP = {
+    EXISTING_ACCESS: 1,
+    COMPLETE_FORM: 2,
+    SUBMIT_STATUS: 3,
+    APPLICATION_REVIEW: 4,
+    ACCESS_DECISION: 5,
+    DONE: 6,
+} as const;
+
 const NhsSdeAccessStepper = () => {
     const t = useTranslations(TRANSLATION_PATH);
     const tCd = useTranslations("pages.account.profile.cohortDiscovery");
@@ -70,26 +79,26 @@ const NhsSdeAccessStepper = () => {
     const isResolvedNeg = !!nhs && NHS_SDE_NEGATIVE_STATUSES.includes(nhs);
 
     const activeStep = (() => {
-        if (!cdsApproved) return 1;
+        if (!cdsApproved) return STEP.EXISTING_ACCESS;
         switch (nhs) {
             case NHS_SDE_STATUS.APPROVED:
-                return 6;
+                return STEP.DONE;
             case NHS_SDE_STATUS.REJECTED:
             case NHS_SDE_STATUS.EXPIRED:
             case NHS_SDE_STATUS.BANNED:
             case NHS_SDE_STATUS.SUSPENDED:
-                return 5;
+                return STEP.ACCESS_DECISION;
             case NHS_SDE_STATUS.APPROVAL_REQUESTED:
-                return 4;
+                return STEP.APPLICATION_REVIEW;
             case NHS_SDE_STATUS.IN_PROCESS:
-                return formCompleted ? 3 : 2;
+                return formCompleted ? STEP.SUBMIT_STATUS : STEP.COMPLETE_FORM;
             default:
-                return applied ? 2 : 1;
+                return applied ? STEP.COMPLETE_FORM : STEP.EXISTING_ACCESS;
         }
     })();
 
     const circleFor = (index: number): CircleState => {
-        if (index === 1) {
+        if (index === STEP.EXISTING_ACCESS) {
             return cdsApproved ? STEP_STATE.COMPLETE : STEP_STATE.LOCKED;
         }
         if (index < activeStep) return STEP_STATE.COMPLETE;
