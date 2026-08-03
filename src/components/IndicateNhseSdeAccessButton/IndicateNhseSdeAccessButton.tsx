@@ -30,10 +30,12 @@ const IndicateNhseSdeAccessButton = ({
     sx,
     action,
     refetchCohort,
+    label,
 }: {
     sx?: SxProps;
     action?: () => void;
     refetchCohort?: () => void;
+    label?: string;
 }) => {
     const t = useTranslations("components.IndicateNhseSdeAccessButton");
     const { showModal } = useModal();
@@ -113,7 +115,7 @@ const IndicateNhseSdeAccessButton = ({
                         {isLoading || isLoadingAuth ? (
                             <CircularProgress size={20} color="inherit" />
                         ) : (
-                            t("label")
+                            label ?? t("label")
                         )}
                     </Button>
                 </span>
