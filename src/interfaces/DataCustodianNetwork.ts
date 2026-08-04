@@ -15,6 +15,20 @@ export interface DataCustodianNetwork {
     service: string[] | null;
 }
 
+export interface DataCustodianNetworkListItem extends DataCustodianNetwork {
+    teams?: EntityTeam[];
+}
+
+export interface DataCustodianNetworkFormValues {
+    name: string;
+    summary: string;
+    enabled: boolean;
+    url: string;
+    service: string;
+    img_url: string;
+    team_ids: number[];
+}
+
 export interface DatasetsSummaryData {
     id: number;
     datasets_total: number;

@@ -41,6 +41,7 @@ export interface CohortDiscoveryButtonProps {
     clickedAction?: () => void;
     onRedirect?: () => void;
     autoOpen?: boolean;
+    label?: string;
 }
 
 const CohortDiscoveryButton = ({
@@ -55,6 +56,7 @@ const CohortDiscoveryButton = ({
     clickedAction,
     onRedirect,
     autoOpen = false,
+    label,
     ...restProps
 }: CohortDiscoveryButtonProps) => {
     const { showModal } = useModal();
@@ -123,7 +125,7 @@ const CohortDiscoveryButton = ({
 
     const handleRequestAccess = useCallback(() => {
         push(
-            `/${RouteName.ACCOUNT}/${RouteName.PROFILE}/${RouteName.COHORT_DISCOVERY_REGISTER}`
+            `/${RouteName.ACCOUNT}/${RouteName.PROFILE}/${RouteName.COHORT_DISCOVERY_REQUEST}?open=true`
         );
     }, [push]);
 
@@ -359,7 +361,7 @@ const CohortDiscoveryButton = ({
                     {isLoading ? (
                         <CircularProgress size={20} color="inherit" />
                     ) : (
-                        t("buttonText")
+                        label ?? t("buttonText")
                     )}
                 </Button>
             </Box>

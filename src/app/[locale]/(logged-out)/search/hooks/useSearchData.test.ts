@@ -62,6 +62,92 @@ describe("useSearchData", () => {
         });
     });
 
+    describe("typesense publications", () => {
+        const publicationProps = {
+            ...baseProps,
+            isDatasets: false,
+            isExternalSourcesEnabled: false,
+            isTypesenseSearch: true,
+            type: "publications",
+        };
+
+        it("returns normalised publication data from the HDRUK provider", () => {
+            const hits = [{ _id: "1", paper_title: "Paper one" }];
+            const v2Data = {
+                ...makeV2Data(HDRUK_SOURCE_VALUE, { hits, total: 1 }),
+                type: "publications",
+            };
+            const { result } = renderHook(() =>
+                useSearchData({ ...publicationProps, v2Data })
+            );
+            expect(result.current?.list).toEqual(hits);
+            expect(result.current?.total).toBe(1);
+            expect(result.current?.path).toBe("search/publications");
+        });
+
+        it("returns undefined while v2Data is loading", () => {
+            const { result } = renderHook(() =>
+                useSearchData({ ...publicationProps, v2Data: undefined })
+            );
+            expect(result.current).toBeUndefined();
+        });
+
+        it("returns v1Data when isTypesenseSearch is false", () => {
+            const v1Data = { list: [], total: 2 } as never;
+            const { result } = renderHook(() =>
+                useSearchData({
+                    ...publicationProps,
+                    isTypesenseSearch: false,
+                    v1Data,
+                })
+            );
+            expect(result.current).toBe(v1Data);
+        });
+    });
+
+    describe("typesense data custodians", () => {
+        const dataCustodianProps = {
+            ...baseProps,
+            isDatasets: false,
+            isExternalSourcesEnabled: false,
+            isTypesenseSearch: true,
+            type: "data_custodians",
+        };
+
+        it("returns normalised data custodian data from the HDRUK provider", () => {
+            const hits = [{ _id: "1", name: "Team A", team_logo: "" }];
+            const v2Data = {
+                ...makeV2Data(HDRUK_SOURCE_VALUE, { hits, total: 1 }),
+                type: "data_custodians",
+            };
+            const { result } = renderHook(() =>
+                useSearchData({ ...dataCustodianProps, v2Data })
+            );
+            expect(result.current?.list).toEqual(hits);
+            expect(result.current?.total).toBe(1);
+            expect(result.current?.path).toBe("search/data_custodians");
+        });
+
+        it("returns undefined while v2Data is loading", () => {
+            const { result } = renderHook(() =>
+                useSearchData({ ...dataCustodianProps, v2Data: undefined })
+            );
+            expect(result.current).toBeUndefined();
+        });
+
+        it("returns v1Data when isTypesenseSearch is false", () => {
+            const v1Data = { list: [], total: 2 } as never;
+            const { result } = renderHook(() =>
+                useSearchData({
+                    ...dataCustodianProps,
+                    isTypesenseSearch: false,
+                    v1Data,
+                })
+            );
+            expect(result.current).toBe(v1Data);
+        });
+    });
+
     describe("v2 normalisation", () => {
         it("returns normalised data for the HDRUK provider", () => {
             const hits = [{ id: "1" }, { id: "2" }];

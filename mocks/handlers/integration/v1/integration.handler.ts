@@ -1,10 +1,12 @@
 import { rest } from "msw";
 import { FederationTestResponse } from "@/interfaces/Federation";
 import { Integration } from "@/interfaces/Integration";
+import { IntegrationHistory } from "@/interfaces/IntegrationHistory";
 import { PaginationType } from "@/interfaces/Pagination";
 import apis from "@/config/apis";
 import {
     federationTestResponseV1,
+    integrationHistoriesV1,
     integrationV1,
     integrationsV1,
 } from "@/mocks/data/integration";
@@ -150,10 +152,52 @@ const getFederationRunV1 = ({
     );
 };
 
+interface getFederationHistoryProps {
+    data?: IntegrationHistory[];
+    teamId?: number;
+    federationId?: number;
+    status?: number;
+    pagination?: Omit<PaginationType<IntegrationHistory>, "list">;
+}
+
+const getFederationHistoryV1 = ({
+    data = integrationHistoriesV1,
+    teamId = teamV1.id,
+    federationId = integrationV1.id,
+    status = 200,
+    pagination,
+}: getFederationHistoryProps = {}) => {
+    return rest.get(
+        `${apis.teamsV1Url}/${teamId}/federations/${federationId}/history`,
+        (req, res, ctx) => {
+            if (status !== 200) {
+                return res(
+                    ctx.status(status),
+                    ctx.json(`Request failed with status code ${status}`)
+                );
+            }
+            if (pagination) {
+                return res(
+                    ctx.status(status),
+                    ctx.json<PaginationType<IntegrationHistory>>({
+                        list: data,
+                        ...pagination,
+                    })
+                );
+            }
+            return res(
+                ctx.status(status),
+                ctx.json<{ data: IntegrationHistory[] }>({ data })
+            );
+        }
+    );
+};
+
 export {
     getIntegrationV1,
     getIntegrationsV1,
     postIntegrationV1,
     postFederationsTestV1,
     getFederationRunV1,
+    getFederationHistoryV1,
 };

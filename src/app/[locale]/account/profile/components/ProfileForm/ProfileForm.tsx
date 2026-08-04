@@ -66,7 +66,17 @@ const getRichTextComponents = (onClick: () => void) => ({
     ),
 });
 
-const ProfileForm = () => {
+interface ProfileFormProps {
+    hideKeepingUpdated?: boolean;
+    onSaved?: () => void;
+    submitLabel?: string;
+}
+
+const ProfileForm = ({
+    hideKeepingUpdated = false,
+    onSaved,
+    submitLabel,
+}: ProfileFormProps = {}) => {
     const t = useTranslations("pages.profile");
     const { user } = useAuth();
     const [
@@ -196,7 +206,9 @@ const ProfileForm = () => {
             setSecondaryEmailVerificationRequested(true);
         }
         const payload = { ...user, ...formData };
-        updateProfile(payload.id, payload);
+        updateProfile(payload.id, payload).then(() => {
+            onSaved && onSaved();
+        });
     };
 
     useEffect(() => {
@@ -245,13 +257,17 @@ const ProfileForm = () => {
                 );
             })}
 
-            <KeepingUpdated
-                fields={profileContactFormFields}
-                control={control}
-            />
+            {!hideKeepingUpdated && (
+                <KeepingUpdated
+                    fields={profileContactFormFields}
+                    control={control}
+                />
+            )}
 
             <Box sx={{ p: 0, display: "flex", justifyContent: "end" }}>
-                <Button type="submit">{t("saveChanges")}</Button>
+                <Button type="submit">
+                    {submitLabel ?? t("saveChanges")}
+                </Button>
             </Box>
         </Form>
     );
