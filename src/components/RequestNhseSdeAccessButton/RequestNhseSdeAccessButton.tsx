@@ -18,12 +18,14 @@ const RequestNhseSdeAccessButton = ({
     label,
     action,
     refetchCohort,
+    variant,
 }: {
     sx?: SxProps;
     color?: string;
     label?: string;
     action?: () => void;
     refetchCohort?: () => void;
+    variant?: "text" | "outlined" | "contained";
 }) => {
     const t = useTranslations("components.RequestNhseSdeAccessButton");
 
@@ -49,6 +51,7 @@ const RequestNhseSdeAccessButton = ({
         <Button
             sx={{ ...sx }}
             color={color}
+            variant={variant}
             onClick={() => {
                 if (user?.id) {
                     onClick();

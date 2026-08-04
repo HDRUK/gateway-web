@@ -1,9 +1,13 @@
 import userEvent from "@testing-library/user-event";
 import NhsSdeAccessStepper from "./NhsSdeAccessStepper";
-import { render, screen } from "@/utils/testUtils";
+import { render, screen, waitFor } from "@/utils/testUtils";
 
 const mockUseCohortStatus = jest.fn();
 const mockUseFeatures = jest.fn();
+const mockSubmitIndicate = jest.fn().mockResolvedValue(true);
+const mockShowModal = jest.fn();
+
+let lastModalProps: { onSuccess?: () => void | Promise<void> } | undefined;
 
 jest.mock("@/hooks/useAuth", () => ({
     __esModule: true,
@@ -20,9 +24,46 @@ jest.mock("@/providers/FeatureProvider", () => ({
     useFeatures: () => mockUseFeatures(),
 }));
 
+jest.mock("@/hooks/usePost", () => ({
+    __esModule: true,
+    default: () => mockSubmitIndicate,
+}));
+
+jest.mock("@/hooks/useModal", () => ({
+    __esModule: true,
+    default: () => ({
+        showModal: (props: { onSuccess?: () => void }) => {
+            lastModalProps = props;
+            mockShowModal(props);
+        },
+    }),
+}));
+
+jest.mock("@/utils/revalidateCache", () => ({
+    __esModule: true,
+    revalidateCache: jest.fn(),
+}));
+
+jest.mock("@/components/RequestNhseSdeAccessButton", () => ({
+    __esModule: true,
+    default: ({ label }: { label?: string }) => (
+        <button type="button">{label}</button>
+    ),
+}));
+
+jest.mock("@/components/IndicateNhseSdeAccessButton", () => ({
+    __esModule: true,
+    default: ({ label, action }: { label?: string; action?: () => void }) => (
+        <button type="button" onClick={() => action && action()}>
+            {label}
+        </button>
+    ),
+}));
+
 const baseStatus = {
     requestStatus: null,
     nhseSdeRequestStatus: null,
+    requestExpiry: null,
     isLoading: false,
     hasFetched: true,
     refetch: jest.fn(),
@@ -34,6 +75,8 @@ const renderStepper = () => render(<NhsSdeAccessStepper />);
 
 describe("NhsSdeAccessStepper", () => {
     beforeEach(() => {
+        jest.clearAllMocks();
+        lastModalProps = undefined;
         mockUseCohortStatus.mockReturnValue(baseStatus);
         mockUseFeatures.mockReturnValue(baseFeatures);
     });
@@ -84,5 +127,132 @@ describe("NhsSdeAccessStepper", () => {
         expect(
             screen.queryByText("Existing Cohort Discovery Access")
         ).not.toBeInTheDocument();
+    });
+
+    it("shows an Awaiting Action badge and activates step 2 when the NHS request is IN PROCESS", async () => {
+        mockUseCohortStatus.mockReturnValue({
+            ...baseStatus,
+            requestStatus: "APPROVED",
+            nhseSdeRequestStatus: "IN PROCESS",
+        });
+
+        renderStepper();
+
+        expect(screen.getByText("Awaiting Action")).toBeInTheDocument();
+        expect(
+            screen.getByRole("button", {
+                name: "Open NHS SDE Registration Form",
+            })
+        ).toBeInTheDocument();
+        expect(
+            screen.getByRole("button", {
+                name: "I confirm I have completed the NHS Registration Form",
+            })
+        ).toBeInTheDocument();
+    });
+
+    it("advances to step 3 and fires the indicate POST via the confirm modal once the form is completed", async () => {
+        mockUseCohortStatus.mockReturnValue({
+            ...baseStatus,
+            requestStatus: "APPROVED",
+            nhseSdeRequestStatus: "IN PROCESS",
+        });
+
+        renderStepper();
+
+        await userEvent.click(
+            screen.getByRole("button", {
+                name: "I confirm I have completed the NHS Registration Form",
+            })
+        );
+
+        const indicateButton = screen.getByRole("button", {
+            name: "I confirm I have been approved by the NHS Research SDE",
+        });
+        expect(indicateButton).toBeInTheDocument();
+
+        await userEvent.click(indicateButton);
+        expect(mockShowModal).toHaveBeenCalled();
+
+        if (lastModalProps && lastModalProps.onSuccess) {
+            await lastModalProps.onSuccess();
+        }
+
+        await waitFor(() =>
+            expect(mockSubmitIndicate).toHaveBeenCalledWith({})
+        );
+    });
+
+    it("shows a Pending badge when NHS approval has been requested", () => {
+        mockUseCohortStatus.mockReturnValue({
+            ...baseStatus,
+            requestStatus: "APPROVED",
+            nhseSdeRequestStatus: "APPROVAL REQUESTED",
+        });
+
+        renderStepper();
+
+        expect(screen.getByText("Pending")).toBeInTheDocument();
+        expect(
+            screen.queryByRole("button", {
+                name: "Open NHS SDE Registration Form",
+            })
+        ).not.toBeInTheDocument();
+    });
+
+    it("shows an Approved badge when NHS access has been granted", () => {
+        mockUseCohortStatus.mockReturnValue({
+            ...baseStatus,
+            requestStatus: "APPROVED",
+            nhseSdeRequestStatus: "APPROVED",
+        });
+
+        renderStepper();
+
+        expect(screen.getByText("Approved")).toBeInTheDocument();
+    });
+
+    it("shows a capitalised badge and no active-step actions when the NHS request is rejected", () => {
+        mockUseCohortStatus.mockReturnValue({
+            ...baseStatus,
+            requestStatus: "APPROVED",
+            nhseSdeRequestStatus: "REJECTED",
+        });
+
+        renderStepper();
+
+        expect(screen.getByText("Rejected")).toBeInTheDocument();
+        expect(
+            screen.queryByRole("button", {
+                name: "Open NHS SDE Registration Form",
+            })
+        ).not.toBeInTheDocument();
+        expect(
+            screen.queryByRole("button", {
+                name: "I confirm I have been approved by the NHS Research SDE",
+            })
+        ).not.toBeInTheDocument();
+    });
+
+    it("reveals step 2 with the registration form once the user opts in from step 1", async () => {
+        mockUseCohortStatus.mockReturnValue({
+            ...baseStatus,
+            requestStatus: "APPROVED",
+        });
+
+        renderStepper();
+
+        await userEvent.click(
+            screen.getByRole("button", {
+                name: "Apply for NHS Research SDE Cohort Data Access",
+            })
+        );
+
+        expect(screen.getByText("Awaiting Action")).toBeInTheDocument();
+        expect(
+            screen.getByRole("button", {
+                name: "Open NHS SDE Registration Form",
+            })
+        ).toBeInTheDocument();
     });
 });
