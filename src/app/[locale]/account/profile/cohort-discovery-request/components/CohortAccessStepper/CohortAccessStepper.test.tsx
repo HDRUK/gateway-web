@@ -173,6 +173,22 @@ describe("CohortAccessStepper", () => {
         expect(screen.queryByText("Application Review")).not.toBeInTheDocument();
     });
 
+    it("hides the access button when hideAccessButton is set", () => {
+        mockUseCohortStatus.mockReturnValue({
+            ...baseStatus,
+            requestStatus: "APPROVED",
+        });
+
+        render(<CohortAccessStepper cmsContent={cmsContent} hideAccessButton />);
+
+        expect(screen.getByText("Approved")).toBeInTheDocument();
+        expect(
+            screen.queryByRole("button", {
+                name: "Access Cohort Discovery tool",
+            })
+        ).not.toBeInTheDocument();
+    });
+
     it("hides the steps while the status is still loading", () => {
         mockUseCohortStatus.mockReturnValue({
             ...baseStatus,

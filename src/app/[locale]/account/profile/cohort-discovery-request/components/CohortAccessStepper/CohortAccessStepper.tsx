@@ -36,11 +36,13 @@ const TERMS_HREF =
 interface CohortAccessStepperProps {
     cmsContent: templateRepeatFields;
     autoOpen?: boolean;
+    hideAccessButton?: boolean;
 }
 
 const CohortAccessStepper = ({
     cmsContent,
     autoOpen = false,
+    hideAccessButton = false,
 }: CohortAccessStepperProps) => {
     const t = useTranslations(TRANSLATION_PATH);
     const tCd = useTranslations("pages.account.profile.cohortDiscovery");
@@ -168,7 +170,7 @@ const CohortAccessStepper = ({
                         </Box>
                     )}
                 </Box>
-                {!loading && isApproved && (
+                {!loading && isApproved && !hideAccessButton && (
                     <CohortDiscoveryButton
                         label={t("accessButton")}
                         wrapperSx={{ width: "auto" }}
