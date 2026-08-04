@@ -20,6 +20,7 @@ import apis from "@/config/apis";
 import { colors } from "@/config/theme";
 import {
     COHORT_STATUS,
+    NHS_SDE_FINAL_STATUSES,
     NHS_SDE_NEGATIVE_STATUSES,
     NHS_SDE_STATUS,
     STEP_STATE,
@@ -43,7 +44,6 @@ const STEP = {
     SUBMIT_STATUS: 3,
     APPLICATION_REVIEW: 4,
     ACCESS_DECISION: 5,
-    DONE: 6,
 } as const;
 
 const NhsSdeAccessStepper = () => {
@@ -76,18 +76,13 @@ const NhsSdeAccessStepper = () => {
     const isApproved = nhs === NHS_SDE_STATUS.APPROVED;
     const inProcess = nhs === NHS_SDE_STATUS.IN_PROCESS;
     const approvalRequested = nhs === NHS_SDE_STATUS.APPROVAL_REQUESTED;
-    const isResolvedNeg = !!nhs && NHS_SDE_NEGATIVE_STATUSES.includes(nhs);
+    const isNegative = !!nhs && NHS_SDE_NEGATIVE_STATUSES.includes(nhs);
+    const isFinal = !!nhs && NHS_SDE_FINAL_STATUSES.includes(nhs);
+    const canApply = !nhs || nhs === NHS_SDE_STATUS.EXPIRED;
 
     const activeStep = (() => {
         if (!cdsApproved) return STEP.EXISTING_ACCESS;
         switch (nhs) {
-            case NHS_SDE_STATUS.APPROVED:
-                return STEP.DONE;
-            case NHS_SDE_STATUS.REJECTED:
-            case NHS_SDE_STATUS.EXPIRED:
-            case NHS_SDE_STATUS.BANNED:
-            case NHS_SDE_STATUS.SUSPENDED:
-                return STEP.ACCESS_DECISION;
             case NHS_SDE_STATUS.APPROVAL_REQUESTED:
                 return STEP.APPLICATION_REVIEW;
             case NHS_SDE_STATUS.IN_PROCESS:
@@ -110,11 +105,11 @@ const NhsSdeAccessStepper = () => {
         ? null
         : approvalRequested
         ? { label: t("badgePending"), bg: colors.grey600 }
-        : inProcess || (applied && !nhs)
+        : inProcess || (applied && canApply)
         ? { label: t("badgeAwaitingAction"), bg: colors.orange }
         : isApproved
         ? { label: capitalise(nhs), bg: colors.green400 }
-        : isResolvedNeg
+        : isNegative
         ? { label: capitalise(nhs), bg: colors.red700 }
         : null;
 
@@ -156,7 +151,7 @@ const NhsSdeAccessStepper = () => {
                             })}
                         </Typography>
                     )}
-                    {cdsApproved && !nhs && !applied && (
+                    {cdsApproved && canApply && !applied && (
                         <Button
                             variant="outlined"
                             color="secondary"
@@ -276,23 +271,24 @@ const NhsSdeAccessStepper = () => {
                         </Box>
                     )}
 
-                    {steps.map((step, i) => {
-                        const label = `${i + 1}`;
-                        const state = circleFor(i + 1);
-                        return (
-                            <StepNode
-                                key={label}
-                                circleState={state}
-                                label={label}
-                                isLast={i === steps.length - 1}>
-                                <StepTitle
-                                    muted={state === STEP_STATE.PENDING}>
-                                    {t(step.titleKey)}
-                                </StepTitle>
-                                {step.extra && step.extra(state)}
-                            </StepNode>
-                        );
-                    })}
+                    {!isFinal &&
+                        steps.map((step, i) => {
+                            const label = `${i + 1}`;
+                            const state = circleFor(i + 1);
+                            return (
+                                <StepNode
+                                    key={label}
+                                    circleState={state}
+                                    label={label}
+                                    isLast={i === steps.length - 1}>
+                                    <StepTitle
+                                        muted={state === STEP_STATE.PENDING}>
+                                        {t(step.titleKey)}
+                                    </StepTitle>
+                                    {step.extra && step.extra(state)}
+                                </StepNode>
+                            );
+                        })}
                 </>
             )}
         </Paper>

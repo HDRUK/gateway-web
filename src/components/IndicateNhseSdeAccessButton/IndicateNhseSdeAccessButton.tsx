@@ -10,6 +10,7 @@ import { useCohortStatus } from "@/hooks/useCohortStatus";
 import useModal from "@/hooks/useModal";
 import usePost from "@/hooks/usePost";
 import apis from "@/config/apis";
+import { NHS_SDE_FINAL_STATUSES } from "@/consts/cohortDiscovery";
 import { revalidateCacheAction } from "@/app/actions/revalidateCacheAction";
 import { useFeatures } from "@/providers/FeatureProvider";
 import Button from "../Button";
@@ -23,8 +24,6 @@ const tooltipWrapper = (tooltip: string) => (children: ReactElement) =>
             </Box>
         </Tooltip>
     );
-
-const hiddenStatuses = ["APPROVED", "REJECTED", "BANNED", "SUSPENDED"];
 
 const IndicateNhseSdeAccessButton = ({
     sx,
@@ -88,12 +87,11 @@ const IndicateNhseSdeAccessButton = ({
     const isDisabled =
         !isLoggedIn ||
         approvalPending ||
-        hasClickedButton ||
         isLoading ||
         isLoadingAuth ||
         !!(
             nhseSdeRequestStatus &&
-            hiddenStatuses.includes(nhseSdeRequestStatus)
+            NHS_SDE_FINAL_STATUSES.includes(nhseSdeRequestStatus)
         );
 
     const wrapper = !isLoggedIn

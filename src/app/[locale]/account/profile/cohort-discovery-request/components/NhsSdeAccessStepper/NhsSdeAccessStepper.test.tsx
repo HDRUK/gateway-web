@@ -212,26 +212,77 @@ describe("NhsSdeAccessStepper", () => {
         expect(screen.getByText("Approved")).toBeInTheDocument();
     });
 
-    it("shows a capitalised badge and no active-step actions when the NHS request is rejected", () => {
+    it("hides all the steps once NHS access has been granted", () => {
         mockUseCohortStatus.mockReturnValue({
             ...baseStatus,
             requestStatus: "APPROVED",
-            nhseSdeRequestStatus: "REJECTED",
+            nhseSdeRequestStatus: "APPROVED",
         });
 
         renderStepper();
 
-        expect(screen.getByText("Rejected")).toBeInTheDocument();
         expect(
-            screen.queryByRole("button", {
+            screen.queryByText("Existing Cohort Discovery Access")
+        ).not.toBeInTheDocument();
+        expect(
+            screen.queryByText("Complete NHS SDE Registration Form")
+        ).not.toBeInTheDocument();
+        expect(screen.queryByText("Access Decision")).not.toBeInTheDocument();
+    });
+
+    it.each(["REJECTED", "BANNED", "SUSPENDED"])(
+        "shows a capitalised badge and hides the steps when the NHS request is %s",
+        status => {
+            mockUseCohortStatus.mockReturnValue({
+                ...baseStatus,
+                requestStatus: "APPROVED",
+                nhseSdeRequestStatus: status,
+            });
+
+            renderStepper();
+
+            expect(
+                screen.getByText(
+                    status.charAt(0) + status.slice(1).toLowerCase()
+                )
+            ).toBeInTheDocument();
+            expect(
+                screen.queryByText("Existing Cohort Discovery Access")
+            ).not.toBeInTheDocument();
+            expect(
+                screen.queryByText("Access Decision")
+            ).not.toBeInTheDocument();
+        }
+    );
+
+    it("lets an expired user restart the application from step 1", async () => {
+        mockUseCohortStatus.mockReturnValue({
+            ...baseStatus,
+            requestStatus: "APPROVED",
+            nhseSdeRequestStatus: "EXPIRED",
+        });
+
+        renderStepper();
+
+        expect(screen.getByText("Expired")).toBeInTheDocument();
+        expect(
+            screen.getByText("Existing Cohort Discovery Access")
+        ).toBeInTheDocument();
+
+        const applyButton = screen.getByRole("button", {
+            name: "Apply for NHS Research SDE Cohort Data Access",
+        });
+        expect(applyButton).toBeInTheDocument();
+
+        await userEvent.click(applyButton);
+
+        expect(
+            screen.getByRole("button", {
                 name: "Open NHS SDE Registration Form",
             })
-        ).not.toBeInTheDocument();
-        expect(
-            screen.queryByRole("button", {
-                name: "I confirm I have been approved by the NHS Research SDE",
-            })
-        ).not.toBeInTheDocument();
+        ).toBeInTheDocument();
+        expect(screen.getByText("Awaiting Action")).toBeInTheDocument();
+        expect(screen.queryByText("Expired")).not.toBeInTheDocument();
     });
 
     it("reveals step 2 with the registration form once the user opts in from step 1", async () => {
