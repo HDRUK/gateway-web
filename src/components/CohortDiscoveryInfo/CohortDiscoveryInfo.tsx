@@ -166,7 +166,7 @@ const CohortDiscoveryInfo = async ({
                                             content={
                                                 cohortDiscovery?.template
                                                     ?.newCohortDiscoveryFieldGroup
-                                                    .thirdPageText
+                                                    .thirdPageText ?? ""
                                             }
                                         />
                                     </Box>
@@ -197,7 +197,7 @@ const CohortDiscoveryInfo = async ({
                                             content={
                                                 cohortDiscovery?.template
                                                     ?.newCohortDiscoveryFieldGroup
-                                                    .thirdPageTextPartTwo
+                                                    .thirdPageTextPartTwo ?? ""
                                             }
                                         />
                                     </Box>

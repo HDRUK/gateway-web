@@ -1,3 +1,5 @@
+import { RouteName } from "@/consts/routeName";
+
 const COHORT_STATUS = {
     APPROVED: "APPROVED",
     REJECTED: "REJECTED",
@@ -61,6 +63,8 @@ const STEP_STATE = {
     PENDING: "pending",
 } as const;
 
+const COHORT_ABOUT_HREF = `/${RouteName.ACCOUNT}/${RouteName.PROFILE}/${RouteName.COHORT_DISCOVERY_ABOUT}`;
+
 export {
     statusMapping,
     NHSSDEStatusMapping,
@@ -72,4 +76,5 @@ export {
     COHORT_DISCOVERY_SDE_EXPIRY_WARNING_DAYS,
     NHS_SDE_FILTER,
     STEP_STATE,
+    COHORT_ABOUT_HREF,
 };

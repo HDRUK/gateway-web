@@ -39,13 +39,13 @@ interface CtaLink {
     title: string;
 }
 
-type CmsStepMarker = "number" | "email" | "none";
+type CmsStepMarker = "number" | "email";
 
 interface CmsStep {
     stepTitle: string;
     stepText: string;
-    marker?: CmsStepMarker;
-    buttonKey?: string;
+    marker?: CmsStepMarker | CmsStepMarker[];
+    buttonKey?: string | string[];
 }
 
 interface PageTemplatePromo {

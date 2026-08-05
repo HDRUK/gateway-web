@@ -17,8 +17,11 @@ import useAuth from "@/hooks/useAuth";
 import { useCohortStatus } from "@/hooks/useCohortStatus";
 import useDialog from "@/hooks/useDialog";
 import { colors } from "@/config/theme";
-import { statusMapping, STEP_STATE } from "@/consts/cohortDiscovery";
-import { RouteName } from "@/consts/routeName";
+import {
+    COHORT_ABOUT_HREF,
+    statusMapping,
+    STEP_STATE,
+} from "@/consts/cohortDiscovery";
 import { differenceInDays } from "@/utils/date";
 import { capitalise } from "@/utils/general";
 import ProfileForm from "@/app/[locale]/account/profile/components/ProfileForm";
@@ -29,7 +32,6 @@ import { CircleState, StepNode, StepTitle } from "../Stepper";
 const TRANSLATION_PATH = "pages.account.profile.cohortDiscovery.stepper";
 const RESOLVED_STATUSES = ["APPROVED", "REJECTED", "EXPIRED", "BANNED"];
 
-const INFO_HREF = `/${RouteName.ABOUT}/${RouteName.COHORT_DISCOVERY}`;
 const TERMS_HREF =
     "https://digital.nhs.uk/data-and-information/research-powered-by-data/registration-service";
 
@@ -140,7 +142,7 @@ const CohortAccessStepper = ({
                     <Typography color={colors.grey700}>
                         {t.rich("moreInfo", {
                             link: chunks => (
-                                <Link href={INFO_HREF}>{chunks}</Link>
+                                <Link href={COHORT_ABOUT_HREF}>{chunks}</Link>
                             ),
                         })}
                     </Typography>
