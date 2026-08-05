@@ -2013,8 +2013,7 @@
         "CohortDiscoveryInfo": {
             "title": "Cohort Discovery",
             "whatCanIDo": "What can I do in Cohort Discovery?",
-            "learnAbout": "Learn about Cohort Discovery and gain access to the service",
-            "accessButton": "Access Cohort Discovery"
+            "learnAbout": "Learn about Cohort Discovery and gain access to the service"
         }
     },
     "modules": {
