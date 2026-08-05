@@ -1,4 +1,4 @@
-import { Box, Stack } from "@mui/material";
+import { Box } from "@mui/material";
 import { getTranslations } from "next-intl/server";
 import { CohortDiscoveryTemplate } from "@/interfaces/Cms";
 import Container from "@/components/Container";
@@ -6,11 +6,11 @@ import HTMLContent from "@/components/HTMLContent";
 import Tabs from "@/components/Tabs";
 import Typography from "@/components/Typography";
 import CohortDiscoveryButton from "../CohortDiscoveryButton";
-import CohortAccessButtons from "./CohortAccessButtons";
-import { CohortDiscoveryTabContent } from "./CohortDiscoveryInfo.styles";
-import ViewCohortDatasetsButton from "./ViewCohortDatasetsButton";
+import HTMLVideoEmbed from "./HTMLVideoEmbed";
+import StepList from "./StepList";
 
 const TRANSLATION_PATH = "components.CohortDiscoveryInfo";
+const TEXT_COLUMN_MAX_WIDTH = 900;
 
 const CohortDiscoveryInfo = async ({
     cohortDiscovery,
@@ -25,7 +25,7 @@ const CohortDiscoveryInfo = async ({
         <Container>
             <Box
                 sx={{
-                    bgcolor: "white",
+                    bgcolor: "common.white",
                     pt: 4,
                     pb: 1,
                     px: 4,
@@ -48,7 +48,7 @@ const CohortDiscoveryInfo = async ({
                 tabBoxSx={{
                     elevation: 0,
                     boxShadow: 0,
-                    bgcolor: "white",
+                    bgcolor: "common.white",
                     mt: "2px",
                     mb: 3,
                 }}
@@ -58,94 +58,85 @@ const CohortDiscoveryInfo = async ({
                         value: "about-cohort-discovery",
                         label: "About Cohort Discovery",
                         content: (
-                            <CohortDiscoveryTabContent
-                                sx={{ bgcolor: "white" }}>
-                                <Box
-                                    sx={{
-                                        p: 0,
-                                        px: 1,
-                                        display: "flex",
-                                        alignItems: "flex-start",
-                                        gap: 2,
-                                        flex: 1,
-                                        flexDirection: {
-                                            mobile: "column",
-                                            laptop: "row",
-                                        },
-                                    }}>
-                                    <Box sx={{ flex: 1 }}>
-                                        <HTMLContent
-                                            content={
-                                                cohortDiscovery?.template
-                                                    ?.newCohortDiscoveryFieldGroup
-                                                    .firstPageText
-                                            }
-                                        />
-                                        <ViewCohortDatasetsButton />
-                                    </Box>
-                                    <Box sx={{ flex: 1 }}>
-                                        {cohortDiscovery?.template
-                                            ?.newCohortDiscoveryFieldGroup
-                                            .firstPageMedia && (
-                                            <HTMLContent
-                                                content={
-                                                    cohortDiscovery?.template
-                                                        ?.newCohortDiscoveryFieldGroup
-                                                        .firstPageMedia
-                                                }
-                                            />
-                                        )}
-                                    </Box>
+                            <Box
+                                sx={{
+                                    bgcolor: "common.white",
+                                    p: { mobile: 2, laptop: 4 },
+                                }}>
+                                <Box sx={{ maxWidth: TEXT_COLUMN_MAX_WIDTH }}>
+                                    <HTMLContent
+                                        content={
+                                            cohortDiscovery?.template
+                                                ?.newCohortDiscoveryFieldGroup
+                                                .firstPageText ?? ""
+                                        }
+                                    />
+                                    <Typography
+                                        variant="h2"
+                                        sx={{ mt: 2, mb: 3 }}>
+                                        {t("whatCanIDo")}
+                                    </Typography>
+                                    <StepList
+                                        steps={
+                                            cohortDiscovery?.template
+                                                ?.newCohortDiscoveryFieldGroup
+                                                .firstPageSteps ?? []
+                                        }
+                                    />
                                 </Box>
-                            </CohortDiscoveryTabContent>
+                                <Box sx={{ mt: 4 }}>
+                                    <HTMLVideoEmbed
+                                        content={
+                                            cohortDiscovery?.template
+                                                ?.newCohortDiscoveryFieldGroup
+                                                .firstPageMedia
+                                        }
+                                    />
+                                </Box>
+                            </Box>
                         ),
                     },
                     {
                         value: "how-to-request-access",
                         label: "How to request access",
                         content: (
-                            <CohortDiscoveryTabContent
-                                sx={{ bgcolor: "white" }}>
-                                <Box
-                                    sx={{
-                                        p: 0,
-                                        px: 1,
-                                        display: "flex",
-                                        alignItems: "center",
-                                        gap: 2,
-                                        flexDirection: {
-                                            mobile: "column",
-                                            laptop: "row",
-                                        },
-                                    }}>
-                                    <Box
-                                        sx={{
-                                            flex: 1,
-                                            alignItems: "flex-start",
-                                        }}>
+                            <Box
+                                sx={{
+                                    bgcolor: "common.white",
+                                    p: { mobile: 2, laptop: 4 },
+                                }}>
+                                <Box sx={{ maxWidth: TEXT_COLUMN_MAX_WIDTH }}>
+                                    <HTMLContent
+                                        content={
+                                            cohortDiscovery?.template
+                                                ?.newCohortDiscoveryFieldGroup
+                                                .secondPageText ?? ""
+                                        }
+                                    />
+                                    <Box sx={{ mt: 3 }}>
+                                        <StepList
+                                            steps={
+                                                cohortDiscovery?.template
+                                                    ?.newCohortDiscoveryFieldGroup
+                                                    .secondPageSteps ?? []
+                                            }
+                                        />
+                                    </Box>
+                                </Box>
+                                {cohortDiscovery?.template
+                                    ?.newCohortDiscoveryFieldGroup
+                                    .secondPageMedia && (
+                                    <Box sx={{ flex: 1 }}>
                                         <HTMLContent
                                             content={
                                                 cohortDiscovery?.template
                                                     ?.newCohortDiscoveryFieldGroup
-                                                    .secondPageText
+                                                    .secondPageMedia
                                             }
                                         />
                                     </Box>
-                                    <Box sx={{ flex: 1 }}>
-                                        {cohortDiscovery?.template
-                                            ?.newCohortDiscoveryFieldGroup
-                                            .secondPageMedia && (
-                                            <HTMLContent
-                                                content={
-                                                    cohortDiscovery?.template
-                                                        ?.newCohortDiscoveryFieldGroup
-                                                        .secondPageMedia
-                                                }
-                                            />
-                                        )}
-                                    </Box>
-                                </Box>
-                            </CohortDiscoveryTabContent>
+                                )}
+                            </Box>
                         ),
                     },
                     {
@@ -160,7 +151,7 @@ const CohortDiscoveryInfo = async ({
                                 }}>
                                 <Box
                                     sx={{
-                                        bgcolor: "white",
+                                        bgcolor: "common.white",
                                         p: 3,
                                         display: "flex",
                                         alignItems: "center",
@@ -175,7 +166,7 @@ const CohortDiscoveryInfo = async ({
                                             content={
                                                 cohortDiscovery?.template
                                                     ?.newCohortDiscoveryFieldGroup
-                                                    .thirdPageText
+                                                    .thirdPageText ?? ""
                                             }
                                         />
                                     </Box>
@@ -195,7 +186,7 @@ const CohortDiscoveryInfo = async ({
                                 </Box>
                                 <Box
                                     sx={{
-                                        bgcolor: "white",
+                                        bgcolor: "common.white",
                                         p: 3,
                                         display: "flex",
                                         alignItems: "center",
@@ -206,7 +197,7 @@ const CohortDiscoveryInfo = async ({
                                             content={
                                                 cohortDiscovery?.template
                                                     ?.newCohortDiscoveryFieldGroup
-                                                    .thirdPageTextPartTwo
+                                                    .thirdPageTextPartTwo ?? ""
                                             }
                                         />
                                     </Box>
@@ -218,90 +209,43 @@ const CohortDiscoveryInfo = async ({
                         value: "nhs-sde-network",
                         label: "NHS Research SDE Network",
                         content: (
-                            <CohortDiscoveryTabContent
+                            <Box
                                 sx={{
-                                    display: "flex",
-                                    alignItems: "stretch",
-                                    flexDirection: "column",
-                                    p: 0,
+                                    bgcolor: "common.white",
+                                    p: { mobile: 2, laptop: 4 },
                                 }}>
-                                <Box
-                                    sx={{
-                                        bgcolor: "white",
-                                        display: "flex",
-                                        justifyContent: "center",
-                                        mb: 2,
-                                        gap: 3,
-                                        py: 2,
-                                    }}>
-                                    <CohortAccessButtons />
+                                <Box sx={{ maxWidth: TEXT_COLUMN_MAX_WIDTH }}>
+                                    <HTMLContent
+                                        content={
+                                            cohortDiscovery?.template
+                                                ?.newCohortDiscoveryFieldGroup
+                                                .fourthPageText ?? ""
+                                        }
+                                    />
+                                    <Box sx={{ mt: 3 }}>
+                                        <StepList
+                                            steps={
+                                                cohortDiscovery?.template
+                                                    ?.newCohortDiscoveryFieldGroup
+                                                    .fourthPageSteps ?? []
+                                            }
+                                        />
+                                    </Box>
                                 </Box>
-                                <Box
-                                    sx={{
-                                        p: 3,
-                                        bgcolor: "white",
-                                        display: "flex",
-                                        gap: 5,
-                                        flexDirection: {
-                                            mobile: "column",
-                                            laptop: "row",
-                                        },
-                                        flexGrow: 1,
-                                    }}>
-                                    <Box
-                                        sx={{
-                                            flex: 1,
-                                            display: "flex",
-                                            flexDirection: "column",
-                                            justifyContent: "flex-start",
-                                        }}>
-                                        <Stack sx={{ mb: 3 }}>
-                                            <Typography variant="h1">
-                                                {t("nhsNetwork")}
-                                            </Typography>
-                                            <Typography sx={{ mb: 1 }}>
-                                                {t("nhsNetworkInfo")}
-                                            </Typography>
-
-                                            <ViewCohortDatasetsButton
-                                                nhsSdeOnly={true}
-                                            />
-
-                                            <ViewCohortDatasetsButton />
-                                        </Stack>
-
+                                {cohortDiscovery?.template
+                                    ?.newCohortDiscoveryFieldGroup
+                                    .fourthPageMedia && (
+                                    <Box sx={{ flex: 1 }}>
                                         <HTMLContent
                                             content={
                                                 cohortDiscovery?.template
                                                     ?.newCohortDiscoveryFieldGroup
-                                                    .fourthPageText
+                                                    .fourthPageMedia
                                             }
                                         />
                                     </Box>
-                                    <Box
-                                        sx={{
-                                            overflowY: {
-                                                laptop: "auto",
-                                                mobile: "visible",
-                                            },
-                                            justifySelf: "center",
-                                            display: "flex",
-                                            justifyContent: "center",
-                                        }}>
-                                        {cohortDiscovery?.template
-                                            ?.newCohortDiscoveryFieldGroup
-                                            .fourthPageMedia && (
-                                            <HTMLContent
-                                                content={
-                                                    cohortDiscovery?.template
-                                                        ?.newCohortDiscoveryFieldGroup
-                                                        .fourthPageMedia
-                                                }
-                                            />
-                                        )}
-                                    </Box>
-                                </Box>
-                            </CohortDiscoveryTabContent>
+                                )}
+                            </Box>
                         ),
                     },
                 ]}

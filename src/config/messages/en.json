@@ -2012,12 +2012,8 @@
         },
         "CohortDiscoveryInfo": {
             "title": "Cohort Discovery",
-            "step1": "Firstly, request access through the NHS website",
-            "step2": "Once approved, select this button",
-            "learnAbout": "Learn about Cohort Discovery and gain access to the service",
-            "accessButton": "Access Cohort Discovery",
-            "nhsNetwork": "NHS Research SDE Network",
-            "nhsNetworkInfo": "The following additional NHS Research SDE datasets are available in Cohort Discovery, but require you go to through a separate approval process by the NHS Research SDE Network."
+            "whatCanIDo": "What can I do in Cohort Discovery?",
+            "learnAbout": "Learn about Cohort Discovery and gain access to the service"
         }
     },
     "modules": {

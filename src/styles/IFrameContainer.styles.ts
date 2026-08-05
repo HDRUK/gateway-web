@@ -1,5 +1,7 @@
 import { styled } from "@mui/material";
 
+export const IFRAME_EMBED_MAX_WIDTH = 950;
+
 export const IFrameWrapper = styled("div")({
     margin: 0,
     position: "relative",

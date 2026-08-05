@@ -19,22 +19,21 @@ import usePost from "@/hooks/usePost";
 import apis from "@/config/apis";
 import { colors } from "@/config/theme";
 import {
+    COHORT_ABOUT_HREF,
     COHORT_STATUS,
     NHS_SDE_FINAL_STATUSES,
     NHS_SDE_NEGATIVE_STATUSES,
     NHS_SDE_STATUS,
     STEP_STATE,
 } from "@/consts/cohortDiscovery";
-import { RouteName } from "@/consts/routeName";
 import { capitalise } from "@/utils/general";
 import { revalidateCacheAction } from "@/app/actions/revalidateCacheAction";
 import { useFeatures } from "@/providers/FeatureProvider";
 import { CircleState, StepNode, StepTitle } from "../Stepper";
 
 const TRANSLATION_PATH = "pages.account.profile.cohortDiscovery.nhsStepper";
-const ABOUT_HREF = `/${RouteName.ABOUT}/${RouteName.COHORT_DISCOVERY}`;
-const MORE_INFO_HREF = `${ABOUT_HREF}?tab=nhs-sde-network`;
-const HOW_TO_HREF = `${ABOUT_HREF}?tab=how-to-request-access`;
+const MORE_INFO_HREF = `${COHORT_ABOUT_HREF}?tab=nhs-sde-network`;
+const HOW_TO_HREF = `${COHORT_ABOUT_HREF}?tab=how-to-request-access`;
 const REGISTRATION_INFO_URL =
     "https://digital.nhs.uk/data-and-information/research-powered-by-data/sde-network";
 
