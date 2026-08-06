@@ -3,7 +3,7 @@ import { useController, Control, useForm, FieldError } from "react-hook-form";
 import { IconButton, List, ListItem, Stack, SxProps } from "@mui/material";
 import { get } from "lodash";
 import { useTranslations } from "next-intl";
-import { FileUpload, UploadedFileMetadata } from "@/interfaces/FileUpload";
+import { FileUpload, UploadedFileMetadataValue } from "@/interfaces/FileUpload";
 import useGet from "@/hooks/useGet";
 import usePost from "@/hooks/usePost";
 import notificationService from "@/services/notification";
@@ -46,7 +46,8 @@ export interface UploadFileProps {
     label?: string;
     required?: boolean;
     name?: string;
-    control: Control;
+    control?: Control;
+    existingFiles?: UploadedFileMetadataValue[];
     allowMultipleFiles?: boolean;
     disabled?: boolean;
     fileDownloadApiPath?: string;
@@ -77,6 +78,7 @@ const UploadFile = ({
     required,
     name = "upload",
     control,
+    existingFiles,
     allowMultipleFiles,
     disabled = false,
     fileDownloadApiPath,
@@ -120,7 +122,8 @@ const UploadFile = ({
         default: t("imageError"),
     };
 
-    const existingFileArray: UploadedFileMetadata[] = [].concat(value || []);
+    const existingFileArray: UploadedFileMetadataValue[] =
+        existingFiles ?? [].concat(value || []);
 
     const { data: fileScanStatus } = useGet<FileUpload>(
         `${apis.fileUploadV1Url}/${fileId}`,

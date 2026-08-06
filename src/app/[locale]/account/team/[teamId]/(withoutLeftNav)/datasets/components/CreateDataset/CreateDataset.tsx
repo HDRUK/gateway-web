@@ -875,6 +875,9 @@ const CreateDataset = ({
                                                 handleToggleUploading={
                                                     setIsSaving
                                                 }
+                                                onRemove={() =>
+                                                    setStructuralMetadata([])
+                                                }
                                             />
                                         )}
 
