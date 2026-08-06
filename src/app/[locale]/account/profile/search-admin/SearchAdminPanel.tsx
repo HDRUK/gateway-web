@@ -11,6 +11,7 @@ import { AdminSearchStatusResponse } from "@/interfaces/AdminSearch";
 import FeatureFlagsTable from "./FeatureFlagsTable";
 import SearchEntitiesTab from "./SearchEntitiesTab";
 import DataCustodianNetworksTab from "./DataCustodianNetworksTab";
+import NightlyDatasetTestsTab from "./NightlyDatasetTestsTab";
 
 const TRANSLATION_PATH = "pages.account.profile.searchAdmin";
 
@@ -58,6 +59,15 @@ export default function SearchAdminPanel() {
                             content: (
                                 <Box sx={{ p: 0, pt: 2 }}>
                                     <DataCustodianNetworksTab />
+                                </Box>
+                            ),
+                        },
+                        {
+                            label: t("nightlyDatasetTestsTab"),
+                            value: "nightlyDatasetTests",
+                            content: (
+                                <Box sx={{ p: 0, pt: 2 }}>
+                                    <NightlyDatasetTestsTab />
                                 </Box>
                             ),
                         },
