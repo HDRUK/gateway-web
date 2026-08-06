@@ -78,9 +78,10 @@ const DatasetMindMap = ({
                 const safeTitle = encodeURIComponent(title);
 
                 if (node.id === "node-synthetic") {
+                    // Loki - For Calum. Tweak per  GAT-9374
                     href =
                         data.metadata.metadata?.structuralMetadata
-                            ?.syntheticDataWebLink[0];
+                            ?.syntheticDataWebLink?.[0] ?? null;
 
                     if (!href) {
                         empty.push(node.id);
