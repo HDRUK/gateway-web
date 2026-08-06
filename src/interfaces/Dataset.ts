@@ -26,7 +26,7 @@ interface StructuralMetadata {
 
 interface StructuralMetadataPublicSchema {
     tables: StructuralMetadata[];
-    syntheticDataWebLink?: string[];
+    syntheticDataWebLink: string[];
 }
 
 interface DemographicGeneric {
