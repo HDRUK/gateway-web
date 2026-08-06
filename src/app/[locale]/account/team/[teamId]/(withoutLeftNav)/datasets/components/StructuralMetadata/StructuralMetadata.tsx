@@ -35,6 +35,7 @@ interface StructuralMetadataProps {
     structuralMetadata?: StructuralMetadata[];
     fileProcessedAction: (metadata: StructuralMetadata[]) => void;
     handleToggleUploading: (isUploading: boolean) => void;
+    onRemove: () => void;
 }
 
 const columnHelper = createColumnHelper();
@@ -72,10 +73,23 @@ const StructuralMetadataSection = ({
     structuralMetadata,
     fileProcessedAction,
     handleToggleUploading,
+    onRemove,
 }: StructuralMetadataProps) => {
     const t = useTranslations(TRANSLATION_PATH);
 
     const [isUploading, setIsUploading] = useState<boolean>(false);
+    const [uploadedFilename, setUploadedFilename] = useState<string>();
+
+    const hasMetadata = !!structuralMetadata?.length;
+
+    const existingFiles = hasMetadata
+        ? [
+              {
+                  uuid: "structural-metadata",
+                  filename: uploadedFilename || t("existingFile"),
+              },
+          ]
+        : [];
 
     const tableColumns = [
         {
@@ -137,21 +151,29 @@ const StructuralMetadataSection = ({
 
             <UploadFile
                 apiPath={`${apis.fileUploadV1Url}?entity_flag=structural-metadata-upload`}
-                onFileUploaded={file =>
-                    file.structural_metadata &&
-                    fileProcessedAction(file.structural_metadata)
-                }
+                onFileUploaded={file => {
+                    if (!file?.structural_metadata) {
+                        return;
+                    }
+                    setUploadedFilename(file.filename);
+                    fileProcessedAction(file.structural_metadata);
+                }}
                 isUploading={setIsUploading}
                 allowReuploading
                 acceptedFileTypes=".xlsx"
+                existingFiles={existingFiles}
+                onFileRemove={() => {
+                    setUploadedFilename(undefined);
+                    onRemove();
+                }}
             />
 
             {isUploading && (
                 <Typography sx={{ mt: 2 }}>{t("uploadMessage")}</Typography>
             )}
 
-            {structuralMetadata && !isUploading && (
-                <Box sx={{ mt: 4, p: 0 }}>
+            {hasMetadata && !isUploading && (
+                <Box sx={{ mt: 2, p: 0 }}>
                     <StructuralMetadataAccordion
                         metadata={structuralMetadata}
                     />
