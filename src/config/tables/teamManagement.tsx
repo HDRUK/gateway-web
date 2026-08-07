@@ -9,7 +9,6 @@ import SortIcon from "@/components/SortIcon";
 import TickCrossIcon from "@/components/TickCrossIcon";
 import { CloseIcon, EditIcon } from "@/consts/icons";
 import { formatDate } from "@/utils/date";
-import { capitalise } from "@/utils/general";
 import { getTeamAdmins } from "@/utils/user";
 
 interface getColumnsProps {
@@ -82,9 +81,7 @@ const getColumns = ({
             ),
             cell: ({ row: { original } }) => (
                 <MarkDownSanitizedWithHtml
-                    content={`${capitalise(original.member_of)} > ${
-                        original.name
-                    }`}
+                    content={original.name}
                     WrapperComponent="span"
                 />
             ),
