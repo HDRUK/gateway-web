@@ -108,6 +108,8 @@ const apis = {
     workgroupsV1Url: `${apiV1Url}/workgroups`,
     metricsV2Url: `${apiV2Url}/metrics`,
     nightlyDatasetTestsV2Url: `${apiV2IPUrl}/nightly_dataset_tests`,
+    emailTemplatesV1Url: `${apiV1IPUrl}/emailtemplates`,
+    emailTemplatesPreviewV1Url: `${apiV1IPUrl}/emailtemplates/preview`,
 };
 
 export default apis;

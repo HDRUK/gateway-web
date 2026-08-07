@@ -620,7 +620,17 @@
                     "editNetworkTitle": "Edit Data Custodian Network",
                     "createNetworkTitle": "Create Data Custodian Network",
                     "cancel": "Cancel",
-                    "saveChanges": "Save changes"
+                    "saveChanges": "Save changes",
+                    "emailTemplatesTab": "Email Templates",
+                    "emailTemplatesTitle": "Email Templates",
+                    "createEmailTemplate": "Create template",
+                    "noEmailTemplatesFound": "No email templates found.",
+                    "toggleEmailTemplateEnabled": "Toggle {IDENTIFIER} enabled",
+                    "editEmailTemplateTitle": "Edit Email Template",
+                    "createEmailTemplateTitle": "Create Email Template",
+                    "emailPreviewTitle": "Preview",
+                    "emailPreviewRendering": "Rendering...",
+                    "emailPreviewError": "Couldn't render a preview. Check the MJML in the body field for errors."
                 }
             },
             "team": {
@@ -2110,6 +2120,12 @@
             "DeleteDataCustodianNetworkDialog": {
                 "title": "Delete network",
                 "message": "Are you sure you want to delete \"{NETWORK_NAME}\"? This cannot be undone.",
+                "confirmButton": "Delete",
+                "cancelButton": "Cancel"
+            },
+            "DeleteEmailTemplateDialog": {
+                "title": "Delete email template",
+                "message": "Are you sure you want to delete \"{IDENTIFIER}\"? Any part of the application that still sends this email will silently stop sending it. This cannot be undone.",
                 "confirmButton": "Delete",
                 "cancelButton": "Cancel"
             },
