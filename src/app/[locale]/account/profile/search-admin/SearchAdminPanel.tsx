@@ -12,6 +12,7 @@ import FeatureFlagsTable from "./FeatureFlagsTable";
 import SearchEntitiesTab from "./SearchEntitiesTab";
 import DataCustodianNetworksTab from "./DataCustodianNetworksTab";
 import NightlyDatasetTestsTab from "./NightlyDatasetTestsTab";
+import EmailTemplatesTab from "./EmailTemplatesTab";
 
 const TRANSLATION_PATH = "pages.account.profile.searchAdmin";
 
@@ -68,6 +69,15 @@ export default function SearchAdminPanel() {
                             content: (
                                 <Box sx={{ p: 0, pt: 2 }}>
                                     <NightlyDatasetTestsTab />
+                                </Box>
+                            ),
+                        },
+                        {
+                            label: t("emailTemplatesTab"),
+                            value: "emailTemplates",
+                            content: (
+                                <Box sx={{ p: 0, pt: 2 }}>
+                                    <EmailTemplatesTab />
                                 </Box>
                             ),
                         },
