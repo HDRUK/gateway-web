@@ -59,7 +59,7 @@ const RequestNhseSdeAccessButton = ({
             }}
             href={
                 isNhsSdeApplicationsEnabled
-                    ? "https://sdevalidation.necsu.nhs.uk/form/user/"
+                    ? "https://sderegistration.necsu.nhs.uk/form/user/"
                     : "https://digital.nhs.uk/data-and-information/research-powered-by-data/sde-network"
             }
             target="_blank"
