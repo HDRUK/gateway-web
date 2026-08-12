@@ -1,7 +1,7 @@
 import userEvent from "@testing-library/user-event";
 import { templateRepeatFields } from "@/interfaces/Cms";
-import CohortAccessStepper from "./CohortAccessStepper";
 import { render, screen } from "@/utils/testUtils";
+import CohortAccessStepper from "./CohortAccessStepper";
 
 const mockUseCohortStatus = jest.fn();
 const mockShowDialog = jest.fn();
@@ -170,7 +170,9 @@ describe("CohortAccessStepper", () => {
                 name: "Access Cohort Discovery tool",
             })
         ).toBeInTheDocument();
-        expect(screen.queryByText("Application Review")).not.toBeInTheDocument();
+        expect(
+            screen.queryByText("Application Review")
+        ).not.toBeInTheDocument();
     });
 
     it("hides the access button when hideAccessButton is set", () => {
@@ -179,13 +181,81 @@ describe("CohortAccessStepper", () => {
             requestStatus: "APPROVED",
         });
 
-        render(<CohortAccessStepper cmsContent={cmsContent} hideAccessButton />);
+        render(
+            <CohortAccessStepper cmsContent={cmsContent} hideAccessButton />
+        );
 
         expect(screen.getByText("Approved")).toBeInTheDocument();
         expect(
             screen.queryByRole("button", {
                 name: "Access Cohort Discovery tool",
             })
+        ).not.toBeInTheDocument();
+    });
+
+    it("offers the re-apply button to an expired user", () => {
+        mockUseCohortStatus.mockReturnValue({
+            ...baseStatus,
+            requestStatus: "EXPIRED",
+        });
+
+        renderStepper();
+
+        expect(screen.getByText("Expired")).toBeInTheDocument();
+        expect(
+            screen.getByRole("button", { name: "Re-apply for access" })
+        ).toBeInTheDocument();
+        expect(
+            screen.queryByRole("button", { name: "Apply for Cohort Discovery" })
+        ).not.toBeInTheDocument();
+    });
+
+    it("restarts a rejected user from the profile step through to the terms dialog", async () => {
+        mockUseCohortStatus.mockReturnValue({
+            ...baseStatus,
+            requestStatus: "REJECTED",
+        });
+
+        renderStepper();
+
+        expect(screen.getByText("Rejected")).toBeInTheDocument();
+
+        await userEvent.click(
+            screen.getByRole("button", { name: "Re-apply for access" })
+        );
+
+        expect(screen.getByText("Review Your Profile")).toBeInTheDocument();
+
+        await userEvent.click(
+            screen.getByRole("button", { name: "Save & continue" })
+        );
+        await userEvent.click(
+            screen.getByRole("button", { name: "submit-declaration" })
+        );
+
+        expect(mockShowDialog).toHaveBeenCalledWith(
+            expect.anything(),
+            expect.objectContaining({
+                cmsContent,
+                onSubmitted: expect.any(Function),
+            })
+        );
+    });
+
+    it("does not offer re-apply to a banned user", () => {
+        mockUseCohortStatus.mockReturnValue({
+            ...baseStatus,
+            requestStatus: "BANNED",
+        });
+
+        renderStepper();
+
+        expect(screen.getByText("Banned")).toBeInTheDocument();
+        expect(
+            screen.queryByRole("button", { name: "Re-apply for access" })
+        ).not.toBeInTheDocument();
+        expect(
+            screen.queryByRole("button", { name: "Apply for Cohort Discovery" })
         ).not.toBeInTheDocument();
     });
 
@@ -198,6 +268,8 @@ describe("CohortAccessStepper", () => {
 
         renderStepper();
 
-        expect(screen.queryByText("Application Review")).not.toBeInTheDocument();
+        expect(
+            screen.queryByText("Application Review")
+        ).not.toBeInTheDocument();
     });
 });

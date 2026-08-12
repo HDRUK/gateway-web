@@ -345,6 +345,7 @@
                         "applyStepTitle": "Apply for Cohort Discovery Access",
                         "applyStepDescription": "Start application, read terms and conditions and submit application.",
                         "applyButton": "Apply for Cohort Discovery",
+                        "reapplyButton": "Re-apply for access",
                         "reviewProfileTitle": "Review Your Profile",
                         "reviewProfileIntro": "Your Cohort Discovery Access Request will be assessed based on your Gateway registered user profile. Please ensure this is complete and up to date before you submit this request and includes:",
                         "checklistEmail": "Institutional email address <warn>(if this is not what appears in your SSO email field, please log out and log in using your institutional email address)</warn>",

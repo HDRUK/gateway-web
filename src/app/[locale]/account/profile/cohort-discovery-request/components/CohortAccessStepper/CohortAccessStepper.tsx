@@ -19,6 +19,7 @@ import useDialog from "@/hooks/useDialog";
 import { colors } from "@/config/theme";
 import {
     COHORT_ABOUT_HREF,
+    COHORT_REAPPLY_STATUSES,
     statusMapping,
     STEP_STATE,
 } from "@/consts/cohortDiscovery";
@@ -62,24 +63,28 @@ const CohortAccessStepper = ({
     const [expanded, setExpanded] = useState<boolean | null>(null);
     const [activeSubStep, setActiveSubStep] = useState(0);
 
-    const started = expanded === null ? autoOpen && !requestStatus : expanded;
-
     const hasApplied = !!requestStatus;
     const isApproved = requestStatus === "APPROVED";
     const isResolved = RESOLVED_STATUSES.includes(requestStatus ?? "");
     const inReview = hasApplied && !isResolved;
+    const canReapply = COHORT_REAPPLY_STATUSES.includes(requestStatus ?? "");
 
-    const step1State: CircleState = hasApplied
-        ? STEP_STATE.COMPLETE
-        : STEP_STATE.ACTIVE;
-    const step2State: CircleState = isResolved
-        ? STEP_STATE.COMPLETE
-        : inReview
-        ? STEP_STATE.ACTIVE
-        : STEP_STATE.PENDING;
+    const started =
+        expanded === null
+            ? autoOpen && (!requestStatus || canReapply)
+            : expanded;
+
+    const step1State: CircleState =
+        hasApplied && !canReapply ? STEP_STATE.COMPLETE : STEP_STATE.ACTIVE;
+    const step2State: CircleState =
+        isResolved && !canReapply
+            ? STEP_STATE.COMPLETE
+            : inReview
+            ? STEP_STATE.ACTIVE
+            : STEP_STATE.PENDING;
     const step3State: CircleState = isApproved
         ? STEP_STATE.COMPLETE
-        : isResolved
+        : isResolved && !canReapply
         ? STEP_STATE.ACTIVE
         : STEP_STATE.PENDING;
 
@@ -198,7 +203,9 @@ const CohortAccessStepper = ({
                                         color="secondary"
                                         sx={{ mt: 2 }}
                                         onClick={() => setExpanded(true)}>
-                                        {t("applyButton")}
+                                        {canReapply
+                                            ? t("reapplyButton")
+                                            : t("applyButton")}
                                     </Button>
                                 ) : (
                                     <Box sx={{ mt: 3 }}>
@@ -217,7 +224,9 @@ const CohortAccessStepper = ({
                                                 <>
                                                     <Typography
                                                         sx={{ mt: 1, mb: 1 }}>
-                                                        {t("reviewProfileIntro")}
+                                                        {t(
+                                                            "reviewProfileIntro"
+                                                        )}
                                                     </Typography>
                                                     <Box sx={{ mb: 2 }}>
                                                         {checklist.map(item => (
