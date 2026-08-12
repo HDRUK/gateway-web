@@ -6,6 +6,9 @@ import CohortAccessStepper from "./CohortAccessStepper";
 const mockUseCohortStatus = jest.fn();
 const mockShowDialog = jest.fn();
 
+// jsdom doesn't implement scrollIntoView
+Element.prototype.scrollIntoView = jest.fn();
+
 jest.mock("@/hooks/useAuth", () => ({
     __esModule: true,
     default: () => ({ user: { id: 1 }, isLoading: false }),

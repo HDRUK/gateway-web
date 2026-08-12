@@ -1,9 +1,7 @@
 "use client";
 
-import { useMemo } from "react";
 import { Grid, Typography } from "@mui/material";
 import { useTranslations } from "next-intl";
-import { useSearchParams } from "next/navigation";
 import { templateRepeatFields } from "@/interfaces/Cms";
 import Box from "@/components/Box";
 import Container from "@/components/Container";
@@ -20,12 +18,6 @@ export default function CohortDiscoveryCoverPage({
     cmsContent: templateRepeatFields;
 }) {
     const t = useTranslations("pages.account.profile.cohortDiscovery");
-
-    const searchParams = useSearchParams();
-
-    const autoOpen = useMemo(() => {
-        return searchParams?.get("open") === "true";
-    }, [searchParams]);
 
     const { user } = useAuth();
     const { requestStatus, nhseSdeRequestStatus } = useCohortStatus(user?.id);
@@ -51,7 +43,6 @@ export default function CohortDiscoveryCoverPage({
                     sx={{ display: "flex", flexDirection: "column", gap: 2 }}>
                     <CohortAccessStepper
                         cmsContent={cmsContent}
-                        autoOpen={autoOpen}
                         hideAccessButton={bothApproved}
                     />
                     <NhsSdeAccessStepper />
