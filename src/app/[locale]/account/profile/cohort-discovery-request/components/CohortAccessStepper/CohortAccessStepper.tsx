@@ -1,6 +1,6 @@
 "use client";
 
-import { ReactNode, useState } from "react";
+import { ReactNode, useRef, useState } from "react";
 import CheckCircleIcon from "@mui/icons-material/CheckCircle";
 import QueryBuilderIcon from "@mui/icons-material/QueryBuilder";
 import { Box } from "@mui/material";
@@ -38,13 +38,11 @@ const TERMS_HREF =
 
 interface CohortAccessStepperProps {
     cmsContent: templateRepeatFields;
-    autoOpen?: boolean;
     hideAccessButton?: boolean;
 }
 
 const CohortAccessStepper = ({
     cmsContent,
-    autoOpen = false,
     hideAccessButton = false,
 }: CohortAccessStepperProps) => {
     const t = useTranslations(TRANSLATION_PATH);
@@ -60,19 +58,15 @@ const CohortAccessStepper = ({
     } = useCohortStatus(user?.id);
     const { showDialog } = useDialog();
 
-    const [expanded, setExpanded] = useState<boolean | null>(null);
+    const [started, setStarted] = useState(false);
     const [activeSubStep, setActiveSubStep] = useState(0);
+    const subStepsRef = useRef<HTMLDivElement>(null);
 
     const hasApplied = !!requestStatus;
     const isApproved = requestStatus === "APPROVED";
     const isResolved = RESOLVED_STATUSES.includes(requestStatus ?? "");
     const inReview = hasApplied && !isResolved;
     const canReapply = COHORT_REAPPLY_STATUSES.includes(requestStatus ?? "");
-
-    const started =
-        expanded === null
-            ? autoOpen && (!requestStatus || canReapply)
-            : expanded;
 
     const step1State: CircleState =
         hasApplied && !canReapply ? STEP_STATE.COMPLETE : STEP_STATE.ACTIVE;
@@ -93,6 +87,13 @@ const CohortAccessStepper = ({
             ? differenceInDays(requestExpiry, new Date())
             : null;
 
+    const continueToTerms = () => {
+        const node = subStepsRef.current;
+        if (node) node.scrollIntoView({ block: "start" });
+
+        setActiveSubStep(1);
+    };
+
     const openTerms = () =>
         showDialog(CohortRequestTermsDialog, {
             cmsContent,
@@ -100,7 +101,7 @@ const CohortAccessStepper = ({
         });
 
     const cancelApplication = () => {
-        setExpanded(false);
+        setStarted(false);
         setActiveSubStep(0);
     };
 
@@ -202,13 +203,13 @@ const CohortAccessStepper = ({
                                         variant="outlined"
                                         color="secondary"
                                         sx={{ mt: 2 }}
-                                        onClick={() => setExpanded(true)}>
+                                        onClick={() => setStarted(true)}>
                                         {canReapply
                                             ? t("reapplyButton")
                                             : t("applyButton")}
                                     </Button>
                                 ) : (
-                                    <Box sx={{ mt: 3 }}>
+                                    <Box ref={subStepsRef} sx={{ mt: 3 }}>
                                         <StepNode
                                             circleState={
                                                 activeSubStep >= 1
@@ -262,8 +263,8 @@ const CohortAccessStepper = ({
                                                         submitLabel={t(
                                                             "profileContinueButton"
                                                         )}
-                                                        onSaved={() =>
-                                                            setActiveSubStep(1)
+                                                        onSaved={
+                                                            continueToTerms
                                                         }
                                                     />
                                                 </>

@@ -1,6 +1,6 @@
 "use client";
 
-import { useCallback, useEffect, useMemo, useRef } from "react";
+import { useCallback, useMemo } from "react";
 import {
     ButtonProps,
     Chip,
@@ -40,7 +40,6 @@ export interface CohortDiscoveryButtonProps {
     disabledOuter?: boolean;
     clickedAction?: () => void;
     onRedirect?: () => void;
-    autoOpen?: boolean;
     label?: string;
 }
 
@@ -55,7 +54,6 @@ const CohortDiscoveryButton = ({
     disabledOuter = false,
     clickedAction,
     onRedirect,
-    autoOpen = false,
     label,
     ...restProps
 }: CohortDiscoveryButtonProps) => {
@@ -64,7 +62,6 @@ const CohortDiscoveryButton = ({
     const { push } = useRouter();
     const logout = useLogout();
     const t = useTranslations(TRANSLATION_PATH);
-    const hasAutoOpenedRef = useRef(false);
 
     const { isRQuestEnabled, isCohortDiscoveryServiceEnabled } = useFeatures();
     const { isLoggedIn, user, claims, isLoading: isLoadingAuth } = useAuth();
@@ -73,37 +70,26 @@ const CohortDiscoveryButton = ({
         requestStatus,
         requestExpiry,
         isLoading: isLoadingStatus,
-        hasFetched: hasFetchedStatus,
     } = useCohortStatus(user?.id);
 
     const {
         redirectUrl: rQuestRedirectUrl,
         isLoading: isLoadingRQuestRedirect,
-        hasFetched: hasFetchedCdsRedirect,
     } = useCohortStatus(user?.id, {
         redirect: true,
     });
 
-    const {
-        redirectUrl: cdsRedirectUrl,
-        isLoading: isLoadingCdsRedirect,
-        hasFetched: hasFetchedRQuestRedirect,
-    } = useCohortStatus(user?.id, {
-        redirect: true,
-        useRQuest: false,
-    });
+    const { redirectUrl: cdsRedirectUrl, isLoading: isLoadingCdsRedirect } =
+        useCohortStatus(user?.id, {
+            redirect: true,
+            useRQuest: false,
+        });
 
     const isLoading =
         isLoadingAuth ||
         isLoadingStatus ||
         isLoadingRQuestRedirect ||
         isLoadingCdsRedirect;
-
-    const isReady =
-        !isLoadingAuth &&
-        hasFetchedStatus &&
-        hasFetchedCdsRedirect &&
-        hasFetchedRQuestRedirect;
 
     const isApproved = isLoggedIn && requestStatus === "APPROVED";
 
@@ -125,7 +111,7 @@ const CohortDiscoveryButton = ({
 
     const handleRequestAccess = useCallback(() => {
         push(
-            `/${RouteName.ACCOUNT}/${RouteName.PROFILE}/${RouteName.COHORT_DISCOVERY_REQUEST}?open=true`
+            `/${RouteName.ACCOUNT}/${RouteName.PROFILE}/${RouteName.COHORT_DISCOVERY_REQUEST}`
         );
     }, [push]);
 
@@ -254,7 +240,7 @@ const CohortDiscoveryButton = ({
                 isProvidersDialog: true,
                 redirectPath:
                     hrefOverride ||
-                    `/${RouteName.ACCOUNT}/${RouteName.PROFILE}/${RouteName.COHORT_DISCOVERY_REQUEST}?open=true`,
+                    `/${RouteName.ACCOUNT}/${RouteName.PROFILE}/${RouteName.COHORT_DISCOVERY_REQUEST}`,
             });
             return;
         }
@@ -327,15 +313,6 @@ const CohortDiscoveryButton = ({
         showDialog,
         showModal,
     ]);
-
-    useEffect(() => {
-        if (!autoOpen) return;
-        if (hasAutoOpenedRef.current) return;
-        if (!isReady) return;
-
-        hasAutoOpenedRef.current = true;
-        handleClick();
-    }, [autoOpen, cdsRedirectUrl, requestStatus, isReady, handleClick]);
 
     return (
         <Tooltip
