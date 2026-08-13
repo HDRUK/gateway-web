@@ -11,6 +11,7 @@ import Loading from "@/components/Loading";
 import Paper from "@/components/Paper";
 import useDelete from "@/hooks/useDelete";
 import useGet from "@/hooks/useGet";
+import useModal from "@/hooks/useModal";
 import apis from "@/config/apis";
 import { colors } from "@/config/theme";
 import { DarEditIcon, DeleteIcon, EyeIcon } from "@/consts/icons";
@@ -27,6 +28,7 @@ const TRANSLATION_PATH = `pages.account.team.widgets`;
 const WidgetList = ({ permissions, teamId }: WidgetListProps) => {
     const t = useTranslations(TRANSLATION_PATH);
     const params = useParams<{ teamId: string }>();
+    const { showModal } = useModal();
 
     const baseWidgetUrl = `${apis.teamsV1Url}/${teamId}/widgets`;
 
@@ -66,9 +68,22 @@ const WidgetList = ({ permissions, teamId }: WidgetListProps) => {
         ...(showDeleteButton
             ? [
                   {
-                      action: async (id: number) => {
-                          await deleteWidget(id);
-                          mutateWidgets();
+                      action: (id: number) => {
+                          showModal({
+                              title: t("actions.delete.title"),
+                              content: t("actions.delete.content", {
+                                  WIDGET_NAME:
+                                      widgetList?.find(
+                                          widget => widget.id === id
+                                      )?.widget_name ?? "",
+                              }),
+                              confirmText: t("actions.delete.confirmText"),
+                              cancelText: t("actions.delete.cancelText"),
+                              onSuccess: async () => {
+                                  await deleteWidget(id);
+                                  mutateWidgets();
+                              },
+                          });
                       },
                       icon: DeleteIcon,
                       label: t("actions.delete.label"),

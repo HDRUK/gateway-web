@@ -1079,7 +1079,13 @@
                     "actions": {
                         "edit": { "label": "Edit widget" },
                         "preview": { "label": "Preview widget" },
-                        "delete": { "label": "Delete widget" }
+                        "delete": {
+                            "label": "Delete widget",
+                            "title": "Delete widget",
+                            "content": "Are you sure you want to delete \"{WIDGET_NAME}\"? This cannot be undone.",
+                            "confirmText": "Delete",
+                            "cancelText": "Cancel"
+                        }
                     },
                     "createmodal": {
                         "create": "Create new widget",
