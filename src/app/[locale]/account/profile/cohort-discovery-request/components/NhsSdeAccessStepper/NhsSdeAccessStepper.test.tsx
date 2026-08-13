@@ -46,8 +46,10 @@ jest.mock("@/utils/revalidateCache", () => ({
 
 jest.mock("@/components/RequestNhseSdeAccessButton", () => ({
     __esModule: true,
-    default: ({ label }: { label?: string }) => (
-        <button type="button">{label}</button>
+    default: ({ label, action }: { label?: string; action?: () => void }) => (
+        <button type="button" onClick={() => action && action()}>
+            {label}
+        </button>
     ),
 }));
 
@@ -303,6 +305,46 @@ describe("NhsSdeAccessStepper", () => {
         expect(
             screen.getByRole("button", {
                 name: "Open NHS SDE Registration Form",
+            })
+        ).toBeInTheDocument();
+    });
+
+    it("reveals the confirm button once the registration form has been opened, without waiting for the status to change", async () => {
+        mockUseCohortStatus.mockReturnValue({
+            ...baseStatus,
+            requestStatus: "APPROVED",
+        });
+
+        renderStepper();
+
+        await userEvent.click(
+            screen.getByRole("button", {
+                name: "Apply for NHS Research SDE Cohort Data Access",
+            })
+        );
+
+        expect(
+            screen.queryByRole("button", {
+                name: "I confirm I have completed the NHS Registration Form",
+            })
+        ).not.toBeInTheDocument();
+
+        await userEvent.click(
+            screen.getByRole("button", {
+                name: "Open NHS SDE Registration Form",
+            })
+        );
+
+        const confirmButton = screen.getByRole("button", {
+            name: "I confirm I have completed the NHS Registration Form",
+        });
+        expect(confirmButton).toBeInTheDocument();
+
+        await userEvent.click(confirmButton);
+
+        expect(
+            screen.getByRole("button", {
+                name: "I confirm I have been approved by the NHS Research SDE",
             })
         ).toBeInTheDocument();
     });

@@ -61,6 +61,7 @@ const NhsSdeAccessStepper = () => {
     const { showModal } = useModal();
 
     const [applied, setApplied] = useState(false);
+    const [formOpened, setFormOpened] = useState(false);
     const [formCompleted, setFormCompleted] = useState(false);
 
     const indicateUrl = `${apis.cohortRequestsV1Url}/user/${user?.id}/indicate_nhse_access`;
@@ -87,7 +88,8 @@ const NhsSdeAccessStepper = () => {
             case NHS_SDE_STATUS.IN_PROCESS:
                 return formCompleted ? STEP.SUBMIT_STATUS : STEP.COMPLETE_FORM;
             default:
-                return applied ? STEP.COMPLETE_FORM : STEP.EXISTING_ACCESS;
+                if (!applied) return STEP.EXISTING_ACCESS;
+                return formCompleted ? STEP.SUBMIT_STATUS : STEP.COMPLETE_FORM;
         }
     })();
 
@@ -178,9 +180,10 @@ const NhsSdeAccessStepper = () => {
                             variant="outlined"
                             color="secondary"
                             label={t("openFormButton")}
+                            action={() => setFormOpened(true)}
                             refetchCohort={refetch}
                         />
-                        {inProcess && (
+                        {(inProcess || formOpened) && (
                             <Button
                                 color="greyCustom"
                                 onClick={() => setFormCompleted(true)}>
