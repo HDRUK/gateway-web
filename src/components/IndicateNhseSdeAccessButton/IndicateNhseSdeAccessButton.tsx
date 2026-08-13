@@ -105,6 +105,7 @@ const IndicateNhseSdeAccessButton = ({
             <ConditionalWrapper requiresWrapper={isDisabled} wrapper={wrapper}>
                 <span style={{ width: "100%" }}>
                     <Button
+                        data-testid="indicate-nhse-sde-access-button"
                         sx={{ ...sx }}
                         variant="outlined"
                         color="secondary"

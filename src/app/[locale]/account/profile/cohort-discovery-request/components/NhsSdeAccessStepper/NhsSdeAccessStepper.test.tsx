@@ -47,7 +47,10 @@ jest.mock("@/utils/revalidateCache", () => ({
 jest.mock("@/components/RequestNhseSdeAccessButton", () => ({
     __esModule: true,
     default: ({ label, action }: { label?: string; action?: () => void }) => (
-        <button type="button" onClick={() => action && action()}>
+        <button
+            type="button"
+            data-testid="request-nhse-sde-access-button"
+            onClick={() => action && action()}>
             {label}
         </button>
     ),
@@ -56,7 +59,10 @@ jest.mock("@/components/RequestNhseSdeAccessButton", () => ({
 jest.mock("@/components/IndicateNhseSdeAccessButton", () => ({
     __esModule: true,
     default: ({ label, action }: { label?: string; action?: () => void }) => (
-        <button type="button" onClick={() => action && action()}>
+        <button
+            type="button"
+            data-testid="indicate-nhse-sde-access-button"
+            onClick={() => action && action()}>
             {label}
         </button>
     ),
@@ -317,35 +323,22 @@ describe("NhsSdeAccessStepper", () => {
 
         renderStepper();
 
-        await userEvent.click(
-            screen.getByRole("button", {
-                name: "Apply for NHS Research SDE Cohort Data Access",
-            })
-        );
+        await userEvent.click(screen.getByTestId("nhs-sde-apply-button"));
 
         expect(
-            screen.queryByRole("button", {
-                name: "I confirm I have completed the NHS Registration Form",
-            })
+            screen.queryByTestId("nhs-sde-confirm-form-button")
         ).not.toBeInTheDocument();
 
         await userEvent.click(
-            screen.getByRole("button", {
-                name: "Open NHS SDE Registration Form",
-            })
+            screen.getByTestId("request-nhse-sde-access-button")
         );
 
-        const confirmButton = screen.getByRole("button", {
-            name: "I confirm I have completed the NHS Registration Form",
-        });
-        expect(confirmButton).toBeInTheDocument();
-
-        await userEvent.click(confirmButton);
+        await userEvent.click(
+            screen.getByTestId("nhs-sde-confirm-form-button")
+        );
 
         expect(
-            screen.getByRole("button", {
-                name: "I confirm I have been approved by the NHS Research SDE",
-            })
+            screen.getByTestId("indicate-nhse-sde-access-button")
         ).toBeInTheDocument();
     });
 });

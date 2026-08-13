@@ -154,6 +154,7 @@ const NhsSdeAccessStepper = () => {
                     )}
                     {cdsApproved && canApply && !applied && (
                         <Button
+                            data-testid="nhs-sde-apply-button"
                             variant="outlined"
                             color="secondary"
                             sx={{ mt: 1 }}
@@ -185,6 +186,7 @@ const NhsSdeAccessStepper = () => {
                         />
                         {(inProcess || formOpened) && (
                             <Button
+                                data-testid="nhs-sde-confirm-form-button"
                                 color="greyCustom"
                                 onClick={() => setFormCompleted(true)}>
                                 {t("confirmFormButton")}
