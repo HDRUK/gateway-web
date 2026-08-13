@@ -49,6 +49,7 @@ const RequestNhseSdeAccessButton = ({
 
     return (
         <Button
+            data-testid="request-nhse-sde-access-button"
             sx={{ ...sx }}
             color={color}
             variant={variant}

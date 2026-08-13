@@ -46,15 +46,23 @@ jest.mock("@/utils/revalidateCache", () => ({
 
 jest.mock("@/components/RequestNhseSdeAccessButton", () => ({
     __esModule: true,
-    default: ({ label }: { label?: string }) => (
-        <button type="button">{label}</button>
+    default: ({ label, action }: { label?: string; action?: () => void }) => (
+        <button
+            type="button"
+            data-testid="request-nhse-sde-access-button"
+            onClick={() => action && action()}>
+            {label}
+        </button>
     ),
 }));
 
 jest.mock("@/components/IndicateNhseSdeAccessButton", () => ({
     __esModule: true,
     default: ({ label, action }: { label?: string; action?: () => void }) => (
-        <button type="button" onClick={() => action && action()}>
+        <button
+            type="button"
+            data-testid="indicate-nhse-sde-access-button"
+            onClick={() => action && action()}>
             {label}
         </button>
     ),
@@ -304,6 +312,33 @@ describe("NhsSdeAccessStepper", () => {
             screen.getByRole("button", {
                 name: "Open NHS SDE Registration Form",
             })
+        ).toBeInTheDocument();
+    });
+
+    it("reveals the confirm button once the registration form has been opened, without waiting for the status to change", async () => {
+        mockUseCohortStatus.mockReturnValue({
+            ...baseStatus,
+            requestStatus: "APPROVED",
+        });
+
+        renderStepper();
+
+        await userEvent.click(screen.getByTestId("nhs-sde-apply-button"));
+
+        expect(
+            screen.queryByTestId("nhs-sde-confirm-form-button")
+        ).not.toBeInTheDocument();
+
+        await userEvent.click(
+            screen.getByTestId("request-nhse-sde-access-button")
+        );
+
+        await userEvent.click(
+            screen.getByTestId("nhs-sde-confirm-form-button")
+        );
+
+        expect(
+            screen.getByTestId("indicate-nhse-sde-access-button")
         ).toBeInTheDocument();
     });
 });
