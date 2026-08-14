@@ -13,6 +13,7 @@ import useAuth from "@/hooks/useAuth";
 import { useCohortStatus } from "@/hooks/useCohortStatus";
 import useGet from "@/hooks/useGet";
 import apis from "@/config/apis";
+import { isAwaitingCohortDecision } from "@/consts/cohortDiscovery";
 import { CheckIcon } from "@/consts/icons";
 import { RouteName } from "@/consts/routeName";
 import { formatTextDelimiter } from "@/utils/dataset";
@@ -275,7 +276,7 @@ const ResultTable = ({ results, showLibraryModal }: ResultTableProps) => {
     const t = useTranslations(RESULTS_TABLE_TRANSLATION_PATH);
     const { isLoggedIn, user } = useAuth();
 
-    const { requestStatus } = useCohortStatus(user?.id);
+    const { requestStatus, hasAccess } = useCohortStatus(user?.id);
 
     const { data: libraryData, mutate: mutateLibraries } = useGet<Library[]>(
         `${apis.librariesV1Url}?per_page=-1`,
@@ -283,9 +284,7 @@ const ResultTable = ({ results, showLibraryModal }: ResultTableProps) => {
     );
 
     const isCohortDiscoveryDisabled =
-        isLoggedIn && requestStatus
-            ? !["APPROVED", "REJECTED", "EXPIRED"].includes(requestStatus)
-            : false;
+        isLoggedIn && isAwaitingCohortDecision(requestStatus, hasAccess);
 
     const translations = {
         actionLabel: t("action.label"),

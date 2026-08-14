@@ -10,6 +10,7 @@ describe("useCohortStatus", () => {
     const mockData = {
         requestStatus: "APPROVED",
         redirectUrl: "https://example.com/redirect",
+        hasAccess: true,
     };
 
     beforeEach(() => {
@@ -33,6 +34,7 @@ describe("useCohortStatus", () => {
         expect(result.current.isLoading).toBe(false);
         expect(result.current.requestStatus).toBe("APPROVED");
         expect(result.current.redirectUrl).toBe("https://example.com/redirect");
+        expect(result.current.hasAccess).toBe(true);
     });
 
     it("should not fetch if userId is undefined", async () => {
@@ -60,5 +62,6 @@ describe("useCohortStatus", () => {
         expect(result.current.isLoading).toBe(false);
         expect(result.current.requestStatus).toBeNull();
         expect(result.current.redirectUrl).toBeNull();
+        expect(result.current.hasAccess).toBe(false);
     });
 });

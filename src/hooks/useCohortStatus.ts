@@ -52,6 +52,7 @@ export const useCohortStatus = (
         nhseSdeRequestStatus: data?.nhseSdeRequestStatus ?? null,
         requestExpiry: data?.requestExpiry ?? null,
         redirectUrl: data?.redirectUrl ?? null,
+        hasAccess: data?.hasAccess ?? false,
         isLoading,
         hasFetched,
         refetch: fetchData,
