@@ -338,7 +338,9 @@
                     "headerText": "Learn about Cohort Discovery and gain access to the service",
                     "accessTitle": "Cohort Data Access",
                     "daysRemaining": "days remaining in current access period",
-                    "accessExpiringIn": "Access expiring in {days} Days",
+                    "accessExpiringIn": "Access expiring in {days, plural, one {# Day} other {# Days}}",
+                    "currentAccessLabel": "Current Access :",
+                    "accessRenewalLabel": "Access Renewal :",
                     "accessText1": "Cohort Discovery allows researchers to explore and identify patient cohorts across multiple, federated health data sources without accessing identifiable patient-level data. It streamlines study feasibility assessments by providing rapid, aggregated cohort counts and characteristics across diverse datasets. To request access or log in, please click the 'Access Cohort Discovery' button.",
                     "stepper": {
                         "moreInfo": "More information about this service can be found <link>here</link>",

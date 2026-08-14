@@ -232,7 +232,12 @@ describe("CohortAccessStepper", () => {
 
         renderStepper();
 
-        expect(screen.getByText("Renewing")).toBeInTheDocument();
+        /* current access is untouched; the renewal is what is pending */
+        expect(screen.getByText("Current Access :")).toBeInTheDocument();
+        expect(screen.getByText("Approved")).toBeInTheDocument();
+        expect(screen.getByText("Access Renewal :")).toBeInTheDocument();
+        expect(screen.getByText("Pending")).toBeInTheDocument();
+        expect(screen.getByText(/Access expiring in/)).toBeInTheDocument();
         expect(
             screen.getByRole("button", {
                 name: "Access Cohort Discovery tool",

@@ -77,12 +77,17 @@ const CohortAccessStepper = ({
             : null;
     const expiringSoon =
         hasAccess &&
-        !isRenewing &&
         daysRemaining != null &&
         daysRemaining <= COHORT_EXPIRY_WARNING_DAYS;
 
+    const indicatorColour = expiringSoon ? colors.yellow800 : colors.grey600;
+
+    /* a renewing user still holds their approved access until it lapses */
+    const accessStatus = isRenewing ? COHORT_STATUS.APPROVED : requestStatus;
+
     const canReapply =
-        COHORT_REAPPLY_STATUSES.includes(requestStatus ?? "") || expiringSoon;
+        COHORT_REAPPLY_STATUSES.includes(requestStatus ?? "") ||
+        (expiringSoon && !isRenewing);
     const showReapplyCopy = canReapply || isRenewing;
     const showSteps = !hasAccess || canReapply || isRenewing;
 
@@ -169,38 +174,70 @@ const CohortAccessStepper = ({
                     {!loading && hasApplied && (
                         <Box
                             sx={{
-                                display: "flex",
+                                display: "grid",
+                                gridTemplateColumns: "auto auto",
+                                justifyContent: "start",
+                                justifyItems: "start",
                                 alignItems: "center",
-                                gap: 2,
+                                columnGap: 1,
+                                rowGap: 1,
                                 mt: 1,
                             }}>
-                            <Chip
-                                size="small"
-                                label={capitalise(requestStatus)}
-                                color={
-                                    expiringSoon
-                                        ? "yellowCustom"
-                                        : statusMapping[requestStatus]
-                                }
-                            />
-                            {daysRemaining != null && (
-                                <>
-                                    <QueryBuilderIcon
-                                        sx={{ color: colors.grey600 }}
-                                    />
-                                    {expiringSoon ? (
-                                        <Typography>
-                                            {tCd("accessExpiringIn", {
-                                                days: daysRemaining,
-                                            })}
-                                        </Typography>
-                                    ) : (
+                            {isRenewing && (
+                                <Typography sx={{ color: colors.grey600 }}>
+                                    {tCd("currentAccessLabel")}
+                                </Typography>
+                            )}
+                            <Box
+                                sx={{
+                                    display: "flex",
+                                    alignItems: "center",
+                                    gap: 2,
+                                }}>
+                                <Chip
+                                    size="small"
+                                    label={capitalise(accessStatus)}
+                                    color={
+                                        expiringSoon
+                                            ? "yellowCustom"
+                                            : statusMapping[accessStatus]
+                                    }
+                                />
+                                {daysRemaining != null && (
+                                    <Box
+                                        sx={{
+                                            display: "flex",
+                                            alignItems: "center",
+                                            gap: 1,
+                                        }}>
+                                        <QueryBuilderIcon
+                                            sx={{ color: indicatorColour }}
+                                        />
                                         <Typography
-                                            sx={{ color: colors.grey600 }}>
-                                            {daysRemaining}{" "}
-                                            {tCd("daysRemaining")}
+                                            sx={{ color: indicatorColour }}>
+                                            {expiringSoon
+                                                ? tCd("accessExpiringIn", {
+                                                      days: daysRemaining,
+                                                  })
+                                                : `${daysRemaining} ${tCd(
+                                                      "daysRemaining"
+                                                  )}`}
                                         </Typography>
-                                    )}
+                                    </Box>
+                                )}
+                            </Box>
+                            {isRenewing && (
+                                <>
+                                    <Typography sx={{ color: colors.grey600 }}>
+                                        {tCd("accessRenewalLabel")}
+                                    </Typography>
+                                    <Chip
+                                        size="small"
+                                        label={capitalise(
+                                            COHORT_STATUS.PENDING
+                                        )}
+                                        color="greyCustom"
+                                    />
                                 </>
                             )}
                         </Box>
