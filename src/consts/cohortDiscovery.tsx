@@ -2,6 +2,7 @@ import { RouteName } from "@/consts/routeName";
 
 const COHORT_STATUS = {
     APPROVED: "APPROVED",
+    RENEWING: "RENEWING",
     REJECTED: "REJECTED",
     PENDING: "PENDING",
     BANNED: "BANNED",
@@ -24,6 +25,14 @@ const COHORT_REAPPLY_STATUSES: string[] = [
     COHORT_STATUS.EXPIRED,
 ];
 
+const isAwaitingCohortDecision = (
+    requestStatus: string | null,
+    hasAccess: boolean
+) =>
+    !!requestStatus &&
+    !hasAccess &&
+    !COHORT_REAPPLY_STATUSES.includes(requestStatus);
+
 const NHS_SDE_NEGATIVE_STATUSES: string[] = [
     NHS_SDE_STATUS.REJECTED,
     NHS_SDE_STATUS.EXPIRED,
@@ -40,6 +49,7 @@ const NHS_SDE_FINAL_STATUSES: string[] = [
 
 const statusMapping = {
     [COHORT_STATUS.APPROVED]: "secondary",
+    [COHORT_STATUS.RENEWING]: "primary",
     [COHORT_STATUS.REJECTED]: "warning",
     [COHORT_STATUS.PENDING]: "greyCustom",
     [COHORT_STATUS.BANNED]: "error",
@@ -60,6 +70,7 @@ const NHSSDEStatusMapping = {
 const NHS_SDE_FILTER = "The NHS Research Secure Data Environment (SDE) Network";
 const COHORT_DISCOVERY_EXPIRY_WARNING_DAYS = 166;
 const COHORT_DISCOVERY_SDE_EXPIRY_WARNING_DAYS = 1770;
+const COHORT_EXPIRY_WARNING_DAYS = 15;
 
 const STEP_STATE = {
     COMPLETE: "complete",
@@ -80,6 +91,8 @@ export {
     NHS_SDE_FINAL_STATUSES,
     COHORT_DISCOVERY_EXPIRY_WARNING_DAYS,
     COHORT_DISCOVERY_SDE_EXPIRY_WARNING_DAYS,
+    COHORT_EXPIRY_WARNING_DAYS,
+    isAwaitingCohortDecision,
     NHS_SDE_FILTER,
     STEP_STATE,
     COHORT_ABOUT_HREF,

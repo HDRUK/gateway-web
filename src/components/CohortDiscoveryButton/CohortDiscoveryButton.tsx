@@ -19,7 +19,10 @@ import { useCohortStatus } from "@/hooks/useCohortStatus";
 import useDialog from "@/hooks/useDialog";
 import useLogout from "@/hooks/useLogout";
 import useModal from "@/hooks/useModal";
-import { statusMapping } from "@/consts/cohortDiscovery";
+import {
+    isAwaitingCohortDecision,
+    statusMapping,
+} from "@/consts/cohortDiscovery";
 import { RouteName } from "@/consts/routeName";
 import { capitalise } from "@/utils/general";
 import { useFeatures } from "@/providers/FeatureProvider";
@@ -69,6 +72,7 @@ const CohortDiscoveryButton = ({
     const {
         requestStatus,
         requestExpiry,
+        hasAccess,
         isLoading: isLoadingStatus,
     } = useCohortStatus(user?.id);
 
@@ -91,7 +95,7 @@ const CohortDiscoveryButton = ({
         isLoadingRQuestRedirect ||
         isLoadingCdsRedirect;
 
-    const isApproved = isLoggedIn && requestStatus === "APPROVED";
+    const isApproved = isLoggedIn && hasAccess;
 
     const hasClaimsMismatch =
         isApproved &&
@@ -102,9 +106,7 @@ const CohortDiscoveryButton = ({
     );
 
     const isPendingApproval = Boolean(
-        isLoggedIn &&
-            requestStatus &&
-            !["APPROVED", "REJECTED", "EXPIRED"].includes(requestStatus)
+        isLoggedIn && isAwaitingCohortDecision(requestStatus, hasAccess)
     );
 
     const isDisabled = disabledOuter || openAthensInvalid || isPendingApproval;
@@ -250,7 +252,7 @@ const CohortDiscoveryButton = ({
             return;
         }
 
-        if (requestStatus !== "APPROVED") {
+        if (!hasAccess) {
             showModal({
                 title: t("modals.notApproved.title"),
                 content: nonApprovedContent,
@@ -301,6 +303,7 @@ const CohortDiscoveryButton = ({
         isLoggedIn,
         hrefOverride,
         requestStatus,
+        hasAccess,
         nonApprovedContent,
         handleRequestAccess,
         hasClaimsMismatch,

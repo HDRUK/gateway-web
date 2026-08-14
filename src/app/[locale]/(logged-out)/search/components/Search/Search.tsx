@@ -86,6 +86,7 @@ import {
     sortByOptionsTool,
 } from "@/config/forms/search";
 import { colors } from "@/config/theme";
+import { isAwaitingCohortDecision } from "@/consts/cohortDiscovery";
 import {
     ChevronThinIcon,
     CloseIcon,
@@ -466,12 +467,10 @@ const Search = ({ filters, schema }: SearchProps) => {
         setIsDownloading(false);
     };
 
-    const { requestStatus } = useCohortStatus(user?.id);
+    const { requestStatus, hasAccess } = useCohortStatus(user?.id);
 
     const isCohortDiscoveryDisabled =
-        isLoggedIn && requestStatus
-            ? !["APPROVED", "REJECTED", "EXPIRED"].includes(requestStatus)
-            : false;
+        isLoggedIn && isAwaitingCohortDecision(requestStatus, hasAccess);
 
     const renderResultCard = (result: SearchResult) => {
         const { _id: resultId } = result;

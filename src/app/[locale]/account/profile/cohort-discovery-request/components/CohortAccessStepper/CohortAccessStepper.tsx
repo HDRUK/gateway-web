@@ -19,7 +19,9 @@ import useDialog from "@/hooks/useDialog";
 import { colors } from "@/config/theme";
 import {
     COHORT_ABOUT_HREF,
+    COHORT_EXPIRY_WARNING_DAYS,
     COHORT_REAPPLY_STATUSES,
+    COHORT_STATUS,
     statusMapping,
     STEP_STATE,
 } from "@/consts/cohortDiscovery";
@@ -52,6 +54,7 @@ const CohortAccessStepper = ({
     const {
         requestStatus,
         requestExpiry,
+        hasAccess,
         isLoading: statusLoading,
         hasFetched,
         refetch,
@@ -63,10 +66,25 @@ const CohortAccessStepper = ({
     const subStepsRef = useRef<HTMLDivElement>(null);
 
     const hasApplied = !!requestStatus;
-    const isApproved = requestStatus === "APPROVED";
+    const isApproved = requestStatus === COHORT_STATUS.APPROVED;
+    const isRenewing = requestStatus === COHORT_STATUS.RENEWING;
     const isResolved = RESOLVED_STATUSES.includes(requestStatus ?? "");
     const inReview = hasApplied && !isResolved;
-    const canReapply = COHORT_REAPPLY_STATUSES.includes(requestStatus ?? "");
+
+    const daysRemaining =
+        hasAccess && requestExpiry
+            ? differenceInDays(requestExpiry, new Date())
+            : null;
+    const expiringSoon =
+        hasAccess &&
+        !isRenewing &&
+        daysRemaining != null &&
+        daysRemaining <= COHORT_EXPIRY_WARNING_DAYS;
+
+    const canReapply =
+        COHORT_REAPPLY_STATUSES.includes(requestStatus ?? "") || expiringSoon;
+    const showReapplyCopy = canReapply || isRenewing;
+    const showSteps = !hasAccess || canReapply || isRenewing;
 
     const step1State: CircleState =
         hasApplied && !canReapply ? STEP_STATE.COMPLETE : STEP_STATE.ACTIVE;
@@ -76,16 +94,12 @@ const CohortAccessStepper = ({
             : inReview
             ? STEP_STATE.ACTIVE
             : STEP_STATE.PENDING;
-    const step3State: CircleState = isApproved
-        ? STEP_STATE.COMPLETE
-        : isResolved && !canReapply
-        ? STEP_STATE.ACTIVE
-        : STEP_STATE.PENDING;
-
-    const daysRemaining =
-        isApproved && requestExpiry
-            ? differenceInDays(requestExpiry, new Date())
-            : null;
+    const step3State: CircleState =
+        isApproved && !canReapply
+            ? STEP_STATE.COMPLETE
+            : isResolved && !canReapply
+            ? STEP_STATE.ACTIVE
+            : STEP_STATE.PENDING;
 
     const continueToTerms = () => {
         const node = subStepsRef.current;
@@ -163,22 +177,36 @@ const CohortAccessStepper = ({
                             <Chip
                                 size="small"
                                 label={capitalise(requestStatus)}
-                                color={statusMapping[requestStatus]}
+                                color={
+                                    expiringSoon
+                                        ? "yellowCustom"
+                                        : statusMapping[requestStatus]
+                                }
                             />
-                            {isApproved && daysRemaining != null && (
+                            {daysRemaining != null && (
                                 <>
                                     <QueryBuilderIcon
                                         sx={{ color: colors.grey600 }}
                                     />
-                                    <Typography sx={{ color: colors.grey600 }}>
-                                        {daysRemaining} {tCd("daysRemaining")}
-                                    </Typography>
+                                    {expiringSoon ? (
+                                        <Typography>
+                                            {tCd("accessExpiringIn", {
+                                                days: daysRemaining,
+                                            })}
+                                        </Typography>
+                                    ) : (
+                                        <Typography
+                                            sx={{ color: colors.grey600 }}>
+                                            {daysRemaining}{" "}
+                                            {tCd("daysRemaining")}
+                                        </Typography>
+                                    )}
                                 </>
                             )}
                         </Box>
                     )}
                 </Box>
-                {!loading && isApproved && !hideAccessButton && (
+                {!loading && hasAccess && !hideAccessButton && (
                     <CohortDiscoveryButton
                         label={t("accessButton")}
                         wrapperSx={{ width: "auto" }}
@@ -188,14 +216,20 @@ const CohortAccessStepper = ({
 
             {loading ? (
                 <Loading />
-            ) : isApproved ? null : (
+            ) : showSteps ? (
                 <>
                     <StepNode circleState={step1State} label="1">
-                        <StepTitle>{t("applyStepTitle")}</StepTitle>
+                        <StepTitle>
+                            {showReapplyCopy
+                                ? t("reapplyStepTitle")
+                                : t("applyStepTitle")}
+                        </StepTitle>
                         {step1State !== STEP_STATE.COMPLETE && (
                             <>
                                 <Typography color={colors.grey600}>
-                                    {t("applyStepDescription")}
+                                    {showReapplyCopy
+                                        ? t("reapplyStepDescription")
+                                        : t("applyStepDescription")}
                                 </Typography>
 
                                 {!started ? (
@@ -319,7 +353,7 @@ const CohortAccessStepper = ({
                         )}
                     </StepNode>
                 </>
-            )}
+            ) : null}
         </Paper>
     );
 };

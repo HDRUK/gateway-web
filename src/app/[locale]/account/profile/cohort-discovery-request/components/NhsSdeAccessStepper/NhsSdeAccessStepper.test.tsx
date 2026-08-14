@@ -70,6 +70,7 @@ jest.mock("@/components/IndicateNhseSdeAccessButton", () => ({
 
 const baseStatus = {
     requestStatus: null,
+    hasAccess: false,
     nhseSdeRequestStatus: null,
     requestExpiry: null,
     isLoading: false,
@@ -105,7 +106,7 @@ describe("NhsSdeAccessStepper", () => {
     it("shows step 1 as complete with an apply button when Cohort Discovery is approved", async () => {
         mockUseCohortStatus.mockReturnValue({
             ...baseStatus,
-            requestStatus: "APPROVED",
+            hasAccess: true,
         });
 
         renderStepper();
@@ -140,7 +141,7 @@ describe("NhsSdeAccessStepper", () => {
     it("shows an Awaiting Action badge and activates step 2 when the NHS request is IN PROCESS", async () => {
         mockUseCohortStatus.mockReturnValue({
             ...baseStatus,
-            requestStatus: "APPROVED",
+            hasAccess: true,
             nhseSdeRequestStatus: "IN PROCESS",
         });
 
@@ -162,7 +163,7 @@ describe("NhsSdeAccessStepper", () => {
     it("advances to step 3 and fires the indicate POST via the confirm modal once the form is completed", async () => {
         mockUseCohortStatus.mockReturnValue({
             ...baseStatus,
-            requestStatus: "APPROVED",
+            hasAccess: true,
             nhseSdeRequestStatus: "IN PROCESS",
         });
 
@@ -194,7 +195,7 @@ describe("NhsSdeAccessStepper", () => {
     it("shows a Pending badge when NHS approval has been requested", () => {
         mockUseCohortStatus.mockReturnValue({
             ...baseStatus,
-            requestStatus: "APPROVED",
+            hasAccess: true,
             nhseSdeRequestStatus: "APPROVAL REQUESTED",
         });
 
@@ -211,7 +212,7 @@ describe("NhsSdeAccessStepper", () => {
     it("shows an Approved badge when NHS access has been granted", () => {
         mockUseCohortStatus.mockReturnValue({
             ...baseStatus,
-            requestStatus: "APPROVED",
+            hasAccess: true,
             nhseSdeRequestStatus: "APPROVED",
         });
 
@@ -223,7 +224,7 @@ describe("NhsSdeAccessStepper", () => {
     it("hides all the steps once NHS access has been granted", () => {
         mockUseCohortStatus.mockReturnValue({
             ...baseStatus,
-            requestStatus: "APPROVED",
+            hasAccess: true,
             nhseSdeRequestStatus: "APPROVED",
         });
 
@@ -243,7 +244,7 @@ describe("NhsSdeAccessStepper", () => {
         status => {
             mockUseCohortStatus.mockReturnValue({
                 ...baseStatus,
-                requestStatus: "APPROVED",
+                hasAccess: true,
                 nhseSdeRequestStatus: status,
             });
 
@@ -266,7 +267,7 @@ describe("NhsSdeAccessStepper", () => {
     it("lets an expired user restart the application from step 1", async () => {
         mockUseCohortStatus.mockReturnValue({
             ...baseStatus,
-            requestStatus: "APPROVED",
+            hasAccess: true,
             nhseSdeRequestStatus: "EXPIRED",
         });
 
@@ -296,7 +297,7 @@ describe("NhsSdeAccessStepper", () => {
     it("reveals step 2 with the registration form once the user opts in from step 1", async () => {
         mockUseCohortStatus.mockReturnValue({
             ...baseStatus,
-            requestStatus: "APPROVED",
+            hasAccess: true,
         });
 
         renderStepper();
@@ -318,7 +319,7 @@ describe("NhsSdeAccessStepper", () => {
     it("reveals the confirm button once the registration form has been opened, without waiting for the status to change", async () => {
         mockUseCohortStatus.mockReturnValue({
             ...baseStatus,
-            requestStatus: "APPROVED",
+            hasAccess: true,
         });
 
         renderStepper();

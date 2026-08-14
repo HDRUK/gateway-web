@@ -20,7 +20,6 @@ import apis from "@/config/apis";
 import { colors } from "@/config/theme";
 import {
     COHORT_ABOUT_HREF,
-    COHORT_STATUS,
     NHS_SDE_FINAL_STATUSES,
     NHS_SDE_NEGATIVE_STATUSES,
     NHS_SDE_STATUS,
@@ -52,7 +51,7 @@ const NhsSdeAccessStepper = () => {
     const { user, isLoading: userLoading } = useAuth();
     const { isNhsSdeApplicationsEnabled } = useFeatures();
     const {
-        requestStatus,
+        hasAccess,
         nhseSdeRequestStatus,
         isLoading: statusLoading,
         hasFetched,
@@ -71,7 +70,6 @@ const NhsSdeAccessStepper = () => {
 
     const loading = userLoading || statusLoading || !hasFetched;
 
-    const cdsApproved = requestStatus === COHORT_STATUS.APPROVED;
     const nhs = nhseSdeRequestStatus;
     const isApproved = nhs === NHS_SDE_STATUS.APPROVED;
     const inProcess = nhs === NHS_SDE_STATUS.IN_PROCESS;
@@ -81,7 +79,7 @@ const NhsSdeAccessStepper = () => {
     const canApply = !nhs || nhs === NHS_SDE_STATUS.EXPIRED;
 
     const activeStep = (() => {
-        if (!cdsApproved) return STEP.EXISTING_ACCESS;
+        if (!hasAccess) return STEP.EXISTING_ACCESS;
         switch (nhs) {
             case NHS_SDE_STATUS.APPROVAL_REQUESTED:
                 return STEP.APPLICATION_REVIEW;
@@ -95,14 +93,14 @@ const NhsSdeAccessStepper = () => {
 
     const circleFor = (index: number): CircleState => {
         if (index === STEP.EXISTING_ACCESS) {
-            return cdsApproved ? STEP_STATE.COMPLETE : STEP_STATE.LOCKED;
+            return hasAccess ? STEP_STATE.COMPLETE : STEP_STATE.LOCKED;
         }
         if (index < activeStep) return STEP_STATE.COMPLETE;
         if (index === activeStep) return STEP_STATE.ACTIVE;
         return STEP_STATE.PENDING;
     };
 
-    const badge = !cdsApproved
+    const badge = !hasAccess
         ? null
         : approvalRequested
         ? { label: t("badgePending"), bg: colors.grey600 }
@@ -140,7 +138,7 @@ const NhsSdeAccessStepper = () => {
             titleKey: "step1Title",
             extra: () => (
                 <>
-                    {!cdsApproved && (
+                    {!hasAccess && (
                         <Typography
                             component="div"
                             color={colors.grey600}
@@ -152,7 +150,7 @@ const NhsSdeAccessStepper = () => {
                             })}
                         </Typography>
                     )}
-                    {cdsApproved && canApply && !applied && (
+                    {hasAccess && canApply && !applied && (
                         <Button
                             data-testid="nhs-sde-apply-button"
                             variant="outlined"

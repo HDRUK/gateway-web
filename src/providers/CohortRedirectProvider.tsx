@@ -7,16 +7,16 @@ import { useCohortStatus } from "@/hooks/useCohortStatus";
 
 const CohortRedirectProvider = () => {
     const { user } = useAuth();
-    const { requestStatus } = useCohortStatus(user?.id);
+    const { hasAccess } = useCohortStatus(user?.id);
     const router = useRouter();
     const params = useSearchParams();
     const redirectUrl = params?.get("redirect_cohort_discovery_upon_signin");
 
     useEffect(() => {
-        if (user && requestStatus === "APPROVED" && redirectUrl) {
+        if (user && hasAccess && redirectUrl) {
             router.push(redirectUrl);
         }
-    }, [user, requestStatus, redirectUrl, router]);
+    }, [user, hasAccess, redirectUrl, router]);
 
     return null;
 };

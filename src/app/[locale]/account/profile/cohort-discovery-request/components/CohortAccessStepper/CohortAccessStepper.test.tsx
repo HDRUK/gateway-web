@@ -70,10 +70,17 @@ const cmsContent: templateRepeatFields = {
 const baseStatus = {
     requestStatus: null,
     requestExpiry: null,
+    hasAccess: false,
     nhseSdeRequestStatus: null,
     isLoading: false,
     hasFetched: true,
     refetch: jest.fn(),
+};
+
+const daysFromNow = (days: number) => {
+    const date = new Date();
+    date.setDate(date.getDate() + days);
+    return date.toISOString();
 };
 
 const renderStepper = () =>
@@ -163,11 +170,16 @@ describe("CohortAccessStepper", () => {
         mockUseCohortStatus.mockReturnValue({
             ...baseStatus,
             requestStatus: "APPROVED",
+            hasAccess: true,
+            requestExpiry: daysFromNow(90),
         });
 
         renderStepper();
 
         expect(screen.getByText("Approved")).toBeInTheDocument();
+        expect(
+            screen.getByText(/days remaining in current access period/)
+        ).toBeInTheDocument();
         expect(
             screen.getByRole("button", {
                 name: "Access Cohort Discovery tool",
@@ -176,12 +188,75 @@ describe("CohortAccessStepper", () => {
         expect(
             screen.queryByText("Application Review")
         ).not.toBeInTheDocument();
+        expect(
+            screen.queryByRole("button", {
+                name: "Re-apply for Cohort Discovery",
+            })
+        ).not.toBeInTheDocument();
+    });
+
+    it("offers re-apply alongside the access badge once access is expiring soon", () => {
+        mockUseCohortStatus.mockReturnValue({
+            ...baseStatus,
+            requestStatus: "APPROVED",
+            hasAccess: true,
+            requestExpiry: daysFromNow(14),
+        });
+
+        renderStepper();
+
+        expect(screen.getByText("Approved")).toBeInTheDocument();
+        expect(screen.getByText(/Access expiring in/)).toBeInTheDocument();
+        expect(
+            screen.getByText("Re-apply for Cohort Discovery Access")
+        ).toBeInTheDocument();
+        expect(
+            screen.getByRole("button", {
+                name: "Re-apply for Cohort Discovery",
+            })
+        ).toBeInTheDocument();
+        expect(
+            screen.getByRole("button", {
+                name: "Access Cohort Discovery tool",
+            })
+        ).toBeInTheDocument();
+    });
+
+    it("keeps access and advances to the review step once a renewal is submitted", () => {
+        mockUseCohortStatus.mockReturnValue({
+            ...baseStatus,
+            requestStatus: "RENEWING",
+            hasAccess: true,
+            requestExpiry: daysFromNow(14),
+        });
+
+        renderStepper();
+
+        expect(screen.getByText("Renewing")).toBeInTheDocument();
+        expect(
+            screen.getByRole("button", {
+                name: "Access Cohort Discovery tool",
+            })
+        ).toBeInTheDocument();
+        expect(screen.getByText("Application Review")).toBeInTheDocument();
+        /* step 1 is complete, so its description and button are gone */
+        expect(
+            screen.queryByRole("button", {
+                name: "Re-apply for Cohort Discovery",
+            })
+        ).not.toBeInTheDocument();
+        expect(
+            screen.getByText(
+                "This step generally takes 5-7 days. Your application will be reviewed based on your Gateway profile and submitted information. If anything is unclear, we will contact you for further information."
+            )
+        ).toBeInTheDocument();
     });
 
     it("hides the access button when hideAccessButton is set", () => {
         mockUseCohortStatus.mockReturnValue({
             ...baseStatus,
             requestStatus: "APPROVED",
+            hasAccess: true,
         });
 
         render(
@@ -206,7 +281,7 @@ describe("CohortAccessStepper", () => {
 
         expect(screen.getByText("Expired")).toBeInTheDocument();
         expect(
-            screen.getByRole("button", { name: "Re-apply for access" })
+            screen.getByRole("button", { name: "Re-apply for Cohort Discovery" })
         ).toBeInTheDocument();
         expect(
             screen.queryByRole("button", { name: "Apply for Cohort Discovery" })
@@ -224,7 +299,7 @@ describe("CohortAccessStepper", () => {
         expect(screen.getByText("Rejected")).toBeInTheDocument();
 
         await userEvent.click(
-            screen.getByRole("button", { name: "Re-apply for access" })
+            screen.getByRole("button", { name: "Re-apply for Cohort Discovery" })
         );
 
         expect(screen.getByText("Review Your Profile")).toBeInTheDocument();
@@ -255,7 +330,7 @@ describe("CohortAccessStepper", () => {
 
         expect(screen.getByText("Banned")).toBeInTheDocument();
         expect(
-            screen.queryByRole("button", { name: "Re-apply for access" })
+            screen.queryByRole("button", { name: "Re-apply for Cohort Discovery" })
         ).not.toBeInTheDocument();
         expect(
             screen.queryByRole("button", { name: "Apply for Cohort Discovery" })

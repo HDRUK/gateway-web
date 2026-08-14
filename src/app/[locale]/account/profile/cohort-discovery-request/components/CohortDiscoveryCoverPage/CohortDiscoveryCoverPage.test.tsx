@@ -37,6 +37,7 @@ jest.mock("@/components/CohortDiscoveryButton", () => ({
 
 const baseStatus = {
     requestStatus: null,
+    hasAccess: false,
     requestExpiry: null,
     nhseSdeRequestStatus: null,
     isLoading: false,
@@ -58,7 +59,7 @@ describe("CohortDiscoveryCoverPage", () => {
     it("does not render a shared access panel when only one access is approved", () => {
         mockUseCohortStatus.mockReturnValue({
             ...baseStatus,
-            requestStatus: "APPROVED",
+            hasAccess: true,
             nhseSdeRequestStatus: "IN PROCESS",
         });
 
@@ -75,7 +76,7 @@ describe("CohortDiscoveryCoverPage", () => {
     it("combines into a single shared access panel when both accesses are approved", () => {
         mockUseCohortStatus.mockReturnValue({
             ...baseStatus,
-            requestStatus: "APPROVED",
+            hasAccess: true,
             nhseSdeRequestStatus: "APPROVED",
         });
 

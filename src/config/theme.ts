@@ -83,6 +83,7 @@ declare module "@mui/material/Chip" {
         warningCustom: true;
         alias: true;
         greyCustom: true;
+        yellowCustom: true;
     }
 }
 
