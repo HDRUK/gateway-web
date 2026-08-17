@@ -7,6 +7,7 @@ const generateCohortRequestV1 = (data = {}): CohortRequest => {
         id: faker.datatype.number(),
         request_status: faker.helpers.arrayElement([
             "APPROVED",
+            "RENEWING",
             "REJECTED",
             "PENDING",
             "BANNED",

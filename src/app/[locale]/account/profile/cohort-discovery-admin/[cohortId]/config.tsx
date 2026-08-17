@@ -4,6 +4,7 @@ import { inputComponents } from "@/config/forms";
 
 const cohortStatusOptions = [
     { label: "Approved", value: "APPROVED" },
+    { label: "Renewing", value: "RENEWING" },
     { label: "Rejected", value: "REJECTED" },
     { label: "Banned", value: "BANNED" },
     { label: "Suspended", value: "SUSPENDED" },

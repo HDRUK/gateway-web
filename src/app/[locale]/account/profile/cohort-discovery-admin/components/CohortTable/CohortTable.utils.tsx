@@ -44,6 +44,7 @@ const updateSort =
 const statusRadios = [
     { label: "All", value: "" },
     { label: "Approved", value: "APPROVED" },
+    { label: "Renewing", value: "RENEWING" },
     { label: "Pending", value: "PENDING" },
     { label: "Rejected", value: "REJECTED" },
     { label: "Banned", value: "BANNED" },
