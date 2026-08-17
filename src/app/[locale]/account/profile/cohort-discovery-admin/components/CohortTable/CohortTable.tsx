@@ -37,8 +37,15 @@ const CohortTable = () => {
 
     const searchDebounced = useDebounce(watchAll.search, 500);
 
+    const isDefaultSort = sort.key === "created_at" && sort.direction === "desc";
+
     const queryParams = new URLSearchParams();
-    queryParams.append("sort", `${sort.key}:${sort.direction}`);
+    queryParams.append(
+        "sort",
+        isDefaultSort
+            ? "priority:desc,created_at:desc"
+            : `${sort.key}:${sort.direction}`
+    );
     queryParams.append("page", currentPage.toString());
     if (requestStatus) {
         queryParams.append("request_status", requestStatus);

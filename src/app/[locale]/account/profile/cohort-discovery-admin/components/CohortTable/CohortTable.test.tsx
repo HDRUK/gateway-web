@@ -1,8 +1,10 @@
+import { rest } from "msw";
 import { formatDate } from "@/utils/date";
-import { render, screen, waitFor, within } from "@/utils/testUtils";
+import { render, screen, fireEvent, waitFor, within } from "@/utils/testUtils";
 import { generateCohortRequestV1 } from "@/mocks/data/cohortRequest";
 import { getCohortRequestsV1 } from "@/mocks/handlers/cohortRequest";
 import { server } from "@/mocks/server";
+import apis from "@/config/apis";
 import CohortTable from "./CohortTable";
 
 const requests = [
@@ -123,6 +125,64 @@ describe("Cohort Table", () => {
             expect(
                 within(tableRows[7]).getByText("Suspended")
             ).toBeInTheDocument();
+        });
+    });
+
+    it("requests a needs-attention-first sort by default", async () => {
+        const requestedSorts: (string | null)[] = [];
+        server.use(
+            rest.get(apis.cohortRequestsV1Url, (req, res, ctx) => {
+                requestedSorts.push(req.url.searchParams.get("sort"));
+                return res(
+                    ctx.status(200),
+                    ctx.json({
+                        lastPage: 1,
+                        to: requests.length,
+                        from: 1,
+                        currentPage: 1,
+                        total: requests.length,
+                        list: requests,
+                    })
+                );
+            })
+        );
+
+        render(<CohortTable />);
+
+        await waitFor(() => {
+            expect(requestedSorts).toContain("priority:desc,created_at:desc");
+        });
+    });
+
+    it("falls back to a plain sort once a reviewer picks a different column", async () => {
+        const requestedSorts: (string | null)[] = [];
+        server.use(
+            rest.get(apis.cohortRequestsV1Url, (req, res, ctx) => {
+                requestedSorts.push(req.url.searchParams.get("sort"));
+                return res(
+                    ctx.status(200),
+                    ctx.json({
+                        lastPage: 1,
+                        to: requests.length,
+                        from: 1,
+                        currentPage: 1,
+                        total: requests.length,
+                        list: requests,
+                    })
+                );
+            })
+        );
+
+        render(<CohortTable />);
+
+        await waitFor(() => {
+            expect(requestedSorts).toContain("priority:desc,created_at:desc");
+        });
+
+        fireEvent.click(screen.getByRole("button", { name: "Sort by name" }));
+
+        await waitFor(() => {
+            expect(requestedSorts).toContain("name:asc");
         });
     });
 });
