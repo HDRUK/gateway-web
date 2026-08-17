@@ -13,6 +13,10 @@ const requests = [
         updated_at: "2025-06-20T00:00:00.000Z",
     }),
     generateCohortRequestV1({
+        request_status: "RENEWING",
+        nhse_sde_request_status: "APPROVAL REQUESTED",
+    }),
+    generateCohortRequestV1({
         request_status: "REJECTED",
         nhse_sde_request_status: "APPROVAL REQUESTED",
     }),
@@ -81,19 +85,22 @@ describe("Cohort Table", () => {
                 within(tableRows[1]).getByText("Approved")
             ).toBeInTheDocument();
             expect(
-                within(tableRows[2]).getByText("Rejected")
+                within(tableRows[2]).getByText("Renewing")
             ).toBeInTheDocument();
             expect(
-                within(tableRows[3]).getByText("Pending")
+                within(tableRows[3]).getByText("Rejected")
             ).toBeInTheDocument();
             expect(
-                within(tableRows[4]).getByText("Banned")
+                within(tableRows[4]).getByText("Pending")
             ).toBeInTheDocument();
             expect(
-                within(tableRows[5]).getByText("Suspended")
+                within(tableRows[5]).getByText("Banned")
             ).toBeInTheDocument();
             expect(
-                within(tableRows[6]).getByText("Expired")
+                within(tableRows[6]).getByText("Suspended")
+            ).toBeInTheDocument();
+            expect(
+                within(tableRows[7]).getByText("Expired")
             ).toBeInTheDocument();
             expect(
                 within(tableRows[1]).getByText("In process")
@@ -102,16 +109,19 @@ describe("Cohort Table", () => {
                 within(tableRows[2]).getByText("Approval requested")
             ).toBeInTheDocument();
             expect(
-                within(tableRows[3]).getByText("Approved")
+                within(tableRows[3]).getByText("Approval requested")
             ).toBeInTheDocument();
             expect(
-                within(tableRows[4]).getByText("Rejected")
+                within(tableRows[4]).getByText("Approved")
             ).toBeInTheDocument();
             expect(
-                within(tableRows[5]).getByText("Banned")
+                within(tableRows[5]).getByText("Rejected")
             ).toBeInTheDocument();
             expect(
-                within(tableRows[6]).getByText("Suspended")
+                within(tableRows[6]).getByText("Banned")
+            ).toBeInTheDocument();
+            expect(
+                within(tableRows[7]).getByText("Suspended")
             ).toBeInTheDocument();
         });
     });
