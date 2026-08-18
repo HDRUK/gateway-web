@@ -1,5 +1,17 @@
 import ErrorDisplay from "@/components/ErrorDisplay";
+import RequireSignIn from "./components/RequireSignIn";
 
-export default function Page401() {
-    return <ErrorDisplay variant={401} />;
+interface Page401Props {
+    searchParams: Promise<{ redirect?: string }>;
+}
+
+export default async function Page401({ searchParams }: Page401Props) {
+    const { redirect } = await searchParams;
+
+    return (
+        <>
+            {redirect && <RequireSignIn redirectPath={redirect} />}
+            <ErrorDisplay variant={401} />
+        </>
+    );
 }

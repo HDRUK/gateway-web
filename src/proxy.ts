@@ -22,9 +22,13 @@ export function proxy(request: NextRequest) {
             ) &&
             !authUser
         ) {
-            const redirectResponse = NextResponse.redirect(
-                new URL(RouteName.ERROR_401, request.url)
+            const error401Url = new URL(RouteName.ERROR_401, request.url);
+            error401Url.searchParams.set(
+                "redirect",
+                request.nextUrl.pathname + request.nextUrl.search
             );
+
+            const redirectResponse = NextResponse.redirect(error401Url);
 
             if (token) {
                 // Remove the JWT cookie by setting it with maxAge: 0
