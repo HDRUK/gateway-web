@@ -1,6 +1,8 @@
+import { rest } from "msw";
 import mockRouter from "next-router-mock";
 import { FederationTestStatus } from "@/interfaces/Federation";
 import { screen, render, act, waitFor, fireEvent } from "@/utils/testUtils";
+import apis from "@/config/apis";
 import { integrationV1 } from "@/mocks/data/integration";
 import { teamV1 } from "@/mocks/data/team";
 import {
@@ -9,6 +11,12 @@ import {
 } from "@/mocks/handlers/integration";
 import { server } from "@/mocks/server";
 import EditIntegrationForm from "./EditIntegrationForm";
+
+jest.mock("notistack", () => ({
+    ...jest.requireActual("notistack"),
+    enqueueSnackbar: jest.fn(),
+    __esModule: true,
+}));
 
 jest.mock("@/hooks/useTestFederation", () => ({
     __esModule: true,
@@ -53,28 +61,32 @@ describe("EditIntegrationForm", () => {
         ).toBeInTheDocument();
     });
 
+    const makeFailingIntegration = () => ({
+        ...integrationV1,
+        id: 2,
+        federation_type: "DATASETS" as const,
+        endpoint_baseurl: "https://example.com",
+        endpoint_datasets: "/datasets",
+        endpoint_dataset: "/datasets/{id}",
+        enabled: true,
+        tested: true,
+        notifications: [
+            {
+                id: 1,
+                opt_in: 0,
+                message: "",
+                email: "",
+                enabled: true,
+                notification_type: "federation",
+                user_id: 1,
+            },
+        ],
+        error: true,
+        error_text: "Connection timed out",
+    });
+
     it("should clear the error alert after running a test", async () => {
-        const failingIntegration = {
-            ...integrationV1,
-            id: 2,
-            federation_type: "DATASETS" as const,
-            endpoint_baseurl: "https://example.com",
-            endpoint_datasets: "/datasets",
-            endpoint_dataset: "/datasets/{id}",
-            notifications: [
-                {
-                    id: 1,
-                    opt_in: 0,
-                    message: "",
-                    email: "",
-                    enabled: true,
-                    notification_type: "federation",
-                    user_id: 1,
-                },
-            ],
-            error: true,
-            error_text: "Connection timed out",
-        };
+        const failingIntegration = makeFailingIntegration();
         const fixedIntegration = {
             ...failingIntegration,
             error: false,
@@ -97,6 +109,76 @@ describe("EditIntegrationForm", () => {
         });
 
         fireEvent.click(testButton);
+
+        await waitFor(() => {
+            expect(
+                screen.queryByText("Connection timed out")
+            ).not.toBeInTheDocument();
+        });
+    });
+
+    it("should clear the error alert after saving the integration", async () => {
+        const failingIntegration = makeFailingIntegration();
+        const fixedIntegration = {
+            ...failingIntegration,
+            error: false,
+            error_text: null,
+        };
+        server.use(getIntegrationV1({ data: failingIntegration }));
+
+        await act(() => render(<EditIntegrationForm />));
+
+        expect(
+            await screen.findByText("Connection timed out")
+        ).toBeInTheDocument();
+
+        server.use(
+            rest.put(
+                `${apis.teamsV1Url}/${teamV1.id}/federations/${failingIntegration.id}`,
+                (req, res, ctx) =>
+                    res(ctx.status(200), ctx.json({ data: fixedIntegration }))
+            ),
+            getIntegrationV1({ data: fixedIntegration })
+        );
+
+        fireEvent.click(
+            screen.getByRole("button", { name: "Save configuration" })
+        );
+
+        await waitFor(() => {
+            expect(
+                screen.queryByText("Connection timed out")
+            ).not.toBeInTheDocument();
+        });
+    });
+
+    it("should clear the error alert after running 'Run now'", async () => {
+        const failingIntegration = makeFailingIntegration();
+        const fixedIntegration = {
+            ...failingIntegration,
+            error: false,
+            error_text: null,
+        };
+        server.use(
+            getIntegrationV1({ data: failingIntegration }),
+            getFederationRunV1({ federationId: failingIntegration.id })
+        );
+
+        await act(() => render(<EditIntegrationForm />));
+
+        expect(
+            await screen.findByText("Connection timed out")
+        ).toBeInTheDocument();
+
+        server.use(getIntegrationV1({ data: fixedIntegration }));
+
+        const runNowButton = await waitFor(() => {
+            const button = screen.getByRole("button", { name: "Run now" });
+            expect(button).not.toBeDisabled();
+            return button;
+        });
+
+        fireEvent.click(runNowButton);
 
         await waitFor(() => {
             expect(

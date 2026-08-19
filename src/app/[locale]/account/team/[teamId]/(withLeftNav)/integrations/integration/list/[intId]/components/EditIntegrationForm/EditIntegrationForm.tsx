@@ -159,7 +159,13 @@ const EditIntegrationForm = () => {
                 ...payload,
                 run_time_hour: runTimeHour,
             };
-            await updateIntegration(payload.id, updatedPayload);
+            const updateResponse = await updateIntegration(
+                payload.id,
+                updatedPayload
+            );
+            if (updateResponse !== null) {
+                mutateIntegration();
+            }
         }
     };
 
@@ -203,6 +209,7 @@ const EditIntegrationForm = () => {
                 : FederationRunStatus.IDLE
         );
         if (response !== null) {
+            mutateIntegration();
             revertTimeoutRef.current = setTimeout(
                 () => setRunNowStatus(FederationRunStatus.IDLE),
                 3000
