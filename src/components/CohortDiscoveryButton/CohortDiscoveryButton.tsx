@@ -1,6 +1,6 @@
 "use client";
 
-import { useCallback, useMemo } from "react";
+import { useCallback, useEffect, useMemo, useRef } from "react";
 import {
     ButtonProps,
     Chip,
@@ -19,10 +19,12 @@ import { useCohortStatus } from "@/hooks/useCohortStatus";
 import useDialog from "@/hooks/useDialog";
 import useLogout from "@/hooks/useLogout";
 import useModal from "@/hooks/useModal";
+import usePostLoginActionCookie from "@/hooks/usePostLoginAction";
 import {
     isAwaitingCohortDecision,
     statusMapping,
 } from "@/consts/cohortDiscovery";
+import { PostLoginActions } from "@/consts/postLoginActions";
 import { RouteName } from "@/consts/routeName";
 import { capitalise } from "@/utils/general";
 import { useFeatures } from "@/providers/FeatureProvider";
@@ -43,6 +45,7 @@ export interface CohortDiscoveryButtonProps {
     disabledOuter?: boolean;
     clickedAction?: () => void;
     onRedirect?: () => void;
+    autoTriggerAccess?: boolean;
     label?: string;
 }
 
@@ -57,6 +60,7 @@ const CohortDiscoveryButton = ({
     disabledOuter = false,
     clickedAction,
     onRedirect,
+    autoTriggerAccess = false,
     label,
     ...restProps
 }: CohortDiscoveryButtonProps) => {
@@ -65,6 +69,8 @@ const CohortDiscoveryButton = ({
     const { push } = useRouter();
     const logout = useLogout();
     const t = useTranslations(TRANSLATION_PATH);
+    const { setPostLoginActionCookie } = usePostLoginActionCookie({});
+    const hasAutoOpenedRef = useRef(false);
 
     const { isRQuestEnabled, isCohortDiscoveryServiceEnabled } = useFeatures();
     const { isLoggedIn, user, claims, isLoading: isLoadingAuth } = useAuth();
@@ -74,26 +80,37 @@ const CohortDiscoveryButton = ({
         requestExpiry,
         hasAccess,
         isLoading: isLoadingStatus,
+        hasFetched: hasFetchedStatus,
     } = useCohortStatus(user?.id);
 
     const {
         redirectUrl: rQuestRedirectUrl,
         isLoading: isLoadingRQuestRedirect,
+        hasFetched: hasFetchedRQuestRedirect,
     } = useCohortStatus(user?.id, {
         redirect: true,
     });
 
-    const { redirectUrl: cdsRedirectUrl, isLoading: isLoadingCdsRedirect } =
-        useCohortStatus(user?.id, {
-            redirect: true,
-            useRQuest: false,
-        });
+    const {
+        redirectUrl: cdsRedirectUrl,
+        isLoading: isLoadingCdsRedirect,
+        hasFetched: hasFetchedCdsRedirect,
+    } = useCohortStatus(user?.id, {
+        redirect: true,
+        useRQuest: false,
+    });
 
     const isLoading =
         isLoadingAuth ||
         isLoadingStatus ||
         isLoadingRQuestRedirect ||
         isLoadingCdsRedirect;
+
+    const isReady =
+        !isLoadingAuth &&
+        hasFetchedStatus &&
+        hasFetchedRQuestRedirect &&
+        hasFetchedCdsRedirect;
 
     const isApproved = isLoggedIn && hasAccess;
 
@@ -238,6 +255,8 @@ const CohortDiscoveryButton = ({
 
     const handleClick = useCallback(() => {
         if (!isLoggedIn) {
+            setPostLoginActionCookie(PostLoginActions.OPEN_COHORT_DISCOVERY);
+
             showDialog(ProvidersDialog, {
                 isProvidersDialog: true,
                 redirectPath:
@@ -315,7 +334,17 @@ const CohortDiscoveryButton = ({
         handleOpenCds,
         showDialog,
         showModal,
+        setPostLoginActionCookie,
     ]);
+
+    useEffect(() => {
+        if (!autoTriggerAccess) return;
+        if (hasAutoOpenedRef.current) return;
+        if (!isReady) return;
+
+        hasAutoOpenedRef.current = true;
+        handleClick();
+    }, [autoTriggerAccess, isReady, handleClick]);
 
     return (
         <Tooltip
