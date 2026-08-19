@@ -16,7 +16,6 @@ import Typography from "@/components/Typography";
 import useAuth from "@/hooks/useAuth";
 import { useCohortStatus } from "@/hooks/useCohortStatus";
 import useDialog from "@/hooks/useDialog";
-import usePostLoginAction from "@/hooks/usePostLoginAction";
 import { colors } from "@/config/theme";
 import {
     COHORT_ABOUT_HREF,
@@ -26,7 +25,6 @@ import {
     statusMapping,
     STEP_STATE,
 } from "@/consts/cohortDiscovery";
-import { PostLoginActions } from "@/consts/postLoginActions";
 import { differenceInDays } from "@/utils/date";
 import { capitalise } from "@/utils/general";
 import ProfileForm from "@/app/[locale]/account/profile/components/ProfileForm";
@@ -43,11 +41,13 @@ const TERMS_HREF =
 interface CohortAccessStepperProps {
     cmsContent: templateRepeatFields;
     hideAccessButton?: boolean;
+    autoTriggerAccess?: boolean;
 }
 
 const CohortAccessStepper = ({
     cmsContent,
     hideAccessButton = false,
+    autoTriggerAccess = false,
 }: CohortAccessStepperProps) => {
     const t = useTranslations(TRANSLATION_PATH);
     const tCd = useTranslations("pages.account.profile.cohortDiscovery");
@@ -65,16 +65,7 @@ const CohortAccessStepper = ({
 
     const [started, setStarted] = useState(false);
     const [activeSubStep, setActiveSubStep] = useState(0);
-    const [pendingCdsOpen, setPendingCdsOpen] = useState(false);
     const subStepsRef = useRef<HTMLDivElement>(null);
-
-    usePostLoginAction({
-        onAction: ({ action }) => {
-            if (action === PostLoginActions.OPEN_COHORT_DISCOVERY) {
-                setPendingCdsOpen(true);
-            }
-        },
-    });
 
     const hasApplied = !!requestStatus;
     const isApproved = requestStatus === COHORT_STATUS.APPROVED;
@@ -258,7 +249,7 @@ const CohortAccessStepper = ({
                     <CohortDiscoveryButton
                         label={t("accessButton")}
                         wrapperSx={{ width: "auto" }}
-                        autoTriggerAccess={pendingCdsOpen}
+                        autoTriggerAccess={autoTriggerAccess}
                     />
                 )}
             </Box>

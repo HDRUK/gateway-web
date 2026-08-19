@@ -2,7 +2,17 @@ import Cookies from "js-cookie";
 import { PostLoginActions } from "@/consts/postLoginActions";
 import { templateRepeatFields } from "@/interfaces/Cms";
 import { render, waitFor } from "@/utils/testUtils";
-import CohortAccessStepper from "./CohortAccessStepper";
+import CohortDiscoveryCoverPage from "./CohortDiscoveryCoverPage";
+
+/**
+ * CohortDiscoveryCoverPage decides which of two different
+ * CohortDiscoveryButton instances is actually on screen - the one inside
+ * CohortAccessStepper normally, or the one inside CohortAccessPanel when
+ * both Cohort Discovery and NHS SDE access are approved. Both real
+ * components (and the real CohortDiscoveryButton) are used here so this
+ * proves the resume-after-login outcome for both branches, rather than
+ * assuming wiring into one branch also covers the other.
+ */
 
 jest.mock("js-cookie");
 
@@ -45,6 +55,11 @@ jest.mock("@/providers/FeatureProvider", () => ({
     }),
 }));
 
+jest.mock("../NhsSdeAccessStepper", () => ({
+    __esModule: true,
+    default: () => <div data-testid="nhs-sde-access-stepper" />,
+}));
+
 const cmsContent: templateRepeatFields = {
     title: "T",
     subTitle: "S",
@@ -54,7 +69,11 @@ const cmsContent: templateRepeatFields = {
 
 const cdsRedirectUrl = "https://cds.example.com";
 
-const configureReadyApprovedStatus = () => {
+const configureCohortStatus = ({
+    nhseSdeRequestStatus,
+}: {
+    nhseSdeRequestStatus: string | null;
+}) => {
     mockUseCohortStatus.mockImplementation(options => {
         if (options?.redirect && options?.useRQuest === false) {
             return {
@@ -76,6 +95,7 @@ const configureReadyApprovedStatus = () => {
             requestStatus: "APPROVED",
             requestExpiry: null,
             hasAccess: true,
+            nhseSdeRequestStatus,
             isLoading: false,
             hasFetched: true,
             refetch: jest.fn(),
@@ -83,11 +103,13 @@ const configureReadyApprovedStatus = () => {
     });
 };
 
-describe("CohortAccessStepper - resuming Cohort Discovery after login", () => {
+const renderPage = () =>
+    render(<CohortDiscoveryCoverPage cmsContent={cmsContent} />);
+
+describe("CohortDiscoveryCoverPage - resuming Cohort Discovery after login", () => {
     beforeEach(() => {
         jest.clearAllMocks();
         window.open = jest.fn();
-        configureReadyApprovedStatus();
         mockUseAuth.mockReturnValue({
             isLoggedIn: true,
             user: { id: 1 },
@@ -96,12 +118,13 @@ describe("CohortAccessStepper - resuming Cohort Discovery after login", () => {
         });
     });
 
-    it("opens Cohort Discovery Service in a new tab once the user returns from login with a pending action", async () => {
+    it("opens Cohort Discovery from the stepper's access button when only cohort access is approved", async () => {
+        configureCohortStatus({ nhseSdeRequestStatus: "IN PROCESS" });
         (Cookies.get as jest.Mock).mockReturnValue(
             JSON.stringify({ action: PostLoginActions.OPEN_COHORT_DISCOVERY })
         );
 
-        render(<CohortAccessStepper cmsContent={cmsContent} />);
+        renderPage();
 
         await waitFor(() => {
             expect(window.open).toHaveBeenCalledWith(
@@ -112,20 +135,28 @@ describe("CohortAccessStepper - resuming Cohort Discovery after login", () => {
         });
     });
 
-    it("does not open Cohort Discovery when there is no pending post-login action", () => {
-        (Cookies.get as jest.Mock).mockReturnValue(undefined);
-
-        render(<CohortAccessStepper cmsContent={cmsContent} />);
-
-        expect(window.open).not.toHaveBeenCalled();
-    });
-
-    it("does not open Cohort Discovery when a different post-login action is pending", () => {
+    it("opens Cohort Discovery from the shared access panel when both cohort and NHS SDE access are approved", async () => {
+        configureCohortStatus({ nhseSdeRequestStatus: "APPROVED" });
         (Cookies.get as jest.Mock).mockReturnValue(
-            JSON.stringify({ action: PostLoginActions.SAVE_SEARCH })
+            JSON.stringify({ action: PostLoginActions.OPEN_COHORT_DISCOVERY })
         );
 
-        render(<CohortAccessStepper cmsContent={cmsContent} />);
+        renderPage();
+
+        await waitFor(() => {
+            expect(window.open).toHaveBeenCalledWith(
+                cdsRedirectUrl,
+                "_blank",
+                "noopener,noreferrer"
+            );
+        });
+    });
+
+    it("does not open Cohort Discovery when there is no pending post-login action, even with both accesses approved", () => {
+        configureCohortStatus({ nhseSdeRequestStatus: "APPROVED" });
+        (Cookies.get as jest.Mock).mockReturnValue(undefined);
+
+        renderPage();
 
         expect(window.open).not.toHaveBeenCalled();
     });
