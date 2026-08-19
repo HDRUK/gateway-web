@@ -1,5 +1,6 @@
 "use client";
 
+import { useState } from "react";
 import { Grid, Typography } from "@mui/material";
 import { useTranslations } from "next-intl";
 import { templateRepeatFields } from "@/interfaces/Cms";
@@ -7,7 +8,9 @@ import Box from "@/components/Box";
 import Container from "@/components/Container";
 import useAuth from "@/hooks/useAuth";
 import { useCohortStatus } from "@/hooks/useCohortStatus";
+import usePostLoginAction from "@/hooks/usePostLoginAction";
 import { NHS_SDE_STATUS } from "@/consts/cohortDiscovery";
+import { PostLoginActions } from "@/consts/postLoginActions";
 import CohortAccessPanel from "../CohortAccessPanel";
 import CohortAccessStepper from "../CohortAccessStepper";
 import NhsSdeAccessStepper from "../NhsSdeAccessStepper";
@@ -21,6 +24,16 @@ export default function CohortDiscoveryCoverPage({
 
     const { user } = useAuth();
     const { hasAccess, nhseSdeRequestStatus } = useCohortStatus(user?.id);
+
+    const [pendingCdsOpen, setPendingCdsOpen] = useState(false);
+
+    usePostLoginAction({
+        onAction: ({ action }) => {
+            if (action === PostLoginActions.OPEN_COHORT_DISCOVERY) {
+                setPendingCdsOpen(true);
+            }
+        },
+    });
 
     const bothApproved =
         hasAccess && nhseSdeRequestStatus === NHS_SDE_STATUS.APPROVED;
@@ -43,12 +56,13 @@ export default function CohortDiscoveryCoverPage({
                     <CohortAccessStepper
                         cmsContent={cmsContent}
                         hideAccessButton={bothApproved}
+                        autoTriggerAccess={pendingCdsOpen}
                     />
                     <NhsSdeAccessStepper />
                 </Grid>
                 {bothApproved && (
                     <Grid size={{ mobile: 12, laptop: 4 }}>
-                        <CohortAccessPanel />
+                        <CohortAccessPanel autoTriggerAccess={pendingCdsOpen} />
                     </Grid>
                 )}
             </Grid>
