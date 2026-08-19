@@ -6,6 +6,12 @@ import { server } from "@/mocks/server";
 import { formatDate } from "@/utils/date";
 import IntegrationListItem from "./IntegrationListItem";
 
+jest.mock("notistack", () => ({
+    ...jest.requireActual("notistack"),
+    enqueueSnackbar: jest.fn(),
+    __esModule: true,
+}));
+
 describe("IntegrationListItem", () => {
     mockRouter.query = { teamId: "1" };
     const integration = {
@@ -166,4 +172,48 @@ describe("IntegrationListItem", () => {
             { timeout: 4000 }
         );
     }, 10000);
+
+    it("should call onChanged after a successful Run now", async () => {
+        server.use(getFederationRunV1({ teamId: 1, federationId: 2 }));
+        const onChanged = jest.fn();
+
+        render(
+            <IntegrationListItem
+                index={1}
+                integration={integration}
+                onChanged={onChanged}
+            />
+        );
+
+        fireEvent.click(screen.getByRole("button", { name: "Run now" }));
+
+        await waitFor(() => {
+            expect(onChanged).toHaveBeenCalled();
+        });
+    });
+
+    it("should not call onChanged when the run request fails", async () => {
+        server.use(
+            getFederationRunV1({ teamId: 1, federationId: 2, status: 500 })
+        );
+        const onChanged = jest.fn();
+
+        render(
+            <IntegrationListItem
+                index={1}
+                integration={integration}
+                onChanged={onChanged}
+            />
+        );
+
+        fireEvent.click(screen.getByRole("button", { name: "Run now" }));
+
+        await waitFor(() => {
+            expect(
+                screen.getByRole("button", { name: "Run now" })
+            ).not.toBeDisabled();
+        });
+
+        expect(onChanged).not.toHaveBeenCalled();
+    });
 });

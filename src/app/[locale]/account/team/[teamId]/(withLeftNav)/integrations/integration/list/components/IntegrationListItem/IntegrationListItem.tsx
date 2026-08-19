@@ -31,11 +31,13 @@ const COMPLETE_DISPLAY_MS = 3000;
 interface IntegrationListItemProps {
     index: number;
     integration: Integration;
+    onChanged?: () => void;
 }
 
 const IntegrationListItem = ({
     index,
     integration,
+    onChanged,
 }: IntegrationListItemProps) => {
     const t = useTranslations("api");
     const params = useParams<{ teamId: string }>();
@@ -68,6 +70,7 @@ const IntegrationListItem = ({
                 : FederationRunStatus.IDLE
         );
         if (response !== null) {
+            onChanged?.();
             revertTimeoutRef.current = setTimeout(
                 () => setRunStatus(FederationRunStatus.IDLE),
                 COMPLETE_DISPLAY_MS
