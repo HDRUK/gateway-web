@@ -52,7 +52,7 @@ const EditIntegrationForm = () => {
         const rounded = Math.round(parseInt(minute, 10) / 15) * 15 % 60;
         return rounded.toString().padStart(2, "0");
     };
-    const { data: integration } = useGet<Integration>(
+    const { data: integration, mutate: mutateIntegration } = useGet<Integration>(
         `${apis.teamsV1Url}/${params?.teamId}/federations/${params?.intId}`,
         { shouldFetch: !!params?.teamId && !!params?.intId }
     );
@@ -309,7 +309,10 @@ const EditIntegrationForm = () => {
                             status={testStatus}
                             runResponse={testResponse}
                             isEnabled={formState.isValid}
-                            onTest={handleTest}
+                            onTest={async () => {
+                                await handleTest();
+                                mutateIntegration();
+                            }}
                         />
                     </Box>
                 </Box>

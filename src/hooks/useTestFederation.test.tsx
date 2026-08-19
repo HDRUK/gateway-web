@@ -1,8 +1,11 @@
+import { rest } from "msw";
 import { useForm } from "react-hook-form";
 import { FederationTestStatus } from "@/interfaces/Federation";
+import { Integration } from "@/interfaces/Integration";
 import useTestFederation from "@/hooks/useTestFederation";
 import { act, renderHook, waitFor } from "@/utils/testUtils";
-import { integrationV1 } from "@/mocks/data/integration";
+import apis from "@/config/apis";
+import { federationTestResponseV1, integrationV1 } from "@/mocks/data/integration";
 import { teamV1 } from "@/mocks/data/team";
 import { postFederationsTestV1 } from "@/mocks/handlers/integration";
 import { server } from "@/mocks/server";
@@ -95,5 +98,79 @@ describe("useTestFederation", () => {
                 setTestedConfig: expect.any(Function),
             });
         });
+    });
+
+    it("should include the federation id in the test payload for an already-saved integration", async () => {
+        let capturedBody: unknown;
+        server.use(
+            rest.post(
+                `${apis.teamsV1Url}/${teamId}/federations/test`,
+                async (req, res, ctx) => {
+                    capturedBody = await req.json();
+                    return res(
+                        ctx.status(200),
+                        ctx.json({ data: federationTestResponseV1 })
+                    );
+                }
+            )
+        );
+
+        const mockIntegration = { ...integrationV1, tested: true };
+        const { result: formResult } = renderHook(() =>
+            useForm({ defaultValues: mockIntegration })
+        );
+        const { result } = renderHook(() =>
+            useTestFederation({
+                teamId,
+                integration: mockIntegration,
+                control: formResult.current.control,
+                reset: formResult.current.reset,
+                getValues: formResult.current.getValues,
+                setValue: formResult.current.setValue,
+            })
+        );
+
+        await act(async () => {
+            await result.current.handleTest();
+        });
+
+        expect(capturedBody).toMatchObject({ id: mockIntegration.id });
+    });
+
+    it("should omit the federation id when testing an integration that has not been saved yet", async () => {
+        let capturedBody: unknown;
+        server.use(
+            rest.post(
+                `${apis.teamsV1Url}/${teamId}/federations/test`,
+                async (req, res, ctx) => {
+                    capturedBody = await req.json();
+                    return res(
+                        ctx.status(200),
+                        ctx.json({ data: federationTestResponseV1 })
+                    );
+                }
+            )
+        );
+
+        const { id, ...unsavedIntegration } = { ...integrationV1, tested: true };
+        const { result: formResult } = renderHook(() =>
+            useForm({ defaultValues: unsavedIntegration })
+        );
+        const { result } = renderHook(() =>
+            useTestFederation({
+                teamId,
+                integration: unsavedIntegration as unknown as Integration,
+                control: formResult.current.control,
+                reset: formResult.current.reset,
+                getValues: formResult.current.getValues,
+                setValue: formResult.current.setValue,
+            })
+        );
+
+        await act(async () => {
+            await result.current.handleTest();
+        });
+
+        expect(capturedBody).not.toHaveProperty("id");
     });
 });

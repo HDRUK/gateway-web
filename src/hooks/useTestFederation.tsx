@@ -90,7 +90,7 @@ const useTestFederation = ({
         }
     }, [integration, tested, reset, setValue]);
 
-    const runFederationTest = usePost<Omit<Federation, "id">>(
+    const runFederationTest = usePost<Omit<Federation, "id"> & { id?: number }>(
         `${apis.teamsV1Url}/${teamId}/federations/test`,
         {
             itemName: "Integration test",
@@ -111,6 +111,7 @@ const useTestFederation = ({
         const updatedPayload = {
             ...payload,
             run_time_hour: parseInt(payload.run_time_hour, 10),
+            ...("id" in integration ? { id: integration.id } : {}),
         } as Federation;
 
         const response = (await runFederationTest(

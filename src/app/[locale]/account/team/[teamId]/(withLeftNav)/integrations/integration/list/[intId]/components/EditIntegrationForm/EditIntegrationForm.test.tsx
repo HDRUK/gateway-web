@@ -53,6 +53,58 @@ describe("EditIntegrationForm", () => {
         ).toBeInTheDocument();
     });
 
+    it("should clear the error alert after running a test", async () => {
+        const failingIntegration = {
+            ...integrationV1,
+            id: 2,
+            federation_type: "DATASETS" as const,
+            endpoint_baseurl: "https://example.com",
+            endpoint_datasets: "/datasets",
+            endpoint_dataset: "/datasets/{id}",
+            notifications: [
+                {
+                    id: 1,
+                    opt_in: 0,
+                    message: "",
+                    email: "",
+                    enabled: true,
+                    notification_type: "federation",
+                    user_id: 1,
+                },
+            ],
+            error: true,
+            error_text: "Connection timed out",
+        };
+        const fixedIntegration = {
+            ...failingIntegration,
+            error: false,
+            error_text: null,
+        };
+        server.use(getIntegrationV1({ data: failingIntegration }));
+
+        await act(() => render(<EditIntegrationForm />));
+
+        expect(
+            await screen.findByText("Connection timed out")
+        ).toBeInTheDocument();
+
+        server.use(getIntegrationV1({ data: fixedIntegration }));
+
+        const testButton = await waitFor(() => {
+            const button = screen.getByRole("button", { name: "Run test" });
+            expect(button).not.toBeDisabled();
+            return button;
+        });
+
+        fireEvent.click(testButton);
+
+        await waitFor(() => {
+            expect(
+                screen.queryByText("Connection timed out")
+            ).not.toBeInTheDocument();
+        });
+    });
+
     it("should not show an error alert when the integration has not failed", async () => {
         const mockIntegration = {
             ...integrationV1,
