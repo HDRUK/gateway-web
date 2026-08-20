@@ -1,3 +1,31 @@
+## [2.42.0](https://github.com/HDRUK/gateway-web/compare/v2.41.0...v2.42.0) (2026-08-20)
+
+### ✨ Features
+
+* **GAT-2905:** add actions and last-run status to the integration card ([b9df574](https://github.com/HDRUK/gateway-web/commit/b9df5741dd4d0c7c45800222b37e660051095729)), closes [GAT-2905](undefinedGAT-2905)
+* **GAT-3104:** Allow optional color on KeyValueList ([a7bf2c5](https://github.com/HDRUK/gateway-web/commit/a7bf2c55404cce597cc53e984c4b49684c14555f)), closes [GAT-3104](undefinedGAT-3104)
+* **GAT-3104:** Show federation level error when present ([8b33e20](https://github.com/HDRUK/gateway-web/commit/8b33e207624dde90af65d44fa797f39911a802fa)), closes [GAT-3104](undefinedGAT-3104)
+* **GAT-9001:** Allow structural metadata to be removed (#1605) ([337a584](https://github.com/HDRUK/gateway-web/commit/337a5843c985a6c334d05b7d32da9ef561fb4641)), closes [GAT-9001](undefinedGAT-9001)
+* **GAT-9195:** Cohort Discovery about page redesign (#1584) ([2819028](https://github.com/HDRUK/gateway-web/commit/281902857ed86c6b97a71013d884794d68013656)), closes [GAT-9195](undefinedGAT-9195)
+* **GAT-9196:** Cohort Discovery - Build apply base (#1591) ([8d6672f](https://github.com/HDRUK/gateway-web/commit/8d6672f6752dc2f1c3440c8b7be0cce8399d4399)), closes [GAT-9196](undefinedGAT-9196)
+* **GAT-9201:** Add NHS SDE access stepper scaffold (#1600) ([b25866a](https://github.com/HDRUK/gateway-web/commit/b25866a209a057363ce0b34e4b84c43d65f6725e)), closes [GAT-9201](undefinedGAT-9201)
+* **GAT-9203:** Add NHS SDE registration validation flow (#1603) ([afa7ad5](https://github.com/HDRUK/gateway-web/commit/afa7ad5f2740bcc78361d4a9559d2758e3a0850e)), closes [GAT-9203](undefinedGAT-9203)
+* **GAT-9204:** Add shared access panel and tidy NHS SDE stepper states (#1604) ([1a855e9](https://github.com/HDRUK/gateway-web/commit/1a855e941894e7af060e4a14f111f8703ce49d9d)), closes [GAT-9204](undefinedGAT-9204)
+* **GAT-9353:** filter stlyingtweaks (#1594) ([2901768](https://github.com/HDRUK/gateway-web/commit/29017688a677b64dd144021555bb440ba19f8f3c)), closes [GAT-9353](undefinedGAT-9353)
+* **GAT-9423:** Adds search box to teams admin page (#1608) ([eb69523](https://github.com/HDRUK/gateway-web/commit/eb69523799fdf47ffba524e4128f34e4ab4b0dd2)), closes [GAT-9423](undefinedGAT-9423)
+* **GAT-9424:** Admin panel for nightly dataset test results added to api. (#1606) ([83c9075](https://github.com/HDRUK/gateway-web/commit/83c9075d7c47fe6c4fcca10cdb2ff0ed1f1b576b)), closes [GAT-9424](undefinedGAT-9424)
+* **GAT-9442:** Implements frontend for the recent changes to emails.… (#1607) ([9ef5257](https://github.com/HDRUK/gateway-web/commit/9ef52573f981e6376de232aaec9e25ab5442495b)), closes [GAT-9442](undefinedGAT-9442)
+* **GAT-9456:** Adds FE to view broken metadata links (#1609) ([6ff51d7](https://github.com/HDRUK/gateway-web/commit/6ff51d79c4ebe0ae0d92d09580dc5476824b424e)), closes [GAT-9456](undefinedGAT-9456)
+* **GAT-9463:** Allow re-apply for cohort access when expired or rejected (#1610) ([8459c09](https://github.com/HDRUK/gateway-web/commit/8459c09e8fd70c6980fe430480ab3b40a381bc8e)), closes [GAT-9463](undefinedGAT-9463)
+* **GAT-9463:** Remove auto-open behaviour (#1611) ([d8eb564](https://github.com/HDRUK/gateway-web/commit/d8eb5642f842d9bb9db8be5227bae4fff0fd0109)), closes [GAT-9463](undefinedGAT-9463)
+* **GAT-9468:** Update NHS Research SDE registration form URL (#1612) ([d274b9b](https://github.com/HDRUK/gateway-web/commit/d274b9b10b9ba9d7a313ae09e9ad46e14ebb3ece)), closes [GAT-9468](undefinedGAT-9468)
+
+### 🐛 Bug Fixes
+
+* **GAT-9334:** Update dompurify version (#1596) ([a71aa12](https://github.com/HDRUK/gateway-web/commit/a71aa121141afbd62855b6f41e718b3d8f1f400f)), closes [GAT-9334](undefinedGAT-9334)
+* **GAT-9356:** Form hydration causing error on save as draft (#1595) ([6e5ac35](https://github.com/HDRUK/gateway-web/commit/6e5ac35f82633372988b2c8053c0fb6ae5132a65)), closes [GAT-9356](undefinedGAT-9356)
+* **GAT-9470:** Fix nhs sde button reveal (#1614) ([7b76c93](https://github.com/HDRUK/gateway-web/commit/7b76c937c1788c7b7543366ad103105960d3d000))
+
 ## [2.41.0](https://github.com/HDRUK/gateway-web/compare/v2.40.0...v2.41.0) (2026-07-28)
 
 ### ✨ Features
