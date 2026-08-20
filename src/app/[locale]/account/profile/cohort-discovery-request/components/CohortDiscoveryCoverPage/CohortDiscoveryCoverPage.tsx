@@ -1,52 +1,30 @@
 "use client";
 
-import { useMemo } from "react";
-import QueryBuilderIcon from "@mui/icons-material/QueryBuilder";
-import { Grid, Link, Typography } from "@mui/material";
+import { Grid, Typography } from "@mui/material";
 import { useTranslations } from "next-intl";
-import { useSearchParams } from "next/navigation";
+import { templateRepeatFields } from "@/interfaces/Cms";
 import Box from "@/components/Box";
-import Chip from "@/components/Chip";
-import CohortDiscoveryButton from "@/components/CohortDiscoveryButton";
 import Container from "@/components/Container";
-import IndicateNhseSdeAccessButton from "@/components/IndicateNhseSdeAccessButton";
-import { MarkDownSanitizedWithHtml } from "@/components/MarkDownSanitizedWithHTML";
-import Paper from "@/components/Paper";
-import RequestNhseSdeAccessButton from "@/components/RequestNhseSdeAccessButton";
 import useAuth from "@/hooks/useAuth";
 import { useCohortStatus } from "@/hooks/useCohortStatus";
-import { colors } from "@/config/theme";
-import { NHSSDEStatusMapping, statusMapping } from "@/consts/cohortDiscovery";
-import { RouteName } from "@/consts/routeName";
-import { differenceInDays } from "@/utils/date";
-import { capitalise } from "@/utils/general";
-import { useFeatures } from "@/providers/FeatureProvider";
+import { COHORT_STATUS, NHS_SDE_STATUS } from "@/consts/cohortDiscovery";
+import CohortAccessPanel from "../CohortAccessPanel";
+import CohortAccessStepper from "../CohortAccessStepper";
+import NhsSdeAccessStepper from "../NhsSdeAccessStepper";
 
-export default function CohortDiscoveryCoverPage() {
+export default function CohortDiscoveryCoverPage({
+    cmsContent,
+}: {
+    cmsContent: templateRepeatFields;
+}) {
     const t = useTranslations("pages.account.profile.cohortDiscovery");
-    const { isNhsSdeApplicationsEnabled } = useFeatures();
-    const { user, isLoading: loadingUser } = useAuth();
-    const {
-        requestExpiry,
-        requestStatus,
-        nhseSdeRequestStatus,
-        isLoading,
-        refetch,
-    } = useCohortStatus(user?.id);
 
-    const searchParams = useSearchParams();
+    const { user } = useAuth();
+    const { requestStatus, nhseSdeRequestStatus } = useCohortStatus(user?.id);
 
-    const autoOpen = useMemo(() => {
-        return searchParams?.get("open") === "true";
-    }, [searchParams]);
-
-    const daysRemaining =
-        requestStatus === "APPROVED" && requestExpiry
-            ? // eslint-disable-next-line react-hooks/purity
-              differenceInDays(requestExpiry, Date.now())
-            : null;
-
-    const loading = loadingUser || isLoading;
+    const bothApproved =
+        requestStatus === COHORT_STATUS.APPROVED &&
+        nhseSdeRequestStatus === NHS_SDE_STATUS.APPROVED;
 
     return (
         <Container sx={{ display: "flex", flexDirection: "column" }}>
@@ -60,156 +38,20 @@ export default function CohortDiscoveryCoverPage() {
                 columnSpacing={2}
                 direction="row"
                 alignItems="stretch">
-                <Grid size={{ mobile: 12, laptop: 8 }}>
-                    <Paper
-                        sx={{
-                            bgcolor: "white",
-                            px: { mobile: 3, laptop: 8 },
-                            py: { mobile: 2, laptop: 6 },
-                        }}>
-                        <Typography variant="h1">{t("accessTitle")}</Typography>
-                        <Box sx={{ display: "flex", px: 0, pt: 0, gap: 2 }}>
-                            {requestStatus && (
-                                <>
-                                    <Chip
-                                        size="small"
-                                        label={capitalise(requestStatus)}
-                                        color={statusMapping[requestStatus]}
-                                    />
-
-                                    {requestStatus === "APPROVED" && (
-                                        <>
-                                            <QueryBuilderIcon
-                                                sx={{ color: colors.grey600 }}
-                                            />
-                                            <Typography
-                                                sx={{
-                                                    color: colors.grey600,
-                                                    alignContent: "center",
-                                                }}>
-                                                {daysRemaining}{" "}
-                                                {t("daysRemaining")}
-                                            </Typography>
-                                        </>
-                                    )}
-                                </>
-                            )}
-                        </Box>
-                        <Typography color={colors.grey700} sx={{ pb: 2 }}>
-                            {t("accessText1")}
-                        </Typography>
-                    </Paper>
+                <Grid
+                    size={bothApproved ? { mobile: 12, laptop: 8 } : 12}
+                    sx={{ display: "flex", flexDirection: "column", gap: 2 }}>
+                    <CohortAccessStepper
+                        cmsContent={cmsContent}
+                        hideAccessButton={bothApproved}
+                    />
+                    <NhsSdeAccessStepper />
                 </Grid>
-                <Grid size={{ mobile: 12, laptop: 4 }}>
-                    <Paper
-                        sx={{
-                            bgcolor: "white",
-                            height: "100%",
-                            display: "flex",
-                            alignItems: "center",
-                            justifyContent: "center",
-                            p: 2,
-                        }}>
-                        <CohortDiscoveryButton
-                            autoOpen={autoOpen}
-                            hrefOverride={`/${RouteName.ACCOUNT}/${RouteName.PROFILE}/${RouteName.COHORT_DISCOVERY_REGISTER}`}
-                            wrapperSx={{ width: "100%" }}
-                        />
-                    </Paper>
-                </Grid>
-                <Grid size={{ mobile: 12, laptop: 8 }}>
-                    <Paper
-                        sx={{
-                            bgcolor: "white",
-                            px: { mobile: 3, laptop: 8 },
-                            py: { mobile: 2, laptop: 6 },
-                        }}>
-                        <Typography variant="h1">
-                            {t("nhseSdeTitle")}
-                        </Typography>
-                        <Box sx={{ display: "flex", px: 0, pt: 0, gap: 2 }}>
-                            {nhseSdeRequestStatus && (
-                                <>
-                                    <Chip
-                                        size="small"
-                                        label={capitalise(nhseSdeRequestStatus)}
-                                        color={
-                                            NHSSDEStatusMapping[
-                                                nhseSdeRequestStatus
-                                            ]
-                                        }
-                                    />
-
-                                    {nhseSdeRequestStatus === "APPROVED" && (
-                                        <>
-                                            <Typography
-                                                sx={{
-                                                    color: colors.grey600,
-                                                    alignContent: "center",
-                                                }}>
-                                                {t("nhsExpiry")}
-                                            </Typography>
-                                        </>
-                                    )}
-                                </>
-                            )}
-                        </Box>
-                        {isNhsSdeApplicationsEnabled && (
-                            <>
-                                <Typography
-                                    color={colors.grey700}
-                                    sx={{ pb: 2 }}>
-                                    {t("nhseSdeText1")}
-                                </Typography>
-                                {!loading && !nhseSdeRequestStatus && (
-                                    <MarkDownSanitizedWithHtml
-                                        sx={{ color: colors.red700 }}
-                                        content={t("nhseSdeText2")}
-                                    />
-                                )}
-                            </>
-                        )}
-                        {!isNhsSdeApplicationsEnabled && (
-                            <Typography color={colors.grey600}>
-                                {t.rich("nhseSdeTemporaryText", {
-                                    mailto: chunks => (
-                                        <Link href={`mailto:${chunks}`}>
-                                            {chunks}
-                                        </Link>
-                                    ),
-                                })}
-                            </Typography>
-                        )}
-                    </Paper>
-                </Grid>
-
-                <Grid size={{ mobile: 12, laptop: 4 }}>
-                    <Paper
-                        sx={{
-                            bgcolor: "white",
-                            height: "100%",
-                            display: "flex",
-                            flexDirection: "column",
-                            alignItems: "center",
-                            justifyContent: "center",
-                            mb: 2,
-                            gap: 2,
-                            p: 2,
-                        }}>
-                        {!loading && nhseSdeRequestStatus !== "APPROVED" && (
-                            <>
-                                <RequestNhseSdeAccessButton
-                                    color="greyCustom"
-                                    refetchCohort={refetch}
-                                />
-                                <IndicateNhseSdeAccessButton
-                                    sx={{ width: "100%" }}
-                                    refetchCohort={refetch}
-                                />
-                            </>
-                        )}
-                    </Paper>
-                </Grid>
+                {bothApproved && (
+                    <Grid size={{ mobile: 12, laptop: 4 }}>
+                        <CohortAccessPanel />
+                    </Grid>
+                )}
             </Grid>
         </Container>
     );

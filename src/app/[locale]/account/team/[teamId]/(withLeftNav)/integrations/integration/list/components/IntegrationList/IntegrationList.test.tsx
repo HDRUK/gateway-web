@@ -29,16 +29,8 @@ describe("IntegrationList", () => {
 
     it("should render list", async () => {
         await waitFor(() => {
-            expect(
-                screen.getByText(
-                    `Integration 1 - ${integrationsV1[0].federation_type}`
-                )
-            ).toBeInTheDocument();
-            expect(
-                screen.getByText(
-                    `Integration 10 - ${integrationsV1[9].federation_type}`
-                )
-            ).toBeInTheDocument();
+            expect(screen.getByText("Integration 1")).toBeInTheDocument();
+            expect(screen.getByText("Integration 10")).toBeInTheDocument();
         });
     });
 });

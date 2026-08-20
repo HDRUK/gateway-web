@@ -12,7 +12,6 @@ import Box from "@/components/Box";
 import Button from "@/components/Button";
 import Container from "@/components/Container";
 import GradientBoxes from "@/components/GradientBoxes";
-import HTMLContent from "@/components/HTMLContent";
 import LogoSlider from "@/components/LogoSlider";
 import TitleWithBg from "@/components/TitleWithBg";
 import { StaticImages } from "@/config/images";
@@ -20,7 +19,7 @@ import theme, { colors } from "@/config/theme";
 import { ArrowForward } from "@/consts/icons";
 import { RouteName } from "@/consts/routeName";
 import InfoHoverPanel from "@/app/[locale]/components/InfoHoverPanel";
-import { IFrameWrapper } from "@/styles/IFrameContainer.styles";
+import HTMLVideoEmbed from "@/components/CohortDiscoveryInfo/HTMLVideoEmbed";
 import NewsSection from "../NewsSection";
 import NewsletterSignup from "../NewsletterSignup";
 import { TeamContent, TeamImage, TeamWrapper } from "./Homepage.styles";
@@ -222,18 +221,7 @@ const HomePage = ({ cmsContent: { page, posts } }: HomePageProps) => {
                         alignItems: "center",
                         flexDirection: "column",
                     }}>
-                    <Box
-                        sx={{
-                            width: "100%",
-                            maxWidth: 950,
-                        }}>
-                        <IFrameWrapper>
-                            <HTMLContent
-                                content={gatewayVideo}
-                                sanitize={false}
-                            />
-                        </IFrameWrapper>
-                    </Box>
+                    <HTMLVideoEmbed content={gatewayVideo} />
                 </Container>
             </Box>
             <Box

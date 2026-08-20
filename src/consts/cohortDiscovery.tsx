@@ -1,30 +1,86 @@
+import { RouteName } from "@/consts/routeName";
+
+const COHORT_STATUS = {
+    APPROVED: "APPROVED",
+    REJECTED: "REJECTED",
+    PENDING: "PENDING",
+    BANNED: "BANNED",
+    SUSPENDED: "SUSPENDED",
+    EXPIRED: "EXPIRED",
+} as const;
+
+const NHS_SDE_STATUS = {
+    IN_PROCESS: "IN PROCESS",
+    APPROVAL_REQUESTED: "APPROVAL REQUESTED",
+    APPROVED: "APPROVED",
+    REJECTED: "REJECTED",
+    BANNED: "BANNED",
+    SUSPENDED: "SUSPENDED",
+    EXPIRED: "EXPIRED",
+} as const;
+
+const COHORT_REAPPLY_STATUSES: string[] = [
+    COHORT_STATUS.REJECTED,
+    COHORT_STATUS.EXPIRED,
+];
+
+const NHS_SDE_NEGATIVE_STATUSES: string[] = [
+    NHS_SDE_STATUS.REJECTED,
+    NHS_SDE_STATUS.EXPIRED,
+    NHS_SDE_STATUS.BANNED,
+    NHS_SDE_STATUS.SUSPENDED,
+];
+
+const NHS_SDE_FINAL_STATUSES: string[] = [
+    NHS_SDE_STATUS.APPROVED,
+    NHS_SDE_STATUS.REJECTED,
+    NHS_SDE_STATUS.BANNED,
+    NHS_SDE_STATUS.SUSPENDED,
+];
+
 const statusMapping = {
-    APPROVED: "secondary",
-    REJECTED: "warning",
-    PENDING: "greyCustom",
-    BANNED: "error",
-    SUSPENDED: "warningCustom",
-    EXPIRED: "error",
+    [COHORT_STATUS.APPROVED]: "secondary",
+    [COHORT_STATUS.REJECTED]: "warning",
+    [COHORT_STATUS.PENDING]: "greyCustom",
+    [COHORT_STATUS.BANNED]: "error",
+    [COHORT_STATUS.SUSPENDED]: "warningCustom",
+    [COHORT_STATUS.EXPIRED]: "error",
 };
 
 const NHSSDEStatusMapping = {
-    "IN PROCESS": "greyCustom",
-    "APPROVAL REQUESTED": "primary",
-    APPROVED: "secondary",
-    REJECTED: "warning",
-    BANNED: "error",
-    SUSPENDED: "warningCustom",
-    EXPIRED: "default",
+    [NHS_SDE_STATUS.IN_PROCESS]: "greyCustom",
+    [NHS_SDE_STATUS.APPROVAL_REQUESTED]: "primary",
+    [NHS_SDE_STATUS.APPROVED]: "secondary",
+    [NHS_SDE_STATUS.REJECTED]: "warning",
+    [NHS_SDE_STATUS.BANNED]: "error",
+    [NHS_SDE_STATUS.SUSPENDED]: "warningCustom",
+    [NHS_SDE_STATUS.EXPIRED]: "default",
 };
 
 const NHS_SDE_FILTER = "The NHS Research Secure Data Environment (SDE) Network";
 const COHORT_DISCOVERY_EXPIRY_WARNING_DAYS = 166;
 const COHORT_DISCOVERY_SDE_EXPIRY_WARNING_DAYS = 1770;
 
+const STEP_STATE = {
+    COMPLETE: "complete",
+    ACTIVE: "active",
+    LOCKED: "locked",
+    PENDING: "pending",
+} as const;
+
+const COHORT_ABOUT_HREF = `/${RouteName.ACCOUNT}/${RouteName.PROFILE}/${RouteName.COHORT_DISCOVERY_ABOUT}`;
+
 export {
     statusMapping,
     NHSSDEStatusMapping,
+    COHORT_STATUS,
+    COHORT_REAPPLY_STATUSES,
+    NHS_SDE_STATUS,
+    NHS_SDE_NEGATIVE_STATUSES,
+    NHS_SDE_FINAL_STATUSES,
     COHORT_DISCOVERY_EXPIRY_WARNING_DAYS,
     COHORT_DISCOVERY_SDE_EXPIRY_WARNING_DAYS,
     NHS_SDE_FILTER,
+    STEP_STATE,
+    COHORT_ABOUT_HREF,
 };

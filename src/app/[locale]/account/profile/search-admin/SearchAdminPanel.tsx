@@ -11,6 +11,9 @@ import { AdminSearchStatusResponse } from "@/interfaces/AdminSearch";
 import FeatureFlagsTable from "./FeatureFlagsTable";
 import SearchEntitiesTab from "./SearchEntitiesTab";
 import DataCustodianNetworksTab from "./DataCustodianNetworksTab";
+import NightlyDatasetTestsTab from "./NightlyDatasetTestsTab";
+import DatasetLinkCheckResultsTab from "./DatasetLinkCheckResultsTab";
+import EmailTemplatesTab from "./EmailTemplatesTab";
 
 const TRANSLATION_PATH = "pages.account.profile.searchAdmin";
 
@@ -58,6 +61,33 @@ export default function SearchAdminPanel() {
                             content: (
                                 <Box sx={{ p: 0, pt: 2 }}>
                                     <DataCustodianNetworksTab />
+                                </Box>
+                            ),
+                        },
+                        {
+                            label: t("nightlyDatasetTestsTab"),
+                            value: "nightlyDatasetTests",
+                            content: (
+                                <Box sx={{ p: 0, pt: 2 }}>
+                                    <NightlyDatasetTestsTab />
+                                </Box>
+                            ),
+                        },
+                        {
+                            label: t("datasetLinkCheckResultsTab"),
+                            value: "datasetLinkCheckResults",
+                            content: (
+                                <Box sx={{ p: 0, pt: 2 }}>
+                                    <DatasetLinkCheckResultsTab />
+                                </Box>
+                            ),
+                        },
+                        {
+                            label: t("emailTemplatesTab"),
+                            value: "emailTemplates",
+                            content: (
+                                <Box sx={{ p: 0, pt: 2 }}>
+                                    <EmailTemplatesTab />
                                 </Box>
                             ),
                         },

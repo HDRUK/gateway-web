@@ -67,7 +67,7 @@ const PublicationCard = ({ publication, actions }: PublicationCardProps) => {
                 </Box>
 
                 <Box sx={{ p: 0, borderLeft: `solid 1px ${colors.grey600}` }}>
-                    <CardActions actions={actions} id={publication.id} status />
+                    <CardActions actions={actions} id={publication.id} />
                 </Box>
             </Box>
         </Paper>

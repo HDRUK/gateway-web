@@ -18,12 +18,14 @@ const RequestNhseSdeAccessButton = ({
     label,
     action,
     refetchCohort,
+    variant,
 }: {
     sx?: SxProps;
     color?: string;
     label?: string;
     action?: () => void;
     refetchCohort?: () => void;
+    variant?: "text" | "outlined" | "contained";
 }) => {
     const t = useTranslations("components.RequestNhseSdeAccessButton");
 
@@ -47,8 +49,10 @@ const RequestNhseSdeAccessButton = ({
 
     return (
         <Button
+            data-testid="request-nhse-sde-access-button"
             sx={{ ...sx }}
             color={color}
+            variant={variant}
             onClick={() => {
                 if (user?.id) {
                     onClick();
@@ -56,7 +60,7 @@ const RequestNhseSdeAccessButton = ({
             }}
             href={
                 isNhsSdeApplicationsEnabled
-                    ? "https://sdevalidation.necsu.nhs.uk/form/user/"
+                    ? "https://sderegistration.necsu.nhs.uk/form/user/"
                     : "https://digital.nhs.uk/data-and-information/research-powered-by-data/sde-network"
             }
             target="_blank"

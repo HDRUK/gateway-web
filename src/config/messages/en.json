@@ -339,11 +339,54 @@
                     "accessTitle": "Cohort Data Access",
                     "daysRemaining": "days remaining in current access period",
                     "accessText1": "Cohort Discovery allows researchers to explore and identify patient cohorts across multiple, federated health data sources without accessing identifiable patient-level data. It streamlines study feasibility assessments by providing rapid, aggregated cohort counts and characteristics across diverse datasets. To request access or log in, please click the 'Access Cohort Discovery' button.",
+                    "stepper": {
+                        "moreInfo": "More information about this service can be found <link>here</link>",
+                        "accessButton": "Access Cohort Discovery tool",
+                        "applyStepTitle": "Apply for Cohort Discovery Access",
+                        "applyStepDescription": "Start application, read terms and conditions and submit application.",
+                        "applyButton": "Apply for Cohort Discovery",
+                        "reapplyButton": "Re-apply for access",
+                        "reviewProfileTitle": "Review Your Profile",
+                        "reviewProfileIntro": "Your Cohort Discovery Access Request will be assessed based on your Gateway registered user profile. Please ensure this is complete and up to date before you submit this request and includes:",
+                        "checklistEmail": "Institutional email address <warn>(if this is not what appears in your SSO email field, please log out and log in using your institutional email address)</warn>",
+                        "checklistOrcid": "ORCID iD",
+                        "checklistSector": "Sector <note>(if you belong to multiple sectors, select the one that matches your intended use of Cohort Discovery. Access and data use permissions are based on sector, see <terms>Terms and Security</terms>)</note>",
+                        "checklistRole": "Role description",
+                        "profileContinueButton": "Save & continue",
+                        "termsStepTitle": "Terms and Conditions",
+                        "reviewStepTitle": "Application Review",
+                        "reviewStepDescription": "This step generally takes 5-7 days. Your application will be reviewed based on your Gateway profile and submitted information. If anything is unclear, we will contact you for further information.",
+                        "decisionStepTitle": "Access Decision",
+                        "decisionStepDescription": "In some cases, access may not be granted if eligibility criteria are not met and we reserve the right not to provide access if your Safe People or Safe Project status is indeterminate"
+                    },
                     "nhseSdeTitle": "NHS Research SDE Network Datasets",
                     "nhseSdeText1": "This service gives approved researchers, access to the additional NHS Research SDE Network datasets and subsequently those with approved projects secure access to NHS data. You must also have approved access to Cohort Discovery service to access the NHS Research SDE Network datasets.",
-                    "nhseSdeText2": "By selecting ‘Confirm approval by the NHS Research SDE’, you are confirming that you have been approved by the NHS Research SDE validation service and you are consenting to HDR UK sharing your email address with the NHS Research SDE team solely for the purpose of verifying your approval status.  \nPlease note: this step involves manual validation by NHS Research SDE validation team and may take up to 10 working days. You will receive an email notification once your access to the additional datasets in cohort discovery has been granted.",
-                    "nhseSdeTemporaryText": "To access SDE Network data, users must first be validated by the SDE Network. This validation process is currently in its pilot phase, with the full service expected to be operational by October 2025. In the meantime, if you would like to be added to the list for validation once the service goes live, please email <mailto>england.data.healthresearch@nhs.net</mailto>",
-                    "nhsExpiry": "SDE access is limited by access to Gateway Cohort Discovery"
+                    "nhseSdeText2": "By selecting ‘Confirm approval by the NHS Research SDE’, you are confirming that you have been approved by the NHS Research SDE registration service and you are consenting to HDR UK sharing your email address with the NHS Research SDE team solely for the purpose of verifying your approval status.  \nPlease note: this step involves manual registration by NHS Research SDE registration team and may take up to 10 working days. You will receive an email notification once your access to the additional datasets in cohort discovery has been granted.",
+                    "nhseSdeTemporaryText": "To access SDE Network data, users must first be registered by the SDE Network. This registration process is currently in its pilot phase, with the full service expected to be operational by October 2025. In the meantime, if you would like to be added to the list for registration once the service goes live, please email <mailto>england.data.healthresearch@nhs.net</mailto>",
+                    "nhsExpiry": "SDE access is limited by access to Gateway Cohort Discovery",
+                    "nhsStepper": {
+                        "title": "Optional NHS Research SDE Cohort Data Access",
+                        "moreInfo": "More information about this service can be found <link>here</link>",
+                        "badgeAwaitingAction": "Awaiting Action",
+                        "badgePending": "Pending",
+                        "step1Title": "Existing Cohort Discovery Access",
+                        "step1Text": "All users must first request access to the Cohort Discovery tool via the HDR UK Gateway. Once approved you may request additional access to view NHS SDE Network datasets.\nIf you are unsure what this means, please first follow steps on the <link>How to request access</link> page.",
+                        "applyButton": "Apply for NHS Research SDE Cohort Data Access",
+                        "step2Title": "Complete NHS SDE Registration Form",
+                        "openFormButton": "Open NHS SDE Registration Form",
+                        "confirmFormButton": "I confirm I have completed the NHS Registration Form",
+                        "step2Text": "From 1st April 2026, all organisations and individuals interested in applying to access health data through the SDE Network must complete the registration process. More information about the registration process can be found here, please follow this link (<link>NHS Research SDE Network Registration Service - NHS England Digital</link>).",
+                        "step2Warning": "Please note this is not the final step in gaining access.",
+                        "step3Title": "Submit NHS SDE Registration Status to HDRUK",
+                        "step3Text": "By selecting ‘I have been approved by the NHS Research SDE’, you confirm your approval status and consent to HDR UK sharing your email address with the NHS Research SDE team for verification.",
+                        "indicateButton": "I confirm I have been approved by the NHS Research SDE",
+                        "modalTitle": "Confirm Registration Receipt from NHS SDE",
+                        "modalBody": "By selecting ‘I have been approved by the NHS Research SDE’, you confirm your approval status and consent to HDR UK sharing your email address with the NHS Research SDE team for verification.",
+                        "modalCancel": "Cancel",
+                        "modalConfirm": "Yes, I confirm this is correct",
+                        "step4Title": "Application Review",
+                        "step5Title": "Access Decision"
+                    }
                 },
                 "dataAccessRequests": {
                     "applications": {
@@ -539,10 +582,24 @@
                 },
                 "searchAdmin": {
                     "title": "Admin Panel",
-                    "text": "Monitor and manage the Typesense search indexes and application feature flags.",
+                    "text": "Administration of Gateway configuration and tools.",
                     "featureFlagsTab": "Feature flags",
                     "searchEntitiesTab": "Search entities",
                     "dataCustodianNetworksTab": "Data Custodian Networks",
+                    "nightlyDatasetTestsTab": "Nightly Dataset Tests",
+                    "nightlyTestsTotalChecked": "Total checked",
+                    "nightlyTestsTotalSuccessful": "Total successful",
+                    "nightlyTestsTotalFailed": "Total failed",
+                    "nightlyTestsPercentageFailed": "Percentage failed",
+                    "nightlyTestsDisclaimer": "These results reflect a single point-in-time check from the last nightly run. A 500 error is often transient (a slow dependency, a momentary outage) and may no longer apply — revisit the dataset before assuming it's still broken. A 404 is more likely to indicate a genuinely missing or misconfigured page and is worth investigating directly.",
+                    "nightlyTestsFailedTitle": "Failed datasets",
+                    "nightlyTestsNoFailures": "No failed datasets in the last nightly check.",
+                    "datasetLinkCheckResultsTab": "Dataset Link Check",
+                    "datasetLinkCheckDisclaimer": "These are links found in active dataset metadata that returned a 404 Not Found, confirmed across multiple independent checks from the last nightly run.",
+                    "datasetLinkCheckSearchPlaceholder": "Search by team name",
+                    "datasetLinkCheckExportButton": "Export to CSV",
+                    "datasetLinkCheckNoFailures": "No broken links found in the last nightly check.",
+                    "datasetLinkCheckNoSearchResults": "No results match that team name.",
                     "enableEditing": "Enable editing",
                     "noFeatureFlags": "No feature flags found.",
                     "reindexInfo": "Reindexing drops and recreates a collection from scratch. Small entities finish in seconds, but larger ones (datasets, data use register, publications) can take a minute or two to fully re-import — this page won't update automatically, so use Refresh status to check progress.",
@@ -570,7 +627,17 @@
                     "editNetworkTitle": "Edit Data Custodian Network",
                     "createNetworkTitle": "Create Data Custodian Network",
                     "cancel": "Cancel",
-                    "saveChanges": "Save changes"
+                    "saveChanges": "Save changes",
+                    "emailTemplatesTab": "Email Templates",
+                    "emailTemplatesTitle": "Email Templates",
+                    "createEmailTemplate": "Create template",
+                    "noEmailTemplatesFound": "No email templates found.",
+                    "toggleEmailTemplateEnabled": "Toggle {IDENTIFIER} enabled",
+                    "editEmailTemplateTitle": "Edit Email Template",
+                    "createEmailTemplateTitle": "Create Email Template",
+                    "emailPreviewTitle": "Preview",
+                    "emailPreviewRendering": "Rendering...",
+                    "emailPreviewError": "Couldn't render a preview. Check the MJML in the body field for errors."
                 }
             },
             "team": {
@@ -696,6 +763,7 @@
                                 "completionGuidance5": "Type of data contained in the column.",
                                 "completionGuidance6": "Please indicate (using True / False) whether the information must be treated as sensitive and may need additional constraints / removal / anonymisation / masking through the data access request process. <bold>Definition:</bold> An ODRL conformant policy expressing the rights associated with the resource.",
                                 "downloadTemplate": "Download data dictionary template",
+                                "existingFile": "Uploaded structural metadata",
                                 "uploadSuccess": "Warning! Uploaded files are automatically saved to the dataset metadata. Uploading a new file will delete the previously uploaded structural metadata.",
                                 "uploadMessage": "Please wait while we scan and process your file. When processing has finished, your data will display below and you will be able to submit the Metadata to the Gateway. Scanning and processing typically takes 30-45 seconds, please do not leave this page"
                             },
@@ -1970,12 +2038,8 @@
         },
         "CohortDiscoveryInfo": {
             "title": "Cohort Discovery",
-            "step1": "Firstly, request access through the NHS website",
-            "step2": "Once approved, select this button",
-            "learnAbout": "Learn about Cohort Discovery and gain access to the service",
-            "accessButton": "Access Cohort Discovery",
-            "nhsNetwork": "NHS Research SDE Network",
-            "nhsNetworkInfo": "The following additional NHS Research SDE datasets are available in Cohort Discovery, but require you go to through a separate approval process by the NHS Research SDE Network."
+            "whatCanIDo": "What can I do in Cohort Discovery?",
+            "learnAbout": "Learn about Cohort Discovery and gain access to the service"
         }
     },
     "modules": {
@@ -2063,6 +2127,12 @@
             "DeleteDataCustodianNetworkDialog": {
                 "title": "Delete network",
                 "message": "Are you sure you want to delete \"{NETWORK_NAME}\"? This cannot be undone.",
+                "confirmButton": "Delete",
+                "cancelButton": "Cancel"
+            },
+            "DeleteEmailTemplateDialog": {
+                "title": "Delete email template",
+                "message": "Are you sure you want to delete \"{IDENTIFIER}\"? Any part of the application that still sends this email will silently stop sending it. This cannot be undone.",
                 "confirmButton": "Delete",
                 "cancelButton": "Cancel"
             },
@@ -2194,7 +2264,7 @@
             "reviewTime": "Your cohort access request has been submitted and will be reviewed within 5–7 working days.",
             "nhsTitle": "Want access to additional NHS Research SDE datasets?",
             "nhsInfo1": "Access to the NHS Research SDE Network datasets requires additional approval by the NHS Research SDE Network and is dependent on Cohort Discovery Data Access approval submitted above.",
-            "nhsInfo2": "To request this access, you will need to complete the external NHS Research SDE Network validation process and then return here to confirm that you have been approved.",
+            "nhsInfo2": "To request this access, you will need to complete the external NHS Research SDE Network registration process and then return here to confirm that you have been approved.",
             "maybeLater": "Maybe later",
             "nhsButtonLabel": "Yes, take me to NHS site"
         }

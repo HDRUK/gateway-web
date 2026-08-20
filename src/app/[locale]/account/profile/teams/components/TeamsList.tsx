@@ -1,15 +1,22 @@
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
+import { useForm } from "react-hook-form";
 import { useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
 import { PaginationType } from "@/interfaces/Pagination";
 import { Team } from "@/interfaces/Team";
 import Box from "@/components/Box";
+import InputWrapper from "@/components/InputWrapper";
 import Pagination from "@/components/Pagination";
 import Table from "@/components/Table";
 import DeleteTeamDialog from "@/modules/DeleteTeamDialog";
+import useDebounce from "@/hooks/useDebounce";
 import useDialog from "@/hooks/useDialog";
 import useGet from "@/hooks/useGet";
 import apis from "@/config/apis";
+import {
+    teamSearchDefaultValues,
+    teamSearchFilter,
+} from "@/config/forms/teamSearch";
 import { getColumns } from "@/config/tables/teamManagement";
 import { Routes } from "@/consts/routes";
 
@@ -33,6 +40,17 @@ const TeamsList = ({
     const [sort, setSort] = useState({ key: "created_at", direction: "desc" });
     const [currentPage, setCurrentPage] = useState(1);
 
+    const { control, watch, setValue } = useForm({
+        defaultValues: teamSearchDefaultValues,
+    });
+
+    const watchAll = watch();
+    const searchDebounced = useDebounce(watchAll.search, 500);
+
+    useEffect(() => {
+        setCurrentPage(1);
+    }, [searchDebounced]);
+
     const queryParams = new URLSearchParams();
 
     queryParams.append("sort", `${sort.key}:${sort.direction}`);
@@ -40,6 +58,10 @@ const TeamsList = ({
 
     if (questionBankStatus) {
         queryParams.append("is_question_bank", questionBankStatus);
+    }
+
+    if (searchDebounced) {
+        queryParams.append("name", searchDebounced);
     }
 
     queryParams.sort();
@@ -87,6 +109,13 @@ const TeamsList = ({
 
     return (
         <>
+            <Box sx={{ p: 0, mb: 2, maxWidth: 400 }}>
+                <InputWrapper
+                    setValue={setValue}
+                    control={control}
+                    {...teamSearchFilter}
+                />
+            </Box>
             <Box sx={{ p: 0, mb: 2 }}>
                 <Table<Team>
                     columns={columns}

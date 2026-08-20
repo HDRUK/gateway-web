@@ -39,6 +39,15 @@ interface CtaLink {
     title: string;
 }
 
+type CmsStepMarker = "number" | "email";
+
+interface CmsStep {
+    stepTitle: string;
+    stepText: string;
+    marker?: CmsStepMarker | CmsStepMarker[];
+    buttonKey?: string | string[];
+}
+
 interface PageTemplatePromo {
     id: string;
     title: string;
@@ -63,13 +72,16 @@ interface CohortDiscoveryTemplate {
             ctaLink?: CtaLink;
             firstPageText: string;
             firstPageMedia: string;
+            firstPageSteps?: CmsStep[];
             secondPageText: string;
             secondPageMedia: string;
+            secondPageSteps?: CmsStep[];
             thirdPageText: string;
             thirdPageMedia: string;
             thirdPageTextPartTwo: string;
             fourthPageText: string;
             fourthPageMedia: string;
+            fourthPageSteps?: CmsStep[];
         };
     };
 }
@@ -173,6 +185,8 @@ export type {
     PageTemplateHome,
     PageTemplatePromo,
     CohortDiscoveryTemplate,
+    CmsStep,
+    CmsStepMarker,
     templateRepeatFields,
     CMSPostResponse,
     CMSPageResponse,

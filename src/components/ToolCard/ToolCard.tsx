@@ -72,11 +72,7 @@ const ToolCard = ({ tool, actions }: ToolCardProps) => {
                     </Box>
                 </Box>
                 <Box sx={{ p: 0, borderLeft: `solid 1px ${colors.grey600}` }}>
-                    <CardActions
-                        actions={actions}
-                        id={tool.id}
-                        status={tool.status}
-                    />
+                    <CardActions actions={actions} id={tool.id} />
                 </Box>
             </Box>
         </Paper>

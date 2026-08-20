@@ -120,7 +120,7 @@ const PopulationFilter = ({
                 </Typography>
             </Box>
             <CheckboxControlled
-                formControlSx={{ pl: 1, pr: 1 }}
+                formControlSx={{ pl: 1, pr: 1, textWrap: "wrap" }}
                 label={t(INCLUDE_UNREPORTED, { unreportedCount })}
                 checked={
                     !!selectedFilters?.populationSize?.includes(
