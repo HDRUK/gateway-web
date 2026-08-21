@@ -24,7 +24,7 @@ export const SearchForm = styled(Form)(({ theme }) => ({
     marginTop: 8,
     marginBottom: 18,
 
-    [theme.breakpoints.up("tablet")]: {
+    [theme.breakpoints.up("sm")]: {
         gap: theme.spacing(6),
     },
 }));

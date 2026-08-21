@@ -16,7 +16,7 @@ export const FooterContainer = styled(Container)(({ theme }) => ({
     padding: "50px 20px",
     display: "flex",
     gap: "200px",
-    [theme.breakpoints.down("tablet")]: {
+    [theme.breakpoints.down("sm")]: {
         flexDirection: "column",
         gap: "16px",
     },
@@ -27,7 +27,7 @@ export const FooterSocialLinks = styled("ul")(({ theme }) => ({
     gap: "20px",
     paddingLeft: 0,
     display: "flex",
-    [theme.breakpoints.down("tablet")]: {
+    [theme.breakpoints.down("sm")]: {
         flexDirection: "column",
         gap: "16px",
     },
@@ -42,7 +42,7 @@ export const FooterLinks = styled("ul")({
 export const FooterLinksContainer = styled("ul")(({ theme }) => ({
     display: "flex",
     gap: "40px",
-    [theme.breakpoints.down("tablet")]: {
+    [theme.breakpoints.down("sm")]: {
         flexDirection: "column",
         gap: "16px",
     },

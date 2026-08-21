@@ -34,8 +34,8 @@ const IntroContent = () => {
             sx={{
                 bgcolor: "transparent",
                 padding: {
-                    mobile: `${theme.spacing(3)} ${theme.spacing(2)}`,
-                    [theme.breakpoints.up("mobile")]: `${theme.spacing(
+                    xs: `${theme.spacing(3)} ${theme.spacing(2)}`,
+                    [theme.breakpoints.up("xs")]: `${theme.spacing(
                         5
                     )} ${theme.spacing(2)} ${theme.spacing(3)}`,
                 },

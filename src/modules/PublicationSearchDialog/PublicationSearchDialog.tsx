@@ -152,7 +152,7 @@ const PublicationSearchDialog = ({
     }, [datasetData]);
 
     return (
-        <Dialog maxWidth="tablet" title="">
+        <Dialog maxWidth="sm" title="">
             <MuiDialogContent sx={{ p: 10 }}>
                 <Typography sx={{ mb: 4 }}>{t("intro")}</Typography>
 

@@ -86,7 +86,7 @@ const CMSPromoTemplate = ({
                         pb: 8,
                         px: 6,
                     }}>
-                    <Box sx={{ display: { laptop: "flex" } }}>
+                    <Box sx={{ display: { md: "flex" } }}>
                         <Box sx={{ flex: 1 }}>
                             <HTMLContent content={promofields.bottomPanel} />
                         </Box>

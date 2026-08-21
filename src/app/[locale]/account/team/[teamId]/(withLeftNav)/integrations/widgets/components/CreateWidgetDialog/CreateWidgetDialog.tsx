@@ -101,7 +101,7 @@ const CreateWidgetDialog = () => {
     const [templateType, setTemplateType] = useState<TemplateValue>("blank");
 
     return (
-        <Dialog title={t("title")} maxWidth="desktop">
+        <Dialog title={t("title")} maxWidth="lg">
             <Stack sx={{ p: 3 }}>
                 <MuiDialogContent>
                     <FormControl component="fieldset" fullWidth>
@@ -116,9 +116,9 @@ const CreateWidgetDialog = () => {
                                     return (
                                         <Grid
                                             size={{
-                                                mobile: 6,
-                                                laptop: 3,
-                                                desktop: 3,
+                                                xs: 6,
+                                                md: 3,
+                                                lg: 3,
                                             }}
                                             key={opt.value}>
                                             <Card

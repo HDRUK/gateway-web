@@ -116,8 +116,8 @@ const Dashboard = ({ teamId, initialCounts }: DashboardProps) => {
                 sx={{
                     display: "grid",
                     gridTemplateColumns: {
-                        mobile: "1fr",
-                        laptop: "repeat(3, 1fr)",
+                        xs: "1fr",
+                        md: "repeat(3, 1fr)",
                     },
                     gap: 2,
                     p: 0,

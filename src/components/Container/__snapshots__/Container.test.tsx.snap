@@ -3,7 +3,7 @@
 exports[`Container should render component 1`] = `
 <div>
   <div
-    class="MuiContainer-root MuiContainer-maxWidthDesktop mui-style-7xszmd-MuiContainer-root"
+    class="MuiContainer-root MuiContainer-maxWidthLg mui-style-1b3jh9s-MuiContainer-root"
   >
     Container content
   </div>

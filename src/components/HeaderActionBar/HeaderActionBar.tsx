@@ -35,7 +35,7 @@ const HeaderActionBar = ({
                 flexDirection: "column",
                 gap: 2,
 
-                [theme.breakpoints.up("desktop")]: {
+                [theme.breakpoints.up("lg")]: {
                     flexDirection: "row",
                 },
 

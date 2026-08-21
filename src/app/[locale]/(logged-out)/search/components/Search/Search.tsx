@@ -184,10 +184,10 @@ const Search = ({ filters, schema }: SearchProps) => {
     const { isLoggedIn, user } = useAuth();
     const { showSidebar } = useSidebar();
     const theme = useTheme();
-    const isMobile = useMediaQuery(theme.breakpoints.only("mobile"));
+    const isMobile = useMediaQuery(theme.breakpoints.only("xs"));
 
     const isTabletOrLaptop = useMediaQuery(
-        theme.breakpoints.between("tablet", "desktop")
+        theme.breakpoints.between("sm", "lg")
     );
     // This is a bit hacky because this is the exact width of the tabs with content,
     // so it's susceptible to changes in font size or content.

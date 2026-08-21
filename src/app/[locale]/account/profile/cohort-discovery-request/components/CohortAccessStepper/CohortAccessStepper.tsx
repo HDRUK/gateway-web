@@ -154,7 +154,7 @@ const CohortAccessStepper = ({
     const loading = userLoading || statusLoading || !hasFetched;
 
     return (
-        <Paper sx={{ bgcolor: "white", p: { mobile: 3, laptop: 4 } }}>
+        <Paper sx={{ bgcolor: "white", p: { xs: 3, md: 4 } }}>
             <Box
                 sx={{
                     display: "flex",

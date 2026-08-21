@@ -262,9 +262,9 @@ const ResultCard = ({
                         <ResultTitle
                             sx={{
                                 flexDirection: {
-                                    mobile: "column",
-                                    tablet: "column",
-                                    laptop: "row",
+                                    xs: "column",
+                                    sm: "column",
+                                    md: "row",
                                 },
                                 mb: 1.5,
                             }}>
@@ -281,8 +281,8 @@ const ResultCard = ({
                                         fontWeight={600}
                                         marginBottom={0.5}
                                         marginRight={{
-                                            tablet: 0,
-                                            laptop: 1,
+                                            sm: 0,
+                                            md: 1,
                                         }}>
                                         {metadata.summary.shortTitle}
                                     </Link>
@@ -300,8 +300,8 @@ const ResultCard = ({
                                                 color: "secondary",
                                                 mb: 1.5,
                                                 mr: {
-                                                    tablet: 0,
-                                                    laptop: 1,
+                                                    sm: 0,
+                                                    md: 1,
                                                 },
                                             }}>
                                             {metadata.summary.publisher.name !==
@@ -324,8 +324,8 @@ const ResultCard = ({
                                             color: "secondary",
                                             mb: 1.5,
                                             mr: {
-                                                tablet: 0,
-                                                laptop: 1,
+                                                sm: 0,
+                                                md: 1,
                                             },
                                         }}>
                                         {metadata.summary.publisher.name !==
@@ -433,8 +433,8 @@ const ResultCard = ({
                                     p: 0,
                                     display: "flex",
                                     flexDirection: {
-                                        mobile: "column",
-                                        tablet: "row",
+                                        xs: "column",
+                                        sm: "row",
                                     },
                                     justifyContent: "space-between",
                                 }}>
@@ -452,8 +452,8 @@ const ResultCard = ({
                                     sx={{
                                         fontSize: 16,
                                         mb: {
-                                            mobile: 1,
-                                            tablet: 0,
+                                            xs: 1,
+                                            sm: 0,
                                         },
                                     }}>
                                     {t("dateLabel")}: {getDateRange(metadata)}
