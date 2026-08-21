@@ -60,7 +60,7 @@ const Modal = () => {
     };
 
     const props: DialogProps = {
-        maxWidth: "tablet",
+        maxWidth: "sm",
         fullWidth: true,
         open: true,
         ...styleProps,

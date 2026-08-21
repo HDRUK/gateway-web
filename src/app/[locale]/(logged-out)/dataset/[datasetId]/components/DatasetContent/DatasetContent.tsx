@@ -267,7 +267,7 @@ const DatasetContent = ({
                                                 showConfirm: false,
                                                 showCancel: false,
                                                 styleProps: {
-                                                    maxWidth: "laptop",
+                                                    maxWidth: "md",
                                                 },
                                             })
                                         }>
@@ -325,7 +325,7 @@ const DatasetContent = ({
                                         <BoxContainer
                                             sx={{
                                                 gridTemplateColumns: {
-                                                    desktop: "repeat(3, 1fr)",
+                                                    lg: "repeat(3, 1fr)",
                                                 },
                                                 gap: 1,
                                                 "&:not(:last-of-type)": {
@@ -336,7 +336,7 @@ const DatasetContent = ({
                                             <Box
                                                 sx={{
                                                     gridColumn: {
-                                                        desktop: "span 1",
+                                                        lg: "span 1",
                                                     },
                                                     p: 0,
                                                 }}>
@@ -352,7 +352,7 @@ const DatasetContent = ({
                                             <Box
                                                 sx={{
                                                     gridColumn: {
-                                                        desktop: "span 2",
+                                                        lg: "span 2",
                                                     },
                                                     p: 0,
                                                     wordWrap: "break-word",

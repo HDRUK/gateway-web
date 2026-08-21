@@ -71,16 +71,16 @@ const WidgetPreview = ({ teamId, widgetId }: WidgetPreviewProps) => {
                 alignItems="stretch">
                 <Grid
                     size={{
-                        mobile: 12,
-                        laptop: 9,
+                        xs: 12,
+                        md: 9,
                     }}
                     sx={{ overflow: "hidden" }}>
                     {data ? <WidgetDisplay data={data} /> : <Loading />}
                 </Grid>
                 <Grid
                     size={{
-                        mobile: 12,
-                        laptop: 3,
+                        xs: 12,
+                        md: 3,
                     }}>
                     <Typography sx={{ fontWeight: 600, mb: 1 }} fontSize={16}>
                         {t("codeTitle")}

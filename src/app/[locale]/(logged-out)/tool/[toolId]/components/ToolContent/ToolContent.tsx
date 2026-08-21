@@ -52,17 +52,17 @@ const ToolContent = ({
         <BoxContainer
             sx={{
                 gridTemplateColumns: {
-                    tablet: "repeat(5, 1fr)",
+                    sm: "repeat(5, 1fr)",
                 },
                 gap: {
-                    mobile: 1,
-                    tablet: 2,
+                    xs: 1,
+                    sm: 2,
                 },
                 p: 0,
             }}>
             <Box
                 sx={{
-                    gridColumn: { tablet: "span 5", laptop: "span 5" },
+                    gridColumn: { sm: "span 5", md: "span 5" },
                     p: 0,
                 }}>
                 <Paper sx={{ borderRadius: 2, p: 2 }}>
@@ -108,7 +108,7 @@ const ToolContent = ({
                                     <BoxContainer
                                         sx={{
                                             gridTemplateColumns: {
-                                                desktop: "repeat(4, 1fr)",
+                                                lg: "repeat(4, 1fr)",
                                             },
                                             gap: 1,
                                             "&:not(:last-of-type)": {
@@ -119,7 +119,7 @@ const ToolContent = ({
                                         <Box
                                             sx={{
                                                 gridColumn: {
-                                                    desktop: "span 1",
+                                                    lg: "span 1",
                                                 },
                                                 p: 0,
                                             }}>
@@ -137,7 +137,7 @@ const ToolContent = ({
                                         <Box
                                             sx={{
                                                 gridColumn: {
-                                                    desktop: "span 2",
+                                                    lg: "span 2",
                                                 },
                                                 p: 0,
                                                 display: "flex",

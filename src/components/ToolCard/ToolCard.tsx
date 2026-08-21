@@ -33,8 +33,8 @@ const ToolCard = ({ tool, actions }: ToolCardProps) => {
                     sx={{
                         display: "grid",
                         gridTemplateColumns: {
-                            mobile: "repeat(1, 1fr)",
-                            tablet: "repeat(1, 2fr 1fr)",
+                            xs: "repeat(1, 1fr)",
+                            sm: "repeat(1, 2fr 1fr)",
                         },
                         gap: 2,
                         pb: 1,

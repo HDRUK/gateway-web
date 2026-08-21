@@ -62,8 +62,8 @@ const FeaturedMetric = ({ selectedButton }: FeatureMetricProps) => {
                             p: 0,
                             fontWeight: 400,
                             display: {
-                                mobile: "none",
-                                laptop: "inline",
+                                xs: "none",
+                                md: "inline",
                             },
                         }}>
                         {chunks}
@@ -146,7 +146,7 @@ const FeaturedMetric = ({ selectedButton }: FeatureMetricProps) => {
                         fontSize: "1.5rem",
                         fontWeight: 600,
                         lineHeight: 1.2,
-                        [theme.breakpoints.down("tablet")]: {
+                        [theme.breakpoints.down("sm")]: {
                             fontSize: "1.25rem",
                         },
                     }}>

@@ -91,7 +91,7 @@ const CohortRequestTermsDialog = () => {
     }, []);
 
     return (
-        <Dialog title="" maxWidth="laptop">
+        <Dialog title="" maxWidth="md">
             <Form
                 sx={{ p: 0 }}
                 component="form"

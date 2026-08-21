@@ -25,7 +25,7 @@ export default function ResultsList({
     children,
 }: ResultsListProps) {
     const theme = useTheme();
-    const isDesktop = useMediaQuery(theme.breakpoints.up("desktop"));
+    const isDesktop = useMediaQuery(theme.breakpoints.up("lg"));
     const containerRef = useRef<HTMLDivElement>(null);
     const [containerWidth, setContainerWidth] = useState(0);
     const tiledChildren = useMemo(() => Children.toArray(children), [children]);
@@ -91,10 +91,10 @@ export default function ResultsList({
             ref={containerRef}
             sx={{
                 gridTemplateColumns: {
-                    mobile: "repeat(1, minmax(0, 1fr))",
-                    tablet: `repeat(auto-fit, minmax(${minTileWidth}px, 1fr))`,
+                    xs: "repeat(1, minmax(0, 1fr))",
+                    sm: `repeat(auto-fit, minmax(${minTileWidth}px, 1fr))`,
                     ...(maxDesktopColumns && {
-                        desktop: `repeat(${maxDesktopColumns}, minmax(0, 1fr))`,
+                        lg: `repeat(${maxDesktopColumns}, minmax(0, 1fr))`,
                     }),
                 },
                 gap: 2,

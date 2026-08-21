@@ -16,10 +16,10 @@ const KeyValueList = ({ rows }: KeyValueListProps) => {
                     sx={{
                         display: "grid",
                         gridTemplateColumns: {
-                            desktop: "130px 1fr",
-                            laptop: "130px 1fr",
-                            tablet: "100px 1fr",
-                            mobile: "130px 1fr",
+                            lg: "130px 1fr",
+                            md: "130px 1fr",
+                            sm: "100px 1fr",
+                            xs: "130px 1fr",
                         },
                         p: 0,
                     }}>

@@ -51,17 +51,17 @@ const PublicationContent = ({
         <BoxContainer
             sx={{
                 gridTemplateColumns: {
-                    tablet: "repeat(5, 1fr)",
+                    sm: "repeat(5, 1fr)",
                 },
                 gap: {
-                    mobile: 1,
-                    tablet: 2,
+                    xs: 1,
+                    sm: 2,
                 },
                 p: 0,
             }}>
             <Box
                 sx={{
-                    gridColumn: { tablet: "span 5", laptop: "span 5" },
+                    gridColumn: { sm: "span 5", md: "span 5" },
                     p: 0,
                 }}>
                 <Paper sx={{ p: 2 }}>
@@ -98,7 +98,7 @@ const PublicationContent = ({
                                         <BoxContainer
                                             sx={{
                                                 gridTemplateColumns: {
-                                                    tablet: !field.hideLabel
+                                                    sm: !field.hideLabel
                                                         ? "repeat(4, 1fr)"
                                                         : "inherit",
                                                 },
@@ -112,7 +112,7 @@ const PublicationContent = ({
                                                 <Box
                                                     sx={{
                                                         gridColumn: {
-                                                            tablet: "span 1",
+                                                            sm: "span 1",
                                                         },
                                                         p: 0,
                                                     }}>
@@ -131,7 +131,7 @@ const PublicationContent = ({
                                             <Box
                                                 sx={{
                                                     gridColumn: {
-                                                        tablet: "span 2",
+                                                        sm: "span 2",
                                                     },
                                                     p: 0,
                                                     display: "flex",

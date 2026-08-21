@@ -31,8 +31,8 @@ const PartnerResourcesBanner = ({
         <Paper
             sx={{
                 display: "flex",
-                flexDirection: { mobile: "column", laptop: "row" },
-                alignItems: { mobile: "flex-start", laptop: "center" },
+                flexDirection: { xs: "column", md: "row" },
+                alignItems: { xs: "flex-start", md: "center" },
                 justifyContent: "space-between",
                 gap: 6,
                 p: 3,
@@ -69,7 +69,7 @@ const PartnerResourcesBanner = ({
                     window.scrollTo({ top: 0, behavior: "smooth" });
                 }}
                 sx={{
-                    alignSelf: { mobile: "stretch", laptop: "center" },
+                    alignSelf: { xs: "stretch", md: "center" },
                 }}>
                 {t("viewPartnerResources")}
             </Button>

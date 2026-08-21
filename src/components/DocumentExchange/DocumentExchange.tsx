@@ -165,10 +165,10 @@ const DocumentExchange = ({
                     <Grid
                         sx={{ p: 0 }}
                         size={{
-                            mobile: 12,
-                            tablet: 12,
-                            laptop: 3,
-                            desktop: 3,
+                            xs: 12,
+                            sm: 12,
+                            md: 3,
+                            lg: 3,
                         }}>
                         <Typography fontWeight={600}>
                             {t("download")}
@@ -189,10 +189,10 @@ const DocumentExchange = ({
                 <Grid
                     sx={{ p: 0 }}
                     size={{
-                        mobile: 4,
-                        tablet: 6,
-                        laptop: 3,
-                        desktop: 3,
+                        xs: 4,
+                        sm: 6,
+                        md: 3,
+                        lg: 3,
                     }}>
                     <Typography fontWeight={600}>
                         {!existingUploadedFile ? t("upload") : t("reUpload")}
@@ -221,10 +221,10 @@ const DocumentExchange = ({
                     <Grid
                         sx={{ pb: 2 }}
                         size={{
-                            mobile: 8,
-                            tablet: 6,
-                            laptop: 3,
-                            desktop: 3,
+                            xs: 8,
+                            sm: 6,
+                            md: 3,
+                            lg: 3,
                         }}>
                         <Box
                             sx={{

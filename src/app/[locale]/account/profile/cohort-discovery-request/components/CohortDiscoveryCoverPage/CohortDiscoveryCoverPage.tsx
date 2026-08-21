@@ -51,7 +51,7 @@ export default function CohortDiscoveryCoverPage({
                 direction="row"
                 alignItems="stretch">
                 <Grid
-                    size={bothApproved ? { mobile: 12, laptop: 8 } : 12}
+                    size={bothApproved ? { xs: 12, md: 8 } : 12}
                     sx={{ display: "flex", flexDirection: "column", gap: 2 }}>
                     <CohortAccessStepper
                         cmsContent={cmsContent}
@@ -61,7 +61,7 @@ export default function CohortDiscoveryCoverPage({
                     <NhsSdeAccessStepper />
                 </Grid>
                 {bothApproved && (
-                    <Grid size={{ mobile: 12, laptop: 4 }}>
+                    <Grid size={{ xs: 12, md: 4 }}>
                         <CohortAccessPanel autoTriggerAccess={pendingCdsOpen} />
                     </Grid>
                 )}
