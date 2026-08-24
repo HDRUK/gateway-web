@@ -18,13 +18,18 @@ jest.mock("notistack", () => ({
     __esModule: true,
 }));
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 jest.mock("@/hooks/useTestFederation", () => ({
     __esModule: true,
-    default: jest.fn(() => ({
+    default: jest.fn((props: { setValue: (name: string, value: unknown) => void }) => ({
         testStatus: FederationTestStatus.TESTED_IS_TRUE,
         testResponse: undefined,
         setTestedConfig: jest.fn(),
-        handleTest: jest.fn(),
+        // Mirrors what the real hook does on a successful test: flip the
+        // form's local `tested` value to true, without touching the backend.
+        handleTest: jest.fn(async () => {
+            props.setValue("tested", true);
+        }),
     })),
     watchFederationKeys: [
         "auth_type",
@@ -184,6 +189,69 @@ describe("EditIntegrationForm", () => {
             expect(
                 screen.queryByText("Connection timed out")
             ).not.toBeInTheDocument();
+        });
+    });
+
+    it("should keep the enabled toggle usable after a successful test, even though the test endpoint doesn't persist 'tested'", async () => {
+        const baseIntegration = {
+            ...integrationV1,
+            id: 2,
+            federation_type: "DATASETS" as const,
+            endpoint_baseurl: "https://example.com",
+            endpoint_datasets: "/datasets",
+            endpoint_dataset: "/datasets/{id}",
+            tested: false,
+            enabled: false,
+            notifications: [
+                {
+                    id: 1,
+                    opt_in: 0,
+                    message: "",
+                    email: "",
+                    enabled: true,
+                    notification_type: "federation",
+                    user_id: 1,
+                },
+            ],
+        };
+        // Starts with a stale prior-failure error, like the real record
+        // would have before the user re-runs the test.
+        const untestedIntegration = {
+            ...baseIntegration,
+            error: true,
+            error_text: "Connection timed out",
+        };
+        server.use(getIntegrationV1({ data: untestedIntegration }));
+
+        const { container } = await act(() => render(<EditIntegrationForm />));
+
+        const getToggle = () =>
+            container.querySelector<HTMLInputElement>('input[name="enabled"]');
+
+        await waitFor(() => expect(getToggle()).not.toBeNull());
+        expect(getToggle()).toBeDisabled();
+
+        const testButton = await waitFor(() => {
+            const button = screen.getByRole("button", { name: "Run test" });
+            expect(button).not.toBeDisabled();
+            return button;
+        });
+
+        // The backend clears error/error_text on a successful test, but -
+        // crucially - never persists `tested`, so the refetch triggered by
+        // the test still comes back with `tested: false`.
+        server.use(
+            getIntegrationV1({
+                data: { ...baseIntegration, error: false, error_text: null },
+            })
+        );
+
+        await act(async () => {
+            fireEvent.click(testButton);
+        });
+
+        await waitFor(() => {
+            expect(getToggle()).not.toBeDisabled();
         });
     });
 
