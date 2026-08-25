@@ -20,7 +20,7 @@ const ApiManagement = () => {
     return (
         <Box
             sx={{
-                gridColumn: { tablet: "span 3", laptop: "span 4" },
+                gridColumn: { sm: "span 3", md: "span 4" },
                 display: "flex",
                 flexDirection: "column",
                 alignItems: "center",

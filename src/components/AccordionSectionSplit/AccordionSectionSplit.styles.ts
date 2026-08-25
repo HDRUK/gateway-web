@@ -12,7 +12,7 @@ export const SplitWrapper = styled("div")<{ columnCount: number }>(
         gap: theme.spacing(GAP),
         alignItems: "stretch",
         ...(columnCount > 1 && {
-            [theme.breakpoints.up("tablet")]: {
+            [theme.breakpoints.up("sm")]: {
                 gridTemplateColumns: "1fr 1fr",
             },
         }),
@@ -72,12 +72,12 @@ export const ScrollArea = styled("div", {
         maxHeight: `calc(${cardHeight * MOBILE_VISIBLE_ROWS}px + ${theme.spacing(
             GAP * (MOBILE_VISIBLE_ROWS - 1)
         )})`,
-        [theme.breakpoints.up("tablet")]: {
+        [theme.breakpoints.up("sm")]: {
             maxHeight: `calc(${cardHeight * visibleRows}px + ${theme.spacing(
                 GAP * (visibleRows - 1)
             )})`,
         },
-        [theme.breakpoints.up("desktop")]: {
+        [theme.breakpoints.up("lg")]: {
             gridTemplateColumns: "repeat(2, 1fr)",
         },
     })

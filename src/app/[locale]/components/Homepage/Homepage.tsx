@@ -173,8 +173,8 @@ const HomePage = ({ cmsContent: { page, posts } }: HomePageProps) => {
             <Box
                 sx={{
                     background: {
-                        tablet: `linear-gradient(170deg, transparent 60%, ${colors.darkGreen50} calc(60% + 1px))`,
-                        desktop: `linear-gradient(170deg, transparent 72%, ${colors.darkGreen50} calc(72% + 1px))`,
+                        sm: `linear-gradient(170deg, transparent 60%, ${colors.darkGreen50} calc(60% + 1px))`,
+                        lg: `linear-gradient(170deg, transparent 72%, ${colors.darkGreen50} calc(72% + 1px))`,
                     },
                 }}>
                 <Container>
@@ -245,7 +245,7 @@ const HomePage = ({ cmsContent: { page, posts } }: HomePageProps) => {
                                 right: 0,
                                 top: "50%",
                                 transform: "translateY(-50%)",
-                                [theme.breakpoints.down("tablet")]: {
+                                [theme.breakpoints.down("sm")]: {
                                     position: "static",
                                     transform: "none",
                                 },
@@ -288,7 +288,7 @@ const HomePage = ({ cmsContent: { page, posts } }: HomePageProps) => {
                         <TeamContent>
                             <Typography
                                 sx={{
-                                    fontSize: { mobile: 20, desktop: 28 },
+                                    fontSize: { xs: 20, lg: 28 },
                                 }}>
                                 {meetTheTeam.title}
                             </Typography>
@@ -327,7 +327,7 @@ const HomePage = ({ cmsContent: { page, posts } }: HomePageProps) => {
                 }}>
                 <Container
                     sx={{
-                        display: { tablet: "flex" },
+                        display: { sm: "flex" },
                         gap: 2,
                         alignItems: "center",
                     }}>
@@ -340,8 +340,8 @@ const HomePage = ({ cmsContent: { page, posts } }: HomePageProps) => {
                                 minWidth: 200,
                                 width: "100%",
                                 whiteSpace: {
-                                    mobile: "unset",
-                                    desktop: "nowrap",
+                                    xs: "unset",
+                                    lg: "nowrap",
                                 },
                             }}
                             color="secondary"

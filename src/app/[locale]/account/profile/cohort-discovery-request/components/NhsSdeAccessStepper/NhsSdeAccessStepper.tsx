@@ -243,7 +243,7 @@ const NhsSdeAccessStepper = () => {
     ];
 
     return (
-        <Paper sx={{ bgcolor: "white", p: { mobile: 3, laptop: 4 } }}>
+        <Paper sx={{ bgcolor: "white", p: { xs: 3, md: 4 } }}>
             <Typography variant="h2">{t("title")}</Typography>
             <Typography sx={{ mb: 2 }} color={colors.grey700}>
                 {t.rich("moreInfo", {

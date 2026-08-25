@@ -17,8 +17,8 @@ export default function CollectionsGrid({ items }: CollectionsGridProps) {
                 display: "grid",
                 gap: 2,
                 gridTemplateColumns: {
-                    mobile: "1fr",
-                    tablet: "repeat(2, 1fr)",
+                    xs: "1fr",
+                    sm: "repeat(2, 1fr)",
                 },
                 p: 1,
             }}>

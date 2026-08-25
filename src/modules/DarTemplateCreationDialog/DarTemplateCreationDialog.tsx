@@ -75,8 +75,8 @@ const DarTemplateCreationDialog = ({
                     columnSpacing={4}>
                     <Grid
                         size={{
-                            mobile: 12,
-                            desktop: 6,
+                            xs: 12,
+                            lg: 6,
                         }}>
                         <Button
                             onClick={() => {
@@ -103,8 +103,8 @@ const DarTemplateCreationDialog = ({
                     </Grid>
                     <Grid
                         size={{
-                            mobile: 12,
-                            desktop: 6,
+                            xs: 12,
+                            lg: 6,
                         }}>
                         <Button
                             onClick={() => {

@@ -107,7 +107,7 @@ const DatasetRelationshipDialog = ({
                 `${linkageDetails[0]?.linkage_type}${TOOLTIP_SUFFIX}`
             )}
             titleSx={{ display: "flex", justifyContent: "flex-start" }}
-            maxWidth="laptop">
+            maxWidth="md">
             <MuiDialogContent>
                 <BoxContainer
                     sx={{

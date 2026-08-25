@@ -25,7 +25,7 @@ const ResultCardPublication = ({ result }: ResultCardPublicationProps) => {
     const t = useTranslations(TRANSLATION_PATH);
 
     const theme = useTheme();
-    const isMobileOrTablet = useMediaQuery(theme.breakpoints.down("laptop"));
+    const isMobileOrTablet = useMediaQuery(theme.breakpoints.down("md"));
 
     const {
         abstract,
@@ -50,9 +50,9 @@ const ResultCardPublication = ({ result }: ResultCardPublicationProps) => {
                             sx={{
                                 display: "flex",
                                 flexDirection: {
-                                    laptop: "row",
-                                    tablet: "column",
-                                    mobile: "column",
+                                    md: "row",
+                                    sm: "column",
+                                    xs: "column",
                                 },
                                 justifyContent: "space-between",
                                 alignItems: "flex-end",

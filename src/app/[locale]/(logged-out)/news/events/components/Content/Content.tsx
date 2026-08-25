@@ -61,9 +61,9 @@ const Content = ({ data }: ContentProps) => {
                                             <Grid
                                                 key={index}
                                                 size={{
-                                                    mobile: 12,
-                                                    tablet: 4,
-                                                    desktop: 3,
+                                                    xs: 12,
+                                                    sm: 4,
+                                                    lg: 3,
                                                 }}>
                                                 <NewsSummaryCard
                                                     summary={

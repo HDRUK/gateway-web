@@ -340,7 +340,7 @@ export default function DarApplicationCard({
                     <BoxContainer
                         sx={{
                             gridTemplateColumns: {
-                                laptop: "repeat(4, 1fr)",
+                                md: "repeat(4, 1fr)",
                             },
                             gap: 1,
                             "&:not(:last-of-type)": {
@@ -358,7 +358,7 @@ export default function DarApplicationCard({
                                     <Box
                                         sx={{
                                             gridColumn: {
-                                                laptop: "span 1",
+                                                md: "span 1",
                                             },
                                             p: 0,
                                         }}>
@@ -369,7 +369,7 @@ export default function DarApplicationCard({
                                     <Box
                                         sx={{
                                             gridColumn: {
-                                                laptop: "span 3",
+                                                md: "span 3",
                                             },
                                             p: 0,
                                             wordWrap: "break-word",

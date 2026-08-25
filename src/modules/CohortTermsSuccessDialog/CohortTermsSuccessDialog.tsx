@@ -37,7 +37,7 @@ const CohortTermsSuccessDialog = ({ onClose }: { onClose: () => void }) => {
         <Dialog
             onClose={() => handleCloseDialog()}
             title=""
-            maxWidth={"tablet"}
+            maxWidth={"sm"}
             fullWidth={false}
             showCloseButton>
             <MuiDialogContent

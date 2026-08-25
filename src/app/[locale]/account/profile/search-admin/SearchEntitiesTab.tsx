@@ -78,9 +78,9 @@ export default function SearchEntitiesTab({
                     p: 0,
                     display: "grid",
                     gridTemplateColumns: {
-                        mobile: "1fr",
-                        tablet: "repeat(2, 1fr)",
-                        desktop: "repeat(3, 1fr)",
+                        xs: "1fr",
+                        sm: "repeat(2, 1fr)",
+                        lg: "repeat(3, 1fr)",
                     },
                     gap: 2,
                 }}>

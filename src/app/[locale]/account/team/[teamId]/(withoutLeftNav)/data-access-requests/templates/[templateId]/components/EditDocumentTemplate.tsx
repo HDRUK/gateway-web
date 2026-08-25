@@ -324,7 +324,7 @@ const EditDocumentTemplate = ({
                     maxWidth={false}
                     sx={{
                         display: "grid",
-                        gridTemplateColumns: { tablet: "1fr 4fr" },
+                        gridTemplateColumns: { sm: "1fr 4fr" },
                         gap: 2,
                         pt: 2,
                     }}>

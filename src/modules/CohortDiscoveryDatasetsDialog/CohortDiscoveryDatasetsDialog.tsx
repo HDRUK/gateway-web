@@ -109,7 +109,7 @@ const CohortDiscoveryDatasetsDialog = ({
     };
 
     return (
-        <Dialog title={t("title")} maxWidth="laptop">
+        <Dialog title={t("title")} maxWidth="md">
             <MuiDialogContent
                 sx={{
                     display: "flex",

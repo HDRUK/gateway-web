@@ -188,7 +188,7 @@ const DataUseCreate = ({ teamId }: DataUseCreateProps) => {
                                                 key={field.name}
                                                 sx={{
                                                     gridTemplateColumns: {
-                                                        desktop:
+                                                        lg:
                                                             "repeat(2, 1fr)",
                                                     },
                                                     gap: 1,
@@ -197,7 +197,7 @@ const DataUseCreate = ({ teamId }: DataUseCreateProps) => {
                                                 <Box
                                                     sx={{
                                                         gridColumn: {
-                                                            desktop: "span 1",
+                                                            lg: "span 1",
                                                         },
                                                         p: 0,
                                                     }}>
@@ -208,7 +208,7 @@ const DataUseCreate = ({ teamId }: DataUseCreateProps) => {
                                                 <Box
                                                     sx={{
                                                         gridColumn: {
-                                                            desktop: "span 1",
+                                                            lg: "span 1",
                                                         },
                                                         p: 0,
                                                     }}>

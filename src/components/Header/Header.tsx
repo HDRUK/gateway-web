@@ -64,20 +64,20 @@ function Header() {
 
     return (
         <AppBar position="static" color={isHome ? "transparent" : "primary"}>
-            <Container maxWidth="desktop">
+            <Container maxWidth="lg">
                 <Toolbar
                     disableGutters
                     sx={{
                         pt: 1,
                         pb: 1,
                         justifyContent: {
-                            tablet: "initial",
+                            sm: "initial",
                         },
                     }}>
                     <Link
                         href="/"
                         sx={{
-                            display: { mobile: "none", desktop: "flex" },
+                            display: { xs: "none", lg: "flex" },
                             mr: 1,
                             "&:focus&.Mui-focusVisible": {
                                 borderRadius: 0,
@@ -95,7 +95,7 @@ function Header() {
                     </Link>
                     <Box
                         sx={{
-                            display: { mobile: "flex", desktop: "none" },
+                            display: { xs: "flex", lg: "none" },
                         }}>
                         <IconButton
                             size="large"
@@ -123,13 +123,13 @@ function Header() {
                     <Link
                         href="/"
                         sx={{
-                            margin: { mobile: "auto" },
-                            ml: { tablet: 2 },
-                            flex: { tablet: 1 },
-                            mr: { tablet: 1 },
-                            position: { mobile: "relative" },
-                            left: { mobile: "-24px", tablet: 0 },
-                            display: { tablet: "flex", desktop: "none" },
+                            margin: { xs: "auto" },
+                            ml: { sm: 2 },
+                            flex: { sm: 1 },
+                            mr: { sm: 1 },
+                            position: { xs: "relative" },
+                            left: { xs: "-24px", sm: 0 },
+                            display: { sm: "flex", lg: "none" },
                             "&:focus&.Mui-focusVisible": {
                                 borderRadius: 0,
                                 outline: `2px solid ${colors.white}`,
@@ -147,7 +147,7 @@ function Header() {
                     <Box
                         sx={{
                             flexGrow: 1,
-                            display: { mobile: "none", desktop: "flex" },
+                            display: { xs: "none", lg: "flex" },
                         }}>
                         <DesktopNav />
                     </Box>
@@ -156,7 +156,7 @@ function Header() {
                         sx={{
                             justifySelf: "end",
                             flexGrow: 0,
-                            display: { mobile: "none", tablet: "flex" },
+                            display: { xs: "none", sm: "flex" },
                         }}>
                         <AccountNav />
                     </Box>

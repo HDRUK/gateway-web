@@ -120,19 +120,19 @@ const GeneralEnquirySidebar = ({
         <BoxContainer
             sx={{
                 gridTemplateColumns: {
-                    tablet: "repeat(4, 1fr)",
+                    sm: "repeat(4, 1fr)",
                 },
                 gap: {
-                    mobile: 1,
-                    tablet: 2,
+                    xs: 1,
+                    sm: 2,
                 },
                 p: 0,
             }}>
             <Box
                 sx={{
                     gridColumn: {
-                        tablet: "span 4",
-                        laptop: "span 4",
+                        sm: "span 4",
+                        md: "span 4",
                     },
                 }}>
                 {datasets.map(item => (

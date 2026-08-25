@@ -62,7 +62,7 @@ const LeftNav = ({
     initialLeftNavOpen,
     roles
 }: LeftNavProps) => {
-    const isMobile = useMediaQuery(theme.breakpoints.only("mobile"));
+    const isMobile = useMediaQuery(theme.breakpoints.only("xs"));
     const features = useFeatures();
 
     const navItems = teamId
@@ -389,8 +389,8 @@ const LeftNav = ({
                 sx={{
                     p: 0,
                     width: {
-                        mobile: "100%",
-                        tablet: navOpen ? WIDTH_NAV_EXPANDED : WIDTH_NAV,
+                        xs: "100%",
+                        sm: navOpen ? WIDTH_NAV_EXPANDED : WIDTH_NAV,
                     },
                     flexShrink: 0,
                     whiteSpace: "nowrap",
@@ -400,7 +400,7 @@ const LeftNav = ({
                         duration: duration,
                     }),
                     "& .MuiDrawer-paper": {
-                        width: { mobile: "100%", tablet: WIDTH_NAV_EXPANDED },
+                        width: { xs: "100%", sm: WIDTH_NAV_EXPANDED },
                         position: "relative",
                         transform: "none !important",
                         visibility: "visible !important",

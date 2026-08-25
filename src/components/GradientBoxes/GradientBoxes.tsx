@@ -19,7 +19,7 @@ const GradientBoxes = ({ items, maxWidth }: GradientBoxesProps) => {
     return (
         <Box
             sx={{
-                display: { tablet: "flex" },
+                display: { sm: "flex" },
                 justifyContent: "center",
                 p: 0,
             }}
@@ -28,9 +28,9 @@ const GradientBoxes = ({ items, maxWidth }: GradientBoxesProps) => {
                 <Box
                     key={item.title}
                     sx={{
-                        maxWidth: { tablet: maxWidth },
+                        maxWidth: { sm: maxWidth },
                         flex: 1,
-                        mb: { mobile: 2, tablet: 0 },
+                        mb: { xs: 2, sm: 0 },
                         p: 3,
                         background: `linear-gradient(97.46deg, ${theme.palette.secondary.main}, ${theme.palette.primary.main})`,
                     }}>
@@ -44,7 +44,7 @@ const GradientBoxes = ({ items, maxWidth }: GradientBoxesProps) => {
                         }}
                         target={item.externalUrl ? "_blank" : "_self"}>
                         <Typography
-                            fontSize={{ mobile: 20, desktop: 28 }}
+                            fontSize={{ xs: 20, lg: 28 }}
                             m={0}
                             mr={1}
                             variant="h2"

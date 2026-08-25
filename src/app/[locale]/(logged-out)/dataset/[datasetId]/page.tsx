@@ -156,11 +156,11 @@ export default async function DatasetItemPage({
                         <BoxContainer
                             sx={{
                                 gridTemplateColumns: {
-                                    tablet: "2fr 1fr",
+                                    sm: "2fr 1fr",
                                 },
                                 gap: {
-                                    mobile: 1,
-                                    tablet: 2,
+                                    xs: 1,
+                                    sm: 2,
                                 },
                                 p: 0,
                             }}>

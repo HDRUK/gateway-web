@@ -98,6 +98,13 @@ const EditIntegrationForm = () => {
         /* Populate form with saved integration */
         const formData: IntegrationForm = {
             ...integration,
+            // The test endpoint validates connectivity and clears any stale
+            // error, but deliberately doesn't persist `tested` until the user
+            // saves - only "Save configuration" does that. Refetching after a
+            // successful test (to pick up the cleared error) would otherwise
+            // stomp the just-set local `tested: true` with the still-stale
+            // DB value, greying the enabled/disabled toggle back out.
+            tested: integration.tested || getValues("tested"),
             run_time_hour: integration.run_time_hour
                 .toString()
                 .padStart(2, "0"),

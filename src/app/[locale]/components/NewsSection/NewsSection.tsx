@@ -16,12 +16,12 @@ const NewsSection = ({ posts }: CMSPostsResponse<NewsNode | EventNode>) => {
             sx={{
                 display: "grid",
                 gridTemplateColumns: {
-                    mobile: "repeat(1, 1fr)",
-                    tablet: "repeat(2, 1fr)",
-                    desktop: "repeat(4, 1fr)",
+                    xs: "repeat(1, 1fr)",
+                    sm: "repeat(2, 1fr)",
+                    lg: "repeat(4, 1fr)",
                 },
                 gap: {
-                    mobile: 4,
+                    xs: 4,
                 },
                 justifyItems: "center",
             }}>

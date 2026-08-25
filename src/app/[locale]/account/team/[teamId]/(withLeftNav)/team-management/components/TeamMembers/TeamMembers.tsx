@@ -40,7 +40,7 @@ const TeamMembers = ({
 }: TeamMembersProps) => {
     const theme = useTheme();
 
-    const isMobileOrTablet = useMediaQuery(theme.breakpoints.down("laptop"));
+    const isMobileOrTablet = useMediaQuery(theme.breakpoints.down("md"));
 
     const t = useTranslations(
         "pages.account.team.teamManagement.components.TeamMembers"

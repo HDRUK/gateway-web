@@ -94,8 +94,8 @@ export default function DatasetsList({ items, branding }: DatasetsListProps) {
                                         p: 0,
                                         display: "flex",
                                         flexDirection: {
-                                            mobile: "column",
-                                            tablet: "row",
+                                            xs: "column",
+                                            sm: "row",
                                         },
                                         justifyContent: "space-between",
                                     }}>

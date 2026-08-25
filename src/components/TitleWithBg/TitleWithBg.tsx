@@ -19,8 +19,8 @@ const TitleWithBg = ({
     ...rest
 }: TitleWithBgProps) => {
     const fontSizes = {
-        md: { mobile: 20, tablet: 20, desktop: 28 },
-        lg: { mobile: 24, tablet: 28, desktop: 40 },
+        md: { xs: 20, sm: 20, lg: 28 },
+        lg: { xs: 24, sm: 28, lg: 40 },
     };
 
     return (

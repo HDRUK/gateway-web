@@ -66,9 +66,9 @@ const FeasibilityEnquiryDialog = ({
                     alignItems="center">
                     <Grid
                         size={{
-                            mobile: 5,
-                            tablet: 5,
-                            desktop: 5,
+                            xs: 5,
+                            sm: 5,
+                            lg: 5,
                         }}
                         sx={{ p: 0 }}>
                         <Box
@@ -91,9 +91,9 @@ const FeasibilityEnquiryDialog = ({
                     </Grid>
                     <Grid
                         size={{
-                            mobile: 6,
-                            tablet: 6,
-                            desktop: 6,
+                            xs: 6,
+                            sm: 6,
+                            lg: 6,
                         }}
                         sx={{ p: 0 }}>
                         <MarkDownSanitizedWithHtml

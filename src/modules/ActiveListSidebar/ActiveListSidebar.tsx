@@ -35,7 +35,7 @@ const ActiveListSidebar = ({
     const isDatasetPage = usePathname()?.includes("dataset");
 
     const theme = useTheme();
-    const isMobile = useMediaQuery(theme.breakpoints.only("mobile"));
+    const isMobile = useMediaQuery(theme.breakpoints.only("xs"));
 
     const [anchorEl, setAnchorEl] = useState(null);
     const handleClick = e => {
@@ -88,7 +88,7 @@ const ActiveListSidebar = ({
             {!isMobile && (
                 <Wrapper
                     disableSticky={disableSticky}
-                    sx={{ gridColumn: { tablet: "span 1", laptop: "span 1" } }}>
+                    sx={{ gridColumn: { sm: "span 1", md: "span 1" } }}>
                     <BookmarkText>{t("bookmarks")}</BookmarkText>
                     <ActiveLinkWrapper>
                         <ActiveList

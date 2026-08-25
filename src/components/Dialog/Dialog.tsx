@@ -33,7 +33,7 @@ const Dialog = ({
     titleSx,
     showCloseButton = true,
     onClose,
-    maxWidth = "tablet",
+    maxWidth = "sm",
     classes,
     keepMounted,
     open = true,
