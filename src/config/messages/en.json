@@ -2094,7 +2094,8 @@
                     "azure": "Azure",
                     "linkedIn": "LinkedIn",
                     "google": "Google",
-                    "openAthens": "your institute"
+                    "openAthens": "your institute",
+                    "registry": "Safe People Registry"
                 },
                 "intro1": "Anyone can search and view datasets, collections and other resources with or without an account. Creating an account allows you to:",
                 "bulletEnquiries": "Submit data access enquiries and applications",
