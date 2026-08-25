@@ -1,9 +1,8 @@
 "use client";
 
-import { useEffect, useMemo, useState } from "react";
-import { isMobile } from "react-device-detect";
+import { useMemo } from "react";
 import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
-import { Typography } from "@mui/material";
+import { Typography, useMediaQuery } from "@mui/material";
 import { useTranslations } from "next-intl";
 import Link from "next/link";
 import { PageTemplateHome } from "@/interfaces/Cms";
@@ -111,7 +110,7 @@ interface HomePageProps {
 
 const HomePage = ({ cmsContent: { page, posts } }: HomePageProps) => {
     const t = useTranslations("pages.home");
-    const [isTouchDevice, setIsTouchDevice] = useState<boolean>(false);
+    const isTouchDevice = useMediaQuery("(hover: none)");
 
     const {
         meetTheTeam,
@@ -135,12 +134,6 @@ const HomePage = ({ cmsContent: { page, posts } }: HomePageProps) => {
             })),
         [logos]
     );
-
-    useEffect(() => {
-        if (isMobile) {
-            setIsTouchDevice(true);
-        }
-    }, []);
 
     const responsiveServices = isTouchDevice
         ? services.map(service => ({ ...service, text: t("touchDevice") }))
