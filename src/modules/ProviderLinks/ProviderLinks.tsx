@@ -8,6 +8,7 @@ import Button from "@/components/Button";
 import apis from "@/config/apis";
 import { colors } from "@/config/theme";
 import { InstituteIcon } from "@/consts/customIcons";
+import { useFeatures } from "@/providers/FeatureProvider";
 
 interface LinkItem {
     label: string;
@@ -46,6 +47,7 @@ const ProviderLinks = ({
 }: ProviderLinksProps) => {
     const t = useTranslations("modules.dialogs.ProvidersDialog");
     const { push } = useRouter();
+    const { isSafePeopleRegistrySSOEnabled } = useFeatures();
 
     let effectiveRedirectPath = "";
 
@@ -68,6 +70,15 @@ const ProviderLinks = ({
                     href: `${apis.authAzureV1Url}${effectiveRedirectPath}`,
                     image: "microsoft-logo.png",
                 },
+                ...(isSafePeopleRegistrySSOEnabled
+                    ? [
+                          {
+                              label: t("socialProviders.registry"),
+                              href: `${apis.authRegistryV1Url}${effectiveRedirectPath}`,
+                              image: "safepeopleregistry-logo.svg",
+                          },
+                      ]
+                    : []),
             ],
         },
         {
