@@ -2,12 +2,13 @@
 
 import { useState } from "react";
 import { useTranslations } from "next-intl";
+import Link from "next/link";
 import { useSearchParams } from "next/navigation";
 import { PaginationType } from "@/interfaces/Pagination";
 import { QuestionBankQuestion } from "@/interfaces/QuestionBankQuestion";
 import Box from "@/components/Box";
 import BoxContainer from "@/components/BoxContainer";
-import Button from "@/components/Button";
+import { Button } from "@hdruk/ui";
 import Loading from "@/components/Loading";
 import Pagination from "@/components/Pagination";
 import Paper from "@/components/Paper";
@@ -148,6 +149,7 @@ const QuestionBankList = () => {
                         <Typography variant="h2">{t("title")}</Typography>
                         <Typography>{t("text")}</Typography>
                         <Button
+                            component={Link}
                             href={`/${RouteName.ACCOUNT}/${RouteName.PROFILE}/${RouteName.DAR_ADMIN}/${RouteName.QUESTION_BANK_ADMIN}/${RouteName.CREATE}`}>
                             {t("create.label")}
                         </Button>

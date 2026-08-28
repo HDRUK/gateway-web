@@ -7,7 +7,7 @@ import { notFound, useParams, useRouter } from "next/navigation";
 import { DarTeamApplication } from "@/interfaces/DataAccessRequestApplication";
 import Box from "@/components/Box";
 import BoxContainer from "@/components/BoxContainer";
-import Button from "@/components/Button";
+import { Button } from "@hdruk/ui";
 import Dialog from "@/components/Dialog";
 import Form from "@/components/Form";
 import InputWrapper from "@/components/InputWrapper";

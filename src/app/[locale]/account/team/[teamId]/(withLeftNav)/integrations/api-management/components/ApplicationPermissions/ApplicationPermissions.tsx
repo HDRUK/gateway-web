@@ -10,7 +10,7 @@ import { useSWRConfig } from "swr";
 import { Application, ApplicationForm } from "@/interfaces/Application";
 import { Permission } from "@/interfaces/Permission";
 import Box from "@/components/Box";
-import Button from "@/components/Button";
+import { Button } from "@hdruk/ui";
 import Form from "@/components/Form";
 import FormError from "@/components/FormError";
 import Paper from "@/components/Paper";
@@ -304,7 +304,7 @@ const ApplicationPermissions = ({
                         <Link
                             href={`/${RouteName.ACCOUNT}/${RouteName.TEAM}/${params?.teamId}/${RouteName.INTEGRATIONS}/${RouteName.API_MANAGEMENT}/${RouteName.CREATE}/${params?.apiId}`}
                             passHref>
-                            <Button color="secondary" variant="outlined">
+                            <Button purpose="secondary">
                                 Back
                             </Button>
                         </Link>

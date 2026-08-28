@@ -8,7 +8,7 @@ import { useParams, useRouter } from "next/navigation";
 import { DataAccessRequestApplication } from "@/interfaces/DataAccessRequestApplication";
 import Box from "@/components/Box";
 import BoxContainer from "@/components/BoxContainer";
-import Button from "@/components/Button";
+import { Button } from "@hdruk/ui";
 import CardActions from "@/components/CardActions";
 import Chip from "@/components/Chip";
 import DarStatusTracker from "@/components/DarStatusTracker";

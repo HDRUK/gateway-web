@@ -3,7 +3,7 @@
 import { Typography } from "@mui/material";
 import { useTranslations } from "next-intl";
 import { colors } from "@/config/theme";
-import Button from "../Button";
+import { Button } from "@hdruk/ui";
 import DownloadExternalFile from "../DownloadExternalFile";
 import { Column, DetailBanner, Justify, Wrapper } from "./FormBanner.styles";
 

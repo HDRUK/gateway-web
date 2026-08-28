@@ -17,7 +17,7 @@ import { FileUpload } from "@/interfaces/FileUpload";
 import Accordion from "@/components/Accordion";
 import Box from "@/components/Box";
 import BoxContainer from "@/components/BoxContainer";
-import Button from "@/components/Button";
+import { Button } from "@hdruk/ui";
 import DownloadFile from "@/components/DownloadFile";
 import Paper from "@/components/Paper";
 import Typography from "@/components/Typography";

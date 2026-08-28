@@ -2,7 +2,7 @@ import { ListItem, ListItemText } from "@mui/material";
 import { useTranslations } from "next-intl";
 import { SearchResultTool } from "@/interfaces/Search";
 import Box from "@/components/Box";
-import Button from "@/components/Button";
+import { Button } from "@hdruk/ui";
 import EllipsisLineLimit from "@/components/EllipsisLineLimit";
 import Link from "@/components/Link";
 import { MarkDownSanitizedWithHtml } from "@/components/MarkDownSanitizedWithHTML";
@@ -62,8 +62,7 @@ const ResultCardTool = ({ result }: ResultCardToolProps) => {
                             <Button
                                 onClick={handleShowAll}
                                 size="small"
-                                variant="outlined"
-                                color="secondary"
+                                purpose="secondary"
                                 sx={{
                                     flexShrink: 0,
                                     alignItems: "flex-start",

@@ -4,7 +4,7 @@ import Input, { InputProps } from "@mui/material/Input";
 import { visuallyHidden } from "@mui/utils";
 import theme from "@/config/theme";
 import { UploadFileIcon } from "@/consts/icons";
-import Button from "../Button";
+import { Button } from "@hdruk/ui";
 
 export interface UploadProps extends InputProps {
     label: string;
@@ -80,12 +80,11 @@ const Upload = (props: UploadProps) => {
                         alignItems="center">
                         <Button
                             color="secondary"
-                            variant="contained"
                             sx={{
                                 pointerEvents: "none",
                                 backgroundColor: theme.palette.grey[200],
                             }}
-                            startIcon={<UploadFileIcon color="primary" />}
+                            startIcon={<UploadFileIcon />}
                             tabIndex={-1}>
                             {label}
                         </Button>

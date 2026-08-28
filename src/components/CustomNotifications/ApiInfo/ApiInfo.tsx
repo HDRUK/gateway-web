@@ -2,7 +2,7 @@ import React, { ReactNode, useCallback } from "react";
 import { CardActions, CardContent, CardHeader } from "@mui/material";
 import Card from "@mui/material/Card";
 import { SnackbarContent, CustomContentProps, closeSnackbar } from "notistack";
-import Button from "@/components/Button";
+import { Button } from "@hdruk/ui";
 
 interface ApiInfoProps extends CustomContentProps {
     id: string;

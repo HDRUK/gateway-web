@@ -1,6 +1,6 @@
 import { SvgIconComponent } from "@mui/icons-material";
 import { Typography } from "@mui/material";
-import Button from "@/components/Button";
+import { Button } from "@hdruk/ui";
 import { colourType } from "@/config/theme";
 import { CircleIcon } from "@/consts/icons";
 

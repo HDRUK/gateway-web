@@ -9,7 +9,7 @@ import Link from "next/link";
 import { PageTemplateHome } from "@/interfaces/Cms";
 import { SearchCategory } from "@/interfaces/Search";
 import Box from "@/components/Box";
-import Button from "@/components/Button";
+import { Button } from "@hdruk/ui";
 import Container from "@/components/Container";
 import GradientBoxes from "@/components/GradientBoxes";
 import LogoSlider from "@/components/LogoSlider";
@@ -254,7 +254,7 @@ const HomePage = ({ cmsContent: { page, posts } }: HomePageProps) => {
                                 variant="text"
                                 component={Link}
                                 endIcon={
-                                    <ArrowForwardIosIcon color="primary" />
+                                    <ArrowForwardIosIcon />
                                 }
                                 href={RouteName.NEWS_EVENTS}>
                                 {t("newsEvents.seeAllLink")}
@@ -304,7 +304,7 @@ const HomePage = ({ cmsContent: { page, posts } }: HomePageProps) => {
                                 passHref>
                                 <Button
                                     variant="text"
-                                    endIcon={<ArrowForward color="primary" />}>
+                                    endIcon={<ArrowForward />}>
                                     {t("meetTheTeam")}
                                 </Button>
                             </Link>
@@ -344,8 +344,7 @@ const HomePage = ({ cmsContent: { page, posts } }: HomePageProps) => {
                                     lg: "nowrap",
                                 },
                             }}
-                            color="secondary"
-                            variant="outlined">
+                            purpose="secondary">
                             {affiliateLink.title}
                         </Button>
                     </a>

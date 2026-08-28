@@ -4,9 +4,10 @@ import { useCallback } from "react";
 import { FormProvider, UseFormReturn, useWatch } from "react-hook-form";
 import { Typography } from "@mui/material";
 import { useTranslations } from "next-intl";
+import Link from "next/link";
 import { Unit, Widget } from "@/interfaces/Widget";
 import Box from "@/components/Box";
-import Button from "@/components/Button";
+import { Button } from "@hdruk/ui";
 import Form from "@/components/Form";
 import FormError from "@/components/FormError";
 import InputWrapper from "@/components/InputWrapper";
@@ -427,9 +428,9 @@ const WidgetConfigForm = ({
                         }}>
                         <Button type="submit">{t("save")}</Button>
                         <Button
+                            component={Link}
                             type="button"
-                            variant="outlined"
-                            color="secondary"
+                            purpose="secondary"
                             href={`/en/account/team/${teamId}/integrations/widgets`}>
                             {t("cancel")}
                         </Button>

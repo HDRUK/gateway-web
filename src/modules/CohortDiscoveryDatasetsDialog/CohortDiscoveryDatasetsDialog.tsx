@@ -7,7 +7,7 @@ import { createColumnHelper } from "@tanstack/react-table";
 import { get } from "lodash";
 import { useTranslations } from "next-intl";
 import { SearchCategory, SearchResultDataset } from "@/interfaces/Search";
-import Button from "@/components/Button";
+import { Button } from "@hdruk/ui";
 import Dialog from "@/components/Dialog";
 import EllipsisLineLimit from "@/components/EllipsisLineLimit";
 import Link from "@/components/Link";
@@ -137,14 +137,15 @@ const CohortDiscoveryDatasetsDialog = ({
                 sx={{ p: 3, pt: 1, justifyContent: "flex-start" }}>
                 <Button onClick={() => hideDialog()}>{t("closeButton")}</Button>
                 <Button
+                    component="a"
                     href={
                         nhsSdeOnly
                             ? `${CURRENT_DOMAIN}/${RouteName.SEARCH}?type=${SearchCategory.DATASETS}&isCohortDiscovery=isCohortDiscovery&dataProviderColl=${NHS_SDE_FILTER}`
                             : `${CURRENT_DOMAIN}/${RouteName.SEARCH}?type=${SearchCategory.DATASETS}&isCohortDiscovery=isCohortDiscovery`
                     }
-                    variant="outlined"
-                    color="secondary"
+                    purpose="secondary"
                     target="_blank"
+                    rel="noopener noreferrer"
                     endIcon={<OpenInNewIcon />}>
                     {t("viewMoreButton")}
                 </Button>

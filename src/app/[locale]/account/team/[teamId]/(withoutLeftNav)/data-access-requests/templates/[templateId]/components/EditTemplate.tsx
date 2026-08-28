@@ -12,7 +12,7 @@ import {
 import { QuestionBankQuestion } from "@/interfaces/QuestionBankQuestion";
 import { QuestionBankSection } from "@/interfaces/QuestionBankSection";
 import { TaskItem } from "@/interfaces/TaskBoard";
-import Button from "@/components/Button";
+import { Button } from "@hdruk/ui";
 import Container from "@/components/Container";
 import Loading from "@/components/Loading";
 import Paper from "@/components/Paper";
@@ -355,8 +355,7 @@ const EditTemplate = ({
                     <Box sx={{ display: "flex", gap: 2 }}>
                         <Button
                             onClick={() => handleSaveChanges(false)}
-                            color="secondary"
-                            variant="outlined">
+                            purpose="secondary">
                             {t("saveDraft")}
                         </Button>
                         <Button onClick={() => handleSaveChanges(true)}>

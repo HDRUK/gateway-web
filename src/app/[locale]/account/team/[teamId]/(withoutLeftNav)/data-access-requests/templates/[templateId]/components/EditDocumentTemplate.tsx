@@ -13,7 +13,7 @@ import {
     QuestionBankQuestionForm,
 } from "@/interfaces/QuestionBankQuestion";
 import Box from "@/components/Box";
-import Button from "@/components/Button";
+import { Button } from "@hdruk/ui";
 import Container from "@/components/Container";
 import Form from "@/components/Form";
 import InputWrapper from "@/components/InputWrapper";
@@ -306,8 +306,7 @@ const EditDocumentTemplate = ({
                                 onClick={handleSubmit(data =>
                                     handleSaveChanges(data, false)
                                 )}
-                                color="secondary"
-                                variant="outlined">
+                                purpose="secondary">
                                 {t("saveDraft")}
                             </Button>
                             <Button

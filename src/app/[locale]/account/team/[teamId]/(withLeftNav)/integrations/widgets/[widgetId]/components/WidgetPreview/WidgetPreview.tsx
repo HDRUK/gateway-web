@@ -3,10 +3,11 @@
 import { useMemo } from "react";
 import { Grid, TextareaAutosize, Typography } from "@mui/material";
 import { useTranslations } from "next-intl";
+import Link from "next/link";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { WidgetEntityData } from "@/interfaces/Widget";
 import Box from "@/components/Box";
-import Button from "@/components/Button";
+import { Button } from "@hdruk/ui";
 import Loading from "@/components/Loading";
 import Paper from "@/components/Paper";
 import useGet from "@/hooks/useGet";
@@ -129,11 +130,11 @@ const WidgetPreview = ({ teamId, widgetId }: WidgetPreviewProps) => {
             <Box sx={{ mt: 4, p: 0, gap: 2, display: "flex" }}>
                 <Button
                     onClick={() => changeTab(TabValues.CONFIGURATION)}
-                    variant="outlined"
-                    color="secondary">
+                    purpose="secondary">
                     {t("back")}
                 </Button>
                 <Button
+                    component={Link}
                     color="inherit"
                     href={`/${RouteName.ACCOUNT}/${RouteName.TEAM}/${teamId}/${RouteName.INTEGRATIONS}/${RouteName.WIDGETS}`}>
                     {t("viewAll")}

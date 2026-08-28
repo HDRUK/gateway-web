@@ -15,7 +15,7 @@ import { Dataset } from "@/interfaces/Dataset";
 import { Publication } from "@/interfaces/Publication";
 import { Tool } from "@/interfaces/Tool";
 import Box from "@/components/Box";
-import Button from "@/components/Button";
+import { Button } from "@hdruk/ui";
 import Dialog from "@/components/Dialog";
 import InputWrapper from "@/components/InputWrapper";
 import Loading from "@/components/Loading";

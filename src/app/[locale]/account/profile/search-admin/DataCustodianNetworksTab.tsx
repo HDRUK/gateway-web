@@ -6,7 +6,7 @@ import { Divider, Skeleton } from "@mui/material";
 import Box from "@/components/Box";
 import Paper from "@/components/Paper";
 import Typography from "@/components/Typography";
-import Button from "@/components/Button";
+import { Button } from "@hdruk/ui";
 import Chip from "@/components/Chip";
 import ActionMenu from "@/components/ActionMenu";
 import useGet from "@/hooks/useGet";

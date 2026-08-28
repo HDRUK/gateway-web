@@ -11,7 +11,7 @@ import { DarFormattedField } from "@/interfaces/DataAccessRequest";
 import { FileUploadFields } from "@/interfaces/FileUpload";
 import { Option } from "@/interfaces/Option";
 import Box from "@/components/Box";
-import Button from "@/components/Button";
+import { Button } from "@hdruk/ui";
 import Typography from "@/components/Typography";
 import theme, { colors } from "@/config/theme";
 import { ARRAY_PREFIX } from "@/consts/dataAccess";

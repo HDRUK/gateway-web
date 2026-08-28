@@ -4,7 +4,7 @@ import { useTranslations } from "next-intl";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import Box from "@/components/Box";
-import Button from "@/components/Button";
+import { Button } from "@hdruk/ui";
 import apis from "@/config/apis";
 import { colors } from "@/config/theme";
 import { InstituteIcon } from "@/consts/customIcons";

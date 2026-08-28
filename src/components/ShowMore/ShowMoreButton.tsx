@@ -1,4 +1,5 @@
-import { Button, ButtonProps, SxProps } from "@mui/material";
+import { ButtonProps, SxProps } from "@mui/material";
+import { Button } from "@hdruk/ui";
 import { useTranslations } from "next-intl";
 import { ArrowDropDownIcon } from "@/consts/icons";
 
@@ -26,7 +27,6 @@ export default function ShowMoreButton({
                     sx={{
                         transform: `rotate(${open ? 180 : 0}deg)`,
                     }}
-                    color="primary"
                 />
             }
             variant="link"

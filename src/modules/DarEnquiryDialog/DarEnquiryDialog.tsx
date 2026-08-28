@@ -1,9 +1,11 @@
 "use client";
 
-import { Box, Button } from "@mui/material";
+import { Button } from "@hdruk/ui";
+import { Box } from "@mui/material";
 import MuiDialogActions from "@mui/material/DialogActions";
 import MuiDialogContent from "@mui/material/DialogContent";
 import { useTranslations } from "next-intl";
+import Link from "next/link";
 import Dialog from "@/components/Dialog";
 import { MarkDownSanitizedWithHtml } from "@/components/MarkDownSanitizedWithHTML";
 import Typography from "@/components/Typography";
@@ -70,11 +72,13 @@ const DarEnquiryDialog = ({
         modalHeader ||
         (isDarEnabled ? t("titleEnabled") : t("titleNotEnabled"));
 
-        return (
+    return (
         <Dialog title={dialogTitle}>
             <MuiDialogContent>
-                {modalContent ? (<Box mb={2}><MarkDownSanitizedWithHtml content={modalContent} /></Box>
-
+                {modalContent ? (
+                    <Box mb={2}>
+                        <MarkDownSanitizedWithHtml content={modalContent} />
+                    </Box>
                 ) : (
                     <Typography mb={2}>{t("messageNotEnabled")}</Typography>
                 )}
@@ -84,7 +88,7 @@ const DarEnquiryDialog = ({
                 {!isDarEnabled && (
                     <Typography>
                         {t.rich("messageNotEnabledOtherInstructions", {
-                            dataCustodian: () => (teamName),
+                            dataCustodian: () => teamName,
                             generalEnquiryLink: () => (
                                 <Button
                                     aria-label="general"
@@ -108,7 +112,7 @@ const DarEnquiryDialog = ({
             <MuiDialogActions>
                 {isDarEnabled && hasPublishedDarTemplate ? (
                     <Button
-                        variant="contained"
+                        variant="text"
                         onClick={() => {
                             hideDialog();
                             createDARApplication({
@@ -120,7 +124,10 @@ const DarEnquiryDialog = ({
                         {t("requestAccessButton")}
                     </Button>
                 ) : (
-                    <Button variant="contained" href={`${url}#anchor6`}>
+                    <Button
+                        variant="text"
+                        component={Link}
+                        href={`${url}#anchor6`}>
                         {t("accessInformationButton")}
                     </Button>
                 )}

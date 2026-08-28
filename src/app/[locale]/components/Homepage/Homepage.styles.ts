@@ -1,5 +1,37 @@
 import { styled } from "@mui/material";
+import { Button } from "@hdruk/ui";
 import Box from "@/components/Box";
+
+/**
+ * Shared geometry for the homepage CTAs — the service tiles and the newsletter
+ * Join button. Deliberately carries no colour: the tiles paint themselves white
+ * and Join takes its purple from the default `primary` purpose, so this stays
+ * orthogonal to the variant/purpose that owns colour.
+ *
+ * Responsive, matching what the homepage rendered before: 8px padding below
+ * `sm`, stepping up to 24px/15px above it. Only the radius takes the design's
+ * new 10px — the padding stays as-is deliberately, since the spec's uniform
+ * 16px would have shortened the desktop tiles.
+ *
+ * Radii are absolute px, deliberately not `sx` multiples of
+ * `shape.borderRadius` (8 here), which would double them.
+ */
+// Re-asserted as `typeof Button` because MUI's styled() collapses a
+// polymorphic component to its default element, which would reject
+// `component={Link}` / `component="a"` at the call sites.
+export const HomepageCtaButton = styled(Button)(({ theme }) => ({
+    padding: theme.spacing(1),
+    gap: theme.spacing(1.25),
+    borderRadius: 8,
+    flex: "1 0 0",
+    alignSelf: "stretch",
+    textAlign: "center",
+
+    [theme.breakpoints.up("sm")]: {
+        padding: theme.spacing(3, 1.875),
+        borderRadius: 10,
+    },
+})) as typeof Button;
 
 export const TeamWrapper = styled("div")(({ theme }) => ({
     display: "flex",

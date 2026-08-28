@@ -4,7 +4,7 @@ import { ReactNode, useState } from "react";
 import WarningAmberIcon from "@mui/icons-material/WarningAmber";
 import { Box } from "@mui/material";
 import { useTranslations } from "next-intl";
-import Button from "@/components/Button";
+import { Button } from "@hdruk/ui";
 import Chip from "@/components/Chip";
 import IndicateNhseSdeAccessButton from "@/components/IndicateNhseSdeAccessButton";
 import Link from "@/components/Link";
@@ -153,8 +153,7 @@ const NhsSdeAccessStepper = () => {
                     {hasAccess && canApply && !applied && (
                         <Button
                             data-testid="nhs-sde-apply-button"
-                            variant="outlined"
-                            color="secondary"
+                            purpose="secondary"
                             sx={{ mt: 1 }}
                             onClick={() => setApplied(true)}>
                             {t("applyButton")}

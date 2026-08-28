@@ -1341,7 +1341,7 @@
                     "filter": "Filter",
                     "filters": {
                         "clearAll": "Clear all",
-                        "filterResults": "Filter results",
+                        "filterResults": "Filters",
                         "dataset": {
                             "populationSize": "Population size",
                             "populationSizeTooltip": "Reported dataset population size in terms of number of people",

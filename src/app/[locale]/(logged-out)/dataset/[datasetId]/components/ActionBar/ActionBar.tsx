@@ -6,7 +6,7 @@ import { usePathname } from "next/navigation";
 import { Dataset } from "@/interfaces/Dataset";
 import { FileExport } from "@/interfaces/FileExport";
 import { SearchCategory } from "@/interfaces/Search";
-import Button from "@/components/Button";
+import { Button } from "@hdruk/ui";
 import HeaderActionBar from "@/components/HeaderActionBar";
 import MenuDropdown from "@/components/MenuDropdown";
 import useAuth from "@/hooks/useAuth";
@@ -248,8 +248,7 @@ const ActionBar = ({ dataset }: ActionBarProps) => {
                     </Button>
                     <Button
                         onClick={handleStartDarRequest}
-                        variant="outlined"
-                        color="secondary">
+                        purpose="secondary">
                         {t("submitApplication")}
                     </Button>
 

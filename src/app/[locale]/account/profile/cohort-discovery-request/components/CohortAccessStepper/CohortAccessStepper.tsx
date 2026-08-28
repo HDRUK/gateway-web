@@ -6,7 +6,7 @@ import QueryBuilderIcon from "@mui/icons-material/QueryBuilder";
 import { Box } from "@mui/material";
 import { useTranslations } from "next-intl";
 import { templateRepeatFields } from "@/interfaces/Cms";
-import Button from "@/components/Button";
+import { Button } from "@hdruk/ui";
 import Chip from "@/components/Chip";
 import CohortDiscoveryButton from "@/components/CohortDiscoveryButton";
 import Link from "@/components/Link";
@@ -274,8 +274,7 @@ const CohortAccessStepper = ({
 
                                 {!started ? (
                                     <Button
-                                        variant="outlined"
-                                        color="secondary"
+                                        purpose="secondary"
                                         sx={{ mt: 2 }}
                                         onClick={() => setStarted(true)}>
                                         {canReapply

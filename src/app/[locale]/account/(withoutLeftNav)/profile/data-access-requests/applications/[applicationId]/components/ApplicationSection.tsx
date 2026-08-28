@@ -19,7 +19,7 @@ import { DarReviewsResponse } from "@/interfaces/DataAccessReview";
 import { QuestionBankSection } from "@/interfaces/QuestionBankSection";
 import Box from "@/components/Box";
 import BoxContainer from "@/components/BoxContainer";
-import Button from "@/components/Button";
+import { Button } from "@hdruk/ui";
 import Chip from "@/components/Chip";
 import InputWrapper from "@/components/InputWrapper";
 import Link from "@/components/Link";
@@ -806,8 +806,7 @@ const ApplicationSection = ({
                                             handleInvalidSubmit
                                         )}
                                         type="submit"
-                                        variant="outlined"
-                                        color="secondary">
+                                        purpose="secondary">
                                         {t("submit")}
                                     </Button>
                                 )}

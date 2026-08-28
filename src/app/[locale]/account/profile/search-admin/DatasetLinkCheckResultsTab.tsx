@@ -8,7 +8,7 @@ import Box from "@/components/Box";
 import Paper from "@/components/Paper";
 import Typography from "@/components/Typography";
 import Link from "@/components/Link";
-import Button from "@/components/Button";
+import { Button } from "@hdruk/ui";
 import SortIcon from "@/components/SortIcon";
 import Table from "@/components/Table";
 import useGet from "@/hooks/useGet";

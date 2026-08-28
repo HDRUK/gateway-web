@@ -1,7 +1,8 @@
 "use client";
 
 import { useMemo, useRef, useState } from "react";
-import { Box, Button, Typography } from "@mui/material";
+import { Button } from "@hdruk/ui";
+import { Box, Typography } from "@mui/material";
 import {
     WidgetEntityData,
     WidgetCategory,
@@ -189,8 +190,11 @@ export default function WidgetDisplay({
                             {TRANSLATIONS.footerDesc}
                         </Typography>
                         <Button
+                            variant="text"
+                            component="a"
                             href={`${FULL_GATEWAY_URL}/about/cohort-discovery`}
                             target="_blank"
+                            rel="noopener noreferrer"
                             sx={{
                                 backgroundColor: colors.white,
                                 flexShrink: 0,
