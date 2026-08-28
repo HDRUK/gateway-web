@@ -20,7 +20,7 @@ exports[`BarSlider should render component 1`] = `
       style="left: 0%; width: 100%;"
     />
     <span
-      class="MuiSlider-mark MuiSlider-markActive mui-style-16kozi8-MuiSlider-mark"
+      class="MuiSlider-mark MuiSlider-markActive mui-style-1kqeoxc-MuiSlider-mark"
       data-index="0"
       style="left: 0%;"
     />
@@ -46,7 +46,7 @@ exports[`BarSlider should render component 1`] = `
       />
       <span
         aria-hidden="true"
-        class="MuiSlider-valueLabel mui-style-r9w2cw-MuiSlider-valueLabel"
+        class="MuiSlider-valueLabel mui-style-un5c8n-MuiSlider-valueLabel"
       >
         <span
           class="MuiSlider-valueLabelCircle"
@@ -81,7 +81,7 @@ exports[`BarSlider should render component 1`] = `
       />
       <span
         aria-hidden="true"
-        class="MuiSlider-valueLabel mui-style-r9w2cw-MuiSlider-valueLabel"
+        class="MuiSlider-valueLabel mui-style-un5c8n-MuiSlider-valueLabel"
       >
         <span
           class="MuiSlider-valueLabelCircle"
