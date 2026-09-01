@@ -1,5 +1,6 @@
 import { styled } from "@mui/material";
 import { Button } from "@hdruk/ui";
+import { tokens } from "@hdruk/ui/theme";
 import Box from "@/components/Box";
 
 /**
@@ -13,8 +14,8 @@ import Box from "@/components/Box";
  * new 10px — the padding stays as-is deliberately, since the spec's uniform
  * 16px would have shortened the desktop tiles.
  *
- * Radii are absolute px, deliberately not `sx` multiples of
- * `shape.borderRadius` (8 here), which would double them.
+ * The `sm` radius is absolute px: 10px is not a `radius` token and not a
+ * multiple of `shape.borderRadius` (4).
  */
 // Re-asserted as `typeof Button` because MUI's styled() collapses a
 // polymorphic component to its default element, which would reject
@@ -22,7 +23,7 @@ import Box from "@/components/Box";
 export const HomepageCtaButton = styled(Button)(({ theme }) => ({
     padding: theme.spacing(1),
     gap: theme.spacing(1.25),
-    borderRadius: 8,
+    borderRadius: tokens.radius.medium,
     flex: "1 0 0",
     alignSelf: "stretch",
     textAlign: "center",

@@ -47,7 +47,7 @@ const EllipsisCharacterLimit = ({
                 requiresWrapper={text.length > characterLimit}
                 wrapper={tooltipWrapper(text)}>
                 {isChip ? (
-                    <Chip label={formattedText} sx={{ borderRadius: 1 }} />
+                    <Chip label={formattedText} />
                 ) : (
                     <span>{formattedText}</span>
                 )}

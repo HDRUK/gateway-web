@@ -33,12 +33,12 @@ exports[`ProviderLinks should match snapshot 1`] = `
         class="MuiBox-root mui-style-1k5ajcd"
       >
         <button
-          class="MuiButtonBase-root MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorPrimary MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorPrimary mui-style-ly6vir-MuiButtonBase-root-MuiButton-root-HdrukButton-root"
+          class="MuiButtonBase-root MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorPrimary MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorPrimary mui-style-1dhwa1o-MuiButtonBase-root-MuiButton-root-HdrukButton-root"
           tabindex="0"
           type="button"
         >
           <span
-            class="MuiBox-root mui-style-14df2v4"
+            class="MuiBox-root mui-style-1tkaydf"
           >
             <svg
               class="MuiSvgIcon-root MuiSvgIcon-fontSizeSmall mui-style-wr9cpa-MuiSvgIcon-root"
@@ -65,12 +65,12 @@ exports[`ProviderLinks should match snapshot 1`] = `
           </span>
         </button>
         <button
-          class="MuiButtonBase-root MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorPrimary MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorPrimary mui-style-ly6vir-MuiButtonBase-root-MuiButton-root-HdrukButton-root"
+          class="MuiButtonBase-root MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorPrimary MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorPrimary mui-style-1dhwa1o-MuiButtonBase-root-MuiButton-root-HdrukButton-root"
           tabindex="0"
           type="button"
         >
           <span
-            class="MuiBox-root mui-style-14df2v4"
+            class="MuiBox-root mui-style-1tkaydf"
           >
             <img
               alt="Azure"
@@ -116,12 +116,12 @@ exports[`ProviderLinks should match snapshot 1`] = `
         class="MuiBox-root mui-style-1k5ajcd"
       >
         <button
-          class="MuiButtonBase-root MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorPrimary MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorPrimary mui-style-ly6vir-MuiButtonBase-root-MuiButton-root-HdrukButton-root"
+          class="MuiButtonBase-root MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorPrimary MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorPrimary mui-style-1dhwa1o-MuiButtonBase-root-MuiButton-root-HdrukButton-root"
           tabindex="0"
           type="button"
         >
           <span
-            class="MuiBox-root mui-style-14df2v4"
+            class="MuiBox-root mui-style-1tkaydf"
           >
             <img
               alt="Google"
@@ -139,12 +139,12 @@ exports[`ProviderLinks should match snapshot 1`] = `
           </span>
         </button>
         <button
-          class="MuiButtonBase-root MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorPrimary MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorPrimary mui-style-ly6vir-MuiButtonBase-root-MuiButton-root-HdrukButton-root"
+          class="MuiButtonBase-root MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorPrimary MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorPrimary mui-style-1dhwa1o-MuiButtonBase-root-MuiButton-root-HdrukButton-root"
           tabindex="0"
           type="button"
         >
           <span
-            class="MuiBox-root mui-style-14df2v4"
+            class="MuiBox-root mui-style-1tkaydf"
           >
             <img
               alt="LinkedIn"
