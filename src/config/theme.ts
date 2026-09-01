@@ -1,7 +1,7 @@
 "use client";
 
 import { ReactElement } from "react";
-import { createHdrukTheme } from "@hdruk/ui/theme";
+import { createHdrukTheme, tokens } from "@hdruk/ui/theme";
 import { sourceSans3 } from "./fonts";
 
 const buttonLinkStyle = {
@@ -126,7 +126,6 @@ export const colors = {
     red700: "#DC3645",
     red900: "#C02531",
     purple100: "#C6CEE5",
-    purple200: "#A2AED3",
     purple400: "#6275B3",
     purple500: "#475da7",
     purple700: "#384B91",
@@ -141,17 +140,8 @@ export const colors = {
 };
 
 const palette = {
-    primary: {
-        main: colors.purple500,
-    },
     secondary: {
         main: colors.green400,
-    },
-    error: {
-        main: colors.red700,
-    },
-    success: {
-        main: colors.green700,
     },
     greyCustom: {
         main: colors.grey400,
@@ -165,7 +155,6 @@ const palette = {
         dark: "#A29415",
         contrastText: colors.grey800,
     },
-    background: { default: colors.grey },
     warningCustom: {
         main: colors.amber500,
         light: "#E9DB5D",
@@ -185,15 +174,6 @@ const theme = createHdrukTheme({
         fontFamily: sourceSans3.style.fontFamily,
         body1: {
             fontSize: 14,
-        },
-    },
-    breakpoints: {
-        values: {
-            xs: 0,
-            sm: 640,
-            md: 1024,
-            lg: 1280,
-            xl: 1536,
         },
     },
     transitions: {
@@ -249,9 +229,6 @@ const theme = createHdrukTheme({
             },
         },
         MuiButtonBase: {
-            defaultProps: {
-                disableRipple: true,
-            },
             styleOverrides: {
                 root: ({ ownerState, theme: _theme }) => {
                     const ownerStateProps = (
@@ -287,7 +264,6 @@ const theme = createHdrukTheme({
         MuiTabs: {
             styleOverrides: {
                 indicator: {
-                    height: 3,
                     backgroundColor: palette.secondary.main,
                 },
             },
@@ -313,9 +289,6 @@ const theme = createHdrukTheme({
             },
         },
         MuiButton: {
-            defaultProps: {
-                disableElevation: true,
-            },
             variants: [
                 {
                     props: { color: "greyCustom" },
@@ -350,7 +323,7 @@ const theme = createHdrukTheme({
                 {
                     props: { variant: "link" },
                     style: {
-                        color: palette.primary.main,
+                        color: tokens.brand.primary,
                         ...buttonLinkStyle,
                     },
                 },
@@ -364,14 +337,6 @@ const theme = createHdrukTheme({
             ],
             styleOverrides: {
                 root: ({ ownerState, theme: _theme }) => ({
-                    "&:hover": {
-                        borderWidth: 2,
-                    },
-                    "&.Mui-disabled": {
-                        borderWidth: 2,
-                    },
-                    borderWidth: 2,
-                    textTransform: "none",
                     whiteSpace: "nowrap",
                     borderColor:
                         ownerState.color === "inherit"
@@ -387,10 +352,6 @@ const theme = createHdrukTheme({
                 // that `purpose` styling isn't overridden by a local rule.
                 outlined: {
                     color: colors.grey800,
-                    borderWidth: 2,
-                    "&.Mui-disabled": {
-                        borderWidth: 2,
-                    },
                 },
                 text: {
                     "&.Mui-focusVisible:not(.MuiIconButton-root)": {
@@ -431,7 +392,7 @@ const theme = createHdrukTheme({
                         },
                     "&.MuiOutlinedInput-root.Mui-error .MuiOutlinedInput-notchedOutline":
                         {
-                            borderColor: palette.error.main,
+                            borderColor: tokens.status.error,
                         },
                     "&.MuiOutlinedInput-root.Mui-disabled .MuiOutlinedInput-notchedOutline":
                         {
@@ -470,7 +431,7 @@ const theme = createHdrukTheme({
                 root: {
                     color: colors.grey400,
                     "&.MuiCheckbox-colorError": {
-                        color: palette.error.main,
+                        color: tokens.status.error,
                     },
                     "&.Mui-focusVisible": {
                         span: {
@@ -486,7 +447,7 @@ const theme = createHdrukTheme({
                 root: {
                     fontSize: 14,
                     "&.Mui-error": {
-                        color: palette.error.main,
+                        color: tokens.status.error,
                     },
                 },
                 label: {
@@ -494,7 +455,7 @@ const theme = createHdrukTheme({
                     width: "100%",
                 },
                 asterisk: {
-                    color: palette.error.main,
+                    color: tokens.status.error,
                 },
             },
         },
@@ -604,9 +565,6 @@ const theme = createHdrukTheme({
                     fontWeight: 400,
                     marginBottom: 2,
                 },
-                caption: {
-                    fontSize: "0.75rem",
-                },
             },
         },
         MuiSwitch: {
@@ -712,11 +670,11 @@ const theme = createHdrukTheme({
                         boxSizing: "border-box",
                     },
                     "& .MuiSwitch-track": {
-                        backgroundColor: palette.error.main,
+                        backgroundColor: tokens.status.error,
                         opacity: 1,
                     },
                     "& .Mui-focusVisible": {
-                        outline: `3px solid ${palette.primary.main}`,
+                        outline: `3px solid ${tokens.brand.primary}`,
                     },
                 },
             },
