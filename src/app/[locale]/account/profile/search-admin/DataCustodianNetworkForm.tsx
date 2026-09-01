@@ -11,7 +11,7 @@ import {
     DataCustodianNetworkListItem,
 } from "@/interfaces/DataCustodianNetwork";
 import Box from "@/components/Box";
-import Button from "@/components/Button";
+import { Button } from "@hdruk/ui";
 import Form from "@/components/Form";
 import InputWrapper from "@/components/InputWrapper";
 import Loading from "@/components/Loading";
@@ -210,8 +210,7 @@ export default function DataCustodianNetworkForm({
                         display="flex"
                         justifyContent="space-between">
                         <Button
-                            color="secondary"
-                            variant="outlined"
+                            purpose="secondary"
                             onClick={onCancel}
                             disabled={isSaving}>
                             {t("cancel")}

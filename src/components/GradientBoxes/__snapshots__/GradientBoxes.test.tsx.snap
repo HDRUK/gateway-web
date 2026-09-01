@@ -9,12 +9,12 @@ exports[`GradientBoxes should render title 1`] = `
       class="MuiBox-root mui-style-uiqv5c"
     >
       <a
-        class="MuiTypography-root MuiTypography-inherit MuiLink-root MuiLink-underlineAlways mui-style-1hgs52l-MuiTypography-root-MuiLink-root"
+        class="MuiTypography-root MuiTypography-inherit MuiLink-root MuiLink-underlineAlways mui-style-6kfs0z-MuiTypography-root-MuiLink-root"
         href="href"
         target="_self"
       >
         <div
-          class="MuiTypography-root MuiTypography-h2 mui-style-1kje510-MuiTypography-root"
+          class="MuiTypography-root MuiTypography-h2 mui-style-13twxy2-MuiTypography-root"
         >
           Lorem ipsum dolor sit amet, consectetur adipiscing elit.
         </div>
@@ -31,10 +31,10 @@ exports[`GradientBoxes should render title 1`] = `
         </svg>
       </a>
       <div
-        class="MuiTypography-root MuiTypography-body1 mui-style-1xut9ip-MuiTypography-root"
+        class="MuiTypography-root MuiTypography-body1 mui-style-1cm53lv-MuiTypography-root"
       >
         <p
-          class="MuiTypography-root MuiTypography-body1 mui-style-jz7w5o-MuiTypography-root"
+          class="MuiTypography-root MuiTypography-body1 mui-style-hjjn0d-MuiTypography-root"
         >
           Vestibulum ultrices purus sit amet cursus gravida. Proin maximus porttitor dui, sed lobortis libero ultrices vitae. In a sem at erat venenatis rhoncus. Morbi at diam sed risus commodo tempus nec ac ligula. Curabitur arcu velit, volutpat in risus sed, suscipit commodo nulla. Aenean luctus feugiat eros at laoreet. Fusce rhoncus augue nec tellus ultrices, et tempor sapien sollicitudin.
         </p>
@@ -44,12 +44,12 @@ exports[`GradientBoxes should render title 1`] = `
       class="MuiBox-root mui-style-uiqv5c"
     >
       <a
-        class="MuiTypography-root MuiTypography-inherit MuiLink-root MuiLink-underlineAlways mui-style-1hgs52l-MuiTypography-root-MuiLink-root"
+        class="MuiTypography-root MuiTypography-inherit MuiLink-root MuiLink-underlineAlways mui-style-6kfs0z-MuiTypography-root-MuiLink-root"
         href="href"
         target="_self"
       >
         <div
-          class="MuiTypography-root MuiTypography-h2 mui-style-1kje510-MuiTypography-root"
+          class="MuiTypography-root MuiTypography-h2 mui-style-13twxy2-MuiTypography-root"
         >
           Vestibulum ultrices purus sit amet cursus gravida. 
         </div>
@@ -66,10 +66,10 @@ exports[`GradientBoxes should render title 1`] = `
         </svg>
       </a>
       <div
-        class="MuiTypography-root MuiTypography-body1 mui-style-1xut9ip-MuiTypography-root"
+        class="MuiTypography-root MuiTypography-body1 mui-style-1cm53lv-MuiTypography-root"
       >
         <p
-          class="MuiTypography-root MuiTypography-body1 mui-style-jz7w5o-MuiTypography-root"
+          class="MuiTypography-root MuiTypography-body1 mui-style-hjjn0d-MuiTypography-root"
         >
           Proin maximus porttitor dui, sed lobortis libero ultrices vitae. In a sem at erat venenatis rhoncus. Morbi at diam sed risus commodo tempus nec ac ligula. Curabitur arcu velit, volutpat in risus sed, suscipit commodo nulla. Aenean luctus feugiat eros at laoreet. Fusce rhoncus augue nec tellus ultrices, et tempor sapien sollicitudin.
         </p>
@@ -79,12 +79,12 @@ exports[`GradientBoxes should render title 1`] = `
       class="MuiBox-root mui-style-uiqv5c"
     >
       <a
-        class="MuiTypography-root MuiTypography-inherit MuiLink-root MuiLink-underlineAlways mui-style-1hgs52l-MuiTypography-root-MuiLink-root"
+        class="MuiTypography-root MuiTypography-inherit MuiLink-root MuiLink-underlineAlways mui-style-6kfs0z-MuiTypography-root-MuiLink-root"
         href="href"
         target="_self"
       >
         <div
-          class="MuiTypography-root MuiTypography-h2 mui-style-1kje510-MuiTypography-root"
+          class="MuiTypography-root MuiTypography-h2 mui-style-13twxy2-MuiTypography-root"
         >
           Aenean luctus feugiat eros at laoreet.
         </div>
@@ -101,10 +101,10 @@ exports[`GradientBoxes should render title 1`] = `
         </svg>
       </a>
       <div
-        class="MuiTypography-root MuiTypography-body1 mui-style-1xut9ip-MuiTypography-root"
+        class="MuiTypography-root MuiTypography-body1 mui-style-1cm53lv-MuiTypography-root"
       >
         <p
-          class="MuiTypography-root MuiTypography-body1 mui-style-jz7w5o-MuiTypography-root"
+          class="MuiTypography-root MuiTypography-body1 mui-style-hjjn0d-MuiTypography-root"
         >
           Fusce rhoncus augue nec tellus ultrices, et tempor sapien sollicitudin.
         </p>

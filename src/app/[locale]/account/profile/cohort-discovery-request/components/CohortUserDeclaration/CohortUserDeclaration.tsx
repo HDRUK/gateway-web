@@ -3,7 +3,7 @@
 import { useState } from "react";
 import { Box, Typography } from "@mui/material";
 import { useTranslations } from "next-intl";
-import Button from "@/components/Button";
+import { Button } from "@hdruk/ui";
 import CheckboxControlled from "@/components/CheckboxControlled";
 import { colors } from "@/config/theme";
 
@@ -62,8 +62,7 @@ const CohortUserDeclaration = ({
                         gap: 2,
                     }}>
                     <Button
-                        variant="outlined"
-                        color="secondary"
+                        purpose="secondary"
                         onClick={onCancel}>
                         {tCommon("cancel")}
                     </Button>

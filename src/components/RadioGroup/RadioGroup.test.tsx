@@ -1,6 +1,6 @@
 import { useForm } from "react-hook-form";
 import userEvent from "@testing-library/user-event";
-import Button from "@/components/Button";
+import { Button } from "@hdruk/ui";
 import Form from "@/components/Form";
 import { render, screen, waitFor } from "@/utils/testUtils";
 import RadioGroup from "./RadioGroup";

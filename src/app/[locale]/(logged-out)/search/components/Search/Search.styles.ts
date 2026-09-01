@@ -17,3 +17,10 @@ export const ActionBar = styled(Box)(({ theme }) => ({
 export const ResultLimitText = styled(Typography)(() => ({
     fontWeight: 500,
 }));
+
+export const toggleViewButton = {
+    "& .MuiButton-startIcon": { color: "success.main" },
+    "&:hover .MuiButton-startIcon, &:focus-visible .MuiButton-startIcon": {
+        color: "inherit",
+    },
+};

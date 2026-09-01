@@ -8,7 +8,7 @@ import { KeyedMutator } from "swr";
 import { Library, NewLibrary } from "@/interfaces/Library";
 import { SearchResultDataset } from "@/interfaces/Search";
 import Box from "@/components/Box";
-import Button from "@/components/Button";
+import { Button } from "@hdruk/ui";
 import CohortDiscoveryButton from "@/components/CohortDiscoveryButton";
 import Link from "@/components/Link";
 import MenuDropdown from "@/components/MenuDropdown";
@@ -372,7 +372,6 @@ const ResultCard = ({
                                     aria-label={`${t("actions")} for ${
                                         metadata.summary.shortTitle
                                     }`}
-                                    variant="contained"
                                     startIcon={
                                         <SpeechBubbleIcon
                                             sx={{ fill: "white" }}
@@ -461,8 +460,7 @@ const ResultCard = ({
                                 <Typography>
                                     <Button
                                         onClick={handleClickQuickView}
-                                        color="secondary"
-                                        variant="outlined">
+                                        purpose="secondary">
                                         {t("showAll")}
                                     </Button>
                                 </Typography>

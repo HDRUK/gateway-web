@@ -5,7 +5,7 @@ import { FormHydration } from "@/interfaces/FormHydration";
 import { Option } from "@/interfaces/Option";
 import { Defs } from "@/interfaces/V4Schema";
 import Box from "@/components/Box";
-import Button from "@/components/Button";
+import { Button } from "@hdruk/ui";
 import Typography from "@/components/Typography";
 import theme, { colors } from "@/config/theme";
 import { INITIAL_FORM_SECTION } from "@/consts/createDataset";

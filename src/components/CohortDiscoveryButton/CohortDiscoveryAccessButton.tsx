@@ -1,5 +1,5 @@
 import { CircularProgress, Tooltip } from "@mui/material";
-import Button from "@/components/Button";
+import { Button } from "@hdruk/ui";
 import { CohortDiscoveryButtonProps } from "./CohortDiscoveryButton";
 
 interface CohortAccessButtonProps

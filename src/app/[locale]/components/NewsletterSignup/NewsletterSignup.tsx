@@ -3,8 +3,8 @@
 import { ReactNode } from "react";
 import { Typography } from "@mui/material";
 import Link from "next/link";
-import Button from "@/components/Button";
 import theme from "@/config/theme";
+import { HomepageCtaButton } from "../Homepage/Homepage.styles";
 import { RouteName } from "@/consts/routeName";
 import {
     StyledNewsletterSignup,
@@ -45,11 +45,12 @@ export default function NewsletterSignup({
                     }}>
                     {description}
                 </Typography>
-                <Button
+                <HomepageCtaButton
                     component={Link}
                     href={RouteName.NEWSLETTER_SIGNUP}
                     sx={{
-                        color: "#fff",
+                        // Purple fill comes from the default `primary` purpose.
+                        color: theme.palette.primary.contrastText,
                         [theme.breakpoints.up(810)]: {
                             height: "60px",
                             minWidth: "149px",
@@ -58,7 +59,7 @@ export default function NewsletterSignup({
                     }}
                     title="Sign up for newsletter">
                     Join
-                </Button>
+                </HomepageCtaButton>
             </StyledNewsletterSignupCta>
         </StyledNewsletterSignup>
     );

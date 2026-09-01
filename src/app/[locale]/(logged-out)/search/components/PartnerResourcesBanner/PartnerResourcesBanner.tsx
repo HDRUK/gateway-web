@@ -2,7 +2,7 @@
 
 import { Box, Typography } from "@mui/material";
 import { useTranslations } from "next-intl";
-import Button from "@/components/Button";
+import { Button } from "@hdruk/ui";
 import Paper from "@/components/Paper";
 import { colors } from "@/config/theme";
 
@@ -62,8 +62,7 @@ const PartnerResourcesBanner = ({
                 />
             </Box>
             <Button
-                variant="outlined"
-                color="secondary"
+                purpose="secondary"
                 onClick={() => {
                     onViewPartnerResources();
                     window.scrollTo({ top: 0, behavior: "smooth" });

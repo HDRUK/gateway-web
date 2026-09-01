@@ -1,7 +1,7 @@
 "use client";
 
 import { ReactElement } from "react";
-import { createTheme } from "@mui/material/styles";
+import { createHdrukTheme } from "@hdruk/ui/theme";
 import { sourceSans3 } from "./fonts";
 
 const buttonLinkStyle = {
@@ -99,7 +99,6 @@ declare module "@mui/material/Checkbox" {
     }
 }
 
-
 export const colors = {
     white: "#fff",
     black: "#000",
@@ -181,7 +180,7 @@ const palette = {
 
 const subtleShadow = "1px 1px 3px 0 rgba(0,0,0,.09)";
 
-const theme = createTheme({
+const theme = createHdrukTheme({
     typography: {
         fontFamily: sourceSans3.style.fontFamily,
         body1: {
@@ -217,17 +216,6 @@ const theme = createTheme({
             },
         },
         MuiTooltip: {
-            styleOverrides: {
-                tooltip: ({ theme }) => ({
-                    borderRadius: 0,
-                    background: colors.grey900,
-                    color: colors.white,
-                    padding: theme.spacing(2),
-                    maxWidth: "395px",
-                    margin: 0,
-                    fontSize: theme.typography.body1.fontSize,
-                }),
-            },
             defaultProps: {
                 enterDelay: 1000,
                 enterNextDelay: 1000,
@@ -384,6 +372,7 @@ const theme = createTheme({
                     },
                     borderWidth: 2,
                     textTransform: "none",
+                    whiteSpace: "nowrap",
                     borderColor:
                         ownerState.color === "inherit"
                             ? _theme.palette.primary.main
@@ -394,24 +383,14 @@ const theme = createTheme({
                         borderWidth: 0,
                     },
                 }),
-                outlined: ({ ownerState, theme: _theme }) => {
-                    return {
-                        color: colors.grey800,
+                // No `:hover` here — hdruk-ui's variants own outlined hover, so
+                // that `purpose` styling isn't overridden by a local rule.
+                outlined: {
+                    color: colors.grey800,
+                    borderWidth: 2,
+                    "&.Mui-disabled": {
                         borderWidth: 2,
-                        "&.Mui-disabled": {
-                            borderWidth: 2,
-                        },
-                        "&:hover, &:focus": {
-                            color: colors.white,
-                            borderColor: _theme.palette.primary.main,
-                            background:
-                                ownerState.color === "inherit"
-                                    ? _theme.palette.primary.main
-                                    : _theme.palette[
-                                          ownerState.color || "primary"
-                                      ]?.main,
-                        },
-                    };
+                    },
                 },
                 text: {
                     "&.Mui-focusVisible:not(.MuiIconButton-root)": {
@@ -601,10 +580,10 @@ const theme = createTheme({
             },
         },
         MuiTypography: {
+            // No `root` fontSize: it would pin every variant to one size and
+            // stop the design-system scale (h5 20px, h6 18px) coming through.
+            // A bare Typography still gets 14px via the body1 override above.
             styleOverrides: {
-                root: {
-                    fontSize: "0.875rem",
-                },
                 h1: ({ theme: _theme }) => ({
                     fontSize: "2rem",
                     fontWeight: 600,

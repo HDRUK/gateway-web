@@ -1,5 +1,5 @@
 import { Control, useController } from "react-hook-form";
-import Button from "@/components/Button";
+import { Button } from "@hdruk/ui";
 import { SortAscIcon, SortDescIcon } from "@/consts/icons";
 
 interface ToggleDirectionProps {

@@ -12,7 +12,7 @@ import {
 } from "@mui/material";
 import { useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
-import Button from "@/components/Button";
+import { Button } from "@hdruk/ui";
 import ProvidersDialog from "@/modules/ProvidersDialog";
 import useAuth from "@/hooks/useAuth";
 import { useCohortStatus } from "@/hooks/useCohortStatus";

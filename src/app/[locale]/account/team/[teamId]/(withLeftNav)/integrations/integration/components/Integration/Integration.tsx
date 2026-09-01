@@ -4,7 +4,7 @@ import Box from "@/components/Box";
 import ImageMediaCard from "@/components/ImageMediaCard";
 import { StaticImages } from "@/config/images";
 import { RouteName } from "@/consts/routeName";
-import { Button } from "@mui/material";
+import { Button } from "@hdruk/ui";
 import { PREDEFINED_INTEGRATION_OVERVIEW_URL } from "@/config/hrefs";
 import { useTranslations } from "next-intl";
 import { DescriptionOutlinedIcon } from "@/consts/icons";

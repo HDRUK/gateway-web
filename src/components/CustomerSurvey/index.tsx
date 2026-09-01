@@ -2,6 +2,7 @@
 
 import { useEffect, useState, useCallback, useId } from "react";
 import { useForm } from "react-hook-form";
+import { Button } from "@hdruk/ui";
 import { yupResolver } from "@hookform/resolvers/yup";
 import CloseIcon from "@mui/icons-material/Close";
 import InsertEmoticonIcon from "@mui/icons-material/InsertEmoticon";
@@ -17,7 +18,6 @@ import {
     IconButton,
     keyframes,
     Box,
-    Button,
     useMediaQuery,
     useTheme,
 } from "@mui/material";
@@ -296,7 +296,7 @@ export default function CustomerSurvey({
                     <InputWrapper control={control} {...reason} />
 
                     <Button
-                        variant="contained"
+                        variant="text"
                         sx={{ mt: 2 }}
                         type="submit"
                         disabled={!watch("reason")?.trim()}>

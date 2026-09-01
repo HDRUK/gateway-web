@@ -1,5 +1,7 @@
 "use client";
 
+import { Button } from "@hdruk/ui";
+import { tokens } from "@hdruk/ui/theme";
 import { createColumnHelper } from "@tanstack/react-table";
 import { get, isArray } from "lodash";
 import { useTranslations } from "next-intl";
@@ -9,7 +11,6 @@ import { FieldType } from "@/interfaces/FieldType";
 import { SearchCategory } from "@/interfaces/Search";
 import Box from "@/components/Box";
 import BoxContainer from "@/components/BoxContainer";
-import Button from "@/components/Button";
 import DemographicsAccordion from "@/components/DemographicsAccordion";
 import Link from "@/components/Link";
 import { MarkDownSanitizedWithHtml } from "@/components/MarkDownSanitizedWithHTML";
@@ -181,7 +182,7 @@ const DatasetContent = ({
     };
 
     return (
-        <Paper sx={{ borderRadius: 2, p: 2 }}>
+        <Paper sx={{ borderRadius: `${tokens.radius.medium}px`, p: 2 }}>
             {populatedSections.map((section, index) => {
                 const id = `anchor-${section.sectionName.replaceAll(
                     /\s/g,
@@ -203,7 +204,9 @@ const DatasetContent = ({
                                 pr: 0,
                             }}>
                             <Typography
-                                variant="h2"
+                                variant="articleLead"
+                                component="h2"
+                                sx={{ mb: 2 }}
                                 aria-live="polite"
                                 tabIndex={-1}>
                                 {section.sectionName}

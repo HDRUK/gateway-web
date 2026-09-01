@@ -4,7 +4,7 @@ import { useState } from "react";
 import MuiDialogActions from "@mui/material/DialogActions";
 import MuiDialogContent from "@mui/material/DialogContent";
 import { useTranslations } from "next-intl";
-import Button from "@/components/Button";
+import { Button } from "@hdruk/ui";
 import CheckboxControlled from "@/components/CheckboxControlled";
 import Dialog from "@/components/Dialog";
 import Typography from "@/components/Typography";
@@ -51,8 +51,7 @@ const DarApplicationActionDialog = ({
             </MuiDialogContent>
             <MuiDialogActions sx={{ alignSelf: "center", m: 3, mt: 0, gap: 3 }}>
                 <Button
-                    variant="outlined"
-                    color="secondary"
+                    purpose="secondary"
                     onClick={() => handleAction()}
                     disabled={!confirmed}
                     sx={{ minWidth: "120px" }}>

@@ -6,7 +6,7 @@ import { useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
 import { FileUpload } from "@/interfaces/FileUpload";
 import Box from "@/components/Box";
-import Button from "@/components/Button";
+import { Button } from "@hdruk/ui";
 import DownloadExternalFile from "@/components/DownloadExternalFile";
 import Paper from "@/components/Paper";
 import Typography from "@/components/Typography";

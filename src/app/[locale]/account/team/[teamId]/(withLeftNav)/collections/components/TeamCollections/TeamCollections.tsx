@@ -7,7 +7,7 @@ import { useRouter, useSearchParams } from "next/navigation";
 import { Collection } from "@/interfaces/Collection";
 import { PaginationType } from "@/interfaces/Pagination";
 import Box from "@/components/Box";
-import Button from "@/components/Button";
+import { Button } from "@hdruk/ui";
 import Paper from "@/components/Paper";
 import Tabs from "@/components/Tabs";
 import Typography from "@/components/Typography";

@@ -2,9 +2,8 @@ import { Control, useController } from "react-hook-form";
 import { FormControl, FormControlLabel, Stack, SxProps } from "@mui/material";
 import Input, { InputProps } from "@mui/material/Input";
 import { visuallyHidden } from "@mui/utils";
-import theme from "@/config/theme";
 import { UploadFileIcon } from "@/consts/icons";
-import Button from "../Button";
+import { Button } from "@hdruk/ui";
 
 export interface UploadProps extends InputProps {
     label: string;
@@ -79,13 +78,9 @@ const Upload = (props: UploadProps) => {
                         direction="row"
                         alignItems="center">
                         <Button
-                            color="secondary"
-                            variant="contained"
-                            sx={{
-                                pointerEvents: "none",
-                                backgroundColor: theme.palette.grey[200],
-                            }}
-                            startIcon={<UploadFileIcon color="primary" />}
+                            purpose="secondary"
+                            sx={{ pointerEvents: "none" }}
+                            startIcon={<UploadFileIcon />}
                             tabIndex={-1}>
                             {label}
                         </Button>

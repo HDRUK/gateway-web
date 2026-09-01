@@ -1,5 +1,5 @@
 import { styled } from "@mui/material";
-import Button from "@/components/Button";
+import { Button } from "@hdruk/ui";
 
 export const SupportList = styled("ul")(() => ({
     listStyle: "none",

@@ -7,7 +7,7 @@ import { KeyedMutator } from "swr";
 import Box from "@/components/Box";
 import Paper from "@/components/Paper";
 import Typography from "@/components/Typography";
-import Button from "@/components/Button";
+import { Button } from "@hdruk/ui";
 import Chip from "@/components/Chip";
 import useDialog from "@/hooks/useDialog";
 import { AdminSearchStatusResponse } from "@/interfaces/AdminSearch";

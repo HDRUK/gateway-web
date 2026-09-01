@@ -1,6 +1,6 @@
 import { ReactNode, useState } from "react";
 import Box from "@/components/Box";
-import Button from "@/components/Button";
+import { Button } from "@hdruk/ui";
 import Typography from "../Typography";
 
 export interface ExpandListProps {

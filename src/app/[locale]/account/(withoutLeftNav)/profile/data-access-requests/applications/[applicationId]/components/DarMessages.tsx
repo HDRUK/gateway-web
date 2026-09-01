@@ -6,7 +6,7 @@ import { useTranslations } from "next-intl";
 import { DarReviewsResponse } from "@/interfaces/DataAccessReview";
 import Box from "@/components/Box";
 import BoxContainer from "@/components/BoxContainer";
-import Button from "@/components/Button";
+import { Button } from "@hdruk/ui";
 import InputWrapper from "@/components/InputWrapper";
 import Loading from "@/components/Loading";
 import useAuth from "@/hooks/useAuth";

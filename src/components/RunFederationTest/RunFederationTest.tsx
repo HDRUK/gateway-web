@@ -5,7 +5,7 @@ import {
     FederationTestStatus,
 } from "@/interfaces/Federation";
 import Box from "@/components/Box";
-import Button from "@/components/Button";
+import { Button } from "@hdruk/ui";
 import TickCrossIcon from "@/components/TickCrossIcon";
 import Typography from "@/components/Typography";
 import { PREDEFINED_INTEGRATION_OVERVIEW_URL } from "@/config/hrefs";

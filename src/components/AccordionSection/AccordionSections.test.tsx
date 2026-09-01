@@ -1,17 +1,31 @@
-import { Button } from "@mui/material";
+import { Button } from "@hdruk/ui";
 import { fireEvent, render, screen } from "@/utils/testUtils";
 import AccordionSection from "./AccordionSection";
 
 describe("AccordionSection", () => {
     it("expands when showing more", () => {
         const mockContents = [
-            <Button key="card1">Card 1</Button>,
-            <Button key="card2">Card 2</Button>,
-            <Button key="card3">Card 3</Button>,
-            <Button key="card4">Card 4</Button>,
-            <Button key="card5">Card 5</Button>,
-            <Button key="card6">Card 6</Button>,
-            <Button key="card7">Card 7</Button>,
+            <Button variant="text" key="card1">
+                Card 1
+            </Button>,
+            <Button variant="text" key="card2">
+                Card 2
+            </Button>,
+            <Button variant="text" key="card3">
+                Card 3
+            </Button>,
+            <Button variant="text" key="card4">
+                Card 4
+            </Button>,
+            <Button variant="text" key="card5">
+                Card 5
+            </Button>,
+            <Button variant="text" key="card6">
+                Card 6
+            </Button>,
+            <Button variant="text" key="card7">
+                Card 7
+            </Button>,
         ];
 
         render(
@@ -31,9 +45,15 @@ describe("AccordionSection", () => {
 
     it("expands when showing more", () => {
         const mockContents = [
-            <Button key="card1">Card 1</Button>,
-            <Button key="card2">Card 2</Button>,
-            <Button key="card3">Card 3</Button>,
+            <Button variant="text" key="card1">
+                Card 1
+            </Button>,
+            <Button variant="text" key="card2">
+                Card 2
+            </Button>,
+            <Button variant="text" key="card3">
+                Card 3
+            </Button>,
         ];
 
         render(

@@ -5,7 +5,7 @@ import AdminPanelSettingsIcon from "@mui/icons-material/AdminPanelSettings";
 import SupervisorAccountIcon from "@mui/icons-material/SupervisorAccount";
 import UserEvent from "@testing-library/user-event";
 import * as yup from "yup";
-import Button from "@/components/Button";
+import { Button } from "@hdruk/ui";
 import Form from "@/components/Form";
 import Select from "@/components/Select";
 import { SelectProps } from "@/components/Select/Select";

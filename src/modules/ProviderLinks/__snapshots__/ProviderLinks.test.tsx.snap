@@ -9,7 +9,7 @@ exports[`ProviderLinks should match snapshot 1`] = `
       class="MuiBox-root mui-style-hp0c5l"
     >
       <h4
-        class="MuiTypography-root MuiTypography-h4 mui-style-1hry5sm-MuiTypography-root"
+        class="MuiTypography-root MuiTypography-h4 mui-style-r8a3yv-MuiTypography-root"
       >
         <span
           class="MuiBox-root mui-style-1w7ybou"
@@ -25,7 +25,7 @@ exports[`ProviderLinks should match snapshot 1`] = `
         )
       </h4>
       <p
-        class="MuiTypography-root MuiTypography-body2 mui-style-1hw0f9c-MuiTypography-root"
+        class="MuiTypography-root MuiTypography-body2 mui-style-truubi-MuiTypography-root"
       >
         You can sign in using one of the supported sign-in options below to access the full platform experience, including Cohort Discovery and all associated features.
       </p>
@@ -33,7 +33,7 @@ exports[`ProviderLinks should match snapshot 1`] = `
         class="MuiBox-root mui-style-1k5ajcd"
       >
         <button
-          class="MuiButtonBase-root MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorPrimary MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorPrimary mui-style-14ilbmx-MuiButtonBase-root-MuiButton-root"
+          class="MuiButtonBase-root MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorPrimary MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorPrimary mui-style-1dhwa1o-MuiButtonBase-root-MuiButton-root-HdrukButton-root"
           tabindex="0"
           type="button"
         >
@@ -65,7 +65,7 @@ exports[`ProviderLinks should match snapshot 1`] = `
           </span>
         </button>
         <button
-          class="MuiButtonBase-root MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorPrimary MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorPrimary mui-style-14ilbmx-MuiButtonBase-root-MuiButton-root"
+          class="MuiButtonBase-root MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorPrimary MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorPrimary mui-style-1dhwa1o-MuiButtonBase-root-MuiButton-root-HdrukButton-root"
           tabindex="0"
           type="button"
         >
@@ -93,7 +93,7 @@ exports[`ProviderLinks should match snapshot 1`] = `
       class="MuiBox-root mui-style-hp0c5l"
     >
       <h4
-        class="MuiTypography-root MuiTypography-h4 mui-style-1hry5sm-MuiTypography-root"
+        class="MuiTypography-root MuiTypography-h4 mui-style-r8a3yv-MuiTypography-root"
       >
         <span
           class="MuiBox-root mui-style-1w7ybou"
@@ -102,7 +102,7 @@ exports[`ProviderLinks should match snapshot 1`] = `
         </span>
       </h4>
       <p
-        class="MuiTypography-root MuiTypography-body2 mui-style-1hw0f9c-MuiTypography-root"
+        class="MuiTypography-root MuiTypography-body2 mui-style-truubi-MuiTypography-root"
       >
         You can sign in using one of the supported sign-in options below to access the core Gateway features but 
         <span
@@ -116,7 +116,7 @@ exports[`ProviderLinks should match snapshot 1`] = `
         class="MuiBox-root mui-style-1k5ajcd"
       >
         <button
-          class="MuiButtonBase-root MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorPrimary MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorPrimary mui-style-14ilbmx-MuiButtonBase-root-MuiButton-root"
+          class="MuiButtonBase-root MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorPrimary MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorPrimary mui-style-1dhwa1o-MuiButtonBase-root-MuiButton-root-HdrukButton-root"
           tabindex="0"
           type="button"
         >
@@ -139,7 +139,7 @@ exports[`ProviderLinks should match snapshot 1`] = `
           </span>
         </button>
         <button
-          class="MuiButtonBase-root MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorPrimary MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorPrimary mui-style-14ilbmx-MuiButtonBase-root-MuiButton-root"
+          class="MuiButtonBase-root MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorPrimary MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorPrimary mui-style-1dhwa1o-MuiButtonBase-root-MuiButton-root-HdrukButton-root"
           tabindex="0"
           type="button"
         >

@@ -3,7 +3,7 @@
 import { CSSProperties } from "react";
 import { SxProps } from "@mui/material";
 import { useRouter } from "next/navigation";
-import Button from "@/components/Button";
+import { Button } from "@hdruk/ui";
 import { getPreviousPage } from "@/hooks/useTrackPreviousPage";
 import { ArrowBackIosNewIcon } from "@/consts/icons";
 

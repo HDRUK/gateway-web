@@ -1,6 +1,6 @@
 import { Fragment, useState } from "react";
 import { Box, Divider } from "@mui/material";
-import Button from "@/components/Button";
+import { Button } from "@hdruk/ui";
 import Link from "@/components/Link";
 import MenuDropdown from "@/components/MenuDropdown";
 import navItems from "@/config/nav";

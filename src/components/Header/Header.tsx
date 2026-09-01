@@ -105,13 +105,17 @@ function Header() {
                             onClick={handleOpenNavMenu}
                             color="inherit"
                             sx={{
+                                color: colors.white,
+                                "&:hover, &:focus-visible": {
+                                    color: "primary.main",
+                                },
                                 "&:focus&.Mui-focusVisible": {
                                     borderRadius: 0,
                                     outline: `2px solid ${colors.white}`,
                                     outlineOffset: "3px",
                                 },
                             }}>
-                            <MenuIcon htmlColor="white" />
+                            <MenuIcon />
                         </IconButton>
 
                         <MenuDropdown

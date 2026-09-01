@@ -1,6 +1,5 @@
-import Button from "@/components/Button";
+import { Button, ButtonProps } from "@hdruk/ui";
 import { DownloadIcon } from "@/consts/icons";
-import { ButtonProps } from "../Button/Button";
 
 export type DownloadButtonProps = ButtonProps;
 

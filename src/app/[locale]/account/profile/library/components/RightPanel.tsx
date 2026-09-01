@@ -8,7 +8,7 @@ import { useTranslations } from "next-intl";
 import { usePathname } from "next/navigation";
 import { SelectedLibrary } from "@/interfaces/Library";
 import Box from "@/components/Box";
-import Button from "@/components/Button";
+import { Button } from "@hdruk/ui";
 import CohortDiscoveryButton from "@/components/CohortDiscoveryButton";
 import Paper from "@/components/Paper";
 import Typography from "@/components/Typography";

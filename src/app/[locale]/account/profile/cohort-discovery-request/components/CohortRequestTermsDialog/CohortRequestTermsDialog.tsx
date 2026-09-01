@@ -12,7 +12,7 @@ import { useRouter } from "next/navigation";
 import { templateRepeatFields } from "@/interfaces/Cms";
 import ActiveList from "@/components/ActiveList";
 import Box from "@/components/Box";
-import Button from "@/components/Button";
+import { Button } from "@hdruk/ui";
 import Dialog from "@/components/Dialog";
 import Form from "@/components/Form";
 import HTMLContent from "@/components/HTMLContent";
@@ -189,8 +189,7 @@ const CohortRequestTermsDialog = () => {
                             alignItems: "flex-end",
                         }}>
                         <Button
-                            variant="outlined"
-                            color="secondary"
+                            purpose="secondary"
                             onClick={() => hideDialog()}>
                             {t(`${TRANSLATION_PATH_DIALOG}.discardButton`)}
                         </Button>

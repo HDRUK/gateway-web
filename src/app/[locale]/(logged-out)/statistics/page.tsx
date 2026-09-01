@@ -1,6 +1,6 @@
 import { getTranslations } from "next-intl/server";
 import Banner from "@/components/Banner";
-import Button from "@/components/Button";
+import { Button } from "@hdruk/ui";
 import Container from "@/components/Container";
 import { getMetrics } from "@/utils/api";
 import metaData from "@/utils/metadata";
@@ -31,9 +31,11 @@ export default async function StatisticsPage() {
                 }}>
                 <MetricsGrid metrics={metrics} />
 
+                {/* No `component={Link}` — this is a Server Component, and a
+                    component cannot be passed across the RSC boundary into a
+                    client component. `href` alone still renders an anchor. */}
                 <Button
-                    variant="outlined"
-                    color="secondary"
+                    purpose="secondary"
                     sx={{ alignSelf: "center" }}
                     href="/">
                     {t("backtoHomepage")}

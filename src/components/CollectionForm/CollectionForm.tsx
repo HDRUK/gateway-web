@@ -22,7 +22,7 @@ import { User } from "@/interfaces/User";
 import { OptionsType } from "@/components/Autocomplete/Autocomplete";
 import Box from "@/components/Box";
 import BoxContainer from "@/components/BoxContainer";
-import Button from "@/components/Button";
+import { Button } from "@hdruk/ui";
 import Chip from "@/components/Chip";
 import Form from "@/components/Form";
 import InputWrapper from "@/components/InputWrapper";
@@ -550,8 +550,7 @@ const CollectionForm = ({
                             <Box sx={{ textAlign: "center", mt: 1 }}>
                                 <Button
                                     onClick={handleAddResource}
-                                    variant="outlined"
-                                    color="secondary"
+                                    purpose="secondary"
                                     startIcon={<AddIcon />}>
                                     {t(
                                         `${TRANSLATION_PATH_CREATE}.addResourceButton`

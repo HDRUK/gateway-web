@@ -1,6 +1,6 @@
 import { ReactNode } from "react";
 import ActionBar from "@/components/ActionBar";
-import Button from "@/components/Button";
+import { Button } from "@hdruk/ui";
 import useActionBar from "@/hooks/useActionBar";
 import { fireEvent, render, screen, waitFor } from "@/utils/testUtils";
 

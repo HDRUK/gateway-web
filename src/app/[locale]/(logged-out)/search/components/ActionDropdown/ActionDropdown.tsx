@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
+import { Button } from "@hdruk/ui";
 import { Bookmark, BookmarkBorder } from "@mui/icons-material";
 import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
-import { Button } from "@mui/material";
 import { get } from "lodash";
 import { useTranslations } from "next-intl";
 import { usePathname, useSearchParams } from "next/navigation";
@@ -226,7 +226,6 @@ const ActionDropdown = ({
     return (
         <>
             <Button
-                variant="contained"
                 endIcon={<ArrowDropDownIcon style={{ color: colors.white }} />}
                 sx={{ py: 0.5 }}
                 onClick={handleOpenDropdownMenu}
