@@ -4,6 +4,7 @@ import { useCallback, useState } from "react";
 import { useForm } from "react-hook-form";
 import { InView } from "react-intersection-observer";
 import { yupResolver } from "@hookform/resolvers/yup";
+import { tokens } from "@hdruk/ui/theme";
 import { Typography } from "@mui/material";
 import MuiDialogActions from "@mui/material/DialogActions";
 import MuiDialogContent from "@mui/material/DialogContent";
@@ -27,7 +28,6 @@ import {
     cohortAcceptTermsDefaultValues,
     cohortAcceptTermsField,
 } from "@/config/forms/cohortTermsAccept";
-import { colors } from "@/config/theme";
 import { RouteName } from "@/consts/routeName";
 
 const TRANSLATION_PATH_DIALOG = "dialogs.CohortRequestTerms";
@@ -102,7 +102,7 @@ const CohortRequestTermsDialog = () => {
                             sx={{
                                 width: 240,
                                 pl: 0,
-                                borderRight: `1px solid ${colors.grey300}`,
+                                borderRight: `1px solid ${tokens.status.grey}`,
                             }}>
                             <ActiveList
                                 handleClick={handleScroll}
@@ -115,7 +115,7 @@ const CohortRequestTermsDialog = () => {
                                 sx={{
                                     p: 0,
                                     mb: 2,
-                                    borderBottom: `1px solid ${colors.grey300}`,
+                                    borderBottom: `1px solid ${tokens.status.grey}`,
                                 }}>
                                 <Typography
                                     variant="h2"
@@ -174,7 +174,7 @@ const CohortRequestTermsDialog = () => {
                     sx={{
                         justifyContent: "space-between",
                         p: 2,
-                        borderTop: `1px solid ${colors.grey300}`,
+                        borderTop: `1px solid ${tokens.status.grey}`,
                     }}>
                     <InputWrapper
                         control={control}

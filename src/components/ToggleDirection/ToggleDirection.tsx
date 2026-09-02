@@ -16,7 +16,7 @@ const ToggleDirection = ({ control, name }: ToggleDirectionProps) => {
     return (
         <Button
             sx={{ marginBottom: 2 }}
-            variant="link"
+            purpose="link"
             onClick={() =>
                 field.onChange(field.value === "asc" ? "desc" : "asc")
             }>

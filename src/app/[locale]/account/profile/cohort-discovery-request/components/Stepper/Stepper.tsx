@@ -1,4 +1,5 @@
 import { ReactNode } from "react";
+import { tokens } from "@hdruk/ui/theme";
 import CheckIcon from "@mui/icons-material/Check";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import { Box } from "@mui/material";
@@ -55,7 +56,7 @@ export const StepTitle = ({
         sx={{
             fontWeight: 600,
             fontSize: small ? 16 : 18,
-            color: muted ? colors.grey500 : colors.grey900,
+            color: muted ? colors.grey500 : tokens.text.primaryBlack,
             mb: 0.5,
         }}>
         {children}

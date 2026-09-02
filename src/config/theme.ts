@@ -4,14 +4,6 @@ import { ReactElement } from "react";
 import { createHdrukTheme, tokens } from "@hdruk/ui/theme";
 import { sourceSans3 } from "./fonts";
 
-const buttonLinkStyle = {
-    padding: 0,
-    "&:hover": {
-        textDecoration: "underline",
-        backgroundColor: "transparent",
-    },
-};
-
 export const DISABLED_OPACITY = 0.4;
 
 export type colourType =
@@ -36,11 +28,6 @@ export type buttonColourType =
     | "yellowCustom"
     | "greyCustom";
 
-declare module "@mui/material/Button" {
-    interface ButtonPropsVariantOverrides {
-        link: true;
-    }
-}
 declare module "@mui/material/styles" {
     interface Palette {
         warningCustom: Palette["primary"];
@@ -99,44 +86,21 @@ declare module "@mui/material/Checkbox" {
     }
 }
 
+// Values with no @hdruk/ui token. Everything else comes from `tokens`.
 export const colors = {
-    white: "#fff",
     black: "#000",
-    orange: "#FE9A2D",
     orange300: "#F9B475",
-    orange200: "#F0BB24",
-    green50: "#E2F3F0",
-    green100: "#B8E2D8",
     green400: "#3DB28C",
-    green700: "#2c8267",
-    green800: "#267259",
     amber500: "#ffc107",
-    grey: "#F6F7F8",
-    grey100: "#F6F7F8",
-    grey200: "#EEE",
-    grey300: "#E2E2E2",
     grey400: "#D0D3D4",
     grey500: "#B3B8BD",
-    grey600: "#868E96",
-    grey700: "#53575A",
-    grey800: "#3C3C3B",
-    grey900: "#262626",
-    red50: "#FFECF1",
     red600: "#EF3F4B",
-    red700: "#DC3645",
-    red900: "#C02531",
-    purple100: "#C6CEE5",
     purple400: "#6275B3",
-    purple500: "#475da7",
-    purple700: "#384B91",
-    purple900: "#29235C",
     teal700: "#017397",
     darkGreen50: "#DEF0F0",
     darkGreen100: "#ADDAD9",
     yellow400: "#F4E751",
     yellow500: "#FFC40C",
-    yellow600: "#F2D12D",
-    yellow800: "#856505",
 };
 
 const palette = {
@@ -145,15 +109,15 @@ const palette = {
     },
     greyCustom: {
         main: colors.grey400,
-        light: colors.grey300,
+        light: tokens.status.grey,
         dark: "#A29415",
-        contrastText: colors.grey800,
+        contrastText: tokens.text.secondaryBlack,
     },
     yellowCustom: {
         main: colors.yellow400,
         light: "#E9DB5D",
         dark: "#A29415",
-        contrastText: colors.grey800,
+        contrastText: tokens.text.secondaryBlack,
     },
     warningCustom: {
         main: colors.amber500,
@@ -162,8 +126,8 @@ const palette = {
         contrastText: colors.black,
     },
     alias: {
-        backgroundColor: colors.grey700,
-        contrastText: colors.white,
+        backgroundColor: tokens.status.archived,
+        contrastText: tokens.background.white,
     },
 };
 
@@ -186,7 +150,7 @@ const theme = createHdrukTheme({
                 root: ({ theme }) => {
                     return {
                         "&.Mui-focusVisible": {
-                            outline: `2px solid ${colors.orange}`,
+                            outline: `2px solid ${tokens.status.needsAction}`,
                             borderRadius: "50%",
                             outlineOffset: 0,
                             background: colors.grey400,
@@ -215,7 +179,7 @@ const theme = createHdrukTheme({
             styleOverrides: {
                 root: ({ theme }) => ({
                     "&:focus": {
-                        backgroundColor: colors.white,
+                        backgroundColor: tokens.background.white,
 
                         "&.Mui-focusVisible": {
                             outline: `3px solid ${theme.palette.primary.main}`,
@@ -228,39 +192,6 @@ const theme = createHdrukTheme({
                 }),
             },
         },
-        MuiButtonBase: {
-            styleOverrides: {
-                root: ({ ownerState, theme: _theme }) => {
-                    const ownerStateProps = (
-                        ownerState?.children as ReactElement
-                    )?.props;
-
-                    return {
-                        "&.MuiMenuItem-root:hover": {
-                            ...(ownerStateProps?.invertListItem && {
-                                background: _theme.palette.primary.dark,
-                            }),
-                        },
-                        "&.MuiMenuItem-root.Mui-selected": {
-                            ...(ownerStateProps?.invertListItem && {
-                                background: _theme.palette.primary.dark,
-                            }),
-                        },
-                        "&.MuiMenuItem-root.Mui-selected:hover": {
-                            ...(ownerStateProps?.invertListItem && {
-                                background: _theme.palette.primary.dark,
-                            }),
-                        },
-                        "&.MuiTab-root": {
-                            textTransform: "initial",
-                        },
-                        "&.MuiTab-root.Mui-selected": {
-                            color: colors.grey900,
-                        },
-                    };
-                },
-            },
-        },
         MuiTabs: {
             styleOverrides: {
                 indicator: {
@@ -271,7 +202,7 @@ const theme = createHdrukTheme({
         MuiToggleButton: {
             styleOverrides: {
                 root: {
-                    background: colors.grey200,
+                    background: tokens.status.hovered,
 
                     "&.Mui-selected": {
                         background: "white",
@@ -293,7 +224,7 @@ const theme = createHdrukTheme({
                 {
                     props: { color: "greyCustom" },
                     style: {
-                        color: colors.grey800,
+                        color: tokens.text.secondaryBlack,
                         borderColor: palette.greyCustom.light,
                         background: palette.greyCustom.light,
                         "&:active": {
@@ -310,7 +241,7 @@ const theme = createHdrukTheme({
                 {
                     props: { color: "yellowCustom" },
                     style: {
-                        color: colors.grey800,
+                        color: tokens.text.secondaryBlack,
                         borderColor: palette.greyCustom.main,
                         "&:active": {
                             background: palette.yellowCustom.main,
@@ -318,20 +249,6 @@ const theme = createHdrukTheme({
                         "&:hover": {
                             background: palette.yellowCustom.main,
                         },
-                    },
-                },
-                {
-                    props: { variant: "link" },
-                    style: {
-                        color: tokens.brand.primary,
-                        ...buttonLinkStyle,
-                    },
-                },
-                {
-                    props: { variant: "link", color: "secondary" },
-                    style: {
-                        color: palette.secondary.main,
-                        ...buttonLinkStyle,
                     },
                 },
             ],
@@ -344,14 +261,14 @@ const theme = createHdrukTheme({
                             : _theme.palette[ownerState.color || "primary"]
                                   ?.main,
                     "&.Mui-focusVisible:not(.MuiIconButton-root)": {
-                        outline: `2px solid ${colors.orange}`,
+                        outline: `2px solid ${tokens.status.needsAction}`,
                         borderWidth: 0,
                     },
                 }),
                 // No `:hover` here — hdruk-ui's variants own outlined hover, so
                 // that `purpose` styling isn't overridden by a local rule.
                 outlined: {
-                    color: colors.grey800,
+                    color: tokens.text.secondaryBlack,
                 },
                 text: {
                     "&.Mui-focusVisible:not(.MuiIconButton-root)": {
@@ -399,8 +316,8 @@ const theme = createHdrukTheme({
                             borderColor: colors.grey400,
                         },
                     "&.MuiOutlinedInput-root.Mui-readOnly": {
-                        color: colors.grey600,
-                        backgroundColor: colors.grey200,
+                        color: tokens.status.faded,
+                        backgroundColor: tokens.status.hovered,
                     },
                     "&.MuiOutlinedInput-root.Mui-readOnly .MuiOutlinedInput-notchedOutline":
                         {
@@ -435,8 +352,8 @@ const theme = createHdrukTheme({
                     },
                     "&.Mui-focusVisible": {
                         span: {
-                            outline: `2px solid ${colors.purple500}`,
-                            border: `1px solid ${colors.white}`,
+                            outline: `2px solid ${tokens.brand.primary}`,
+                            border: `1px solid ${tokens.background.white}`,
                         },
                     },
                 },
@@ -652,7 +569,7 @@ const theme = createHdrukTheme({
                             "& .MuiSwitch-input": {
                                 left: "-220%",
                             },
-                            color: colors.white,
+                            color: tokens.background.white,
                             "& + .MuiSwitch-track": {
                                 backgroundColor: palette.secondary.main,
                                 opacity: 1,
@@ -663,7 +580,7 @@ const theme = createHdrukTheme({
                             },
                         },
                         "&.Mui-disabled+.MuiSwitch-track": {
-                            backgroundColor: colors.grey600,
+                            backgroundColor: tokens.status.faded,
                         },
                     },
                     "& .MuiSwitch-thumb": {
@@ -693,13 +610,13 @@ const theme = createHdrukTheme({
                     props: { color: "success" },
                     style: {
                         background: colors.green400,
-                        color: colors.white,
+                        color: tokens.background.white,
                     },
                 },
                 {
                     props: { color: "secondary" },
                     style: {
-                        color: colors.white,
+                        color: tokens.background.white,
                     },
                 },
                 {
@@ -711,8 +628,8 @@ const theme = createHdrukTheme({
                 {
                     props: { color: "yellowCustom" },
                     style: {
-                        background: colors.yellow600,
-                        color: colors.yellow800,
+                        background: tokens.status.warning,
+                        color: tokens.text.warning,
                     },
                 },
                 {
@@ -725,8 +642,8 @@ const theme = createHdrukTheme({
                 {
                     props: { color: "greyCustom" },
                     style: {
-                        backgroundColor: colors.grey600,
-                        color: colors.white,
+                        backgroundColor: tokens.status.faded,
+                        color: tokens.background.white,
                     },
                 },
             ],

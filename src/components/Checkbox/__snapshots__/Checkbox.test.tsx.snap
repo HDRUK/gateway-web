@@ -9,7 +9,7 @@ exports[`Checkbox checkbox snapshot 1`] = `
       class="MuiFormControlLabel-root MuiFormControlLabel-labelPlacementEnd mui-style-i1n6p3-MuiFormControlLabel-root"
     >
       <span
-        class="MuiButtonBase-root MuiCheckbox-root MuiCheckbox-colorSecondary MuiCheckbox-sizeMedium PrivateSwitchBase-root MuiCheckbox-root MuiCheckbox-colorSecondary MuiCheckbox-sizeMedium MuiCheckbox-root MuiCheckbox-colorSecondary MuiCheckbox-sizeMedium mui-style-1ye22tx-MuiButtonBase-root-MuiSwitchBase-root-MuiCheckbox-root"
+        class="MuiButtonBase-root MuiCheckbox-root MuiCheckbox-colorSecondary MuiCheckbox-sizeMedium PrivateSwitchBase-root MuiCheckbox-root MuiCheckbox-colorSecondary MuiCheckbox-sizeMedium MuiCheckbox-root MuiCheckbox-colorSecondary MuiCheckbox-sizeMedium mui-style-1tf26ui-MuiButtonBase-root-MuiSwitchBase-root-MuiCheckbox-root"
       >
         <input
           class="PrivateSwitchBase-input mui-style-12xagqm-MuiSwitchBase-root"

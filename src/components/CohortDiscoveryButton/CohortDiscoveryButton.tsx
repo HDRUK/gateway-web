@@ -12,7 +12,7 @@ import {
 } from "@mui/material";
 import { useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
-import { Button } from "@hdruk/ui";
+import { Button, ButtonPurpose } from "@hdruk/ui";
 import ProvidersDialog from "@/modules/ProvidersDialog";
 import useAuth from "@/hooks/useAuth";
 import { useCohortStatus } from "@/hooks/useCohortStatus";
@@ -38,6 +38,7 @@ export interface CohortDiscoveryButtonProps {
     showDatasetExplanatoryTooltip?: boolean | null;
     color?: ButtonProps["color"];
     variant?: ButtonProps["variant"];
+    purpose?: ButtonPurpose;
     sx?: SxProps;
     wrapperSx?: SxProps;
     tooltipOverride?: string | null;
@@ -51,8 +52,9 @@ export interface CohortDiscoveryButtonProps {
 
 const CohortDiscoveryButton = ({
     showDatasetExplanatoryTooltip,
-    color = "primary",
+    color,
     variant,
+    purpose,
     sx,
     wrapperSx,
     tooltipOverride,
@@ -64,6 +66,10 @@ const CohortDiscoveryButton = ({
     label,
     ...restProps
 }: CohortDiscoveryButtonProps) => {
+    // The chooser's buttons state a colour outright; the main button leaves it
+    // unset so `purpose` can supply one — an explicit colour would beat it.
+    const accessButtonColor = color ?? "primary";
+
     const { showModal } = useModal();
     const { showDialog } = useDialog();
     const { push } = useRouter();
@@ -215,7 +221,7 @@ const CohortDiscoveryButton = ({
                 direction="row">
                 {isRQuestEnabled && (
                     <CohortDiscoveryAccessButton
-                        color={color}
+                        color={accessButtonColor}
                         disabledOuter={!rQuestRedirectUrl}
                         onClick={handleOpenRQuest}
                         tooltip={tooltipOverride || t("rquest.tooltip")}
@@ -242,7 +248,7 @@ const CohortDiscoveryButton = ({
         [
             isRQuestEnabled,
             isCohortDiscoveryServiceEnabled,
-            color,
+            accessButtonColor,
             rQuestRedirectUrl,
             cdsRedirectUrl,
             handleOpenRQuest,
@@ -364,6 +370,7 @@ const CohortDiscoveryButton = ({
                     data-testid={DATA_TEST_ID}
                     color={color}
                     variant={variant}
+                    purpose={purpose}
                     disabled={isLoading || isDisabled}
                     sx={{ width: "100%", ...sx }}
                     {...restProps}>

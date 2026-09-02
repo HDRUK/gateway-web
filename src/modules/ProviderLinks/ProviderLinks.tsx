@@ -1,3 +1,4 @@
+import { tokens } from "@hdruk/ui/theme";
 import { SvgIconComponent } from "@mui/icons-material";
 import { Typography } from "@mui/material";
 import { useTranslations } from "next-intl";
@@ -30,7 +31,7 @@ interface ProviderLinksProps {
 }
 
 const highlight = (chunks: React.ReactNode) => (
-    <Box component="span" sx={{ color: colors.red700, p: 0 }}>
+    <Box component="span" sx={{ color: tokens.status.error, p: 0 }}>
         {chunks}
     </Box>
 );
@@ -133,7 +134,7 @@ const ProviderLinks = ({
                                 }
                                 sx={{
                                     p: 0,
-                                    color: colors.grey700,
+                                    color: tokens.text.faded,
                                     display: "block",
                                     lineHeight: "inherit",
                                     fontWeight: "inherit",

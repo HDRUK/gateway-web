@@ -32,7 +32,7 @@ const TitlePanel = ({ image, text, title, id }: TitlePanelProps) => {
                     sx={{
                         minHeight: {
                             sm: 190,
-                            lg: 180,
+                            lg: 200,
                         },
                         p: 0,
                     }}>

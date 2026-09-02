@@ -1,3 +1,4 @@
+import { tokens } from "@hdruk/ui/theme";
 import { Link } from "@mui/material";
 import { useParams } from "next/navigation";
 import { DataUse } from "@/interfaces/DataUse";
@@ -7,7 +8,6 @@ import KeyValueList from "@/components/KeyValueList";
 import Paper from "@/components/Paper";
 import ShowMore from "@/components/ShowMore";
 import Typography from "@/components/Typography";
-import { colors } from "@/config/theme";
 import { RouteName } from "@/consts/routeName";
 import { formatDate } from "@/utils/date";
 import CardActions from "../CardActions";
@@ -109,7 +109,7 @@ const DataUseCard = ({ dataUse, actions }: DataUseCardProps) => {
                         />
                     </Box>
                 </Box>
-                <Box sx={{ p: 0, borderLeft: `solid 1px ${colors.grey600}` }}>
+                <Box sx={{ p: 0, borderLeft: `solid 1px ${tokens.status.faded}` }}>
                     <CardActions actions={actions} id={dataUse.id} />
                 </Box>
             </Box>

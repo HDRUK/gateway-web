@@ -1,10 +1,10 @@
 import { Control } from "react-hook-form";
 import { isPlainObject } from "lodash";
+import { tokens } from "@hdruk/ui/theme";
 import { Metadata } from "@/interfaces/Dataset";
 import Box from "@/components/Box";
 import InputWrapper from "@/components/InputWrapper";
 import { inputComponents } from "@/config/forms";
-import { colors } from "@/config/theme";
 import { capitalise, splitCamelcase } from "@/utils/general";
 import Typography from "../Typography";
 
@@ -47,7 +47,7 @@ const DynamicInputWrapper = ({
                             <Box
                                 key={name ? `${name}.${key}` : key}
                                 sx={{
-                                    borderBottom: `1px solid ${colors.grey300}`,
+                                    borderBottom: `1px solid ${tokens.status.grey}`,
                                     mb: 2,
                                 }}>
                                 <Typography fontWeight="bold" sx={{ mb: 2 }}>

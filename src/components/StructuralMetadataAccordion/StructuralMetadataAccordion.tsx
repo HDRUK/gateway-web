@@ -15,10 +15,10 @@ import {
     StructuralMetadataColumn,
     StructuralMetadataPublicSchema,
 } from "@/interfaces/Dataset";
+import { tokens } from "@hdruk/ui/theme";
 import Accordion from "@/components/Accordion";
 import Box from "@/components/Box";
 import TooltipText from "@/components/TooltipText";
-import { colors } from "@/config/theme";
 import { formatTextWithLinks } from "@/utils/dataset";
 import { decodeHtmlEntity } from "@/utils/general";
 
@@ -126,7 +126,7 @@ const StructuralMetadataAccordion = ({
                                 </TableHead>
                                 <TableBody
                                     sx={{
-                                        color: colors.grey600,
+                                        color: tokens.text.disabled,
                                     }}>
                                     {item?.rows.map(row => (
                                         <TableRow key={row.name}>

@@ -29,7 +29,7 @@ export default function ShowMoreButton({
                     }}
                 />
             }
-            variant="link"
+            purpose="link"
             sx={sxButton}>
             {open ? t("showLess") : t("showMore")}
         </Button>

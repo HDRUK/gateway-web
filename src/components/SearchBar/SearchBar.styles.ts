@@ -1,9 +1,9 @@
+import { tokens } from "@hdruk/ui/theme";
 import { styled } from "@mui/material";
 import Box from "@/components/Box";
 import Form from "@/components/Form";
 import Link from "@/components/Link";
 import Typography from "@/components/Typography";
-import { colors } from "@/config/theme";
 import TextFieldBase from "../TextFieldBase";
 
 export const FormWrapper = styled(Box)(() => ({
@@ -47,12 +47,12 @@ export const SearchInput = styled(TextFieldBase)(() => ({
 }));
 
 export const ExplainerText = styled(Typography)(() => ({
-    color: colors.grey600,
+    color: tokens.text.disabled,
     fontSize: "1rem",
 }));
 
 export const ExplainerLink = styled(Link)(() => ({
     display: "inline-block",
-    color: colors.green700,
+    color: tokens.brand.secondary,
     fontSize: "1rem",
 }));

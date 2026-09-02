@@ -1,6 +1,7 @@
 "use client";
 
 import { useMemo } from "react";
+import { tokens } from "@hdruk/ui/theme";
 import { FileUploadOutlined } from "@mui/icons-material";
 import { Divider, Stack, Tooltip } from "@mui/material";
 import { uniq } from "lodash";
@@ -155,7 +156,7 @@ const RightPanel = ({ selected, handleRemove }: RightPanelProps) => {
                     {darSidebarData.type && (
                         <Box
                             sx={{
-                                backgroundColor: colors.grey100,
+                                backgroundColor: tokens.background.primary,
                                 border: `1px solid ${colors.grey400}`,
                                 gap: 1,
                                 display: "flex",
@@ -167,7 +168,7 @@ const RightPanel = ({ selected, handleRemove }: RightPanelProps) => {
                                 useFlexGap
                                 sx={{
                                     justifyContent: "space-between",
-                                    borderBottom: `1px solid ${colors.grey300}`,
+                                    borderBottom: `1px solid ${tokens.status.grey}`,
                                     pb: 1,
                                 }}>
                                 <Stack direction="row" sx={{ p: 0, gap: 1 }}>
@@ -180,11 +181,11 @@ const RightPanel = ({ selected, handleRemove }: RightPanelProps) => {
                                             background:
                                                 darSidebarData.type ===
                                                 DarTemplateType.DOCUMENT.toLowerCase()
-                                                    ? colors.purple100
+                                                    ? tokens.brand.accentPrimary
                                                     : darSidebarData.type ===
                                                       DarTemplateType.FORM.toLowerCase()
-                                                    ? colors.purple500
-                                                    : `linear-gradient(to right, ${colors.purple100} 50%,${colors.purple500} 50%)`,
+                                                    ? tokens.brand.primary
+                                                    : `linear-gradient(to right, ${tokens.brand.accentPrimary} 50%,${tokens.brand.primary} 50%)`,
                                         }}
                                     />
                                     <Typography>
@@ -196,7 +197,7 @@ const RightPanel = ({ selected, handleRemove }: RightPanelProps) => {
                                     <Typography
                                         component="span"
                                         sx={{
-                                            color: colors.grey600,
+                                            color: tokens.text.disabled,
                                             mr: 1,
                                         }}>
                                         {tDar("selectedDatasets")}
@@ -276,7 +277,7 @@ const RightPanel = ({ selected, handleRemove }: RightPanelProps) => {
                             sx={{
                                 p: 2,
                                 m: 0,
-                                backgroundColor: colors.grey,
+                                backgroundColor: tokens.background.primary,
                             }}>
                             <Button
                                 color="greyCustom"

@@ -40,7 +40,7 @@ const ActiveList = ({
                         }}>
                         <Button
                             onClick={() => handleClick(index + 1)}
-                            variant="link"
+                            purpose="link"
                             sx={{
                                 whiteSpace: "inherit",
                                 textAlign: "left",

@@ -1,4 +1,4 @@
-import { colors } from "@/config/theme";
+import { tokens } from "@hdruk/ui/theme";
 
 export const galleryStyle = {
     figure: {
@@ -17,7 +17,7 @@ export const galleryStyle = {
         right: "-1em",
         top: "-1em",
     },
-    closeIcon: { color: colors.white, fontSize: "2em" },
+    closeIcon: { color: tokens.text.primaryWhite, fontSize: "2em" },
     arrow: {
         position: "absolute",
         top: "50%",

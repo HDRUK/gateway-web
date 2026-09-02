@@ -92,7 +92,7 @@ const DarEnquiryDialog = ({
                             generalEnquiryLink: () => (
                                 <Button
                                     aria-label="general"
-                                    variant="link"
+                                    purpose="link"
                                     onClick={handleGeneralEnquiry}>
                                     {t("generalEnquiryLink")}
                                 </Button>
@@ -100,7 +100,7 @@ const DarEnquiryDialog = ({
                             feasabilityEnquiryLink: () => (
                                 <Button
                                     aria-label="feasibility"
-                                    variant="link"
+                                    purpose="link"
                                     onClick={handleFeasibilityEnquiry}>
                                     {t("feasibilityEnquiryLink")}
                                 </Button>

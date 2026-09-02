@@ -4,6 +4,7 @@ import { useEffect, useMemo, useState } from "react";
 import { useForm } from "react-hook-form";
 import { useTranslations } from "next-intl";
 import { useRouter, useSearchParams } from "next/navigation";
+import { tokens } from "@hdruk/ui/theme";
 import { PaginationType } from "@/interfaces/Pagination";
 import { Tool } from "@/interfaces/Tool";
 import Box from "@/components/Box";
@@ -20,7 +21,6 @@ import {
     searchDefaultValues,
     sortByOptions,
 } from "@/config/forms/toolAccountSearch";
-import { colors } from "@/config/theme";
 import { DataStatus } from "@/consts/application";
 import { AddIcon, ArchiveIcon, EditIcon, UnarchiveIcon } from "@/consts/icons";
 import { RouteName } from "@/consts/routeName";
@@ -294,7 +294,7 @@ const TeamTools = ({ permissions, teamId, userId }: TeamToolsProps) => {
             <Tabs
                 centered
                 tabs={tabsList}
-                tabBoxSx={{ padding: 0, background: colors.white }}
+                tabBoxSx={{ padding: 0, background: tokens.background.white }}
                 rootBoxSx={{ padding: 0 }}
             />
         </>

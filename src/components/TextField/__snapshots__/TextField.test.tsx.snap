@@ -22,7 +22,7 @@ exports[`TextField should render icon 1`] = `
       class="MuiBox-root mui-style-ve6emg"
     >
       <div
-        class="MuiInputBase-root MuiOutlinedInput-root MuiInputBase-colorPrimary MuiInputBase-fullWidth MuiInputBase-sizeSmall MuiInputBase-adornedStart mui-style-3p4m9g-MuiInputBase-root-MuiOutlinedInput-root"
+        class="MuiInputBase-root MuiOutlinedInput-root MuiInputBase-colorPrimary MuiInputBase-fullWidth MuiInputBase-sizeSmall MuiInputBase-adornedStart mui-style-1kts8f7-MuiInputBase-root-MuiOutlinedInput-root"
       >
         <div
           class="MuiInputAdornment-root MuiInputAdornment-positionStart mui-style-1nowbqt-MuiInputAdornment-root"
@@ -35,7 +35,7 @@ exports[`TextField should render icon 1`] = `
           </span>
           <svg
             aria-hidden="true"
-            class="MuiSvgIcon-root MuiSvgIcon-colorPrimary MuiSvgIcon-fontSizeMedium mui-style-13zxd6q-MuiSvgIcon-root"
+            class="MuiSvgIcon-root MuiSvgIcon-colorPrimary MuiSvgIcon-fontSizeMedium mui-style-iggaj2-MuiSvgIcon-root"
             data-testid="AddAPhotoIcon"
             focusable="false"
             viewBox="0 0 24 24"

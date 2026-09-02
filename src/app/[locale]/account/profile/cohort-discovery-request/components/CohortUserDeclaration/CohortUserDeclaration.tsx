@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { tokens } from "@hdruk/ui/theme";
 import { Box, Typography } from "@mui/material";
 import { useTranslations } from "next-intl";
 import { Button } from "@hdruk/ui";
@@ -30,7 +31,7 @@ const CohortUserDeclaration = ({
                     *
                 </Typography>
             </Typography>
-            <Typography color={colors.grey600} sx={{ mb: 1 }}>
+            <Typography color={tokens.text.disabled} sx={{ mb: 1 }}>
                 {t("userDeclarationAdditional")}
             </Typography>
             <Typography sx={{ mb: 1 }}>{t("statementIntro")}</Typography>

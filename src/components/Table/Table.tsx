@@ -7,7 +7,7 @@ import {
     ColumnDef,
     Column,
 } from "@tanstack/react-table";
-import { colors } from "@/config/theme";
+import { tokens } from "@hdruk/ui/theme";
 import ActionDropdown from "@/app/[locale]/(logged-out)/search/components/ActionDropdown";
 import * as styles from "./Table.styles";
 
@@ -66,8 +66,8 @@ const getCommonCellStyles = <T,>(
 
     const shouldPin = isPinned || isHeaderPinned;
     return {
-        backgroundColor: shouldPin ? colors.grey100 : "white",
-        boxShadow: hasPinnedBorder ? `1px 0 ${colors.grey300}` : undefined,
+        backgroundColor: shouldPin ? tokens.background.primary : "white",
+        boxShadow: hasPinnedBorder ? `1px 0 ${tokens.status.grey}` : undefined,
         left: shouldPin ? `${column.getStart()}px` : undefined,
         top: shouldPin ? 0 : undefined,
         opacity: shouldPin ? 0.95 : 1,

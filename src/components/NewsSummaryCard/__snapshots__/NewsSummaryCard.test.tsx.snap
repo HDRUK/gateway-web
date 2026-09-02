@@ -50,7 +50,7 @@ exports[`NewsSummaryCard should render component 1`] = `
         class="MuiBox-root mui-style-164r41r"
       >
         <a
-          class="MuiTypography-root MuiTypography-inherit MuiLink-root MuiLink-underlineHover mui-style-12qr6y2-MuiTypography-root-MuiLink-root"
+          class="MuiTypography-root MuiTypography-inherit MuiLink-root MuiLink-underlineHover mui-style-d5nsbx-MuiTypography-root-MuiLink-root"
           href="https://www.healthdatagateway.org/"
           rel="noopener"
           target="_blank"
