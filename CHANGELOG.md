@@ -1,3 +1,23 @@
+## [2.43.0](https://github.com/HDRUK/gateway-web/compare/v2.42.0...v2.43.0) (2026-09-02)
+
+### ✨ Features
+
+* **GAT-7829:** Update file type for structual metadata example file (#1617) ([65353bc](https://github.com/HDRUK/gateway-web/commit/65353bc6d65033a94f044ee56c5ab6bc3952e38b)), closes [GAT-7829](undefinedGAT-7829)
+* **GAT-9134:** Add delete widget confirmation modal (#1616) ([baa716f](https://github.com/HDRUK/gateway-web/commit/baa716f07b2ccf2a904807336efe2c39d0c94143)), closes [GAT-9134](undefinedGAT-9134)
+* **GAT-9205:** Reapply for cohort discovery when near expiry (#1618) ([c3681e5](https://github.com/HDRUK/gateway-web/commit/c3681e5ee91193a56093924308dae25bfbba92b7)), closes [GAT-9205](undefinedGAT-9205)
+* **GAT-9206:** Redirect logged-out users to the cohort status page after sign-in ([bcbd3cd](https://github.com/HDRUK/gateway-web/commit/bcbd3cd216db51157d0eaa1229b33a7cddaa1c17)), closes [GAT-9206](undefinedGAT-9206)
+* **GAT-9265:** Update breakpoints to standard MUI names (#1625) ([736fbf4](https://github.com/HDRUK/gateway-web/commit/736fbf4b724ed7b15b0dddd18620dd489e77fd45)), closes [GAT-9265](undefinedGAT-9265)
+* **GAT-9459:** Add priority sort order to table ([478b992](https://github.com/HDRUK/gateway-web/commit/478b992cc98f3437a65e9c3cae425ccff3b1beac)), closes [GAT-9459](undefinedGAT-9459)
+* **GAT-9459:** Add RENEWING status in the cohort discovery admin view ([04a8f3e](https://github.com/HDRUK/gateway-web/commit/04a8f3e10e357c88c9509b2d7e9d7c72a6232ee9)), closes [GAT-9459](undefinedGAT-9459)
+
+### 🐛 Bug Fixes
+
+* **GAT-9482:** Clear the error banner after a successful integration test ([399efc5](https://github.com/HDRUK/gateway-web/commit/399efc56ab36ab958cdbd1e8483dac70f96f77c5)), closes [GAT-9482](undefinedGAT-9482)
+* **GAT-9482:** Improve reactivity when editing and running integrations ([fd53343](https://github.com/HDRUK/gateway-web/commit/fd53343936f835032d8a87cf4ca27914bf9d1f11)), closes [GAT-9482](undefinedGAT-9482)
+* **GAT-9483:** Fix CDS auto-open in the event both CDS and NHSDE access is granted ([cd81700](https://github.com/HDRUK/gateway-web/commit/cd81700a762a7ee5184a62d1cb099ac53db86d02))
+* **GAT-9483:** Restore Cohort Discovery auto-open after login ([d449ff4](https://github.com/HDRUK/gateway-web/commit/d449ff44e4f858f9ac2835ce2e93e9c23f73686b)), closes [GAT-9483](undefinedGAT-9483) [usePostLoginAction/PostLoginActions](undefinedostLoginActions)
+* **GAT-9999:** fixes bug where local state was being repalced by stal… (#1626) ([2e96dba](https://github.com/HDRUK/gateway-web/commit/2e96dba9d661a371e66ad30f23144fd5799c53e1))
+
 ## [2.42.0](https://github.com/HDRUK/gateway-web/compare/v2.41.0...v2.42.0) (2026-08-20)
 
 ### ✨ Features
