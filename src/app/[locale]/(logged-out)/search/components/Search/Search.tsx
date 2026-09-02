@@ -86,6 +86,7 @@ import {
     sortByOptionsTool,
 } from "@/config/forms/search";
 import { colors } from "@/config/theme";
+import { isAwaitingCohortDecision } from "@/consts/cohortDiscovery";
 import {
     ChevronThinIcon,
     CloseIcon,
@@ -183,10 +184,10 @@ const Search = ({ filters, schema }: SearchProps) => {
     const { isLoggedIn, user } = useAuth();
     const { showSidebar } = useSidebar();
     const theme = useTheme();
-    const isMobile = useMediaQuery(theme.breakpoints.only("mobile"));
+    const isMobile = useMediaQuery(theme.breakpoints.only("xs"));
 
     const isTabletOrLaptop = useMediaQuery(
-        theme.breakpoints.between("tablet", "desktop")
+        theme.breakpoints.between("sm", "lg")
     );
     // This is a bit hacky because this is the exact width of the tabs with content,
     // so it's susceptible to changes in font size or content.
@@ -466,12 +467,10 @@ const Search = ({ filters, schema }: SearchProps) => {
         setIsDownloading(false);
     };
 
-    const { requestStatus } = useCohortStatus(user?.id);
+    const { requestStatus, hasAccess } = useCohortStatus(user?.id);
 
     const isCohortDiscoveryDisabled =
-        isLoggedIn && requestStatus
-            ? !["APPROVED", "REJECTED", "EXPIRED"].includes(requestStatus)
-            : false;
+        isLoggedIn && isAwaitingCohortDecision(requestStatus, hasAccess);
 
     const renderResultCard = (result: SearchResult) => {
         const { _id: resultId } = result;

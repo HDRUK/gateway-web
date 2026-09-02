@@ -25,6 +25,7 @@ describe("getCohortStatusAndRedirect", () => {
         const mockUserRequest = {
             request_status: "APPROVED",
             request_expire_at: "07-07-2025 10:00:00",
+            has_access: true,
         };
 
         (getUserCohortRequest as jest.Mock).mockResolvedValue(mockUserRequest);
@@ -37,6 +38,7 @@ describe("getCohortStatusAndRedirect", () => {
             nhseSdeRequestStatus: null,
             requestExpiry: "07-07-2025 10:00:00",
             redirectUrl: "",
+            hasAccess: true,
         });
     });
 
@@ -53,7 +55,7 @@ describe("getCohortStatusAndRedirect", () => {
         expect(result).toBeNull();
     });
 
-    it("should handle missing request_status or redirect_url", async () => {
+    it("should handle missing request_status, has_access or redirect_url", async () => {
         (getUserCohortRequest as jest.Mock).mockResolvedValue({});
         (getCohortAccessRedirect as jest.Mock).mockResolvedValue({});
 
@@ -64,6 +66,7 @@ describe("getCohortStatusAndRedirect", () => {
             nhseSdeRequestStatus: null,
             requestExpiry: null,
             redirectUrl: "",
+            hasAccess: false,
         });
     });
 });

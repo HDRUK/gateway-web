@@ -52,7 +52,7 @@ const EditIntegrationForm = () => {
         const rounded = Math.round(parseInt(minute, 10) / 15) * 15 % 60;
         return rounded.toString().padStart(2, "0");
     };
-    const { data: integration } = useGet<Integration>(
+    const { data: integration, mutate: mutateIntegration } = useGet<Integration>(
         `${apis.teamsV1Url}/${params?.teamId}/federations/${params?.intId}`,
         { shouldFetch: !!params?.teamId && !!params?.intId }
     );
@@ -98,6 +98,13 @@ const EditIntegrationForm = () => {
         /* Populate form with saved integration */
         const formData: IntegrationForm = {
             ...integration,
+            // The test endpoint validates connectivity and clears any stale
+            // error, but deliberately doesn't persist `tested` until the user
+            // saves - only "Save configuration" does that. Refetching after a
+            // successful test (to pick up the cleared error) would otherwise
+            // stomp the just-set local `tested: true` with the still-stale
+            // DB value, greying the enabled/disabled toggle back out.
+            tested: integration.tested || getValues("tested"),
             run_time_hour: integration.run_time_hour
                 .toString()
                 .padStart(2, "0"),
@@ -159,7 +166,13 @@ const EditIntegrationForm = () => {
                 ...payload,
                 run_time_hour: runTimeHour,
             };
-            await updateIntegration(payload.id, updatedPayload);
+            const updateResponse = await updateIntegration(
+                payload.id,
+                updatedPayload
+            );
+            if (updateResponse !== null) {
+                mutateIntegration();
+            }
         }
     };
 
@@ -203,6 +216,7 @@ const EditIntegrationForm = () => {
                 : FederationRunStatus.IDLE
         );
         if (response !== null) {
+            mutateIntegration();
             revertTimeoutRef.current = setTimeout(
                 () => setRunNowStatus(FederationRunStatus.IDLE),
                 3000
@@ -309,7 +323,10 @@ const EditIntegrationForm = () => {
                             status={testStatus}
                             runResponse={testResponse}
                             isEnabled={formState.isValid}
-                            onTest={handleTest}
+                            onTest={async () => {
+                                await handleTest();
+                                mutateIntegration();
+                            }}
                         />
                     </Box>
                 </Box>

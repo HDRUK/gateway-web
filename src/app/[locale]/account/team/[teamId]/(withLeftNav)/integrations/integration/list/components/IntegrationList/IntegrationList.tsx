@@ -16,7 +16,7 @@ const IntegrationList = () => {
     const [currentPage, setCurrentPage] = useState(1);
 
     const params = useParams<{ teamId: string }>();
-    const { data, isLoading } = useGet<PaginationType<Integration>>(
+    const { data, isLoading, mutate } = useGet<PaginationType<Integration>>(
         `${apis.teamsV1Url}/${params?.teamId}/federations?per_page=10&page=${currentPage}`,
         {
             keepPreviousData: true,
@@ -49,6 +49,7 @@ const IntegrationList = () => {
                     key={integration.id}
                     index={index + startIndex}
                     integration={integration}
+                    onChanged={() => mutate()}
                 />
             ))}
             <Pagination

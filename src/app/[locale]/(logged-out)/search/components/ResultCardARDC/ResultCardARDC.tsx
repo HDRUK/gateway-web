@@ -22,7 +22,7 @@ interface ResultCardARDCProps {
 
 const ResultCardARDC = ({ result, providerLogo }: ResultCardARDCProps) => {
     const theme = useTheme();
-    const isMobileOrTablet = useMediaQuery(theme.breakpoints.down("laptop"));
+    const isMobileOrTablet = useMediaQuery(theme.breakpoints.down("md"));
 
     const title = result.display_title || result.title || "";
     const organisation = result.group;

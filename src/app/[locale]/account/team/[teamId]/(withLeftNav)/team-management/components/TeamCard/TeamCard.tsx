@@ -79,7 +79,7 @@ const TeamCard = ({
                         <Grid
                             key={section.id}
                             sx={{ mb: 4 }}
-                            size={{ mobile: 12, tablet: 6 }}>
+                            size={{ xs: 12, sm: 6 }}>
                             <TooltipIcon
                                 boxSx={{ justifyContent: "flex-start" }}
                                 label={translations[section.label]}

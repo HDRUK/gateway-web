@@ -338,6 +338,9 @@
                     "headerText": "Learn about Cohort Discovery and gain access to the service",
                     "accessTitle": "Cohort Data Access",
                     "daysRemaining": "days remaining in current access period",
+                    "accessExpiringIn": "Access expiring in {days, plural, one {# Day} other {# Days}}",
+                    "currentAccessLabel": "Current Access :",
+                    "accessRenewalLabel": "Access Renewal :",
                     "accessText1": "Cohort Discovery allows researchers to explore and identify patient cohorts across multiple, federated health data sources without accessing identifiable patient-level data. It streamlines study feasibility assessments by providing rapid, aggregated cohort counts and characteristics across diverse datasets. To request access or log in, please click the 'Access Cohort Discovery' button.",
                     "stepper": {
                         "moreInfo": "More information about this service can be found <link>here</link>",
@@ -345,7 +348,9 @@
                         "applyStepTitle": "Apply for Cohort Discovery Access",
                         "applyStepDescription": "Start application, read terms and conditions and submit application.",
                         "applyButton": "Apply for Cohort Discovery",
-                        "reapplyButton": "Re-apply for access",
+                        "reapplyStepTitle": "Re-apply for Cohort Discovery Access",
+                        "reapplyStepDescription": "Start your application now so you don't lose access to the Cohort Discovery Service",
+                        "reapplyButton": "Re-apply for Cohort Discovery",
                         "reviewProfileTitle": "Review Your Profile",
                         "reviewProfileIntro": "Your Cohort Discovery Access Request will be assessed based on your Gateway registered user profile. Please ensure this is complete and up to date before you submit this request and includes:",
                         "checklistEmail": "Institutional email address <warn>(if this is not what appears in your SSO email field, please log out and log in using your institutional email address)</warn>",
@@ -1079,7 +1084,13 @@
                     "actions": {
                         "edit": { "label": "Edit widget" },
                         "preview": { "label": "Preview widget" },
-                        "delete": { "label": "Delete widget" }
+                        "delete": {
+                            "label": "Delete widget",
+                            "title": "Delete widget",
+                            "content": "Are you sure you want to delete \"{WIDGET_NAME}\"? This cannot be undone.",
+                            "confirmText": "Delete",
+                            "cancelText": "Cancel"
+                        }
                     },
                     "createmodal": {
                         "create": "Create new widget",

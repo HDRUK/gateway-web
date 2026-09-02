@@ -6,7 +6,11 @@ import Paper from "@/components/Paper";
 
 const TRANSLATION_PATH = "pages.account.profile.cohortDiscovery.stepper";
 
-const CohortAccessPanel = () => {
+const CohortAccessPanel = ({
+    autoTriggerAccess = false,
+}: {
+    autoTriggerAccess?: boolean;
+}) => {
     const t = useTranslations(TRANSLATION_PATH);
 
     return (
@@ -17,9 +21,12 @@ const CohortAccessPanel = () => {
                 display: "flex",
                 alignItems: "center",
                 justifyContent: "center",
-                p: { mobile: 3, laptop: 4 },
+                p: { xs: 3, md: 4 },
             }}>
-            <CohortDiscoveryButton label={t("accessButton")} />
+            <CohortDiscoveryButton
+                label={t("accessButton")}
+                autoTriggerAccess={autoTriggerAccess}
+            />
         </Paper>
     );
 };

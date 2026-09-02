@@ -6,7 +6,7 @@ exports[`Footer should render component 1`] = `
     class="mui-style-7ip1ev"
   >
     <div
-      class="MuiContainer-root MuiContainer-maxWidthDesktop mui-style-1pszioj-MuiContainer-root"
+      class="MuiContainer-root MuiContainer-maxWidthLg mui-style-u20iuw-MuiContainer-root"
     >
       <div
         class="MuiBox-root mui-style-0"

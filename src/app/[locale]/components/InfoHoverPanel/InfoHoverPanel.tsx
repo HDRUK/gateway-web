@@ -30,9 +30,9 @@ const BUTTON_STYLES = {
     height: "100%",
     background: "white",
     borderColor: "white",
-    borderRadius: { mobile: 2, tablet: 3 },
-    p: { mobile: 1, tablet: "24px 15px" },
-    fontSize: { mobile: 14, tablet: 19 },
+    borderRadius: { xs: 2, sm: 3 },
+    p: { xs: 1, sm: "24px 15px" },
+    fontSize: { xs: 14, sm: 19 },
     textAlign: "center",
 };
 
@@ -114,8 +114,8 @@ const InfoHoverPanel = ({
                     gap: 1,
                     display: "grid",
                     gridTemplateColumns: {
-                        mobile: "repeat(2, 1fr)",
-                        desktop: "repeat(4, 1fr)",
+                        xs: "repeat(2, 1fr)",
+                        lg: "repeat(4, 1fr)",
                     },
                     alignItems: "stretch",
                 }}>
@@ -126,9 +126,9 @@ const InfoHoverPanel = ({
                 variant="h2"
                 sx={{
                     color: {
-                        mobile: colors.white,
-                        tablet: colors.green400,
-                        desktop: colors.white,
+                        xs: colors.white,
+                        sm: colors.green400,
+                        lg: colors.white,
                     },
                     fontSize: 24,
                     mt: 3,
@@ -142,8 +142,8 @@ const InfoHoverPanel = ({
                     gap: 1,
                     display: "grid",
                     gridTemplateColumns: {
-                        mobile: "repeat(2, 1fr)",
-                        desktop: "repeat(4, 1fr)",
+                        xs: "repeat(2, 1fr)",
+                        lg: "repeat(4, 1fr)",
                     },
                     alignItems: "stretch",
                 }}>

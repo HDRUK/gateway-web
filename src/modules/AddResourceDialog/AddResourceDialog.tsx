@@ -203,7 +203,7 @@ const AddDatasetDialog = ({
         });
     };
     return (
-        <Dialog title={t("title")} maxWidth="laptop">
+        <Dialog title={t("title")} maxWidth="md">
             <MuiDialogContent sx={{ minHeight: "55vh" }}>
                 <Typography color={colors.grey600}>{t("intro")}</Typography>
 

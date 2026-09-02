@@ -31,18 +31,18 @@ export const Responsive: Story = {
         <BoxContainer
             sx={{
                 gridTemplateColumns: {
-                    mobile: "repeat(1, 1fr)",
-                    tablet: "repeat(5, 1fr)",
+                    xs: "repeat(1, 1fr)",
+                    sm: "repeat(5, 1fr)",
                 },
                 gap: {
-                    mobile: 0,
-                    tablet: 1,
+                    xs: 0,
+                    sm: 1,
                 },
             }}>
-            <Box sx={{ gridColumn: { tablet: "span 2", laptop: "span 1" } }}>
+            <Box sx={{ gridColumn: { sm: "span 2", md: "span 1" } }}>
                 Container 1
             </Box>
-            <Box sx={{ gridColumn: { tablet: "span 3", laptop: "span 4" } }}>
+            <Box sx={{ gridColumn: { sm: "span 3", md: "span 4" } }}>
                 Container 2
             </Box>
         </BoxContainer>

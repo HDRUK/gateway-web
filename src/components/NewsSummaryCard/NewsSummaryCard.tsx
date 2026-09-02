@@ -41,7 +41,7 @@ const NewsSummaryCard = ({
             aria-describedby={id}
             sx={{
                 width: "100%",
-                maxWidth: { tablet: 345 },
+                maxWidth: { sm: 345 },
                 background: "transparent",
                 position: "relative",
             }}>

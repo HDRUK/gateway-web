@@ -211,13 +211,13 @@ const ActionBar = ({ dataset }: ActionBarProps) => {
             backButtonText={t("label")}
             backButtonHref={`/${RouteName.SEARCH}?type=${SearchCategory.DATASETS}`}
             additionalContentSx={{
-                display: { mobile: "grid", desktop: "flex" },
-                width: { mobile: "100%", desktop: "auto" },
+                display: { xs: "grid", lg: "flex" },
+                width: { xs: "100%", lg: "auto" },
                 gap: 1,
                 p: 0,
                 gridTemplateColumns: {
-                    mobile: "repeat(2, minmax(0, 1fr))",
-                    desktop: "none",
+                    xs: "repeat(2, minmax(0, 1fr))",
+                    lg: "none",
                 },
             }}
             additionalContent={
@@ -227,8 +227,8 @@ const ActionBar = ({ dataset }: ActionBarProps) => {
                             sx={{
                                 pr: 1,
                                 display: {
-                                    mobile: "none",
-                                    tablet: "inline-block",
+                                    xs: "none",
+                                    sm: "inline-block",
                                 },
                             }}
                         />
@@ -239,8 +239,8 @@ const ActionBar = ({ dataset }: ActionBarProps) => {
                             sx={{
                                 pr: 1,
                                 display: {
-                                    mobile: "none",
-                                    tablet: "inline-block",
+                                    xs: "none",
+                                    sm: "inline-block",
                                 },
                             }}
                         />
@@ -269,15 +269,15 @@ const ActionBar = ({ dataset }: ActionBarProps) => {
                                 style={{ color: "primary" }}
                                 sx={{
                                     display: {
-                                        mobile: "none",
-                                        tablet: "inline-block",
+                                        xs: "none",
+                                        sm: "inline-block",
                                     },
                                 }}
                             />
                         }
                         sx={{
                             bgcolor: colors.grey200,
-                            ml: { mobile: 0, desktop: 2 },
+                            ml: { xs: 0, lg: 2 },
                         }}
                         onClick={handleOpenDropdownMenu}>
                         {t("downloadMetadata")}

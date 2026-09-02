@@ -4,4 +4,5 @@ export enum PostLoginActions {
     OPEN_FEASIBILITY_ENQUIRY = "action-open-feasibility-enquiry",
     OPEN_GENERAL_ENQUIRY = "action-open-general-enquiry",
     START_DAR_REQUEST = "action-start-dar-request",
+    OPEN_COHORT_DISCOVERY = "action-open-cohort-discovery",
 }

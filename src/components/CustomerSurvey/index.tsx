@@ -79,7 +79,7 @@ export default function CustomerSurvey({
     const t = useTranslations("components.CustomerSurvey");
     const pathname = usePathname();
     const theme = useTheme();
-    const isMobile = useMediaQuery(theme.breakpoints.only("mobile"));
+    const isMobile = useMediaQuery(theme.breakpoints.only("xs"));
 
     const [hideComponent, setHideComponent] = useState(hideOnLoad);
     const [submitted, setSubmitted] = useState(false);
@@ -271,12 +271,12 @@ export default function CustomerSurvey({
                                                 cursor: "pointer",
                                                 color: colour,
                                                 minWidth: {
-                                                    mobile: "30px",
-                                                    tablet: "75px",
+                                                    xs: "30px",
+                                                    sm: "75px",
                                                 },
                                                 minHeight: {
-                                                    mobile: "30px",
-                                                    tablet: "75px",
+                                                    xs: "30px",
+                                                    sm: "75px",
                                                 },
                                                 margin: 1,
                                                 fontSize: 1,

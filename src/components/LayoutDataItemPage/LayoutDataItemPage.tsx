@@ -24,15 +24,15 @@ export default function LayoutDataItemPage({
         <BoxContainer
             sx={{
                 gridTemplateColumns: {
-                    mobile: "repeat(1, 1fr)",
-                    tablet: "repeat(3, 1fr)",
-                    laptop: "repeat(5, 1fr)",
+                    xs: "repeat(1, 1fr)",
+                    sm: "repeat(3, 1fr)",
+                    md: "repeat(5, 1fr)",
                 },
             }}>
             {navigation}
             <Box
                 sx={{
-                    gridColumn: { tablet: "span 2", laptop: "span 4" },
+                    gridColumn: { sm: "span 2", md: "span 4" },
                     p: 0,
                     overflow: "hidden",
                 }}>

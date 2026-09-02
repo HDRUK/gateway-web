@@ -2,6 +2,7 @@ import { User } from "./User";
 
 type CohortRequestStatus =
     | "APPROVED"
+    | "RENEWING"
     | "REJECTED"
     | "PENDING"
     | "BANNED"
@@ -42,6 +43,7 @@ interface CohortRequest {
     nhse_sde_request_expire_at: string;
     nhse_sde_updated_at: string;
     access_to_env: string;
+    has_access: boolean;
 }
 
 interface CohortRequestForm {
@@ -63,6 +65,7 @@ interface CohortRequestUser {
     updated_at: string;
     deleted_at: string;
     accept_declaration: boolean;
+    has_access: boolean;
 }
 
 interface CohortRequestAccess {
@@ -74,6 +77,7 @@ interface CohortResponse {
     nhseSdeRequestStatus: NHSSDERequestStatus;
     requestExpiry: string;
     redirectUrl: string;
+    hasAccess: boolean;
 }
 
 export type {

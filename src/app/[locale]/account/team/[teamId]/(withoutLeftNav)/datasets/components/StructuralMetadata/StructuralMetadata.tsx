@@ -160,7 +160,7 @@ const StructuralMetadataSection = ({
                 }}
                 isUploading={setIsUploading}
                 allowReuploading
-                acceptedFileTypes=".xlsx"
+                acceptedFileTypes=".csv"
                 existingFiles={existingFiles}
                 onFileRemove={() => {
                     setUploadedFilename(undefined);

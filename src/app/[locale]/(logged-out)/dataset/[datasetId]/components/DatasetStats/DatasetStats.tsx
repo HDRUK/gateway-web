@@ -107,12 +107,12 @@ const DatasetStats = ({ data }: { data: Partial<VersionItem> }) => {
             sx={{
                 gridTemplateColumns: "repeat(5, 1fr)",
                 gap: {
-                    mobile: 1,
-                    tablet: 2,
+                    xs: 1,
+                    sm: 2,
                 },
-                display: { mobile: "flex", desktop: "grid" },
-                overflowX: { mobile: "scroll", desktop: "inherit" },
-                p: { mobile: 1, desktop: 0 },
+                display: { xs: "flex", lg: "grid" },
+                overflowX: { xs: "scroll", lg: "inherit" },
+                p: { xs: 1, lg: 0 },
                 scrollSnapType: "x mandatory",
                 "&::-webkit-scrollbar": { display: "none" },
             }}>

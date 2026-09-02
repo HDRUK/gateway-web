@@ -102,11 +102,11 @@ const QuestionItem = ({ task, setTasks }: QuestionItemProps) => {
                     <BoxContainer
                         sx={{
                             gridTemplateColumns: {
-                                tablet: "10fr 1fr",
+                                sm: "10fr 1fr",
                             },
                             gap: {
-                                mobile: 1,
-                                tablet: 2,
+                                xs: 1,
+                                sm: 2,
                             },
                             p: 0,
                         }}>

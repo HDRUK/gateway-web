@@ -26,7 +26,7 @@ export const DetailBanner = styled(Box)(() => ({
     backgroundColor: colors.purple900,
     color: colors.white,
     padding: `${theme.spacing(1)} ${theme.spacing(2)}`,
-    [theme.breakpoints.up("laptop")]: {
+    [theme.breakpoints.up("md")]: {
         flexDirection: "row",
     },
 }));
@@ -39,7 +39,7 @@ export const Column = styled("div")<ColumnProps>(({ emphasis, justify }) => ({
     gap: emphasis ? theme.spacing(0.5) : "initial",
     "> p": { fontWeight: emphasis ? 600 : "inherit" },
     "> .MuiButton-text, .MuiButton-link": { color: colors.white },
-    [theme.breakpoints.up("laptop")]: {
+    [theme.breakpoints.up("md")]: {
         justifyContent: justify || "center",
     },
 }));

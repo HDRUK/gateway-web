@@ -83,6 +83,7 @@ declare module "@mui/material/Chip" {
         warningCustom: true;
         alias: true;
         greyCustom: true;
+        yellowCustom: true;
     }
 }
 
@@ -98,19 +99,6 @@ declare module "@mui/material/Checkbox" {
     }
 }
 
-declare module "@mui/material/styles" {
-    interface BreakpointOverrides {
-        xs: false;
-        sm: false;
-        md: false;
-        lg: false;
-        xl: false;
-        mobile: true;
-        tablet: true;
-        laptop: true;
-        desktop: true;
-    }
-}
 
 export const colors = {
     white: "#fff",
@@ -149,6 +137,8 @@ export const colors = {
     darkGreen100: "#ADDAD9",
     yellow400: "#F4E751",
     yellow500: "#FFC40C",
+    yellow600: "#F2D12D",
+    yellow800: "#856505",
 };
 
 const palette = {
@@ -200,10 +190,11 @@ const theme = createTheme({
     },
     breakpoints: {
         values: {
-            mobile: 0,
-            tablet: 640,
-            laptop: 1024,
-            desktop: 1280,
+            xs: 0,
+            sm: 640,
+            md: 1024,
+            lg: 1280,
+            xl: 1536,
         },
     },
     transitions: {
@@ -778,6 +769,13 @@ const theme = createTheme({
                     props: { color: "warningCustom" },
                     style: {
                         background: colors.orange300,
+                    },
+                },
+                {
+                    props: { color: "yellowCustom" },
+                    style: {
+                        background: colors.yellow600,
+                        color: colors.yellow800,
                     },
                 },
                 {

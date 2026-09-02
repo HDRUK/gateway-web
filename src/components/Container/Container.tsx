@@ -3,7 +3,7 @@ import MuiContainer, {
 } from "@mui/material/Container";
 
 const Container = (props: MuiContainerProps) => {
-    const { maxWidth = "desktop", ...rest } = props;
+    const { maxWidth = "lg", ...rest } = props;
     return <MuiContainer maxWidth={maxWidth} {...rest} />;
 };
 

@@ -9,7 +9,7 @@ export const ActionBar = styled(Box)(({ theme }) => ({
     width: "100%",
     textAlign: "left",
 
-    [theme.breakpoints.down("tablet")]: {
+    [theme.breakpoints.down("sm")]: {
         flexDirection: "column",
     },
 }));

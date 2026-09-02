@@ -23,6 +23,7 @@ export const getCohortStatusAndRedirect = async (
             nhseSdeRequestStatus: userRequest?.nhse_sde_request_status ?? null,
             requestExpiry: userRequest?.request_expire_at ?? null,
             redirectUrl: accessRedirect?.redirect_url ?? null,
+            hasAccess: userRequest?.has_access ?? false,
         };
     } catch (error) {
         const session = await getSessionCookie();

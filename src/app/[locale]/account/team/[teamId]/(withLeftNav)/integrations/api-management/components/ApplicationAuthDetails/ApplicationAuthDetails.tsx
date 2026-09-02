@@ -50,7 +50,7 @@ const ApplicationAuthDetails = ({
                 <Card
                     sx={{
                         display: "grid",
-                        gridTemplateColumns: { laptop: "3fr 1fr" },
+                        gridTemplateColumns: { md: "3fr 1fr" },
                     }}>
                     <Box>
                         <Typography
@@ -61,7 +61,7 @@ const ApplicationAuthDetails = ({
                         </Typography>
                         <Typography>{t("authSettingsIntro")}</Typography>
                     </Box>
-                    <Box sx={{ justifySelf: { laptop: "flex-end" } }}>
+                    <Box sx={{ justifySelf: { md: "flex-end" } }}>
                         <Button onClick={handleGenerateId}>
                             {t("generateClientId")}
                         </Button>

@@ -27,7 +27,7 @@ export default async function MetricsGrid({ metrics }: MetricsGridProps) {
     return (
         <Grid container spacing={2}>
             {metricKeys.map(key => (
-                <Grid key={key} size={{ mobile: 12, tablet: 6, laptop: 3 }}>
+                <Grid key={key} size={{ xs: 12, sm: 6, md: 3 }}>
                     <Card
                         sx={{
                             height: "100%",

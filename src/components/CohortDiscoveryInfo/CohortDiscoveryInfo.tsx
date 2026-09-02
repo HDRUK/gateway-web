@@ -61,7 +61,7 @@ const CohortDiscoveryInfo = async ({
                             <Box
                                 sx={{
                                     bgcolor: "common.white",
-                                    p: { mobile: 2, laptop: 4 },
+                                    p: { xs: 2, md: 4 },
                                 }}>
                                 <Box sx={{ maxWidth: TEXT_COLUMN_MAX_WIDTH }}>
                                     <HTMLContent
@@ -103,7 +103,7 @@ const CohortDiscoveryInfo = async ({
                             <Box
                                 sx={{
                                     bgcolor: "common.white",
-                                    p: { mobile: 2, laptop: 4 },
+                                    p: { xs: 2, md: 4 },
                                 }}>
                                 <Box sx={{ maxWidth: TEXT_COLUMN_MAX_WIDTH }}>
                                     <HTMLContent
@@ -156,8 +156,8 @@ const CohortDiscoveryInfo = async ({
                                         display: "flex",
                                         alignItems: "center",
                                         flexDirection: {
-                                            mobile: "column",
-                                            laptop: "row",
+                                            xs: "column",
+                                            md: "row",
                                         },
                                         mb: 3,
                                     }}>
@@ -212,7 +212,7 @@ const CohortDiscoveryInfo = async ({
                             <Box
                                 sx={{
                                     bgcolor: "common.white",
-                                    p: { mobile: 2, laptop: 4 },
+                                    p: { xs: 2, md: 4 },
                                 }}>
                                 <Box sx={{ maxWidth: TEXT_COLUMN_MAX_WIDTH }}>
                                     <HTMLContent

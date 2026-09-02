@@ -7,7 +7,7 @@ export const TeamWrapper = styled("div")(({ theme }) => ({
     alignItems: "center",
     gap: theme.spacing(2),
 
-    [theme.breakpoints.up("tablet")]: {
+    [theme.breakpoints.up("sm")]: {
         gap: theme.spacing(5),
         flexDirection: "row",
     },
@@ -17,7 +17,7 @@ export const TeamImage = styled("img")(({ theme }) => ({
     height: "auto",
     width: "100%",
 
-    [theme.breakpoints.up("tablet")]: {
+    [theme.breakpoints.up("sm")]: {
         maxWidth: "30%",
     },
 }));
@@ -29,7 +29,7 @@ export const TeamContent = styled(Box)(({ theme }) => ({
     textAlign: "left",
     gap: theme.spacing(2),
 
-    [theme.breakpoints.up("tablet")]: {
+    [theme.breakpoints.up("sm")]: {
         gap: theme.spacing(5),
     },
 }));

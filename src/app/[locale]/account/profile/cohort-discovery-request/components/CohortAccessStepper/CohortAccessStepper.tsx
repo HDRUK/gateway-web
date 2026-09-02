@@ -19,7 +19,9 @@ import useDialog from "@/hooks/useDialog";
 import { colors } from "@/config/theme";
 import {
     COHORT_ABOUT_HREF,
+    COHORT_EXPIRY_WARNING_DAYS,
     COHORT_REAPPLY_STATUSES,
+    COHORT_STATUS,
     statusMapping,
     STEP_STATE,
 } from "@/consts/cohortDiscovery";
@@ -39,11 +41,13 @@ const TERMS_HREF =
 interface CohortAccessStepperProps {
     cmsContent: templateRepeatFields;
     hideAccessButton?: boolean;
+    autoTriggerAccess?: boolean;
 }
 
 const CohortAccessStepper = ({
     cmsContent,
     hideAccessButton = false,
+    autoTriggerAccess = false,
 }: CohortAccessStepperProps) => {
     const t = useTranslations(TRANSLATION_PATH);
     const tCd = useTranslations("pages.account.profile.cohortDiscovery");
@@ -52,6 +56,7 @@ const CohortAccessStepper = ({
     const {
         requestStatus,
         requestExpiry,
+        hasAccess,
         isLoading: statusLoading,
         hasFetched,
         refetch,
@@ -63,10 +68,30 @@ const CohortAccessStepper = ({
     const subStepsRef = useRef<HTMLDivElement>(null);
 
     const hasApplied = !!requestStatus;
-    const isApproved = requestStatus === "APPROVED";
+    const isApproved = requestStatus === COHORT_STATUS.APPROVED;
+    const isRenewing = requestStatus === COHORT_STATUS.RENEWING;
     const isResolved = RESOLVED_STATUSES.includes(requestStatus ?? "");
     const inReview = hasApplied && !isResolved;
-    const canReapply = COHORT_REAPPLY_STATUSES.includes(requestStatus ?? "");
+
+    const daysRemaining =
+        hasAccess && requestExpiry
+            ? differenceInDays(requestExpiry, new Date())
+            : null;
+    const expiringSoon =
+        hasAccess &&
+        daysRemaining != null &&
+        daysRemaining <= COHORT_EXPIRY_WARNING_DAYS;
+
+    const indicatorColour = expiringSoon ? colors.yellow800 : colors.grey600;
+
+    /* a renewing user still holds their approved access until it lapses */
+    const accessStatus = isRenewing ? COHORT_STATUS.APPROVED : requestStatus;
+
+    const canReapply =
+        COHORT_REAPPLY_STATUSES.includes(requestStatus ?? "") ||
+        (expiringSoon && !isRenewing);
+    const showReapplyCopy = canReapply || isRenewing;
+    const showSteps = !hasAccess || canReapply || isRenewing;
 
     const step1State: CircleState =
         hasApplied && !canReapply ? STEP_STATE.COMPLETE : STEP_STATE.ACTIVE;
@@ -76,16 +101,12 @@ const CohortAccessStepper = ({
             : inReview
             ? STEP_STATE.ACTIVE
             : STEP_STATE.PENDING;
-    const step3State: CircleState = isApproved
-        ? STEP_STATE.COMPLETE
-        : isResolved && !canReapply
-        ? STEP_STATE.ACTIVE
-        : STEP_STATE.PENDING;
-
-    const daysRemaining =
-        isApproved && requestExpiry
-            ? differenceInDays(requestExpiry, new Date())
-            : null;
+    const step3State: CircleState =
+        isApproved && !canReapply
+            ? STEP_STATE.COMPLETE
+            : isResolved && !canReapply
+            ? STEP_STATE.ACTIVE
+            : STEP_STATE.PENDING;
 
     const continueToTerms = () => {
         const node = subStepsRef.current;
@@ -133,7 +154,7 @@ const CohortAccessStepper = ({
     const loading = userLoading || statusLoading || !hasFetched;
 
     return (
-        <Paper sx={{ bgcolor: "white", p: { mobile: 3, laptop: 4 } }}>
+        <Paper sx={{ bgcolor: "white", p: { xs: 3, md: 4 } }}>
             <Box
                 sx={{
                     display: "flex",
@@ -155,47 +176,100 @@ const CohortAccessStepper = ({
                     {!loading && hasApplied && (
                         <Box
                             sx={{
-                                display: "flex",
+                                display: "grid",
+                                gridTemplateColumns: "auto auto",
+                                justifyContent: "start",
+                                justifyItems: "start",
                                 alignItems: "center",
-                                gap: 2,
+                                columnGap: 1,
+                                rowGap: 1,
                                 mt: 1,
                             }}>
-                            <Chip
-                                size="small"
-                                label={capitalise(requestStatus)}
-                                color={statusMapping[requestStatus]}
-                            />
-                            {isApproved && daysRemaining != null && (
+                            {isRenewing && (
+                                <Typography sx={{ color: colors.grey600 }}>
+                                    {tCd("currentAccessLabel")}
+                                </Typography>
+                            )}
+                            <Box
+                                sx={{
+                                    display: "flex",
+                                    alignItems: "center",
+                                    gap: 2,
+                                }}>
+                                <Chip
+                                    size="small"
+                                    label={capitalise(accessStatus)}
+                                    color={
+                                        expiringSoon
+                                            ? "yellowCustom"
+                                            : statusMapping[accessStatus]
+                                    }
+                                />
+                                {daysRemaining != null && (
+                                    <Box
+                                        sx={{
+                                            display: "flex",
+                                            alignItems: "center",
+                                            gap: 1,
+                                        }}>
+                                        <QueryBuilderIcon
+                                            sx={{ color: indicatorColour }}
+                                        />
+                                        <Typography
+                                            sx={{ color: indicatorColour }}>
+                                            {expiringSoon
+                                                ? tCd("accessExpiringIn", {
+                                                      days: daysRemaining,
+                                                  })
+                                                : `${daysRemaining} ${tCd(
+                                                      "daysRemaining"
+                                                  )}`}
+                                        </Typography>
+                                    </Box>
+                                )}
+                            </Box>
+                            {isRenewing && (
                                 <>
-                                    <QueryBuilderIcon
-                                        sx={{ color: colors.grey600 }}
-                                    />
                                     <Typography sx={{ color: colors.grey600 }}>
-                                        {daysRemaining} {tCd("daysRemaining")}
+                                        {tCd("accessRenewalLabel")}
                                     </Typography>
+                                    <Chip
+                                        size="small"
+                                        label={capitalise(
+                                            COHORT_STATUS.PENDING
+                                        )}
+                                        color="greyCustom"
+                                    />
                                 </>
                             )}
                         </Box>
                     )}
                 </Box>
-                {!loading && isApproved && !hideAccessButton && (
+                {!loading && hasAccess && !hideAccessButton && (
                     <CohortDiscoveryButton
                         label={t("accessButton")}
                         wrapperSx={{ width: "auto" }}
+                        autoTriggerAccess={autoTriggerAccess}
                     />
                 )}
             </Box>
 
             {loading ? (
                 <Loading />
-            ) : isApproved ? null : (
+            ) : showSteps ? (
                 <>
                     <StepNode circleState={step1State} label="1">
-                        <StepTitle>{t("applyStepTitle")}</StepTitle>
+                        <StepTitle>
+                            {showReapplyCopy
+                                ? t("reapplyStepTitle")
+                                : t("applyStepTitle")}
+                        </StepTitle>
                         {step1State !== STEP_STATE.COMPLETE && (
                             <>
                                 <Typography color={colors.grey600}>
-                                    {t("applyStepDescription")}
+                                    {showReapplyCopy
+                                        ? t("reapplyStepDescription")
+                                        : t("applyStepDescription")}
                                 </Typography>
 
                                 {!started ? (
@@ -319,7 +393,7 @@ const CohortAccessStepper = ({
                         )}
                     </StepNode>
                 </>
-            )}
+            ) : null}
         </Paper>
     );
 };

@@ -50,9 +50,9 @@ const CollectionCard = ({ collection, actions }: CollectionCardProps) => {
                     sx={{
                         display: "grid",
                         gridTemplateColumns: {
-                            mobile: "repeat(1, 1fr)",
-                            tablet: "repeat(1, 1fr 4fr)",
-                            laptop: "repeat(1, 1fr 4fr)",
+                            xs: "repeat(1, 1fr)",
+                            sm: "repeat(1, 1fr 4fr)",
+                            md: "repeat(1, 1fr 4fr)",
                         },
                         gap: 2,
                         p: 2,
@@ -75,10 +75,10 @@ const CollectionCard = ({ collection, actions }: CollectionCardProps) => {
                             backgroundSize: "cover",
                             backgroundPosition: "center",
                             maxWidth: {
-                                desktop: "40vw",
-                                laptop: "30vw",
-                                tablet: "15vw",
-                                mobile: "70vw",
+                                lg: "40vw",
+                                md: "30vw",
+                                sm: "15vw",
+                                xs: "70vw",
                             },
                         }}>
                         {!hasImage && (
@@ -95,10 +95,10 @@ const CollectionCard = ({ collection, actions }: CollectionCardProps) => {
                             p: 0,
                             fontSize: 13,
                             maxWidth: {
-                                desktop: "40vw",
-                                laptop: "30vw",
-                                tablet: "15vw",
-                                mobile: "70vw",
+                                lg: "40vw",
+                                md: "30vw",
+                                sm: "15vw",
+                                xs: "70vw",
                             },
                         }}>
                         <Typography

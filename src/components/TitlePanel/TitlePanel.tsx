@@ -18,27 +18,27 @@ const TitlePanel = ({ image, text, title, id }: TitlePanelProps) => {
             <Box
                 sx={{
                     p: 0,
-                    mr: { tablet: 2 },
-                    mt: { tablet: 6 },
+                    mr: { sm: 2 },
+                    mt: { sm: 6 },
                     flex: 1,
-                    flexDirection: { mobile: "row", tablet: "column" },
+                    flexDirection: { xs: "row", sm: "column" },
                     width: "100%",
                     minHeight: {
-                        desktop: 360,
+                        lg: 360,
                     },
                 }}>
                 <TitleWithBg mb={2} title={title} />
                 <Box
                     sx={{
                         minHeight: {
-                            tablet: 190,
-                            desktop: 180,
+                            sm: 190,
+                            lg: 180,
                         },
                         p: 0,
                     }}>
                     <Typography
                         color="white"
-                        fontSize={{ mobile: 14, tablet: 18, desktop: 24 }}>
+                        fontSize={{ xs: 14, sm: 18, lg: 24 }}>
                         {text}
                     </Typography>
                 </Box>
@@ -48,7 +48,7 @@ const TitlePanel = ({ image, text, title, id }: TitlePanelProps) => {
                 sx={{
                     p: 0,
                     position: "relative",
-                    display: { mobile: "none", tablet: "block" },
+                    display: { xs: "none", sm: "block" },
                 }}>
                 <Image
                     width={554}

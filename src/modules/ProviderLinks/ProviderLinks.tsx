@@ -108,8 +108,8 @@ const ProviderLinks = ({
                             columnGap: 3,
                             rowGap: 2,
                             gridTemplateColumns: {
-                                mobile: "repeat(1, 1fr)",
-                                tablet: "repeat(2, 1fr)",
+                                xs: "repeat(1, 1fr)",
+                                sm: "repeat(2, 1fr)",
                             },
                         }}>
                         {group.links.map(link => (

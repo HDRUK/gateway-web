@@ -1,8 +1,10 @@
+import { rest } from "msw";
 import { formatDate } from "@/utils/date";
-import { render, screen, waitFor, within } from "@/utils/testUtils";
+import { render, screen, fireEvent, waitFor, within } from "@/utils/testUtils";
 import { generateCohortRequestV1 } from "@/mocks/data/cohortRequest";
 import { getCohortRequestsV1 } from "@/mocks/handlers/cohortRequest";
 import { server } from "@/mocks/server";
+import apis from "@/config/apis";
 import CohortTable from "./CohortTable";
 
 const requests = [
@@ -11,6 +13,10 @@ const requests = [
         nhse_sde_request_status: "IN PROCESS",
         created_at: "2025-01-15T00:00:00.000Z",
         updated_at: "2025-06-20T00:00:00.000Z",
+    }),
+    generateCohortRequestV1({
+        request_status: "RENEWING",
+        nhse_sde_request_status: "APPROVAL REQUESTED",
     }),
     generateCohortRequestV1({
         request_status: "REJECTED",
@@ -81,19 +87,22 @@ describe("Cohort Table", () => {
                 within(tableRows[1]).getByText("Approved")
             ).toBeInTheDocument();
             expect(
-                within(tableRows[2]).getByText("Rejected")
+                within(tableRows[2]).getByText("Renewing")
             ).toBeInTheDocument();
             expect(
-                within(tableRows[3]).getByText("Pending")
+                within(tableRows[3]).getByText("Rejected")
             ).toBeInTheDocument();
             expect(
-                within(tableRows[4]).getByText("Banned")
+                within(tableRows[4]).getByText("Pending")
             ).toBeInTheDocument();
             expect(
-                within(tableRows[5]).getByText("Suspended")
+                within(tableRows[5]).getByText("Banned")
             ).toBeInTheDocument();
             expect(
-                within(tableRows[6]).getByText("Expired")
+                within(tableRows[6]).getByText("Suspended")
+            ).toBeInTheDocument();
+            expect(
+                within(tableRows[7]).getByText("Expired")
             ).toBeInTheDocument();
             expect(
                 within(tableRows[1]).getByText("In process")
@@ -102,17 +111,78 @@ describe("Cohort Table", () => {
                 within(tableRows[2]).getByText("Approval requested")
             ).toBeInTheDocument();
             expect(
-                within(tableRows[3]).getByText("Approved")
+                within(tableRows[3]).getByText("Approval requested")
             ).toBeInTheDocument();
             expect(
-                within(tableRows[4]).getByText("Rejected")
+                within(tableRows[4]).getByText("Approved")
             ).toBeInTheDocument();
             expect(
-                within(tableRows[5]).getByText("Banned")
+                within(tableRows[5]).getByText("Rejected")
             ).toBeInTheDocument();
             expect(
-                within(tableRows[6]).getByText("Suspended")
+                within(tableRows[6]).getByText("Banned")
             ).toBeInTheDocument();
+            expect(
+                within(tableRows[7]).getByText("Suspended")
+            ).toBeInTheDocument();
+        });
+    });
+
+    it("requests a needs-attention-first sort by default", async () => {
+        const requestedSorts: (string | null)[] = [];
+        server.use(
+            rest.get(apis.cohortRequestsV1Url, (req, res, ctx) => {
+                requestedSorts.push(req.url.searchParams.get("sort"));
+                return res(
+                    ctx.status(200),
+                    ctx.json({
+                        lastPage: 1,
+                        to: requests.length,
+                        from: 1,
+                        currentPage: 1,
+                        total: requests.length,
+                        list: requests,
+                    })
+                );
+            })
+        );
+
+        render(<CohortTable />);
+
+        await waitFor(() => {
+            expect(requestedSorts).toContain("priority:desc,created_at:desc");
+        });
+    });
+
+    it("falls back to a plain sort once a reviewer picks a different column", async () => {
+        const requestedSorts: (string | null)[] = [];
+        server.use(
+            rest.get(apis.cohortRequestsV1Url, (req, res, ctx) => {
+                requestedSorts.push(req.url.searchParams.get("sort"));
+                return res(
+                    ctx.status(200),
+                    ctx.json({
+                        lastPage: 1,
+                        to: requests.length,
+                        from: 1,
+                        currentPage: 1,
+                        total: requests.length,
+                        list: requests,
+                    })
+                );
+            })
+        );
+
+        render(<CohortTable />);
+
+        await waitFor(() => {
+            expect(requestedSorts).toContain("priority:desc,created_at:desc");
+        });
+
+        fireEvent.click(screen.getByRole("button", { name: "Sort by name" }));
+
+        await waitFor(() => {
+            expect(requestedSorts).toContain("name:asc");
         });
     });
 });
