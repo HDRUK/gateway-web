@@ -9,7 +9,7 @@ exports[`KeepingUpdated should render content 1`] = `
       class="MuiDivider-root MuiDivider-fullWidth mui-style-dtu0rx-MuiDivider-root"
     />
     <p
-      class="MuiTypography-root MuiTypography-body1 mui-style-133d3ty-MuiTypography-root"
+      class="MuiTypography-root MuiTypography-body2 mui-style-94j1ag-MuiTypography-root"
     >
       Keeping you updated
     </p>
@@ -20,7 +20,7 @@ exports[`KeepingUpdated should render content 1`] = `
       class="MuiBox-root mui-style-106jpu6"
     >
       <p
-        class="MuiTypography-root MuiTypography-body1 mui-style-1db0tst-MuiTypography-root"
+        class="MuiTypography-root MuiTypography-body2 mui-style-wnbch4-MuiTypography-root"
       >
         Feedback
       </p>
@@ -45,7 +45,7 @@ exports[`KeepingUpdated should render content 1`] = `
       class="MuiDivider-root MuiDivider-fullWidth mui-style-dtu0rx-MuiDivider-root"
     />
     <p
-      class="MuiTypography-root MuiTypography-body1 mui-style-1p70w88-MuiTypography-root"
+      class="MuiTypography-root MuiTypography-body2 mui-style-1yg223w-MuiTypography-root"
     >
       As a user of the Gateway we take the privacy and security of your personal data seriously. Our privacy policy aims to give you information on how Health Data Research UK collects and processes your personal data through your use of this Gateway, including any data you may provide by emailing us.
     </p>

@@ -32,7 +32,7 @@ exports[`NewsSummaryCard should render component 1`] = `
         id=":r1:"
       >
         <p
-          class="MuiTypography-root MuiTypography-body1 mui-style-kzo8fg-MuiTypography-root"
+          class="MuiTypography-root MuiTypography-body2 mui-style-cuy0rt-MuiTypography-root"
         >
           This is a headline
         </p>
@@ -41,7 +41,7 @@ exports[`NewsSummaryCard should render component 1`] = `
         class="MuiTypography-root MuiTypography-body2 mui-style-1rkv3pj-MuiTypography-root"
       >
         <p
-          class="MuiTypography-root MuiTypography-body1 mui-style-ce4r67-MuiTypography-root"
+          class="MuiTypography-root MuiTypography-body2 mui-style-1gtu4iv-MuiTypography-root"
         >
           Cras ut sem eu ligula tincidunt aliquet. Lorem ipsum dolor sit amet. Nullam maximus risus et pharetra fringill. Suspendisse porttitor tortor et lectus pulvinar
         </p>

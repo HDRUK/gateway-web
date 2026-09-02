@@ -6,7 +6,7 @@ exports[`CheckboxRow should render component 1`] = `
     class="MuiBox-root mui-style-106jpu6"
   >
     <p
-      class="MuiTypography-root MuiTypography-body1 mui-style-1db0tst-MuiTypography-root"
+      class="MuiTypography-root MuiTypography-body2 mui-style-wnbch4-MuiTypography-root"
     >
       Name
     </p>

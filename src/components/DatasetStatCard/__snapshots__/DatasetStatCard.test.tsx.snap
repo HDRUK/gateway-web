@@ -12,7 +12,7 @@ exports[`DatasetStatCard should match snapshot 1`] = `
       class="mui-style-1hyoz7m"
     >
       <p
-        class="MuiTypography-root MuiTypography-body1 mui-style-kao32l-MuiTypography-root"
+        class="MuiTypography-root MuiTypography-body2 mui-style-282xcq-MuiTypography-root"
       >
         A description
       </p>
@@ -51,12 +51,12 @@ exports[`DatasetStatCard should match snapshot 1`] = `
         class="mui-style-1cfaonj"
       >
         <p
-          class="MuiTypography-root MuiTypography-body1 mui-style-366hur-MuiTypography-root"
+          class="MuiTypography-root MuiTypography-body2 mui-style-1brge3j-MuiTypography-root"
         >
           10
         </p>
         <p
-          class="MuiTypography-root MuiTypography-body1 mui-style-6ufs9k-MuiTypography-root"
+          class="MuiTypography-root MuiTypography-body2 mui-style-u9l7ki-MuiTypography-root"
         >
           days
         </p>

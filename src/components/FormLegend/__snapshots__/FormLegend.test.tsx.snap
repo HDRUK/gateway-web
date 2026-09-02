@@ -29,12 +29,12 @@ exports[`FormLegend should render legend 1`] = `
         class="MuiBox-root mui-style-19bls30"
       >
         <p
-          class="MuiTypography-root MuiTypography-body1 mui-style-4b3ftf-MuiTypography-root"
+          class="MuiTypography-root MuiTypography-body2 mui-style-1klk0cd-MuiTypography-root"
         >
           Item1
         </p>
         <p
-          class="MuiTypography-root MuiTypography-body1 mui-style-4b3ftf-MuiTypography-root"
+          class="MuiTypography-root MuiTypography-body2 mui-style-1klk0cd-MuiTypography-root"
         >
           (
           2

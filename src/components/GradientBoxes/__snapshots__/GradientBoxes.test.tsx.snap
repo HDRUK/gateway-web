@@ -31,10 +31,10 @@ exports[`GradientBoxes should render title 1`] = `
         </svg>
       </a>
       <div
-        class="MuiTypography-root MuiTypography-body1 mui-style-1c67s7h-MuiTypography-root"
+        class="MuiTypography-root MuiTypography-body2 mui-style-1xy1who-MuiTypography-root"
       >
         <p
-          class="MuiTypography-root MuiTypography-body1 mui-style-ce4r67-MuiTypography-root"
+          class="MuiTypography-root MuiTypography-body2 mui-style-1gtu4iv-MuiTypography-root"
         >
           Vestibulum ultrices purus sit amet cursus gravida. Proin maximus porttitor dui, sed lobortis libero ultrices vitae. In a sem at erat venenatis rhoncus. Morbi at diam sed risus commodo tempus nec ac ligula. Curabitur arcu velit, volutpat in risus sed, suscipit commodo nulla. Aenean luctus feugiat eros at laoreet. Fusce rhoncus augue nec tellus ultrices, et tempor sapien sollicitudin.
         </p>
@@ -66,10 +66,10 @@ exports[`GradientBoxes should render title 1`] = `
         </svg>
       </a>
       <div
-        class="MuiTypography-root MuiTypography-body1 mui-style-1c67s7h-MuiTypography-root"
+        class="MuiTypography-root MuiTypography-body2 mui-style-1xy1who-MuiTypography-root"
       >
         <p
-          class="MuiTypography-root MuiTypography-body1 mui-style-ce4r67-MuiTypography-root"
+          class="MuiTypography-root MuiTypography-body2 mui-style-1gtu4iv-MuiTypography-root"
         >
           Proin maximus porttitor dui, sed lobortis libero ultrices vitae. In a sem at erat venenatis rhoncus. Morbi at diam sed risus commodo tempus nec ac ligula. Curabitur arcu velit, volutpat in risus sed, suscipit commodo nulla. Aenean luctus feugiat eros at laoreet. Fusce rhoncus augue nec tellus ultrices, et tempor sapien sollicitudin.
         </p>
@@ -101,10 +101,10 @@ exports[`GradientBoxes should render title 1`] = `
         </svg>
       </a>
       <div
-        class="MuiTypography-root MuiTypography-body1 mui-style-1c67s7h-MuiTypography-root"
+        class="MuiTypography-root MuiTypography-body2 mui-style-1xy1who-MuiTypography-root"
       >
         <p
-          class="MuiTypography-root MuiTypography-body1 mui-style-ce4r67-MuiTypography-root"
+          class="MuiTypography-root MuiTypography-body2 mui-style-1gtu4iv-MuiTypography-root"
         >
           Fusce rhoncus augue nec tellus ultrices, et tempor sapien sollicitudin.
         </p>
