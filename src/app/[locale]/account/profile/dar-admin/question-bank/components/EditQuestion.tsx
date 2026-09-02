@@ -3,6 +3,7 @@
 import { useEffect, useMemo, useState } from "react";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
+import { tokens } from "@hdruk/ui/theme";
 import { Typography } from "@mui/material";
 import { useTranslations } from "next-intl";
 import { Option } from "@/interfaces/Option";
@@ -27,7 +28,6 @@ import {
     sectionField,
     custodiansFields,
 } from "@/config/forms/questionBank";
-import { colors } from "@/config/theme";
 import FormQuestions from "./FormQuestions";
 import PreviewQuestion from "./PreviewQuestion";
 
@@ -217,7 +217,7 @@ const EditQuestion = ({ onSubmit, question }: EditQuestionProps) => {
 
                         {typeof formState.errors.options?.message ===
                             "string" && (
-                            <Typography sx={{ color: colors.red700 }}>
+                            <Typography sx={{ color: tokens.status.error }}>
                                 {formState.errors.options?.message}
                             </Typography>
                         )}

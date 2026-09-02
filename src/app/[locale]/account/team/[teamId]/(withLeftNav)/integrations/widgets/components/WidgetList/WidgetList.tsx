@@ -2,6 +2,7 @@
 
 import { useTranslations } from "next-intl";
 import { useParams } from "next/navigation";
+import { tokens } from "@hdruk/ui/theme";
 import { Widget } from "@/interfaces/Widget";
 import Box from "@/components/Box";
 import CardActions from "@/components/CardActions";
@@ -13,7 +14,6 @@ import useDelete from "@/hooks/useDelete";
 import useGet from "@/hooks/useGet";
 import useModal from "@/hooks/useModal";
 import apis from "@/config/apis";
-import { colors } from "@/config/theme";
 import { DarEditIcon, DeleteIcon, EyeIcon } from "@/consts/icons";
 import { RouteName } from "@/consts/routeName";
 import { formatDate } from "@/utils/date";
@@ -165,7 +165,7 @@ const WidgetList = ({ permissions, teamId }: WidgetListProps) => {
                         <Box
                             sx={{
                                 p: 0,
-                                borderLeft: `solid 1px ${colors.grey600}`,
+                                borderLeft: `solid 1px ${tokens.status.faded}`,
                                 my: 2,
                             }}>
                             <CardActions actions={actions} id={widget.id} />

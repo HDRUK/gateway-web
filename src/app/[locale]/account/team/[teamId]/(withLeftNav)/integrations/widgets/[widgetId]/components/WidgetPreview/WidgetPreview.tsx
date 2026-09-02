@@ -1,6 +1,7 @@
 "use client";
 
 import { useMemo } from "react";
+import { tokens } from "@hdruk/ui/theme";
 import { Grid, TextareaAutosize, Typography } from "@mui/material";
 import { useTranslations } from "next-intl";
 import Link from "next/link";
@@ -13,7 +14,7 @@ import Paper from "@/components/Paper";
 import useGet from "@/hooks/useGet";
 import notificationService from "@/services/notification";
 import apis from "@/config/apis";
-import theme, { colors } from "@/config/theme";
+import theme from "@/config/theme";
 import { RouteName } from "@/consts/routeName";
 import WidgetDisplay from "@/widgets/WidgetDisplay";
 import { TabValues } from "../../const";
@@ -91,7 +92,7 @@ const WidgetPreview = ({ teamId, widgetId }: WidgetPreviewProps) => {
                     <TextareaAutosize
                         maxRows={20}
                         style={{
-                            backgroundColor: colors.grey100,
+                            backgroundColor: tokens.background.primary,
                             border: 0,
                             width: "100%",
                             padding: theme.spacing(2),
@@ -115,7 +116,7 @@ const WidgetPreview = ({ teamId, widgetId }: WidgetPreviewProps) => {
                     <TextareaAutosize
                         maxRows={3}
                         style={{
-                            backgroundColor: colors.grey100,
+                            backgroundColor: tokens.background.primary,
                             border: 0,
                             width: "100%",
                             padding: theme.spacing(2),

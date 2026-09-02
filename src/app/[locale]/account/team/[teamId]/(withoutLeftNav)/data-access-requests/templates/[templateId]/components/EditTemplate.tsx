@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState, useMemo } from "react";
+import { tokens } from "@hdruk/ui/theme";
 import { Box } from "@mui/material";
 import { useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
@@ -27,7 +28,7 @@ import useModal from "@/hooks/useModal";
 import usePatch from "@/hooks/usePatch";
 import notificationService from "@/services/notification";
 import apis from "@/config/apis";
-import theme, { colors } from "@/config/theme";
+import theme from "@/config/theme";
 import { ArrowBackIosNewIcon } from "@/consts/icons";
 import { RouteName } from "@/consts/routeName";
 import PreviewTemplate from "./PreviewTemplate";
@@ -338,7 +339,7 @@ const EditTemplate = ({
                     position: "sticky",
                     top: 0,
                     zIndex: theme.zIndex.appBar,
-                    bgcolor: colors.grey,
+                    bgcolor: tokens.background.primary,
                     borderBottom: 1,
                     borderColor: "divider",
                     py: 4,

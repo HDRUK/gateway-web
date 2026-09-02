@@ -1,5 +1,5 @@
 import * as yup from "yup";
-import { colors } from "@/config/theme";
+import { tokens } from "@hdruk/ui/theme";
 import { REGEX_PHONE } from "@/consts/regex";
 import { inputComponents } from ".";
 
@@ -90,7 +90,7 @@ const formFields = [
         multiple: true,
         readOnly: true,
         required: true,
-        style: { backgroundColor: colors.grey },
+        style: { backgroundColor: tokens.background.primary },
     },
     {
         label: "Are there other datasets you would like to link with the ones listed above?",

@@ -1,12 +1,12 @@
 "use client";
 
 import { useId } from "react";
+import { tokens } from "@hdruk/ui/theme";
 import { SxProps, Tooltip } from "@mui/material";
 import { useTranslations } from "next-intl";
 import { BucketCheckbox } from "@/interfaces/Filter";
 import Box from "@/components/Box";
 import CheckboxControlled from "@/components/CheckboxControlled";
-import { colors } from "@/config/theme";
 
 const TRANSLATION_PATH = "pages.search.components.FilterPanel.filters";
 const TOOLTIP_SUFFIX = "Tooltip";
@@ -35,7 +35,7 @@ const FilterSectionInlineSwitch = ({
                 display: "flex",
                 justifyContent: "space-between",
                 alignItems: "center",
-                background: colors.white,
+                background: tokens.background.white,
                 p: 0,
                 pl: 3,
                 ...containerSx,

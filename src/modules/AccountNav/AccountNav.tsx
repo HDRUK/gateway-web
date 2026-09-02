@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { tokens } from "@hdruk/ui/theme";
 import { Box, Skeleton } from "@mui/material";
 import { useTranslations } from "next-intl";
 import { Button } from "@hdruk/ui";
@@ -11,7 +12,6 @@ import useAccountMenu from "@/hooks/useAccountMenu";
 import useAuth from "@/hooks/useAuth";
 import useDialog from "@/hooks/useDialog";
 import { useIsHomePage } from "@/hooks/useIsHomePage";
-import { colors } from "@/config/theme";
 
 const AccountNav = () => {
     const { showDialog } = useDialog();
@@ -46,10 +46,10 @@ const AccountNav = () => {
                         disableRipple
                         sx={{
                             marginLeft: "5px",
-                            color: colors.white,
+                            color: tokens.text.primaryWhite,
 
                             "&:focus&.Mui-focusVisible": {
-                                outlineColor: colors.white,
+                                outlineColor: tokens.background.white,
                                 borderRadius: 0,
                                 textDecoration: "underline",
                             },
@@ -76,7 +76,7 @@ const AccountNav = () => {
             // The homepage header sits on the dark hero, so the label is forced
             // white there. Elsewhere `tertiary` supplies its own colour and
             // overriding it would put white text on a light fill.
-            sx={isHomePage ? { color: colors.white } : undefined}
+            sx={isHomePage ? { color: tokens.text.primaryWhite } : undefined}
             onClick={() =>
                 showDialog(ProvidersDialog, { isProvidersDialog: true })
             }>

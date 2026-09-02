@@ -9,7 +9,7 @@ exports[`TextField should render icon 1`] = `
       class="MuiBox-root mui-style-old1by"
     >
       <p
-        class="MuiTypography-root MuiTypography-body2 mui-style-1y7t9fj-MuiTypography-root"
+        class="MuiTypography-root MuiTypography-body2 mui-style-1q44c8r-MuiTypography-root"
       >
         <label
           for="fieldName"
@@ -22,7 +22,7 @@ exports[`TextField should render icon 1`] = `
       class="MuiBox-root mui-style-ve6emg"
     >
       <div
-        class="MuiInputBase-root MuiOutlinedInput-root MuiInputBase-colorPrimary MuiInputBase-fullWidth MuiInputBase-sizeSmall MuiInputBase-adornedStart mui-style-3p4m9g-MuiInputBase-root-MuiOutlinedInput-root"
+        class="MuiInputBase-root MuiOutlinedInput-root MuiInputBase-colorPrimary MuiInputBase-fullWidth MuiInputBase-sizeSmall MuiInputBase-adornedStart mui-style-mamh14-MuiInputBase-root-MuiOutlinedInput-root"
       >
         <div
           class="MuiInputAdornment-root MuiInputAdornment-positionStart mui-style-1nowbqt-MuiInputAdornment-root"
@@ -35,7 +35,7 @@ exports[`TextField should render icon 1`] = `
           </span>
           <svg
             aria-hidden="true"
-            class="MuiSvgIcon-root MuiSvgIcon-colorPrimary MuiSvgIcon-fontSizeMedium mui-style-13zxd6q-MuiSvgIcon-root"
+            class="MuiSvgIcon-root MuiSvgIcon-colorPrimary MuiSvgIcon-fontSizeMedium mui-style-iggaj2-MuiSvgIcon-root"
             data-testid="AddAPhotoIcon"
             focusable="false"
             viewBox="0 0 24 24"
@@ -47,7 +47,7 @@ exports[`TextField should render icon 1`] = `
         </div>
         <input
           aria-invalid="false"
-          class="MuiInputBase-input MuiOutlinedInput-input MuiInputBase-inputSizeSmall MuiInputBase-inputAdornedStart mui-style-1adqmvi-MuiInputBase-input-MuiOutlinedInput-input"
+          class="MuiInputBase-input MuiOutlinedInput-input MuiInputBase-inputSizeSmall MuiInputBase-inputAdornedStart mui-style-1b17i47-MuiInputBase-input-MuiOutlinedInput-input"
           id="fieldName"
           name="fieldName"
           type="text"

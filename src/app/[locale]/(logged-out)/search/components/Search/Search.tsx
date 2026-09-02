@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useMemo, useRef, useState } from "react";
+import { tokens } from "@hdruk/ui/theme";
 import { BookmarkBorder } from "@mui/icons-material";
 import FormatListBulletedIcon from "@mui/icons-material/FormatListBulleted";
 import {
@@ -865,14 +866,14 @@ const Search = ({ filters, schema }: SearchProps) => {
         position: "absolute",
         zIndex: theme.zIndex.modal,
         borderRadius: "50%",
-        backgroundColor: colors.white,
+        backgroundColor: tokens.background.white,
         width: "48px",
         height: "48px",
         top: 20,
         m: 0,
         left: filterSidebarOpen ? 290 : 20,
         "&:hover": {
-            backgroundColor: colors.grey300,
+            backgroundColor: tokens.status.grey,
         },
         transition: theme.transitions.create("left", {
             easing,
@@ -899,7 +900,7 @@ const Search = ({ filters, schema }: SearchProps) => {
                     anchor="top"
                     open={filterDrawerOpen}
                     onClose={toggleFilterDrawer(false)}>
-                    <Box sx={{ mt: 0, pt: 2, backgroundColor: colors.grey }}>
+                    <Box sx={{ mt: 0, pt: 2, backgroundColor: tokens.background.primary }}>
                         <IconButton
                             data-testid="dialog-close-icon"
                             aria-label="close"
@@ -908,7 +909,7 @@ const Search = ({ filters, schema }: SearchProps) => {
                                 position: "absolute",
                                 right: 8,
                                 top: 30,
-                                color: colors.purple500,
+                                color: tokens.brand.primary,
                             }}>
                             <CloseIcon />
                         </IconButton>

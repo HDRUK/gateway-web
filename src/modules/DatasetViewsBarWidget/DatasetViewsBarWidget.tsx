@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, type ReactNode } from "react";
+import { tokens } from "@hdruk/ui/theme";
 import MuiLink from "@mui/material/Link";
 import Skeleton from "@mui/material/Skeleton";
 import { useTheme } from "@mui/material/styles";
@@ -20,7 +21,6 @@ import Paper from "@/components/Paper";
 import Typography from "@/components/Typography";
 import useGet from "@/hooks/useGet";
 import apis from "@/config/apis";
-import { colors } from "@/config/theme";
 import { RouteName } from "@/consts/routeName";
 import { getShortenedText } from "@/utils/string";
 
@@ -62,7 +62,7 @@ const BarLabelInsideEnd = ({
             textAnchor="end"
             dominantBaseline="central"
             pointerEvents="none"
-            fill={isHighlighted ? colors.white : colors.purple900}
+            fill={isHighlighted ? tokens.text.primaryWhite : tokens.status.information}
             opacity={isFaded ? 0.3 : 1}
             fontSize={typography.caption.fontSize}>
             {children}
@@ -222,7 +222,7 @@ const DatasetViewsBarWidget = ({
                 series={[
                     {
                         data: entries.map(e => e.counter),
-                        color: colors.purple100,
+                        color: tokens.brand.accentPrimary,
                         highlightScope: { highlight: "item" },
                         barLabel: "value",
                     },
@@ -243,7 +243,7 @@ const DatasetViewsBarWidget = ({
                     "& .MuiBarChart-element": {
                         cursor: "pointer",
                     },
-                    "& .MuiBarChart-element:hover": { fill: colors.purple500 },
+                    "& .MuiBarChart-element:hover": { fill: tokens.brand.primary },
                     "& .MuiBarChart-element[data-highlighted]": {
                         filter: "none",
                     },

@@ -2,6 +2,7 @@
 
 import { useMemo, useRef, useState } from "react";
 import { Button } from "@hdruk/ui";
+import { tokens } from "@hdruk/ui/theme";
 import { Box, Typography } from "@mui/material";
 import {
     WidgetEntityData,
@@ -12,7 +13,7 @@ import {
     ScriptItem,
     DataUseItem,
 } from "@/interfaces/Widget";
-import theme, { colors } from "@/config/theme";
+import theme from "@/config/theme";
 import { FULL_GATEWAY_URL } from "@/consts/urls";
 import CategoryMenu from "./components/CategoryMenu";
 import CollectionsGrid from "./components/CollectionGrid";
@@ -135,7 +136,7 @@ export default function WidgetDisplay({
                 height: `${size_height}${unit}`,
                 overflow: "hidden",
                 backgroundColor: branding_neutral ?? theme.palette.grey[100],
-                color: colors.grey900,
+                color: tokens.text.primaryBlack,
             }}
             ref={widgetContainer}>
             <Box
@@ -173,7 +174,7 @@ export default function WidgetDisplay({
                     <Box
                         component="footer"
                         sx={{
-                            backgroundColor: branding_neutral ?? colors.grey200,
+                            backgroundColor: branding_neutral ?? tokens.status.hovered,
                             display: "flex",
                             flexDirection: "row",
                             justifyContent: "space-between",
@@ -196,7 +197,7 @@ export default function WidgetDisplay({
                             target="_blank"
                             rel="noopener noreferrer"
                             sx={{
-                                backgroundColor: colors.white,
+                                backgroundColor: tokens.background.white,
                                 flexShrink: 0,
                             }}
                             color="greyCustom"

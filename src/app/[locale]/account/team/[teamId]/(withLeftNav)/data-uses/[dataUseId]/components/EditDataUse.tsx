@@ -3,6 +3,7 @@
 import { ChangeEvent, useCallback, useEffect, useMemo, useState } from "react";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
+import { tokens } from "@hdruk/ui/theme";
 import { Typography } from "@mui/material";
 import dayjs from "dayjs";
 import { get, isEqual } from "lodash";
@@ -357,11 +358,11 @@ const EditDataUse = () => {
                                 sx={{
                                     ".MuiAccordionSummary-root": {
                                         background: colors.purple400,
-                                        color: colors.white,
+                                        color: tokens.text.primaryWhite,
                                     },
                                     ".MuiSvgIcon-root.MuiSvgIcon-colorPrimary":
                                         {
-                                            color: colors.white,
+                                            color: tokens.text.primaryWhite,
                                         },
                                 }}
                                 heading={

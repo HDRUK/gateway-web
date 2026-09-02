@@ -73,7 +73,6 @@ export default function ActionMenu({
                 aria-controls={open ? "action-menu" : undefined}
                 aria-haspopup="true"
                 aria-expanded={open ? "true" : undefined}
-                variant="outlined"
                 color={buttonColor}
                 size="small"
                 disableRipple

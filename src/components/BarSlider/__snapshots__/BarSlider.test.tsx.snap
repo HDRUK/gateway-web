@@ -10,7 +10,7 @@ exports[`BarSlider should render component 1`] = `
     />
   </div>
   <span
-    class="MuiSlider-root MuiSlider-colorPrimary MuiSlider-sizeSmall mui-style-1xhrbcv-MuiSlider-root"
+    class="MuiSlider-root MuiSlider-colorPrimary MuiSlider-sizeSmall mui-style-1tn1eup-MuiSlider-root"
   >
     <span
       class="MuiSlider-rail mui-style-r64h58-MuiSlider-rail"
@@ -46,7 +46,7 @@ exports[`BarSlider should render component 1`] = `
       />
       <span
         aria-hidden="true"
-        class="MuiSlider-valueLabel mui-style-un5c8n-MuiSlider-valueLabel"
+        class="MuiSlider-valueLabel mui-style-1h91u8i-MuiSlider-valueLabel"
       >
         <span
           class="MuiSlider-valueLabelCircle"
@@ -81,7 +81,7 @@ exports[`BarSlider should render component 1`] = `
       />
       <span
         aria-hidden="true"
-        class="MuiSlider-valueLabel mui-style-un5c8n-MuiSlider-valueLabel"
+        class="MuiSlider-valueLabel mui-style-1h91u8i-MuiSlider-valueLabel"
       >
         <span
           class="MuiSlider-valueLabelCircle"

@@ -3,6 +3,7 @@
 import { omit } from "lodash";
 import { useTranslations } from "next-intl";
 import { useRouter, useSearchParams } from "next/navigation";
+import { tokens } from "@hdruk/ui/theme";
 import { DarTemplate } from "@/interfaces/DataAccessRequest";
 import { PaginationType } from "@/interfaces/Pagination";
 import BackButton from "@/components/BackButton";
@@ -15,7 +16,6 @@ import useDelete from "@/hooks/useDelete";
 import useDialog from "@/hooks/useDialog";
 import usePost from "@/hooks/usePost";
 import apis from "@/config/apis";
-import { colors } from "@/config/theme";
 import { ContentCopyIcon, EditIcon, DeleteIcon } from "@/consts/icons";
 import { RouteName } from "@/consts/routeName";
 import TemplateList from "../TemplateList";
@@ -190,7 +190,7 @@ const TeamTemplates = ({
             <Tabs
                 centered
                 tabs={tabsList}
-                tabBoxSx={{ padding: 0, background: colors.white }}
+                tabBoxSx={{ padding: 0, background: tokens.background.white }}
                 rootBoxSx={{ padding: 0 }}
                 paramName="published"
                 defaultSelectedTab={t("active")}

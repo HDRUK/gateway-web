@@ -33,7 +33,7 @@ const ApiManagement = () => {
                             sx={{ height: 24, width: 24 }}
                         />
                     }
-                    variant="link">
+                    purpose="link">
                     {t("howTo")}
                 </Button>
             </Link>

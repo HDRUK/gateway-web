@@ -9,7 +9,7 @@ exports[`KeepingUpdated should render content 1`] = `
       class="MuiDivider-root MuiDivider-fullWidth mui-style-dtu0rx-MuiDivider-root"
     />
     <p
-      class="MuiTypography-root MuiTypography-body1 mui-style-1drs2w0-MuiTypography-root"
+      class="MuiTypography-root MuiTypography-body2 mui-style-94j1ag-MuiTypography-root"
     >
       Keeping you updated
     </p>
@@ -20,12 +20,12 @@ exports[`KeepingUpdated should render content 1`] = `
       class="MuiBox-root mui-style-106jpu6"
     >
       <p
-        class="MuiTypography-root MuiTypography-body1 mui-style-15hv12f-MuiTypography-root"
+        class="MuiTypography-root MuiTypography-body2 mui-style-wnbch4-MuiTypography-root"
       >
         Feedback
       </p>
       <span
-        class="MuiButtonBase-root MuiCheckbox-root MuiCheckbox-colorPrimary MuiCheckbox-sizeMedium PrivateSwitchBase-root MuiCheckbox-root MuiCheckbox-colorPrimary MuiCheckbox-sizeMedium MuiCheckbox-root MuiCheckbox-colorPrimary MuiCheckbox-sizeMedium mui-style-1886xlh-MuiButtonBase-root-MuiSwitchBase-root-MuiCheckbox-root"
+        class="MuiButtonBase-root MuiCheckbox-root MuiCheckbox-colorPrimary MuiCheckbox-sizeMedium PrivateSwitchBase-root MuiCheckbox-root MuiCheckbox-colorPrimary MuiCheckbox-sizeMedium MuiCheckbox-root MuiCheckbox-colorPrimary MuiCheckbox-sizeMedium mui-style-1ywmfpa-MuiButtonBase-root-MuiSwitchBase-root-MuiCheckbox-root"
         control="[object Object]"
         label="I am happy to be contacted to share and give feedback on my experience with the Gateway"
       >
@@ -45,7 +45,7 @@ exports[`KeepingUpdated should render content 1`] = `
       class="MuiDivider-root MuiDivider-fullWidth mui-style-dtu0rx-MuiDivider-root"
     />
     <p
-      class="MuiTypography-root MuiTypography-body1 mui-style-17204gr-MuiTypography-root"
+      class="MuiTypography-root MuiTypography-body2 mui-style-1yg223w-MuiTypography-root"
     >
       As a user of the Gateway we take the privacy and security of your personal data seriously. Our privacy policy aims to give you information on how Health Data Research UK collects and processes your personal data through your use of this Gateway, including any data you may provide by emailing us.
     </p>

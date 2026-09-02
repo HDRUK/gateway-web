@@ -33,7 +33,6 @@ const CMSBanners = ({ data }: { data: HomepageBannerNode[] }) => {
                                 linkText &&
                                 linkUrl && (
                                     <Button
-                                        variant="text"
                                         component="a"
                                         color="greyCustom"
                                         href={linkUrl}

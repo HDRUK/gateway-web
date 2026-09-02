@@ -1,10 +1,10 @@
 "use client";
 
+import { tokens } from "@hdruk/ui/theme";
 import { Box, Link, List, ListItem, ListItemText } from "@mui/material";
 import { DatasetItem, WidgetBranding } from "@/interfaces/Widget";
 import EllipsisLineLimit from "@/components/EllipsisLineLimit";
 import Typography from "@/components/Typography";
-import { colors } from "@/config/theme";
 import { RouteName } from "@/consts/routeName";
 import { FULL_GATEWAY_URL } from "@/consts/urls";
 import { formatPopulationSize } from "../utils/formatPopulationSize";
@@ -26,7 +26,7 @@ export default function DatasetsList({ items, branding }: DatasetsListProps) {
     return (
         <List
             sx={{
-                background: branding?.neutral ?? colors.grey100,
+                background: branding?.neutral ?? tokens.background.primary,
                 px: 1,
                 mt: 1,
                 display: "flex",
@@ -39,8 +39,8 @@ export default function DatasetsList({ items, branding }: DatasetsListProps) {
                     sx={{
                         p: 0,
                         mb: 1,
-                        borderBottom: `1px solid ${branding?.neutral ?? colors.grey300}`,
-                        background: colors.white,
+                        borderBottom: `1px solid ${branding?.neutral ?? tokens.status.grey}`,
+                        background: tokens.background.white,
                     }}>
                     <ListItemText
                         disableTypography
@@ -99,14 +99,14 @@ export default function DatasetsList({ items, branding }: DatasetsListProps) {
                                         },
                                         justifyContent: "space-between",
                                     }}>
-                                    <Typography color={branding?.secondary ?? colors.green700}>
+                                    <Typography color={branding?.secondary ?? tokens.brand.secondary}>
                                         {`${TRANSLATIONS.populationSize}: `}
                                         {formatPopulationSize(
                                             result.population_size,
                                             TRANSLATIONS.noData
                                         )}
                                     </Typography>
-                                    <Typography color={branding?.secondary ?? colors.green700}>
+                                    <Typography color={branding?.secondary ?? tokens.brand.secondary}>
                                         {`${TRANSLATIONS.dateRange}: `}
                                         {formatYearRange(
                                             result.start_date ?? null,

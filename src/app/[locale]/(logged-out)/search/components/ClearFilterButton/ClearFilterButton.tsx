@@ -28,7 +28,7 @@ const ClearFilterButton = ({
 
     return (
         <ClearButton
-            variant="link"
+            purpose="link"
             onClick={resetFilterSection}
             disabled={!filterItemCount}>
             {t("clearFilter")} ({filterItemCount})

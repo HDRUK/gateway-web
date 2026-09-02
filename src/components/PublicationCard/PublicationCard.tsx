@@ -1,12 +1,12 @@
 "use client";
 
+import { tokens } from "@hdruk/ui/theme";
 import { Publication } from "@/interfaces/Publication";
 import { IconType } from "@/interfaces/Ui";
 import Box from "@/components/Box";
 import KeyValueList from "@/components/KeyValueList";
 import Paper from "@/components/Paper";
 import Typography from "@/components/Typography";
-import { colors } from "@/config/theme";
 import { formatDate } from "@/utils/date";
 import CardActions from "../CardActions";
 
@@ -66,7 +66,7 @@ const PublicationCard = ({ publication, actions }: PublicationCardProps) => {
                     />
                 </Box>
 
-                <Box sx={{ p: 0, borderLeft: `solid 1px ${colors.grey600}` }}>
+                <Box sx={{ p: 0, borderLeft: `solid 1px ${tokens.status.faded}` }}>
                     <CardActions actions={actions} id={publication.id} />
                 </Box>
             </Box>

@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { useTranslations } from "next-intl";
 import { useSearchParams } from "next/navigation";
+import { tokens } from "@hdruk/ui/theme";
 import { PaginationType } from "@/interfaces/Pagination";
 import { Publication } from "@/interfaces/Publication";
 import Box from "@/components/Box";
@@ -22,7 +23,6 @@ import {
     publicationSearchDefaultValues,
     sortByOptions,
 } from "@/config/forms/publicationAccountSearch";
-import { colors } from "@/config/theme";
 import { DataStatus } from "@/consts/application";
 import { AddIcon, ArchiveIcon, EditIcon, UnarchiveIcon } from "@/consts/icons";
 import { RouteName } from "@/consts/routeName";
@@ -279,7 +279,7 @@ const UserPublications = ({
             <Tabs
                 centered
                 tabs={tabsList}
-                tabBoxSx={{ padding: 0, background: colors.white }}
+                tabBoxSx={{ padding: 0, background: tokens.background.white }}
                 rootBoxSx={{ padding: 0 }}
             />
         </>

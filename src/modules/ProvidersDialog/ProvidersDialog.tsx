@@ -68,7 +68,7 @@ const ProvidersDialog = () => {
                         display: institutionSelectVisible ? "block" : "none",
                     }}>
                     <Button
-                        variant="link"
+                        purpose="link"
                         onClick={() => setInstitutionSelectVisible(false)}>
                         {t("selectAnother")}
                     </Button>
