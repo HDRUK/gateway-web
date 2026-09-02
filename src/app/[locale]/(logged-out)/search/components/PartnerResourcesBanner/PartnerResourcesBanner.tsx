@@ -1,10 +1,10 @@
 "use client";
 
+import { tokens } from "@hdruk/ui/theme";
 import { Box, Typography } from "@mui/material";
 import { useTranslations } from "next-intl";
 import { Button } from "@hdruk/ui";
 import Paper from "@/components/Paper";
-import { colors } from "@/config/theme";
 
 const TRANSLATION_PATH = "pages.search.components.PartnerResourcesBanner";
 const ARDC_FALLBACK_LOGO =
@@ -38,20 +38,20 @@ const PartnerResourcesBanner = ({
                 p: 3,
                 my: 2,
                 mx: 2,
-                backgroundColor: colors.grey100,
-                border: `1px solid ${colors.grey600}`,
+                backgroundColor: tokens.background.primary,
+                border: `1px solid ${tokens.status.faded}`,
             }}
             elevation={0}>
             <Typography
                 fontWeight={700}
                 fontSize={20}
-                sx={{ color: colors.green800 }}>
+                sx={{ color: tokens.brand.secondaryHovered }}>
                 {count} {t("partnerResources")}
             </Typography>
             <Box sx={{ flex: 1 }}>
                 <Typography
                     mb={1.5}
-                    sx={{ color: colors.grey800, fontSize: 15 }}>
+                    sx={{ color: tokens.text.secondaryBlack, fontSize: 15 }}>
                     {t("partnerResourcesBanner")}
                 </Typography>
                 <Box

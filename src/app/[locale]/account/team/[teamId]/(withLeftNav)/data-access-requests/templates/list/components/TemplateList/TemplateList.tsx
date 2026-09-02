@@ -1,4 +1,5 @@
 import { useTranslations } from "next-intl";
+import { tokens } from "@hdruk/ui/theme";
 import { DarTemplate } from "@/interfaces/DataAccessRequest";
 import { IconType } from "@/interfaces/Ui";
 import Box from "@/components/Box";
@@ -10,7 +11,6 @@ import Pagination from "@/components/Pagination";
 import Paper from "@/components/Paper";
 import ShowingXofX from "@/components/ShowingXofX";
 import Typography from "@/components/Typography";
-import { colors } from "@/config/theme";
 import { formatDate } from "@/utils/date";
 
 interface TemplateListProps {
@@ -131,7 +131,7 @@ const TemplateList = ({
                             <Box
                                 sx={{
                                     p: 0,
-                                    borderLeft: `solid 1px ${colors.grey600}`,
+                                    borderLeft: `solid 1px ${tokens.status.faded}`,
                                     justifyContent: "center",
                                     display: "flex",
                                     flexDirection: "column",

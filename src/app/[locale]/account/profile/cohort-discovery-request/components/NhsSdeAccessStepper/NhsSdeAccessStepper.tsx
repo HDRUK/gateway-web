@@ -1,6 +1,7 @@
 "use client";
 
 import { ReactNode, useState } from "react";
+import { tokens } from "@hdruk/ui/theme";
 import WarningAmberIcon from "@mui/icons-material/WarningAmber";
 import { Box } from "@mui/material";
 import { useTranslations } from "next-intl";
@@ -103,13 +104,13 @@ const NhsSdeAccessStepper = () => {
     const badge = !hasAccess
         ? null
         : approvalRequested
-        ? { label: t("badgePending"), bg: colors.grey600 }
+        ? { label: t("badgePending"), bg: tokens.status.faded }
         : inProcess || (applied && canApply)
-        ? { label: t("badgeAwaitingAction"), bg: colors.orange }
+        ? { label: t("badgeAwaitingAction"), bg: tokens.status.needsAction }
         : isApproved
         ? { label: capitalise(nhs), bg: colors.green400 }
         : isNegative
-        ? { label: capitalise(nhs), bg: colors.red700 }
+        ? { label: capitalise(nhs), bg: tokens.status.error }
         : null;
 
     const openConfirmModal = () => {
@@ -141,7 +142,7 @@ const NhsSdeAccessStepper = () => {
                     {!hasAccess && (
                         <Typography
                             component="div"
-                            color={colors.grey600}
+                            color={tokens.text.disabled}
                             sx={{ whiteSpace: "pre-line" }}>
                             {t.rich("step1Text", {
                                 link: chunks => (
@@ -190,7 +191,7 @@ const NhsSdeAccessStepper = () => {
                             </Button>
                         )}
                     </Box>
-                    <Typography component="div" color={colors.grey600}>
+                    <Typography component="div" color={tokens.text.disabled}>
                         {t.rich("step2Text", {
                             link: chunks => (
                                 <Link
@@ -210,9 +211,9 @@ const NhsSdeAccessStepper = () => {
                             mt: 1,
                         }}>
                         <WarningAmberIcon
-                            sx={{ color: colors.red700, fontSize: 18 }}
+                            sx={{ color: tokens.status.error, fontSize: 18 }}
                         />
-                        <Typography color={colors.red700}>
+                        <Typography color={tokens.status.error}>
                             {t("step2Warning")}
                         </Typography>
                     </Box>
@@ -223,7 +224,7 @@ const NhsSdeAccessStepper = () => {
             titleKey: "step3Title",
             extra: state => state === STEP_STATE.ACTIVE && (
                 <>
-                    <Typography color={colors.grey600} sx={{ mt: 1, mb: 2 }}>
+                    <Typography color={tokens.text.disabled} sx={{ mt: 1, mb: 2 }}>
                         {t("step3Text")}
                     </Typography>
                     <IndicateNhseSdeAccessButton
@@ -244,7 +245,7 @@ const NhsSdeAccessStepper = () => {
     return (
         <Paper sx={{ bgcolor: "white", p: { xs: 3, md: 4 } }}>
             <Typography variant="h2">{t("title")}</Typography>
-            <Typography sx={{ mb: 2 }} color={colors.grey700}>
+            <Typography sx={{ mb: 2 }} color={tokens.text.faded}>
                 {t.rich("moreInfo", {
                     link: chunks => <Link href={MORE_INFO_HREF}>{chunks}</Link>,
                 })}
@@ -253,7 +254,7 @@ const NhsSdeAccessStepper = () => {
             {loading ? (
                 <Loading />
             ) : !isNhsSdeApplicationsEnabled ? (
-                <Typography component="div" color={colors.grey600}>
+                <Typography component="div" color={tokens.text.disabled}>
                     {tCd.rich("nhseSdeTemporaryText", {
                         mailto: chunks => (
                             <Link href={`mailto:${chunks}`}>{chunks}</Link>
@@ -267,7 +268,7 @@ const NhsSdeAccessStepper = () => {
                             <Chip
                                 size="small"
                                 label={badge.label}
-                                sx={{ bgcolor: badge.bg, color: colors.white }}
+                                sx={{ bgcolor: badge.bg, color: tokens.text.primaryWhite }}
                             />
                         </Box>
                     )}

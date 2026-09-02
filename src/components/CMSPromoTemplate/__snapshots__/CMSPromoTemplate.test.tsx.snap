@@ -6,10 +6,10 @@ exports[`CMSPromoTemplate should render content 1`] = `
     class="wpStyles"
   >
     <div
-      class="MuiBox-root mui-style-1u6a07a"
+      class="MuiBox-root mui-style-1ifzgud"
     >
       <h1
-        class="MuiTypography-root MuiTypography-h2 mui-style-17o73ha-MuiTypography-root"
+        class="MuiTypography-root MuiTypography-h2 mui-style-lbecmy-MuiTypography-root"
       >
         Cohort Discovery
       </h1>
@@ -75,7 +75,7 @@ exports[`CMSPromoTemplate should render content 1`] = `
       </div>
     </div>
     <div
-      class="MuiBox-root mui-style-1iru1wc"
+      class="MuiBox-root mui-style-5bmkq1"
     >
       <div
         class="MuiBox-root mui-style-19midj6"

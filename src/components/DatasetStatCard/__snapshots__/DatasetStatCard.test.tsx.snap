@@ -4,15 +4,15 @@ exports[`DatasetStatCard should match snapshot 1`] = `
 <div>
   <div
     aria-describedby="desc-undefined"
-    class="MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation1 MuiCard-root mui-style-3ulcnr-MuiPaper-root-MuiCard-root"
-    style="--Paper-shadow: 0px 2px 1px -1px rgba(0,0,0,0.2),0px 1px 1px 0px rgba(0,0,0,0.14),0px 1px 3px 0px rgba(0,0,0,0.12);"
+    class="MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation0 MuiCard-root mui-style-yhk7q1-MuiPaper-root-MuiCard-root"
+    style="--Paper-shadow: none;"
     tabindex="0"
   >
     <div
       class="mui-style-1hyoz7m"
     >
       <p
-        class="MuiTypography-root MuiTypography-body1 mui-style-1hbyc6-MuiTypography-root"
+        class="MuiTypography-root MuiTypography-body2 mui-style-282xcq-MuiTypography-root"
       >
         A description
       </p>
@@ -20,12 +20,12 @@ exports[`DatasetStatCard should match snapshot 1`] = `
         class="MuiBox-root mui-style-1lekzkb"
       >
         <span
-          id=":r0:"
+          id=":r1:"
         />
         <button
           aria-label="helper"
-          aria-labelledby=":r0:"
-          class="MuiButtonBase-root MuiIconButton-root MuiIconButton-sizeMedium mui-style-1tqdbyl-MuiButtonBase-root-MuiIconButton-root"
+          aria-labelledby=":r1:"
+          class="MuiButtonBase-root MuiIconButton-root MuiIconButton-sizeSmall mui-style-14nopqm-MuiButtonBase-root-MuiIconButton-root"
           data-mui-internal-clone-element="true"
           tabindex="0"
           type="button"
@@ -51,12 +51,12 @@ exports[`DatasetStatCard should match snapshot 1`] = `
         class="mui-style-1cfaonj"
       >
         <p
-          class="MuiTypography-root MuiTypography-body1 mui-style-1qgayv0-MuiTypography-root"
+          class="MuiTypography-root MuiTypography-body2 mui-style-1brge3j-MuiTypography-root"
         >
           10
         </p>
         <p
-          class="MuiTypography-root MuiTypography-body1 mui-style-e7lpzj-MuiTypography-root"
+          class="MuiTypography-root MuiTypography-body2 mui-style-u9l7ki-MuiTypography-root"
         >
           days
         </p>

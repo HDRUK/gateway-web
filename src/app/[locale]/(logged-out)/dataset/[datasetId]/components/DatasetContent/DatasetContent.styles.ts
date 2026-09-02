@@ -5,7 +5,7 @@ import Chip from "@/components/Chip";
 
 export const ObservationTableWrapper = styled(Box)(({ theme }) => ({
     padding: 0,
-    border: `1px solid ${theme.palette.greyCustom.main}`,
+    border: `1px solid ${theme.palette.divider}`,
     overflowX: "scroll",
 }));
 

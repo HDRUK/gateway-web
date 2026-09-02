@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { tokens } from "@hdruk/ui/theme";
 import { Box } from "@mui/material";
 import { useTranslations } from "next-intl";
 import Link from "next/link";
@@ -31,8 +32,8 @@ interface InfoHoverPanelProps {
 // NOTE: 19px has no typography variant (body1 is 14px), so it stays literal.
 const BUTTON_STYLES = {
     height: "100%",
-    background: colors.white,
-    borderColor: colors.white,
+    background: tokens.background.white,
+    borderColor: tokens.background.white,
     fontSize: { xs: 14, sm: 19 },
     "&:hover, &:focus-visible": {
         backgroundColor: "primary.main",
@@ -75,7 +76,7 @@ const InfoHoverPanel = ({
                 key={item.id}
                 fullWidth
                 sx={BUTTON_STYLES}
-                variant="outlined"
+                purpose="tertiary"
                 disableRipple>
                 {t(`${item.id}.label`)}
             </HomepageCtaButton>
@@ -89,7 +90,7 @@ const InfoHoverPanel = ({
                 href={item.href}
                 fullWidth
                 sx={BUTTON_STYLES}
-                variant="outlined"
+                purpose="tertiary"
                 disableRipple
                 {...(item.externalUrl && {
                     target: "_blank",
@@ -129,9 +130,9 @@ const InfoHoverPanel = ({
                 variant="h2"
                 sx={{
                     color: {
-                        xs: colors.white,
+                        xs: tokens.text.primaryWhite,
                         sm: colors.green400,
-                        lg: colors.white,
+                        lg: tokens.text.primaryWhite,
                     },
                     fontSize: 24,
                     mt: 3,

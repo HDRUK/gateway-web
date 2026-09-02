@@ -4,6 +4,7 @@ import { useEffect, useMemo, useState } from "react";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useRouter } from "next/navigation";
+import { tokens } from "@hdruk/ui/theme";
 import { Team } from "@/interfaces/Team";
 import Box from "@/components/Box";
 import Form from "@/components/Form";
@@ -25,7 +26,6 @@ import {
     TeamNotifications,
     TeamNotificationsForm,
 } from "@/config/forms/emailNotifications";
-import { colors } from "@/config/theme";
 import { getPreferredEmail } from "@/utils/user";
 import EmailNotificationDescriptions from "../EmailNotificationDescriptions";
 
@@ -128,7 +128,7 @@ const EmailNotifications = ({ permissions, team }: EmailNotificationsProps) => {
                     </Typography>
                     {team_email && (
                         <Box sx={{ display: "flex", p: 0, gap: 2 }}>
-                            <Typography color={colors.grey600}>
+                            <Typography color={tokens.text.disabled}>
                                 Team Emails:
                             </Typography>
                             <Typography>{team_email}</Typography>

@@ -1,12 +1,12 @@
 import { ReactNode, useMemo } from "react";
 import { FieldError } from "react-hook-form";
+import { tokens } from "@hdruk/ui/theme";
 import { SxProps } from "@mui/material";
 import Box from "@/components/Box";
 import CharacterLimit from "@/components/CharacterLimit";
 import FormError from "@/components/FormError";
 import FormInfoLabel from "@/components/FormInfoLabel";
 import Typography from "@/components/Typography";
-import { colors } from "@/config/theme";
 
 interface FormInputWrapperProps {
     horizontalForm?: boolean;
@@ -76,7 +76,7 @@ const FormInputWrapper = ({
                     <CharacterLimit count={characterCount} limit={limit} />
                 )}
                 {extraInfo && (
-                    <Typography fontSize={13} color={colors.grey600}>
+                    <Typography fontSize={13} color={tokens.text.disabled}>
                         {extraInfo}
                     </Typography>
                 )}

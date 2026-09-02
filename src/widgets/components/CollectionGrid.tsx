@@ -1,9 +1,9 @@
 "use client";
 
+import { tokens } from "@hdruk/ui/theme";
 import { Box, Chip, Link } from "@mui/material";
 import { CollectionItem, WidgetBranding } from "@/interfaces/Widget";
 import BoxStacked from "@/components/BoxStacked";
-import { colors } from "@/config/theme";
 import { FULL_GATEWAY_URL } from "@/consts/urls";
 
 const boxStackedSX = { aspectRatio: "1.9 / 1", minHeight: 130 } as const;
@@ -29,7 +29,7 @@ export default function CollectionsGrid({ items }: CollectionsGridProps) {
                         href={`${FULL_GATEWAY_URL}/collection/${result.id}`}
                         target="_blank"
                         sx={{
-                            color: colors.white,
+                            color: tokens.text.primaryWhite,
                             px: 3,
                             py: 2,
                             display: "flex",
@@ -38,7 +38,7 @@ export default function CollectionsGrid({ items }: CollectionsGridProps) {
                                 result?.image_link ||
                                 "https://media.prod.hdruk.cloud/static/default_placeholder.png"
                             })`,
-                            backgroundColor: colors.white,
+                            backgroundColor: tokens.background.white,
                             backgroundRepeat: "no-repeat",
                             backgroundSize: "contain",
                             backgroundPosition: "center",
@@ -48,8 +48,8 @@ export default function CollectionsGrid({ items }: CollectionsGridProps) {
                             size="small"
                             label={result.name}
                             sx={{
-                                backgroundColor: colors.grey600,
-                                color: colors.white,
+                                backgroundColor: tokens.status.faded,
+                                color: tokens.text.primaryWhite,
                                 maxWidth: "220px",
                             }}
                         />

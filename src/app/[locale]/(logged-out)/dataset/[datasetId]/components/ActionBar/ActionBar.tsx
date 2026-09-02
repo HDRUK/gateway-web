@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { useTranslations } from "next-intl";
 import { usePathname } from "next/navigation";
+import { tokens } from "@hdruk/ui/theme";
 import { Dataset } from "@/interfaces/Dataset";
 import { FileExport } from "@/interfaces/FileExport";
 import { SearchCategory } from "@/interfaces/Search";
@@ -16,7 +17,6 @@ import useGeneralEnquiry from "@/hooks/useGeneralEnquiry";
 import getRequest from "@/services/api/get";
 import notificationService from "@/services/notification";
 import apis from "@/config/apis";
-import { colors } from "@/config/theme";
 import {
     ChevronThinIcon,
     DownloadIcon,
@@ -150,7 +150,7 @@ const ActionBar = ({ dataset }: ActionBarProps) => {
                         )
                     }
                     style={{ display: "flex", justifyContent: "flex-start" }}
-                    variant="link">
+                    purpose="link">
                     Metadata
                 </Button>
             ),
@@ -166,7 +166,7 @@ const ActionBar = ({ dataset }: ActionBarProps) => {
                         )
                     }
                     style={{ display: "flex", justifyContent: "flex-start" }}
-                    variant="link"
+                    purpose="link"
                     disabled={
                         dataset.versions[0].metadata?.metadata?.observations
                             ?.length === 0
@@ -186,7 +186,7 @@ const ActionBar = ({ dataset }: ActionBarProps) => {
                         )
                     }
                     style={{ display: "flex", justifyContent: "flex-start" }}
-                    variant="link"
+                    purpose="link"
                     disabled={
                         dataset.versions[0].metadata?.metadata
                             ?.structuralMetadata?.tables?.length === 0
@@ -275,7 +275,7 @@ const ActionBar = ({ dataset }: ActionBarProps) => {
                             />
                         }
                         sx={{
-                            bgcolor: colors.grey200,
+                            bgcolor: tokens.status.hovered,
                             ml: { xs: 0, lg: 2 },
                         }}
                         onClick={handleOpenDropdownMenu}>

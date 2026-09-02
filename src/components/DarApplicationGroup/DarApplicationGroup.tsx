@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { tokens } from "@hdruk/ui/theme";
 import { Typography } from "@mui/material";
 import { useTranslations } from "next-intl";
 import { DataAccessRequestApplication } from "@/interfaces/DataAccessRequestApplication";
@@ -37,13 +38,13 @@ export default function DarApplicationGroup({
                 pb: 1,
                 transition: "background-color 0.1s ease-in",
                 ...(expanded.includes(item.id) && {
-                    backgroundColor: colors.grey300,
+                    backgroundColor: tokens.status.grey,
                 }),
             }}>
             <Box>
                 <Typography
                     variant="h2"
-                    color={colors.purple500}
+                    color={tokens.brand.primary}
                     fontSize={32}
                     fontWeight={600}>
                     {t("darApplication")}
@@ -53,7 +54,7 @@ export default function DarApplicationGroup({
                     <Typography fontSize={16}>{item.project_title}</Typography>
                 </ShowMore>
                 <Typography
-                    color={colors.purple500}
+                    color={tokens.brand.primary}
                     fontWeight={700}
                     sx={{ mt: 2 }}>
                     {t("applicationsInGroup")}

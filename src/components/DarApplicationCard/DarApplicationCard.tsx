@@ -1,6 +1,7 @@
 "use client";
 
 import { Fragment, useMemo } from "react";
+import { tokens } from "@hdruk/ui/theme";
 import DownloadIcon from "@mui/icons-material/Download";
 import { Grid } from "@mui/material";
 import { useTranslations } from "next-intl";
@@ -21,7 +22,6 @@ import DarDatasetQuickViewDialog from "@/modules/DarDatasetQuickViewDialog";
 import useAuth from "@/hooks/useAuth";
 import useDialog from "@/hooks/useDialog";
 import apis from "@/config/apis";
-import { colors } from "@/config/theme";
 import { DarEditIcon } from "@/consts/customIcons";
 import {
     DarApplicationApprovalStatus,
@@ -362,7 +362,7 @@ export default function DarApplicationCard({
                                             },
                                             p: 0,
                                         }}>
-                                        <Typography color={colors.grey600}>
+                                        <Typography color={tokens.text.disabled}>
                                             {item.text}
                                         </Typography>
                                     </Box>
@@ -385,7 +385,7 @@ export default function DarApplicationCard({
                                     sx={{
                                         display: "flex",
                                         alignItems: "center",
-                                        color: colors.grey600,
+                                        color: tokens.text.disabled,
                                     }}>
                                     <QueryBuilderOutlinedIcon sx={{ mr: 1 }} />
                                     {application.days_since_submission}
@@ -404,7 +404,7 @@ export default function DarApplicationCard({
                     <Box
                         sx={{
                             p: 0,
-                            borderLeft: `solid 1px ${colors.grey600}`,
+                            borderLeft: `solid 1px ${tokens.status.faded}`,
                             display: "flex",
                             flexDirection: "column",
                         }}>

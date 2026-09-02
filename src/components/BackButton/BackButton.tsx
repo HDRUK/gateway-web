@@ -35,7 +35,7 @@ const BackButton = ({ label, onClick, buttonSx, ...rest }: BackButtonProps) => {
     return (
         <Button
             sx={{ marginBottom: 2, ...buttonSx }}
-            variant="link"
+            purpose="link"
             onClick={handleClick}
             startIcon={<ArrowBackIosNewIcon />}
             {...rest}>

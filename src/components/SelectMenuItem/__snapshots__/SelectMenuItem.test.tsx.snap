@@ -6,7 +6,7 @@ exports[`SelectedMenuItem should render basic component 1`] = `
     class="MuiListItemText-root mui-style-cfq8qh-MuiListItemText-root"
   >
     <span
-      class="MuiTypography-root MuiTypography-body1 MuiListItemText-primary mui-style-40bc9v-MuiTypography-root"
+      class="MuiTypography-root MuiTypography-body1 MuiListItemText-primary mui-style-1xne7sg-MuiTypography-root"
     >
        
       Menu label
@@ -22,7 +22,7 @@ exports[`SelectedMenuItem should render component with icon 1`] = `
   >
     <svg
       aria-hidden="true"
-      class="MuiSvgIcon-root MuiSvgIcon-colorPrimary MuiSvgIcon-fontSizeSmall mui-style-1cm1tyh-MuiSvgIcon-root"
+      class="MuiSvgIcon-root MuiSvgIcon-colorPrimary MuiSvgIcon-fontSizeSmall mui-style-f7buna-MuiSvgIcon-root"
       data-testid="AccountCircleIcon"
       focusable="false"
       viewBox="0 0 24 24"
@@ -36,7 +36,7 @@ exports[`SelectedMenuItem should render component with icon 1`] = `
     class="MuiListItemText-root mui-style-cfq8qh-MuiListItemText-root"
   >
     <span
-      class="MuiTypography-root MuiTypography-body1 MuiListItemText-primary mui-style-40bc9v-MuiTypography-root"
+      class="MuiTypography-root MuiTypography-body1 MuiListItemText-primary mui-style-1xne7sg-MuiTypography-root"
     >
        
       Menu label
@@ -51,7 +51,7 @@ exports[`SelectedMenuItem should render component with right position icon 1`] =
     class="MuiListItemText-root mui-style-cfq8qh-MuiListItemText-root"
   >
     <span
-      class="MuiTypography-root MuiTypography-body1 MuiListItemText-primary mui-style-40bc9v-MuiTypography-root"
+      class="MuiTypography-root MuiTypography-body1 MuiListItemText-primary mui-style-1xne7sg-MuiTypography-root"
     >
        
       Menu label
@@ -62,7 +62,7 @@ exports[`SelectedMenuItem should render component with right position icon 1`] =
   >
     <svg
       aria-hidden="true"
-      class="MuiSvgIcon-root MuiSvgIcon-colorPrimary MuiSvgIcon-fontSizeSmall mui-style-hdtclf-MuiSvgIcon-root"
+      class="MuiSvgIcon-root MuiSvgIcon-colorPrimary MuiSvgIcon-fontSizeSmall mui-style-yo8zy-MuiSvgIcon-root"
       data-testid="AccountCircleIcon"
       focusable="false"
       viewBox="0 0 24 24"
@@ -81,7 +81,7 @@ exports[`SelectedMenuItem should render invertListItem component  1`] = `
     class="MuiListItemText-root mui-style-cfq8qh-MuiListItemText-root"
   >
     <span
-      class="MuiTypography-root MuiTypography-body1 MuiListItemText-primary mui-style-40bc9v-MuiTypography-root"
+      class="MuiTypography-root MuiTypography-body1 MuiListItemText-primary mui-style-1xne7sg-MuiTypography-root"
     >
        
       Menu label

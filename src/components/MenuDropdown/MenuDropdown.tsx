@@ -1,8 +1,9 @@
 import { MouseEvent, MouseEventHandler } from "react";
+import { tokens } from "@hdruk/ui/theme";
 import { Menu, MenuItem } from "@mui/material";
 import Link from "next/link";
 import useDialog from "@/hooks/useDialog";
-import theme, { colors } from "@/config/theme";
+import theme from "@/config/theme";
 import { MarkDownSanitizedWithHtml } from "../MarkDownSanitizedWithHTML";
 
 interface MenuDropdownProps {
@@ -72,7 +73,7 @@ function MenuDropdown({
                                 maxWidth: 250,
                                 color: theme.palette.primary.main,
                                 textWrap: "initial",
-                                borderBottom: `${colors.grey300} 1px solid`,
+                                borderBottom: `${tokens.status.grey} 1px solid`,
                             }}
                             key={subItem.label}
                             onClick={() => {
@@ -124,7 +125,7 @@ function MenuDropdown({
                             maxWidth: 250,
                             color: theme.palette.primary.main,
                             textWrap: "initial",
-                            borderBottom: `${colors.grey300} 1px solid`,
+                            borderBottom: `${tokens.status.grey} 1px solid`,
                         }}
                         onClick={onClick}
                         aria-label={ariaLabel}

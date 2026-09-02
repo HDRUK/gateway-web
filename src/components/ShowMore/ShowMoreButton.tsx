@@ -18,7 +18,6 @@ export default function ShowMoreButton({
 
     return (
         <Button
-            style={{ whiteSpace: "nowrap" }}
             size="small"
             onClick={() => onClick?.(!open)}
             endIcon={
@@ -29,7 +28,7 @@ export default function ShowMoreButton({
                     }}
                 />
             }
-            variant="link"
+            purpose="link"
             sx={sxButton}>
             {open ? t("showLess") : t("showMore")}
         </Button>

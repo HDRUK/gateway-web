@@ -14,6 +14,7 @@ import {
     FailedDataset,
     IntegrationHistory,
 } from "@/interfaces/IntegrationHistory";
+import { tokens } from "@hdruk/ui/theme";
 import { PaginationType } from "@/interfaces/Pagination";
 import Box from "@/components/Box";
 import Loading from "@/components/Loading";
@@ -97,7 +98,7 @@ const IntegrationHistoryTable = () => {
             sx={{
                 cursor: "pointer",
                 ...(historyKey(x) === selectedKey && {
-                    backgroundColor: colors.green50,
+                    backgroundColor: tokens.background.success,
                 }),
             }}>
             <TableCell>{formatDate(x.started_at, "DD MMM YYYY HH:mm")}</TableCell>
@@ -147,8 +148,8 @@ const IntegrationHistoryTable = () => {
                 data-testid="integration-history-detail"
                 sx={{
                     p: 3,
-                    background: colors.grey900,
-                    color: colors.white,
+                    background: tokens.text.primaryBlack,
+                    color: tokens.text.primaryWhite,
                 }}>
                 {!selected ? (
                     <Typography sx={{ textAlign: "center" }}>
@@ -156,7 +157,7 @@ const IntegrationHistoryTable = () => {
                     </Typography>
                 ) : (
                     <>
-                        <Typography fontSize={10} color={colors.grey200}>
+                        <Typography fontSize={10} color={tokens.text.secondaryWhite}>
                             {formatDate(selected.started_at, "DD MMM YYYY HH:mm")}
                         </Typography>
                         <Box

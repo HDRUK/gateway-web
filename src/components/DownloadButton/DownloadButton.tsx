@@ -11,7 +11,7 @@ const DownloadButton = ({
     return (
         <Button
             sx={{ marginBottom: 2, ...sx }}
-            variant={restProps.variant ?? "link"}
+            purpose={restProps.purpose ?? "link"}
             startIcon={<DownloadIcon />}
             {...restProps}>
             {children}
