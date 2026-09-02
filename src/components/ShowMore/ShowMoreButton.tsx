@@ -18,7 +18,6 @@ export default function ShowMoreButton({
 
     return (
         <Button
-            style={{ whiteSpace: "nowrap" }}
             size="small"
             onClick={() => onClick?.(!open)}
             endIcon={

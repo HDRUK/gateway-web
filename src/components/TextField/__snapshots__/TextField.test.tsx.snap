@@ -9,7 +9,7 @@ exports[`TextField should render icon 1`] = `
       class="MuiBox-root mui-style-old1by"
     >
       <p
-        class="MuiTypography-root MuiTypography-body2 mui-style-1y7t9fj-MuiTypography-root"
+        class="MuiTypography-root MuiTypography-body2 mui-style-1q44c8r-MuiTypography-root"
       >
         <label
           for="fieldName"
@@ -22,7 +22,7 @@ exports[`TextField should render icon 1`] = `
       class="MuiBox-root mui-style-ve6emg"
     >
       <div
-        class="MuiInputBase-root MuiOutlinedInput-root MuiInputBase-colorPrimary MuiInputBase-fullWidth MuiInputBase-sizeSmall MuiInputBase-adornedStart mui-style-1kts8f7-MuiInputBase-root-MuiOutlinedInput-root"
+        class="MuiInputBase-root MuiOutlinedInput-root MuiInputBase-colorPrimary MuiInputBase-fullWidth MuiInputBase-sizeSmall MuiInputBase-adornedStart mui-style-1lqi4oa-MuiInputBase-root-MuiOutlinedInput-root"
       >
         <div
           class="MuiInputAdornment-root MuiInputAdornment-positionStart mui-style-1nowbqt-MuiInputAdornment-root"

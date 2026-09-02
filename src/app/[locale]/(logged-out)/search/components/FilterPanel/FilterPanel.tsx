@@ -44,7 +44,6 @@ import {
     FILTER_DATA_PROVIDER,
 } from "@/config/forms/filters";
 import { SOURCE_GAT } from "@/config/forms/search";
-import { colors } from "@/config/theme";
 import { INCLUDE_UNREPORTED } from "@/consts/filters";
 import { ARDC_SOURCE_VALUE, HDRUK_SOURCE_VALUE } from "@/consts/search";
 import {
@@ -157,7 +156,7 @@ const EMPTY_FILTERS = {
 
 const filterCountStyles = {
     borderRadius: "50%",
-    backgroundColor: colors.green400,
+    backgroundColor: tokens.brand.secondary,
     width: "25px",
     height: "25px",
     color: tokens.text.primaryWhite,
@@ -844,7 +843,9 @@ const FilterPanel = ({
                     mt: 1,
                     backgroundColor: tokens.background.primary,
                 }}>
-                <Typography variant="h2">{tRoot("filterResults")}</Typography>
+                <Typography variant="h5" component="h2">
+                    {tRoot("filterResults")}
+                </Typography>
 
                 {!isQueryEmpty(selectedFilters) &&
                     !staticFilterValues[STATIC_FILTER_DATA_SOURCE]?.[

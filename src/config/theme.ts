@@ -1,8 +1,6 @@
 "use client";
 
-import { ReactElement } from "react";
 import { createHdrukTheme, tokens } from "@hdruk/ui/theme";
-import { sourceSans3 } from "./fonts";
 
 export const DISABLED_OPACITY = 0.4;
 
@@ -104,13 +102,12 @@ export const colors = {
 };
 
 const palette = {
-    secondary: {
-        main: colors.green400,
-    },
+    // `main` is the resting fill and `dark` the hover: MUI derives every
+    // button state from these, so the shades carry the whole colour.
     greyCustom: {
-        main: colors.grey400,
         light: tokens.status.grey,
-        dark: "#A29415",
+        main: tokens.status.grey,
+        dark: colors.grey400,
         contrastText: tokens.text.secondaryBlack,
     },
     yellowCustom: {
@@ -134,31 +131,11 @@ const palette = {
 const subtleShadow = "1px 1px 3px 0 rgba(0,0,0,.09)";
 
 const theme = createHdrukTheme({
-    typography: {
-        fontFamily: sourceSans3.style.fontFamily,
-        body1: {
-            fontSize: 14,
-        },
-    },
     transitions: {
         duration: { enteringScreen: 400, leavingScreen: 400 },
     },
     palette,
     components: {
-        MuiIconButton: {
-            styleOverrides: {
-                root: ({ theme }) => {
-                    return {
-                        "&.Mui-focusVisible": {
-                            outline: `2px solid ${tokens.status.needsAction}`,
-                            borderRadius: "50%",
-                            outlineOffset: 0,
-                            background: colors.grey400,
-                        },
-                    };
-                },
-            },
-        },
         MuiTooltip: {
             defaultProps: {
                 enterDelay: 1000,
@@ -192,22 +169,14 @@ const theme = createHdrukTheme({
                 }),
             },
         },
-        MuiTabs: {
-            styleOverrides: {
-                indicator: {
-                    backgroundColor: palette.secondary.main,
-                },
-            },
-        },
         MuiToggleButton: {
             styleOverrides: {
                 root: {
                     background: tokens.status.hovered,
 
                     "&.Mui-selected": {
-                        background: "white",
+                        background: tokens.background.white,
                     },
-                    borderRadius: 0,
                     border: "none",
                 },
             },
@@ -216,64 +185,6 @@ const theme = createHdrukTheme({
             styleOverrides: {
                 root: {
                     boxShadow: "none",
-                },
-            },
-        },
-        MuiButton: {
-            variants: [
-                {
-                    props: { color: "greyCustom" },
-                    style: {
-                        color: tokens.text.secondaryBlack,
-                        borderColor: palette.greyCustom.light,
-                        background: palette.greyCustom.light,
-                        "&:active": {
-                            background: palette.greyCustom.main,
-                        },
-                        "&:hover": {
-                            background: palette.greyCustom.main,
-                        },
-                        "&.Mui-focusVisible": {
-                            background: palette.greyCustom.main,
-                        },
-                    },
-                },
-                {
-                    props: { color: "yellowCustom" },
-                    style: {
-                        color: tokens.text.secondaryBlack,
-                        borderColor: palette.greyCustom.main,
-                        "&:active": {
-                            background: palette.yellowCustom.main,
-                        },
-                        "&:hover": {
-                            background: palette.yellowCustom.main,
-                        },
-                    },
-                },
-            ],
-            styleOverrides: {
-                root: ({ ownerState, theme: _theme }) => ({
-                    whiteSpace: "nowrap",
-                    borderColor:
-                        ownerState.color === "inherit"
-                            ? _theme.palette.primary.main
-                            : _theme.palette[ownerState.color || "primary"]
-                                  ?.main,
-                    "&.Mui-focusVisible:not(.MuiIconButton-root)": {
-                        outline: `2px solid ${tokens.status.needsAction}`,
-                        borderWidth: 0,
-                    },
-                }),
-                // No `:hover` here — hdruk-ui's variants own outlined hover, so
-                // that `purpose` styling isn't overridden by a local rule.
-                outlined: {
-                    color: tokens.text.secondaryBlack,
-                },
-                text: {
-                    "&.Mui-focusVisible:not(.MuiIconButton-root)": {
-                        outlineOffset: "-2px",
-                    },
                 },
             },
         },
@@ -299,14 +210,6 @@ const theme = createHdrukTheme({
                     "& fieldset": {
                         borderWidth: 2,
                     },
-                    "&.MuiOutlinedInput-root:hover .MuiOutlinedInput-notchedOutline":
-                        {
-                            borderColor: colors.green400,
-                        },
-                    "&.MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline":
-                        {
-                            borderColor: colors.green400,
-                        },
                     "&.MuiOutlinedInput-root.Mui-error .MuiOutlinedInput-notchedOutline":
                         {
                             borderColor: tokens.status.error,
@@ -350,25 +253,17 @@ const theme = createHdrukTheme({
                     "&.MuiCheckbox-colorError": {
                         color: tokens.status.error,
                     },
-                    "&.Mui-focusVisible": {
-                        span: {
-                            outline: `2px solid ${tokens.brand.primary}`,
-                            border: `1px solid ${tokens.background.white}`,
-                        },
-                    },
                 },
             },
         },
         MuiFormControlLabel: {
             styleOverrides: {
                 root: {
-                    fontSize: 14,
                     "&.Mui-error": {
                         color: tokens.status.error,
                     },
                 },
                 label: {
-                    fontSize: 14,
                     width: "100%",
                 },
                 asterisk: {
@@ -379,7 +274,6 @@ const theme = createHdrukTheme({
         MuiMenu: {
             styleOverrides: {
                 paper: {
-                    borderRadius: 0,
                     boxShadow: subtleShadow,
                 },
             },
@@ -428,7 +322,6 @@ const theme = createHdrukTheme({
         MuiPaper: {
             styleOverrides: {
                 root: {
-                    borderRadius: 0,
                     boxShadow: subtleShadow,
                 },
             },
@@ -436,7 +329,6 @@ const theme = createHdrukTheme({
         MuiCard: {
             styleOverrides: {
                 root: {
-                    borderRadius: 0,
                     boxShadow: "none",
                 },
             },
@@ -450,36 +342,18 @@ const theme = createHdrukTheme({
                 }),
             },
         },
-        MuiDialogTitle: {
-            styleOverrides: {
-                root: {
-                    fontSize: "1.3rem",
-                },
-            },
-        },
         MuiTypography: {
-            // No `root` fontSize: it would pin every variant to one size and
-            // stop the design-system scale (h5 20px, h6 18px) coming through.
-            // A bare Typography still gets 14px via the body1 override above.
             styleOverrides: {
                 h1: ({ theme: _theme }) => ({
-                    fontSize: "2rem",
-                    fontWeight: 600,
                     marginBottom: _theme.spacing(2),
                 }),
                 h2: {
-                    fontSize: "1.3rem",
-                    fontWeight: 400,
                     marginBottom: 15,
                 },
                 h3: {
-                    fontSize: "1.1rem",
-                    fontWeight: 400,
                     marginBottom: 2,
                 },
                 h4: {
-                    fontSize: "1rem",
-                    fontWeight: 400,
                     marginBottom: 2,
                 },
             },
@@ -571,7 +445,7 @@ const theme = createHdrukTheme({
                             },
                             color: tokens.background.white,
                             "& + .MuiSwitch-track": {
-                                backgroundColor: palette.secondary.main,
+                                backgroundColor: tokens.brand.secondary,
                                 opacity: 1,
                                 border: 0,
                             },
@@ -589,9 +463,6 @@ const theme = createHdrukTheme({
                     "& .MuiSwitch-track": {
                         backgroundColor: tokens.status.error,
                         opacity: 1,
-                    },
-                    "& .Mui-focusVisible": {
-                        outline: `3px solid ${tokens.brand.primary}`,
                     },
                 },
             },

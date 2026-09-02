@@ -207,7 +207,7 @@ const DarMessages = ({
                                     <CheckCircleIcon
                                         sx={{
                                             pr: 1,
-                                            color: colors.green400,
+                                            color: tokens.brand.secondary,
                                             height: ICON_SIZE,
                                             width: ICON_SIZE,
                                             p: 0,

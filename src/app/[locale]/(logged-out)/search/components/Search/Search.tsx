@@ -86,7 +86,6 @@ import {
     sortByOptionsPublications,
     sortByOptionsTool,
 } from "@/config/forms/search";
-import { colors } from "@/config/theme";
 import { isAwaitingCohortDecision } from "@/consts/cohortDiscovery";
 import {
     ChevronThinIcon,
@@ -999,7 +998,7 @@ const Search = ({ filters, schema }: SearchProps) => {
                     {isMobile && (
                         <Box
                             sx={{
-                                borderBottom: `3px solid ${colors.green400}`,
+                                borderBottom: `3px solid ${tokens.brand.secondary}`,
                                 width: "100%",
                             }}>
                             <Button

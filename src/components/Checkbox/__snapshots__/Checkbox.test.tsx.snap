@@ -6,10 +6,10 @@ exports[`Checkbox checkbox snapshot 1`] = `
     class="MuiFormControl-root MuiFormControl-fullWidth mui-style-7cho04-MuiFormControl-root"
   >
     <label
-      class="MuiFormControlLabel-root MuiFormControlLabel-labelPlacementEnd mui-style-i1n6p3-MuiFormControlLabel-root"
+      class="MuiFormControlLabel-root MuiFormControlLabel-labelPlacementEnd mui-style-apdqk8-MuiFormControlLabel-root"
     >
       <span
-        class="MuiButtonBase-root MuiCheckbox-root MuiCheckbox-colorSecondary MuiCheckbox-sizeMedium PrivateSwitchBase-root MuiCheckbox-root MuiCheckbox-colorSecondary MuiCheckbox-sizeMedium MuiCheckbox-root MuiCheckbox-colorSecondary MuiCheckbox-sizeMedium mui-style-1tf26ui-MuiButtonBase-root-MuiSwitchBase-root-MuiCheckbox-root"
+        class="MuiButtonBase-root MuiCheckbox-root MuiCheckbox-colorSecondary MuiCheckbox-sizeMedium PrivateSwitchBase-root MuiCheckbox-root MuiCheckbox-colorSecondary MuiCheckbox-sizeMedium MuiCheckbox-root MuiCheckbox-colorSecondary MuiCheckbox-sizeMedium mui-style-vc7eyj-MuiButtonBase-root-MuiSwitchBase-root-MuiCheckbox-root"
       >
         <input
           class="PrivateSwitchBase-input mui-style-12xagqm-MuiSwitchBase-root"
@@ -24,10 +24,10 @@ exports[`Checkbox checkbox snapshot 1`] = `
         />
       </span>
       <span
-        class="MuiTypography-root MuiTypography-body1 MuiFormControlLabel-label mui-style-40bc9v-MuiTypography-root"
+        class="MuiTypography-root MuiTypography-body1 MuiFormControlLabel-label mui-style-1xne7sg-MuiTypography-root"
       >
         <p
-          class="MuiTypography-root MuiTypography-body2 mui-style-1y7t9fj-MuiTypography-root"
+          class="MuiTypography-root MuiTypography-body2 mui-style-1q44c8r-MuiTypography-root"
         >
           <label
             for="fieldName"

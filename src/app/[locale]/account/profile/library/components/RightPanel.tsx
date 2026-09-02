@@ -281,7 +281,6 @@ const RightPanel = ({ selected, handleRemove }: RightPanelProps) => {
                             }}>
                             <Button
                                 color="greyCustom"
-                                variant="outlined"
                                 onClick={handleMultiDelete}
                                 sx={{
                                     width: "100%",

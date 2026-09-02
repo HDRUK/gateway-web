@@ -1,6 +1,5 @@
 import { css } from "@emotion/react";
 import { tokens } from "@hdruk/ui/theme";
-import { colors } from "@/config/theme";
 
 export const tabsStyle = {
     searchTabList: css({
@@ -13,17 +12,17 @@ export const tabsStyle = {
                 borderBottom: "3px solid transparent",
 
                 "&.Mui-selected": {
-                    borderBottom: `3px solid ${colors.green400}`,
+                    borderBottom: `3px solid ${tokens.brand.secondary}`,
                     boxShadow: "inherit",
                 },
 
                 "&:focus, &:hover": {
                     background: tokens.brand.accentSecondary,
-                    borderBottom: `3px solid ${colors.green400}`,
+                    borderBottom: `3px solid ${tokens.brand.secondary}`,
                 },
 
                 "&t:active:not(.Mui-selected)": {
-                    borderBottom: `3px solid ${colors.green400}`,
+                    borderBottom: `3px solid ${tokens.brand.secondary}`,
                 },
             },
         }),
@@ -37,11 +36,11 @@ export const tabsStyle = {
 
                 "&:focus, &:hover": {
                     background: tokens.background.primary,
-                    boxShadow: `inset 0 -1px 0 0px ${colors.green400}`,
+                    boxShadow: `inset 0 -1px 0 0px ${tokens.brand.secondary}`,
                 },
 
                 "&.Mui-selected": {
-                    boxShadow: `inset 0 -3px 0 0px ${colors.green400}`,
+                    boxShadow: `inset 0 -3px 0 0px ${tokens.brand.secondary}`,
                     fontWeight: 600,
                 },
             },

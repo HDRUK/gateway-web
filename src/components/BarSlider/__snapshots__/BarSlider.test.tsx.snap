@@ -46,7 +46,7 @@ exports[`BarSlider should render component 1`] = `
       />
       <span
         aria-hidden="true"
-        class="MuiSlider-valueLabel mui-style-un5c8n-MuiSlider-valueLabel"
+        class="MuiSlider-valueLabel mui-style-1h91u8i-MuiSlider-valueLabel"
       >
         <span
           class="MuiSlider-valueLabelCircle"
@@ -81,7 +81,7 @@ exports[`BarSlider should render component 1`] = `
       />
       <span
         aria-hidden="true"
-        class="MuiSlider-valueLabel mui-style-un5c8n-MuiSlider-valueLabel"
+        class="MuiSlider-valueLabel mui-style-1h91u8i-MuiSlider-valueLabel"
       >
         <span
           class="MuiSlider-valueLabelCircle"

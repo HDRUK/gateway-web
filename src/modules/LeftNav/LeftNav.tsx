@@ -22,7 +22,7 @@ import { LeftNavItem } from "@/interfaces/Ui";
 import EllipsisCharacterLimit from "@/components/EllipsisCharacterLimit";
 import Typography from "@/components/Typography";
 import config from "@/config/config";
-import theme, { colors } from "@/config/theme";
+import theme from "@/config/theme";
 import {
     ExpandLessIcon,
     ExpandMoreIcon,
@@ -148,7 +148,7 @@ const LeftNav = ({
                     subNavItemSelected(
                         subItemHref
                     )
-                        ? colors.green400
+                        ? tokens.brand.secondary
                         : tokens.status.hovered
                 }`;
 
@@ -444,7 +444,7 @@ const LeftNav = ({
                                         paddingLeft: 1,
                                         borderBottom: leftNavExpandedOnMobile
                                             ? ""
-                                            : `2px solid  ${colors.green400}`,
+                                            : `2px solid  ${tokens.brand.secondary}`,
                                     }}>
                                     <ListItemIcon
                                         sx={{

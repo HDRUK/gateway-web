@@ -16,7 +16,7 @@ const circleColors: Record<
     { bg: string; color: string; border: string }
 > = {
     [STEP_STATE.COMPLETE]: {
-        bg: colors.green400,
+        bg: tokens.brand.secondary,
         color: tokens.text.primaryWhite,
         border: "none",
     },

@@ -11,7 +11,7 @@ exports[`FormLegend should render legend 1`] = `
       tabindex="0"
     >
       <span
-        class="mui-style-8tkev2"
+        class="mui-style-dgdrpa"
       >
         <svg
           aria-hidden="true"
@@ -29,12 +29,12 @@ exports[`FormLegend should render legend 1`] = `
         class="MuiBox-root mui-style-19bls30"
       >
         <p
-          class="MuiTypography-root MuiTypography-body1 mui-style-e3uhv1-MuiTypography-root"
+          class="MuiTypography-root MuiTypography-body1 mui-style-4b3ftf-MuiTypography-root"
         >
           Item1
         </p>
         <p
-          class="MuiTypography-root MuiTypography-body1 mui-style-e3uhv1-MuiTypography-root"
+          class="MuiTypography-root MuiTypography-body1 mui-style-4b3ftf-MuiTypography-root"
         >
           (
           2
