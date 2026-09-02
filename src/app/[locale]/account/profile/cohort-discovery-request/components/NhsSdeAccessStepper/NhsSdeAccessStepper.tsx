@@ -18,6 +18,7 @@ import { useCohortStatus } from "@/hooks/useCohortStatus";
 import useModal from "@/hooks/useModal";
 import usePost from "@/hooks/usePost";
 import apis from "@/config/apis";
+import { colors } from "@/config/theme";
 import {
     COHORT_ABOUT_HREF,
     NHS_SDE_FINAL_STATUSES,
@@ -107,7 +108,7 @@ const NhsSdeAccessStepper = () => {
         : inProcess || (applied && canApply)
         ? { label: t("badgeAwaitingAction"), bg: tokens.status.needsAction }
         : isApproved
-        ? { label: capitalise(nhs), bg: tokens.brand.secondary }
+        ? { label: capitalise(nhs), bg: colors.green400 }
         : isNegative
         ? { label: capitalise(nhs), bg: tokens.status.error }
         : null;

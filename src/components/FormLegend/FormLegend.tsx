@@ -4,6 +4,7 @@ import { Fragment } from "react";
 import { tokens } from "@hdruk/ui/theme";
 import { ListItemButton } from "@mui/material";
 import { LegendItem, LegendStatus } from "@/interfaces/FormLegend";
+import { colors } from "@/config/theme";
 import { CloseIcon, CheckIcon, PriorityHighIcon } from "@/consts/icons";
 import { capitalise, splitCamelcase } from "@/utils/general";
 import Box from "../Box";
@@ -34,7 +35,7 @@ const getIcon = (status: LegendStatus) => {
 const getBackgroundColour = (status: LegendStatus) => {
     switch (status) {
         case LegendStatus.VALID:
-            return tokens.brand.secondary;
+            return colors.green400;
         case LegendStatus.ACTIVE:
             return tokens.brand.primary;
         case LegendStatus.OPTIONAL_REMAIN:

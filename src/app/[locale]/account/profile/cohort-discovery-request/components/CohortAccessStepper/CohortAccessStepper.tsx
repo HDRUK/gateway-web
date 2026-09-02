@@ -317,7 +317,7 @@ const CohortAccessStepper = ({
                                                                 }}>
                                                                 <CheckCircleIcon
                                                                     sx={{
-                                                                        color: tokens.brand.secondary,
+                                                                        color: colors.green400,
                                                                         fontSize: 20,
                                                                         mt: 0.25,
                                                                         flexShrink: 0,

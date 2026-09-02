@@ -7,7 +7,7 @@ exports[`Loading should render component 1`] = `
     class="MuiBox-root mui-style-1c3tbzi"
   >
     <span
-      class="MuiCircularProgress-root MuiCircularProgress-indeterminate MuiCircularProgress-colorSecondary mui-style-1tr8z6p-MuiCircularProgress-root"
+      class="MuiCircularProgress-root MuiCircularProgress-indeterminate MuiCircularProgress-colorSecondary mui-style-zxm296-MuiCircularProgress-root"
       role="status"
       style="width: 48px; height: 48px;"
     >

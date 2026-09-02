@@ -5,6 +5,7 @@ import { SearchQueryParams } from "@/interfaces/Search";
 import Box from "@/components/Box";
 import Chip from "@/components/Chip";
 import ShowMore from "@/components/ShowMore";
+import { colors } from "@/config/theme";
 import { CloseIcon } from "@/consts/icons";
 import { isQueryEmpty } from "@/utils/filters";
 
@@ -66,16 +67,16 @@ const FilterChips = ({
                                                     whiteSpace: "nowrap",
                                                     color: tokens.text.primaryWhite,
                                                     backgroundColor:
-                                                        tokens.brand.secondary,
+                                                        colors.green400,
                                                     borderColor:
-                                                        tokens.brand.secondary,
+                                                        colors.green400,
                                                     marginBottom: "4px",
                                                     "&:focus-visible": {
                                                         borderColor:
                                                             tokens.status.needsAction,
                                                         borderWidth: 2,
                                                         backgroundColor:
-                                                            tokens.brand.secondary,
+                                                            colors.green400,
                                                     },
                                                 }}
                                                 color={color}

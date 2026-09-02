@@ -50,7 +50,7 @@ const ratings: Ratings[] = [
     { icon: SentimentVeryDissatisfiedIcon, rating: 2, colour: tokens.status.needsAction },
     { icon: SentimentSatisfiedIcon, rating: 3, colour: tokens.status.warningHover },
     { icon: SentimentSatisfiedAltIcon, rating: 4, colour: colors.darkGreen100 },
-    { icon: InsertEmoticonIcon, rating: 5, colour: tokens.brand.secondary },
+    { icon: InsertEmoticonIcon, rating: 5, colour: colors.green400 },
 ];
 
 const displayIn = 150000;

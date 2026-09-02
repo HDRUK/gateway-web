@@ -5,6 +5,7 @@ import { Button } from "@hdruk/ui";
 import { tokens } from "@hdruk/ui/theme";
 import { Box, Menu, MenuItem } from "@mui/material";
 import { WidgetBranding, WidgetCategory } from "@/interfaces/Widget";
+import { colors } from "@/config/theme";
 import { ChevronThinIcon } from "@/consts/icons";
 import { CATEGORY_LABEL } from "../consts";
 
@@ -52,7 +53,7 @@ export default function CategoryMenu({
             <Box
                 sx={{
                     borderBottom: `3px solid ${
-                        branding?.secondary ?? tokens.brand.secondary
+                        branding?.secondary ?? colors.green400
                     }`,
                     width: "100%",
                     p: 0,

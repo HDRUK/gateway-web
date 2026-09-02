@@ -10,6 +10,7 @@ import Box from "@/components/Box";
 import { Button } from "@hdruk/ui";
 import TooltipIcon from "@/components/TooltipIcon";
 import Typography from "@/components/Typography";
+import { colors } from "@/config/theme";
 import { CheckCircleRoundedIcon, WarningRoundedIcon } from "@/consts/icons";
 import {
     ACCOUNT,
@@ -78,7 +79,7 @@ const SubmissionScreen = ({
                     {isValid ? (
                         <CheckCircleRoundedIcon
                             sx={{
-                                color: tokens.brand.secondary,
+                                color: colors.green400,
                                 height: ICON_SIZE,
                                 width: ICON_SIZE,
                             }}

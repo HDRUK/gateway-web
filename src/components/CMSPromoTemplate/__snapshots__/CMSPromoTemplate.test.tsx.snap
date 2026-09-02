@@ -6,7 +6,7 @@ exports[`CMSPromoTemplate should render content 1`] = `
     class="wpStyles"
   >
     <div
-      class="MuiBox-root mui-style-evs7h3"
+      class="MuiBox-root mui-style-1ifzgud"
     >
       <h1
         class="MuiTypography-root MuiTypography-h2 mui-style-lbecmy-MuiTypography-root"
@@ -24,7 +24,7 @@ exports[`CMSPromoTemplate should render content 1`] = `
           class="MuiBox-root mui-style-e42i7k"
         >
           <div
-            class="mui-style-q0asr6"
+            class="mui-style-xl0kid"
           >
             <h2>
               About Cohort Discovery
@@ -54,7 +54,7 @@ exports[`CMSPromoTemplate should render content 1`] = `
           class="MuiBox-root mui-style-e42i7k"
         >
           <div
-            class="mui-style-q0asr6"
+            class="mui-style-xl0kid"
           >
             <p>
               <iframe
@@ -81,7 +81,7 @@ exports[`CMSPromoTemplate should render content 1`] = `
         class="MuiBox-root mui-style-19midj6"
       >
         <div
-          class="mui-style-q0asr6"
+          class="mui-style-xl0kid"
         >
           <h3>
             How you can request access to Cohort Discovery
@@ -117,7 +117,7 @@ exports[`CMSPromoTemplate should render content 1`] = `
           class="MuiBox-root mui-style-e42i7k"
         >
           <div
-            class="mui-style-q0asr6"
+            class="mui-style-xl0kid"
           >
             <h3>
               How cohort discovery works

@@ -6,7 +6,7 @@ exports[`GradientBoxes should render title 1`] = `
     class="MuiBox-root mui-style-11fnh3v"
   >
     <div
-      class="MuiBox-root mui-style-19ei95m"
+      class="MuiBox-root mui-style-uy14ad"
     >
       <a
         class="MuiTypography-root MuiTypography-inherit MuiLink-root MuiLink-underlineAlways mui-style-ogcx25-MuiTypography-root-MuiLink-root"
@@ -41,7 +41,7 @@ exports[`GradientBoxes should render title 1`] = `
       </div>
     </div>
     <div
-      class="MuiBox-root mui-style-19ei95m"
+      class="MuiBox-root mui-style-uy14ad"
     >
       <a
         class="MuiTypography-root MuiTypography-inherit MuiLink-root MuiLink-underlineAlways mui-style-ogcx25-MuiTypography-root-MuiLink-root"
@@ -76,7 +76,7 @@ exports[`GradientBoxes should render title 1`] = `
       </div>
     </div>
     <div
-      class="MuiBox-root mui-style-19ei95m"
+      class="MuiBox-root mui-style-uy14ad"
     >
       <a
         class="MuiTypography-root MuiTypography-inherit MuiLink-root MuiLink-underlineAlways mui-style-ogcx25-MuiTypography-root-MuiLink-root"

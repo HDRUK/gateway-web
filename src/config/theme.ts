@@ -102,12 +102,15 @@ export const colors = {
 };
 
 const palette = {
+    secondary: {
+        main: colors.green400,
+    },
     // `main` is the resting fill and `dark` the hover: MUI derives every
     // button state from these, so the shades carry the whole colour.
     greyCustom: {
         light: tokens.status.grey,
-        main: tokens.status.grey,
-        dark: colors.grey400,
+        main: colors.grey400,
+        dark: "#A29415",
         contrastText: tokens.text.secondaryBlack,
     },
     yellowCustom: {
@@ -178,6 +181,15 @@ const theme = createHdrukTheme({
                         background: tokens.background.white,
                     },
                     border: "none",
+                },
+            },
+        },
+        MuiTabs: {
+            styleOverrides: {
+                indicator: {
+                    height: 3,
+                    borderRadius: 3,
+                    backgroundColor: palette.secondary.main,
                 },
             },
         },

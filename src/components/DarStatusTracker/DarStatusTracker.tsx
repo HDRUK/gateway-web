@@ -99,7 +99,7 @@ export default function DarStatusTracker({
                                     justifyContent: "center",
                                     border: "3px solid",
                                     borderColor: isActive
-                                        ? alpha(tokens.brand.secondary, 0.5)
+                                        ? alpha(colors.green400, 0.5)
                                         : "transparent",
                                     p: 0,
                                     zIndex: 2,
@@ -110,7 +110,7 @@ export default function DarStatusTracker({
                                             ? colors.grey500
                                             : isActive
                                             ? tokens.background.white
-                                            : tokens.brand.secondary,
+                                            : colors.green400,
                                 }}>
                                 <Box
                                     sx={{
@@ -118,7 +118,7 @@ export default function DarStatusTracker({
                                         height: 8,
                                         borderRadius: "50%",
                                         bgcolor: isActive
-                                            ? tokens.brand.secondary
+                                            ? colors.green400
                                             : tokens.background.white,
                                         p: 0,
                                     }}
