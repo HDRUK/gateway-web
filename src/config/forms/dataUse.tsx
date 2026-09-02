@@ -31,6 +31,7 @@ const defaultValues = {
     access_type: "",
     privacy_enhancements: "",
     non_gateway_outputs: [],
+    outputs: [],
     applicants: [],
     datasets: [],
     keywords: [],
@@ -42,6 +43,15 @@ const validationSchema = yup.object({
     organisation_name: yup.string().required("This cannot be empty"),
     project_title: yup.string().required("This cannot be empty"),
     lay_summary: yup.string().max(3000, "Maximum of 3,000 characters"),
+    outputs: yup.array().of(
+        yup.object().shape({
+            url: yup
+                .string()
+                .nullable()
+                .transform(value => (value === "" ? null : value))
+                .url("Must be a valid URL"),
+        })
+    ),
 });
 
 const yesNoList = [
@@ -428,13 +438,9 @@ const formFields = [
         fields: [
             {
                 label: "Link to research outputs (optional)",
-                name: "non_gateway_outputs",
-                info: "A URL link to any academic or non-academic research outputs, as they become available, including code used. If the link is to a Gateway resource, this will automatically populate in related resources.",
-                component: inputComponents.Autocomplete,
-                // TODO - populate this list
-                options: [],
-                canCreate: true,
-                multiple: true,
+                name: "outputs",
+                info: "A URL link to any academic or non-academic research outputs, as they become available, including code used.",
+                component: inputComponents.ArrayField,
             },
         ],
     },
@@ -460,8 +466,37 @@ const formFields = [
     // },
 ];
 
+const outputsFormArrayFields = [
+    {
+        label: "Type (optional)",
+        name: "type",
+        component: inputComponents.TextField,
+    },
+    {
+        label: "Title (optional)",
+        name: "title",
+        component: inputComponents.TextField,
+    },
+    {
+        label: "Status (optional)",
+        name: "status",
+        component: inputComponents.TextField,
+    },
+    {
+        label: "URL (optional)",
+        name: "url",
+        component: inputComponents.TextField,
+    },
+    {
+        label: "Detail (optional)",
+        name: "detail",
+        component: inputComponents.TextArea,
+    },
+];
+
 export {
     defaultValues as dataUseDefaultValues,
     validationSchema as dataUseValidationSchema,
     formFields as dataUseFormFields,
+    outputsFormArrayFields,
 };

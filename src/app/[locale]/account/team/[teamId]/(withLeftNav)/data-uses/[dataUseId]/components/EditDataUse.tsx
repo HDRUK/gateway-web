@@ -1,7 +1,7 @@
 "use client";
 
 import { ChangeEvent, useCallback, useEffect, useMemo, useState } from "react";
-import { useForm } from "react-hook-form";
+import { Control, FieldValues, useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { Typography } from "@mui/material";
 import dayjs from "dayjs";
@@ -15,6 +15,7 @@ import Accordion from "@/components/Accordion";
 import { OptionsType } from "@/components/Autocomplete/Autocomplete";
 import Box from "@/components/Box";
 import Form from "@/components/Form";
+import FormInfoLabel from "@/components/FormInfoLabel";
 import InputWrapper from "@/components/InputWrapper";
 import useActionBar from "@/hooks/useActionBar";
 import useDebounce from "@/hooks/useDebounce";
@@ -37,6 +38,7 @@ import {
     PAGES,
     TEAM,
 } from "@/consts/translation";
+import OutputsFields from "./OutputsFields";
 
 const EditDataUse = () => {
     const t = useTranslations(
@@ -197,7 +199,6 @@ const EditDataUse = () => {
     };
 
     const [keywordOptions, setKeywordsOptions] = useState<OptionsType[]>([]);
-    const [outputOptions, setOutputOptions] = useState<OptionsType[]>([]);
 
     useEffect(() => {
         if (!keywords) {
@@ -213,23 +214,6 @@ const EditDataUse = () => {
             }) as OptionsType[]
         );
     }, [keywords]);
-
-    const existingResearchLinks = existingDataUse?.non_gateway_outputs;
-
-    useEffect(() => {
-        if (!existingResearchLinks) {
-            return;
-        }
-
-        setOutputOptions(
-            existingResearchLinks.map(data => {
-                return {
-                    label: data,
-                    value: data,
-                };
-            }) as OptionsType[]
-        );
-    }, [existingResearchLinks]);
 
     useEffect(() => {
         showBar("CreateDataUse", {
@@ -262,9 +246,6 @@ const EditDataUse = () => {
     const getOptions = (fieldName: string) => {
         if (fieldName === "keywords") {
             return keywordOptions;
-        }
-        if (fieldName === "non_gateway_outputs") {
-            return outputOptions;
         }
         return [];
     };
@@ -376,7 +357,22 @@ const EditDataUse = () => {
                                             p: 0,
                                             gridColumn: "span 3",
                                         }}>
-                                        {field.name !== "datasets" ? (
+                                        {field.name === "datasets" ? (
+                                            datasetField(field)
+                                        ) : field.name === "outputs" ? (
+                                            <>
+                                                <FormInfoLabel
+                                                    label={field.label}
+                                                    info={field.info}
+                                                    name={field.name}
+                                                />
+                                                <OutputsFields
+                                                    control={
+                                                        control as unknown as Control<FieldValues>
+                                                    }
+                                                />
+                                            </>
+                                        ) : (
                                             <InputWrapper
                                                 key={field.name}
                                                 control={control}
@@ -388,8 +384,6 @@ const EditDataUse = () => {
                                                     ),
                                                 })}
                                             />
-                                        ) : (
-                                            datasetField(field)
                                         )}
                                     </Box>
                                 ))}

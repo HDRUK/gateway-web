@@ -12,6 +12,15 @@ export interface ReducedDataUse {
     organisation_name: string;
 }
 
+export interface DurOutput {
+    id?: number;
+    type: string | null;
+    title: string | null;
+    status: string | null;
+    detail: string | null;
+    url: string | null;
+}
+
 export interface DataUse {
     id: number;
     created_at: Date | Dayjs | string;
@@ -23,6 +32,7 @@ export interface DataUse {
     gateway_outputs_tools: string[];
     gateway_outputs_papers: string[];
     non_gateway_outputs: string[];
+    outputs: DurOutput[];
     project_title: string;
     project_id_text: string;
     organisation_name: string;
