@@ -12,7 +12,7 @@ export const SplitWrapper = styled("div")<{ columnCount: number }>(
         gap: theme.spacing(GAP),
         alignItems: "stretch",
         ...(columnCount > 1 && {
-            [theme.breakpoints.up("sm")]: {
+            [theme.breakpoints.up("md")]: {
                 gridTemplateColumns: "1fr 1fr",
             },
         }),
@@ -79,12 +79,23 @@ export const ScrollArea = styled("div", {
             maxHeight: `calc(${cardHeight * visibleRows}px + ${theme.spacing(
                 GAP * (visibleRows - 1)
             )})`,
-            ...(mediaCards && { gridTemplateColumns: "repeat(2, 1fr)" }),
         },
-        [theme.breakpoints.up("xl")]: {
-            gridTemplateColumns: mediaCards
-                ? "repeat(4, 1fr)"
-                : "repeat(2, 1fr)",
+        [theme.breakpoints.up("lg")]: {
+            ...(!mediaCards && { gridTemplateColumns: "repeat(2, 1fr)" }),
         },
+        ...(mediaCards && {
+            gridTemplateColumns: "repeat(auto-fit, minmax(100%, 1fr))",
+            "& > *": { minWidth: 0 },
+            [theme.breakpoints.up("sm")]: {
+                gridTemplateColumns: `repeat(auto-fit, minmax(calc((100% - ${theme.spacing(
+                    GAP
+                )}) / 2), 1fr))`,
+            },
+            [theme.breakpoints.up("lg")]: {
+                gridTemplateColumns: `repeat(auto-fit, minmax(calc((100% - ${theme.spacing(
+                    GAP * 3
+                )}) / 4), 1fr))`,
+            },
+        }),
     })
 );
