@@ -60,25 +60,31 @@ export const SplitCard = styled(AccordionCard)(({ theme }) => ({
 }));
 
 export const ScrollArea = styled("div", {
-    shouldForwardProp: prop => prop !== "cardHeight" && prop !== "visibleRows",
-})<{ cardHeight: number; visibleRows: number }>(
-    ({ theme, cardHeight, visibleRows }) => ({
+    shouldForwardProp: prop =>
+        prop !== "cardHeight" &&
+        prop !== "visibleRows" &&
+        prop !== "mediaCards",
+})<{ cardHeight: number; visibleRows: number; mediaCards?: boolean }>(
+    ({ theme, cardHeight, visibleRows, mediaCards }) => ({
         display: "grid",
         gridTemplateColumns: "1fr",
         gridAutoRows: `${cardHeight}px`,
         gap: theme.spacing(GAP),
         overflowY: "auto",
         flexGrow: 1,
-        maxHeight: `calc(${cardHeight * MOBILE_VISIBLE_ROWS}px + ${theme.spacing(
-            GAP * (MOBILE_VISIBLE_ROWS - 1)
-        )})`,
-        [theme.breakpoints.up("sm")]: {
+        maxHeight: `calc(${
+            cardHeight * MOBILE_VISIBLE_ROWS
+        }px + ${theme.spacing(GAP * (MOBILE_VISIBLE_ROWS - 1))})`,
+        [theme.breakpoints.up("md")]: {
             maxHeight: `calc(${cardHeight * visibleRows}px + ${theme.spacing(
                 GAP * (visibleRows - 1)
             )})`,
+            ...(mediaCards && { gridTemplateColumns: "repeat(2, 1fr)" }),
         },
-        [theme.breakpoints.up("lg")]: {
-            gridTemplateColumns: "repeat(2, 1fr)",
+        [theme.breakpoints.up("xl")]: {
+            gridTemplateColumns: mediaCards
+                ? "repeat(4, 1fr)"
+                : "repeat(2, 1fr)",
         },
     })
 );

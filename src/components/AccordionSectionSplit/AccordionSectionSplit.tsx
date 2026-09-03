@@ -82,6 +82,7 @@ export default function AccordionSectionSplit({
                             </PaneHeading>
                             <ScrollArea
                                 cardHeight={cardHeight}
+                                mediaCards={disableCardWrapper}
                                 visibleRows={visibleRows}>
                                 {disableCardWrapper
                                     ? pane.contents
