@@ -865,7 +865,7 @@
                         "title": "Manage or create a Collection",
                         "intro": "Collections are groupings of useful resources based on set criteria, and are a useful way for a Researcher to explore resources that are linked to each other. Types of Collections could include resources related to a research domain, research hub or research project.",
                         "addImages": "Collection image cover (recommended)",
-                        "addImagesInfo": "Upload an image W700 x H350 (1:0.5). If your image is of a lower resolution a default Gateway Collection image will be displayed on the Collection until a higher resolution image is uploaded.",
+                        "addImagesInfo": "Upload an image at least 300px wide by 300px high. It will be scaled to fit within 400px x 400px. If your image is of a lower resolution a default Gateway Collection image will be displayed on the Collection until a higher resolution image is uploaded.",
                         "addImageSuccess": "Image uploaded",
                         "fileSelectButtonText": "Upload file",
                         "addResources": "Add resources",
@@ -1994,7 +1994,7 @@
             "error": "An error has occured. Please check your file and try again",
             "sanitisedFilename": "Note: all spaces and special characters will be removed from the file name.",
             "imageError": "An error occured when reading your file.",
-            "imageDimensionsError": "File needs to be at least 600px wide, by 300px high."
+            "imageDimensionsError": "File needs to be at least 300px wide, by 300px high."
         },
         "StructuralMetadataAccordion": {
             "columnName": "Column name",

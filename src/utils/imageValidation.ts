@@ -4,7 +4,7 @@ export type ImageCheckResult = boolean | ImageValidationError;
 
 export const validateImageDimensions = (
     file: File,
-    minWidth = 600,
+    minWidth = 300,
     minHeight = 300
 ): Promise<ImageCheckResult> => {
     return new Promise((resolve, reject) => {

@@ -14,7 +14,7 @@ import Typography from "@/components/Typography";
 import ActiveListSidebar from "@/modules/ActiveListSidebar";
 import { StaticImages } from "@/config/images";
 import { DataStatus } from "@/consts/application";
-import { AspectRatioImage } from "@/consts/image";
+import { LogoImage } from "@/consts/image";
 import { RouteName } from "@/consts/routeName";
 import { getReducedCollection } from "@/utils/api";
 import metaData from "@/utils/metadata";
@@ -85,7 +85,7 @@ export default async function CollectionItemPage({
                             width={554}
                             height={250}
                             alt={toTitleCase(name)}
-                            style={AspectRatioImage}
+                            style={LogoImage}
                             src={image_link || StaticImages.BASE.placeholder}
                         />
                     </Box>

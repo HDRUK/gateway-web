@@ -18,7 +18,7 @@ import { NetworkSkeleton, SectionSkeleton } from "@/components/Skeletons";
 import ActiveListSidebarWithFilter from "@/modules/ActiveListSidebarWithFilter";
 import { FILTER_PUBLISHER_NAME } from "@/config/forms/filters";
 import { StaticImages } from "@/config/images";
-import { AspectRatioImage } from "@/consts/image";
+import { LogoImage } from "@/consts/image";
 import { RouteName } from "@/consts/routeName";
 import { accordions } from "../../config";
 import DataCustodianOuter from "../DataCustodianOuter";
@@ -105,7 +105,7 @@ export default function DataCustodianNetworkPage({
                                 infoData?.img_url ||
                                 StaticImages.BASE.placeholder
                             }
-                            style={AspectRatioImage}
+                            style={LogoImage}
                         />
                     </Box>
                     <HeaderActionBar

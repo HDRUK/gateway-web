@@ -13,6 +13,7 @@ import Paper from "@/components/Paper";
 import TooltipIcon from "@/components/TooltipIcon";
 import Typography from "@/components/Typography";
 import { StaticImages } from "@/config/images";
+import { LogoImage } from "@/consts/image";
 import { formatDate } from "@/utils/date";
 import { DataCustodianField, DataCustodianSection } from "../../config";
 
@@ -184,13 +185,7 @@ async function DataCustodianContent({
                                     StaticImages.BASE.placeholder
                                 }
                                 sizes="(max-width: 768px) 100vw, 400px"
-                                style={{
-                                    width: "100%",
-                                    height: "auto",
-                                    maxWidth: 400,
-                                    maxHeight: 400,
-                                    objectFit: "contain",
-                                }}
+                                style={LogoImage}
                             />
                         </Box>
                         <DataCustodianLinks data={data} sx={{ mb: 2 }} />
