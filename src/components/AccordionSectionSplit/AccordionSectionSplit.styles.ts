@@ -91,11 +91,6 @@ export const ScrollArea = styled("div", {
                     GAP
                 )}) / 2), 1fr))`,
             },
-            [theme.breakpoints.up("lg")]: {
-                gridTemplateColumns: `repeat(auto-fit, minmax(calc((100% - ${theme.spacing(
-                    GAP * 3
-                )}) / 4), 1fr))`,
-            },
         }),
     })
 );
