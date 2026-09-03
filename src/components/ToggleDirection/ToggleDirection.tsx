@@ -1,5 +1,5 @@
 import { Control, useController } from "react-hook-form";
-import Button from "@/components/Button";
+import { Button } from "@hdruk/ui";
 import { SortAscIcon, SortDescIcon } from "@/consts/icons";
 
 interface ToggleDirectionProps {
@@ -16,7 +16,7 @@ const ToggleDirection = ({ control, name }: ToggleDirectionProps) => {
     return (
         <Button
             sx={{ marginBottom: 2 }}
-            variant="link"
+            purpose="link"
             onClick={() =>
                 field.onChange(field.value === "asc" ? "desc" : "asc")
             }>

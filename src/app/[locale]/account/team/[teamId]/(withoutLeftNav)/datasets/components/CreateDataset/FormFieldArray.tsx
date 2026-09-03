@@ -1,13 +1,14 @@
 import React, { useMemo } from "react";
 import { Control, useFieldArray, useFormState } from "react-hook-form";
 import { useTranslations } from "next-intl";
+import { tokens } from "@hdruk/ui/theme";
 import { FormHydration } from "@/interfaces/FormHydration";
 import { Option } from "@/interfaces/Option";
 import { Defs } from "@/interfaces/V4Schema";
 import Box from "@/components/Box";
-import Button from "@/components/Button";
+import { Button } from "@hdruk/ui";
 import Typography from "@/components/Typography";
-import theme, { colors } from "@/config/theme";
+import theme from "@/config/theme";
 import { INITIAL_FORM_SECTION } from "@/consts/createDataset";
 import { AddIcon } from "@/consts/icons";
 import {
@@ -67,7 +68,7 @@ const FormFieldArray = ({
             <Typography sx={{ mb: 1 }}>
                 {fieldParent.title.replace(" Array", "")}
                 {fieldParent.required && (
-                    <Typography component="span" sx={{ color: colors.red700 }}>
+                    <Typography component="span" sx={{ color: tokens.status.error }}>
                         *
                     </Typography>
                 )}
@@ -79,7 +80,7 @@ const FormFieldArray = ({
                 </Typography>
             )}
             {errors?.[fieldParent.title]?.message && (
-                <Typography sx={{ color: colors.red700 }}>
+                <Typography sx={{ color: tokens.status.error }}>
                     {errors[fieldParent.title].message as string}
                 </Typography>
             )}

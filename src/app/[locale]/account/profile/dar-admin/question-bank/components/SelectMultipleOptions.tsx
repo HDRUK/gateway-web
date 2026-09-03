@@ -3,7 +3,7 @@ import { IconButton } from "@mui/material";
 import { useTranslations } from "next-intl";
 import Box from "@/components/Box";
 import BoxContainer from "@/components/BoxContainer";
-import Button from "@/components/Button";
+import { Button } from "@hdruk/ui";
 import TextField from "@/components/TextField";
 import { AddIcon, CloseIcon } from "@/consts/icons";
 

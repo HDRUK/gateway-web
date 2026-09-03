@@ -1,5 +1,5 @@
+import { tokens } from "@hdruk/ui/theme";
 import { styled } from "@mui/material";
-import { colors } from "@/config/theme";
 
 const CARDS_PER_ROW = 5;
 const CARD_MIN_WIDTH = 190;
@@ -33,8 +33,8 @@ export const ResourceCardItem = styled("li")(({ theme }) => ({
     flexDirection: "column",
     alignItems: "center",
     gap: theme.spacing(1),
-    background: colors.grey100,
-    border: `1px solid ${colors.grey300}`,
+    background: tokens.background.primary,
+    border: `1px solid ${tokens.status.grey}`,
     borderRadius: theme.shape.borderRadius,
     padding: theme.spacing(3, 2),
     textAlign: "center",

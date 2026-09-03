@@ -1,5 +1,6 @@
 import { Dispatch, SetStateAction, useEffect, useState } from "react";
 import { useController, Control, useForm, FieldError } from "react-hook-form";
+import { tokens } from "@hdruk/ui/theme";
 import { IconButton, List, ListItem, Stack, SxProps } from "@mui/material";
 import { get } from "lodash";
 import { useTranslations } from "next-intl";
@@ -8,12 +9,12 @@ import useGet from "@/hooks/useGet";
 import usePost from "@/hooks/usePost";
 import notificationService from "@/services/notification";
 import apis from "@/config/apis";
-import theme, { colors } from "@/config/theme";
+import theme from "@/config/theme";
 import { DeleteForeverOutlinedIcon } from "@/consts/icons";
 import { ImageValidationError } from "@/consts/image";
 import { validateImageDimensions } from "@/utils/imageValidation";
 import { sanitiseString } from "@/utils/sanitiseString";
-import Button from "../Button";
+import { Button } from "@hdruk/ui";
 import FormInputWrapper from "../FormInputWrapper";
 import Link from "../Link";
 import Loading from "../Loading";
@@ -337,7 +338,7 @@ const UploadFile = ({
                                 </Button>
 
                                 <Typography
-                                    color={colors.grey600}
+                                    color={tokens.text.disabled}
                                     sx={{ mt: 2 }}>
                                     {file?.name ||
                                         (acceptedFileTypes
@@ -390,7 +391,7 @@ const UploadFile = ({
                                 sx={{
                                     mb: 1,
                                     fontWeight: 700,
-                                    color: colors.grey700,
+                                    color: tokens.text.faded,
                                 }}
                                 role="status"
                                 aria-live="polite">

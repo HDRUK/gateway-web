@@ -17,6 +17,7 @@ import {
 import Cookies from "js-cookie";
 import Link from "next/link";
 import { usePathname, useParams } from "next/navigation";
+import { tokens } from "@hdruk/ui/theme";
 import { LeftNavItem } from "@/interfaces/Ui";
 import EllipsisCharacterLimit from "@/components/EllipsisCharacterLimit";
 import Typography from "@/components/Typography";
@@ -148,7 +149,7 @@ const LeftNav = ({
                         subItemHref
                     )
                         ? colors.green400
-                        : colors.grey200
+                        : tokens.status.hovered
                 }`;
 
         return !item.subItems ? (
@@ -188,7 +189,7 @@ const LeftNav = ({
                             alignItems: "center",
                             justifyContent: "center",
                             fontSize: 18,
-                            color: colors.grey600,
+                            color: tokens.text.disabled,
                         }}>
                         {item.icon}
                     </ListItemIcon>
@@ -251,7 +252,7 @@ const LeftNav = ({
                                 alignItems: "center",
                                 justifyContent: "center",
                                 fontSize: 18,
-                                color: colors.grey600,
+                                color: tokens.text.disabled,
                             }}>
                             {item.icon}
                         </ListItemIcon>
@@ -300,7 +301,7 @@ const LeftNav = ({
                                     passHref
                                     sx={{
                                         p: 0,
-                                        color: colors.grey700,
+                                        color: tokens.text.faded,
                                     }}
                                     aria-current={
                                         subNavItemSelected(subItem.href)
@@ -416,7 +417,7 @@ const LeftNav = ({
                     },
                 }}>
                 <Divider />
-                <List component="nav" sx={{ color: colors.grey800 }}>
+                <List component="nav" sx={{ color: tokens.text.secondaryBlack }}>
                     {isMobile ? (
                         <>
                             <Tooltip
@@ -452,7 +453,7 @@ const LeftNav = ({
                                             alignItems: "center",
                                             justifyContent: "center",
                                             fontSize: 18,
-                                            color: colors.grey600,
+                                            color: tokens.text.disabled,
                                         }}>
                                         {firstNavItem.icon}
                                     </ListItemIcon>

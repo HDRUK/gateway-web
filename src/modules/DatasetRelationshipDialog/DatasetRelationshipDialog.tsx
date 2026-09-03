@@ -7,7 +7,7 @@ import { useTranslations } from "next-intl";
 import { Library, NewLibrary } from "@/interfaces/Library";
 import Box from "@/components/Box";
 import BoxContainer from "@/components/BoxContainer";
-import Button from "@/components/Button";
+import { Button } from "@hdruk/ui";
 import Dialog from "@/components/Dialog";
 import Link from "@/components/Link";
 import Typography from "@/components/Typography";

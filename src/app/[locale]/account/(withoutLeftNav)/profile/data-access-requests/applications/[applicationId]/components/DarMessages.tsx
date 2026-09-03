@@ -1,12 +1,13 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import { useForm } from "react-hook-form";
+import { tokens } from "@hdruk/ui/theme";
 import { Divider, Typography } from "@mui/material";
 import DOMPurify from "isomorphic-dompurify";
 import { useTranslations } from "next-intl";
 import { DarReviewsResponse } from "@/interfaces/DataAccessReview";
 import Box from "@/components/Box";
 import BoxContainer from "@/components/BoxContainer";
-import Button from "@/components/Button";
+import { Button } from "@hdruk/ui";
 import InputWrapper from "@/components/InputWrapper";
 import Loading from "@/components/Loading";
 import useAuth from "@/hooks/useAuth";
@@ -180,14 +181,14 @@ const DarMessages = ({
                             <Typography
                                 variant="h2"
                                 component="p"
-                                color={colors.purple500}
+                                color={tokens.brand.primary}
                                 sx={{ m: 0 }}>
                                 {t("status")}
                             </Typography>
                             <Typography
                                 sx={{
                                     display: "flex",
-                                    color: colors.grey700,
+                                    color: tokens.text.faded,
                                 }}>
                                 {(actionRequiredApplicant && isResearcher) ||
                                 (!actionRequiredApplicant && !isResearcher) ? (
@@ -223,7 +224,7 @@ const DarMessages = ({
                         </Box>
                     )}
 
-                <Typography variant="h2" component="p" color={colors.purple500}>
+                <Typography variant="h2" component="p" color={tokens.brand.primary}>
                     {t("messagingDashboard")}
                 </Typography>
                 <Typography>{t("messagingContent")}</Typography>
@@ -257,8 +258,8 @@ const DarMessages = ({
                                 sx={{
                                     borderRadius: theme.spacing(1),
                                     backgroundColor: review.user_id
-                                        ? colors.grey100
-                                        : colors.green50,
+                                        ? tokens.background.primary
+                                        : tokens.background.success,
                                     mb: 2,
                                     width: "70%",
                                     alignSelf: review.user_id
@@ -272,14 +273,14 @@ const DarMessages = ({
                                         justifyContent: "space-between",
                                     }}>
                                     <Typography
-                                        color={colors.grey600}
+                                        color={tokens.text.disabled}
                                         fontSize={13}>
                                         {review.user_id
                                             ? `${user?.firstname} ${user?.lastname}`
                                             : teamName}
                                     </Typography>
                                     <Typography
-                                        color={colors.grey600}
+                                        color={tokens.text.disabled}
                                         fontSize={13}>
                                         {formatDate(
                                             review.created_at,

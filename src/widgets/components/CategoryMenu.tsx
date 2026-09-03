@@ -1,7 +1,9 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { Box, Button, Menu, MenuItem } from "@mui/material";
+import { Button } from "@hdruk/ui";
+import { tokens } from "@hdruk/ui/theme";
+import { Box, Menu, MenuItem } from "@mui/material";
 import { WidgetBranding, WidgetCategory } from "@/interfaces/Widget";
 import { colors } from "@/config/theme";
 import { ChevronThinIcon } from "@/consts/icons";
@@ -50,11 +52,14 @@ export default function CategoryMenu({
         <Box component="nav" sx={{ p: 0 }}>
             <Box
                 sx={{
-                    borderBottom: `3px solid ${branding?.secondary ?? colors.green400}`,
+                    borderBottom: `3px solid ${
+                        branding?.secondary ?? colors.green400
+                    }`,
                     width: "100%",
                     p: 0,
                 }}>
                 <Button
+                    variant="text"
                     aria-controls="tab-menu"
                     aria-haspopup="true"
                     onClick={e => setMenuAnchor(e.currentTarget)}
@@ -62,7 +67,7 @@ export default function CategoryMenu({
                     title="Open to show search type options"
                     color="secondary"
                     sx={btnFullWidthSx}
-                    endIcon={<ChevronThinIcon color="primary" />}>
+                    endIcon={<ChevronThinIcon />}>
                     {CATEGORY_LABEL[value]}
                 </Button>
 

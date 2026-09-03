@@ -6,6 +6,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
 import * as yup from "yup";
+import { tokens } from "@hdruk/ui/theme";
 import { DarTemplate } from "@/interfaces/DataAccessRequest";
 import { UploadedFileMetadata } from "@/interfaces/FileUpload";
 import {
@@ -13,7 +14,7 @@ import {
     QuestionBankQuestionForm,
 } from "@/interfaces/QuestionBankQuestion";
 import Box from "@/components/Box";
-import Button from "@/components/Button";
+import { Button } from "@hdruk/ui";
 import Container from "@/components/Container";
 import Form from "@/components/Form";
 import InputWrapper from "@/components/InputWrapper";
@@ -27,7 +28,7 @@ import usePatch from "@/hooks/usePatch";
 import usePost from "@/hooks/usePost";
 import apis from "@/config/apis";
 import { inputComponents } from "@/config/forms";
-import theme, { colors } from "@/config/theme";
+import theme from "@/config/theme";
 import { ArrowBackIosNewIcon } from "@/consts/icons";
 import { RouteName } from "@/consts/routeName";
 import { formatDarQuestion } from "@/utils/dataAccessRequest";
@@ -287,7 +288,7 @@ const EditDocumentTemplate = ({
                         position: "sticky",
                         top: 0,
                         zIndex: theme.zIndex.appBar,
-                        bgcolor: colors.grey,
+                        bgcolor: tokens.background.primary,
                         borderBottom: 1,
                         borderColor: "divider",
                         py: 4,
@@ -306,8 +307,7 @@ const EditDocumentTemplate = ({
                                 onClick={handleSubmit(data =>
                                     handleSaveChanges(data, false)
                                 )}
-                                color="secondary"
-                                variant="outlined">
+                                purpose="secondary">
                                 {t("saveDraft")}
                             </Button>
                             <Button

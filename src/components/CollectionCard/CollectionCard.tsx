@@ -1,10 +1,11 @@
 import { useTranslations } from "next-intl";
+import { tokens } from "@hdruk/ui/theme";
 import { Collection } from "@/interfaces/Collection";
 import { IconType } from "@/interfaces/Ui";
 import Box from "@/components/Box";
 import Paper from "@/components/Paper";
 import Typography from "@/components/Typography";
-import theme, { colors } from "@/config/theme";
+import theme from "@/config/theme";
 import { DataStatus } from "@/consts/application";
 import { formatDate } from "@/utils/date";
 import CardActions from "../CardActions";
@@ -64,7 +65,7 @@ const CollectionCard = ({ collection, actions }: CollectionCardProps) => {
                             justifyContent: "center",
                             alignItems: "center",
                             textAlign: "center",
-                            color: colors.white,
+                            color: tokens.text.primaryWhite,
                             ...(hasImage
                                 ? { backgroundImage: `url("${image_link}")` }
                                 : {}),
@@ -139,7 +140,7 @@ const CollectionCard = ({ collection, actions }: CollectionCardProps) => {
                         />
                     </Box>
                 </Box>
-                <Box sx={{ p: 0, borderLeft: `solid 1px ${colors.grey600}` }}>
+                <Box sx={{ p: 0, borderLeft: `solid 1px ${tokens.status.faded}` }}>
                     <CardActions
                         actions={actions}
                         id={collection.id}

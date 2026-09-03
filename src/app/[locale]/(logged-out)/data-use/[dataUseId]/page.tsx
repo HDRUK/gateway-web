@@ -34,8 +34,10 @@ export default async function DataUseItemPage({
     // an endpoint that will not show the data if not active
     if (!data || data?.status !== DataStatus.ACTIVE) notFound();
 
-    const populatedSections = dataUseFields.filter(section =>
-        section.fields.some(field => !isEmpty(get(data, field.path)))
+    const populatedSections = dataUseFields.filter(
+        section =>
+            section.alwaysRender ||
+            section.fields.some(field => !isEmpty(get(data, field.path)))
     );
 
     const activeLinkList = populatedSections.map(section => {

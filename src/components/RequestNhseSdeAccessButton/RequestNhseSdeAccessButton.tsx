@@ -7,7 +7,7 @@ import usePost from "@/hooks/usePost";
 import apis from "@/config/apis";
 import { OpenInNewIcon } from "@/consts/icons";
 import { useFeatures } from "@/providers/FeatureProvider";
-import Button from "../Button";
+import { Button } from "@hdruk/ui";
 
 // SC: NHSE SDEs have requested we disable this functionality until they are ready.
 // Given this may need swift re-enabling/disabling in future outside of our
@@ -49,6 +49,7 @@ const RequestNhseSdeAccessButton = ({
 
     return (
         <Button
+            component="a"
             data-testid="request-nhse-sde-access-button"
             sx={{ ...sx }}
             color={color}

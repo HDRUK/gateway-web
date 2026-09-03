@@ -5,15 +5,16 @@ import {
     useFormState,
     useWatch,
 } from "react-hook-form";
+import { tokens } from "@hdruk/ui/theme";
 import { Divider } from "@mui/material";
 import { useTranslations } from "next-intl";
 import { DarFormattedField } from "@/interfaces/DataAccessRequest";
 import { FileUploadFields } from "@/interfaces/FileUpload";
 import { Option } from "@/interfaces/Option";
 import Box from "@/components/Box";
-import Button from "@/components/Button";
+import { Button } from "@hdruk/ui";
 import Typography from "@/components/Typography";
-import theme, { colors } from "@/config/theme";
+import theme from "@/config/theme";
 import { ARRAY_PREFIX } from "@/consts/dataAccess";
 import { AddIcon } from "@/consts/icons";
 import {
@@ -112,7 +113,7 @@ const DarFieldArray = ({
             <Divider variant="fullWidth" sx={{ mb: 4 }} />
 
             {errors?.[arrayName]?.message && (
-                <Typography sx={{ color: colors.red700 }}>
+                <Typography sx={{ color: tokens.status.error }}>
                     {errors[arrayName]?.message as string}
                 </Typography>
             )}

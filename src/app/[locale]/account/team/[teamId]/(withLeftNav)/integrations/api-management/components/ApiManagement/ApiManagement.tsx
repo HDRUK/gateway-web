@@ -3,7 +3,7 @@
 import { useTranslations } from "next-intl";
 import { useParams } from "next/navigation";
 import Box from "@/components/Box";
-import Button from "@/components/Button";
+import { Button } from "@hdruk/ui";
 import ImageMediaCard from "@/components/ImageMediaCard";
 import Link from "@/components/Link";
 import Typography from "@/components/Typography";
@@ -33,7 +33,7 @@ const ApiManagement = () => {
                             sx={{ height: 24, width: 24 }}
                         />
                     }
-                    variant="link">
+                    purpose="link">
                     {t("howTo")}
                 </Button>
             </Link>

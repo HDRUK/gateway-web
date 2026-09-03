@@ -1,13 +1,14 @@
 "use client";
 
 import { useForm } from "react-hook-form";
+import { tokens } from "@hdruk/ui/theme";
 import MuiDialogContent from "@mui/material/DialogContent";
 import { useTranslations } from "next-intl";
 import { notFound, useParams, useRouter } from "next/navigation";
 import { DarTeamApplication } from "@/interfaces/DataAccessRequestApplication";
 import Box from "@/components/Box";
 import BoxContainer from "@/components/BoxContainer";
-import Button from "@/components/Button";
+import { Button } from "@hdruk/ui";
 import Dialog from "@/components/Dialog";
 import Form from "@/components/Form";
 import InputWrapper from "@/components/InputWrapper";
@@ -15,7 +16,6 @@ import Typography from "@/components/Typography";
 import useModal from "@/hooks/useModal";
 import notificationService from "@/services/notification";
 import { inputComponents } from "@/config/forms";
-import { colors } from "@/config/theme";
 import { CACHE_DAR_REVIEWS } from "@/consts/cache";
 import {
     DarApplicationApprovalStatus,
@@ -148,14 +148,14 @@ const DarManageDialog = ({ applicationId }: DarManageDialogProps) => {
                         {statusSection.map(section => (
                             <Box
                                 sx={{
-                                    backgroundColor: colors.grey100,
+                                    backgroundColor: tokens.background.primary,
                                     p: 4,
                                     pb: 2,
                                 }}
                                 key={section.name}>
                                 <Typography
                                     fontSize={20}
-                                    color={colors.purple700}
+                                    color={tokens.brand.primaryHovered}
                                     fontWeight={600}
                                     sx={{ mb: 1 }}>
                                     {section.description}

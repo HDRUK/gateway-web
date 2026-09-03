@@ -1,9 +1,10 @@
 "use client";
 
 import { useState } from "react";
+import { tokens } from "@hdruk/ui/theme";
 import { Box, Typography } from "@mui/material";
 import { useTranslations } from "next-intl";
-import Button from "@/components/Button";
+import { Button } from "@hdruk/ui";
 import CheckboxControlled from "@/components/CheckboxControlled";
 import { colors } from "@/config/theme";
 
@@ -30,7 +31,7 @@ const CohortUserDeclaration = ({
                     *
                 </Typography>
             </Typography>
-            <Typography color={colors.grey600} sx={{ mb: 1 }}>
+            <Typography color={tokens.text.disabled} sx={{ mb: 1 }}>
                 {t("userDeclarationAdditional")}
             </Typography>
             <Typography sx={{ mb: 1 }}>{t("statementIntro")}</Typography>
@@ -62,8 +63,7 @@ const CohortUserDeclaration = ({
                         gap: 2,
                     }}>
                     <Button
-                        variant="outlined"
-                        color="secondary"
+                        purpose="secondary"
                         onClick={onCancel}>
                         {tCommon("cancel")}
                     </Button>

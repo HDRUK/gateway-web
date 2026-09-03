@@ -125,7 +125,9 @@ export default async function DatasetItemPage({
                                         pt: 0.5,
                                         pb: 0.5,
                                     }}>
-                                    <Typography variant="h2">
+                                    <Typography
+                                        variant="articleLead"
+                                        component="h2">
                                         {
                                             datasetVersion.metadata?.metadata
                                                 ?.summary?.title
@@ -133,11 +135,13 @@ export default async function DatasetItemPage({
                                     </Typography>
                                     {dataCustodianName && dataCustodianId && (
                                         <>
-                                            <Typography variant="h2">
+                                            <Typography
+                                                variant="articleLead"
+                                                component="span">
                                                 -
                                             </Typography>
                                             <Link
-                                                variant="h2"
+                                                variant="articleLead"
                                                 href={`/${RouteName.DATA_CUSTODIANS_ITEM}/${dataCustodianId}`}>
                                                 {dataCustodianName}
                                             </Link>

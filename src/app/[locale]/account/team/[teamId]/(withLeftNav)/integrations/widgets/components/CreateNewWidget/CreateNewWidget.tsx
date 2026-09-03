@@ -1,7 +1,7 @@
 "use client";
 
 import { useTranslations } from "next-intl";
-import Button from "@/components/Button";
+import { Button } from "@hdruk/ui";
 import useDialog from "@/hooks/useDialog";
 import { AddIcon } from "@/consts/icons";
 import CreateWidgetDialog from "../CreateWidgetDialog/CreateWidgetDialog";

@@ -1,10 +1,10 @@
+import { tokens } from "@hdruk/ui/theme";
 import { ListItem, useMediaQuery, useTheme } from "@mui/material";
 import { useTranslations } from "next-intl";
 import { SearchResultPublication } from "@/interfaces/Search";
 import EllipsisLineLimit from "@/components/EllipsisLineLimit";
 import ShowMore from "@/components/ShowMore";
 import Typography from "@/components/Typography";
-import { colors } from "@/config/theme";
 import { OpenInNewIcon } from "@/consts/icons";
 import { RouteName } from "@/consts/routeName";
 import {
@@ -40,7 +40,7 @@ const ResultCardPublication = ({ result }: ResultCardPublicationProps) => {
 
     return (
         <ListItem
-            sx={{ p: 0, borderBottom: `1px solid ${colors.grey300}` }}
+            sx={{ p: 0, borderBottom: `1px solid ${tokens.status.grey}` }}
             alignItems="flex-start">
             <ListItem component="div">
                 <PublicationWrapper

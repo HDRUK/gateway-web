@@ -1,8 +1,9 @@
+import { tokens } from "@hdruk/ui/theme";
 import { ListItem, ListItemText } from "@mui/material";
 import { useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
 import { SearchResultDataUse } from "@/interfaces/Search";
-import Button from "@/components/Button";
+import { Button } from "@hdruk/ui";
 import EllipsisCharacterLimit from "@/components/EllipsisCharacterLimit";
 import EllipsisLineLimit from "@/components/EllipsisLineLimit";
 import Link from "@/components/Link";
@@ -10,7 +11,6 @@ import TooltipText from "@/components/TooltipText";
 import Typography from "@/components/Typography";
 import DataUseDetailsDialog from "@/modules/DataUseDetailsDialog";
 import useDialog from "@/hooks/useDialog";
-import { colors } from "@/config/theme";
 import { RouteName } from "@/consts/routeName";
 import {
     ResultButtonWrap,
@@ -60,7 +60,7 @@ const ResultCardDataUse = ({ result }: ResultCardProps) => {
 
     return (
         <ListItem
-            sx={{ p: 0, borderBottom: `1px solid ${colors.grey300}` }}
+            sx={{ p: 0, borderBottom: `1px solid ${tokens.status.grey}` }}
             alignItems="flex-start">
             <ListItemText
                 disableTypography
@@ -81,8 +81,7 @@ const ResultCardDataUse = ({ result }: ResultCardProps) => {
                             <Button
                                 onClick={handleShowAll}
                                 size="small"
-                                variant="outlined"
-                                color="secondary"
+                                purpose="secondary"
                                 sx={{
                                     ml: 1,
                                     flexShrink: 0,

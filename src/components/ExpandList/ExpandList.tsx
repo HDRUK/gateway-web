@@ -1,6 +1,6 @@
 import { ReactNode, useState } from "react";
 import Box from "@/components/Box";
-import Button from "@/components/Button";
+import { Button } from "@hdruk/ui";
 import Typography from "../Typography";
 
 export interface ExpandListProps {
@@ -43,7 +43,7 @@ const ExpandList = ({
             {listItems.length > showCount && !expanded && (
                 <Button
                     sx={{ mt: 1 }}
-                    variant="link"
+                    purpose="link"
                     onClick={() => setExpanded(true)}>
                     {buttonTextExpand}
                 </Button>
@@ -51,7 +51,7 @@ const ExpandList = ({
             {showLessButton && expanded && (
                 <Button
                     sx={{ mt: 1 }}
-                    variant="link"
+                    purpose="link"
                     onClick={() => setExpanded(false)}>
                     {buttonTextHide}
                 </Button>

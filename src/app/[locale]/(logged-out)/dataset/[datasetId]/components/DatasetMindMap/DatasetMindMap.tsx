@@ -1,6 +1,7 @@
 "use client";
 
 import { useMemo } from "react";
+import { tokens } from "@hdruk/ui/theme";
 import { ReactFlowProps } from "@xyflow/react";
 import { useTranslations } from "next-intl";
 import { VersionItem } from "@/interfaces/Dataset";
@@ -186,7 +187,8 @@ const DatasetMindMap = ({
     ]);
 
     return (
-        <Paper sx={{ borderRadius: 2, height: "370px" }}>
+        <Paper
+            sx={{ borderRadius: `${tokens.radius.medium}px`, height: "370px" }}>
             <MindMap
                 panOnDrag={panOnDrag}
                 panOnScroll={panOnScroll}

@@ -2,6 +2,7 @@
 
 import { useEffect, useMemo, useState } from "react";
 import { useForm } from "react-hook-form";
+import { tokens } from "@hdruk/ui/theme";
 import { Typography } from "@mui/material";
 import { useTranslations } from "next-intl";
 import { useSearchParams } from "next/navigation";
@@ -23,7 +24,6 @@ import {
     darDashboardSearchFilter,
     darDashboardSortField,
 } from "@/config/forms/dataAccessApplicationDashboard";
-import { colors } from "@/config/theme";
 import {
     DarApplicationApprovalStatus,
     DarApplicationStatus,
@@ -259,11 +259,11 @@ export default function DarDashboard({
                             tabs={approvalTab}
                             tabBoxSx={{
                                 padding: 0,
-                                background: colors.white,
+                                background: tokens.background.white,
                             }}
                             rootBoxSx={{
                                 padding: 0,
-                                borderTop: `1px solid ${colors.grey200}`,
+                                borderTop: `1px solid ${tokens.status.hovered}`,
                                 mb: 1,
                             }}
                             paramName="action"
@@ -343,10 +343,10 @@ export default function DarDashboard({
 
             <Tabs
                 tabs={tabList}
-                tabBoxSx={{ padding: 0, background: colors.white }}
+                tabBoxSx={{ padding: 0, background: tokens.background.white }}
                 rootBoxSx={{
                     padding: 0,
-                    borderTop: `1px solid ${colors.grey200}`,
+                    borderTop: `1px solid ${tokens.status.hovered}`,
                     "& .MuiTabs-root": {
                         mb:
                             statusParam ===

@@ -3,7 +3,7 @@
 import { Box, Typography } from "@mui/material";
 import { useTranslations } from "next-intl";
 import Link from "next/link";
-import Button from "@/components/Button";
+import { Button } from "@hdruk/ui";
 import { CONTACT_EMAIL_ADDRESS } from "@/consts/application";
 
 const TRANSLATIONS_NAMESPACE_CONTACT_SUPPORT = "components.ContactSupport";
@@ -18,8 +18,7 @@ export default function MeetTheTeam() {
             </Typography>
             <Typography sx={{ mb: 3 }}>{t("content")}</Typography>
             <Button
-                variant="outlined"
-                color="secondary"
+                purpose="secondary"
                 component={Link}
                 href={`mailto:${CONTACT_EMAIL_ADDRESS}`}>
                 {t("contactButton")}

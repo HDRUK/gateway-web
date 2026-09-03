@@ -4,7 +4,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { Stack } from "@mui/material";
 import type { Meta, StoryObj } from "@storybook/nextjs";
 import * as yup from "yup";
-import Button from "@/components/Button";
+import { Button } from "@hdruk/ui";
 import Form from "@/components/Form";
 import TextFieldComponent from "@/components/TextField";
 import { AddAPhotoIcon } from "@/consts/icons";

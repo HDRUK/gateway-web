@@ -5,7 +5,7 @@ import MuiDialogActions from "@mui/material/DialogActions";
 import MuiDialogContent from "@mui/material/DialogContent";
 import { useTranslations } from "next-intl";
 import * as yup from "yup";
-import Button from "@/components/Button";
+import { Button } from "@hdruk/ui";
 import Dialog from "@/components/Dialog";
 import InputWrapper from "@/components/InputWrapper";
 
@@ -63,7 +63,7 @@ const SaveSearchDialog = ({ onCancel, onSubmit }: SaveSearchDialogProps) => {
                         onClick={onCancel}>
                         {t("cancelButton")}
                     </Button>
-                    <Button type="submit" isLoading={isLoading}>
+                    <Button type="submit" loading={isLoading}>
                         {t("saveQueryButton")}
                     </Button>
                 </MuiDialogActions>

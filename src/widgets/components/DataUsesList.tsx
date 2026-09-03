@@ -1,12 +1,13 @@
 "use client";
 
+import { tokens } from "@hdruk/ui/theme";
 import { Box, Link, List, ListItem, ListItemText } from "@mui/material";
 import { DataUseItem, WidgetBranding } from "@/interfaces/Widget";
 import EllipsisCharacterLimit from "@/components/EllipsisCharacterLimit";
 import EllipsisLineLimit from "@/components/EllipsisLineLimit";
 import TooltipText from "@/components/TooltipText";
 import Typography from "@/components/Typography";
-import theme, { colors } from "@/config/theme";
+import theme from "@/config/theme";
 import { RouteName } from "@/consts/routeName";
 import { FULL_GATEWAY_URL } from "@/consts/urls";
 
@@ -39,11 +40,11 @@ type DataUsesListProps = { items: DataUseItem[]; branding: WidgetBranding };
 
 export default function DataUsesList({ items }: DataUsesListProps) {
     return (
-        <List sx={{ background: colors.white, p: 0, m: 0 }}>
+        <List sx={{ background: tokens.background.white, p: 0, m: 0 }}>
             {items.map(result => (
                 <ListItem
                     key={result.id}
-                    sx={{ p: 0, borderBottom: `1px solid ${colors.grey300}` }}
+                    sx={{ p: 0, borderBottom: `1px solid ${tokens.status.grey}` }}
                     alignItems="flex-start">
                     <ListItemText
                         disableTypography

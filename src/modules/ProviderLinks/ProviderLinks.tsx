@@ -1,13 +1,15 @@
+import { tokens } from "@hdruk/ui/theme";
 import { SvgIconComponent } from "@mui/icons-material";
 import { Typography } from "@mui/material";
 import { useTranslations } from "next-intl";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import Box from "@/components/Box";
-import Button from "@/components/Button";
+import { Button } from "@hdruk/ui";
 import apis from "@/config/apis";
 import { colors } from "@/config/theme";
 import { InstituteIcon } from "@/consts/customIcons";
+import { useFeatures } from "@/providers/FeatureProvider";
 
 interface LinkItem {
     label: string;
@@ -29,7 +31,7 @@ interface ProviderLinksProps {
 }
 
 const highlight = (chunks: React.ReactNode) => (
-    <Box component="span" sx={{ color: colors.red700, p: 0 }}>
+    <Box component="span" sx={{ color: tokens.status.error, p: 0 }}>
         {chunks}
     </Box>
 );
@@ -46,6 +48,7 @@ const ProviderLinks = ({
 }: ProviderLinksProps) => {
     const t = useTranslations("modules.dialogs.ProvidersDialog");
     const { push } = useRouter();
+    const { isSafePeopleRegistrySSOEnabled } = useFeatures();
 
     let effectiveRedirectPath = "";
 
@@ -68,6 +71,15 @@ const ProviderLinks = ({
                     href: `${apis.authAzureV1Url}${effectiveRedirectPath}`,
                     image: "microsoft-logo.png",
                 },
+                ...(isSafePeopleRegistrySSOEnabled
+                    ? [
+                          {
+                              label: t("socialProviders.registry"),
+                              href: `${apis.authRegistryV1Url}${effectiveRedirectPath}`,
+                              image: "safepeopleregistry-logo.svg",
+                          },
+                      ]
+                    : []),
             ],
         },
         {
@@ -122,7 +134,7 @@ const ProviderLinks = ({
                                 }
                                 sx={{
                                     p: 0,
-                                    color: colors.grey700,
+                                    color: tokens.text.faded,
                                     display: "block",
                                     lineHeight: "inherit",
                                     fontWeight: "inherit",

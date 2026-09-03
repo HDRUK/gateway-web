@@ -6,7 +6,7 @@ exports[`FormLegend should render legend 1`] = `
     class="MuiBox-root mui-style-129n30d"
   >
     <div
-      class="MuiButtonBase-root MuiListItemButton-root MuiListItemButton-gutters MuiListItemButton-root MuiListItemButton-gutters mui-style-5gylba-MuiButtonBase-root-MuiListItemButton-root"
+      class="MuiButtonBase-root MuiListItemButton-root MuiListItemButton-gutters MuiListItemButton-root MuiListItemButton-gutters mui-style-14sp1vi-MuiButtonBase-root-MuiListItemButton-root"
       role="button"
       tabindex="0"
     >
@@ -29,12 +29,12 @@ exports[`FormLegend should render legend 1`] = `
         class="MuiBox-root mui-style-19bls30"
       >
         <p
-          class="MuiTypography-root MuiTypography-body1 mui-style-1aa6n12-MuiTypography-root"
+          class="MuiTypography-root MuiTypography-body2 mui-style-1klk0cd-MuiTypography-root"
         >
           Item1
         </p>
         <p
-          class="MuiTypography-root MuiTypography-body1 mui-style-1aa6n12-MuiTypography-root"
+          class="MuiTypography-root MuiTypography-body2 mui-style-1klk0cd-MuiTypography-root"
         >
           (
           2

@@ -9,7 +9,7 @@ import {
     ApplicationForm,
     ApplicationPayload,
 } from "@/interfaces/Application";
-import Button from "@/components/Button";
+import { Button } from "@hdruk/ui";
 import Form from "@/components/Form";
 import InputWrapper from "@/components/InputWrapper";
 import Loading from "@/components/Loading";

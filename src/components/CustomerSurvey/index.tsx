@@ -2,7 +2,9 @@
 
 import { useEffect, useState, useCallback, useId } from "react";
 import { useForm } from "react-hook-form";
+import { Button } from "@hdruk/ui";
 import { yupResolver } from "@hookform/resolvers/yup";
+import { tokens } from "@hdruk/ui/theme";
 import CloseIcon from "@mui/icons-material/Close";
 import InsertEmoticonIcon from "@mui/icons-material/InsertEmoticon";
 import MoodBadIcon from "@mui/icons-material/MoodBad";
@@ -17,7 +19,6 @@ import {
     IconButton,
     keyframes,
     Box,
-    Button,
     useMediaQuery,
     useTheme,
 } from "@mui/material";
@@ -45,9 +46,9 @@ const cookieLife = 90; // days
 const cookieLifeClosed = 5; // days
 
 const ratings: Ratings[] = [
-    { icon: MoodBadIcon, rating: 1, colour: colors.red700 },
-    { icon: SentimentVeryDissatisfiedIcon, rating: 2, colour: colors.orange },
-    { icon: SentimentSatisfiedIcon, rating: 3, colour: colors.orange200 },
+    { icon: MoodBadIcon, rating: 1, colour: tokens.status.error },
+    { icon: SentimentVeryDissatisfiedIcon, rating: 2, colour: tokens.status.needsAction },
+    { icon: SentimentSatisfiedIcon, rating: 3, colour: tokens.status.warningHover },
     { icon: SentimentSatisfiedAltIcon, rating: 4, colour: colors.darkGreen100 },
     { icon: InsertEmoticonIcon, rating: 5, colour: colors.green400 },
 ];
@@ -296,7 +297,7 @@ export default function CustomerSurvey({
                     <InputWrapper control={control} {...reason} />
 
                     <Button
-                        variant="contained"
+                        variant="text"
                         sx={{ mt: 2 }}
                         type="submit"
                         disabled={!watch("reason")?.trim()}>

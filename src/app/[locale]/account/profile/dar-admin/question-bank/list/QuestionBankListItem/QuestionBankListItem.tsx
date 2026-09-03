@@ -1,3 +1,4 @@
+import { tokens } from "@hdruk/ui/theme";
 import { Card } from "@mui/material";
 import { QuestionBankQuestion } from "@/interfaces/QuestionBankQuestion";
 import { IconType } from "@/interfaces/Ui";
@@ -5,7 +6,6 @@ import Box from "@/components/Box";
 import CardActions from "@/components/CardActions";
 import Chip from "@/components/Chip";
 import Typography from "@/components/Typography";
-import { colors } from "@/config/theme";
 import { formatDate } from "@/utils/date";
 
 interface QuestionCardProps {
@@ -94,7 +94,7 @@ const QuestionBankListItem = ({ data, actions }: QuestionCardProps) => {
                         <Typography component="span">{guidance}</Typography>
                     </Box>
                 </Box>
-                <Box sx={{ p: 0, borderLeft: `solid 1px ${colors.grey600}` }}>
+                <Box sx={{ p: 0, borderLeft: `solid 1px ${tokens.status.faded}` }}>
                     <CardActions
                         actions={hydratedActions}
                         id={data.question_id}

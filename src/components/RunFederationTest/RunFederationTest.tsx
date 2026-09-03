@@ -4,8 +4,9 @@ import {
     FederationTestResponse,
     FederationTestStatus,
 } from "@/interfaces/Federation";
+import { tokens } from "@hdruk/ui/theme";
 import Box from "@/components/Box";
-import Button from "@/components/Button";
+import { Button } from "@hdruk/ui";
 import TickCrossIcon from "@/components/TickCrossIcon";
 import Typography from "@/components/Typography";
 import { PREDEFINED_INTEGRATION_OVERVIEW_URL } from "@/config/hrefs";
@@ -25,8 +26,8 @@ const Container = ({ children }: { children: ReactNode }) => {
         <Box
             sx={{
                 height: "100%",
-                background: colors.grey900,
-                color: colors.white,
+                background: tokens.text.primaryBlack,
+                color: tokens.text.primaryWhite,
                 p: 3,
             }}>
             {children}
@@ -61,7 +62,7 @@ const RunFederationTest = ({
                         flexDirection: "column",
                     }}>
                     <div>
-                        <Typography fontSize={10} color={colors.grey200}>
+                        <Typography fontSize={10} color={tokens.text.secondaryWhite}>
                             Complete
                         </Typography>
                         <Box
@@ -138,7 +139,7 @@ const RunFederationTest = ({
                 <Button
                     style={{
                         ...(!isEnabled && {
-                            background: colors.grey200,
+                            background: tokens.status.hovered,
                         }),
                     }}
                     {...(!isEnabled && {
