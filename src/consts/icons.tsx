@@ -38,15 +38,18 @@ import DocumentScannerIcon from "@mui/icons-material/DocumentScanner";
 import DownloadIcon from "@mui/icons-material/Download";
 import DragIndicatorIcon from "@mui/icons-material/DragIndicator";
 import EditIcon from "@mui/icons-material/Edit";
+import EmailOutlinedIcon from "@mui/icons-material/EmailOutlined";
 import ErrorIcon from "@mui/icons-material/Error";
 import ExpandLessIcon from "@mui/icons-material/ExpandLess";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import FilterAltIcon from "@mui/icons-material/FilterAlt";
 import FilterAltOffIcon from "@mui/icons-material/FilterAltOff";
 import FilterAltOutlinedIcon from "@mui/icons-material/FilterAltOutlined";
+import FlagOutlinedIcon from "@mui/icons-material/FlagOutlined";
 import FolderSharedOutlinedIcon from "@mui/icons-material/FolderSharedOutlined";
 import CalendarMonthOutlinedIcon from "@mui/icons-material/CalendarMonthOutlined";
 import GridViewOutlinedIcon from "@mui/icons-material/GridViewOutlined";
+import GroupRemoveIcon from "@mui/icons-material/GroupRemove";
 import GroupsIcon from "@mui/icons-material/Groups";
 import GroupsOutlinedIcon from "@mui/icons-material/GroupsOutlined";
 import HandymanOutlinedIcon from "@mui/icons-material/HandymanOutlined";
@@ -54,13 +57,17 @@ import HelpIcon from "@mui/icons-material/Help";
 import HistoryIcon from "@mui/icons-material/History";
 import HelpOutlineIcon from "@mui/icons-material/HelpOutline";
 import HelpOutlineOutlinedIcon from "@mui/icons-material/HelpOutlineOutlined";
+import HubOutlinedIcon from "@mui/icons-material/HubOutlined";
 import IndeterminateCheckBoxSharpIcon from "@mui/icons-material/IndeterminateCheckBoxSharp";
 import InfoIcon from "@mui/icons-material/Info";
+import InsertLinkOutlinedIcon from "@mui/icons-material/InsertLinkOutlined";
 import KeyboardDoubleArrowDownIcon from "@mui/icons-material/KeyboardDoubleArrowDown";
 import LaunchIcon from "@mui/icons-material/Launch";
 import LockIcon from "@mui/icons-material/Lock";
 import MenuIcon from "@mui/icons-material/Menu";
+import NightsStayOutlinedIcon from "@mui/icons-material/NightsStayOutlined";
 import OpenInNewIcon from "@mui/icons-material/OpenInNew";
+import PeopleAltOutlinedIcon from "@mui/icons-material/PeopleAltOutlined";
 import PersonOutlineOutlinedIcon from "@mui/icons-material/PersonOutlineOutlined";
 import PlayArrowIcon from "@mui/icons-material/PlayArrow";
 import PriorityHighIcon from "@mui/icons-material/PriorityHigh";
@@ -68,6 +75,7 @@ import QueryBuilderOutlinedIcon from "@mui/icons-material/QueryBuilderOutlined";
 import QuestionAnswerIcon from "@mui/icons-material/QuestionAnswer";
 import RemoveIcon from "@mui/icons-material/Remove";
 import RemoveCircleIcon from "@mui/icons-material/RemoveCircle";
+import RemoveModeratorIcon from "@mui/icons-material/RemoveModerator";
 import RestartAltIcon from "@mui/icons-material/RestartAlt";
 import SchemaOutlinedIcon from "@mui/icons-material/SchemaOutlined";
 import SearchIcon from "@mui/icons-material/Search";
@@ -144,6 +152,7 @@ export {
     GroupsOutlinedIcon,
     ContentCopyIcon,
     RemoveCircleIcon,
+    RemoveModeratorIcon,
     DownloadIcon,
     WarningIcon,
     WarningRoundedIcon,
@@ -174,4 +183,11 @@ export {
     CalendarMonthOutlinedIcon,
     HistoryIcon,
     PlayArrowIcon,
+    EmailOutlinedIcon,
+    FlagOutlinedIcon,
+    HubOutlinedIcon,
+    InsertLinkOutlinedIcon,
+    NightsStayOutlinedIcon,
+    PeopleAltOutlinedIcon,
+    GroupRemoveIcon,
 };

@@ -18,7 +18,7 @@ import usePatch from "@/hooks/usePatch";
 import { useUnsavedChanges } from "@/hooks/useUnsavedChanges";
 import apis from "@/config/apis";
 import { getColumns } from "@/config/tables/teamMemberManagement";
-import { DeleteForeverIcon } from "@/consts/icons";
+import { DeleteForeverIcon, RemoveModeratorIcon } from "@/consts/icons";
 import {
     RolesPayload,
     getChangeCount,
@@ -117,6 +117,14 @@ const TeamMembers = ({
         itemName: `Team member`,
     });
 
+    // Removing a super-user from a team goes through a dedicated admin-only
+    // endpoint (rather than the standard team-member removal endpoint above),
+    // since the API enforces the target is actually a super-user.
+    const removeSuperUserFromTeam = useDelete(
+        `${apis.adminTeamsV1Url}/${teamId}/users`,
+        { itemName: `Super-user`, errorNotificationsOn: true }
+    );
+
     useEffect(() => {
         if (teamMembers) setTableRows(teamMembers);
     }, [teamMembers]);
@@ -128,7 +136,12 @@ const TeamMembers = ({
     const actions = useMemo(
         () => [
             {
-                icon: DeleteForeverIcon,
+                icon: (rowUser: User) =>
+                    rowUser.is_admin ? (
+                        <RemoveModeratorIcon />
+                    ) : (
+                        <DeleteForeverIcon />
+                    ),
                 checkConditions: (rowUser: User) => {
                     let overrides = {};
                     if (isLastUser) {
@@ -145,7 +158,20 @@ const TeamMembers = ({
                     }
                     return overrides;
                 },
-                onClick: (rowUser: User) =>
+                onClick: (rowUser: User) => {
+                    if (rowUser.is_admin) {
+                        showModal({
+                            confirmText: "Remove",
+                            title: "Remove super-user from team",
+                            content: `Are you sure you want to remove super-user ${rowUser.firstname} ${rowUser.lastname} from this team?`,
+                            onSuccess: async () => {
+                                await removeSuperUserFromTeam(rowUser.id);
+                                router.refresh();
+                            },
+                        });
+                        return;
+                    }
+
                     showModal({
                         confirmText: "Remove",
                         title: "Delete a user",
@@ -154,11 +180,12 @@ const TeamMembers = ({
                             deleteTeamMember(`users/${rowUser.id}`);
                             router.refresh();
                         },
-                    }),
+                    });
+                },
             },
         ],
         // eslint-disable-next-line react-hooks/exhaustive-deps
-        [deleteTeamMember, showModal, teamMembers]
+        [deleteTeamMember, removeSuperUserFromTeam, showModal, teamMembers]
     );
 
     useEffect(() => {
