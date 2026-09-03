@@ -1,7 +1,7 @@
 "use client";
 
 import { Suspense, useMemo, useState } from "react";
-import { Box, Typography } from "@mui/material";
+import { Typography } from "@mui/material";
 import { useTranslations } from "next-intl";
 import Image from "next/image";
 import {
@@ -12,6 +12,8 @@ import {
 import { Filter, FilterValues } from "@/interfaces/Filter";
 import { NetworkSummary } from "@/interfaces/NetworkSummary";
 import { SearchCategory } from "@/interfaces/Search";
+import Box from "@/components/Box";
+import BoxContainer from "@/components/BoxContainer";
 import HeaderActionBar from "@/components/HeaderActionBar";
 import LayoutDataItemPage from "@/components/LayoutDataItemPage";
 import { NetworkSkeleton, SectionSkeleton } from "@/components/Skeletons";
@@ -93,37 +95,60 @@ export default function DataCustodianNetworkPage({
             }
             body={
                 <>
-                    <Typography variant="h1" sx={{ ml: 2, mt: 2 }}>
-                        {infoData.name}
-                    </Typography>
-                    <Box sx={{ display: "flex", alignItems: "center", pt: 0 }}>
-                        <Image
-                            width={554}
-                            height={250}
-                            alt={infoData.name}
-                            src={
-                                infoData?.img_url ||
-                                StaticImages.BASE.placeholder
-                            }
-                            style={LogoImage}
-                        />
-                    </Box>
                     <HeaderActionBar
                         backButtonText={t("backLabel")}
                         backButtonHref={`/${RouteName.SEARCH}?type=${SearchCategory.COLLECTIONS}`}
                         wrapperSx={{ boxShadow: 0 }}
                     />
-                    <Box
-                        sx={{
-                            display: "flex",
-                            flexDirection: "column",
-                            gap: 2,
-                        }}>
-                        <IntroductionContent
-                            networkData={infoData}
-                            anchorIndex={0}
-                        />
+                    <Box sx={{ pb: 0 }}>
+                        <Typography variant="h2" component="h1">
+                            {infoData.name}
+                        </Typography>
                     </Box>
+                    <BoxContainer
+                        sx={{
+                            gridTemplateColumns: {
+                                md: "repeat(5, 1fr)",
+                            },
+                            gap: {
+                                xs: 1,
+                                sm: 2,
+                            },
+                        }}>
+                        <Box
+                            sx={{
+                                gridColumn: { md: "span 3" },
+                                py: 0,
+                            }}>
+                            <IntroductionContent
+                                networkData={infoData}
+                                anchorIndex={0}
+                            />
+                        </Box>
+                        <Box
+                            sx={{
+                                gridColumn: { md: "span 2" },
+                                py: 0,
+                                display: "flex",
+                                alignItems: "flex-start",
+                                justifyContent: {
+                                    md: "flex-end",
+                                    sm: "center",
+                                },
+                            }}>
+                            <Image
+                                width={554}
+                                height={250}
+                                alt={infoData.name}
+                                src={
+                                    infoData?.img_url ||
+                                    StaticImages.BASE.placeholder
+                                }
+                                style={LogoImage}
+                                sizes="(max-width: 768px) 100vw, 554px"
+                            />
+                        </Box>
+                    </BoxContainer>
                     <Suspense
                         fallback={<SectionSkeleton title="Data Custodians" />}>
                         <DataCustodianOuter

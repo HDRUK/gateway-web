@@ -60,10 +60,7 @@ export default async function DataCustodianItemPage({
 
     const summaryPromise = getTeamSummary(dataCustodianId, {
         cache: {
-            tags: [
-                "custodian_summary",
-                `custodian_summary-${dataCustodianId}`,
-            ],
+            tags: ["custodian_summary", `custodian_summary-${dataCustodianId}`],
         },
     });
 
@@ -92,8 +89,10 @@ export default async function DataCustodianItemPage({
                             cohortDiscoverySupport.supportsCohortDiscovery
                         }
                     />
-                    <Box sx={{ ml: 2, mt: 2, pb: 0 }}>
-                        <Typography variant="h1">{infoData.name}</Typography>
+                    <Box sx={{ mt: 2, pb: 0 }}>
+                        <Typography variant="h2" component="h1">
+                            {infoData.name}
+                        </Typography>
                     </Box>
                     <Box
                         sx={{
@@ -109,7 +108,7 @@ export default async function DataCustodianItemPage({
                             <DataCustodianContent
                                 summaryPromise={summaryPromise}
                                 populatedSections={populatedSections}
-                                teamSummary={infoData}
+                                infoData={infoData}
                             />
                             {!!infoData.aliases?.length && (
                                 <Fragment key="custodian_alias">

@@ -23,9 +23,9 @@ export default function IntroductionContent({
 
     return (
         <div style={{ gap: "8px" }} id={`anchor${anchorIndex}`}>
-            <Typography variant="h3" style={{ minHeight: "46px" }}>{`${t(
-                "heading"
-            )}`}</Typography>
+            <Typography
+                variant="articleLead"
+                style={{ minHeight: "46px" }}>{`${t("heading")}`}</Typography>
             {summary && (
                 <MarkDownSanitizedWithHtml
                     sx={{ pb: 1 }}

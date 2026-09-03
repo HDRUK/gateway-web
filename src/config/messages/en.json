@@ -1526,17 +1526,21 @@
             "backLabel": "Back to Collections search results",
             "components": {
                 "DatasetsContent": {
+                    "title": "Datasets & BioSamples",
                     "heading": "Datasets & BioSamples ({ length })",
                     "populationSize": "Dataset population size: { length }",
                     "unknownString": "Unknown"
                 },
                 "DatausesContent": {
+                    "title": "Data Uses",
                     "heading": "Data Uses ({ length })"
                 },
                 "PublicationsContent": {
+                    "title": "Publications",
                     "heading": "Publications ({ length })"
                 },
                 "ToolsContent": {
+                    "title": "Analysis Scripts & Software",
                     "heading": "Analysis Scripts & Software ({ length })"
                 }
             }
@@ -1806,17 +1810,21 @@
             "backLabel": "Back to Tools search results",
             "components": {
                 "DatasetsContent": {
+                    "title": "Datasets that the analysis, tool or software can be applied to",
                     "heading": "Datasets that the analysis, tool or software can be applied to ({ length })",
                     "populationSize": "Dataset population size: { length }",
                     "unknownString": "Unknown"
                 },
                 "DatausesContent": {
+                    "title": "Data Uses / Research Projects which have used this analysis, tool or software",
                     "heading": "Data Uses / Research Projects which have used this analysis, tool or software ({ length })"
                 },
                 "PublicationsContent": {
+                    "title": "Publications related to this analysis, tool or software",
                     "heading": "Publications related to this analysis, tool or software ({ length })"
                 },
                 "CollectionsContent": {
+                    "title": "Collections which include this analysis, tool or software",
                     "heading": "Collections which include this analysis, tool or software ({ length })"
                 }
             }
@@ -1838,15 +1846,19 @@
             "urlTooltip": "Weblink for the publication text or site from which the text is available",
             "components": {
                 "DatasetsContent": {
+                    "title": "Datasets related to this Publication",
                     "heading": "Datasets related to this Publication ({ length })"
                 },
                 "DatausesContent": {
+                    "title": "Data Uses / Research Projects which are related to this Publication",
                     "heading": "Data Uses / Research Projects which are related to this Publication ({ length })"
                 },
                 "ToolsContent": {
+                    "title": "Analysis Scripts & Software related to this Publication",
                     "heading": "Analysis Scripts & Software related to this Publication ({ length })"
                 },
                 "CollectionsContent": {
+                    "title": "Collections which include this Publication",
                     "heading": "Collections which include this Publication ({ length })"
                 }
             },

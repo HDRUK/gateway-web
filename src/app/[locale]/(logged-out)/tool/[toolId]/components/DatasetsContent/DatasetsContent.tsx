@@ -29,6 +29,7 @@ export default function DatasetContent({
             heading={t("heading", {
                 length: datasetsLatestVersions.length,
             })}
+            title={t("title")}
             contents={datasetsLatestVersions.map(
                 ({ shortTitle, datasetType, populationSize, dataset_id }) => (
                     <>

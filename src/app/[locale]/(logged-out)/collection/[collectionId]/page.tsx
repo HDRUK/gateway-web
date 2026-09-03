@@ -3,6 +3,7 @@ import Image from "next/image";
 import { notFound } from "next/navigation";
 import { SearchCategory } from "@/interfaces/Search";
 import Box from "@/components/Box";
+import BoxContainer from "@/components/BoxContainer";
 import DataUsesContent from "@/components/DataUsesContent";
 import HTMLContent from "@/components/HTMLContent";
 import HeaderActionBar from "@/components/HeaderActionBar";
@@ -70,26 +71,57 @@ export default async function CollectionItemPage({
                             wrapperSx={{ p: 0, boxShadow: 0 }}
                         />
                     </Box>
-                <Box sx={{ ml: 2, mt: 2 }}>
-                    <Typography variant="h1" sx={{ }}>
-                        <HTMLContent content={name} />
-                    </Typography>
-                    <Box sx={{ display: "flex", alignItems: "center", pt: 0, justifyContent: "space-between", p: 0}}>
-                        <Box sx={{ mb: 1, p: 0 }}>
-                            <Typography variant="h3" sx={{ mb: 1 }}>
+                    <Box sx={{ mt: 2, pb: 0 }}>
+                        <Typography variant="h2" component="h1">
+                            <HTMLContent content={name} />
+                        </Typography>
+                    </Box>
+                    <BoxContainer
+                        sx={{
+                            gridTemplateColumns: {
+                                md: "repeat(5, 1fr)",
+                            },
+                            gap: {
+                                xs: 1,
+                                sm: 2,
+                            },
+                        }}>
+                        <Box
+                            sx={{
+                                gridColumn: { md: "span 3" },
+                                py: 0,
+                            }}>
+                            <Typography
+                                variant="articleLead"
+                                component="p"
+                                sx={{ mb: 2 }}>
                                 {t("introTitle")}
                             </Typography>
                             <MarkDownSanitizedWithHtml content={description} />
                         </Box>
-                        <Image
-                            width={554}
-                            height={250}
-                            alt={toTitleCase(name)}
-                            style={LogoImage}
-                            src={image_link || StaticImages.BASE.placeholder}
-                        />
-                    </Box>
-                </Box>
+                        <Box
+                            sx={{
+                                gridColumn: { md: "span 2" },
+                                py: 0,
+                                display: "flex",
+                                alignItems: "flex-start",
+                                justifyContent: {
+                                    md: "flex-end",
+                                    sm: "center",
+                                },
+                            }}>
+                            <Image
+                                width={554}
+                                height={250}
+                                alt={toTitleCase(name)}
+                                style={LogoImage}
+                                src={
+                                    image_link || StaticImages.BASE.placeholder
+                                }
+                                sizes="(max-width: 768px) 100vw, 554px"
+                            />
+                        </Box>
+                    </BoxContainer>
                     <Box>
                         <DatasetsContent
                             datasets={dataset_versions}

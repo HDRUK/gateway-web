@@ -61,7 +61,7 @@ export default function AccordionSectionSplit({
             headingComponent="h2"
             heading={
                 <Typography
-                    variant="h1"
+                    variant="h2"
                     component="span"
                     color="primary"
                     sx={{ fontWeight: 400, mb: 0 }}>
@@ -73,7 +73,7 @@ export default function AccordionSectionSplit({
                     {panes.map(pane => (
                         <Pane key={pane.heading}>
                             <PaneHeading>
-                                <PaneTitle variant="h3">
+                                <PaneTitle variant="articleLead">
                                     {pane.heading}
                                 </PaneTitle>
                                 <PaneCount variant="caption">

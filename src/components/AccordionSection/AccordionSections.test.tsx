@@ -29,10 +29,14 @@ describe("AccordionSection", () => {
         ];
 
         render(
-            <AccordionSection heading="Accordion" contents={mockContents} />
+            <AccordionSection
+                heading="Accordion"
+                title="Accordion"
+                contents={mockContents}
+            />
         );
 
-        const accordion = screen.getByText(/accordion/i);
+        const accordion = screen.getAllByText(/accordion/i)[0];
 
         fireEvent.click(accordion);
 
@@ -57,10 +61,14 @@ describe("AccordionSection", () => {
         ];
 
         render(
-            <AccordionSection heading="Accordion" contents={mockContents} />
+            <AccordionSection
+                heading="Accordion"
+                title="Accordion"
+                contents={mockContents}
+            />
         );
 
-        const accordion = screen.getByText(/accordion/i);
+        const accordion = screen.getAllByText(/accordion/i)[0];
 
         fireEvent.click(accordion);
 
