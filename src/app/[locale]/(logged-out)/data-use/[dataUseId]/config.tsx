@@ -4,11 +4,13 @@ interface DataUseField {
     path: string;
     type: FieldType;
     hideTooltip?: boolean;
+    alwaysRender?: boolean;
 }
 
 export interface DataUseSection {
     sectionName: string;
     fields: DataUseField[];
+    alwaysRender?: boolean;
 }
 
 const dataUseFields: DataUseSection[] = [
@@ -161,10 +163,12 @@ const dataUseFields: DataUseSection[] = [
     },
     {
         sectionName: "safeOutput",
+        alwaysRender: true,
         fields: [
             {
-                path: "non_gateway_outputs",
-                type: FieldType.LIST_LINK,
+                path: "outputs",
+                type: FieldType.OUTPUT_LIST,
+                alwaysRender: true,
             },
         ],
     },
