@@ -28,6 +28,7 @@ export default function DatasetContent({
             heading={t("heading", {
                 length: datasets.length,
             })}
+            title={t("title")}
             defaultExpanded={datasets.length > 0}
             contents={datasets.map(
                 (

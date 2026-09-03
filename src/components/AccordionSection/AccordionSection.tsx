@@ -2,6 +2,7 @@ import { ReactNode, useState } from "react";
 import { Box, Typography } from "@mui/material";
 import { useTranslations } from "next-intl";
 import Accordion, { AccordionProps } from "@/components/Accordion/Accordion";
+import { PaneTitle } from "@/components/AccordionSectionSplit/AccordionSectionSplit.styles";
 import BoxContainer from "@/components/BoxContainer";
 import { ShowMoreButton } from "@/components/ShowMore";
 import AccordionCard from "./AccordionCard";
@@ -10,6 +11,7 @@ export interface AccordionSectionProps
     extends Omit<AccordionProps, "contents"> {
     contents: ReactNode[];
     limitRows?: number;
+    title: string;
 }
 
 const TRANSLATION_PATH = "components.ShowMore";
@@ -17,6 +19,7 @@ const TRANSLATION_PATH = "components.ShowMore";
 export default function AccordionSection({
     contents,
     heading,
+    title,
     limitRows = 6,
     ...restProps
 }: AccordionSectionProps) {
@@ -34,12 +37,19 @@ export default function AccordionSection({
             elevation={0}
             headingComponent="h2"
             heading={
-                <Typography variant="h3" component="span">
-                    {heading}
+                <Typography
+                    variant="h2"
+                    component="span"
+                    color="primary"
+                    sx={{ fontWeight: 400, mb: 0 }}>
+                    {title}
                 </Typography>
             }
             contents={
                 <>
+                    <PaneTitle variant="articleLead" sx={{ mb: 2 }}>
+                        {heading}
+                    </PaneTitle>
                     <BoxContainer
                         sx={{
                             gridTemplateColumns: {

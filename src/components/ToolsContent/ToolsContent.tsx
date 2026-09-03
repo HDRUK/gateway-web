@@ -55,6 +55,7 @@ export default function ToolsContent({
                 heading={t("heading", {
                     length: tools.length,
                 })}
+                title={t("title")}
                 defaultExpanded={tools.length > 0}
                 {...accordionProps}
                 contents={tools.map(renderCard)}

@@ -59,6 +59,7 @@ export default function PublicationContent({
                 heading={t("heading", {
                     length: publications.length,
                 })}
+                title={t("title")}
                 {...accordionProps}
                 contents={publications.map(renderCard)}
             />
