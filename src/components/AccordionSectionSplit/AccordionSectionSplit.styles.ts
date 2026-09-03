@@ -12,7 +12,7 @@ export const SplitWrapper = styled("div")<{ columnCount: number }>(
         gap: theme.spacing(GAP),
         alignItems: "stretch",
         ...(columnCount > 1 && {
-            [theme.breakpoints.up("sm")]: {
+            [theme.breakpoints.up("md")]: {
                 gridTemplateColumns: "1fr 1fr",
             },
         }),
@@ -60,25 +60,37 @@ export const SplitCard = styled(AccordionCard)(({ theme }) => ({
 }));
 
 export const ScrollArea = styled("div", {
-    shouldForwardProp: prop => prop !== "cardHeight" && prop !== "visibleRows",
-})<{ cardHeight: number; visibleRows: number }>(
-    ({ theme, cardHeight, visibleRows }) => ({
+    shouldForwardProp: prop =>
+        prop !== "cardHeight" &&
+        prop !== "visibleRows" &&
+        prop !== "mediaCards",
+})<{ cardHeight: number; visibleRows: number; mediaCards?: boolean }>(
+    ({ theme, cardHeight, visibleRows, mediaCards }) => ({
         display: "grid",
         gridTemplateColumns: "1fr",
         gridAutoRows: `${cardHeight}px`,
         gap: theme.spacing(GAP),
         overflowY: "auto",
         flexGrow: 1,
-        maxHeight: `calc(${cardHeight * MOBILE_VISIBLE_ROWS}px + ${theme.spacing(
-            GAP * (MOBILE_VISIBLE_ROWS - 1)
-        )})`,
-        [theme.breakpoints.up("sm")]: {
+        maxHeight: `calc(${
+            cardHeight * MOBILE_VISIBLE_ROWS
+        }px + ${theme.spacing(GAP * (MOBILE_VISIBLE_ROWS - 1))})`,
+        [theme.breakpoints.up("md")]: {
             maxHeight: `calc(${cardHeight * visibleRows}px + ${theme.spacing(
                 GAP * (visibleRows - 1)
             )})`,
         },
         [theme.breakpoints.up("lg")]: {
-            gridTemplateColumns: "repeat(2, 1fr)",
+            ...(!mediaCards && { gridTemplateColumns: "repeat(2, 1fr)" }),
         },
+        ...(mediaCards && {
+            gridTemplateColumns: "repeat(auto-fit, minmax(100%, 1fr))",
+            "& > *": { minWidth: 0 },
+            [theme.breakpoints.up("sm")]: {
+                gridTemplateColumns: `repeat(auto-fit, minmax(calc((100% - ${theme.spacing(
+                    GAP
+                )}) / 2), 1fr))`,
+            },
+        }),
     })
 );

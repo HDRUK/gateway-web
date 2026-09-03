@@ -48,7 +48,6 @@ export default function CollectionsContent({
             boxStackedProps={{
                 sx: {
                     height: "100%",
-                    "& > a": { backgroundSize: "cover" },
                 },
             }}
             key={`collection_${collection.id}`}
@@ -80,7 +79,9 @@ export default function CollectionsContent({
             associatedHeading={t("associatedHeading")}
             associatedCount={associatedCollections.length}
             ownedContents={collections.map(renderFixedHeightCard)}
-            associatedContents={associatedCollections.map(renderFixedHeightCard)}
+            associatedContents={associatedCollections.map(
+                renderFixedHeightCard
+            )}
             cardHeight={COLLECTION_CARD_HEIGHT}
             visibleRows={COLLECTION_VISIBLE_ROWS}
             disableCardWrapper
