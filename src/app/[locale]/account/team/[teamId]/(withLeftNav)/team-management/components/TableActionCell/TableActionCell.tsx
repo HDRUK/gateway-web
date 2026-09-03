@@ -1,6 +1,5 @@
 import { ReactNode } from "react";
 import { Box, IconButton, Tooltip } from "@mui/material";
-import { IconType } from "@/interfaces/Ui";
 import { User } from "@/interfaces/User";
 import ConditionalWrapper from "@/components/ConditionalWrapper";
 
@@ -9,7 +8,7 @@ interface TableActionCellProps {
     actions: {
         label?: string;
         checkConditions?: (user: User) => { title: string; disabled: boolean };
-        icon: IconType;
+        icon: (user: User) => ReactNode;
         onClick: (user: User) => void;
     }[];
 }
@@ -23,7 +22,7 @@ const linkWrapper = (title: string) => (children: ReactNode) => {
 };
 const TableActionCell = ({ actions, user }: TableActionCellProps) => {
     if (actions.length === 1) {
-        const [{ onClick, icon: Icon, checkConditions, ...rest }] = actions;
+        const [{ onClick, icon, checkConditions, ...rest }] = actions;
 
         const { title, disabled } =
             typeof checkConditions === "function"
@@ -41,7 +40,7 @@ const TableActionCell = ({ actions, user }: TableActionCellProps) => {
                         disabled={disabled}
                         aria-label={title}
                         {...rest}>
-                        <Icon />
+                        {icon(user)}
                     </IconButton>
                 </ConditionalWrapper>
             </Box>

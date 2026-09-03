@@ -641,7 +641,9 @@
                     "createEmailTemplateTitle": "Create Email Template",
                     "emailPreviewTitle": "Preview",
                     "emailPreviewRendering": "Rendering...",
-                    "emailPreviewError": "Couldn't render a preview. Check the MJML in the body field for errors."
+                    "emailPreviewError": "Couldn't render a preview. Check the MJML in the body field for errors.",
+                    "usersTab": "Users",
+                    "usersWarning": "Dragon's Ahead! This page allows the complete deletion of user accounts. There is no coming back from this. You have been warned. Please ensure you know what you're doing. You cannot delete users who currently own live entities. You must first transfer ownership, or delete the entity."
                 }
             },
             "team": {
@@ -1081,8 +1083,12 @@
                     "dateUpdated": "Date updated",
                     "widget": "Widget",
                     "actions": {
-                        "edit": { "label": "Edit widget" },
-                        "preview": { "label": "Preview widget" },
+                        "edit": {
+                            "label": "Edit widget"
+                        },
+                        "preview": {
+                            "label": "Preview widget"
+                        },
                         "delete": {
                             "label": "Delete widget",
                             "title": "Delete widget",
@@ -2279,6 +2285,22 @@
                     "label": "Population Size",
                     "tooltip": "Population size associated with the population type in the dataset"
                 }
+            },
+            "DeleteUserDialog": {
+                "title": "Delete user",
+                "warning": "This will permanently delete {USER_NAME}'s account. This action cannot be undone.",
+                "noLinkedData": "This user has no linked data — delete permanently?",
+                "linkedDataIntro": "The following items are linked to this user. Choose whether to reassign each one to another user or delete it before this user can be permanently deleted.",
+                "confirmButton": "Delete permanently",
+                "cancelButton": "Cancel"
+            },
+            "RemoveFromTeamsDialog": {
+                "title": "Remove super-user from teams",
+                "intro": "Select which teams to remove {USER_NAME} from.",
+                "noTeams": "This user is not currently a member of any teams.",
+                "success": "{USER_NAME} was removed from {COUNT, plural, one {# team} other {# teams}}",
+                "confirmButton": "Remove from selected teams",
+                "cancelButton": "Cancel"
             }
         },
         "CohortTermsSuccessDialog": {
