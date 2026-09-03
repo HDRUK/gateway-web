@@ -62,6 +62,7 @@ export default function CollectionsContent({
                 heading={t("heading", {
                     length: collections.length,
                 })}
+                title={t("title")}
                 {...accordionProps}
                 contents={collections.map(renderCard)}
             />

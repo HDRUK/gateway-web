@@ -12,7 +12,7 @@ import dayjs from "dayjs";
 import { get } from "lodash";
 import { useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
-import { DataUse } from "@/interfaces/DataUse";
+import { DataUse, DurOutput } from "@/interfaces/DataUse";
 import { FileUpload } from "@/interfaces/FileUpload";
 import Accordion from "@/components/Accordion";
 import Box from "@/components/Box";
@@ -62,6 +62,7 @@ const DUR_TABLE_ROWS = [
 const DATE_FORMAT = "DD/MM/YY";
 const DATASETS_FIELD_NAME = "datasets";
 const NON_GATEWAY_DATASETS_FIELD_NAME = "non_gateway_datasets";
+const OUTPUTS_FIELD_NAME = "outputs";
 const EMPTY_VALUE = "-";
 
 const DataUseCreate = ({ teamId }: DataUseCreateProps) => {
@@ -99,6 +100,15 @@ const DataUseCreate = ({ teamId }: DataUseCreateProps) => {
                 NON_GATEWAY_DATASETS_FIELD_NAME
             );
             return nonGatewayDatasets?.join(", ");
+        }
+
+        if (fieldName === OUTPUTS_FIELD_NAME) {
+            const outputs = get(durContent, OUTPUTS_FIELD_NAME) as
+                | DurOutput[]
+                | undefined;
+            return outputs
+                ?.map(output => output.title || output.url)
+                .join(", ");
         }
 
         return get(durContent, fieldName);

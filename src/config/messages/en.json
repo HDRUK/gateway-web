@@ -473,7 +473,6 @@
                         "backButton": "Back to Teams list",
                         "title": "Add Team’s details",
                         "text": "Add details of the data publisher team you want to create on the Gateway",
-                        "aspectRatioInfo": "Please note the aspect ratio of the image should be approximately 2:1 (width:height)",
                         "addImageSuccess": "Image Uploaded",
                         "fileSelectButtonText": "Choose logo",
                         "darModal": "Data Access Request modal"
@@ -642,7 +641,9 @@
                     "createEmailTemplateTitle": "Create Email Template",
                     "emailPreviewTitle": "Preview",
                     "emailPreviewRendering": "Rendering...",
-                    "emailPreviewError": "Couldn't render a preview. Check the MJML in the body field for errors."
+                    "emailPreviewError": "Couldn't render a preview. Check the MJML in the body field for errors.",
+                    "usersTab": "Users",
+                    "usersWarning": "Dragon's Ahead! This page allows the complete deletion of user accounts. There is no coming back from this. You have been warned. Please ensure you know what you're doing. You cannot delete users who currently own live entities. You must first transfer ownership, or delete the entity."
                 }
             },
             "team": {
@@ -866,7 +867,7 @@
                         "title": "Manage or create a Collection",
                         "intro": "Collections are groupings of useful resources based on set criteria, and are a useful way for a Researcher to explore resources that are linked to each other. Types of Collections could include resources related to a research domain, research hub or research project.",
                         "addImages": "Collection image cover (recommended)",
-                        "addImagesInfo": "Upload an image W700 x H350 (1:0.5). If your image is of a lower resolution a default Gateway Collection image will be displayed on the Collection until a higher resolution image is uploaded.",
+                        "addImagesInfo": "Upload an image at least 300px wide by 300px high. It will be scaled to fit within 400px x 400px. If your image is of a lower resolution a default Gateway Collection image will be displayed on the Collection until a higher resolution image is uploaded.",
                         "addImageSuccess": "Image uploaded",
                         "fileSelectButtonText": "Upload file",
                         "addResources": "Add resources",
@@ -1082,8 +1083,12 @@
                     "dateUpdated": "Date updated",
                     "widget": "Widget",
                     "actions": {
-                        "edit": { "label": "Edit widget" },
-                        "preview": { "label": "Preview widget" },
+                        "edit": {
+                            "label": "Edit widget"
+                        },
+                        "preview": {
+                            "label": "Preview widget"
+                        },
                         "delete": {
                             "label": "Delete widget",
                             "title": "Delete widget",
@@ -1527,17 +1532,21 @@
             "backLabel": "Back to Collections search results",
             "components": {
                 "DatasetsContent": {
+                    "title": "Datasets & BioSamples",
                     "heading": "Datasets & BioSamples ({ length })",
                     "populationSize": "Dataset population size: { length }",
                     "unknownString": "Unknown"
                 },
                 "DatausesContent": {
+                    "title": "Data Uses",
                     "heading": "Data Uses ({ length })"
                 },
                 "PublicationsContent": {
+                    "title": "Publications",
                     "heading": "Publications ({ length })"
                 },
                 "ToolsContent": {
+                    "title": "Analysis Scripts & Software",
                     "heading": "Analysis Scripts & Software ({ length })"
                 }
             }
@@ -1807,17 +1816,21 @@
             "backLabel": "Back to Tools search results",
             "components": {
                 "DatasetsContent": {
+                    "title": "Datasets that the analysis, tool or software can be applied to",
                     "heading": "Datasets that the analysis, tool or software can be applied to ({ length })",
                     "populationSize": "Dataset population size: { length }",
                     "unknownString": "Unknown"
                 },
                 "DatausesContent": {
+                    "title": "Data Uses / Research Projects which have used this analysis, tool or software",
                     "heading": "Data Uses / Research Projects which have used this analysis, tool or software ({ length })"
                 },
                 "PublicationsContent": {
+                    "title": "Publications related to this analysis, tool or software",
                     "heading": "Publications related to this analysis, tool or software ({ length })"
                 },
                 "CollectionsContent": {
+                    "title": "Collections which include this analysis, tool or software",
                     "heading": "Collections which include this analysis, tool or software ({ length })"
                 }
             }
@@ -1839,15 +1852,19 @@
             "urlTooltip": "Weblink for the publication text or site from which the text is available",
             "components": {
                 "DatasetsContent": {
+                    "title": "Datasets related to this Publication",
                     "heading": "Datasets related to this Publication ({ length })"
                 },
                 "DatausesContent": {
+                    "title": "Data Uses / Research Projects which are related to this Publication",
                     "heading": "Data Uses / Research Projects which are related to this Publication ({ length })"
                 },
                 "ToolsContent": {
+                    "title": "Analysis Scripts & Software related to this Publication",
                     "heading": "Analysis Scripts & Software related to this Publication ({ length })"
                 },
                 "CollectionsContent": {
+                    "title": "Collections which include this Publication",
                     "heading": "Collections which include this Publication ({ length })"
                 }
             },
@@ -1995,8 +2012,7 @@
             "error": "An error has occured. Please check your file and try again",
             "sanitisedFilename": "Note: all spaces and special characters will be removed from the file name.",
             "imageError": "An error occured when reading your file.",
-            "imageAspectRatioError": "File needs to be of approximately of aspect ratio 2:1 (width:height).",
-            "imageDimensionsError": "File needs to be at least 600px wide, by 300px high."
+            "imageDimensionsError": "File needs to be at least 300px wide, by 300px high."
         },
         "StructuralMetadataAccordion": {
             "columnName": "Column name",
@@ -2269,6 +2285,22 @@
                     "label": "Population Size",
                     "tooltip": "Population size associated with the population type in the dataset"
                 }
+            },
+            "DeleteUserDialog": {
+                "title": "Delete user",
+                "warning": "This will permanently delete {USER_NAME}'s account. This action cannot be undone.",
+                "noLinkedData": "This user has no linked data — delete permanently?",
+                "linkedDataIntro": "The following items are linked to this user. Choose whether to reassign each one to another user or delete it before this user can be permanently deleted.",
+                "confirmButton": "Delete permanently",
+                "cancelButton": "Cancel"
+            },
+            "RemoveFromTeamsDialog": {
+                "title": "Remove super-user from teams",
+                "intro": "Select which teams to remove {USER_NAME} from.",
+                "noTeams": "This user is not currently a member of any teams.",
+                "success": "{USER_NAME} was removed from {COUNT, plural, one {# team} other {# teams}}",
+                "confirmButton": "Remove from selected teams",
+                "cancelButton": "Cancel"
             }
         },
         "CohortTermsSuccessDialog": {

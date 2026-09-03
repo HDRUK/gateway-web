@@ -56,6 +56,7 @@ export default function DataUsesContent({
                 heading={t("heading", {
                     length: datauses.length,
                 })}
+                title={t("title")}
                 defaultExpanded={datauses.length > 0}
                 {...accordionProps}
                 contents={datauses.map(renderCard)}

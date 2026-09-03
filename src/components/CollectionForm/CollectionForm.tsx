@@ -45,6 +45,7 @@ import {
 } from "@/config/forms/collection";
 import { DataStatus } from "@/consts/application";
 import { AddIcon } from "@/consts/icons";
+import { LogoImage } from "@/consts/image";
 import { RouteName } from "@/consts/routeName";
 import { revalidateCacheAction } from "@/app/actions/revalidateCacheAction";
 
@@ -529,7 +530,7 @@ const CollectionForm = ({
                                     <img
                                         src={existingCollectionData?.image_link}
                                         alt={`${existingCollectionData?.name} logo`}
-                                        width="100%"
+                                        style={LogoImage}
                                     />
                                 </Box>
                             )}
