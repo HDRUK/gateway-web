@@ -102,7 +102,7 @@ describe("Nav utils", () => {
 
             expect(apiManagementItem).toBeDefined();
             expect(apiManagementItem?.href).toBe(
-                `/${RouteName.ACCOUNT}/${RouteName.TEAM}/123/${RouteName.INTEGRATIONS}/${RouteName.API_MANAGEMENT}`
+                `/${RouteName.ACCOUNT}/${RouteName.TEAM}/123/${RouteName.INTEGRATIONS}/${RouteName.API_MANAGEMENT}/${RouteName.LIST}`
             );
         });
 
@@ -125,7 +125,7 @@ describe("Nav utils", () => {
 
             expect(integrationItem).toBeDefined();
             expect(integrationItem?.href).toBe(
-                `/${RouteName.ACCOUNT}/${RouteName.TEAM}/123/${RouteName.INTEGRATIONS}/${RouteName.INTEGRATION}`
+                `/${RouteName.ACCOUNT}/${RouteName.TEAM}/123/${RouteName.INTEGRATIONS}/${RouteName.INTEGRATION}/${RouteName.LIST}`
             );
         });
 

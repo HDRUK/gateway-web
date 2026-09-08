@@ -13,8 +13,10 @@ import {
     IconButton,
     SxProps,
 } from "@mui/material";
+import { tokens } from "@hdruk/ui/theme";
 import { IconType } from "@/interfaces/Ui";
 import FormInputWrapper from "@/components/FormInputWrapper";
+import theme from "@/config/theme";
 import { CancelIcon } from "@/consts/icons";
 
 export interface TextFieldBaseProps<TFieldValues extends FieldValues, TName> {
@@ -115,7 +117,11 @@ const TextFieldBase = <
                             <InputAdornment position="start">
                                 <Icon
                                     sx={{
-                                        fontSize: startAdornmentSize ?? "small",
+                                        fontSize:
+                                            startAdornmentSize ??
+                                            theme.typography.pxToRem(
+                                                tokens.iconSize.medium
+                                            ),
                                     }}
                                     color="primary"
                                 />
