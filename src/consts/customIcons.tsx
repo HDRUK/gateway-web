@@ -1,8 +1,8 @@
 "use client";
 
+import { tokens } from "@hdruk/ui/theme";
 import { createSvgIcon } from "@mui/material";
 import { styled, Theme } from "@mui/material/styles";
-import { colors } from "@/config/theme";
 
 type checkboxSizes = "small" | "medium" | "large";
 
@@ -86,17 +86,17 @@ const CheckboxIndeterminateIcon = styled(CheckboxIcon)(({ theme, size }) => ({
     },
 }));
 
-const ChecklistTickIcon = `url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><path fill='${colors.green700.replace(
+const ChecklistTickIcon = `url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><path fill='${tokens.brand.secondary.replace(
     "#",
     "%23"
 )}' d='M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2m-2 15-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8z'/></svg>")`;
 
-const ChecklistCrossIcon = `url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><path fill='${colors.red700.replace(
+const ChecklistCrossIcon = `url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><path fill='${tokens.status.error.replace(
     "#",
     "%23"
 )}' d='M12 2C6.47 2 2 6.47 2 12s4.47 10 10 10 10-4.47 10-10S17.53 2 12 2m5 13.59L15.59 17 12 13.41 8.41 17 7 15.59 10.59 12 7 8.41 8.41 7 12 10.59 15.59 7 17 8.41 13.41 12z'/></svg>")`;
 
-const ChecklistWarningIcon = `url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><path fill='${colors.red700.replace(
+const ChecklistWarningIcon = `url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><path fill='${tokens.status.error.replace(
     "#",
     "%23"
 )}' d='M2.73 21h18.53c.77 0 1.25-.83.87-1.5l-9.27-16c-.39-.67-1.35-.67-1.73 0l-9.27 16c-.38.67.1 1.5.87 1.5M13 18h-2v-2h2zm-1-4c-.55 0-1-.45-1-1v-2c0-.55.45-1 1-1s1 .45 1 1v2c0 .55-.45 1-1 1'/></svg>")`;
@@ -624,7 +624,7 @@ const TableIcon = createSvgIcon(
         width="24"
         height="24"
         viewBox="0 0 24 24"
-        fill="white"
+        fill="none"
         xmlns="http://www.w3.org/2000/svg">
         <path
             id="Path"

@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { SxProps } from "@mui/material";
-import { ButtonProps } from "@/components/Button/Button";
+import { ButtonProps } from "@mui/material/Button";
 import { FileExport } from "@/interfaces/FileExport";
 import useGet from "@/hooks/useGet";
 import { downloadFile } from "@/utils/download";

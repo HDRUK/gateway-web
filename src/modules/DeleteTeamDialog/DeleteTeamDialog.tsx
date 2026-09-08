@@ -4,7 +4,7 @@ import * as React from "react";
 import MuiDialogActions from "@mui/material/DialogActions";
 import MuiDialogContent from "@mui/material/DialogContent";
 import { useTranslations } from "next-intl";
-import Button from "@/components/Button";
+import { Button } from "@hdruk/ui";
 import Dialog from "@/components/Dialog";
 import Typography from "@/components/Typography";
 import useDelete from "@/hooks/useDelete";

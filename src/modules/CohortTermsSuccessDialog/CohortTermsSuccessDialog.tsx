@@ -2,7 +2,7 @@ import MuiDialogActions from "@mui/material/DialogActions";
 import MuiDialogContent from "@mui/material/DialogContent";
 import { useTranslations } from "next-intl";
 import Box from "@/components/Box";
-import Button from "@/components/Button";
+import { Button } from "@hdruk/ui";
 import Dialog from "@/components/Dialog";
 import RequestNhseSdeAccessButton from "@/components/RequestNhseSdeAccessButton";
 import Typography from "@/components/Typography";
@@ -79,8 +79,7 @@ const CohortTermsSuccessDialog = ({ onClose }: { onClose: () => void }) => {
                             gap: 2,
                         }}>
                         <Button
-                            variant="outlined"
-                            color="secondary"
+                            purpose="secondary"
                             onClick={() => {
                                 handleCloseDialog();
                             }}>

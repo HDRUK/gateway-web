@@ -1,20 +1,22 @@
 "use client";
 
 import { useState } from "react";
+import { tokens } from "@hdruk/ui/theme";
 import { Box, Skeleton } from "@mui/material";
 import { useTranslations } from "next-intl";
-import Button from "@/components/Button";
+import { Button } from "@hdruk/ui";
 import InitialsBadge from "@/components/InitialsBadge";
 import MenuDropdown from "@/components/MenuDropdown";
 import ProvidersDialog from "@/modules/ProvidersDialog";
 import useAccountMenu from "@/hooks/useAccountMenu";
 import useAuth from "@/hooks/useAuth";
 import useDialog from "@/hooks/useDialog";
-import { colors } from "@/config/theme";
+import { useIsHomePage } from "@/hooks/useIsHomePage";
 
 const AccountNav = () => {
     const { showDialog } = useDialog();
     const t = useTranslations("components");
+    const isHomePage = useIsHomePage();
     const [anchorElement, setAnchorElement] = useState<null | HTMLElement>(
         null
     );
@@ -44,10 +46,10 @@ const AccountNav = () => {
                         disableRipple
                         sx={{
                             marginLeft: "5px",
-                            color: colors.white,
+                            color: tokens.text.primaryWhite,
 
                             "&:focus&.Mui-focusVisible": {
-                                outlineColor: colors.white,
+                                outlineColor: tokens.background.white,
                                 borderRadius: 0,
                                 textDecoration: "underline",
                             },
@@ -70,12 +72,11 @@ const AccountNav = () => {
 
     return (
         <Button
-            size="small"
-            variant="outlined"
-            color="secondary"
-            sx={{
-                color: "white",
-            }}
+            purpose={isHomePage ? "secondary" : "tertiary"}
+            // The homepage header sits on the dark hero, so the label is forced
+            // white there. Elsewhere `tertiary` supplies its own colour and
+            // overriding it would put white text on a light fill.
+            sx={isHomePage ? { color: tokens.text.primaryWhite } : undefined}
             onClick={() =>
                 showDialog(ProvidersDialog, { isProvidersDialog: true })
             }>

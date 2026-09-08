@@ -3,7 +3,7 @@
 import { ReactElement } from "react";
 import { PageTemplatePromo } from "@/interfaces/Cms";
 import Box from "@/components/Box";
-import Button from "@/components/Button";
+import { Button } from "@hdruk/ui";
 import GradientBanner from "@/components/GradientBanner";
 import HTMLContent from "@/components/HTMLContent";
 import Link from "@/components/Link";

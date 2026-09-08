@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/nextjs";
-import Button from "../Button";
+import { Button } from "@hdruk/ui";
 import InfoBanner from "./InfoBanner";
 
 const meta = {
@@ -14,7 +14,7 @@ type Story = StoryObj<typeof InfoBanner>;
 export const Default: Story = {
     args: {
         action: (
-            <Button variant="contained" color="greyCustom">
+            <Button color="greyCustom">
                 Read more
             </Button>
         ),

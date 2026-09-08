@@ -9,10 +9,10 @@ import {
     Select,
 } from "@mui/material";
 import { useTranslations } from "next-intl";
+import { tokens } from "@hdruk/ui/theme";
 import { DashboardEntity, DashboardEntityCount } from "@/interfaces/Dashboard";
 import Box from "@/components/Box";
 import Typography from "@/components/Typography";
-import { colors } from "@/config/theme";
 import { ArrowBackIosNewIcon, ArrowForwardIosIcon } from "@/consts/icons";
 import ResourceCard from "./ResourceCard";
 import { CardsTrack, CardsWrapper } from "./ResourceCounts.styles";
@@ -143,9 +143,9 @@ const ResourceCounts = ({
                             top: "50%",
                             transform: "translate(-50%, -50%)",
                             zIndex: 1,
-                            bgcolor: colors.white,
+                            bgcolor: tokens.background.white,
                             boxShadow: 2,
-                            "&:hover": { bgcolor: colors.white },
+                            "&:hover": { bgcolor: tokens.background.white },
                         }}>
                         <ArrowBackIosNewIcon fontSize="small" />
                     </IconButton>
@@ -179,9 +179,9 @@ const ResourceCounts = ({
                             top: "50%",
                             transform: "translate(50%, -50%)",
                             zIndex: 1,
-                            bgcolor: colors.white,
+                            bgcolor: tokens.background.white,
                             boxShadow: 2,
-                            "&:hover": { bgcolor: colors.white },
+                            "&:hover": { bgcolor: tokens.background.white },
                         }}>
                         <ArrowForwardIosIcon fontSize="small" />
                     </IconButton>

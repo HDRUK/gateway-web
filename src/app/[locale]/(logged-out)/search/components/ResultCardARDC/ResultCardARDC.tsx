@@ -7,11 +7,11 @@ import {
     useMediaQuery,
     useTheme,
 } from "@mui/material";
+import { tokens } from "@hdruk/ui/theme";
 import { SearchResultARDC } from "@/interfaces/Search";
 import EllipsisLineLimit from "@/components/EllipsisLineLimit";
 import Link from "@/components/Link";
 import Typography from "@/components/Typography";
-import { colors } from "@/config/theme";
 
 const ARDC_BASE_URL = "https://researchdata.edu.au/health/view";
 
@@ -31,7 +31,7 @@ const ResultCardARDC = ({ result, providerLogo }: ResultCardARDCProps) => {
 
     return (
         <ListItem
-            sx={{ p: 0, borderBottom: `1px solid ${colors.grey300}` }}
+            sx={{ p: 0, borderBottom: `1px solid ${tokens.status.grey}` }}
             alignItems="flex-start">
             <ListItemText
                 sx={{
@@ -70,7 +70,7 @@ const ResultCardARDC = ({ result, providerLogo }: ResultCardARDCProps) => {
                             {organisation && (
                                 <Typography
                                     sx={{
-                                        color: colors.green700,
+                                        color: tokens.brand.secondary,
                                         mb: 2,
                                     }}>
                                     {organisation}
@@ -79,7 +79,7 @@ const ResultCardARDC = ({ result, providerLogo }: ResultCardARDCProps) => {
                             <Typography
                                 component="div"
                                 sx={{
-                                    color: colors.grey800,
+                                    color: tokens.text.secondaryBlack,
                                     mt: 0.5,
                                 }}>
                                 <EllipsisLineLimit

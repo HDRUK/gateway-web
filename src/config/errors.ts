@@ -30,6 +30,10 @@ export const errors: { [char: number]: Error } = {
         imageAlt: "404 - Page not found",
         imageSrc: "/images/errors/404.png",
     },
+    409: {
+        message:
+            "An account with this email address already exists. Please sign in instead.",
+    },
     423: {
         message: "This page is currently locked",
     },

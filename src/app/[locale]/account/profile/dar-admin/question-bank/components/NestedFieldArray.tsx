@@ -4,7 +4,7 @@ import { useTranslations } from "next-intl";
 import { ComponentTypes } from "@/interfaces/ComponentTypes";
 import { QuestionBankQuestionForm } from "@/interfaces/QuestionBankQuestion";
 import Box from "@/components/Box";
-import Button from "@/components/Button";
+import { Button } from "@hdruk/ui";
 import InputWrapper from "@/components/InputWrapper";
 import Typography from "@/components/Typography";
 import { inputComponents } from "@/config/forms";

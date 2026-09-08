@@ -1,8 +1,8 @@
+import { tokens } from "@hdruk/ui/theme";
 import { FormHelperText } from "@mui/material";
 import Markdown from "markdown-to-jsx";
 import Label from "@/components/Label";
 import TooltipIcon from "@/components/TooltipIcon";
-import { colors } from "@/config/theme";
 
 interface FormInfoLabelProps {
     horizontalForm?: boolean;
@@ -32,7 +32,7 @@ const FormInfoLabel = ({
                     label={label}
                     sx={{
                         ...(disabled && {
-                            color: colors.grey600,
+                            color: tokens.text.disabled,
                         }),
                     }}
                     onClick={onClick}
@@ -44,7 +44,7 @@ const FormInfoLabel = ({
                     id={`${name}-information`}
                     sx={{
                         fontSize: 13,
-                        color: colors.grey700,
+                        color: tokens.text.faded,
                     }}>
                     <Markdown options={{
                         overrides: {
@@ -65,7 +65,7 @@ const FormInfoLabel = ({
                             label={label}
                             sx={{
                                 ...(disabled && {
-                                    color: colors.grey600,
+                                    color: tokens.text.disabled,
                                 }),
                             }}
                         />

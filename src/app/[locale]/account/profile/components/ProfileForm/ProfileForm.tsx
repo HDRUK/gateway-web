@@ -8,7 +8,7 @@ import { useTranslations } from "next-intl";
 import { Sector } from "@/interfaces/Sector";
 import { User } from "@/interfaces/User";
 import Box from "@/components/Box";
-import Button from "@/components/Button";
+import { Button } from "@hdruk/ui";
 import Form from "@/components/Form";
 import InputWrapper from "@/components/InputWrapper";
 import Loading from "@/components/Loading";

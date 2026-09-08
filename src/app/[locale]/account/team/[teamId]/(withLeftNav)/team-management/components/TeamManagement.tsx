@@ -3,7 +3,7 @@
 import { Team } from "@/interfaces/Team";
 import Box from "@/components/Box";
 import BoxContainer from "@/components/BoxContainer";
-import Button from "@/components/Button";
+import { Button } from "@hdruk/ui";
 import Paper from "@/components/Paper";
 import Typography from "@/components/Typography";
 import useDialog from "@/hooks/useDialog";

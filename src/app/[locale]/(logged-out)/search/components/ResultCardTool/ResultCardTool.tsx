@@ -1,14 +1,14 @@
+import { tokens } from "@hdruk/ui/theme";
 import { ListItem, ListItemText } from "@mui/material";
 import { useTranslations } from "next-intl";
 import { SearchResultTool } from "@/interfaces/Search";
 import Box from "@/components/Box";
-import Button from "@/components/Button";
+import { Button } from "@hdruk/ui";
 import EllipsisLineLimit from "@/components/EllipsisLineLimit";
 import Link from "@/components/Link";
 import { MarkDownSanitizedWithHtml } from "@/components/MarkDownSanitizedWithHTML";
 import ToolDetailsDialog from "@/modules/ToolDetailsDialog";
 import useDialog from "@/hooks/useDialog";
-import { colors } from "@/config/theme";
 import { RouteName } from "@/consts/routeName";
 import { ToolDescription } from "./ResultCardTool.styles";
 
@@ -34,7 +34,7 @@ const ResultCardTool = ({ result }: ResultCardToolProps) => {
         <ListItem
             alignItems="flex-start"
             sx={{
-                borderBottom: `1px solid ${colors.grey300}`,
+                borderBottom: `1px solid ${tokens.status.grey}`,
                 "&:last-of-type": {
                     borderBottom: "none",
                     pb: 0,
@@ -62,8 +62,7 @@ const ResultCardTool = ({ result }: ResultCardToolProps) => {
                             <Button
                                 onClick={handleShowAll}
                                 size="small"
-                                variant="outlined"
-                                color="secondary"
+                                purpose="secondary"
                                 sx={{
                                     flexShrink: 0,
                                     alignItems: "flex-start",

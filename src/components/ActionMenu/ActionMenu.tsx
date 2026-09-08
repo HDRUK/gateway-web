@@ -1,5 +1,5 @@
 import * as React from "react";
-import Button from "@mui/material/Button";
+import { Button } from "@hdruk/ui";
 import Menu, { MenuProps } from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
 import { styled } from "@mui/material/styles";
@@ -73,13 +73,12 @@ export default function ActionMenu({
                 aria-controls={open ? "action-menu" : undefined}
                 aria-haspopup="true"
                 aria-expanded={open ? "true" : undefined}
-                variant="outlined"
                 color={buttonColor}
                 size="small"
                 disableRipple
                 disableElevation
                 onClick={handleClick}
-                endIcon={<ArrowDropDownIcon color="primary" />}>
+                endIcon={<ArrowDropDownIcon />}>
                 {label}
             </Button>
             <StyledMenu

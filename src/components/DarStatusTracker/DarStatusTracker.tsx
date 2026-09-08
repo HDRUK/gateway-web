@@ -1,3 +1,4 @@
+import { tokens } from "@hdruk/ui/theme";
 import { ListItem, alpha, List } from "@mui/material";
 import { useTranslations } from "next-intl";
 import Box from "@/components/Box";
@@ -108,7 +109,7 @@ export default function DarStatusTracker({
                                             : isFuture
                                             ? colors.grey500
                                             : isActive
-                                            ? colors.white
+                                            ? tokens.background.white
                                             : colors.green400,
                                 }}>
                                 <Box
@@ -118,7 +119,7 @@ export default function DarStatusTracker({
                                         borderRadius: "50%",
                                         bgcolor: isActive
                                             ? colors.green400
-                                            : colors.white,
+                                            : tokens.background.white,
                                         p: 0,
                                     }}
                                 />

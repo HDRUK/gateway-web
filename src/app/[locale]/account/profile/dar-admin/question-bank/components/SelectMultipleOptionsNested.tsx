@@ -6,7 +6,7 @@ import { QuestionBankQuestionForm } from "@/interfaces/QuestionBankQuestion";
 import Accordion from "@/components/Accordion";
 import Box from "@/components/Box";
 import BoxContainer from "@/components/BoxContainer";
-import Button from "@/components/Button";
+import { Button } from "@hdruk/ui";
 import Paper from "@/components/Paper";
 import TextField from "@/components/TextField";
 import Typography from "@/components/Typography";

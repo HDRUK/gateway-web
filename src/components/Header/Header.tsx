@@ -2,6 +2,7 @@
 
 import * as React from "react";
 import { hotjar } from "react-hotjar";
+import { tokens } from "@hdruk/ui/theme";
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
 import Container from "@mui/material/Container";
@@ -21,7 +22,6 @@ import useDialog from "@/hooks/useDialog";
 import { useIsHomePage } from "@/hooks/useIsHomePage";
 import { StaticImages } from "@/config/images";
 import navItems from "@/config/nav";
-import { colors } from "@/config/theme";
 import { MenuIcon } from "@/consts/icons";
 
 function Header() {
@@ -81,7 +81,7 @@ function Header() {
                             mr: 1,
                             "&:focus&.Mui-focusVisible": {
                                 borderRadius: 0,
-                                outline: `2px solid ${colors.white}`,
+                                outline: `2px solid ${tokens.background.white}`,
                                 outlineOffset: "3px",
                             },
                         }}>
@@ -105,13 +105,17 @@ function Header() {
                             onClick={handleOpenNavMenu}
                             color="inherit"
                             sx={{
+                                color: tokens.text.primaryWhite,
+                                "&:hover, &:focus-visible": {
+                                    color: "primary.main",
+                                },
                                 "&:focus&.Mui-focusVisible": {
                                     borderRadius: 0,
-                                    outline: `2px solid ${colors.white}`,
+                                    outline: `2px solid ${tokens.background.white}`,
                                     outlineOffset: "3px",
                                 },
                             }}>
-                            <MenuIcon htmlColor="white" />
+                            <MenuIcon />
                         </IconButton>
 
                         <MenuDropdown
@@ -132,7 +136,7 @@ function Header() {
                             display: { sm: "flex", lg: "none" },
                             "&:focus&.Mui-focusVisible": {
                                 borderRadius: 0,
-                                outline: `2px solid ${colors.white}`,
+                                outline: `2px solid ${tokens.background.white}`,
                                 outlineOffset: "3px",
                             },
                         }}>

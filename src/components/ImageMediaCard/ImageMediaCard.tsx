@@ -3,7 +3,7 @@ import CardActions from "@mui/material/CardActions";
 import CardContent from "@mui/material/CardContent";
 import CardMedia from "@mui/material/CardMedia";
 import Typography from "@mui/material/Typography";
-import Button from "@/components/Button";
+import { Button } from "@hdruk/ui";
 import Link from "@/components/Link";
 
 interface ImageMediaCardProps {

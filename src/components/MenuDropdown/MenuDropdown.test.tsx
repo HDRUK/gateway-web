@@ -1,5 +1,5 @@
 import React from "react";
-import { Button } from "@mui/material";
+import { Button } from "@hdruk/ui";
 import MenuDropdown from "@/components/MenuDropdown";
 import { fireEvent, render, screen, waitFor } from "@/utils/testUtils";
 
@@ -17,7 +17,9 @@ const Component = () => {
 
     return (
         <>
-            <Button onClick={event => setAnchorElement(event.currentTarget)}>
+            <Button
+                variant="text"
+                onClick={event => setAnchorElement(event.currentTarget)}>
                 Open menu
             </Button>
             <MenuDropdown

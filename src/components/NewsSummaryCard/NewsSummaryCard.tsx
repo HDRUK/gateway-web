@@ -1,5 +1,6 @@
 import { useId } from "react";
-import { Box, Button, CardActions } from "@mui/material";
+import { Box, CardActions } from "@mui/material";
+import { Button } from "@hdruk/ui";
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
 import CardMedia from "@mui/material/CardMedia";
@@ -81,7 +82,7 @@ const NewsSummaryCard = ({
                     <Link href={url} color="primary" passHref>
                         <Button
                             variant="text"
-                            endIcon={<ArrowForward color="primary" />}>
+                            endIcon={<ArrowForward />}>
                             {buttonText}
                         </Button>
                     </Link>

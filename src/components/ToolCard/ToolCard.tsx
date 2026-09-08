@@ -1,9 +1,9 @@
+import { tokens } from "@hdruk/ui/theme";
 import { Tool } from "@/interfaces/Tool";
 import { IconType } from "@/interfaces/Ui";
 import Box from "@/components/Box";
 import Paper from "@/components/Paper";
 import Typography from "@/components/Typography";
-import { colors } from "@/config/theme";
 import { formatDate } from "@/utils/date";
 import CardActions from "../CardActions";
 import KeyValueList from "../KeyValueList";
@@ -71,7 +71,7 @@ const ToolCard = ({ tool, actions }: ToolCardProps) => {
                         />
                     </Box>
                 </Box>
-                <Box sx={{ p: 0, borderLeft: `solid 1px ${colors.grey600}` }}>
+                <Box sx={{ p: 0, borderLeft: `solid 1px ${tokens.status.faded}` }}>
                     <CardActions actions={actions} id={tool.id} />
                 </Box>
             </Box>

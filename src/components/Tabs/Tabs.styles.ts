@@ -1,4 +1,5 @@
 import { css } from "@emotion/react";
+import { tokens } from "@hdruk/ui/theme";
 import { colors } from "@/config/theme";
 
 export const tabsStyle = {
@@ -17,7 +18,7 @@ export const tabsStyle = {
                 },
 
                 "&:focus, &:hover": {
-                    background: colors.green100,
+                    background: tokens.brand.accentSecondary,
                     borderBottom: `3px solid ${colors.green400}`,
                 },
 
@@ -35,7 +36,7 @@ export const tabsStyle = {
                 py: "5px",
 
                 "&:focus, &:hover": {
-                    background: colors.grey100,
+                    background: tokens.background.primary,
                     boxShadow: `inset 0 -1px 0 0px ${colors.green400}`,
                 },
 

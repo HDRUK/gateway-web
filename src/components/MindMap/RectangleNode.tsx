@@ -1,9 +1,9 @@
+import { Button } from "@hdruk/ui";
 import { Handle, Position, NodeProps } from "@xyflow/react";
 import CohortDiscoveryButton from "@/components/CohortDiscoveryButton";
 import Link from "@/components/Link";
 import theme from "@/config/theme";
 import { LaunchIcon } from "@/consts/icons";
-import Button from "../Button";
 
 export interface RectangleNodeData {
     id: string;
@@ -15,6 +15,13 @@ export interface RectangleNodeData {
     hidden: boolean;
 }
 
+/**
+ * Nodes sit on a saturated background, so their content is always light. Set
+ * explicitly rather than inherited: the library reads `color="inherit"` on a
+ * text Button as "neutral grey", so inheritance alone would not reach it.
+ */
+const NODE_CONTENT_COLOR = theme.palette.common.white;
+
 const RectangleNode = ({
     data: { id, label, href, nodeSx, position, color, hidden, action, cohort },
 }: NodeProps<RectangleNodeData>) => {
@@ -23,7 +30,7 @@ const RectangleNode = ({
     return (
         <div
             style={{
-                color: "white",
+                color: NODE_CONTENT_COLOR,
                 background:
                     href || action || cohort
                         ? color
@@ -55,7 +62,11 @@ const RectangleNode = ({
                     onClick={action}
                     color="inherit"
                     variant="text"
-                    sx={{ p: 0, lineHeight: "inherit" }}>
+                    sx={{
+                        p: 0,
+                        lineHeight: "inherit",
+                        color: NODE_CONTENT_COLOR,
+                    }}>
                     {label}
                 </Button>
             ) : cohort ? (
@@ -63,7 +74,11 @@ const RectangleNode = ({
                     showDatasetExplanatoryTooltip
                     color="inherit"
                     variant="text"
-                    sx={{ p: 0, lineHeight: "inherit" }}
+                    sx={{
+                        p: 0,
+                        lineHeight: "inherit",
+                        color: NODE_CONTENT_COLOR,
+                    }}
                 />
             ) : (
                 <div id={id}>{label}</div>

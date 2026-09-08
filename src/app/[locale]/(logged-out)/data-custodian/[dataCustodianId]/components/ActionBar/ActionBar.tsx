@@ -1,6 +1,6 @@
 "use client";
 
-import { Button } from "@mui/material";
+import { Button } from "@hdruk/ui";
 import { useTranslations } from "next-intl";
 import { usePathname } from "next/navigation";
 import { SearchCategory } from "@/interfaces/Search";
@@ -49,8 +49,7 @@ const ActionBar = ({ team, cohortDiscoveryEnabled }: ActionBarProps) => {
             additionalContent={
                 <>
                     <Button
-                        color="primary"
-                        variant="contained"
+                        variant="text"
                         onClick={handleGeneralEnquiryClick}
                         startIcon={<SpeechBubbleIcon />}>
                         {t("enquire")}

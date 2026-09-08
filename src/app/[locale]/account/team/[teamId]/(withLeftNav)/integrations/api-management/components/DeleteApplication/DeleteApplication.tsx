@@ -1,6 +1,6 @@
 import { useParams, useRouter } from "next/navigation";
 import Box from "@/components/Box";
-import Button from "@/components/Button";
+import { Button } from "@hdruk/ui";
 import Typography from "@/components/Typography";
 import useDelete from "@/hooks/useDelete";
 import apis from "@/config/apis";
@@ -36,8 +36,7 @@ const DeleteApplication = ({ applicationId }: { applicationId: number }) => {
                 }}>
                 <Button
                     onClick={deleteApplication}
-                    variant="outlined"
-                    color="secondary">
+                    purpose="secondary">
                     Delete App
                 </Button>
             </Box>

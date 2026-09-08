@@ -1,7 +1,7 @@
 import { Stack } from "@mui/material";
 import type { Meta, StoryObj } from "@storybook/nextjs";
 import { Dayjs } from "dayjs";
-import Button from "@/components/Button";
+import { Button } from "@hdruk/ui";
 import DatePickerControlled from "./DatePickerControlled";
 
 const meta: Meta<typeof DatePickerControlled> = {

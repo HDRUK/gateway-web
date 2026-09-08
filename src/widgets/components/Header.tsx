@@ -1,10 +1,11 @@
 "use client";
 
 /* eslint-disable @next/next/no-img-element */
+import { tokens } from "@hdruk/ui/theme";
 import { Box, IconButton, InputAdornment, OutlinedInput } from "@mui/material";
 import { WidgetBranding } from "@/interfaces/Widget";
 import Typography from "@/components/Typography";
-import theme, { colors } from "@/config/theme";
+import theme from "@/config/theme";
 import { SearchIcon, CancelIcon } from "@/consts/icons";
 
 const SEARCH_ICON_SIZE = "32px";
@@ -22,7 +23,7 @@ const headerSx = {
     width: "auto%",
     py: 2,
     px: 1,
-    backgroundColor: colors.white,
+    backgroundColor: tokens.background.white,
     borderBottom: `1px solid ${theme.palette.grey[300]}`,
 };
 

@@ -1,9 +1,9 @@
 import { ReactNode, useEffect, useState } from "react";
+import { tokens } from "@hdruk/ui/theme";
 import { Box, Drawer, DrawerProps, IconButton } from "@mui/material";
 import { DialogProps } from "@mui/material/Dialog";
 import MuiDialogTitle from "@mui/material/DialogTitle";
 import useDialog from "@/hooks/useDialog";
-import { colors } from "@/config/theme";
 import { CloseIcon } from "@/consts/icons";
 import { GlobalDialogContextProps } from "@/providers/DialogProvider";
 
@@ -64,11 +64,11 @@ const Sidebar = () => {
             <Box sx={{ width: "70vw" }} role="presentation">
                 <Box
                     sx={{
-                        backgroundColor: colors.purple700,
+                        backgroundColor: tokens.brand.primaryHovered,
                         height: 60,
                         display: "flex",
                         WebkitAlignItems: "center",
-                        color: colors.white,
+                        color: tokens.text.primaryWhite,
                     }}>
                     <MuiDialogTitle>{title}</MuiDialogTitle>
                     <IconButton
@@ -79,7 +79,7 @@ const Sidebar = () => {
                             position: "absolute",
                             right: 8,
                             top: 8,
-                            color: colors.white,
+                            color: tokens.text.primaryWhite,
                         }}>
                         <CloseIcon />
                     </IconButton>

@@ -1,8 +1,8 @@
+import { tokens } from "@hdruk/ui/theme";
 import { ListItemText, styled } from "@mui/material";
 import EllipsisLineLimit from "@/components/EllipsisLineLimit";
 import Link from "@/components/Link";
 import Typography from "@/components/Typography";
-import { colors } from "@/config/theme";
 
 export const PublicationTitle = styled(Link)(() => ({
     width: "100%",
@@ -12,20 +12,20 @@ export const PublicationTitle = styled(Link)(() => ({
 }));
 
 export const PublicationYear = styled(Typography)(({ theme }) => ({
-    color: colors.grey600,
+    color: tokens.text.disabled,
     flexShrink: 0,
     marginLeft: theme.spacing(2),
 }));
 
 export const PublicationText = styled(Typography)(({ theme }) => ({
-    color: colors.grey800,
+    color: tokens.text.secondaryBlack,
     fontWeight: 400,
     marginBottom: theme.spacing(2),
 }));
 
 export const PublicationAbstract = styled(EllipsisLineLimit)(({ theme }) => ({
     margin: `${theme.spacing(2)} 0 ${theme.spacing(1.5)}`,
-    color: colors.grey800,
+    color: tokens.text.secondaryBlack,
 }));
 
 export const PublicationWrapper = styled(ListItemText)(({ theme }) => ({

@@ -1,6 +1,7 @@
 "use client";
 
-import { Box, Button, Typography } from "@mui/material";
+import { Button } from "@hdruk/ui";
+import { Box, Typography } from "@mui/material";
 import { useTranslations } from "next-intl";
 import { HomepageBannerNode } from "@/interfaces/Homepage";
 import InfoBanner from "@/components/InfoBanner";
@@ -32,8 +33,8 @@ const CMSBanners = ({ data }: { data: HomepageBannerNode[] }) => {
                                 linkText &&
                                 linkUrl && (
                                     <Button
+                                        component="a"
                                         color="greyCustom"
-                                        variant="contained"
                                         href={linkUrl}
                                         disableElevation>
                                         {linkText}

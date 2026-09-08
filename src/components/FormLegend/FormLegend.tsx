@@ -1,6 +1,7 @@
 "use client";
 
 import { Fragment } from "react";
+import { tokens } from "@hdruk/ui/theme";
 import { ListItemButton } from "@mui/material";
 import { LegendItem, LegendStatus } from "@/interfaces/FormLegend";
 import { colors } from "@/config/theme";
@@ -36,13 +37,13 @@ const getBackgroundColour = (status: LegendStatus) => {
         case LegendStatus.VALID:
             return colors.green400;
         case LegendStatus.ACTIVE:
-            return colors.purple500;
+            return tokens.brand.primary;
         case LegendStatus.OPTIONAL_REMAIN:
             return "#F0BB24";
         case LegendStatus.INVALID:
-            return colors.red700;
+            return tokens.status.error;
         default:
-            return colors.purple100;
+            return tokens.brand.accentPrimary;
     }
 };
 
@@ -83,8 +84,8 @@ const FormLegend = ({
                                         height: "18px",
                                         color:
                                             item.status === LegendStatus.ACTIVE
-                                                ? colors.purple500
-                                                : colors.grey700,
+                                                ? tokens.brand.primary
+                                                : tokens.text.faded,
                                     }}
                                 />
                             ) : (

@@ -1,7 +1,8 @@
 import { useEffect, useState } from "react";
+import { Button } from "@hdruk/ui";
+import { tokens } from "@hdruk/ui/theme";
 import { Bookmark, BookmarkBorder } from "@mui/icons-material";
 import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
-import { Button } from "@mui/material";
 import { get } from "lodash";
 import { useTranslations } from "next-intl";
 import { usePathname, useSearchParams } from "next/navigation";
@@ -19,7 +20,6 @@ import useFeasibilityEnquiry from "@/hooks/useFeasibilityEnquiry";
 import useGeneralEnquiry from "@/hooks/useGeneralEnquiry";
 import usePostLoginActionCookie from "@/hooks/usePostLoginAction";
 import apis from "@/config/apis";
-import { colors } from "@/config/theme";
 import { CohortIcon, SpeechBubbleIcon } from "@/consts/customIcons";
 import { PostLoginActions } from "@/consts/postLoginActions";
 import { RouteName } from "@/consts/routeName";
@@ -136,7 +136,7 @@ const ActionDropdown = ({
                       button: (
                           <CohortDiscoveryButton
                               showDatasetExplanatoryTooltip
-                              variant="link"
+                              purpose="link"
                           />
                       ),
                       icon: (
@@ -226,8 +226,7 @@ const ActionDropdown = ({
     return (
         <>
             <Button
-                variant="contained"
-                endIcon={<ArrowDropDownIcon style={{ color: colors.white }} />}
+                endIcon={<ArrowDropDownIcon style={{ color: tokens.text.primaryWhite }} />}
                 sx={{ py: 0.5 }}
                 onClick={handleOpenDropdownMenu}
                 aria-label={title ? `${t("actions")} for ${title}` : undefined}>

@@ -1,7 +1,7 @@
 import * as yup from "yup";
+import { tokens } from "@hdruk/ui/theme";
 import { QuestionBankQuestionForm } from "@/interfaces/QuestionBankQuestion";
 import { getChipLabel } from "@/components/Autocomplete/utils";
-import { colors } from "@/config/theme";
 import { inputComponents } from ".";
 
 const defaultValues: Partial<QuestionBankQuestionForm> = {
@@ -99,7 +99,7 @@ const formFields = [
         containerSx: {
             p: 2,
             my: 2,
-            backgroundColor: colors.purple100,
+            backgroundColor: tokens.brand.accentPrimary,
         },
     },
     {

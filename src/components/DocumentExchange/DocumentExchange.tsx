@@ -13,7 +13,7 @@ import apis from "@/config/apis";
 import theme from "@/config/theme";
 import { DeleteForeverOutlinedIcon, ReUploadIcon } from "@/consts/icons";
 import Box from "../Box";
-import Button from "../Button";
+import { Button } from "@hdruk/ui";
 import HTMLContent from "../HTMLContent";
 import Link from "../Link";
 import Typography from "../Typography";
@@ -178,7 +178,8 @@ const DocumentExchange = ({
                         </Typography>
                         <Divider sx={{ my: 1 }} />
                         <Button
-                            startIcon={<FileDownload color="primary" />}
+                            component="a"
+                            startIcon={<FileDownload />}
                             variant="text"
                             href={`${apis.fileProcessedV1Url}/${document.value.uuid}/download`}>
                             {t("download")}
@@ -206,7 +207,7 @@ const DocumentExchange = ({
                     <Button
                         startIcon={
                             !existingUploadedFile ? (
-                                <PublishIcon color="primary" />
+                                <PublishIcon />
                             ) : (
                                 <ReUploadIcon sx={{ width: 16 }} />
                             )

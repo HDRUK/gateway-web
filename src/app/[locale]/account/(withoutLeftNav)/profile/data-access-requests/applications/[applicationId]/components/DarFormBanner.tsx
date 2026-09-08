@@ -1,7 +1,7 @@
 import IconButton from "@mui/material/IconButton";
 import { useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
-import Button from "@/components/Button";
+import { Button } from "@hdruk/ui";
 import {
     Column,
     DetailBanner,

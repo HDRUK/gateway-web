@@ -1,4 +1,5 @@
 import { cloneElement } from "react";
+import { tokens } from "@hdruk/ui/theme";
 import MuiChip, { ChipProps as MuiChipProps } from "@mui/material/Chip";
 import { ResourceType } from "@/interfaces/AddResource";
 import { colors } from "@/config/theme";
@@ -29,7 +30,7 @@ const resourceChipConfig = {
     },
     [ResourceType.TOOL]: {
         icon: <ToolIcon sx={{ "*": { fill: "white" } }} />,
-        sx: { color: "white", backgroundColor: colors.purple900 },
+        sx: { color: "white", backgroundColor: tokens.status.information },
     },
 };
 

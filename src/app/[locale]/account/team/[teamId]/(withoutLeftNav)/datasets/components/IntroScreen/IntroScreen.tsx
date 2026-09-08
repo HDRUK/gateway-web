@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { useTranslations } from "next-intl";
+import { tokens } from "@hdruk/ui/theme";
 import { OptionsType } from "@/components/Autocomplete/Autocomplete";
 import Box from "@/components/Box";
 import CheckboxControlled from "@/components/CheckboxControlled";
@@ -12,7 +13,6 @@ import Paper from "@/components/Paper";
 import TooltipIcon from "@/components/TooltipIcon";
 import Typography from "@/components/Typography";
 import { inputComponents } from "@/config/forms";
-import { colors } from "@/config/theme";
 import {
     ACCOUNT,
     COMPONENTS,
@@ -169,7 +169,7 @@ const IntroScreen = ({
                     wordBreak: "break-word",
                 }}>
                 <Typography variant="h2">{t("checkboxIntro")}</Typography>
-                <Typography sx={{ color: colors.grey600, pb: 2 }}>
+                <Typography sx={{ color: tokens.text.disabled, pb: 2 }}>
                     {t("selectAll")}
                 </Typography>
 

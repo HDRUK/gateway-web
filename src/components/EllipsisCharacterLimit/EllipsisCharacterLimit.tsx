@@ -1,7 +1,6 @@
 import { ReactNode } from "react";
 import { Chip, Tooltip } from "@mui/material";
-import { ButtonProps } from "@mui/material/Button";
-import Button from "@/components/Button";
+import { Button, ButtonProps } from "@hdruk/ui";
 import ConditionalWrapper from "@/components/ConditionalWrapper";
 import { getShortenedText } from "@/utils/string";
 
@@ -48,7 +47,7 @@ const EllipsisCharacterLimit = ({
                 requiresWrapper={text.length > characterLimit}
                 wrapper={tooltipWrapper(text)}>
                 {isChip ? (
-                    <Chip label={formattedText} sx={{ borderRadius: 1 }} />
+                    <Chip label={formattedText} />
                 ) : (
                     <span>{formattedText}</span>
                 )}

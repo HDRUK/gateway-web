@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState, useMemo } from "react";
+import { tokens } from "@hdruk/ui/theme";
 import { Box } from "@mui/material";
 import { useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
@@ -12,7 +13,7 @@ import {
 import { QuestionBankQuestion } from "@/interfaces/QuestionBankQuestion";
 import { QuestionBankSection } from "@/interfaces/QuestionBankSection";
 import { TaskItem } from "@/interfaces/TaskBoard";
-import Button from "@/components/Button";
+import { Button } from "@hdruk/ui";
 import Container from "@/components/Container";
 import Loading from "@/components/Loading";
 import Paper from "@/components/Paper";
@@ -27,7 +28,7 @@ import useModal from "@/hooks/useModal";
 import usePatch from "@/hooks/usePatch";
 import notificationService from "@/services/notification";
 import apis from "@/config/apis";
-import theme, { colors } from "@/config/theme";
+import theme from "@/config/theme";
 import { ArrowBackIosNewIcon } from "@/consts/icons";
 import { RouteName } from "@/consts/routeName";
 import PreviewTemplate from "./PreviewTemplate";
@@ -338,7 +339,7 @@ const EditTemplate = ({
                     position: "sticky",
                     top: 0,
                     zIndex: theme.zIndex.appBar,
-                    bgcolor: colors.grey,
+                    bgcolor: tokens.background.primary,
                     borderBottom: 1,
                     borderColor: "divider",
                     py: 4,
@@ -355,8 +356,7 @@ const EditTemplate = ({
                     <Box sx={{ display: "flex", gap: 2 }}>
                         <Button
                             onClick={() => handleSaveChanges(false)}
-                            color="secondary"
-                            variant="outlined">
+                            purpose="secondary">
                             {t("saveDraft")}
                         </Button>
                         <Button onClick={() => handleSaveChanges(true)}>

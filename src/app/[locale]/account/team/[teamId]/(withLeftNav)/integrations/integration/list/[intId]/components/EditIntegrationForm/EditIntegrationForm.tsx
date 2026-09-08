@@ -14,7 +14,7 @@ import {
     IntegrationPayload,
 } from "@/interfaces/Integration";
 import Box from "@/components/Box";
-import Button from "@/components/Button";
+import { Button } from "@hdruk/ui";
 import Form from "@/components/Form";
 import InputWrapper from "@/components/InputWrapper";
 import Paper from "@/components/Paper";

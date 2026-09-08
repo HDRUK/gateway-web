@@ -36,6 +36,7 @@ const apis = {
     authGoogleV1Url: `${apiV1Url}/auth/google`,
     authLinkedinV1Url: `${apiV1Url}/auth/linkedin`,
     authAzureV1Url: `${apiV1Url}/auth/azure`,
+    authRegistryV1Url: `${apiV1Url}/auth/registry`,
     cohortRequestsV1Url: `${apiV1Url}/cohort_requests`,
     cohortRequestsV1UrlIP: `${apiV1IPUrl}/cohort_requests`,
     customerSatisfactionV1Url: `${apiV1Url}/csat`,

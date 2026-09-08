@@ -1,5 +1,6 @@
+import { tokens } from "@hdruk/ui/theme";
 import { styled } from "@mui/material";
-import theme, { colors } from "@/config/theme";
+import theme from "@/config/theme";
 import Box from "../Box";
 
 export enum Justify {
@@ -23,8 +24,8 @@ export const DetailBanner = styled(Box)(() => ({
     flexDirection: "column",
     justifyContent: "space-between",
     gap: 4,
-    backgroundColor: colors.purple900,
-    color: colors.white,
+    backgroundColor: tokens.status.information,
+    color: tokens.text.primaryWhite,
     padding: `${theme.spacing(1)} ${theme.spacing(2)}`,
     [theme.breakpoints.up("md")]: {
         flexDirection: "row",
@@ -38,7 +39,7 @@ export const Column = styled("div")<ColumnProps>(({ emphasis, justify }) => ({
     justifyContent: "center",
     gap: emphasis ? theme.spacing(0.5) : "initial",
     "> p": { fontWeight: emphasis ? 600 : "inherit" },
-    "> .MuiButton-text, .MuiButton-link": { color: colors.white },
+    "> .MuiButton-text, .MuiButton-link": { color: tokens.text.primaryWhite },
     [theme.breakpoints.up("md")]: {
         justifyContent: justify || "center",
     },

@@ -1,10 +1,11 @@
 "use client";
 
 import { useState } from "react";
+import { tokens } from "@hdruk/ui/theme";
 import { Box } from "@mui/material";
 import { useTranslations } from "next-intl";
 import Link from "next/link";
-import Button from "@/components/Button";
+import { HomepageCtaButton } from "../Homepage/Homepage.styles";
 import TitlePanel from "@/components/TitlePanel";
 import Typography from "@/components/Typography";
 import ProvidersDialog from "@/modules/ProvidersDialog";
@@ -26,14 +27,19 @@ interface InfoHoverPanelProps {
     defaultImageSrc: string;
 }
 
+// Geometry comes from HomepageCtaButton; only the white treatment and the
+// responsive type scale are specific to these tiles.
+// NOTE: 19px has no typography variant (body1 is 14px), so it stays literal.
 const BUTTON_STYLES = {
     height: "100%",
-    background: "white",
-    borderColor: "white",
-    borderRadius: { xs: 2, sm: 3 },
-    p: { xs: 1, sm: "24px 15px" },
+    background: tokens.background.white,
+    borderColor: tokens.background.white,
     fontSize: { xs: 14, sm: 19 },
-    textAlign: "center",
+    "&:hover, &:focus-visible": {
+        backgroundColor: "primary.main",
+        borderColor: "primary.main",
+        color: "primary.contrastText",
+    },
 };
 
 const InfoHoverPanel = ({
@@ -56,7 +62,7 @@ const InfoHoverPanel = ({
         const handleMouseLeave = () => setSelected(null);
 
         return item.loggedIn && !isLoggedIn ? (
-            <Button
+            <HomepageCtaButton
                 component="a"
                 onClick={() =>
                     showDialog(ProvidersDialog, {
@@ -68,32 +74,30 @@ const InfoHoverPanel = ({
                 onMouseLeave={handleMouseLeave}
                 onFocus={() => setSelected(item)}
                 key={item.id}
-                size="large"
                 fullWidth
                 sx={BUTTON_STYLES}
-                variant="outlined"
+                purpose="tertiary"
                 disableRipple>
                 {t(`${item.id}.label`)}
-            </Button>
+            </HomepageCtaButton>
         ) : (
-            <Button
+            <HomepageCtaButton
                 component={Link}
                 onMouseEnter={handleMouseEnter}
                 onMouseLeave={handleMouseLeave}
                 onFocus={() => setSelected(item)}
                 key={item.id}
                 href={item.href}
-                size="large"
                 fullWidth
                 sx={BUTTON_STYLES}
-                variant="outlined"
+                purpose="tertiary"
                 disableRipple
                 {...(item.externalUrl && {
                     target: "_blank",
                     rel: "noreferrer",
                 })}>
                 {t(`${item.id}.label`)}
-            </Button>
+            </HomepageCtaButton>
         );
     };
 
@@ -126,9 +130,9 @@ const InfoHoverPanel = ({
                 variant="h2"
                 sx={{
                     color: {
-                        xs: colors.white,
+                        xs: tokens.text.primaryWhite,
                         sm: colors.green400,
-                        lg: colors.white,
+                        lg: tokens.text.primaryWhite,
                     },
                     fontSize: 24,
                     mt: 3,

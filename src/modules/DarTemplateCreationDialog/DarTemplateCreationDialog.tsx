@@ -1,14 +1,14 @@
+import { tokens } from "@hdruk/ui/theme";
 import { Grid } from "@mui/material";
 import MuiDialogContent from "@mui/material/DialogContent";
 import { useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
-import Button from "@/components/Button";
+import { Button } from "@hdruk/ui";
 import Dialog from "@/components/Dialog";
 import Typography from "@/components/Typography";
 import useDialog from "@/hooks/useDialog";
 import usePost from "@/hooks/usePost";
 import apis from "@/config/apis";
-import { colors } from "@/config/theme";
 import { DarTemplateType } from "@/consts/dataAccess";
 import { AddIcon } from "@/consts/icons";
 import { RouteName } from "@/consts/routeName";
@@ -20,7 +20,7 @@ interface DarTemplateCreationDialogProps {
 }
 
 const BUTTON_SX = {
-    backgroundColor: colors.white,
+    backgroundColor: tokens.background.white,
     display: "flex",
     flexDirection: "column",
     gap: 2,
@@ -28,19 +28,19 @@ const BUTTON_SX = {
     mt: 2,
     maxWidth: "300px",
     justifySelf: "center",
-    color: colors.grey700,
+    color: tokens.text.faded,
 
     "&:not(:disabled)": {
         h2: {
-            color: colors.purple500,
+            color: tokens.brand.primary,
         },
 
         "&:hover, &:focus": {
-            backgroundColor: colors.purple500,
+            backgroundColor: tokens.brand.primary,
             h2: {
-                color: colors.white,
+                color: tokens.text.primaryWhite,
             },
-            color: colors.grey300,
+            color: tokens.status.grey,
         },
     },
 };
@@ -62,7 +62,7 @@ const DarTemplateCreationDialog = ({
             <MuiDialogContent
                 sx={{
                     paddingX: 4,
-                    backgroundColor: colors.grey100,
+                    backgroundColor: tokens.background.primary,
                 }}>
                 <Grid
                     container

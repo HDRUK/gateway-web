@@ -1,3 +1,4 @@
+import { tokens } from "@hdruk/ui/theme";
 import { ChipProps, Tooltip } from "@mui/material";
 import { useTranslations } from "next-intl";
 import { SearchQueryParams } from "@/interfaces/Search";
@@ -32,7 +33,7 @@ const FilterChips = ({
             <ShowMore
                 maxHeight={68}
                 sxButton={{
-                    color: colors.green700,
+                    color: tokens.brand.secondary,
                     textDecoration: "underline",
                 }}>
                 <Box
@@ -64,7 +65,7 @@ const FilterChips = ({
                                                     maxWidth: 200,
                                                     overflow: "hidden",
                                                     whiteSpace: "nowrap",
-                                                    color: colors.white,
+                                                    color: tokens.text.primaryWhite,
                                                     backgroundColor:
                                                         colors.green400,
                                                     borderColor:
@@ -72,7 +73,7 @@ const FilterChips = ({
                                                     marginBottom: "4px",
                                                     "&:focus-visible": {
                                                         borderColor:
-                                                            colors.orange,
+                                                            tokens.status.needsAction,
                                                         borderWidth: 2,
                                                         backgroundColor:
                                                             colors.green400,

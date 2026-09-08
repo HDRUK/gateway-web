@@ -2,6 +2,7 @@
 
 import { useEffect, useMemo, useState } from "react";
 import { useForm } from "react-hook-form";
+import { tokens } from "@hdruk/ui/theme";
 import MuiDialogActions from "@mui/material/DialogActions";
 import MuiDialogContent from "@mui/material/DialogContent";
 import { useTranslations } from "next-intl";
@@ -15,7 +16,7 @@ import { Dataset } from "@/interfaces/Dataset";
 import { Publication } from "@/interfaces/Publication";
 import { Tool } from "@/interfaces/Tool";
 import Box from "@/components/Box";
-import Button from "@/components/Button";
+import { Button } from "@hdruk/ui";
 import Dialog from "@/components/Dialog";
 import InputWrapper from "@/components/InputWrapper";
 import Loading from "@/components/Loading";
@@ -27,7 +28,6 @@ import useDialog from "@/hooks/useDialog";
 import useGet from "@/hooks/useGet";
 import apis from "@/config/apis";
 import { getColumns } from "@/config/tables/addResources";
-import { colors } from "@/config/theme";
 import { capitalise } from "@/utils/general";
 import { resourceTypes, defaultValues, searchResource } from "./config";
 
@@ -205,7 +205,7 @@ const AddDatasetDialog = ({
     return (
         <Dialog title={t("title")} maxWidth="md">
             <MuiDialogContent sx={{ minHeight: "55vh" }}>
-                <Typography color={colors.grey600}>{t("intro")}</Typography>
+                <Typography color={tokens.text.disabled}>{t("intro")}</Typography>
 
                 <InputWrapper
                     setValue={setValue}

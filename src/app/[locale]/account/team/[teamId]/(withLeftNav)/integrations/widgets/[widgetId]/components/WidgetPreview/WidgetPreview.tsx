@@ -1,18 +1,20 @@
 "use client";
 
 import { useMemo } from "react";
+import { tokens } from "@hdruk/ui/theme";
 import { Grid, TextareaAutosize, Typography } from "@mui/material";
 import { useTranslations } from "next-intl";
+import Link from "next/link";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { WidgetEntityData } from "@/interfaces/Widget";
 import Box from "@/components/Box";
-import Button from "@/components/Button";
+import { Button } from "@hdruk/ui";
 import Loading from "@/components/Loading";
 import Paper from "@/components/Paper";
 import useGet from "@/hooks/useGet";
 import notificationService from "@/services/notification";
 import apis from "@/config/apis";
-import theme, { colors } from "@/config/theme";
+import theme from "@/config/theme";
 import { RouteName } from "@/consts/routeName";
 import WidgetDisplay from "@/widgets/WidgetDisplay";
 import { TabValues } from "../../const";
@@ -90,7 +92,7 @@ const WidgetPreview = ({ teamId, widgetId }: WidgetPreviewProps) => {
                     <TextareaAutosize
                         maxRows={20}
                         style={{
-                            backgroundColor: colors.grey100,
+                            backgroundColor: tokens.background.primary,
                             border: 0,
                             width: "100%",
                             padding: theme.spacing(2),
@@ -114,7 +116,7 @@ const WidgetPreview = ({ teamId, widgetId }: WidgetPreviewProps) => {
                     <TextareaAutosize
                         maxRows={3}
                         style={{
-                            backgroundColor: colors.grey100,
+                            backgroundColor: tokens.background.primary,
                             border: 0,
                             width: "100%",
                             padding: theme.spacing(2),
@@ -129,11 +131,11 @@ const WidgetPreview = ({ teamId, widgetId }: WidgetPreviewProps) => {
             <Box sx={{ mt: 4, p: 0, gap: 2, display: "flex" }}>
                 <Button
                     onClick={() => changeTab(TabValues.CONFIGURATION)}
-                    variant="outlined"
-                    color="secondary">
+                    purpose="secondary">
                     {t("back")}
                 </Button>
                 <Button
+                    component={Link}
                     color="inherit"
                     href={`/${RouteName.ACCOUNT}/${RouteName.TEAM}/${teamId}/${RouteName.INTEGRATIONS}/${RouteName.WIDGETS}`}>
                     {t("viewAll")}

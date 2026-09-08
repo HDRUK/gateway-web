@@ -6,7 +6,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { useRouter, useParams } from "next/navigation";
 import { ApplicationForm } from "@/interfaces/Application";
 import Box from "@/components/Box";
-import Button from "@/components/Button";
+import { Button } from "@hdruk/ui";
 import Form from "@/components/Form";
 import InputWrapper from "@/components/InputWrapper";
 import Paper from "@/components/Paper";
@@ -102,8 +102,7 @@ const CreateApplicationForm = () => {
                     }}>
                     <Button
                         onClick={() => reset(applicationDefaultValues)}
-                        color="secondary"
-                        variant="outlined">
+                        purpose="secondary">
                         Clear form
                     </Button>
                     <Button type="submit">Save &amp; Continue</Button>

@@ -8,7 +8,7 @@ import { useTranslations } from "next-intl";
 import { DatasetEnquiry, Enquiry } from "@/interfaces/Enquiry";
 import Box from "@/components/Box";
 import BoxContainer from "@/components/BoxContainer";
-import Button from "@/components/Button";
+import { Button } from "@hdruk/ui";
 import Form from "@/components/Form";
 import InputWrapper from "@/components/InputWrapper";
 import useAuth from "@/hooks/useAuth";

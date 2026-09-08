@@ -69,6 +69,33 @@ describe("DataUseCreate", () => {
         });
     });
 
+    it("renders structured outputs without crashing", async () => {
+        triggerUpload = true;
+        const mockDataUseWithOutputs = generateDataUse({
+            id: MOCK_DUR_ID,
+            project_title: MOCK_PROJECT_TITLE,
+            outputs: [
+                {
+                    id: 1,
+                    type: "Paper",
+                    title: "Sample research output",
+                    status: "Published",
+                    detail: "Some detail",
+                    url: "https://example.com/output",
+                },
+            ],
+        });
+        server.use(getTeamDataUseV2(MOCK_DUR_ID, mockDataUseWithOutputs));
+
+        render(<CreateDataUse teamId={TEAM_ID} />);
+
+        await waitFor(() => {
+            expect(
+                screen.getByText(/Sample research output/i)
+            ).toBeInTheDocument();
+        });
+    });
+
     it("handles failed fetch with no crash", async () => {
         triggerUpload = true;
         server.use(getTeamDataUseV2(MOCK_DUR_ID, undefined, 500));

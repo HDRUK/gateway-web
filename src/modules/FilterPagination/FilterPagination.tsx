@@ -1,5 +1,5 @@
 import { Filter } from "@/interfaces/Filter";
-import Button from "@/components/Button";
+import { Button } from "@hdruk/ui";
 import Loading from "@/components/Loading";
 import useGet from "@/hooks/useGet";
 
@@ -44,7 +44,6 @@ function FilterPagination({
                     {filter.type}{" "}
                     <Button
                         variant="text"
-                        color="primary"
                         size="small"
                         sx={{ margin: "0 5px" }}
                         onClick={() => handleUpdate(filter.id)}>
@@ -52,7 +51,6 @@ function FilterPagination({
                     </Button>
                     <Button
                         variant="text"
-                        color="primary"
                         size="small"
                         onClick={() => handleDelete(filter.id)}>
                         Delete

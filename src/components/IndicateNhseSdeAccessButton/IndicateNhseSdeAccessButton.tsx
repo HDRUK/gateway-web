@@ -13,7 +13,7 @@ import apis from "@/config/apis";
 import { NHS_SDE_FINAL_STATUSES } from "@/consts/cohortDiscovery";
 import { revalidateCacheAction } from "@/app/actions/revalidateCacheAction";
 import { useFeatures } from "@/providers/FeatureProvider";
-import Button from "../Button";
+import { Button } from "@hdruk/ui";
 import ConditionalWrapper from "../ConditionalWrapper";
 
 const tooltipWrapper = (tooltip: string) => (children: ReactElement) =>
@@ -107,8 +107,7 @@ const IndicateNhseSdeAccessButton = ({
                     <Button
                         data-testid="indicate-nhse-sde-access-button"
                         sx={{ ...sx }}
-                        variant="outlined"
-                        color="secondary"
+                        purpose="secondary"
                         disabled={isDisabled}
                         onClick={() => user?.id && onClick()}>
                         {isLoading || isLoadingAuth ? (

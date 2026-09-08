@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 import { useTranslations } from "next-intl";
 import { SearchPaginationType, SearchResult } from "@/interfaces/Search";
-import Button from "@/components/Button";
+import { Button } from "@hdruk/ui";
 import CohortDiscoveryDatasetsDialog from "@/modules/CohortDiscoveryDatasetsDialog";
 import useDialog from "@/hooks/useDialog";
 import usePost from "@/hooks/usePost";
@@ -53,8 +53,7 @@ const ViewCohortDatasetsButton = ({
 
     return (
         <Button
-            variant="outlined"
-            color="secondary"
+            purpose="secondary"
             onClick={() =>
                 showDialog(CohortDiscoveryDatasetsDialog, { data, nhsSdeOnly })
             }

@@ -1,10 +1,10 @@
 "use client";
 
+import { tokens } from "@hdruk/ui/theme";
 import Skeleton from "@mui/material/Skeleton";
 import Box from "@/components/Box";
 import Paper from "@/components/Paper";
 import Typography from "@/components/Typography";
-import { colors } from "@/config/theme";
 
 export interface CountTile {
     key: string;
@@ -63,7 +63,7 @@ const CountTilesWidget = ({
                             alignItems: "center",
                             gap: 2,
                             p: 2,
-                            bgcolor: colors.grey100,
+                            bgcolor: tokens.background.primary,
                         }}>
                         <Typography component="dt">{label}</Typography>
                         <Typography variant="h1" component="dd" sx={{ m: 0 }}>

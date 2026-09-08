@@ -3,6 +3,7 @@
 import { useEffect, useRef, useState } from "react";
 import { useTranslations } from "next-intl";
 import { useParams } from "next/navigation";
+import { tokens } from "@hdruk/ui/theme";
 import { FederationRunStatus } from "@/interfaces/Federation";
 import { Integration } from "@/interfaces/Integration";
 import Box from "@/components/Box";
@@ -12,7 +13,6 @@ import KeyValueList from "@/components/KeyValueList";
 import Paper from "@/components/Paper";
 import Typography from "@/components/Typography";
 import apis from "@/config/apis";
-import { colors } from "@/config/theme";
 import {
     AutorenewIcon,
     CheckIcon,
@@ -160,14 +160,14 @@ const IntegrationListItem = ({
                                       {
                                           key: "Error",
                                           value: integration.error_text,
-                                          color: colors.red700,
+                                          color: tokens.status.error,
                                       },
                                   ]
                                 : []),
                         ]}
                     />
                 </Box>
-                <Box sx={{ borderLeft: `solid 1px ${colors.grey600}` }}>
+                <Box sx={{ borderLeft: `solid 1px ${tokens.status.faded}` }}>
                     <CardActions actions={actions} id={integration.id} />
                 </Box>
             </Box>

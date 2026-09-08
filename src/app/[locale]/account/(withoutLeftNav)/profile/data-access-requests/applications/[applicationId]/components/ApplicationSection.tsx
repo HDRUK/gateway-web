@@ -3,6 +3,7 @@
 import { Fragment, useEffect, useMemo, useState } from "react";
 import { Control, useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
+import { tokens } from "@hdruk/ui/theme";
 import { Divider } from "@mui/material";
 import { get } from "lodash";
 import { useTranslations } from "next-intl";
@@ -19,7 +20,7 @@ import { DarReviewsResponse } from "@/interfaces/DataAccessReview";
 import { QuestionBankSection } from "@/interfaces/QuestionBankSection";
 import Box from "@/components/Box";
 import BoxContainer from "@/components/BoxContainer";
-import Button from "@/components/Button";
+import { Button } from "@hdruk/ui";
 import Chip from "@/components/Chip";
 import InputWrapper from "@/components/InputWrapper";
 import Link from "@/components/Link";
@@ -41,7 +42,7 @@ import {
     LAST_SAVED_DATE_FORMAT,
     messageSection,
 } from "@/config/forms/dataAccessApplication";
-import theme, { colors } from "@/config/theme";
+import theme from "@/config/theme";
 import {
     ARRAY_FIELD,
     DarApplicationApprovalStatus,
@@ -683,7 +684,7 @@ const ApplicationSection = ({
                                             <HelpOutlineIcon
                                                 sx={{
                                                     mr: 1,
-                                                    color: colors.grey600,
+                                                    color: tokens.text.disabled,
                                                     fontSize: 16,
                                                 }}
                                             />
@@ -792,7 +793,7 @@ const ApplicationSection = ({
                         {isMissingRequiredFields && (
                             <Typography
                                 sx={{
-                                    color: colors.red700,
+                                    color: tokens.status.error,
                                 }}>
                                 {t("missingRequiredFields")}
                             </Typography>
@@ -806,8 +807,7 @@ const ApplicationSection = ({
                                             handleInvalidSubmit
                                         )}
                                         type="submit"
-                                        variant="outlined"
-                                        color="secondary">
+                                        purpose="secondary">
                                         {t("submit")}
                                     </Button>
                                 )}

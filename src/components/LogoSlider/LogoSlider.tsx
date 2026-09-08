@@ -1,5 +1,6 @@
 import { Dispatch, SetStateAction, useRef, useState } from "react";
-import { Button, GlobalStyles } from "@mui/material";
+import { Button } from "@hdruk/ui";
+import { GlobalStyles } from "@mui/material";
 import Image from "next/image";
 import NextLink from "next/link";
 import Box from "@/components/Box";
@@ -23,6 +24,7 @@ const LogoComponent = ({
 
     return (
         <Button
+            variant="text"
             tabIndex={selectable ? 0 : -1}
             disableRipple
             component={NextLink}

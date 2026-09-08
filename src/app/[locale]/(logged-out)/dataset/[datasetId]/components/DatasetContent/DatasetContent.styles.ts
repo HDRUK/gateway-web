@@ -1,11 +1,11 @@
 import { styled } from "@mui/material";
 import Box from "@/components/Box";
-import Button from "@/components/Button";
+import { Button } from "@hdruk/ui";
 import Chip from "@/components/Chip";
 
 export const ObservationTableWrapper = styled(Box)(({ theme }) => ({
     padding: 0,
-    border: `1px solid ${theme.palette.greyCustom.main}`,
+    border: `1px solid ${theme.palette.divider}`,
     overflowX: "scroll",
 }));
 

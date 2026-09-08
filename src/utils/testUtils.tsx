@@ -1,5 +1,6 @@
 import React, { ReactNode } from "react";
-import { CacheProvider, ThemeProvider } from "@emotion/react";
+import { CacheProvider } from "@emotion/react";
+import { ThemeProvider } from "@mui/material/styles";
 import {
     render,
     renderHook,

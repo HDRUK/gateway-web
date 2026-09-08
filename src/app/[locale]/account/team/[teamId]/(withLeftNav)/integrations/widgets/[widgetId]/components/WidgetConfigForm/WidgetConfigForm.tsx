@@ -2,17 +2,18 @@
 
 import { useCallback } from "react";
 import { FormProvider, UseFormReturn, useWatch } from "react-hook-form";
+import { tokens } from "@hdruk/ui/theme";
 import { Typography } from "@mui/material";
 import { useTranslations } from "next-intl";
+import Link from "next/link";
 import { Unit, Widget } from "@/interfaces/Widget";
 import Box from "@/components/Box";
-import Button from "@/components/Button";
+import { Button } from "@hdruk/ui";
 import Form from "@/components/Form";
 import FormError from "@/components/FormError";
 import InputWrapper from "@/components/InputWrapper";
 import Paper from "@/components/Paper";
 import { inputComponents } from "@/config/forms";
-import { colors } from "@/config/theme";
 import {
     BRANDING_DEFAULTS,
     BRANDING_NHS,
@@ -129,7 +130,7 @@ const WidgetConfigForm = ({
                                     "datasets"
                                 )
                             }
-                            variant="link">
+                            purpose="link">
                             Select all
                         </Button>
                     ),
@@ -156,7 +157,7 @@ const WidgetConfigForm = ({
                             onClick={() =>
                                 selectAllOptions("included_data_uses", "durs")
                             }
-                            variant="link">
+                            purpose="link">
                             Select all
                         </Button>
                     ),
@@ -183,7 +184,7 @@ const WidgetConfigForm = ({
                             onClick={() =>
                                 selectAllOptions("included_scripts", "tools")
                             }
-                            variant="link">
+                            purpose="link">
                             Select all
                         </Button>
                     ),
@@ -213,7 +214,7 @@ const WidgetConfigForm = ({
                                     "collections"
                                 )
                             }
-                            variant="link">
+                            purpose="link">
                             Select all
                         </Button>
                     ),
@@ -262,8 +263,8 @@ const WidgetConfigForm = ({
                             <Button
                                 key={labelKey}
                                 onClick={() => applyPreset(width, height)}
-                                variant="link"
-                                sx={{ color: colors.green700 }}>
+                                purpose="link"
+                                sx={{ color: tokens.brand.secondary }}>
                                 {t(labelKey)}
                             </Button>
                         ))}
@@ -310,8 +311,8 @@ const WidgetConfigForm = ({
                             <Button
                                 key={labelKey}
                                 onClick={() => applyBranding(palette)}
-                                variant="link"
-                                sx={{ color: colors.green700 }}>
+                                purpose="link"
+                                sx={{ color: tokens.brand.secondary }}>
                                 {t(labelKey)}
                             </Button>
                         ))}
@@ -427,9 +428,9 @@ const WidgetConfigForm = ({
                         }}>
                         <Button type="submit">{t("save")}</Button>
                         <Button
+                            component={Link}
                             type="button"
-                            variant="outlined"
-                            color="secondary"
+                            purpose="secondary"
                             href={`/en/account/team/${teamId}/integrations/widgets`}>
                             {t("cancel")}
                         </Button>

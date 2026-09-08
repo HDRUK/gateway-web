@@ -1,13 +1,13 @@
 "use client";
 
 import { useEffect, useRef } from "react";
+import { tokens } from "@hdruk/ui/theme";
 import CloseIcon from "@mui/icons-material/Close";
 import { Modal, Typography } from "@mui/material";
 import Box from "@mui/material/Box";
 import Container from "@mui/material/Container";
 import IconButton from "@mui/material/IconButton";
 import Image from "next/image";
-import { colors } from "@/config/theme";
 import { useGatewayStore } from "@/store/useGatewayStore";
 import { galleryStyle } from "./style";
 
@@ -61,7 +61,7 @@ export const LightBox = () => {
                                     component="figcaption">
                                     <Typography
                                         variant="body1"
-                                        color={colors.white}>
+                                        color={tokens.text.primaryWhite}>
                                         {lightBoxImage.title}
                                     </Typography>
                                 </Box>

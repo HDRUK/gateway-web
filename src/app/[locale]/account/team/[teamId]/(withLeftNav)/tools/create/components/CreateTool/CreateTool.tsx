@@ -21,7 +21,7 @@ import { Tool, ToolPayload, ToolPayloadSubmission } from "@/interfaces/Tool";
 import { OptionsType, ValueType } from "@/components/Autocomplete/Autocomplete";
 import Box from "@/components/Box";
 import BoxContainer from "@/components/BoxContainer";
-import Button from "@/components/Button";
+import { Button } from "@hdruk/ui";
 import Chip from "@/components/Chip";
 import Form from "@/components/Form";
 import InputWrapper from "@/components/InputWrapper";
@@ -432,8 +432,7 @@ const CreateTool = ({ teamId, userId, toolId }: ToolCreateProps) => {
                             <Box sx={{ textAlign: "center", mt: 1 }}>
                                 <Button
                                     onClick={handleAddResource}
-                                    variant="outlined"
-                                    color="secondary"
+                                    purpose="secondary"
                                     startIcon={<AddIcon />}>
                                     {t("addResourceButton")}
                                 </Button>

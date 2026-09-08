@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect } from "react";
-import Button from "@/components/Button";
+import { Button } from "@hdruk/ui";
 import Container from "@/components/Container";
 
 export default function Error({

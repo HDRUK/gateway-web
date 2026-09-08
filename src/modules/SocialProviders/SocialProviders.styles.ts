@@ -1,5 +1,5 @@
+import { tokens } from "@hdruk/ui/theme";
 import { css } from "@emotion/react";
-import { colors } from "@/config/theme";
 
 export const dot = css({
     position: "absolute",
@@ -8,5 +8,5 @@ export const dot = css({
     right: "12px",
     top: "13px",
     borderRadius: "4px",
-    backgroundColor: colors.orange,
+    backgroundColor: tokens.status.needsAction,
 });

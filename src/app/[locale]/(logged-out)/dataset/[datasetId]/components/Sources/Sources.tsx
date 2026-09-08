@@ -1,5 +1,6 @@
 "use client";
 
+import { tokens } from "@hdruk/ui/theme";
 import { Divider } from "@mui/material";
 import { get, isEqual } from "lodash";
 import { useTranslations } from "next-intl";
@@ -32,7 +33,7 @@ const Sources = ({ data }: SourcesProps) => {
     const dataCustodianName = get(data, "summary.dataCustodian.name");
 
     return (
-        <Paper sx={{ borderRadius: 2, p: 2 }}>
+        <Paper sx={{ borderRadius: `${tokens.radius.small}px`, p: 2 }}>
             <Typography variant="h4">
                 <b>{`${t("datasetTypes")}: `}</b>
                 {formatTextDelimiter(extractNamesFromDataType(datasetType))}

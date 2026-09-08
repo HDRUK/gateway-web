@@ -12,7 +12,7 @@ import { Team, TeamEditForm, TeamCreateForm } from "@/interfaces/Team";
 import { User } from "@/interfaces/User";
 import { OptionsType } from "@/components/Autocomplete/Autocomplete";
 import Box from "@/components/Box";
-import Button from "@/components/Button";
+import { Button } from "@hdruk/ui";
 import Form from "@/components/Form";
 import InputWrapper from "@/components/InputWrapper";
 import Loading from "@/components/Loading";
@@ -494,8 +494,7 @@ const CreateTeamForm = () => {
                         justifyContent="space-between"
                         marginBottom={10}>
                         <Button
-                            color="secondary"
-                            variant="outlined"
+                            purpose="secondary"
                             onClick={() => push(Routes.ACCOUNT_TEAMS)}
                             disabled={isSaving}>
                             {t(`${TRANSLATION_PATH_COMMON}.cancel`)}

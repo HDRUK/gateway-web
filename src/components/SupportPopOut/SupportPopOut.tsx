@@ -4,7 +4,7 @@ import { useCallback, useEffect, useState } from "react";
 import { Popover } from "@mui/material";
 import { useTranslations } from "next-intl";
 import { usePathname } from "next/navigation";
-import Button from "@/components/Button";
+import { Button } from "@hdruk/ui";
 import Link from "@/components/Link";
 import {
     CUSTOMER_PORTAL_REPORT_BUG_URL,

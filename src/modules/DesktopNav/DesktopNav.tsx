@@ -1,10 +1,10 @@
 import { Fragment, useState } from "react";
+import { tokens } from "@hdruk/ui/theme";
 import { Box, Divider } from "@mui/material";
-import Button from "@/components/Button";
+import { Button } from "@hdruk/ui";
 import Link from "@/components/Link";
 import MenuDropdown from "@/components/MenuDropdown";
 import navItems from "@/config/nav";
-import { colors } from "@/config/theme";
 import { ExpandMoreIcon } from "@/consts/icons";
 
 function DesktopNav() {
@@ -51,18 +51,18 @@ function DesktopNav() {
                             disableRipple
                             key={item.label}
                             sx={{
-                                color: colors.white,
+                                color: tokens.text.primaryWhite,
                                 "&:focus&.Mui-focusVisible": {
-                                    outlineColor: `${colors.white} !important`,
+                                    outlineColor: `${tokens.background.white} !important`,
                                     borderRadius: 0,
                                     textDecoration: "underline",
                                     svg: {
-                                        color: colors.white,
+                                        color: tokens.text.primaryWhite,
                                     },
                                 },
                             }}
                             endIcon={
-                                <ExpandMoreIcon sx={{ color: colors.white }} />
+                                <ExpandMoreIcon sx={{ color: tokens.text.primaryWhite }} />
                             }
                             onClick={(event: React.MouseEvent<HTMLElement>) =>
                                 handleOpenNav(
@@ -78,13 +78,13 @@ function DesktopNav() {
                         sx={{
                             color: "white",
                             "&:focus&.Mui-focusVisible": {
-                                outlineColor: colors.white,
+                                outlineColor: tokens.background.white,
                                 outlineOffset: "3px",
                                 borderRadius: 0,
                                 textDecoration: "underline",
                             },
                         }}
-                        variant="link"
+                        purpose="link"
                         component={Link}
                         key={item.label}
                         href={item.href}>

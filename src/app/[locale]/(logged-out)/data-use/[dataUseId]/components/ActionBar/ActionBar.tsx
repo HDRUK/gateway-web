@@ -5,7 +5,7 @@ import { useTranslations } from "next-intl";
 import { useParams } from "next/navigation";
 import { FileExport } from "@/interfaces/FileExport";
 import { SearchCategory } from "@/interfaces/Search";
-import Button from "@/components/Button";
+import { Button } from "@hdruk/ui";
 import HeaderActionBar from "@/components/HeaderActionBar";
 import useGet from "@/hooks/useGet";
 import notificationService from "@/services/notification";

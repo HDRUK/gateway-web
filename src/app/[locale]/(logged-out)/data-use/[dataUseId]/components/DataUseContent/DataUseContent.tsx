@@ -3,7 +3,7 @@
 import { get, isEmpty } from "lodash";
 import { useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
-import { DataUse, DatasetWithTitle } from "@/interfaces/DataUse";
+import { DataUse, DatasetWithTitle, DurOutput } from "@/interfaces/DataUse";
 import { FieldType } from "@/interfaces/FieldType";
 import Box from "@/components/Box";
 import BoxContainer from "@/components/BoxContainer";
@@ -37,7 +37,7 @@ const DataUseContent = ({
     const renderDataUseField = (
         path: string,
         type: FieldType,
-        value: string | string[] | DatasetWithTitle[]
+        value: string | string[] | DatasetWithTitle[] | DurOutput[]
     ) => {
         const val = value as string;
 
@@ -81,6 +81,48 @@ const DataUseContent = ({
                                 {item}
                             </Link>
                         ))}
+                    </ListContainer>
+                );
+            }
+            case FieldType.OUTPUT_LIST: {
+                return (
+                    <ListContainer>
+                        {(value as DurOutput[])?.map(output => {
+                            const headline = output.title || output.url;
+
+                            return (
+                                <Box key={output.id} sx={{ p: 0 }}>
+                                    {headline &&
+                                        (output.url ? (
+                                            <Link
+                                                href={output.url}
+                                                target="_blank">
+                                                {headline}
+                                            </Link>
+                                        ) : (
+                                            <Typography>
+                                                {headline}
+                                            </Typography>
+                                        ))}
+                                    {(output.type || output.status) && (
+                                        <Typography
+                                            variant="caption"
+                                            sx={{ display: "block" }}>
+                                            {[output.type, output.status]
+                                                .filter(Boolean)
+                                                .join(" · ")}
+                                        </Typography>
+                                    )}
+                                    {output.detail && (
+                                        <Typography
+                                            variant="caption"
+                                            sx={{ display: "block" }}>
+                                            {output.detail}
+                                        </Typography>
+                                    )}
+                                </Box>
+                            );
+                        })}
                     </ListContainer>
                 );
             }
@@ -158,7 +200,8 @@ const DataUseContent = ({
 
                                     if (
                                         (isEmpty(value) &&
-                                            !isPopulatedDatasetsField) ||
+                                            !isPopulatedDatasetsField &&
+                                            !field.alwaysRender) ||
                                         field.path === NON_GATEWAY_DATASETS
                                     ) {
                                         return null;

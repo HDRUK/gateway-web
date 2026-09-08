@@ -10,7 +10,7 @@ import { useTranslations } from "next-intl";
 import { Dataset } from "@/interfaces/Dataset";
 import { OptionsType } from "@/components/Autocomplete/Autocomplete";
 import { getChipLabel } from "@/components/Autocomplete/utils";
-import Button from "@/components/Button";
+import { Button } from "@hdruk/ui";
 import Dialog from "@/components/Dialog";
 import InputWrapper from "@/components/InputWrapper";
 import useDebounce from "@/hooks/useDebounce";

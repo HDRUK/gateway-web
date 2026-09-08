@@ -12,7 +12,7 @@ import {
 } from "@mui/material";
 import { useTranslations } from "next-intl";
 import { DataAccessRequestApplication } from "@/interfaces/DataAccessRequestApplication";
-import Button from "@/components/Button";
+import { Button } from "@hdruk/ui";
 import Chip from "@/components/Chip";
 import DarStatusTracker from "@/components/DarStatusTracker";
 import useGet from "@/hooks/useGet";
@@ -160,14 +160,13 @@ const DarActionBar = ({
                                 {t("saveDraft")}
                             </Button>
                         )}
-                        <Button color="primary" onClick={submitOnClick}>
+                        <Button onClick={submitOnClick}>
                             {t("submitApplication")}
                         </Button>
                     </>
                 ) : (
                     <Button
-                        variant="outlined"
-                        color="secondary"
+                        purpose="secondary"
                         onClick={manageApplicationOnStatus}>
                         {t("applicationStatus")}
                     </Button>

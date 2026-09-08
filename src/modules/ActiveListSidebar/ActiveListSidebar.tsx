@@ -7,7 +7,7 @@ import { useTranslations } from "next-intl";
 import { usePathname, useSearchParams } from "next/navigation";
 import ActiveList from "@/components/ActiveList";
 import Box from "@/components/Box";
-import Button from "@/components/Button";
+import { Button } from "@hdruk/ui";
 import { ChevronThinIcon } from "@/consts/icons";
 import {
     ActiveLinkWrapper,
@@ -130,7 +130,7 @@ const ActiveListSidebar = ({
                                 },
                             }}
                             variant="text"
-                            endIcon={<ChevronThinIcon color="primary" />}>
+                            endIcon={<ChevronThinIcon />}>
                             {t("bookmarks")}
                         </Button>
                         <Menu

@@ -11,7 +11,7 @@ import { useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
 import * as yup from "yup";
 import Box from "@/components/Box";
-import Button from "@/components/Button";
+import { Button } from "@hdruk/ui";
 import Dialog from "@/components/Dialog";
 import InputWrapper from "@/components/InputWrapper";
 import useDialog from "@/hooks/useDialog";
@@ -132,8 +132,7 @@ const AddPublicationDialog = ({ teamId }: AddPublicationDialogProps) => {
                 <MuiDialogActions sx={{ alignSelf: "center" }}>
                     <Button
                         onClick={handleManual}
-                        variant="outlined"
-                        color="secondary">
+                        purpose="secondary">
                         {t("manualButton")}
                     </Button>
                 </MuiDialogActions>

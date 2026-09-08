@@ -76,7 +76,9 @@ const Sort = ({
                 options={options}
                 formControlSx={{
                     marginBottom: 0,
-                    backgroundColor: theme.palette.common.white,
+                    "& .MuiOutlinedInput-root": {
+                        backgroundColor: theme.palette.common.white,
+                    },
                 }}
             />
         );

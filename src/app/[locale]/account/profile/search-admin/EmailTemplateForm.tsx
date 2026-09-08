@@ -7,7 +7,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { Skeleton } from "@mui/material";
 import { EmailTemplateFormValues, EmailTemplate } from "@/interfaces/EmailTemplate";
 import Box from "@/components/Box";
-import Button from "@/components/Button";
+import { Button } from "@hdruk/ui";
 import Form from "@/components/Form";
 import InputWrapper from "@/components/InputWrapper";
 import Loading from "@/components/Loading";
@@ -190,8 +190,7 @@ export default function EmailTemplateForm({
                                 display="flex"
                                 justifyContent="space-between">
                                 <Button
-                                    color="secondary"
-                                    variant="outlined"
+                                    purpose="secondary"
                                     onClick={onCancel}
                                     disabled={isSaving}>
                                     {t("cancel")}

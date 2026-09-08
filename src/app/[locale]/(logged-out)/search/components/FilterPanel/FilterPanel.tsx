@@ -5,6 +5,7 @@ import { useForm } from "react-hook-form";
 import { get } from "lodash";
 import { useTranslations } from "next-intl";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
+import { tokens } from "@hdruk/ui/theme";
 import { BucketCheckbox, DateRange, Filter } from "@/interfaces/Filter";
 import { Aggregations, SearchCategory } from "@/interfaces/Search";
 import Accordion from "@/components/Accordion";
@@ -159,7 +160,7 @@ const filterCountStyles = {
     backgroundColor: colors.green400,
     width: "25px",
     height: "25px",
-    color: colors.white,
+    color: tokens.text.primaryWhite,
     display: "flex",
     alignItems: "center",
     justifyContent: "center",
@@ -841,16 +842,18 @@ const FilterPanel = ({
                     alignItems: "baseline",
                     gap: 1,
                     mt: 1,
-                    backgroundColor: colors.grey,
+                    backgroundColor: tokens.background.primary,
                 }}>
-                <Typography variant="h2">{tRoot("filterResults")}</Typography>
+                <Typography variant="h5" component="h2">
+                    {tRoot("filterResults")}
+                </Typography>
 
                 {!isQueryEmpty(selectedFilters) &&
                     !staticFilterValues[STATIC_FILTER_DATA_SOURCE]?.[
                         ARDC_SOURCE_VALUE
                     ] && (
                         <ClearButton
-                            variant="link"
+                            purpose="link"
                             onClick={resetAllFilters}
                             sx={{ m: 0 }}>
                             {tRoot("clearAll")}
@@ -921,7 +924,7 @@ const FilterPanel = ({
                     <Accordion
                         key={label}
                         sx={{
-                            background: colors.white,
+                            background: tokens.background.white,
                             boxShadow: "none",
                             mt: 0.5,
                             mb: 0.5,

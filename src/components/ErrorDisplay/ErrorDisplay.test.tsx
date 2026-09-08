@@ -27,6 +27,15 @@ describe("ErrorDisplay", () => {
         ).toBeInTheDocument();
     });
 
+    it("renders an ErrorDisplay for 409 conflict", () => {
+        render(<ErrorDisplay variant={409} />);
+        expect(
+            screen.getByText(
+                "An account with this email address already exists. Please sign in instead."
+            )
+        ).toBeInTheDocument();
+    });
+
     it("renders an ErrorDisplay for 423 locked", () => {
         render(<ErrorDisplay variant={423} />);
         expect(

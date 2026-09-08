@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { tokens } from "@hdruk/ui/theme";
 import { Bookmark, BookmarkBorder } from "@mui/icons-material";
 import { ListItem, ListItemText } from "@mui/material";
 import { get } from "lodash";
@@ -8,7 +9,7 @@ import { KeyedMutator } from "swr";
 import { Library, NewLibrary } from "@/interfaces/Library";
 import { SearchResultDataset } from "@/interfaces/Search";
 import Box from "@/components/Box";
-import Button from "@/components/Button";
+import { Button } from "@hdruk/ui";
 import CohortDiscoveryButton from "@/components/CohortDiscoveryButton";
 import Link from "@/components/Link";
 import MenuDropdown from "@/components/MenuDropdown";
@@ -24,7 +25,6 @@ import useGeneralEnquiry from "@/hooks/useGeneralEnquiry";
 import usePost from "@/hooks/usePost";
 import usePostLoginActionCookie from "@/hooks/usePostLoginAction";
 import apis from "@/config/apis";
-import { colors } from "@/config/theme";
 import { CohortIcon, SpeechBubbleIcon } from "@/consts/customIcons";
 import { ChevronThinIcon } from "@/consts/icons";
 import { PostLoginActions } from "@/consts/postLoginActions";
@@ -167,7 +167,7 @@ const ResultCard = ({
                       button: (
                           <CohortDiscoveryButton
                               showDatasetExplanatoryTooltip
-                              variant="link"
+                              purpose="link"
                               clickedAction={() => setAnchorElement(null)}
                           />
                       ),
@@ -250,7 +250,7 @@ const ResultCard = ({
 
     return (
         <ListItem
-            sx={{ p: 0, borderBottom: `1px solid ${colors.grey300}` }}
+            sx={{ p: 0, borderBottom: `1px solid ${tokens.status.grey}` }}
             alignItems="flex-start">
             <section
                 style={{ width: "100%" }}
@@ -372,7 +372,6 @@ const ResultCard = ({
                                     aria-label={`${t("actions")} for ${
                                         metadata.summary.shortTitle
                                     }`}
-                                    variant="contained"
                                     startIcon={
                                         <SpeechBubbleIcon
                                             sx={{ fill: "white" }}
@@ -439,7 +438,7 @@ const ResultCard = ({
                                     justifyContent: "space-between",
                                 }}>
                                 <Typography
-                                    color={colors.green700}
+                                    color={tokens.brand.secondary}
                                     sx={{ fontSize: 16 }}>
                                     {t("populationSize")}:{" "}
                                     {getPopulationSize(
@@ -448,7 +447,7 @@ const ResultCard = ({
                                     )}
                                 </Typography>
                                 <Typography
-                                    color={colors.green700}
+                                    color={tokens.brand.secondary}
                                     sx={{
                                         fontSize: 16,
                                         mb: {
@@ -461,8 +460,7 @@ const ResultCard = ({
                                 <Typography>
                                     <Button
                                         onClick={handleClickQuickView}
-                                        color="secondary"
-                                        variant="outlined">
+                                        purpose="secondary">
                                         {t("showAll")}
                                     </Button>
                                 </Typography>

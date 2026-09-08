@@ -1,6 +1,6 @@
 "use client";
 
-import Button from "@/components/Button";
+import { Button } from "@hdruk/ui";
 import { useTranslations } from "@/mocks/next-intl";
 
 export default function CookieToggle() {

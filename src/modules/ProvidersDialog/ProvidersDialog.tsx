@@ -5,7 +5,7 @@ import MuiDialogContent from "@mui/material/DialogContent";
 import { useTranslations } from "next-intl";
 import Script from "next/script";
 import BulletList from "@/components/BulletList";
-import Button from "@/components/Button";
+import { Button } from "@hdruk/ui";
 import Dialog from "@/components/Dialog";
 import Link from "@/components/Link";
 import Loading from "@/components/Loading";
@@ -68,7 +68,7 @@ const ProvidersDialog = () => {
                         display: institutionSelectVisible ? "block" : "none",
                     }}>
                     <Button
-                        variant="link"
+                        purpose="link"
                         onClick={() => setInstitutionSelectVisible(false)}>
                         {t("selectAnother")}
                     </Button>

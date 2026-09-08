@@ -45,3 +45,6 @@ tiltconf.json
 build-storybook.log
 
 /public/embed/widget.js
+# yalc (local package linking)
+.yalc
+yalc.lock

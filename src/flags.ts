@@ -47,3 +47,8 @@ export const isCustodianDashboardEnabled = flag({
     key: "V3_CustodianDashboard",
     adapter,
 });
+
+export const isSafePeopleRegistrySSOEnabled = flag({
+    key: "SafePeopleRegistrySSOEnabled",
+    adapter,
+});

@@ -1,3 +1,4 @@
+import { tokens } from "@hdruk/ui/theme";
 import { SxProps, Theme } from "@mui/material";
 import { colors } from "@/config/theme";
 import { STEP_STATE } from "@/consts/cohortDiscovery";
@@ -16,21 +17,21 @@ const circleColors: Record<
 > = {
     [STEP_STATE.COMPLETE]: {
         bg: colors.green400,
-        color: colors.white,
+        color: tokens.text.primaryWhite,
         border: "none",
     },
     [STEP_STATE.ACTIVE]: {
-        bg: colors.grey900,
-        color: colors.white,
+        bg: tokens.text.primaryBlack,
+        color: tokens.text.primaryWhite,
         border: "none",
     },
     [STEP_STATE.LOCKED]: {
-        bg: colors.grey200,
+        bg: tokens.status.hovered,
         color: colors.grey500,
         border: "none",
     },
     [STEP_STATE.PENDING]: {
-        bg: colors.white,
+        bg: tokens.background.white,
         color: colors.grey500,
         border: `2px solid ${colors.grey400}`,
     },
@@ -58,7 +59,7 @@ export const getCircleSx = (
 export const connectorSx: SxProps<Theme> = theme => ({
     flexGrow: 1,
     width: 2,
-    bgcolor: colors.grey300,
+    bgcolor: tokens.status.grey,
     my: 0.75,
     minHeight: theme.spacing(2.5),
 });

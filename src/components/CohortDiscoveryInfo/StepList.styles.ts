@@ -1,5 +1,6 @@
 "use client";
 
+import { tokens } from "@hdruk/ui/theme";
 import { styled } from "@mui/material";
 import Typography from "@/components/Typography";
 import { colors } from "@/config/theme";
@@ -56,8 +57,8 @@ export const StepCircle = styled("span")(({ theme }) => ({
     alignItems: "center",
     justifyContent: "center",
     border: `${theme.spacing(0.25)} solid ${colors.grey400}`,
-    background: colors.grey200,
-    color: colors.grey800,
+    background: tokens.status.hovered,
+    color: tokens.text.secondaryBlack,
     fontWeight: 600,
     marginTop: -MARKER_RAISE,
 }));
@@ -71,7 +72,7 @@ export const StepMarkerIcon = styled("span")(({ theme }) => ({
     alignItems: "center",
     justifyContent: "center",
     background: theme.palette.common.white,
-    color: colors.grey800,
+    color: tokens.text.secondaryBlack,
     marginTop: -(MARKER_RAISE + 2),
     "& svg": {
         fontSize: theme.spacing(3.75),
@@ -108,7 +109,7 @@ export const StepContent = styled("div")(({ theme }) => ({
         display: "flex",
         alignItems: "center",
         gap: theme.spacing(1),
-        color: colors.red700,
+        color: tokens.status.error,
         "&::before": {
             ...iconBackground(warningIcon),
             flexShrink: 0,

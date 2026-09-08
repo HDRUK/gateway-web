@@ -1,4 +1,5 @@
-import { Button, Divider, Grid } from "@mui/material";
+import { Button } from "@hdruk/ui";
+import { Divider, Grid } from "@mui/material";
 import MuiDialogContent from "@mui/material/DialogContent";
 import { useTranslations } from "next-intl";
 import { KeyedMutator } from "swr";
@@ -76,7 +77,7 @@ const FeasibilityEnquiryDialog = ({
                             alignItems="center"
                             justifyContent="center">
                             <Button
-                                variant="contained"
+                                variant="text"
                                 onClick={handleFeasibilityEnquiries}>
                                 {t("enquire")}
                             </Button>
@@ -102,8 +103,7 @@ const FeasibilityEnquiryDialog = ({
                         />
                         {mutateLibraries && (
                             <Button
-                                variant="outlined"
-                                color="secondary"
+                                purpose="secondary"
                                 onClick={handleAddToLibrary}>
                                 {t("addToLibrary")}
                             </Button>

@@ -1,5 +1,4 @@
-import Button from "@/components/Button";
-import { ButtonProps } from "@/components/Button/Button";
+import { Button, ButtonProps } from "@hdruk/ui";
 import useDialog from "@/hooks/useDialog";
 import Box from "../Box";
 

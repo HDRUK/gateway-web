@@ -31,8 +31,8 @@ const TitlePanel = ({ image, text, title, id }: TitlePanelProps) => {
                 <Box
                     sx={{
                         minHeight: {
-                            sm: 190,
-                            lg: 180,
+                            sm: 210,
+                            lg: 200,
                         },
                         p: 0,
                     }}>

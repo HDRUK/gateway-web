@@ -1,11 +1,11 @@
 import { get } from "lodash";
+import { tokens } from "@hdruk/ui/theme";
 import { Dataset } from "@/interfaces/Dataset";
 import { IconType } from "@/interfaces/Ui";
 import Box from "@/components/Box";
 import KeyValueList from "@/components/KeyValueList";
 import Paper from "@/components/Paper";
 import Typography from "@/components/Typography";
-import { colors } from "@/config/theme";
 import { nonManualDatasetCardActions } from "@/consts/actions";
 import { DataStatus } from "@/consts/application";
 import { getLatestVersion } from "@/utils/dataset";
@@ -101,7 +101,7 @@ const DatasetCard = ({ dataset, actions }: DatasetCardProps) => {
                         </Typography>
                     </Box>
                 </Box>
-                <Box sx={{ p: 0, borderLeft: `solid 1px ${colors.grey600}` }}>
+                <Box sx={{ p: 0, borderLeft: `solid 1px ${tokens.status.faded}` }}>
                     <CardActions
                         actions={
                             dataset.create_origin === "MANUAL"

@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useMemo, useRef, useState } from "react";
+import { tokens } from "@hdruk/ui/theme";
 import { BookmarkBorder } from "@mui/icons-material";
 import FormatListBulletedIcon from "@mui/icons-material/FormatListBulleted";
 import {
@@ -36,7 +37,7 @@ import {
     ViewType,
 } from "@/interfaces/Search";
 import { V4Schema } from "@/interfaces/V4Schema";
-import Button from "@/components/Button";
+import { Button } from "@hdruk/ui";
 import Loading from "@/components/Loading";
 import Pagination from "@/components/Pagination";
 import Paper from "@/components/Paper";
@@ -134,7 +135,11 @@ import ResultCardTool from "../ResultCardTool/ResultCardTool";
 import ResultsList from "../ResultsList";
 import ResultsTable from "../ResultsTable";
 import Sort from "../Sort";
-import { ActionBar, ResultLimitText } from "./Search.styles";
+import {
+    ActionBar,
+    ResultLimitText,
+    toggleViewButton,
+} from "./Search.styles";
 
 const TRANSLATION_PATH = "pages.search";
 
@@ -861,14 +866,14 @@ const Search = ({ filters, schema }: SearchProps) => {
         position: "absolute",
         zIndex: theme.zIndex.modal,
         borderRadius: "50%",
-        backgroundColor: colors.white,
+        backgroundColor: tokens.background.white,
         width: "48px",
         height: "48px",
         top: 20,
         m: 0,
         left: filterSidebarOpen ? 290 : 20,
         "&:hover": {
-            backgroundColor: colors.grey300,
+            backgroundColor: tokens.status.grey,
         },
         transition: theme.transitions.create("left", {
             easing,
@@ -895,7 +900,7 @@ const Search = ({ filters, schema }: SearchProps) => {
                     anchor="top"
                     open={filterDrawerOpen}
                     onClose={toggleFilterDrawer(false)}>
-                    <Box sx={{ mt: 0, pt: 2, backgroundColor: colors.grey }}>
+                    <Box sx={{ mt: 0, pt: 2, backgroundColor: tokens.background.primary }}>
                         <IconButton
                             data-testid="dialog-close-icon"
                             aria-label="close"
@@ -904,7 +909,7 @@ const Search = ({ filters, schema }: SearchProps) => {
                                 position: "absolute",
                                 right: 8,
                                 top: 30,
-                                color: colors.purple500,
+                                color: tokens.brand.primary,
                             }}>
                             <CloseIcon />
                         </IconButton>
@@ -1010,7 +1015,7 @@ const Search = ({ filters, schema }: SearchProps) => {
                                     fontWeight: 600,
                                     "&:hover": { background: "white" },
                                 }}
-                                endIcon={<ChevronThinIcon color="primary" />}>
+                                endIcon={<ChevronThinIcon />}>
                                 {categoryDropdowns[queryParams.type]}
                             </Button>
                             <Menu
@@ -1125,8 +1130,7 @@ const Search = ({ filters, schema }: SearchProps) => {
                                 )}
                                 {isMobile && (
                                     <Button
-                                        variant="outlined"
-                                        color="secondary"
+                                        purpose="secondary"
                                         size="small"
                                         onClick={toggleFilterDrawer(true)}
                                         startIcon={
@@ -1205,10 +1209,9 @@ const Search = ({ filters, schema }: SearchProps) => {
                                                                 !isDownloading &&
                                                                 downloadSearchResults()
                                                             }
-                                                            variant="contained"
                                                             color="greyCustom"
                                                             startIcon={
-                                                                <DownloadIcon color="primary" />
+                                                                <DownloadIcon />
                                                             }
                                                             disabled={
                                                                 isDownloading ||
@@ -1221,12 +1224,11 @@ const Search = ({ filters, schema }: SearchProps) => {
                                                         </Button>
                                                     )}
                                                 <Button
-                                                    variant="contained"
                                                     color="greyCustom"
                                                     disabled={!hasSearched}
                                                     onClick={handleSaveClick}
                                                     startIcon={
-                                                        <BookmarkBorder color="primary" />
+                                                        <BookmarkBorder />
                                                     }>
                                                     {t("saveSearch")}
                                                 </Button>
@@ -1234,17 +1236,17 @@ const Search = ({ filters, schema }: SearchProps) => {
                                                     SearchCategory.DATASETS &&
                                                     !isExternalSourceSelected && (
                                                         <Button
-                                                            variant="outlined"
-                                                            color="secondary"
+                                                            purpose="secondary"
+                                                            sx={toggleViewButton}
                                                             onClick={
                                                                 handleToggleView
                                                             }
                                                             startIcon={
                                                                 resultsView ===
                                                                 ViewType.LIST ? (
-                                                                    <FormatListBulletedIcon color="success" />
+                                                                    <FormatListBulletedIcon />
                                                                 ) : (
-                                                                    <TableIcon color="success" />
+                                                                    <TableIcon />
                                                                 )
                                                             }>
                                                             {resultsView ===
@@ -1402,8 +1404,8 @@ const Search = ({ filters, schema }: SearchProps) => {
                                                         mt: 2,
                                                     }}>
                                                     <Button
-                                                        variant="outlined"
-                                                        color="secondary"
+                                                        component="a"
+                                                        purpose="secondary"
                                                         href={ardcSearchUrl}
                                                         target="_blank"
                                                         rel="noopener noreferrer"
