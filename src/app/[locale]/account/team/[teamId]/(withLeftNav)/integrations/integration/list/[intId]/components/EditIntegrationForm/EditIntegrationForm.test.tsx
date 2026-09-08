@@ -255,6 +255,156 @@ describe("EditIntegrationForm", () => {
         });
     });
 
+    it("should not discard an unsaved edit when the record is refetched mid-edit (e.g. after running a test)", async () => {
+        // Regression test for the "Save configuration" button appearing to
+        // do nothing after editing a field: the form-population effect used
+        // to call reset() on every refetch of `integration`, even while the
+        // user still had unsaved changes, silently reverting them back to
+        // the last-saved server values before the user ever clicked Save.
+        const baseIntegration = makeFailingIntegration();
+        server.use(getIntegrationV1({ data: baseIntegration }));
+
+        await act(() => render(<EditIntegrationForm />));
+
+        const baseUrlInput = await screen.findByDisplayValue(
+            baseIntegration.endpoint_baseurl
+        );
+
+        fireEvent.change(baseUrlInput, {
+            target: { value: "https://edited-not-yet-saved.example.com" },
+        });
+
+        expect(
+            screen.getByDisplayValue(
+                "https://edited-not-yet-saved.example.com"
+            )
+        ).toBeInTheDocument();
+
+        // Refetching the record (as happens after running a test) returns
+        // genuinely different data - the backend clears the stale error -
+        // which is exactly what previously triggered the form-wide reset().
+        server.use(
+            getIntegrationV1({
+                data: { ...baseIntegration, error: false, error_text: null },
+            })
+        );
+
+        const testButton = screen.getByRole("button", { name: "Run test" });
+        await act(async () => {
+            fireEvent.click(testButton);
+        });
+
+        await waitFor(() => {
+            expect(
+                screen.queryByText("Connection timed out")
+            ).not.toBeInTheDocument();
+        });
+
+        expect(
+            screen.getByDisplayValue(
+                "https://edited-not-yet-saved.example.com"
+            )
+        ).toBeInTheDocument();
+    });
+
+    it("should re-sync the form and clear isDirty after a successful save", async () => {
+        // The unsaved-edit guard above must not get stuck: once a save
+        // actually succeeds, the subsequent refetch should still reset()
+        // the form (re-baselining to the newly-persisted values), otherwise
+        // 'formState.isDirty' would remain permanently true - re-disabling
+        // "Run now" and re-triggering the leave-page warning even though
+        // there is nothing left unsaved.
+        const failingIntegration = makeFailingIntegration();
+        const fixedIntegration = {
+            ...failingIntegration,
+            endpoint_baseurl: "https://saved.example.com",
+            error: false,
+            error_text: null,
+        };
+        server.use(getIntegrationV1({ data: failingIntegration }));
+
+        await act(() => render(<EditIntegrationForm />));
+
+        const baseUrlInput = await screen.findByDisplayValue(
+            failingIntegration.endpoint_baseurl
+        );
+        fireEvent.change(baseUrlInput, {
+            target: { value: "https://saved.example.com" },
+        });
+
+        server.use(
+            rest.put(
+                `${apis.teamsV1Url}/${teamV1.id}/federations/${failingIntegration.id}`,
+                (req, res, ctx) =>
+                    res(ctx.status(200), ctx.json({ data: fixedIntegration }))
+            ),
+            getIntegrationV1({ data: fixedIntegration })
+        );
+
+        await act(async () => {
+            fireEvent.click(
+                screen.getByRole("button", { name: "Save configuration" })
+            );
+        });
+
+        const runNowButton = await waitFor(() => {
+            const button = screen.getByRole("button", { name: "Run now" });
+            expect(button).not.toBeDisabled();
+            return button;
+        });
+        expect(runNowButton).toBeInTheDocument();
+    });
+
+    it("should keep 'Run test' usable after saving a NO_AUTH integration whose auth_secret_key is null", async () => {
+        // Regression test: a NO_AUTH integration legitimately has no secret
+        // key, so the backend returns `auth_secret_key: null`. The yup
+        // schema's base `auth_secret_key` type was a plain (non-nullable)
+        // string, so validating this record threw a raw yup type error
+        // ("auth_secret_key cannot be null") instead of a normal per-field
+        // validation error - @hookform/resolvers/yup surfaces that as
+        // formState.isValid === false with an EMPTY errors object, since the
+        // thrown error's `.inner` doesn't map cleanly onto a field path.
+        // That left "Run test" permanently disabled with "you must complete
+        // the required fields" after every save, even though every field
+        // was actually filled in correctly.
+        const noAuthIntegration = {
+            ...makeFailingIntegration(),
+            auth_type: "NO_AUTH" as const,
+            auth_secret_key: null,
+            error: false,
+            error_text: null,
+        };
+        server.use(getIntegrationV1({ data: noAuthIntegration }));
+
+        await act(() => render(<EditIntegrationForm />));
+
+        await screen.findByDisplayValue(noAuthIntegration.endpoint_baseurl);
+
+        server.use(
+            rest.put(
+                `${apis.teamsV1Url}/${teamV1.id}/federations/${noAuthIntegration.id}`,
+                (req, res, ctx) =>
+                    res(ctx.status(200), ctx.json({ data: noAuthIntegration }))
+            ),
+            getIntegrationV1({ data: noAuthIntegration })
+        );
+
+        await act(async () => {
+            fireEvent.click(
+                screen.getByRole("button", { name: "Save configuration" })
+            );
+        });
+
+        // "Run test"'s disabled state is driven by formState.isValid
+        // regardless of testStatus (which is mocked to TESTED_IS_TRUE in
+        // this file), so this is the part that actually exercises the bug.
+        await waitFor(() => {
+            expect(
+                screen.getByRole("button", { name: "Run test" })
+            ).not.toBeDisabled();
+        });
+    });
+
     it("should not show an error alert when the integration has not failed", async () => {
         const mockIntegration = {
             ...integrationV1,

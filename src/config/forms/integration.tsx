@@ -34,10 +34,13 @@ const validationSchema = yup.object({
         .min(1, "Notification contacts is a required field")
         .of(yup.string())
         .label("Notification contact(s)"),
-    auth_secret_key: yup.string().when("auth_type", {
-        is: (auth_type: AuthType) => requiresSecretKey(auth_type),
-        then: () => yup.string().required().label("Auth secret key"),
-    }),
+    auth_secret_key: yup
+        .string()
+        .nullable()
+        .when("auth_type", {
+            is: (auth_type: AuthType) => requiresSecretKey(auth_type),
+            then: () => yup.string().required().label("Auth secret key"),
+        }),
 });
 
 const formFields = [
