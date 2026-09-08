@@ -37,7 +37,7 @@ export default async function TeamCreateIntegrationPage({
         <ProtectedAccountRoute
             permissions={permissions}
             pagePermissions={["integrations.metadata", "integrations.dar"]}>
-            <BackButton label="Back to Integration Management" />
+            <BackButton label="Back" />
             <Paper sx={{ marginBottom: 1 }}>
                 <Box>
                     <Typography variant="h2">{t("title")}</Typography>

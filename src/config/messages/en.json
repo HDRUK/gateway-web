@@ -949,11 +949,20 @@
                 },
                 "integrations": {
                     "apiManagement": {
-                        "howTo": "How to setup and manage custom integrations",
+                        "howTo": "Get help setting up and managing your integrations",
                         "cannotCreate": "Please note that HDR UK cannot create Custom Integrations on behalf of users.",
                         "create": {
                             "title": "Custom Integrations",
                             "text": "Use this form to create your Custom Integration on the Gateway"
+                        },
+                        "list": {
+                            "title": "Custom Integrations",
+                            "create": "Add Custom Integration",
+                            "tabs": {
+                                "all": "All",
+                                "enabled": "Enabled",
+                                "disabled": "Disabled"
+                            }
                         },
                         "manage": {
                             "permissions": {
@@ -983,7 +992,13 @@
                         "generateClientId": "Generate new client ID"
                     },
                     "integrations": {
-                        "howTo": "How to setup and manage predefined integrations"
+                        "howTo": "Get help setting up and managing your integrations",
+                        "list": {
+                            "title": "Predefined Integrations",
+                            "create": "Add Predefined Integration",
+                            "empty": "You have not created any predefined integrations yet.",
+                            "emptyAction": "Create one"
+                        }
                     }
                 },
                 "dar": {

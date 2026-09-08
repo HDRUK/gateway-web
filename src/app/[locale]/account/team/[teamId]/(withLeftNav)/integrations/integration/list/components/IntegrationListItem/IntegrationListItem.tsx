@@ -167,7 +167,11 @@ const IntegrationListItem = ({
                         ]}
                     />
                 </Box>
-                <Box sx={{ borderLeft: `solid 1px ${tokens.status.faded}` }}>
+                <Box
+                    sx={{
+                        p: 0,
+                        borderLeft: `solid 1px ${tokens.status.faded}`,
+                    }}>
                     <CardActions actions={actions} id={integration.id} />
                 </Box>
             </Box>

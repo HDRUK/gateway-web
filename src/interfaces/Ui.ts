@@ -13,6 +13,7 @@ interface LeftNavItem {
     subItems?: {
         label: string;
         href: string;
+        matchPath?: string;
         onClick?: (href: string) => Promise<string>;
     }[];
 }
