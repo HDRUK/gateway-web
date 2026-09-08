@@ -1,3 +1,9 @@
+## [2.43.1](https://github.com/HDRUK/gateway-web/compare/v2.43.0...v2.43.1) (2026-09-08)
+
+### 🐛 Bug Fixes
+
+* **GAT-9999:** Fixes bug in yup validator which badly calls reset an… (#1640) ([08346cd](https://github.com/HDRUK/gateway-web/commit/08346cd476846e2196ab4ec21a889b50ee88b4fd))
+
 ## [2.43.0](https://github.com/HDRUK/gateway-web/compare/v2.42.0...v2.43.0) (2026-09-02)
 
 ### ✨ Features
