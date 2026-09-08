@@ -1,3 +1,19 @@
+## [2.44.0](https://github.com/HDRUK/gateway-web/compare/v2.43.1...v2.44.0) (2026-09-08)
+
+### ✨ Features
+
+* **GAT-9265:** Adopt the shared @hdruk/ui Button component (#1631) ([0f73c6a](https://github.com/HDRUK/gateway-web/commit/0f73c6afb029b5b572519d0aed165cee382b2f74)), closes [GAT-9265](undefinedGAT-9265)
+* **GAT-9495:** Add structured outputs editor to the DUR edit form ([627ba6c](https://github.com/HDRUK/gateway-web/commit/627ba6cf330df905668e86e33a9d4579d20c7699)), closes [GAT-9495](undefinedGAT-9495)
+* **GAT-9495:** Render structured outputs on the public DUR page ([e528654](https://github.com/HDRUK/gateway-web/commit/e528654767b8f7c748fe6aaf7f237ac5c890a7fb)), closes [GAT-9495](undefinedGAT-9495)
+* **GAT-9510:** #6 - Handle duplicate email error for Registry SSO (#1630) ([3ce95ae](https://github.com/HDRUK/gateway-web/commit/3ce95aea3f09fbf8afa84b009384e5a53e56b93f)), closes [GAT-9510](undefinedGAT-9510)
+* **GAT-9510:** Enables SSO for Registry auth (#1628) ([53b0766](https://github.com/HDRUK/gateway-web/commit/53b0766765febe3ea51b24c480ad5042b37a939d)), closes [GAT-9510](undefinedGAT-9510)
+* **GAT-9525:** Remove theme overrides now owned by @hdruk/ui (#1632) ([37a84c1](https://github.com/HDRUK/gateway-web/commit/37a84c1326a643e4260fb258adbdce2e1de4f053)), closes [GAT-9525](undefinedGAT-9525)
+
+### 🐛 Bug Fixes
+
+* **GAT-9498:** Fix crash on DUR upload ([86c636f](https://github.com/HDRUK/gateway-web/commit/86c636f214841d1344819ecae9a0ece26bffebd1))
+* **GAT-9508:** replace react-device-detect with useMediaQuery (#1629) ([2a765f3](https://github.com/HDRUK/gateway-web/commit/2a765f312d3088f9ae05493b13447d6bc64d2fa5)), closes [GAT-9508](undefinedGAT-9508)
+
 ## [2.43.1](https://github.com/HDRUK/gateway-web/compare/v2.43.0...v2.43.1) (2026-09-08)
 
 ### 🐛 Bug Fixes
