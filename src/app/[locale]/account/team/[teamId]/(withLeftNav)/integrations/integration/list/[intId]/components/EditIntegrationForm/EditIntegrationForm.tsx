@@ -61,6 +61,11 @@ const EditIntegrationForm = () => {
 
     const isEditing = params?.intId;
 
+    // LS: Set right before mutateIntegration() on a successful save, so the
+    // resulting refetch is allowed to set new baseline on the form even though it's
+    // still dirty. See the form-population effect below.
+    const justSavedRef = useRef(false);
+
     const {
         control,
         handleSubmit,
@@ -70,6 +75,7 @@ const EditIntegrationForm = () => {
         setValue,
         getValues,
         unregister,
+        trigger,
     } = useForm<IntegrationForm>({
         mode: "onTouched",
         resolver: yupResolver(integrationValidationSchema),
@@ -94,6 +100,18 @@ const EditIntegrationForm = () => {
 
     useEffect(() => {
         if (!integration) return;
+
+        // LS: Don't blatt edits the user hasn't saved yet. `integration`
+        // changes reference whenever the record is refetched with genuinely
+        // different data (e.g. running a test clears a stale error), which
+        // would otherwise reset() the whole form back to the last-saved
+        // values mid editing. The refetch triggered by our own successful save
+        // is the one exception - that one SHOULD form a new baseline the form (and
+        // clear isDirty), tracked via justSavedRef rather than
+        // formState.isSubmitSuccessful, since that flag isn't guaranteed to
+        // have flipped yet by the time this refetch resolves.
+        if (formState.isDirty && !justSavedRef.current) return;
+        justSavedRef.current = false;
 
         /* Populate form with saved integration */
         const formData: IntegrationForm = {
@@ -121,8 +139,14 @@ const EditIntegrationForm = () => {
 
         setTestedConfig(federationFields);
         reset(formData);
+        // LS: reset() does not re-run the resolver, so formState.isValid keeps
+        // whatever value it last had rather than reflecting the data we just
+        // populated the form with - trigger() forces a fresh, authoritative
+        // validation pass against the current values so
+        // "Run test" isn't left showing a stale valid/invalid state.
+        void trigger();
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [integration, reset]);
+    }, [integration, reset, trigger]);
 
     useUnsavedChanges({
         shouldConfirmLeave: formState.isDirty && !formState.isSubmitSuccessful,
@@ -171,6 +195,7 @@ const EditIntegrationForm = () => {
                 updatedPayload
             );
             if (updateResponse !== null) {
+                justSavedRef.current = true;
                 mutateIntegration();
             }
         }

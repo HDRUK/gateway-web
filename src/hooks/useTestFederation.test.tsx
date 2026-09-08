@@ -1,4 +1,5 @@
 import { rest } from "msw";
+import { pick } from "lodash";
 import { useForm } from "react-hook-form";
 import { FederationTestStatus } from "@/interfaces/Federation";
 import { Integration } from "@/interfaces/Integration";
@@ -135,6 +136,106 @@ describe("useTestFederation", () => {
         });
 
         expect(capturedBody).toMatchObject({ id: mockIntegration.id });
+    });
+
+    it("should not untest the integration when the watched config drifts from testedConfig without a genuine user edit", async () => {
+        // Regression test: `setTestedConfig` (called by EditIntegrationForm
+        // right before it calls reset() to re-sync the form from the
+        // server, e.g. after a save) can transiently disagree with the
+        // form's own watched values for a render or two, since the two
+        // don't update atomically. That mismatch must NOT be treated as a
+        // real config change - if the form isn't dirty, it can't be the
+        // user editing a field.
+        const mockIntegration = {
+            ...integrationV1,
+            tested: true,
+            enabled: true,
+            endpoint_baseurl: "https://original.example.com",
+        };
+        const { result: formResult } = renderHook(() =>
+            useForm({ defaultValues: mockIntegration })
+        );
+        const { result } = renderHook(() =>
+            useTestFederation({
+                teamId,
+                integration: mockIntegration,
+                tested: true,
+                control: formResult.current.control,
+                reset: formResult.current.reset,
+                getValues: formResult.current.getValues,
+                setValue: formResult.current.setValue,
+            })
+        );
+
+        await waitFor(() => {
+            expect(result.current.testStatus).toBe(
+                FederationTestStatus.TESTED_IS_TRUE
+            );
+        });
+
+        // Simulate the drift: testedConfig now disagrees with the form's
+        // current (untouched, not dirty) values.
+        act(() => {
+            result.current.setTestedConfig({
+                ...pick(mockIntegration, [
+                    "auth_type",
+                    "auth_secret_key",
+                    "endpoint_baseurl",
+                    "endpoint_datasets",
+                    "endpoint_dataset",
+                    "run_time_hour",
+                    "notifications",
+                ]),
+                endpoint_baseurl: "https://drifted-baseline.example.com",
+            } as never);
+        });
+
+        expect(formResult.current.formState.isDirty).toBe(false);
+
+        await waitFor(() => {
+            expect(formResult.current.getValues("tested")).toBe(true);
+        });
+        expect(formResult.current.getValues("enabled")).toBe(true);
+    });
+
+    it("should still untest the integration on a genuine user edit to a watched field", async () => {
+        const mockIntegration = {
+            ...integrationV1,
+            tested: true,
+            enabled: true,
+            endpoint_baseurl: "https://original.example.com",
+        };
+        const { result: formResult } = renderHook(() =>
+            useForm({ defaultValues: mockIntegration })
+        );
+        renderHook(() =>
+            useTestFederation({
+                teamId,
+                integration: mockIntegration,
+                tested: true,
+                control: formResult.current.control,
+                reset: formResult.current.reset,
+                getValues: formResult.current.getValues,
+                setValue: formResult.current.setValue,
+            })
+        );
+
+        await waitFor(() => {
+            expect(formResult.current.getValues("tested")).toBe(true);
+        });
+
+        act(() => {
+            formResult.current.setValue(
+                "endpoint_baseurl",
+                "https://edited.example.com",
+                { shouldDirty: true }
+            );
+        });
+
+        await waitFor(() => {
+            expect(formResult.current.getValues("tested")).toBe(false);
+        });
+        expect(formResult.current.getValues("enabled")).toBe(false);
     });
 
     it("should omit the federation id when testing an integration that has not been saved yet", async () => {

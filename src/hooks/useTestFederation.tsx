@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Control, useWatch } from "react-hook-form";
+import { Control, useFormState, useWatch } from "react-hook-form";
 import { isEqual, pick } from "lodash";
 import {
     Federation,
@@ -64,6 +64,8 @@ const useTestFederation = ({
         defaultValue: undefined,
     });
 
+    const { isDirty } = useFormState({ control });
+
     useEffect(() => {
         const updatedForm = pick(getValues(), watchFederationKeys);
 
@@ -74,13 +76,15 @@ const useTestFederation = ({
         }
 
         const configChanges = !isEqual(updatedForm, testedConfig);
-        if (configChanges) {
+        // Only react to this as a genuine user edit when the form is
+        // actually dirty.
+        if (configChanges && isDirty) {
             setTestStatus(FederationTestStatus.NOT_RUN);
             setValue("tested", false);
             setValue("enabled", false);
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [fieldsToWatch, testedConfig]);
+    }, [fieldsToWatch, testedConfig, isDirty]);
 
     useEffect(() => {
         if (!tested && !integration) return;
