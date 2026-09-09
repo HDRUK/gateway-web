@@ -1572,7 +1572,7 @@
             "datasets": "Datasets",
             "dataUses": "Data Uses",
             "publications": "Publications",
-            "tools": "Tools",
+            "tools": "Analysis Scripts & Software",
             "serviceOfferings": "Service offerings",
             "aliases": "Aliases",
             "components": {
@@ -1608,7 +1608,7 @@
                     "associatedHeading": "Associated publications"
                 },
                 "ToolsContent": {
-                    "title": "Analysis scripts, tools and software",
+                    "title": "Analysis Scripts & Software",
                     "heading": "Analysis Scripts & Software ({ length })",
                     "associatedHeading": "Associated analysis scripts, tools and software"
                 },
