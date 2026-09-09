@@ -1130,7 +1130,7 @@
                         "contentInfo": "You might just want to show entities from yourselves for example",
                         "dataCustodians": "Data custodians",
                         "permittedDomains": "Permitted domains",
-                        "permittedDomainInfo": "If you have multiple environments, like a dev & preprod, it may be useful to add these in here too, like: https://web.preprod.hdruk.cloud (without the trailing slash)",
+                        "permittedDomainInfo": "Add one URL per environment. For example, if you have development and pre-production environments, you might add:\nhttps://web.preprod.hdruk.cloud\n\nOptional port numbers can be added using the format:\nhttps://web.preprod.hdruk.cloud:4000",
                         "validUrl": "Each item must be a valid URL",
                         "entityTypeRequired": "Select at least one entity type to include in your widget",
                         "includedDatasetsRequired": "Select at least one item under Datasets & BioSamples",
