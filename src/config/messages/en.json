@@ -1574,7 +1574,7 @@
             "datasets": "Datasets",
             "dataUses": "Data Uses",
             "publications": "Publications",
-            "tools": "Tools",
+            "tools": "Analysis Scripts & Software",
             "serviceOfferings": "Service offerings",
             "aliases": "Aliases",
             "components": {
@@ -1610,7 +1610,7 @@
                     "associatedHeading": "Associated publications"
                 },
                 "ToolsContent": {
-                    "title": "Analysis scripts, tools and software",
+                    "title": "Analysis Scripts & Software",
                     "heading": "Analysis Scripts & Software ({ length })",
                     "associatedHeading": "Associated analysis scripts, tools and software"
                 },
@@ -1621,11 +1621,11 @@
         },
         "dataCustodianNetwork": {
             "introduction": "Introduction",
-            "dataCustodian": "Data Custodian",
+            "dataCustodian": "Data Custodians",
             "datasets": "Datasets",
             "collections": "Collections",
-            "dataUses": "Data use",
-            "publications": "Publication",
+            "dataUses": "Data Uses",
+            "publications": "Publications",
             "tools": "Analysis Scripts & Software",
             "serviceOfferings": "Service offerings",
             "backLabel": "Back to Collections search results",
@@ -1637,7 +1637,7 @@
                     "heading": "Introduction"
                 },
                 "DataCustodianContent": {
-                    "title": "Data Custodian",
+                    "title": "Data Custodians",
                     "datasets": "Datasets ({ length })",
                     "datause": "Data Use ({ length })",
                     "tools": "Tools ({ length })",
