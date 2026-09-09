@@ -28,7 +28,7 @@ exports[`NewsSummaryCard should render component 1`] = `
       class="MuiCardContent-root mui-style-zajgoz-MuiCardContent-root"
     >
       <div
-        class="MuiTypography-root MuiTypography-h5 MuiTypography-gutterBottom mui-style-n0m1mk-MuiTypography-root"
+        class="MuiTypography-root MuiTypography-h5 MuiTypography-gutterBottom mui-style-5judno-MuiTypography-root"
         id=":r1:"
       >
         <p
