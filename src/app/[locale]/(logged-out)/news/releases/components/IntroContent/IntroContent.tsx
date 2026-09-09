@@ -18,7 +18,7 @@ const richTextComponents = {
     ),
     gatewayLink: (chunks: React.ReactNode) => (
         <Link
-            href="https://github.com/HDRUK/gateway-api/blob/dev/CHANGELOG.md"
+            href="https://github.com/HDRUK/gateway-api/blob/main/CHANGELOG.md"
             target="_blank"
             rel="noopener noreferrer">
             {chunks}
@@ -26,7 +26,7 @@ const richTextComponents = {
     ),
     cohortWebLink: (chunks: React.ReactNode) => (
         <Link
-            href="https://github.com/HDRUK/cohort-discovery-service-web/blob/dev/CHANGELOG.md"
+            href="https://github.com/HDRUK/cohort-discovery-service-web/blob/main/CHANGELOG.md"
             target="_blank"
             rel="noopener noreferrer">
             {chunks}
@@ -34,7 +34,7 @@ const richTextComponents = {
     ),
     cohortApiLink: (chunks: React.ReactNode) => (
         <Link
-            href="https://github.com/HDRUK/cohort-discovery-service-api/blob/dev/CHANGELOG.md"
+            href="https://github.com/HDRUK/cohort-discovery-service-api/blob/main/CHANGELOG.md"
             target="_blank"
             rel="noopener noreferrer">
             {chunks}
@@ -42,7 +42,7 @@ const richTextComponents = {
     ),
     cohortNlpLink: (chunks: React.ReactNode) => (
         <Link
-            href="https://github.com/HDRUK/cohort-discovery-service-nlp/blob/dev/CHANGELOG.md"
+            href="https://github.com/HDRUK/cohort-discovery-service-nlp/blob/main/CHANGELOG.md"
             target="_blank"
             rel="noopener noreferrer">
             {chunks}
