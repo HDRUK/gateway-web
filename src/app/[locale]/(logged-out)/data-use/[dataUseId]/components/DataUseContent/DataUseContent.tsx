@@ -184,7 +184,10 @@ const DataUseContent = ({
                                     pl: 0,
                                     pr: 0,
                                 }}>
-                                <Typography variant="h2">
+                                <Typography
+                                    variant="articleLead"
+                                    component="h2"
+                                    sx={{ mb: 2 }}>
                                     {t(section.sectionName)}
                                 </Typography>
 

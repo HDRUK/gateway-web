@@ -356,19 +356,21 @@ const theme = createHdrukTheme({
         },
         MuiTypography: {
             styleOverrides: {
-                h1: ({ theme: _theme }) => ({
-                    marginBottom: _theme.spacing(2),
-                }),
-                h2: {
-                    marginBottom: 15,
-                },
-                h3: {
-                    marginBottom: 2,
-                },
-                h4: {
-                    marginBottom: 2,
-                },
+                h1: ({ theme }) => ({ marginBottom: theme.spacing(2) }),
+                h2: ({ theme }) => ({ marginBottom: theme.spacing(2) }),
+                h3: ({ theme }) => ({ marginBottom: theme.spacing(1) }),
+                h4: ({ theme }) => ({ marginBottom: theme.spacing(1) }),
+                h5: ({ theme }) => ({ marginBottom: theme.spacing(1) }),
+                h6: ({ theme }) => ({ marginBottom: theme.spacing(1) }),
             },
+            variants: [
+                {
+                    props: { variant: "articleLead" },
+                    style: ({ theme }) => ({
+                        marginBottom: theme.spacing(1),
+                    }),
+                },
+            ],
         },
         MuiSwitch: {
             variants: [
