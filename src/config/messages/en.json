@@ -1619,11 +1619,11 @@
         },
         "dataCustodianNetwork": {
             "introduction": "Introduction",
-            "dataCustodian": "Data Custodian",
+            "dataCustodian": "Data Custodians",
             "datasets": "Datasets",
             "collections": "Collections",
-            "dataUses": "Data use",
-            "publications": "Publication",
+            "dataUses": "Data Uses",
+            "publications": "Publications",
             "tools": "Analysis Scripts & Software",
             "serviceOfferings": "Service offerings",
             "backLabel": "Back to Collections search results",
@@ -1635,7 +1635,7 @@
                     "heading": "Introduction"
                 },
                 "DataCustodianContent": {
-                    "title": "Data Custodian",
+                    "title": "Data Custodians",
                     "datasets": "Datasets ({ length })",
                     "datause": "Data Use ({ length })",
                     "tools": "Tools ({ length })",

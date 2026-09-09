@@ -6,8 +6,8 @@ import { Box } from "@mui/material";
 import { Filter, FilterItem, FilterValues } from "@/interfaces/Filter";
 import FilterSection from "@/components/FilterSection";
 import { FILTER_PUBLISHER_NAME } from "@/config/forms/filters";
-import ActiveListSidebar from "../ActiveListSidebar";
 import theme from "@/config/theme";
+import ActiveListSidebar from "../ActiveListSidebar";
 
 const ActiveListSidebarWithFilter = ({
     items,
@@ -58,15 +58,16 @@ const ActiveListSidebarWithFilter = ({
 
     return (
         <Box sx={{ backgroundColor: theme.palette.common.white }}>
-            <Box sx={{
-                position: "sticky",
-                top: 0,
-                zIndex: theme.zIndex.appBar,
-                alignSelf: "flex-start",
-            }}>
-                <ActiveListSidebar items={items} disableSticky />
+            <Box
+                sx={{
+                    position: "sticky",
+                    top: 0,
+                    zIndex: theme.zIndex.appBar,
+                    alignSelf: "flex-start",
+                }}>
+                <ActiveListSidebar items={items} disableSticky sx={{ p: 0 }} />
                 {filterItem && (
-                <Box sx={{ p: 1 }}>
+                    <Box sx={{ p: 2 }}>
                         <FilterSection
                             filterSection={FILTER_PUBLISHER_NAME}
                             filterItem={filterItem}
@@ -77,7 +78,8 @@ const ActiveListSidebarWithFilter = ({
                             handleCheckboxChange={handleCheckboxChange}
                             setValue={setValue}
                         />
-                </Box>)}
+                    </Box>
+                )}
             </Box>
         </Box>
     );
