@@ -213,9 +213,11 @@
         },
         "releases": {
             "noResults": "There are no releases for {year}",
-            "heading": "Welcome to our Gateway release summary page!",
-            "description1": "Here, you can learn more about the Gateway's newest features, improvements, and updates, through periodic summaries that are designed to be more digestible than our full ticket by ticket release notes. If you are interested in the detail, our full release notes can be accessed <githubLink>here</githubLink>. Our Technology Team is committed to continuously enhancing the Gateway, delivering regular updates and improvements through agile, user-focused development. Explore each <githubLink>detailed release</githubLink> to discover how the Gateway is evolving, or await the higher level summaries that we aim to publish once per quarter.",
-            "description2": "To learn more about what is planned on our development roadmap please see the 'What next?' section <researchersLink>here</researchersLink>. If you would like to share feedback or suggest improvements to add to the Gateway roadmap, please contact us through our <supportLink>Support Centre</supportLink>."
+            "heading": "Welcome to our release notes summary page!",
+            "description1": "Here, you can learn more about the Health Data Research Gateway and Cohort Discovery Service's newest features, improvements, and updates, through quarterly release summaries designed to be more digestible than our full ticket by ticket release notes. If you are interested in the detail, the Health Data Research Gateway’s full release notes can be accessed <gatewayLink>here</gatewayLink>, and the Cohort Discovery Service’s full release notes can be found on our repos <cohortWebLink>here</cohortWebLink>, <cohortApiLink>here</cohortApiLink>, and <cohortNlpLink>here</cohortNlpLink>.",
+            "description2": "Our Technology Team is committed to continuous enhancement, delivering regular updates and improvements through agile, user-focused development.",
+            "description3": "If you would like to share feedback or suggest improvements to add to the Gateway roadmap, please contact us through our <supportLink>Support Centre</supportLink>.",
+            "note": "<bold>Note:</bold> These periodic release summaries are produced using Github Changelogs and Copilot, and published after manual curation."
         },
         "about": {
             "ourMissionAndPurpose": {
