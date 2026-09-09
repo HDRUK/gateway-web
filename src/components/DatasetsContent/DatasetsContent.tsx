@@ -75,7 +75,6 @@ export default function DatasetContent({
                 heading={t("heading", {
                     length: activeDatasets.length,
                 })}
-                title={t("title")}
                 defaultExpanded={activeDatasets.length > 0}
                 contents={activeDatasets.map(renderCard)}
             />
