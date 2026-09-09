@@ -1,6 +1,5 @@
 import { Filter } from "@/interfaces/Filter";
-import { Button } from "@hdruk/ui";
-import Loading from "@/components/Loading";
+import { Button, Loading } from "@hdruk/ui";
 import useGet from "@/hooks/useGet";
 
 interface FilterPaginationProps {

@@ -14,10 +14,9 @@ import { DeleteForeverOutlinedIcon } from "@/consts/icons";
 import { ImageValidationError } from "@/consts/image";
 import { validateImageDimensions } from "@/utils/imageValidation";
 import { sanitiseString } from "@/utils/sanitiseString";
-import { Button } from "@hdruk/ui";
+import { Button, Loading } from "@hdruk/ui";
 import FormInputWrapper from "../FormInputWrapper";
 import Link from "../Link";
-import Loading from "../Loading";
 import Typography from "../Typography";
 import Upload from "../Upload";
 

@@ -6,7 +6,7 @@ import Box from "@/components/Box";
 import CardActions from "@/components/CardActions";
 import Chip from "@/components/Chip";
 import KeyValueList from "@/components/KeyValueList";
-import Loading from "@/components/Loading";
+import { Loading } from "@hdruk/ui";
 import Pagination from "@/components/Pagination";
 import Paper from "@/components/Paper";
 import ShowingXofX from "@/components/ShowingXofX";

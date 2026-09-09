@@ -11,10 +11,9 @@ import {
     DataCustodianNetworkListItem,
 } from "@/interfaces/DataCustodianNetwork";
 import Box from "@/components/Box";
-import { Button } from "@hdruk/ui";
+import { Button, Loading } from "@hdruk/ui";
 import Form from "@/components/Form";
 import InputWrapper from "@/components/InputWrapper";
-import Loading from "@/components/Loading";
 import Paper from "@/components/Paper";
 import Typography from "@/components/Typography";
 import useDebounce from "@/hooks/useDebounce";

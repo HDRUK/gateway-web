@@ -18,7 +18,7 @@ import { PaginationType } from "@/interfaces/Pagination";
 import { SavedSearchWithPivot } from "@/interfaces/Search";
 import { DataList, DataListItem } from "@/components/DataList";
 import ListItemActions from "@/components/ListItemActions";
-import Loading from "@/components/Loading";
+import { Loading } from "@hdruk/ui";
 import Pagination from "@/components/Pagination";
 import Paper from "@/components/Paper";
 import ShowingXofX from "@/components/ShowingXofX";

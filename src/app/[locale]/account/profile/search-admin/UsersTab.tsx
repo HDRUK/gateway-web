@@ -8,7 +8,7 @@ import { PaginationType } from "@/interfaces/Pagination";
 import { User } from "@/interfaces/User";
 import Box from "@/components/Box";
 import InputWrapper from "@/components/InputWrapper";
-import Loading from "@/components/Loading";
+import { Loading } from "@hdruk/ui";
 import Pagination from "@/components/Pagination";
 import Table from "@/components/Table";
 import DeleteUserDialog from "@/modules/DeleteUserDialog";
