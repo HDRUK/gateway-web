@@ -380,6 +380,13 @@ const datasetFields: DatasetSection[] = [
                     "Indication of whether there are any additional conditions set for use if any, multiple requirements may be provided.",
             },
             {
+                path: "metadata.metadata.accessibility.usage.duoCodes",
+                type: FieldType.LIST_TEXT,
+                label: "GA4GH Data Use Ontology (DUO) codes",
+                tooltip:
+                    "Machine-readable codes from the GA4GH Data Use Ontology describing the permitted or restricted uses of this dataset, e.g. DUO:0000042 (general research use). Multiple codes may apply. This is separate from data use limitation and data use requirements, which use HDR UK's own categories rather than the GA4GH ontology's identifiers.",
+            },
+            {
                 path: "metadata.metadata.accessibility.access.dataController",
                 type: FieldType.LIST_TEXT,
                 label: "Data Controller",

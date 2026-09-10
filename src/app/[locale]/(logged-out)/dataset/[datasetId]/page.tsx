@@ -8,6 +8,7 @@ import Typography from "@/components/Typography";
 import ActiveListSidebar from "@/modules/ActiveListSidebar";
 import { DataStatus } from "@/consts/application";
 import { RouteName } from "@/consts/routeName";
+import { SCHEMA_NAME, SCHEMA_VERSION } from "@/consts/schema";
 import { getDataset } from "@/utils/api";
 import { getLatestVersion } from "@/utils/dataset";
 import metaData from "@/utils/metadata";
@@ -34,9 +35,6 @@ const DATASET_STAT_PATHS = [
     "metadata.metadata.coverage.spatial",
     "metadata.metadata.accessibility.access.deliveryLeadTime",
 ];
-
-const SCHEMA_NAME = process.env.NEXT_PUBLIC_SCHEMA_NAME || "HDRUK";
-const SCHEMA_VERSION = process.env.NEXT_PUBLIC_SCHEMA_VERSION || "4.0.0";
 
 export default async function DatasetItemPage({
     params,
@@ -210,7 +208,9 @@ export default async function DatasetItemPage({
                                 }}>
                                 <Sources
                                     data={datasetVersion.metadata.metadata}
-                                    gwdmVersion={datasetVersion.metadata.gwdmVersion}
+                                    gwdmVersion={
+                                        datasetVersion.metadata.gwdmVersion
+                                    }
                                 />
                                 {data?.linkages && (
                                     <Linkages linkages={data.linkages} />
