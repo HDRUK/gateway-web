@@ -1,5 +1,6 @@
 import BoxContainer from "@/components/BoxContainer";
 import ProtectedAccountRoute from "@/components/ProtectedAccountRoute";
+import { SCHEMA_NAME, SCHEMA_VERSION } from "@/consts/schema";
 import {
     getFormHydration,
     getSchemaFromTraser,
@@ -18,9 +19,6 @@ export const metadata = metaData(
     },
     noFollowRobots
 );
-
-const SCHEMA_NAME = process.env.NEXT_PUBLIC_SCHEMA_NAME || "HDRUK";
-const SCHEMA_VERSION = process.env.NEXT_PUBLIC_SCHEMA_VERSION || "4.0.0";
 
 export default async function CreateDatasetPage({
     params,
