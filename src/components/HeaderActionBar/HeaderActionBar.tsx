@@ -46,6 +46,10 @@ const HeaderActionBar = ({
                 buttonSx={{
                     m: 0,
                     alignSelf: "flex-start",
+
+                    [theme.breakpoints.up("lg")]: {
+                        alignSelf: "center",
+                    },
                 }}
                 onClick={() => router.push(backButtonHref)}
             />

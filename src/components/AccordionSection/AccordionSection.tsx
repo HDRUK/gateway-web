@@ -2,7 +2,6 @@ import { ReactNode, useState } from "react";
 import { Box, Typography } from "@mui/material";
 import { useTranslations } from "next-intl";
 import Accordion, { AccordionProps } from "@/components/Accordion/Accordion";
-import { PaneTitle } from "@/components/AccordionSectionSplit/AccordionSectionSplit.styles";
 import BoxContainer from "@/components/BoxContainer";
 import { ShowMoreButton } from "@/components/ShowMore";
 import AccordionCard from "./AccordionCard";
@@ -11,7 +10,6 @@ export interface AccordionSectionProps
     extends Omit<AccordionProps, "contents"> {
     contents: ReactNode[];
     limitRows?: number;
-    title: string;
 }
 
 const TRANSLATION_PATH = "components.ShowMore";
@@ -19,8 +17,8 @@ const TRANSLATION_PATH = "components.ShowMore";
 export default function AccordionSection({
     contents,
     heading,
-    title,
     limitRows = 6,
+    sx,
     ...restProps
 }: AccordionSectionProps) {
     const limitItems = contents.slice(0, limitRows);
@@ -36,20 +34,31 @@ export default function AccordionSection({
             noIndent
             elevation={0}
             headingComponent="h2"
+            sx={{
+                "&:not(:last-of-type)": {
+                    borderBottom: 1,
+                    borderColor: "greyCustom.main",
+                },
+                ".MuiAccordionSummary-root": {
+                    padding: theme => theme.spacing(2.5, 0),
+                },
+                ".MuiAccordionSummary-content, .MuiAccordionSummary-content.Mui-expanded":
+                    {
+                        marginTop: 0,
+                        marginBottom: 0,
+                    },
+                ...sx,
+            }}
             heading={
                 <Typography
-                    variant="h2"
+                    variant="articleLead"
                     component="span"
-                    color="primary"
-                    sx={{ fontWeight: 400, mb: 0 }}>
-                    {title}
+                    sx={{ mb: 0 }}>
+                    {heading}
                 </Typography>
             }
             contents={
                 <>
-                    <PaneTitle variant="articleLead" sx={{ mb: 2 }}>
-                        {heading}
-                    </PaneTitle>
                     <BoxContainer
                         sx={{
                             gridTemplateColumns: {

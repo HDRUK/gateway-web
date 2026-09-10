@@ -31,7 +31,6 @@ describe("AccordionSection", () => {
         render(
             <AccordionSection
                 heading="Accordion"
-                title="Accordion"
                 contents={mockContents}
             />
         );
@@ -63,7 +62,6 @@ describe("AccordionSection", () => {
         render(
             <AccordionSection
                 heading="Accordion"
-                title="Accordion"
                 contents={mockContents}
             />
         );

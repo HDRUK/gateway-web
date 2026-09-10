@@ -1,13 +1,20 @@
 "use client";
 
 import { useCallback, useState, useEffect } from "react";
-import { Menu, MenuItem, useMediaQuery, useTheme } from "@mui/material";
+import { Button } from "@hdruk/ui";
+import {
+    Menu,
+    MenuItem,
+    SxProps,
+    Theme,
+    useMediaQuery,
+    useTheme,
+} from "@mui/material";
 import { toNumber } from "lodash";
 import { useTranslations } from "next-intl";
 import { usePathname, useSearchParams } from "next/navigation";
 import ActiveList from "@/components/ActiveList";
 import Box from "@/components/Box";
-import { Button } from "@hdruk/ui";
 import { ChevronThinIcon } from "@/consts/icons";
 import {
     ActiveLinkWrapper,
@@ -21,11 +28,13 @@ const MOBILE_SCROLL_OFFSET = 60;
 const ActiveListSidebar = ({
     items,
     disableSticky,
+    sx,
 }: {
     items: {
         label: string;
     }[];
     disableSticky?: boolean;
+    sx?: SxProps<Theme>;
 }) => {
     const t = useTranslations(TRANSLATION_PATH);
 
@@ -88,7 +97,10 @@ const ActiveListSidebar = ({
             {!isMobile && (
                 <Wrapper
                     disableSticky={disableSticky}
-                    sx={{ gridColumn: { sm: "span 1", md: "span 1" } }}>
+                    sx={{
+                        gridColumn: { sm: "span 1", md: "span 1" },
+                        ...sx,
+                    }}>
                     <BookmarkText>{t("bookmarks")}</BookmarkText>
                     <ActiveLinkWrapper>
                         <ActiveList
@@ -100,7 +112,7 @@ const ActiveListSidebar = ({
                 </Wrapper>
             )}
             {isMobile && (
-                <Wrapper>
+                <Wrapper sx={sx}>
                     <Box
                         sx={{
                             width: "100%",

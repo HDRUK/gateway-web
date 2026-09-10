@@ -7,6 +7,7 @@ import {
     useFieldArray,
     FieldValues,
 } from "react-hook-form";
+import { Button, Loading } from "@hdruk/ui";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { get, omit } from "lodash";
 import { useTranslations } from "next-intl";
@@ -27,7 +28,6 @@ import { Team } from "@/interfaces/Team";
 import { Defs } from "@/interfaces/V4Schema";
 import { OptionsType } from "@/components/Autocomplete/Autocomplete";
 import Box from "@/components/Box";
-import { Button, Loading } from "@hdruk/ui";
 import Form from "@/components/Form";
 import FormBanner, { NAVBAR_ID } from "@/components/FormBanner/FormBanner";
 import FormLegend from "@/components/FormLegend";
@@ -807,7 +807,7 @@ const CreateDataset = ({
                 actionButtonsEnabled={!isSaving}
             />
 
-            <Box sx={{ display: "flex", flexDirection: "row", p: 0, }}>
+            <Box sx={{ display: "flex", flexDirection: "row", p: 0 }}>
                 <Box
                     sx={{
                         flex: 1,
@@ -839,7 +839,7 @@ const CreateDataset = ({
                 {currentSectionIndex < formSections.length - 1 &&
                 currentSectionIndex > 0 ? (
                     <>
-                        <Box sx={{ flex: 2, p: 0, }}>
+                        <Box sx={{ flex: 2, p: 0 }}>
                             <FormProvider {...methods}>
                                 <Form>
                                     <Paper
@@ -848,7 +848,9 @@ const CreateDataset = ({
                                             marginBottom: "10px",
                                             padding: 2,
                                         }}>
-                                        <Typography variant="h2">
+                                        <Typography
+                                            variant="articleLead"
+                                            component="h2">
                                             {capitalise(
                                                 splitCamelcase(
                                                     selectedFormSection
@@ -939,25 +941,28 @@ const CreateDataset = ({
                             </FormProvider>
                         </Box>
                         {currentSectionIndex > 0 && (
-                            <Box sx={{
-                                position: "sticky",
-                                top: guidanceOffset,
-                                padding: 0,
-                                flex: 1,
-                                alignSelf: "flex-start",
-                                maxHeight: `calc(100vh - ${guidanceOffset})`,
-                                overflow: 'auto'
-                            }}>
+                            <Box
+                                sx={{
+                                    position: "sticky",
+                                    top: guidanceOffset,
+                                    padding: 0,
+                                    flex: 1,
+                                    alignSelf: "flex-start",
+                                    maxHeight: `calc(100vh - ${guidanceOffset})`,
+                                    overflow: "auto",
+                                }}>
                                 <Paper
-                                    sx={{                                    
+                                    sx={{
                                         alignItems: "center",
                                         padding: theme.spacing(2),
                                         margin: theme.spacing(1.25),
                                         wordBreak: "break-word",
                                         height: "100%",
-                                        minHeight: '20vh',
-                                      }}>
-                                    <Typography variant="h2">
+                                        minHeight: "20vh",
+                                    }}>
+                                    <Typography
+                                        variant="articleLead"
+                                        component="h2">
                                         {t("guidance")}
                                     </Typography>
 

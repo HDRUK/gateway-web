@@ -61,7 +61,8 @@ export default async function DataUseItemPage({
                             py: 3,
                         }}>
                         <Typography
-                            variant="h2"
+                            variant="articleLead"
+                            component="h2"
                             sx={{ pt: 0.5, pb: 0.5, m: 0 }}
                             id="anchor1">
                             {data.project_title}

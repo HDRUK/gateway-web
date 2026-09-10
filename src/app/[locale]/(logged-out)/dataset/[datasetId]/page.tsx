@@ -122,8 +122,7 @@ export default async function DatasetItemPage({
                                         flexWrap: "wrap",
                                         alignItems: "baseline",
                                         gap: 1,
-                                        pt: 0.5,
-                                        pb: 0.5,
+                                        p: 0,
                                     }}>
                                     <Typography
                                         variant="articleLead"
