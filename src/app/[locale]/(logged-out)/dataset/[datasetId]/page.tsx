@@ -97,11 +97,6 @@ export default async function DatasetItemPage({
         "metadata.metadata.summary.dataCustodian.name"
     );
 
-    const dataCustodianId = get(
-        datasetVersion,
-        "metadata.metadata.summary.dataCustodian.identifier"
-    );
-
     return (
         <LayoutDataItemPage
             navigation={<ActiveListSidebar items={activeLinkList} />}
@@ -132,7 +127,7 @@ export default async function DatasetItemPage({
                                                 ?.summary?.title
                                         }
                                     </Typography>
-                                    {dataCustodianName && dataCustodianId && (
+                                    {dataCustodianName && data?.team?.id && (
                                         <>
                                             <Typography
                                                 variant="articleLead"
@@ -141,7 +136,7 @@ export default async function DatasetItemPage({
                                             </Typography>
                                             <Link
                                                 variant="articleLead"
-                                                href={`/${RouteName.DATA_CUSTODIANS_ITEM}/${dataCustodianId}`}>
+                                                href={`/${RouteName.DATA_CUSTODIANS_ITEM}/${data?.team?.id}`}>
                                                 {dataCustodianName}
                                             </Link>
                                         </>
