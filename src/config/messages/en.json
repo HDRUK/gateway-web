@@ -124,6 +124,7 @@
         "enabled": "Enabled",
         "all": "All",
         "notReported": "Not reported",
+        "none": "None",
         "dar": {
             "status": {
                 "all": "All",
