@@ -49,7 +49,6 @@ const DOI_URL = "https://doi.org/";
 const DOI_NAME_PATH = "metadata.metadata.summary.doiName";
 const FOLLOWUP_PATH = "metadata.metadata.coverage.followUp";
 const CITATION_PATH = "metadata.metadata.accessibility.usage.resourceCreator";
-const DUO_CODES_PATH = "metadata.metadata.accessibility.usage.duoCodes";
 
 const columnHelper = createColumnHelper<Observation>();
 
@@ -287,10 +286,7 @@ const DatasetContent = ({
                                         value === -1 ||
                                         (Array.isArray(value) && !value.length)
                                     ) {
-                                        if (field.path !== DUO_CODES_PATH) {
-                                            return null;
-                                        }
-                                        value = [t("none")];
+                                        return null;
                                     }
 
                                     if (field.path === DOI_NAME_PATH) {
