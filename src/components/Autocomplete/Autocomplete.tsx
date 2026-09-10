@@ -15,7 +15,7 @@ import MuiAutocomplete, {
 import TextField from "@mui/material/TextField";
 import { IconType } from "@/interfaces/Ui";
 import FormInputWrapper from "@/components/FormInputWrapper";
-import Loading from "../Loading";
+import { Loading } from "@hdruk/ui";
 import Typography from "../Typography";
 
 export type ValueType = string | number;

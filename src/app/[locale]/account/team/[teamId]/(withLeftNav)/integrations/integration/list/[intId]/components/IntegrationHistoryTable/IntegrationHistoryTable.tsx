@@ -17,7 +17,7 @@ import {
 import { tokens } from "@hdruk/ui/theme";
 import { PaginationType } from "@/interfaces/Pagination";
 import Box from "@/components/Box";
-import Loading from "@/components/Loading";
+import { Loading } from "@hdruk/ui";
 import Pagination from "@/components/Pagination";
 import Paper from "@/components/Paper";
 import TickCrossIcon from "@/components/TickCrossIcon";

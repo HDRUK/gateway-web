@@ -6,7 +6,7 @@ import { useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
 import { useSWRConfig } from "swr";
 import { User } from "@/interfaces/User";
-import Loading from "@/components/Loading";
+import { Loading } from "@hdruk/ui";
 import Paper from "@/components/Paper";
 import Table from "@/components/Table";
 import ChangesActionBar from "@/modules/ChangesActionBar";

@@ -37,8 +37,7 @@ import {
     ViewType,
 } from "@/interfaces/Search";
 import { V4Schema } from "@/interfaces/V4Schema";
-import { Button } from "@hdruk/ui";
-import Loading from "@/components/Loading";
+import { Button, Loading } from "@hdruk/ui";
 import Pagination from "@/components/Pagination";
 import Paper from "@/components/Paper";
 import SearchBar from "@/components/SearchBar";
@@ -1318,7 +1317,7 @@ const Search = ({ filters, schema }: SearchProps) => {
                             )}
 
                             {(isSearching || data === undefined) && (
-                                <Loading ariaLabel={t("loadingAriaLabel")} />
+                                <Loading label={t("loadingAriaLabel")} />
                             )}
 
                             {!isSearching &&

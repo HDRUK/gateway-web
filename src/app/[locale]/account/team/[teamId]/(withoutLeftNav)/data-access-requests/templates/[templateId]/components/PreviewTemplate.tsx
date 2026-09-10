@@ -2,7 +2,7 @@
 
 import { useForm } from "react-hook-form";
 import { DarQuestion } from "@/interfaces/DataAccessRequest";
-import Loading from "@/components/Loading";
+import { Loading } from "@hdruk/ui";
 import Paper from "@/components/Paper";
 import { inputComponents } from "@/config/forms";
 import { renderFormHydrationField } from "@/utils/formHydration";

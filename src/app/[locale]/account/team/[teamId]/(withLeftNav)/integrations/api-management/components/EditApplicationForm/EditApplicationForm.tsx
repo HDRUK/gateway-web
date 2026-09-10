@@ -9,10 +9,9 @@ import {
     ApplicationForm,
     ApplicationPayload,
 } from "@/interfaces/Application";
-import { Button } from "@hdruk/ui";
+import { Button, Loading } from "@hdruk/ui";
 import Form from "@/components/Form";
 import InputWrapper from "@/components/InputWrapper";
-import Loading from "@/components/Loading";
 import Paper from "@/components/Paper";
 import Typography from "@/components/Typography";
 import useGetTeam from "@/hooks/useGetTeam";

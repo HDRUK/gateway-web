@@ -6,7 +6,7 @@ import { Divider, FormControlLabel, Radio, RadioGroup } from "@mui/material";
 import MuiDialogActions from "@mui/material/DialogActions";
 import MuiDialogContent from "@mui/material/DialogContent";
 import { useTranslations } from "next-intl";
-import { Button } from "@hdruk/ui";
+import { Button, Loading } from "@hdruk/ui";
 import { tokens } from "@hdruk/ui/theme";
 import {
     ReassignEntityType,
@@ -20,7 +20,6 @@ import Accordion from "@/components/Accordion";
 import Autocomplete from "@/components/Autocomplete";
 import Box from "@/components/Box";
 import Dialog from "@/components/Dialog";
-import Loading from "@/components/Loading";
 import Typography from "@/components/Typography";
 import useDialog from "@/hooks/useDialog";
 import useGet from "@/hooks/useGet";

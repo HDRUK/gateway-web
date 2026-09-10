@@ -7,7 +7,7 @@ import {
     useFieldArray,
     FieldValues,
 } from "react-hook-form";
-import { Button } from "@hdruk/ui";
+import { Button, Loading } from "@hdruk/ui";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { get, omit } from "lodash";
 import { useTranslations } from "next-intl";
@@ -32,7 +32,6 @@ import Form from "@/components/Form";
 import FormBanner, { NAVBAR_ID } from "@/components/FormBanner/FormBanner";
 import FormLegend from "@/components/FormLegend";
 import Link from "@/components/Link";
-import Loading from "@/components/Loading";
 import { MarkDownSanitizedWithHtml } from "@/components/MarkDownSanitizedWithHTML";
 import Paper from "@/components/Paper";
 import Typography from "@/components/Typography";
