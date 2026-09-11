@@ -1,5 +1,6 @@
-import { ReactNode } from "react";
+import { ReactNode, useState } from "react";
 import { Control, FieldValues, Path, useController } from "react-hook-form";
+import { Loading } from "@hdruk/ui";
 import ClearIcon from "@mui/icons-material/Clear";
 import {
     FilterOptionsState,
@@ -10,13 +11,12 @@ import {
     Tooltip,
 } from "@mui/material";
 import MuiAutocomplete, {
+    autocompleteClasses,
     createFilterOptions,
 } from "@mui/material/Autocomplete";
 import TextField from "@mui/material/TextField";
 import { IconType } from "@/interfaces/Ui";
 import FormInputWrapper from "@/components/FormInputWrapper";
-import { Loading } from "@hdruk/ui";
-import Typography from "../Typography";
 
 export type ValueType = string | number;
 export type OptionsType = {
@@ -89,6 +89,8 @@ const Autocomplete = <T extends FieldValues>(props: AutocompleteProps<T>) => {
         ...restProps
     } = props;
 
+    const [expanded, setExpanded] = useState(false);
+
     const {
         field,
         fieldState: { error },
@@ -96,6 +98,7 @@ const Autocomplete = <T extends FieldValues>(props: AutocompleteProps<T>) => {
         name,
         control,
     });
+
     const filterOptions = (
         searchOptions: SearchOptions[],
         params: FilterOptionsState<SearchOptions>
@@ -154,10 +157,11 @@ const Autocomplete = <T extends FieldValues>(props: AutocompleteProps<T>) => {
                 options={options}
                 disabled={disabled}
                 renderTags={(tagValue, getTagProps) => {
-                    const visibleOptions = tagValue.slice(
-                        0,
-                        MAX_DISPLAYED_TAGS
-                    );
+                    const visibleOptions = expanded
+                        ? tagValue
+                        : tagValue.slice(0, MAX_DISPLAYED_TAGS);
+                    const isOverflowing =
+                        visibleOptions.length < tagValue.length;
                     const additionalOptions =
                         tagValue.length - visibleOptions.length;
 
@@ -208,10 +212,21 @@ const Autocomplete = <T extends FieldValues>(props: AutocompleteProps<T>) => {
                                 </span>
                             );
                         }),
-                        additionalOptions > 0 ? (
-                            <Typography key="more" style={{ marginLeft: 4 }}>
-                                + {additionalOptions} more
-                            </Typography>
+                        expanded || isOverflowing ? (
+                            <Chip
+                                key="toggle"
+                                className={autocompleteClasses.tag}
+                                size="small"
+                                variant="outlined"
+                                aria-expanded={expanded}
+                                label={
+                                    expanded
+                                        ? "Show fewer"
+                                        : `+ ${additionalOptions} more`
+                                }
+                                onMouseDown={event => event.preventDefault()}
+                                onClick={() => setExpanded(!expanded)}
+                            />
                         ) : null,
                     ];
                 }}

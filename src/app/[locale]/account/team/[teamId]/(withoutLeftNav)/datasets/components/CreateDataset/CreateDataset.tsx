@@ -906,6 +906,9 @@ const CreateDataset = ({
 
                                                             return fields?.length ? (
                                                                 <FormFieldArray
+                                                                    key={
+                                                                        fieldParent.title
+                                                                    }
                                                                     schemadefs={
                                                                         schemadefs
                                                                     }
