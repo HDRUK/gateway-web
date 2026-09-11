@@ -60,7 +60,7 @@ interface SearchOptions {
     label: string;
 }
 
-const MAX_DISPLAYED_TAGS = 30;
+const MAX_DISPLAYED_TAGS = 20;
 
 const Autocomplete = <T extends FieldValues>(props: AutocompleteProps<T>) => {
     const {
