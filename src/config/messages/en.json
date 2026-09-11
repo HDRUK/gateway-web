@@ -960,6 +960,7 @@
                         "list": {
                             "title": "Custom Integrations",
                             "create": "Add Custom Integration",
+                            "empty": "No Custom Integrations found on the Gateway for your team.",
                             "tabs": {
                                 "all": "All",
                                 "enabled": "Enabled",

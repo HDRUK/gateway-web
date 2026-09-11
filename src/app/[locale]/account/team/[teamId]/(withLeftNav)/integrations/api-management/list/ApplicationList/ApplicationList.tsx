@@ -3,11 +3,14 @@
 import { useEffect, useState } from "react";
 import { useTranslations } from "next-intl";
 import { useParams, useSearchParams } from "next/navigation";
+import { Loading } from "@hdruk/ui";
 import { tokens } from "@hdruk/ui/theme";
 import { Application } from "@/interfaces/Application";
 import { PaginationType } from "@/interfaces/Pagination";
+import Box from "@/components/Box";
 import BoxContainer from "@/components/BoxContainer";
 import Pagination from "@/components/Pagination";
+import Paper from "@/components/Paper";
 import Tabs from "@/components/Tabs";
 import useGet from "@/hooks/useGet";
 import apis from "@/config/apis";
@@ -81,12 +84,29 @@ const ApplicationList = () => {
 
             <ApplicationSearchBar setQueryParams={setQueryParams} />
 
+            {isLoading && (
+                <Box
+                    sx={{
+                        display: "flex",
+                        alignContent: "center",
+                        justifyContent: "center",
+                        width: "100%",
+                    }}>
+                    <Loading />
+                </Box>
+            )}
+
             {list?.map(application => (
                 <ApplicationListItem
                     key={application.id}
                     application={application}
                 />
             ))}
+
+            {!isLoading && list?.length === 0 && (
+                <Paper sx={{ p: 2, mb: 2 }}>{t("empty")}</Paper>
+            )}
+
             <Pagination
                 isLoading={isLoading}
                 page={parseInt(queryParams.page, 10)}
