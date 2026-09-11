@@ -1,10 +1,4 @@
-import {
-    ReactNode,
-    useCallback,
-    useEffect,
-    useLayoutEffect,
-    useState,
-} from "react";
+import { ReactNode, useState } from "react";
 import { Control, FieldValues, Path, useController } from "react-hook-form";
 import { Loading } from "@hdruk/ui";
 import ClearIcon from "@mui/icons-material/Clear";
@@ -23,7 +17,6 @@ import MuiAutocomplete, {
 import TextField from "@mui/material/TextField";
 import { IconType } from "@/interfaces/Ui";
 import FormInputWrapper from "@/components/FormInputWrapper";
-import { countTagsWithinRows } from "./utils";
 
 export type ValueType = string | number;
 export type OptionsType = {
@@ -67,8 +60,7 @@ interface SearchOptions {
     label: string;
 }
 
-const MAX_COLLAPSED_ROWS = 5;
-const RESIZE_SETTLE_MS = 150;
+const MAX_DISPLAYED_TAGS = 30;
 
 const Autocomplete = <T extends FieldValues>(props: AutocompleteProps<T>) => {
     const {
@@ -98,17 +90,6 @@ const Autocomplete = <T extends FieldValues>(props: AutocompleteProps<T>) => {
     } = props;
 
     const [expanded, setExpanded] = useState(false);
-    const [tagContainer, setTagContainer] = useState<HTMLElement | null>(null);
-    const [measured, setMeasured] = useState<{
-        valueCount: number;
-        visibleCount: number;
-    } | null>(null);
-
-    const setInputRef = useCallback(
-        (node: HTMLInputElement | null) =>
-            setTagContainer(node?.parentElement ?? null),
-        []
-    );
 
     const {
         field,
@@ -118,49 +99,6 @@ const Autocomplete = <T extends FieldValues>(props: AutocompleteProps<T>) => {
         control,
     });
 
-    const valueCount = Array.isArray(field.value) ? field.value.length : 0;
-    const visibleCount =
-        measured?.valueCount === valueCount ? measured.visibleCount : null;
-
-    useLayoutEffect(() => {
-        if (!tagContainer || expanded || visibleCount !== null) return;
-
-        const offsetTops = Array.from(
-            tagContainer.querySelectorAll<HTMLElement>(
-                `.${autocompleteClasses.tag}`
-            )
-        ).map(element => element.offsetTop);
-
-        // Laying the tags out is what tells us how many fit, so the count can
-        // only come from the DOM after paint. The guard above caps it at one
-        // extra render per value set.
-        // eslint-disable-next-line react-hooks/set-state-in-effect
-        setMeasured({
-            valueCount,
-            visibleCount: countTagsWithinRows(offsetTops, MAX_COLLAPSED_ROWS),
-        });
-    }, [tagContainer, expanded, visibleCount, valueCount]);
-
-    useEffect(() => {
-        let width = window.innerWidth;
-        let settleTimer: ReturnType<typeof setTimeout>;
-
-        const handleResize = () => {
-            if (width === window.innerWidth) return;
-
-            width = window.innerWidth;
-
-            clearTimeout(settleTimer);
-            settleTimer = setTimeout(() => setMeasured(null), RESIZE_SETTLE_MS);
-        };
-
-        window.addEventListener("resize", handleResize);
-
-        return () => {
-            clearTimeout(settleTimer);
-            window.removeEventListener("resize", handleResize);
-        };
-    }, []);
     const filterOptions = (
         searchOptions: SearchOptions[],
         params: FilterOptionsState<SearchOptions>
@@ -219,10 +157,9 @@ const Autocomplete = <T extends FieldValues>(props: AutocompleteProps<T>) => {
                 options={options}
                 disabled={disabled}
                 renderTags={(tagValue, getTagProps) => {
-                    const visibleOptions =
-                        visibleCount !== null && !expanded
-                            ? tagValue.slice(0, visibleCount)
-                            : tagValue;
+                    const visibleOptions = expanded
+                        ? tagValue
+                        : tagValue.slice(0, MAX_DISPLAYED_TAGS);
                     const isOverflowing =
                         visibleOptions.length < tagValue.length;
                     const additionalOptions =
@@ -314,7 +251,6 @@ const Autocomplete = <T extends FieldValues>(props: AutocompleteProps<T>) => {
                 renderInput={params => (
                     <TextField
                         {...params}
-                        inputRef={setInputRef}
                         sx={{ padding: 0 }}
                         placeholder={placeholder}
                         InputProps={{
