@@ -19,20 +19,30 @@ const colors = [
     { value: "yellow", label: "Yellow" },
 ];
 
+const dois = Array.from(
+    { length: 46 },
+    (_, index) => `10.1000/journal.example.${index}`
+);
+
 const WrapperComponent = (
     props: Omit<
         AutocompleteProps<{ [key: string]: string }>,
         "control" | "name" | "label"
-    >
+    > & { defaultValue?: string[] }
 ) => {
-    const { control } = useForm<{ fieldName: string }>();
+    const { defaultValue, ...rest } = props;
+    const { control } = useForm<{ fieldName: string }>({
+        defaultValues: { fieldName: defaultValue } as unknown as {
+            fieldName: string;
+        },
+    });
 
     return (
         <Autocomplete
             control={control}
             label="Select an option"
             name="fieldName"
-            {...props}
+            {...rest}
         />
     );
 };
@@ -58,4 +68,16 @@ export const CreateChips: Story = {
         canCreate: true,
     },
     render: props => <WrapperComponent {...props} />,
+};
+
+export const ManyValues: Story = {
+    args: {
+        name: "publications",
+        label: "Publication using the dataset",
+        placeholder: "10.1001/jamapediatrics.2016.3633",
+        freeSolo: true,
+        multiple: true,
+        canCreate: true,
+    },
+    render: props => <WrapperComponent {...props} defaultValue={dois} />,
 };

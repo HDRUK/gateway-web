@@ -11,4 +11,17 @@ const getChipLabel = (
     return options.find(option => option.value === value)?.label;
 };
 
-export { getChipLabel };
+const countTagsWithinRows = (offsetTops: number[], maxRows: number) => {
+    const rows = [...new Set(offsetTops)];
+
+    if (rows.length <= maxRows) {
+        return offsetTops.length;
+    }
+
+    const lastVisibleRow = rows[maxRows - 1];
+    const fitting = offsetTops.filter(top => top <= lastVisibleRow).length;
+
+    return Math.max(fitting - 1, 1);
+};
+
+export { countTagsWithinRows, getChipLabel };
