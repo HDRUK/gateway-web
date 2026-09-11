@@ -63,9 +63,9 @@ describe("Autocomplete", () => {
         };
 
         it("should render every value when within the limit", () => {
-            render(<MultipleWrapper values={createValues(30)} />);
+            render(<MultipleWrapper values={createValues(20)} />);
 
-            expect(screen.getByText("10.1000/doi29")).toBeInTheDocument();
+            expect(screen.getByText("10.1000/doi19")).toBeInTheDocument();
             expect(
                 screen.queryByRole("button", { name: /more$/ })
             ).not.toBeInTheDocument();
@@ -75,17 +75,17 @@ describe("Autocomplete", () => {
             render(<MultipleWrapper values={createValues(46)} />);
 
             expect(
-                screen.getByRole("button", { name: "+ 16 more" })
+                screen.getByRole("button", { name: "+ 26 more" })
             ).toBeInTheDocument();
-            expect(screen.getByText("10.1000/doi29")).toBeInTheDocument();
-            expect(screen.queryByText("10.1000/doi30")).not.toBeInTheDocument();
+            expect(screen.getByText("10.1000/doi19")).toBeInTheDocument();
+            expect(screen.queryByText("10.1000/doi20")).not.toBeInTheDocument();
         });
 
         it("should reveal and re-hide every value when toggled", async () => {
             render(<MultipleWrapper values={createValues(46)} />);
 
             await userEvent.click(
-                screen.getByRole("button", { name: "+ 16 more" })
+                screen.getByRole("button", { name: "+ 26 more" })
             );
 
             expect(screen.getByText("10.1000/doi45")).toBeInTheDocument();
@@ -97,7 +97,7 @@ describe("Autocomplete", () => {
 
             expect(screen.queryByText("10.1000/doi45")).not.toBeInTheDocument();
             expect(
-                screen.getByRole("button", { name: "+ 16 more" })
+                screen.getByRole("button", { name: "+ 26 more" })
             ).toBeInTheDocument();
         });
 
@@ -105,11 +105,11 @@ describe("Autocomplete", () => {
             render(<MultipleWrapper values={createValues(46)} />);
 
             await userEvent.click(
-                screen.getByRole("button", { name: "+ 16 more" })
+                screen.getByRole("button", { name: "+ 26 more" })
             );
 
             const chip = screen
-                .getByText("10.1000/doi30")
+                .getByText("10.1000/doi20")
                 .closest(".MuiChip-root") as HTMLElement;
 
             await userEvent.click(
@@ -118,7 +118,7 @@ describe("Autocomplete", () => {
 
             expect(screen.getByTestId("current-value")).toHaveTextContent(
                 createValues(46)
-                    .filter(value => value !== "10.1000/doi30")
+                    .filter(value => value !== "10.1000/doi20")
                     .join(",")
             );
         });

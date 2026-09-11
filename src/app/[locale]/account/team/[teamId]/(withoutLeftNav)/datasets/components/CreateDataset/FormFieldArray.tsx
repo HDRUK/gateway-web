@@ -88,7 +88,7 @@ const FormFieldArray = ({
                 formArrayValues?.map((_, index) => (
                     <DatasetTypeFormFieldRow
                         schemadefs={schemadefs}
-                        key={fieldParent.title}
+                        key={`${fieldParent.title}${index}`}
                         index={index}
                         control={control}
                         fieldParent={fieldParent}
@@ -102,7 +102,7 @@ const FormFieldArray = ({
             {!isDatasetType &&
                 formArrayValues?.map((field, index) => (
                     <Box
-                        key={`${fieldParent.title}${field.id}`}
+                        key={`${fieldParent.title}${index}`}
                         sx={{ mb: theme.spacing(3) }}>
                         {Object.entries(field)
                             .filter(([key]) => key !== "id")
