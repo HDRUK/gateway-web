@@ -308,6 +308,12 @@ const renderFormHydrationField = (
         return null;
     }
 
+    const displayOptions = options?.map(option =>
+        String(option.value) === option.label
+            ? option
+            : { ...option, label: `${option.value} (${option.label})` }
+    );
+
     return (
         <InputWrapper
             name={nameOverride || name}
@@ -334,17 +340,14 @@ const renderFormHydrationField = (
                     value: string | number;
                     label: string;
                 }[],
-                selectedOption: {
-                    value: string | number;
-                    label: string;
-                }
+                selectedOption: string | number
             ) =>
-                options.find(option => option === selectedOption)?.label ||
-                selectedOption?.value ||
-                selectedOption
+                options.find(option => option.value === selectedOption)
+                    ?.label ?? String(selectedOption ?? "")
             }
             onFocus={() => setActiveField && setActiveField(name)}
             {...rest}
+            options={displayOptions}
             label={name || ""}
             {...fileUploadFields}
         />
@@ -364,7 +367,9 @@ const formatValidationItems = (items: Partial<FormHydrationValidation>[]) => ({
         ),
 });
 
-const generateValidationRules = (validationFields: FormHydrationValidation[]) => {
+const generateValidationRules = (
+    validationFields: FormHydrationValidation[]
+) => {
     const transformedObject: Record<
         string,
         Omit<FormHydrationValidation, "title">
