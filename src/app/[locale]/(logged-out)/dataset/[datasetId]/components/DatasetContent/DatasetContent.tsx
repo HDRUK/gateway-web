@@ -3,7 +3,7 @@
 import { Button } from "@hdruk/ui";
 import { tokens } from "@hdruk/ui/theme";
 import { createColumnHelper } from "@tanstack/react-table";
-import { get, isArray } from "lodash";
+import { get, isArray, isEmpty, isPlainObject, startCase } from "lodash";
 import { useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
 import { VersionItem } from "@/interfaces/Dataset";
@@ -38,6 +38,7 @@ import {
 import {
     DatasetButtonItem,
     DatasetFieldWrapper,
+    KeyValueLabel,
     ListContainer,
     ObservationTableWrapper,
 } from "./DatasetContent.styles";
@@ -87,6 +88,12 @@ const renderObservationsTable = (
         />
     </ObservationTableWrapper>
 );
+
+const isEmptyValue = (value: unknown) =>
+    !value ||
+    value === -1 ||
+    (isArray(value) && !value.length) ||
+    (isPlainObject(value) && isEmpty(value));
 
 const DatasetContent = ({
     data,
@@ -168,6 +175,28 @@ const DatasetContent = ({
 
             case FieldType.LIST_DATASETTYPE: {
                 return value.map((item, i) => [i > 0 && ", ", item.name]);
+            }
+
+            case FieldType.KEY_VALUE: {
+                return (
+                    <ListContainer>
+                        {Object.entries(
+                            value as unknown as Record<string, unknown>
+                        )
+                            .filter(([, entry]) => !isEmptyValue(entry))
+                            .map(([key, entry]) => (
+                                <div key={key}>
+                                    <KeyValueLabel>
+                                        {startCase(key)}
+                                    </KeyValueLabel>
+                                    :{" "}
+                                    {isArray(entry)
+                                        ? entry.join(", ")
+                                        : String(entry)}
+                                </div>
+                            ))}
+                    </ListContainer>
+                );
             }
 
             default: {
@@ -281,11 +310,7 @@ const DatasetContent = ({
                                 section.fields.map(field => {
                                     let value = get(data, field.path);
 
-                                    if (
-                                        !value ||
-                                        value === -1 ||
-                                        (Array.isArray(value) && !value.length)
-                                    ) {
+                                    if (isEmptyValue(value)) {
                                         return null;
                                     }
 

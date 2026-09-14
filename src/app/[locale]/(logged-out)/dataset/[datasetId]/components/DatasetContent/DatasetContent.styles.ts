@@ -32,6 +32,10 @@ export const DatasetButtonItem = styled(Button)(() => ({
     marginBottom: "4px",
 }));
 
+export const KeyValueLabel = styled("span")(({ theme }) => ({
+    fontWeight: theme.typography.fontWeightBold,
+}));
+
 export const ListContainer = styled("div")(({ theme }) => ({
     padding: 0,
     display: "flex",

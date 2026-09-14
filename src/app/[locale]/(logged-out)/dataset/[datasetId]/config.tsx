@@ -380,6 +380,13 @@ const datasetFields: DatasetSection[] = [
                     "Indication of whether there are any additional conditions set for use if any, multiple requirements may be provided.",
             },
             {
+                path: "metadata.metadata.accessibility.usage.dataUsePermissions",
+                type: FieldType.KEY_VALUE,
+                label: "Data use permissions",
+                tooltip:
+                    "Permissions relating to how people and materials within this dataset may be used, beyond the general access and use conditions described elsewhere in this section.",
+            },
+            {
                 path: "metadata.metadata.accessibility.usage.duoCodes",
                 type: FieldType.LIST_TEXT,
                 label: "GA4GH Data Use Ontology (DUO) codes",
