@@ -1,6 +1,6 @@
+import { Button } from "@hdruk/ui";
 import { styled } from "@mui/material";
 import Box from "@/components/Box";
-import { Button } from "@hdruk/ui";
 import Chip from "@/components/Chip";
 
 export const ObservationTableWrapper = styled(Box)(({ theme }) => ({
@@ -30,10 +30,6 @@ export const DatasetButtonItem = styled(Button)(() => ({
     overflow: "hidden",
     whiteSpace: "nowrap",
     marginBottom: "4px",
-}));
-
-export const KeyValueLabel = styled("span")(({ theme }) => ({
-    fontWeight: theme.typography.fontWeightBold,
 }));
 
 export const ListContainer = styled("div")(({ theme }) => ({
