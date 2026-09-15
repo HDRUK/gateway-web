@@ -1,7 +1,7 @@
 import { act } from "@testing-library/react";
 import { renderHook } from "@/utils/testUtils";
 import { ARDC_SOURCE_VALUE } from "@/consts/search";
-import { SearchAggregationData } from "@/interfaces/Search";
+import { SearchAggregationData, SearchPollData } from "@/interfaces/Search";
 import useLoadExternalData from "./useLoadExternalData";
 
 jest.mock("@/hooks/useGet");
@@ -27,25 +27,51 @@ const ardcResult = {
     ids: [],
 };
 
-const resolvedPollData: SearchAggregationData = {
-    ...baseV2Data,
+const resolvedPollData: SearchPollData = {
     pending: [],
     results: { [ARDC_SOURCE_VALUE]: ardcResult },
 };
 
-let capturedOnSuccess: ((data: SearchAggregationData) => void) | undefined;
+const pendingPollData: SearchPollData = {
+    pending: [ARDC_SOURCE_VALUE],
+    results: {},
+};
+
+// the hook only ever sees poll data belonging to the token in its own swr key,
+// so the mock is driven per url
+let pollDataByUrl: Record<string, SearchPollData | null | undefined> = {};
+let capturedOnSuccess: ((data: SearchPollData | null) => void) | undefined;
 let capturedOnError: (() => void) | undefined;
 
+// the api service swallows http errors and resolves null, so this — not
+// onError — is how a failed poll actually reaches the hook
+const failPoll = (times = 1) => {
+    for (let i = 0; i < times; i += 1) {
+        capturedOnSuccess?.(null);
+    }
+};
+
+const succeedPoll = (data: SearchPollData) => capturedOnSuccess?.(data);
+
 beforeEach(() => {
+    pollDataByUrl = {};
     capturedOnSuccess = undefined;
     capturedOnError = undefined;
     mockUseGet.mockClear();
-    mockUseGet.mockImplementation((_url: unknown, options: Record<string, unknown>) => {
-        capturedOnSuccess = options?.onSuccess as typeof capturedOnSuccess;
-        capturedOnError = options?.onError as typeof capturedOnError;
-        return { data: undefined, isLoading: false, mutate: jest.fn() };
-    });
+    mockUseGet.mockImplementation(
+        (url: string | null, options: Record<string, unknown>) => {
+            capturedOnSuccess = options?.onSuccess as typeof capturedOnSuccess;
+            capturedOnError = options?.onError as typeof capturedOnError;
+
+            const data =
+                url && options?.shouldFetch ? pollDataByUrl[url] : undefined;
+
+            return { data, isLoading: false, mutate: jest.fn() };
+        }
+    );
 });
+
+const lastOptions = () => mockUseGet.mock.calls.at(-1)?.[1];
 
 describe("useLoadExternalData", () => {
     describe("polling gate", () => {
@@ -81,6 +107,13 @@ describe("useLoadExternalData", () => {
             expect(options.refreshInterval).toBe(500);
         });
 
+        it("polls the url for the current token", () => {
+            renderHook(() => useLoadExternalData(baseV2Data, true));
+
+            const [url] = mockUseGet.mock.calls[0];
+            expect(url).toContain("tok-1");
+        });
+
         it("returns isPolling true while polling", () => {
             const { result } = renderHook(() =>
                 useLoadExternalData(baseV2Data, true)
@@ -96,13 +129,15 @@ describe("useLoadExternalData", () => {
         });
     });
 
-    describe("onSuccess — all pending resolved", () => {
+    describe("resolved polls", () => {
         it("stops polling and returns results when all pending providers resolve", () => {
-            const { result } = renderHook(() =>
+            const { result, rerender } = renderHook(() =>
                 useLoadExternalData(baseV2Data, true)
             );
 
-            act(() => capturedOnSuccess?.(resolvedPollData));
+            const [url] = mockUseGet.mock.calls[0];
+            pollDataByUrl[url] = resolvedPollData;
+            rerender();
 
             expect(result.current.isPolling).toBe(false);
             expect(result.current.externalResults[ARDC_SOURCE_VALUE]).toEqual(
@@ -110,53 +145,210 @@ describe("useLoadExternalData", () => {
             );
         });
 
-        it("continues polling when not all pending providers have resolved", () => {
-            const { result } = renderHook(() =>
+        it("continues polling when the poll response still lists pending providers", () => {
+            const { result, rerender } = renderHook(() =>
                 useLoadExternalData(baseV2Data, true)
             );
 
-            act(() => capturedOnSuccess?.({ ...baseV2Data, results: {} }));
+            const [url] = mockUseGet.mock.calls[0];
+            pollDataByUrl[url] = pendingPollData;
+            rerender();
 
             expect(result.current.isPolling).toBe(true);
-        });
-
-        it("continues polling when poll response still lists pending providers", () => {
-            const { result } = renderHook(() =>
-                useLoadExternalData(baseV2Data, true)
-            );
-
-            // Poll response says ARDC is still pending
-            act(() =>
-                capturedOnSuccess?.({
-                    ...baseV2Data,
-                    pending: [ARDC_SOURCE_VALUE],
-                    results: {},
-                })
-            );
-
-            expect(result.current.isPolling).toBe(true);
+            expect(result.current.externalResults).toEqual({});
         });
     });
 
-    describe("onError", () => {
-        it("stops polling on error", () => {
-            const { result } = renderHook(() =>
+    describe("failed polls", () => {
+        it("continues polling when a poll resolves null", () => {
+            const { result, rerender } = renderHook(() =>
                 useLoadExternalData(baseV2Data, true)
             );
 
-            act(() => capturedOnError?.());
+            const [url] = mockUseGet.mock.calls[0];
+            pollDataByUrl[url] = null;
+            rerender();
+
+            expect(result.current.isPolling).toBe(true);
+            expect(result.current.externalResults).toEqual({});
+        });
+
+        it("gives up after three consecutive failures", () => {
+            const { result, rerender } = renderHook(() =>
+                useLoadExternalData(baseV2Data, true)
+            );
+
+            act(() => failPoll(3));
+            rerender();
+
+            expect(result.current.isPolling).toBe(false);
+            expect(result.current.externalResults).toEqual({});
+        });
+
+        it("ignores polls that land after it stopped asking", () => {
+            let isValidating = true;
+            const { result, rerender } = renderHook(() =>
+                useLoadExternalData(baseV2Data, true, isValidating)
+            );
+
+            // a superseded request resolves while polling is paused
+            act(() => failPoll(3));
+            rerender();
+
+            isValidating = false;
+            rerender();
+
+            expect(result.current.isPolling).toBe(true);
+        });
+
+        it("counts failures via onError should the api service ever throw", () => {
+            const { result, rerender } = renderHook(() =>
+                useLoadExternalData(baseV2Data, true)
+            );
+
+            act(() => {
+                for (let i = 0; i < 3; i += 1) {
+                    capturedOnError?.();
+                }
+            });
+            rerender();
 
             expect(result.current.isPolling).toBe(false);
         });
 
-        it("returns empty results after error", () => {
-            const { result } = renderHook(() =>
+        it("keeps polling a slow provider that has not failed", () => {
+            const { result, rerender } = renderHook(() =>
                 useLoadExternalData(baseV2Data, true)
             );
 
-            act(() => capturedOnError?.());
+            const [url] = mockUseGet.mock.calls[0];
+            pollDataByUrl[url] = pendingPollData;
+
+            act(() => {
+                for (let i = 0; i < 10; i += 1) {
+                    succeedPoll(pendingPollData);
+                }
+            });
+            rerender();
+
+            expect(result.current.isPolling).toBe(true);
+        });
+
+        it("resets the failure count when a poll succeeds", () => {
+            const { result, rerender } = renderHook(() =>
+                useLoadExternalData(baseV2Data, true)
+            );
+
+            act(() => {
+                failPoll(2);
+                succeedPoll(pendingPollData);
+                failPoll(2);
+            });
+            rerender();
+
+            expect(result.current.isPolling).toBe(true);
+        });
+
+        it("polls again for a new token after giving up", () => {
+            let v2Data = baseV2Data;
+            const { result, rerender } = renderHook(() =>
+                useLoadExternalData(v2Data, true)
+            );
+
+            act(() => failPoll(3));
+            rerender();
+            expect(result.current.isPolling).toBe(false);
+
+            v2Data = { ...baseV2Data, token: "tok-retry" };
+            rerender();
+
+            expect(result.current.isPolling).toBe(true);
+            expect(mockUseGet.mock.calls.at(-1)?.[0]).toContain("tok-retry");
+        });
+    });
+
+    describe("a token that only ever fails", () => {
+        it("asks for a fresh aggregation once the failure budget is spent", () => {
+            const refreshAggregation = jest.fn();
+            const { rerender } = renderHook(() =>
+                useLoadExternalData(baseV2Data, true, false, refreshAggregation)
+            );
+
+            act(() => failPoll(3));
+            rerender();
+
+            expect(refreshAggregation).toHaveBeenCalledTimes(1);
+        });
+
+        it("does not ask again for the same query", () => {
+            const refreshAggregation = jest.fn();
+            let v2Data = baseV2Data;
+            const { rerender } = renderHook(() =>
+                useLoadExternalData(v2Data, true, false, refreshAggregation)
+            );
+
+            act(() => failPoll(3));
+            rerender();
+
+            // the fresh token fails too
+            v2Data = { ...baseV2Data, token: "tok-fresh" };
+            rerender();
+            act(() => failPoll(3));
+            rerender();
+
+            expect(refreshAggregation).toHaveBeenCalledTimes(1);
+        });
+
+        it("asks again when the query changes", () => {
+            const refreshAggregation = jest.fn();
+            let v2Data = baseV2Data;
+            const { rerender } = renderHook(() =>
+                useLoadExternalData(v2Data, true, false, refreshAggregation)
+            );
+
+            act(() => failPoll(3));
+            rerender();
+
+            v2Data = { ...baseV2Data, query: "diabetes", token: "tok-2" };
+            rerender();
+            act(() => failPoll(3));
+            rerender();
+
+            expect(refreshAggregation).toHaveBeenCalledTimes(2);
+        });
+
+        it("does not ask when the poll has not failed", () => {
+            const refreshAggregation = jest.fn();
+            const { rerender } = renderHook(() =>
+                useLoadExternalData(baseV2Data, true, false, refreshAggregation)
+            );
+
+            act(() => succeedPoll(pendingPollData));
+            rerender();
+
+            expect(refreshAggregation).not.toHaveBeenCalled();
+        });
+    });
+
+    describe("superseded tokens", () => {
+        it("does not cache a poll belonging to a superseded token", () => {
+            let v2Data = baseV2Data;
+            const { result, rerender } = renderHook(() =>
+                useLoadExternalData(v2Data, true)
+            );
+
+            const [firstUrl] = mockUseGet.mock.calls[0];
+
+            // the user searches again before the first poll resolves
+            v2Data = { ...baseV2Data, query: "diabetes", token: "tok-2" };
+            rerender();
+
+            // the first token's poll resolves late
+            pollDataByUrl[firstUrl] = resolvedPollData;
+            rerender();
 
             expect(result.current.externalResults).toEqual({});
+            expect(result.current.isPolling).toBe(true);
         });
     });
 
@@ -167,7 +359,9 @@ describe("useLoadExternalData", () => {
                 useLoadExternalData(v2Data, true)
             );
 
-            act(() => capturedOnSuccess?.(resolvedPollData));
+            const [url] = mockUseGet.mock.calls[0];
+            pollDataByUrl[url] = resolvedPollData;
+            rerender();
 
             v2Data = { ...baseV2Data, token: "tok-2" };
             rerender();
@@ -184,7 +378,9 @@ describe("useLoadExternalData", () => {
                 useLoadExternalData(v2Data, true)
             );
 
-            act(() => capturedOnSuccess?.(resolvedPollData));
+            const [url] = mockUseGet.mock.calls[0];
+            pollDataByUrl[url] = resolvedPollData;
+            rerender();
             expect(result.current.isPolling).toBe(false);
 
             v2Data = { ...baseV2Data, query: "diabetes", token: "tok-3" };
@@ -195,43 +391,32 @@ describe("useLoadExternalData", () => {
         });
 
         it("serves a revisited query from cache instead of re-polling its expired token", () => {
-            const emptyResolved: SearchAggregationData = {
+            const emptyQueryV2Data: SearchAggregationData = {
                 query: "",
                 type: "datasets",
                 token: "tok-empty",
-                pending: [],
-                results: { [ARDC_SOURCE_VALUE]: ardcResult },
-            };
-            let v2Data: SearchAggregationData = {
-                ...emptyResolved,
                 pending: [ARDC_SOURCE_VALUE],
                 results: {},
             };
+            let v2Data: SearchAggregationData = emptyQueryV2Data;
             const { result, rerender } = renderHook(() =>
                 useLoadExternalData(v2Data, true)
             );
 
             // Resolve the no-query search
-            act(() => capturedOnSuccess?.(emptyResolved));
+            const [emptyUrl] = mockUseGet.mock.calls[0];
+            pollDataByUrl[emptyUrl] = resolvedPollData;
+            rerender();
 
             // Run a different query and resolve it (overwrites nothing now)
             v2Data = { ...baseV2Data, token: "tok-asthma" };
             rerender();
-            act(() =>
-                capturedOnSuccess?.({
-                    ...baseV2Data,
-                    token: "tok-asthma",
-                    pending: [],
-                    results: { [ARDC_SOURCE_VALUE]: ardcResult },
-                })
-            );
+            const [asthmaUrl] = mockUseGet.mock.calls.at(-1) as [string];
+            pollDataByUrl[asthmaUrl] = resolvedPollData;
+            rerender();
 
             // Clear the query: SWR replays the cached no-query response (expired token)
-            v2Data = {
-                ...emptyResolved,
-                pending: [ARDC_SOURCE_VALUE],
-                results: {},
-            };
+            v2Data = emptyQueryV2Data;
             rerender();
 
             expect(result.current.isPolling).toBe(false);
@@ -254,11 +439,11 @@ describe("useLoadExternalData", () => {
             const { rerender } = renderHook(() =>
                 useLoadExternalData(baseV2Data, true, isValidating)
             );
-            expect(mockUseGet.mock.calls.at(-1)?.[1].shouldFetch).toBe(false);
+            expect(lastOptions().shouldFetch).toBe(false);
 
             isValidating = false;
             rerender();
-            expect(mockUseGet.mock.calls.at(-1)?.[1].shouldFetch).toBe(true);
+            expect(lastOptions().shouldFetch).toBe(true);
         });
     });
 });
