@@ -9,7 +9,7 @@ import ActiveListSidebar from "@/modules/ActiveListSidebar";
 import { DataStatus } from "@/consts/application";
 import { RouteName } from "@/consts/routeName";
 import { SCHEMA_NAME, SCHEMA_VERSION } from "@/consts/schema";
-import { getDataset } from "@/utils/api";
+import { getDataset, getSchemaFromTraser } from "@/utils/api";
 import { getLatestVersion } from "@/utils/dataset";
 import metaData from "@/utils/metadata";
 import ActionBar from "./components/ActionBar";
@@ -43,14 +43,26 @@ export default async function DatasetItemPage({
 }) {
     const { datasetId } = await params;
 
-    const [data, googleRecommendedDataset] = await Promise.all([
+    const [data, googleRecommendedDataset, schema] = await Promise.all([
         getDataset(datasetId, SCHEMA_NAME, SCHEMA_VERSION, {
             suppressError: true,
         }),
         getDataset(datasetId, "SchemaOrg", "GoogleRecommended").catch(
             () => undefined
         ),
+        getSchemaFromTraser(SCHEMA_NAME, SCHEMA_VERSION).catch(() => undefined),
     ]);
+
+    const duoCodeDetails = Object.fromEntries(
+        (schema?.schema?.$defs?.DuoCodesEnum?.oneOf ?? []).map(option => [
+            option.const,
+            {
+                shortcode: option.shortcode,
+                label: option.title,
+                description: option.description,
+            },
+        ])
+    );
 
     // Note that the status check is only required under v1 - under v2, we can use
     // an endpoint that will not show the data if not active
@@ -192,6 +204,7 @@ export default async function DatasetItemPage({
                                 <DatasetContent
                                     data={datasetVersion}
                                     populatedSections={populatedSections}
+                                    duoCodeDetails={duoCodeDetails}
                                 />
                             </Box>
                             <Box

@@ -71,6 +71,17 @@ const Sources = ({ data, gwdmVersion }: SourcesProps) => {
                     ? formatTextDelimiter(collectionSource)
                     : t("noCollectionSources")}
             </Typography>
+            {gwdmVersion && (
+                <>
+                    <Divider sx={{ my: 1 }} />
+                    <Typography variant="h4" component="p">
+                        <Typography component="span" variant="subtitle2">
+                            {`${t("schemaVersion")}: `}
+                        </Typography>
+                        {gwdmVersion}
+                    </Typography>
+                </>
+            )}
         </Paper>
     );
 };

@@ -2,6 +2,7 @@
 
 import { Button } from "@hdruk/ui";
 import { tokens } from "@hdruk/ui/theme";
+import { Tooltip } from "@mui/material";
 import { createColumnHelper } from "@tanstack/react-table";
 import { get, isArray, isEmpty, isPlainObject, startCase } from "lodash";
 import { useTranslations } from "next-intl";
@@ -37,6 +38,7 @@ import {
 } from "../../config";
 import {
     DatasetButtonItem,
+    DatasetFieldItem,
     DatasetFieldWrapper,
     ListContainer,
     ObservationTableWrapper,
@@ -49,6 +51,17 @@ const DOI_URL = "https://doi.org/";
 const DOI_NAME_PATH = "metadata.metadata.summary.doiName";
 const FOLLOWUP_PATH = "metadata.metadata.coverage.followUp";
 const CITATION_PATH = "metadata.metadata.accessibility.usage.resourceCreator";
+
+// GA4GH's OLS4 instance requires the term's OBO purl, percent-encoded twice
+// (once for the purl itself, once more because OLS4 treats the whole path
+// segment as needing re-encoding) - e.g. DUO:0000042 -> DUO_0000042 ->
+// http://purl.obolibrary.org/obo/DUO_0000042 -> doubly-encoded path segment.
+const getOlsLinkForDuoCode = (code: string): string => {
+    const purl = `http://purl.obolibrary.org/obo/${code.replace(":", "_")}`;
+    return `https://www.ebi.ac.uk/ols4/ontologies/duo/classes/${encodeURIComponent(
+        encodeURIComponent(purl)
+    )}`;
+};
 
 const columnHelper = createColumnHelper<Observation>();
 
@@ -94,12 +107,20 @@ const isEmptyValue = (value: unknown) =>
     (isArray(value) && !value.length) ||
     (isPlainObject(value) && isEmpty(value));
 
+interface DuoCodeDetails {
+    shortcode: string;
+    label: string;
+    description: string;
+}
+
 const DatasetContent = ({
     data,
     populatedSections,
+    duoCodeDetails = {},
 }: {
     data: VersionItem;
     populatedSections: DatasetSection[];
+    duoCodeDetails?: Record<string, DuoCodeDetails>;
 }) => {
     const router = useRouter();
     const t = useTranslations(TRANSLATION_PATH);
@@ -152,6 +173,59 @@ const DatasetContent = ({
                     i > 0 && ", ",
                     formatTextWithLinks(item),
                 ]);
+            }
+            case FieldType.LIST_TEXT_LABELLED: {
+                const list = isArray(value)
+                    ? value
+                    : Array.from(new Set(splitStringList(value)));
+
+                return (
+                    <DatasetFieldWrapper sx={{ gap: 0.75 }}>
+                        {list.map(item => {
+                            const code = item.toString();
+                            const details = duoCodeDetails[code];
+
+                            if (!details) {
+                                return (
+                                    <DatasetFieldItem key={code} label={code} />
+                                );
+                            }
+
+                            const chipLabel = details.shortcode || code;
+
+                            return (
+                                <Tooltip
+                                    key={code}
+                                    describeChild
+                                    placement="top"
+                                    title={
+                                        <>
+                                            <Typography variant="subtitle1">
+                                                {`${
+                                                    details.label
+                                                } (${code.replace(":", " ")})`}
+                                            </Typography>
+                                            <Typography>
+                                                {details.description}
+                                            </Typography>
+                                            <Link
+                                                href={getOlsLinkForDuoCode(
+                                                    code
+                                                )}>
+                                                {t("viewOnOlsSite")}
+                                            </Link>
+                                        </>
+                                    }>
+                                    <DatasetFieldItem
+                                        label={chipLabel}
+                                        variant="outlined"
+                                        tabIndex={0}
+                                    />
+                                </Tooltip>
+                            );
+                        })}
+                    </DatasetFieldWrapper>
+                );
             }
             case FieldType.LIST_LINK: {
                 const list = isArray(value)

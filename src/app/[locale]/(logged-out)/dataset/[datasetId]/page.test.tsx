@@ -31,6 +31,9 @@ jest.mock("next/headers", () => ({
 
 jest.mock("@/utils/api", () => ({
     getDataset: jest.fn().mockImplementation(() => getDataSetMock()),
+    getSchemaFromTraser: jest
+        .fn()
+        .mockResolvedValue({ schema: { $defs: {} } }),
 }));
 
 const mockDataSet = generatePageDataSetV1();

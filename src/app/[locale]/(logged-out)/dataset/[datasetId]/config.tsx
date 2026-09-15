@@ -388,7 +388,7 @@ const datasetFields: DatasetSection[] = [
             },
             {
                 path: "metadata.metadata.accessibility.usage.duoCodes",
-                type: FieldType.LIST_TEXT,
+                type: FieldType.LIST_TEXT_LABELLED,
                 label: "GA4GH Data Use Ontology (DUO) codes",
                 tooltip:
                     "Machine-readable codes from the GA4GH Data Use Ontology describing the permitted or restricted uses of this dataset, e.g. DUO:0000042 (general research use). Multiple codes may apply. This is separate from data use limitation and data use requirements, which use HDR UK's own categories rather than the GA4GH ontology's identifiers.",
