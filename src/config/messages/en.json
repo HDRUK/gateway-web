@@ -124,6 +124,7 @@
         "enabled": "Enabled",
         "all": "All",
         "notReported": "Not reported",
+        "viewOnOlsSite": "View on OLS site",
         "dar": {
             "status": {
                 "all": "All",
