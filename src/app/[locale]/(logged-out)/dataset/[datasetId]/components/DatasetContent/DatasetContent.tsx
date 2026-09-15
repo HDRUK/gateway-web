@@ -38,7 +38,6 @@ import {
 import {
     DatasetButtonItem,
     DatasetFieldWrapper,
-    KeyValueLabel,
     ListContainer,
     ObservationTableWrapper,
 } from "./DatasetContent.styles";
@@ -186,9 +185,11 @@ const DatasetContent = ({
                             .filter(([, entry]) => !isEmptyValue(entry))
                             .map(([key, entry]) => (
                                 <div key={key}>
-                                    <KeyValueLabel>
+                                    <Typography
+                                        component="span"
+                                        fontWeight="medium">
                                         {startCase(key)}
-                                    </KeyValueLabel>
+                                    </Typography>
                                     :{" "}
                                     {isArray(entry)
                                         ? entry.join(", ")
