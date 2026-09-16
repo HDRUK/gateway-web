@@ -17,7 +17,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7
 
       - name: Detect changes to the widget embed surface
         id: filter
@@ -35,7 +35,7 @@ jobs:
 
       - name: Label PR
         if: steps.filter.outputs.widget == 'true'
-        uses: actions/github-script@v7
+        uses: actions/github-script@v9
         with:
           script: |
             await github.rest.issues.addLabels({
