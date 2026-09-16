@@ -1,5 +1,5 @@
-import * as yup from "yup";
 import { tokens } from "@hdruk/ui/theme";
+import * as yup from "yup";
 import { QuestionBankQuestionForm } from "@/interfaces/QuestionBankQuestion";
 import { getChipLabel } from "@/components/Autocomplete/utils";
 import { inputComponents } from ".";
@@ -164,7 +164,7 @@ const validationFormFields = [
         type: "string",
         component: inputComponents.Select,
         options: [
-            { label: "", value: "" },
+            { label: "None", value: "" },
             { label: "Email address", value: "email" },
             { label: "Url", value: "url" },
             { label: "Regex Pattern", value: "pattern" },
