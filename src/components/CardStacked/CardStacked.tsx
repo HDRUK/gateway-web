@@ -34,6 +34,7 @@ export default function CardStacked({
                     py: 2,
                     display: "flex",
                     alignItems: "flex-end",
+                    overflow: "hidden",
                     backgroundImage: `url(${imgUrl})`,
                     backgroundColor: tokens.background.white,
                     backgroundRepeat: "no-repeat",
@@ -46,7 +47,12 @@ export default function CardStacked({
                     sx={{
                         backgroundColor: tokens.status.faded,
                         color: tokens.text.primaryWhite,
-                        maxWidth: "220px",
+                        maxWidth: "100%",
+                        "& .MuiChip-label > div": {
+                            overflow: "hidden",
+                            textOverflow: "ellipsis",
+                            whiteSpace: "nowrap",
+                        },
                     }}
                     data-testid="grid-chip"
                     {...chipProps}
