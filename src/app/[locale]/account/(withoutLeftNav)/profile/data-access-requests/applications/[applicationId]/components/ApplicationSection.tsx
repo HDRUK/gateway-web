@@ -54,6 +54,7 @@ import { RouteName } from "@/consts/routeName";
 import {
     buildDarAnswers,
     createDarFileUploadConfig,
+    findQuestionById,
     formatDarAnswers,
     formatDarQuestion,
     getVisibleQuestionIds,
@@ -170,18 +171,10 @@ const ApplicationSection = ({
 
         const baseName = fieldName.split(".").pop() ?? fieldName;
 
-        const topLevelGuidance = [
-            ...questions,
-            ...beforeYouBeginFormFields,
-        ]?.find(question => question.title === baseName)?.guidance;
-
-        const childGuidance = filteredData
-            .flatMap(field =>
-                (field.options ?? []).flatMap(option => option.children ?? [])
-            )
-            .find(child => child.name === baseName)?.guidance;
-
-        const guidance = topLevelGuidance ?? childGuidance;
+        const guidance =
+            findQuestionById(questions, baseName)?.guidance ??
+            beforeYouBeginFormFields.find(field => field.name === baseName)
+                ?.guidance;
 
         if (!guidance) {
             setGuidanceText(undefined);
@@ -381,7 +374,8 @@ const ApplicationSection = ({
                                     pl: 3,
                                     pr: 3,
                                     backgroundColor:
-                                        field.name === selectedField
+                                        field.question_id.toString() ===
+                                        selectedField
                                             ? theme.palette.grey[100]
                                             : "inherit",
                                 }}>
@@ -399,7 +393,10 @@ const ApplicationSection = ({
                                     field.question_id.toString(),
                                     field.component !==
                                         inputComponents.DocumentExchange &&
-                                        updateGuidanceText,
+                                        (() =>
+                                            updateGuidanceText(
+                                                field.question_id.toString()
+                                            )),
                                     field.component &&
                                         formatFileUploadFields(
                                             field.component,
@@ -425,7 +422,8 @@ const ApplicationSection = ({
                                                 pl: 3,
                                                 pr: 3,
                                                 backgroundColor:
-                                                    child.name === selectedField
+                                                    child.question_id.toString() ===
+                                                    selectedField
                                                         ? theme.palette
                                                               .grey[100]
                                                         : "inherit",
@@ -437,7 +435,10 @@ const ApplicationSection = ({
                                                 },
                                                 formControl,
                                                 child.question_id.toString(),
-                                                updateGuidanceText,
+                                                () =>
+                                                    updateGuidanceText(
+                                                        child.question_id.toString()
+                                                    ),
                                                 child.component
                                                     ? formatFileUploadFields(
                                                           child.component,
