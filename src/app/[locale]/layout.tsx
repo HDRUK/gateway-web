@@ -13,20 +13,9 @@ import SupportPopOut from "@/components/SupportPopOut";
 import ThemeRegistry from "@/components/ThemeRegistry/ThemeRegistry";
 import ProvidersDialog from "@/modules/ProvidersDialog";
 import { getHomePageBanner } from "@/utils/cms";
+import { getFeatures } from "@/utils/gatewayFlagAdapter";
 import metaData from "@/utils/metadata";
 import packageJson from "@/../package.json";
-import {
-    isAliasesEnabled,
-    isSDEConciergeServiceEnquiryEnabled,
-    isNhsSdeApplicationsEnabled,
-    isWidgetsEnabled,
-    isCohortDiscoveryServiceEnabled,
-    isRQuestEnabled,
-    isExternalSourcesEnabled,
-    isTypesenseSearchEnabled,
-    isCustodianDashboardEnabled,
-    isSafePeopleRegistrySSOEnabled,
-} from "@/flags";
 import ActionBarProvider from "@/providers/ActionBarProvider";
 import CohortRedirectProvider from "@/providers/CohortRedirectProvider";
 import DialogProvider from "@/providers/DialogProvider";
@@ -64,24 +53,29 @@ export default async function RootLayout(props: {
 
     const { version } = packageJson;
 
+    // A single fetch of all flags, instead of one fetch per flag - the
+    // individual `flag()` helpers in `@/flags` each hit this same endpoint
+    // independently, which turned every page load into 10 duplicate
+    // requests. `getFeatures` still fetches with `cache: "no-store"`, so a
+    // flag flipped on the backend is picked up on the very next request.
+    const rawFeatures = await getFeatures();
+
     const features = {
         isSDEConciergeServiceEnquiryEnabled:
-            (await isSDEConciergeServiceEnquiryEnabled()) as boolean,
-        isAliasesEnabled: (await isAliasesEnabled()) as boolean,
+            rawFeatures.SDEConciergeServiceEnquiry ?? false,
+        isAliasesEnabled: rawFeatures.Aliases ?? false,
         isNhsSdeApplicationsEnabled:
-            (await isNhsSdeApplicationsEnabled()) as boolean,
-        isWidgetsEnabled: (await isWidgetsEnabled()) as boolean,
+            rawFeatures.NhsSdeApplicationsEnabled ?? false,
+        isWidgetsEnabled: rawFeatures.Widgets ?? false,
         isCohortDiscoveryServiceEnabled:
-            (await isCohortDiscoveryServiceEnabled()) as boolean,
-        isRQuestEnabled: (await isRQuestEnabled()) as boolean,
-        isExternalSourcesEnabled:
-            (await isExternalSourcesEnabled()) as boolean,
-        isTypesenseSearchEnabled:
-            (await isTypesenseSearchEnabled()) as boolean,
+            rawFeatures.CohortDiscoveryService ?? false,
+        isRQuestEnabled: rawFeatures.RQuest ?? false,
+        isExternalSourcesEnabled: rawFeatures.V2_SearchAggregation ?? false,
+        isTypesenseSearchEnabled: rawFeatures.TypesenseSearch ?? false,
         isCustodianDashboardEnabled:
-            (await isCustodianDashboardEnabled()) as boolean,
+            rawFeatures.V3_CustodianDashboard ?? false,
         isSafePeopleRegistrySSOEnabled:
-            (await isSafePeopleRegistrySSOEnabled()) as boolean,
+            rawFeatures.SafePeopleRegistrySSOEnabled ?? false,
     };
 
     if (includeBanners) {
