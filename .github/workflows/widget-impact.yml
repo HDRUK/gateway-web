@@ -21,7 +21,7 @@ jobs:
 
       - name: Detect changes to the widget embed surface
         id: filter
-        uses: dorny/paths-filter@v3
+        uses: dorny/paths-filter@v4
         with:
           filters: |
             widget:
