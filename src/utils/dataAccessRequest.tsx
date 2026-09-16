@@ -99,6 +99,32 @@ const getVisibleQuestionIds = (
     return Array.from(new Set(out));
 };
 
+const findQuestionById = (
+    fields: DarApplicationQuestion[] = [],
+    questionId: string
+): DarApplicationQuestion | undefined => {
+    for (const field of fields) {
+        if (String(field.question_id) === questionId) {
+            return field;
+        }
+
+        const children = (field.options ?? []).flatMap(option =>
+            Object.values(option.children ?? []).flat()
+        );
+
+        const match = findQuestionById(
+            [...(field.fields ?? []), ...children],
+            questionId
+        );
+
+        if (match) {
+            return match;
+        }
+    }
+
+    return undefined;
+};
+
 const formatDarQuestion = (
     field: DarApplicationQuestion
 ): DarFormattedField => ({
@@ -456,6 +482,7 @@ const buildDarAnswers = (
 export {
     isSelected,
     getVisibleQuestionIds,
+    findQuestionById,
     mapKeysToValues,
     formatDarQuestion,
     formatDarAnswers,

@@ -7,6 +7,7 @@ import { inputComponents } from "@/config/forms";
 import { ARRAY_FIELD, ARRAY_PREFIX } from "@/consts/dataAccess";
 import {
     buildDarAnswers,
+    findQuestionById,
     formatDarAnswers,
     formatDarQuestion,
     getVisibleQuestionIds,
@@ -501,6 +502,76 @@ describe("Data Access Request utils", () => {
             };
 
             expect(formatDarQuestion(input)).toEqual(expected);
+        });
+    });
+
+    describe("findQuestionById", () => {
+        const buildQuestion = (
+            question_id: number,
+            overrides: Partial<DarApplicationQuestion> = {}
+        ): DarApplicationQuestion => ({
+            appliciation_id: 1,
+            question_id,
+            title: `Question ${question_id}`,
+            component: inputComponents.TextField,
+            required: false,
+            section_id: 1,
+            guidance: `Guidance ${question_id}`,
+            order: 1,
+            validations: {},
+            is_child: 0,
+            options: [],
+            ...overrides,
+        });
+
+        const child = buildQuestion(30, { is_child: 1 });
+        const arrayChild = buildQuestion(20);
+        const arrayField = buildQuestion(2, {
+            component: ARRAY_FIELD as DarApplicationQuestion["component"],
+            fields: [arrayChild],
+        });
+        const parentWithOptions = buildQuestion(3, {
+            component: inputComponents.RadioGroup,
+            options: [
+                { label: "No", children: [] },
+                { label: "Yes", children: [child] },
+            ],
+        });
+        const questions = [buildQuestion(1), arrayField, parentWithOptions];
+
+        it("finds a top level question", () => {
+            expect(findQuestionById(questions, "1")).toEqual(questions[0]);
+        });
+
+        it("finds a question nested within an array field", () => {
+            expect(findQuestionById(questions, "20")).toEqual(arrayChild);
+        });
+
+        it("finds a child question nested within an option", () => {
+            expect(findQuestionById(questions, "30")).toEqual(child);
+        });
+
+        it("finds a child question when children are keyed by option", () => {
+            const keyedChildren = buildQuestion(4, {
+                options: [
+                    {
+                        label: "Yes",
+                        children: {
+                            Yes: [child],
+                        } as unknown as DarApplicationQuestion[],
+                    },
+                ],
+            });
+
+            expect(findQuestionById([keyedChildren], "30")).toEqual(child);
+        });
+
+        it("returns undefined when the question is not present", () => {
+            expect(findQuestionById(questions, "999")).toBeUndefined();
+        });
+
+        it("returns undefined when no questions are supplied", () => {
+            expect(findQuestionById(undefined, "1")).toBeUndefined();
         });
     });
 
