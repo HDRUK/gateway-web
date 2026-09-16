@@ -61,6 +61,7 @@ env:
   REDIS_PASSWORD: "mypassword"
   REDIS_PORT: "6379"
   SEARCH_SERVICE_URL: ${{ secrets.SEARCH_SERVICE_URL }}
+  SCOUT_DRIVER: "null"
   TED_ENABLED: "true"
   TED_SERVICE_URL: ${{ secrets.TED_SERVICE_URL }}
   TRASER_ENABLED: "true"
