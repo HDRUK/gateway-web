@@ -1,5 +1,6 @@
 /** @jsxImportSource @emotion/react */
 import { CSSProperties, useCallback, useEffect, useState } from "react";
+import { tokens } from "@hdruk/ui/theme";
 import {
     flexRender,
     getCoreRowModel,
@@ -7,7 +8,6 @@ import {
     ColumnDef,
     Column,
 } from "@tanstack/react-table";
-import { tokens } from "@hdruk/ui/theme";
 import ActionDropdown from "@/app/[locale]/(logged-out)/search/components/ActionDropdown";
 import * as styles from "./Table.styles";
 
@@ -140,74 +140,77 @@ const Table = <T,>({
         .filter(Boolean).length;
 
     return (
-        <table css={style ?? styles.table}>
-            {!hideHeader && (
-                <thead>
-                    {table.getHeaderGroups().map(headerGroup => (
-                        <tr key={headerGroup.id}>
-                            {headerGroup.headers.map(header => (
-                                <th
-                                    css={styles.th}
-                                    key={header.id}
+        <div style={{ overflowX: "auto" }}>
+            <table css={style ?? styles.table}>
+                {!hideHeader && (
+                    <thead>
+                        {table.getHeaderGroups().map(headerGroup => (
+                            <tr key={headerGroup.id}>
+                                {headerGroup.headers.map(header => (
+                                    <th
+                                        css={styles.th}
+                                        key={header.id}
+                                        style={{
+                                            ...getCommonCellStyles(
+                                                header.column,
+                                                pinHeader
+                                            ),
+                                        }}>
+                                        <div className="whitespace-nowrap">
+                                            {header.isPlaceholder
+                                                ? null
+                                                : flexRender(
+                                                      header.column.columnDef
+                                                          .header,
+                                                      header.getContext()
+                                                  )}
+                                        </div>
+                                    </th>
+                                ))}
+                            </tr>
+                        ))}
+                    </thead>
+                )}
+                <tbody>
+                    {table.getRowModel().rows.map(row => (
+                        <tr key={row.id}>
+                            {row.getVisibleCells().map(cell => (
+                                <td
+                                    css={styles.td}
+                                    key={cell.id}
                                     style={{
-                                        ...getCommonCellStyles(
-                                            header.column,
-                                            pinHeader
-                                        ),
+                                        ...getCommonCellStyles(cell.column),
                                     }}>
-                                    <div className="whitespace-nowrap">
+                                    {flexRender(
+                                        cell.column.columnDef.cell,
+                                        cell.getContext()
+                                    )}
+                                </td>
+                            ))}
+                        </tr>
+                    ))}
+                </tbody>
+                {hasFooterContent && (
+                    <tfoot>
+                        {table.getFooterGroups().map(footerGroup => (
+                            <tr key={footerGroup.id}>
+                                {footerGroup.headers.map(header => (
+                                    <th key={header.id}>
                                         {header.isPlaceholder
                                             ? null
                                             : flexRender(
                                                   header.column.columnDef
-                                                      .header,
+                                                      .footer,
                                                   header.getContext()
                                               )}
-                                    </div>
-                                </th>
-                            ))}
-                        </tr>
-                    ))}
-                </thead>
-            )}
-            <tbody>
-                {table.getRowModel().rows.map(row => (
-                    <tr key={row.id}>
-                        {row.getVisibleCells().map(cell => (
-                            <td
-                                css={styles.td}
-                                key={cell.id}
-                                style={{
-                                    ...getCommonCellStyles(cell.column),
-                                }}>
-                                {flexRender(
-                                    cell.column.columnDef.cell,
-                                    cell.getContext()
-                                )}
-                            </td>
+                                    </th>
+                                ))}
+                            </tr>
                         ))}
-                    </tr>
-                ))}
-            </tbody>
-            {hasFooterContent && (
-                <tfoot>
-                    {table.getFooterGroups().map(footerGroup => (
-                        <tr key={footerGroup.id}>
-                            {footerGroup.headers.map(header => (
-                                <th key={header.id}>
-                                    {header.isPlaceholder
-                                        ? null
-                                        : flexRender(
-                                              header.column.columnDef.footer,
-                                              header.getContext()
-                                          )}
-                                </th>
-                            ))}
-                        </tr>
-                    ))}
-                </tfoot>
-            )}
-        </table>
+                    </tfoot>
+                )}
+            </table>
+        </div>
     );
 };
 

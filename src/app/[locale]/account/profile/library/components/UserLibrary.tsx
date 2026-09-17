@@ -3,7 +3,7 @@
 import { useState } from "react";
 import { Library, SelectedLibrary } from "@/interfaces/Library";
 import Box from "@/components/Box";
-import Loading from "@/components/Loading";
+import { Loading } from "@hdruk/ui";
 import useDelete from "@/hooks/useDelete";
 import useGet from "@/hooks/useGet";
 import apis from "@/config/apis";

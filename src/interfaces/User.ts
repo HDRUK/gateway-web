@@ -14,6 +14,8 @@ interface User {
     roles: Role[];
     organisation: string;
     workgroups?: Workgroup[];
+    is_admin?: boolean;
+    teams?: { id: number; name?: string }[];
 }
 
 export type { User };

@@ -28,19 +28,45 @@ describe("IntegrationList", () => {
         render(<IntegrationList />);
     });
 
-    it("should render count of integrations", async () => {
-        await waitFor(() => {
-            expect(
-                screen.getByTestId("number-of-integrations").textContent
-            ).toBe("Number of Integrations: 10");
-        });
-    });
-
     it("should render list", async () => {
         await waitFor(() => {
             expect(screen.getByText("Integration 1")).toBeInTheDocument();
             expect(screen.getByText("Integration 10")).toBeInTheDocument();
         });
+    });
+});
+
+describe("IntegrationList - empty state", () => {
+    mockRouter.query = { teamId: "1" };
+    window.scrollTo = jest.fn();
+
+    it("should invite the user to create one when there are none", async () => {
+        server.use(getIntegrationsV1({ data: [] }));
+
+        render(<IntegrationList />);
+
+        expect(
+            await screen.findByText(
+                "You have not created any predefined integrations yet."
+            )
+        ).toBeInTheDocument();
+        expect(screen.getByRole("link", { name: "Create one" })).toHaveAttribute(
+            "href",
+            "/account/team/1/integrations/integration/create"
+        );
+    });
+
+    it("should not show the empty message when integrations exist", async () => {
+        server.use(getIntegrationsV1({ data: generateIntegrationsV1(1) }));
+
+        render(<IntegrationList />);
+
+        expect(await screen.findByText("Integration 1")).toBeInTheDocument();
+        expect(
+            screen.queryByText(
+                "You have not created any predefined integrations yet."
+            )
+        ).not.toBeInTheDocument();
     });
 });
 

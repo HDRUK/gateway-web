@@ -67,7 +67,7 @@ describe("LeftNav", () => {
 
     it("renders expanded items", () => {
         mockRouter.push(
-            `/en/${RouteName.ACCOUNT}/${RouteName.TEAM}/1/${RouteName.INTEGRATIONS}/${RouteName.API_MANAGEMENT}`
+            `/en/${RouteName.ACCOUNT}/${RouteName.TEAM}/1/${RouteName.INTEGRATIONS}/${RouteName.API_MANAGEMENT}/${RouteName.LIST}`
         );
 
         const { getAllByRole } = render(
@@ -94,6 +94,35 @@ describe("LeftNav", () => {
             within(links[3]).getByText("Predefined Integrations")
         ).toBeInTheDocument();
         expect(within(links[4]).getByText("Help")).toBeInTheDocument();
+    });
+
+    it.each([
+        RouteName.CREATE,
+        `${RouteName.LIST}/1`,
+        `${RouteName.CREATE}/1/${RouteName.PERMISSIONS}`,
+    ])("keeps Integrations expanded on api-management/%s", path => {
+        mockRouter.push(
+            `/en/${RouteName.ACCOUNT}/${RouteName.TEAM}/1/${RouteName.INTEGRATIONS}/${RouteName.API_MANAGEMENT}/${path}`
+        );
+        mockRouter.query = { ...mockRouter.query, locale: "en" };
+
+        const { getByText, getByRole } = render(
+            <LeftNav
+                teamId="1"
+                permissions={{
+                    "roles.read": true,
+                    "applications.read": true,
+                    "integrations.metadata": true,
+                    "integrations.dar": true,
+                }}
+                initialLeftNavOpen={true}
+            />
+        );
+
+        expect(getByText("Custom Integrations")).toBeInTheDocument();
+        expect(
+            getByRole("link", { name: "Custom Integrations" })
+        ).toHaveAttribute("aria-current", "page");
     });
 
     it("closes the profile navigation and creates cookie", () => {

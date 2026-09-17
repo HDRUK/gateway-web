@@ -240,8 +240,17 @@ const WidgetConfigForm = ({
                 },
                 {
                     name: "permitted_domains",
-                    label: t("permittedDomains"),
-                    info: t("permittedDomainInfo"),
+                    label: "",
+                    intro: (
+                        <>
+                            <Typography variant="subtitle2">
+                                {t("permittedDomains")}
+                            </Typography>
+                            <Typography sx={{ whiteSpace: "pre-line", mb: 2 }}>
+                                {t("permittedDomainInfo")}
+                            </Typography>
+                        </>
+                    ),
                     component: inputComponents.Autocomplete,
                     multiple: true,
                     handleHomeEndKeys: true,
@@ -398,6 +407,7 @@ const WidgetConfigForm = ({
                                                 maxWidth: 100,
                                             }),
                                         }}>
+                                        {"intro" in field && field.intro}
                                         <InputWrapper
                                             control={control}
                                             {...field}

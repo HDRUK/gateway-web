@@ -12,7 +12,7 @@ import Box from "@/components/Box";
 import DarApplicationCard from "@/components/DarApplicationCard";
 import DarApplicationGroup from "@/components/DarApplicationGroup";
 import InputWrapper from "@/components/InputWrapper";
-import Loading from "@/components/Loading";
+import { Loading } from "@hdruk/ui";
 import Pagination from "@/components/Pagination";
 import Paper from "@/components/Paper";
 import Tabs from "@/components/Tabs";

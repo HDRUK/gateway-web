@@ -13,9 +13,8 @@ import {
 import { QuestionBankQuestion } from "@/interfaces/QuestionBankQuestion";
 import { QuestionBankSection } from "@/interfaces/QuestionBankSection";
 import { TaskItem } from "@/interfaces/TaskBoard";
-import { Button } from "@hdruk/ui";
+import { Button, Loading } from "@hdruk/ui";
 import Container from "@/components/Container";
-import Loading from "@/components/Loading";
 import Paper from "@/components/Paper";
 import Sections from "@/components/Sections";
 import Tabs from "@/components/Tabs";

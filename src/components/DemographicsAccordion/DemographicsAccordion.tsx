@@ -124,7 +124,7 @@ const DemographicsAccordion = ({ data }: { data: Demographics }) => {
                                     alignItems: "center",
                                     width: "100%",
                                 }}>
-                                <Typography variant="h4" sx={{ m: 0 }}>
+                                <Typography variant="h6" sx={{ m: 0 }}>
                                     {key.startsWith("Disease")
                                         ? key
                                         : toTitleCase(key)}

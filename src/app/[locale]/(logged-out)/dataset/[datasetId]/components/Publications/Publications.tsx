@@ -27,7 +27,9 @@ const Publications = ({ data }: PublicationsProps) => {
 
     return (
         <Paper sx={{ borderRadius: 2, p: 2 }}>
-            <Typography variant="h2"> {t("datasetPublications")} </Typography>
+            <Typography variant="h6" component="h2">
+                {t("datasetPublications")}
+            </Typography>
 
             <Box
                 sx={{

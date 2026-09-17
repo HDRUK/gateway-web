@@ -1,5 +1,6 @@
 "use client";
 
+import { tokens } from "@hdruk/ui/theme";
 import {
     TableHead,
     TableRow,
@@ -15,7 +16,6 @@ import {
     StructuralMetadataColumn,
     StructuralMetadataPublicSchema,
 } from "@/interfaces/Dataset";
-import { tokens } from "@hdruk/ui/theme";
 import Accordion from "@/components/Accordion";
 import Box from "@/components/Box";
 import TooltipText from "@/components/TooltipText";
@@ -106,6 +106,7 @@ const StructuralMetadataAccordion = ({
                                 content={item?.description}
                                 label={decodeHtmlEntity(item?.name)}
                                 variant="h4"
+                                sx={{ m: 0 }}
                             />
                         </Box>
                     }

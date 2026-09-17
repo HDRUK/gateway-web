@@ -118,18 +118,15 @@ const IntroScreen = ({
                     flex: 2,
                 }}>
                 <Box sx={{ p: 0 }}>
-                    <Typography variant="h1">{t("welcomeMessage")}</Typography>
-                    <Typography sx={{ fontSize: "1.25rem" }}>
+                    <Typography variant="h2" component="h1">
+                        {t("welcomeMessage")}
+                    </Typography>
+                    <Typography variant="articleLead">
                         {t("legendIntro")}
                     </Typography>
                 </Box>
                 <Box>
-                    <Typography
-                        sx={{
-                            fontSize: "1.25rem",
-                            fontWeight: "bold",
-                            mb: 1,
-                        }}>
+                    <Typography variant="h4" component="h2" sx={{ mb: 1 }}>
                         {t("progressLegend")}
                     </Typography>
                     <FormLegend items={FORM_LEGEND_EXAMPLE} />
@@ -168,7 +165,9 @@ const IntroScreen = ({
                     alignItems: "center",
                     wordBreak: "break-word",
                 }}>
-                <Typography variant="h2">{t("checkboxIntro")}</Typography>
+                <Typography variant="articleLead" component="h2">
+                    {t("checkboxIntro")}
+                </Typography>
                 <Typography sx={{ color: tokens.text.disabled, pb: 2 }}>
                     {t("selectAll")}
                 </Typography>

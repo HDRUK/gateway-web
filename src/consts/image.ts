@@ -1,11 +1,11 @@
 export enum ImageValidationError {
-    RATIO = "ratio",
     SIZE = "size",
 }
 
-export const AspectRatioImage = {
-    width: "auto",
-    maxHeight: 400,
+export const LogoImage = {
+    width: "100%",
+    height: "auto",
     maxWidth: 400,
-    height: "100%",
-};
+    maxHeight: 400,
+    objectFit: "contain",
+} as const;

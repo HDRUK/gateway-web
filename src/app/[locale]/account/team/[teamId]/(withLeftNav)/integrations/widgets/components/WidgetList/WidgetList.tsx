@@ -8,7 +8,7 @@ import Box from "@/components/Box";
 import CardActions from "@/components/CardActions";
 import KeyValueList from "@/components/KeyValueList";
 import Link from "@/components/Link";
-import Loading from "@/components/Loading";
+import { Loading } from "@hdruk/ui";
 import Paper from "@/components/Paper";
 import useDelete from "@/hooks/useDelete";
 import useGet from "@/hooks/useGet";

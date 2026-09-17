@@ -2,7 +2,6 @@ import { Fragment, Suspense } from "react";
 import { Skeleton } from "@mui/material";
 import { get, isEmpty } from "lodash";
 import { getTranslations } from "next-intl/server";
-import Image from "next/image";
 import { notFound } from "next/navigation";
 import Box from "@/components/Box";
 import Chip from "@/components/Chip";
@@ -12,9 +11,7 @@ import { DataCustodianEntitiesSkeleton } from "@/components/Skeletons/Skeletons"
 import Typography from "@/components/Typography";
 import ActiveListSidebar from "@/modules/ActiveListSidebar";
 import apis from "@/config/apis";
-import { StaticImages } from "@/config/images";
 import { DEFAULT_CACHE_REVALIDATE } from "@/consts/cache";
-import { AspectRatioImage } from "@/consts/image";
 import { getTeamInfo, getTeamSummary } from "@/utils/api";
 import metaData from "@/utils/metadata";
 import ActionBar from "./components/ActionBar";
@@ -63,10 +60,7 @@ export default async function DataCustodianItemPage({
 
     const summaryPromise = getTeamSummary(dataCustodianId, {
         cache: {
-            tags: [
-                "custodian_summary",
-                `custodian_summary-${dataCustodianId}`,
-            ],
+            tags: ["custodian_summary", `custodian_summary-${dataCustodianId}`],
         },
     });
 
@@ -95,31 +89,10 @@ export default async function DataCustodianItemPage({
                             cohortDiscoverySupport.supportsCohortDiscovery
                         }
                     />
-                    <Box>
-                        <Box
-                            sx={{
-                                display: "flex",
-                                alignItems: "center",
-                                pt: 0,
-                                justifyContent: "space-between",
-                                p: 0,
-                            }}>
-                            <Box sx={{ mb: 1, p: 0 }}>
-                                <Typography variant="h1" sx={{ mt: 2, mb: 0 }}>
-                                    {infoData.name}
-                                </Typography>
-                            </Box>
-                            <Image
-                                width={554}
-                                height={250}
-                                alt={infoData.name}
-                                src={
-                                    infoData?.team_logo ||
-                                    StaticImages.BASE.placeholder
-                                }
-                                style={AspectRatioImage}
-                            />
-                        </Box>
+                    <Box sx={{ mt: 2, pb: 0 }}>
+                        <Typography variant="h2" component="h1">
+                            {infoData.name}
+                        </Typography>
                     </Box>
                     <Box
                         sx={{
@@ -135,6 +108,7 @@ export default async function DataCustodianItemPage({
                             <DataCustodianContent
                                 summaryPromise={summaryPromise}
                                 populatedSections={populatedSections}
+                                infoData={infoData}
                             />
                             {!!infoData.aliases?.length && (
                                 <Fragment key="custodian_alias">

@@ -1,7 +1,7 @@
 "use client";
 
-import { Grid, SvgIconTypeMap } from "@mui/material";
-import { OverridableComponent } from "@mui/material/OverridableComponent";
+import { ReactNode } from "react";
+import { Grid } from "@mui/material";
 import { User } from "@/interfaces/User";
 import Box from "@/components/Box";
 import Paper from "@/components/Paper";
@@ -13,9 +13,7 @@ import PermissionCheckboxes from "../PermissionCheckboxes";
 import TableActionCell from "../TableActionCell";
 
 interface Action {
-    icon: OverridableComponent<SvgIconTypeMap<{}, "svg">> & {
-        muiName: string;
-    };
+    icon: (rowUser: User) => ReactNode;
     checkConditions: (rowUser: User) => {};
     onClick: (rowUser: User) => void;
 }

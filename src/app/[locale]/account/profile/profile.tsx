@@ -2,7 +2,7 @@
 
 import { useTranslations } from "next-intl";
 import Box from "@/components/Box";
-import Loading from "@/components/Loading";
+import { Loading } from "@hdruk/ui";
 import Paper from "@/components/Paper";
 import Typography from "@/components/Typography";
 import useAuth from "@/hooks/useAuth";

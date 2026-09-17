@@ -7,7 +7,7 @@ import { CohortRequest, CohortRequestStatus } from "@/interfaces/CohortRequest";
 import { PaginationType } from "@/interfaces/Pagination";
 import Box from "@/components/Box";
 import InputWrapper from "@/components/InputWrapper";
-import Loading from "@/components/Loading";
+import { Loading } from "@hdruk/ui";
 import Pagination from "@/components/Pagination";
 import Table from "@/components/Table";
 import useDebounce from "@/hooks/useDebounce";

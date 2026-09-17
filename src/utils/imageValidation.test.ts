@@ -64,9 +64,27 @@ describe("validateImageDimensions", () => {
         jest.clearAllMocks();
     });
 
-    it("returns true for valid image dimensions and ratio", async () => {
+    it("returns true for valid image dimensions", async () => {
         mockWidth = 800;
         mockHeight = 400;
+        const file = new File(["dummy"], "test.jpg", { type: "image/jpeg" });
+
+        const result = await validateImageDimensions(file);
+        expect(result).toBe(true);
+    });
+
+    it("returns true for a square image", async () => {
+        mockWidth = 500;
+        mockHeight = 500;
+        const file = new File(["dummy"], "test.jpg", { type: "image/jpeg" });
+
+        const result = await validateImageDimensions(file);
+        expect(result).toBe(true);
+    });
+
+    it("returns true for a portrait image", async () => {
+        mockWidth = 300;
+        mockHeight = 900;
         const file = new File(["dummy"], "test.jpg", { type: "image/jpeg" });
 
         const result = await validateImageDimensions(file);
@@ -80,16 +98,6 @@ describe("validateImageDimensions", () => {
 
         await expect(validateImageDimensions(file)).rejects.toBe(
             ImageValidationError.SIZE
-        );
-    });
-
-    it("returns ImageValidationError.RATIO for invalid ratio", async () => {
-        mockWidth = 1000;
-        mockHeight = 300;
-        const file = new File(["dummy"], "test.jpg", { type: "image/jpeg" });
-
-        await expect(validateImageDimensions(file)).rejects.toBe(
-            ImageValidationError.RATIO
         );
     });
 });

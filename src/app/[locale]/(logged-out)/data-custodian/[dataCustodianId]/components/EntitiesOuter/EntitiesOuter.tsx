@@ -25,9 +25,9 @@ export default async function EntitiesOuter({
                 gap: 2,
                 pt: 0,
             }}>
-            <CollectionsContent
-                collections={data.collections}
-                associatedCollections={data.associated_collections ?? []}
+            <DataUsesContent
+                datauses={data.durs}
+                associatedDatauses={data.associated_durs ?? []}
                 anchorIndex={startIndex + 2}
                 translationPath={TRANSLATION_PATH}
             />
@@ -37,15 +37,15 @@ export default async function EntitiesOuter({
                 anchorIndex={startIndex + 3}
                 translationPath={TRANSLATION_PATH}
             />
-            <DataUsesContent
-                datauses={data.durs}
-                associatedDatauses={data.associated_durs ?? []}
-                anchorIndex={startIndex + 4}
-                translationPath={TRANSLATION_PATH}
-            />
             <PublicationsContent
                 publications={data.publications}
                 associatedPublications={data.associated_publications ?? []}
+                anchorIndex={startIndex + 4}
+                translationPath={TRANSLATION_PATH}
+            />
+            <CollectionsContent
+                collections={data.collections}
+                associatedCollections={data.associated_collections ?? []}
                 anchorIndex={startIndex + 5}
                 translationPath={TRANSLATION_PATH}
             />

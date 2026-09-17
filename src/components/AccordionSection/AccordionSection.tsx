@@ -18,6 +18,7 @@ export default function AccordionSection({
     contents,
     heading,
     limitRows = 6,
+    sx,
     ...restProps
 }: AccordionSectionProps) {
     const limitItems = contents.slice(0, limitRows);
@@ -33,8 +34,26 @@ export default function AccordionSection({
             noIndent
             elevation={0}
             headingComponent="h2"
+            sx={{
+                "&:not(:last-of-type)": {
+                    borderBottom: 1,
+                    borderColor: "greyCustom.main",
+                },
+                ".MuiAccordionSummary-root": {
+                    padding: theme => theme.spacing(2.5, 0),
+                },
+                ".MuiAccordionSummary-content, .MuiAccordionSummary-content.Mui-expanded":
+                    {
+                        marginTop: 0,
+                        marginBottom: 0,
+                    },
+                ...sx,
+            }}
             heading={
-                <Typography variant="h3" component="span">
+                <Typography
+                    variant="articleLead"
+                    component="span"
+                    sx={{ mb: 0 }}>
                     {heading}
                 </Typography>
             }

@@ -4,6 +4,12 @@ export const SUPPORT_METADATA_ONBOARDING_URL =
 export const COHORT_DISCOVERY_URL =
     "https://rquest.prod.healthdatagateway.org/";
 
+export enum ApplicationStatus {
+    ALL = "all",
+    ENABLED = "enabled",
+    DISABLED = "disabled",
+}
+
 export enum DataStatus {
     ACTIVE = "ACTIVE",
     DRAFT = "DRAFT",

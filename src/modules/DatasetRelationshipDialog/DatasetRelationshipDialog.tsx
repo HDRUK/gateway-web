@@ -137,14 +137,16 @@ const DatasetRelationshipDialog = ({
                                         <Link
                                             href={`/${RouteName.DATASET_ITEM}/${linkage.dataset_id}`}>
                                             <Typography
-                                                variant="h3"
+                                                variant="body1"
                                                 component="p"
                                                 onClick={() => hideDialog()}>
                                                 {linkage.title}
                                             </Typography>
                                         </Link>
                                     ) : (
-                                        <Typography variant="h3" component="p">
+                                        <Typography
+                                            variant="body1"
+                                            component="p">
                                             {linkage.title}
                                         </Typography>
                                     )}

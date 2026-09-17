@@ -1,6 +1,6 @@
+import { ReactNode } from "react";
 import { Box } from "@mui/material";
 import { createColumnHelper } from "@tanstack/react-table";
-import { IconType } from "@/interfaces/Ui";
 import { User } from "@/interfaces/User";
 import TooltipIcon from "@/components/TooltipIcon";
 import PermissionDescriptions from "@/modules/PermissionDescriptions";
@@ -85,7 +85,7 @@ const getColumns = ({
     actions: {
         label?: string;
         onClick: (rowUser: User) => void;
-        icon: IconType;
+        icon: (rowUser: User) => ReactNode;
     }[];
     features: { [key: string]: boolean };
 }) => {

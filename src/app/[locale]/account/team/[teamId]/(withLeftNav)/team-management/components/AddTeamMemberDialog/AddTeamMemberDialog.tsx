@@ -10,7 +10,7 @@ import pLimit from "p-limit";
 import { AddTeamMember, UserAndRoles } from "@/interfaces/AddTeamMember";
 import Box from "@/components/Box";
 import Dialog from "@/components/Dialog";
-import Loading from "@/components/Loading";
+import { Loading } from "@hdruk/ui";
 import ModalButtons from "@/components/ModalButtons";
 import useAuth from "@/hooks/useAuth";
 // import useDebounce from "@/hooks/useDebounce";

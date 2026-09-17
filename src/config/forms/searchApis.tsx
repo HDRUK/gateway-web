@@ -1,11 +1,8 @@
+import { SearchIcon } from "@/consts/icons";
 import { inputComponents } from ".";
 
 const defaultValues = {
     searchTitleDescription: "",
-    status: {
-        enabled: false,
-        disabled: false,
-    },
 };
 
 const formFields = [
@@ -16,24 +13,7 @@ const formFields = [
         name: "searchTitleDescription",
         placeholder: "Search titles and descriptions",
         label: "",
-    },
-    {
-        label: "Custom Integration status:",
-        name: "status",
-        component: inputComponents.CheckboxGroup,
-        horizontalForm: false,
-        nColumns: 10, // makes 10 columns so the two checkboxes are aligned left -- could be improved!
-        formControlSx: { m: 0, p: 0, mb: 0 },
-        checkboxes: [
-            {
-                name: "status.enabled",
-                label: "Enabled",
-            },
-            {
-                name: "status.disabled",
-                label: "Disabled",
-            },
-        ],
+        icon: SearchIcon,
     },
 ];
 

@@ -12,10 +12,9 @@ import { Team, TeamEditForm, TeamCreateForm } from "@/interfaces/Team";
 import { User } from "@/interfaces/User";
 import { OptionsType } from "@/components/Autocomplete/Autocomplete";
 import Box from "@/components/Box";
-import { Button } from "@hdruk/ui";
+import { Button, Loading } from "@hdruk/ui";
 import Form from "@/components/Form";
 import InputWrapper from "@/components/InputWrapper";
-import Loading from "@/components/Loading";
 import Paper from "@/components/Paper";
 import Typography from "@/components/Typography";
 import UploadFile from "@/components/UploadFile";
@@ -35,6 +34,7 @@ import {
     teamValidationSchema,
     hydratedDarFormFields,
 } from "@/config/forms/team";
+import { LogoImage } from "@/consts/image";
 import { ROLE_CUSTODIAN_TEAM_ADMIN } from "@/consts/roles";
 import { Routes } from "@/consts/routes";
 
@@ -455,9 +455,7 @@ const CreateTeamForm = () => {
                                         ? t(
                                               `${TRANSLATION_PATH_CREATE}.addImageSuccess`
                                           )
-                                        : t(
-                                              `${TRANSLATION_PATH_CREATE}.aspectRatioInfo`
-                                          )
+                                        : undefined
                                 }
                             />
 
@@ -466,7 +464,7 @@ const CreateTeamForm = () => {
                                     <img
                                         src={existingTeamData?.team_logo}
                                         alt={`${existingTeamData?.name} logo`}
-                                        width="100%"
+                                        style={LogoImage}
                                     />
                                 </Box>
                             )}

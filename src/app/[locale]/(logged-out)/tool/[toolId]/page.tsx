@@ -59,7 +59,10 @@ export default async function ToolPage({
                         backButtonHref={`/${RouteName.SEARCH}?type=${SearchCategory.TOOLS}`}
                     />
                     <Box sx={{ px: 3, py: 3 }}>
-                        <Typography variant="h2" sx={{ pt: 0.5, pb: 0.5 }}>
+                        <Typography
+                            variant="h4"
+                            component="h2"
+                            sx={{ pt: 0.5, pb: 0.5 }}>
                             {data.name}
                         </Typography>
                         <ToolContent

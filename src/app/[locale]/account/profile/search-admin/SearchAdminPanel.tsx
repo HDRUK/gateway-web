@@ -7,6 +7,15 @@ import Typography from "@/components/Typography";
 import Tabs from "@/components/Tabs";
 import useGet from "@/hooks/useGet";
 import apis from "@/config/apis";
+import {
+    FlagOutlinedIcon,
+    SearchIcon,
+    HubOutlinedIcon,
+    NightsStayOutlinedIcon,
+    InsertLinkOutlinedIcon,
+    EmailOutlinedIcon,
+    PeopleAltOutlinedIcon,
+} from "@/consts/icons";
 import { AdminSearchStatusResponse } from "@/interfaces/AdminSearch";
 import FeatureFlagsTable from "./FeatureFlagsTable";
 import SearchEntitiesTab from "./SearchEntitiesTab";
@@ -14,6 +23,7 @@ import DataCustodianNetworksTab from "./DataCustodianNetworksTab";
 import NightlyDatasetTestsTab from "./NightlyDatasetTestsTab";
 import DatasetLinkCheckResultsTab from "./DatasetLinkCheckResultsTab";
 import EmailTemplatesTab from "./EmailTemplatesTab";
+import UsersTab from "./UsersTab";
 
 const TRANSLATION_PATH = "pages.account.profile.searchAdmin";
 
@@ -32,10 +42,12 @@ export default function SearchAdminPanel() {
                 <Tabs
                     rootBoxSx={{ p: 0 }}
                     tabBoxSx={{ p: 0 }}
+                    tabVariant="scrollable"
                     tabs={[
                         {
                             label: t("featureFlagsTab"),
                             value: "features",
+                            icon: <FlagOutlinedIcon />,
                             content: (
                                 <Box sx={{ p: 0, pt: 2 }}>
                                     <FeatureFlagsTable />
@@ -45,6 +57,7 @@ export default function SearchAdminPanel() {
                         {
                             label: t("searchEntitiesTab"),
                             value: "entities",
+                            icon: <SearchIcon />,
                             content: (
                                 <Box sx={{ p: 0, pt: 2 }}>
                                     <SearchEntitiesTab
@@ -58,6 +71,7 @@ export default function SearchAdminPanel() {
                         {
                             label: t("dataCustodianNetworksTab"),
                             value: "networks",
+                            icon: <HubOutlinedIcon />,
                             content: (
                                 <Box sx={{ p: 0, pt: 2 }}>
                                     <DataCustodianNetworksTab />
@@ -67,6 +81,7 @@ export default function SearchAdminPanel() {
                         {
                             label: t("nightlyDatasetTestsTab"),
                             value: "nightlyDatasetTests",
+                            icon: <NightsStayOutlinedIcon />,
                             content: (
                                 <Box sx={{ p: 0, pt: 2 }}>
                                     <NightlyDatasetTestsTab />
@@ -76,6 +91,7 @@ export default function SearchAdminPanel() {
                         {
                             label: t("datasetLinkCheckResultsTab"),
                             value: "datasetLinkCheckResults",
+                            icon: <InsertLinkOutlinedIcon />,
                             content: (
                                 <Box sx={{ p: 0, pt: 2 }}>
                                     <DatasetLinkCheckResultsTab />
@@ -85,9 +101,20 @@ export default function SearchAdminPanel() {
                         {
                             label: t("emailTemplatesTab"),
                             value: "emailTemplates",
+                            icon: <EmailOutlinedIcon />,
                             content: (
                                 <Box sx={{ p: 0, pt: 2 }}>
                                     <EmailTemplatesTab />
+                                </Box>
+                            ),
+                        },
+                        {
+                            label: t("usersTab"),
+                            value: "users",
+                            icon: <PeopleAltOutlinedIcon />,
+                            content: (
+                                <Box sx={{ p: 0, pt: 2 }}>
+                                    <UsersTab />
                                 </Box>
                             ),
                         },

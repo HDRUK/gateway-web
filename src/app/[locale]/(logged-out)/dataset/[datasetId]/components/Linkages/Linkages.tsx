@@ -32,7 +32,9 @@ const Linkages = ({ linkages }: LinkagesProps) => {
 
     return (
         <Paper sx={{ borderRadius: 2, p: 2 }}>
-            <Typography variant="h2"> {t("title")} </Typography>
+            <Typography variant="h6" component="h2">
+                {t("title")}
+            </Typography>
             <Box sx={{ display: "flex", flexWrap: "wrap", p: 0 }} gap={1}>
                 {linkageCounts.map(([type, count]) => (
                     <EllipsisCharacterLimit

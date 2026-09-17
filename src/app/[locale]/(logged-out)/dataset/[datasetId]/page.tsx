@@ -97,11 +97,6 @@ export default async function DatasetItemPage({
         "metadata.metadata.summary.dataCustodian.name"
     );
 
-    const dataCustodianId = get(
-        datasetVersion,
-        "metadata.metadata.summary.dataCustodian.identifier"
-    );
-
     return (
         <LayoutDataItemPage
             navigation={<ActiveListSidebar items={activeLinkList} />}
@@ -122,8 +117,7 @@ export default async function DatasetItemPage({
                                         flexWrap: "wrap",
                                         alignItems: "baseline",
                                         gap: 1,
-                                        pt: 0.5,
-                                        pb: 0.5,
+                                        p: 0,
                                     }}>
                                     <Typography
                                         variant="articleLead"
@@ -133,7 +127,7 @@ export default async function DatasetItemPage({
                                                 ?.summary?.title
                                         }
                                     </Typography>
-                                    {dataCustodianName && dataCustodianId && (
+                                    {dataCustodianName && data?.team?.id && (
                                         <>
                                             <Typography
                                                 variant="articleLead"
@@ -142,7 +136,7 @@ export default async function DatasetItemPage({
                                             </Typography>
                                             <Link
                                                 variant="articleLead"
-                                                href={`/${RouteName.DATA_CUSTODIANS_ITEM}/${dataCustodianId}`}>
+                                                href={`/${RouteName.DATA_CUSTODIANS_ITEM}/${data?.team?.id}`}>
                                                 {dataCustodianName}
                                             </Link>
                                         </>

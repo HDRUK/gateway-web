@@ -2,9 +2,8 @@
 
 import { useTranslations } from "next-intl";
 import Box from "@/components/Box";
-import { Button } from "@hdruk/ui";
+import { Button, Loading } from "@hdruk/ui";
 import Link from "@/components/Link";
-import Loading from "@/components/Loading";
 import Paper from "@/components/Paper";
 import Typography from "@/components/Typography";
 import useAuth from "@/hooks/useAuth";

@@ -34,15 +34,19 @@ const Sources = ({ data }: SourcesProps) => {
 
     return (
         <Paper sx={{ borderRadius: `${tokens.radius.small}px`, p: 2 }}>
-            <Typography variant="h4">
-                <b>{`${t("datasetTypes")}: `}</b>
+            <Typography variant="body2">
+                <Typography variant="h6" component="span">
+                    {`${t("datasetTypes")}: `}
+                </Typography>
                 {formatTextDelimiter(extractNamesFromDataType(datasetType))}
             </Typography>
 
             {datasetSubTypeArray.length > 0 &&
                 !isEqual(datasetSubTypeArray, [N_A]) && (
-                    <Typography variant="h4">
-                        <b>{`${t("datasetSubtypes")}: `}</b>
+                    <Typography variant="body2">
+                        <Typography variant="h6" component="span">
+                            {`${t("datasetSubtypes")}: `}
+                        </Typography>
                         {formatTextDelimiter(datasetSubTypeArray)}
                     </Typography>
                 )}
@@ -50,14 +54,18 @@ const Sources = ({ data }: SourcesProps) => {
             <Divider sx={{ my: 1 }} />
 
             {dataCustodianName && (
-                <Typography variant="h4">
-                    <b>{`${t("dataCustodian")}: `}</b>
+                <Typography variant="body2">
+                    <Typography variant="h6" component="span">
+                        {`${t("dataCustodian")}: `}
+                    </Typography>
                     {dataCustodianName}
                 </Typography>
             )}
 
-            <Typography variant="h4">
-                <b>{`${t("collectionSources")}: `}</b>
+            <Typography variant="body2">
+                <Typography variant="h6" component="span">
+                    {`${t("collectionSources")}: `}
+                </Typography>
                 {collectionSource
                     ? formatTextDelimiter(collectionSource)
                     : t("noCollectionSources")}

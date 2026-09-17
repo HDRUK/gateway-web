@@ -38,7 +38,11 @@ const isExpanded = (
     expandedSection: string,
     trimmedPathname: string
 ) => {
-    if (item.subItems?.some(subItem => trimmedPathname.includes(subItem.href)))
+    if (
+        item.subItems?.some(subItem =>
+            trimmedPathname.includes(subItem.matchPath ?? subItem.href)
+        )
+    )
         return true;
     return expandedSection === item.label;
 };
@@ -142,11 +146,11 @@ const LeftNav = ({
         const sectionId = itemIds[item.label];
         const expanded = isExpanded(item, expandedSection, trimmedPathname);
 
-        const calculateLeftBorder = (subItemHref: string) => 
-            `1px solid 
+        const calculateLeftBorder = (subItemPath: string) =>
+            `1px solid
                 ${
                     subNavItemSelected(
-                        subItemHref
+                        subItemPath
                     )
                         ? colors.green400
                         : tokens.status.hovered
@@ -304,7 +308,9 @@ const LeftNav = ({
                                         color: tokens.text.faded,
                                     }}
                                     aria-current={
-                                        subNavItemSelected(subItem.href)
+                                        subNavItemSelected(
+                                            subItem.matchPath ?? subItem.href
+                                        )
                                             ? "page"
                                             : undefined
                                     }
@@ -320,7 +326,8 @@ const LeftNav = ({
                                             py: 1.5,
                                             px: 1,
                                             borderLeft: calculateLeftBorder(
-                                                subItem.href
+                                                subItem.matchPath ??
+                                                    subItem.href
                                             ),
                                         }}
                                         primary={subItem.label}

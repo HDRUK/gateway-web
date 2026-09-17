@@ -1,18 +1,26 @@
 "use client";
 
 import { useMemo, useState } from "react";
-import { Box } from "@mui/material";
+import { Button } from "@hdruk/ui";
+import { useTranslations } from "next-intl";
 import { useParams } from "next/navigation";
 import { Integration } from "@/interfaces/Integration";
 import { PaginationType } from "@/interfaces/Pagination";
+import Box from "@/components/Box";
 import BoxContainer from "@/components/BoxContainer";
+import Link from "@/components/Link";
 import Pagination from "@/components/Pagination";
+import Paper from "@/components/Paper";
 import Typography from "@/components/Typography";
 import useGet from "@/hooks/useGet";
 import apis from "@/config/apis";
+import { RouteName } from "@/consts/routeName";
 import IntegrationListItem from "../IntegrationListItem";
 
+const TRANSLATION_PATH = `pages.account.team.integrations.integrations.list`;
+
 const IntegrationList = () => {
+    const t = useTranslations(TRANSLATION_PATH);
     const [currentPage, setCurrentPage] = useState(1);
 
     const params = useParams<{ teamId: string }>();
@@ -29,21 +37,12 @@ const IntegrationList = () => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [currentPage]);
 
-    const { lastPage, list, total, from } = data || {};
+    const { lastPage, list, from } = data || {};
 
-    const calculatedTotal = total || list?.length;
     const startIndex = from || 1;
 
     return (
-        <BoxContainer>
-            <Box
-                data-testid="number-of-integrations"
-                display="flex"
-                justifyContent="flex-end">
-                <Typography>
-                    Number of Integrations: <strong>{calculatedTotal}</strong>
-                </Typography>
-            </Box>
+        <BoxContainer sx={{ mt: 1 }}>
             {list?.map((integration, index) => (
                 <IntegrationListItem
                     key={integration.id}
@@ -52,6 +51,23 @@ const IntegrationList = () => {
                     onChanged={() => mutate()}
                 />
             ))}
+            {list?.length === 0 && (
+                <Paper>
+                    <Box
+                        sx={{
+                            display: "flex",
+                            alignItems: "center",
+                            gap: 1,
+                        }}>
+                        <Typography>{t("empty")}</Typography>
+                        <Link
+                            passHref
+                            href={`/${RouteName.ACCOUNT}/${RouteName.TEAM}/${params?.teamId}/${RouteName.INTEGRATIONS}/${RouteName.INTEGRATION}/${RouteName.CREATE}`}>
+                            <Button purpose="link">{t("emptyAction")}</Button>
+                        </Link>
+                    </Box>
+                </Paper>
+            )}
             <Pagination
                 isLoading={isLoading}
                 page={currentPage}

@@ -5,18 +5,44 @@ import { useTranslations } from "next-intl";
 import Box from "@/components/Box";
 import Link from "@/components/Link";
 import theme from "@/config/theme";
-import { RouteName } from "@/consts/routeName";
 
 const richTextComponents = {
-    researchersLink: (chunks: React.ReactNode) => (
-        <Link href={RouteName.RESEARCHERS}>{chunks}</Link>
-    ),
+    bold: (chunks: React.ReactNode) => <b>{chunks}</b>,
     supportLink: (chunks: React.ReactNode) => (
-        <Link href={`/${RouteName.SUPPORT}`}>{chunks}</Link>
-    ),
-    githubLink: (chunks: React.ReactNode) => (
         <Link
-            href="https://github.com/HDRUK/gateway-api/blob/dev/CHANGELOG.md"
+            href="https://hdruk.atlassian.net/servicedesk/customer/portal/7/group/82/create/78?customfield_10752=11728"
+            target="_blank"
+            rel="noopener noreferrer">
+            {chunks}
+        </Link>
+    ),
+    gatewayLink: (chunks: React.ReactNode) => (
+        <Link
+            href="https://github.com/HDRUK/gateway-api/blob/main/CHANGELOG.md"
+            target="_blank"
+            rel="noopener noreferrer">
+            {chunks}
+        </Link>
+    ),
+    cohortWebLink: (chunks: React.ReactNode) => (
+        <Link
+            href="https://github.com/HDRUK/cohort-discovery-service-web/blob/main/CHANGELOG.md"
+            target="_blank"
+            rel="noopener noreferrer">
+            {chunks}
+        </Link>
+    ),
+    cohortApiLink: (chunks: React.ReactNode) => (
+        <Link
+            href="https://github.com/HDRUK/cohort-discovery-service-api/blob/main/CHANGELOG.md"
+            target="_blank"
+            rel="noopener noreferrer">
+            {chunks}
+        </Link>
+    ),
+    cohortNlpLink: (chunks: React.ReactNode) => (
+        <Link
+            href="https://github.com/HDRUK/cohort-discovery-service-nlp/blob/main/CHANGELOG.md"
             target="_blank"
             rel="noopener noreferrer">
             {chunks}
@@ -45,8 +71,14 @@ const IntroContent = () => {
             <Typography sx={{ mb: 1 }}>
                 {t.rich("description1", richTextComponents)}
             </Typography>
-            <Typography>
+            <Typography sx={{ mb: 1 }}>
                 {t.rich("description2", richTextComponents)}
+            </Typography>
+            <Typography sx={{ mb: 1 }}>
+                {t.rich("description3", richTextComponents)}
+            </Typography>
+            <Typography variant="body2">
+                {t.rich("note", richTextComponents)}
             </Typography>
         </Box>
     );

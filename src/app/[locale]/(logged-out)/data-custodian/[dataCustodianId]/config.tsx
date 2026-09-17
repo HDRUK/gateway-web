@@ -30,7 +30,7 @@ const accordions = [
         fields: [],
     },
     {
-        sectionName: "collections",
+        sectionName: "dataUses",
         fields: [],
     },
     {
@@ -38,11 +38,11 @@ const accordions = [
         fields: [],
     },
     {
-        sectionName: "dataUses",
+        sectionName: "publications",
         fields: [],
     },
     {
-        sectionName: "publications",
+        sectionName: "collections",
         fields: [],
     },
     // { TODO: Post-MVP

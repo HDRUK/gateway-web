@@ -70,7 +70,8 @@ export default async function PublicationItemPage({
                             py: 3,
                         }}>
                         <Typography
-                            variant="h2"
+                            variant="h4"
+                            component="h2"
                             sx={{ pt: 0.5, pb: 0.5, m: 0 }}>
                             <MarkDownSanitizedWithHtml
                                 content={data.paper_title}

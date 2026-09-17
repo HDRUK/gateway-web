@@ -18,7 +18,7 @@ jest.mock("notistack", () => ({
     __esModule: true,
 }));
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
+ 
 jest.mock("@/hooks/useTestFederation", () => ({
     __esModule: true,
     default: jest.fn((props: { setValue: (name: string, value: unknown) => void }) => ({
