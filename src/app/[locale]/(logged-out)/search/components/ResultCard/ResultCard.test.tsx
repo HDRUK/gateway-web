@@ -109,6 +109,16 @@ describe("ResultCard", () => {
                     },
                     metadata: mockWithoutData,
                     _id: "1",
+                    team: {
+                        id: 1,
+                        member_of: "",
+                        name: "",
+                        is_question_bank: false,
+                        is_dar: false,
+                        dar_modal_header: null,
+                        dar_modal_content: null,
+                        dar_modal_footer: null,
+                    },
                 }}
                 libraryData={[]}
                 mutateLibraries={jest.fn()}
