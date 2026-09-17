@@ -1,3 +1,23 @@
+## [2.45.0](https://github.com/HDRUK/gateway-web/compare/v2.44.0...v2.45.0) (2026-09-17)
+
+### ✨ Features
+
+* **GAT-2665:** Implements user management via the admin panel (#1637) ([52b5a63](https://github.com/HDRUK/gateway-web/commit/52b5a63ee9ba8b084cc59331a538f005d113a702)), closes [GAT-2665](undefinedGAT-2665)
+* **GAT-8550:** Update domain helper text (#1641) ([7bde4a0](https://github.com/HDRUK/gateway-web/commit/7bde4a041d0f307e123aca2a0a8135daa62be13b)), closes [GAT-8550](undefinedGAT-8550)
+* **GAT-8666:** Logo sizing and page heading consistency (#1519) ([2d07b20](https://github.com/HDRUK/gateway-web/commit/2d07b206afcad31fa6ed49d84e8cc7c1ced3fb7d)), closes [GAT-8666](undefinedGAT-8666)
+* **GAT-9257:**  add Loading component (#1645) ([e4b434f](https://github.com/HDRUK/gateway-web/commit/e4b434ffcbd29f5239fe595806619c1c3d91ea54)), closes [GAT-9257](undefinedGAT-9257)
+* **GAT-9290:** Add no integrations message (#1647) ([55935ee](https://github.com/HDRUK/gateway-web/commit/55935ee58db738b406c8121c54ed30187c63c55b)), closes [GAT-9290](undefinedGAT-9290)
+* **GAT-9290:** tidy up integrations pages (#1639) ([b63a100](https://github.com/HDRUK/gateway-web/commit/b63a100879c6819cd11ce9e4e8c55d622f446f81)), closes [GAT-9290](undefinedGAT-9290)
+* **GAT-9439:** Update release notes intro copy (#1642) ([2b51f56](https://github.com/HDRUK/gateway-web/commit/2b51f562673ef06f1dec832245e1d0e1b292cb74)), closes [GAT-9439](undefinedGAT-9439)
+* **GAT-9500:** Show all autocomplete values (#1649) ([06d764a](https://github.com/HDRUK/gateway-web/commit/06d764a91ac0dd28bde640c9f0c78bdbd2fa4b44)), closes [GAT-9500](undefinedGAT-9500)
+* **GAT-9546:** 🤖 correct heading typography (#1643) ([9e557db](https://github.com/HDRUK/gateway-web/commit/9e557db2daf3f72f538c577e319fdd5b4a5acc26)), closes [GAT-9546](undefinedGAT-9546)
+* **GAT-9549:** 🤖 reorder and reword custodian sections (#1644) ([cc8ea36](https://github.com/HDRUK/gateway-web/commit/cc8ea362649d6885c4c686265542a51f530a2bf2)), closes [GAT-9549](undefinedGAT-9549)
+
+### 🐛 Bug Fixes
+
+* **GAT-9530:** Adjust collection images (#1638) ([ac4b59e](https://github.com/HDRUK/gateway-web/commit/ac4b59ecd175331a8674c837da0c278f7485940e)), closes [GAT-9530](undefinedGAT-9530)
+* **GAT-9531:** fix data custodian link (#1648) ([0817c7b](https://github.com/HDRUK/gateway-web/commit/0817c7b75bac28e4589be1c983da8cbeec60ff2b))
+
 ## [2.44.0](https://github.com/HDRUK/gateway-web/compare/v2.43.1...v2.44.0) (2026-09-08)
 
 ### ✨ Features
