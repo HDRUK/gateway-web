@@ -27,7 +27,6 @@ interface ResultTableProps {
 
 const CONFORMS_TO_PATH = "metadata.accessibility.formatAndStandards.conformsTo";
 const PUBLISHER_NAME_PATH = "metadata.summary.publisher.name";
-const PUBLISHERS_ID = "metadata.summary.publisher.gatewayId";
 const COHORT_DISCOVERY_PATH = "isCohortDiscovery";
 const ACCESS_SERVICE_PATH =
     "metadata.accessibility.access.accessServiceCategory";
@@ -91,33 +90,23 @@ const getColumns = ({
     columnHelper.display({
         id: "dataProvider",
         cell: ({ row: { original } }) => {
-            const dataCustodianId = get(original, PUBLISHERS_ID);
-            // if the below is false, its because the api has failed to find the team id based off the original uid for gatewayId
-            const isNumber = !Number.isNaN(Number(dataCustodianId));
-            const linkHref = `/${RouteName.DATA_CUSTODIANS_ITEM}/${dataCustodianId}`;
+            const linkHref = `/${RouteName.DATA_CUSTODIANS_ITEM}/${original.team.id}`;
 
             return (
                 <div style={{ textAlign: "center" }}>
-                    {isNumber && (
-                        <Link
-                            href={linkHref}
-                            onFocus={e => {
-                                e.currentTarget.scrollIntoView({
-                                    behavior: "smooth",
-                                    inline: "center",
-                                    block: "nearest",
-                                });
-                            }}>
-                            <EllipsisLineLimit
-                                text={get(original, PUBLISHER_NAME_PATH)}
-                            />
-                        </Link>
-                    )}
-                    {!isNumber && (
+                    <Link
+                        href={linkHref}
+                        onFocus={e => {
+                            e.currentTarget.scrollIntoView({
+                                behavior: "smooth",
+                                inline: "center",
+                                block: "nearest",
+                            });
+                        }}>
                         <EllipsisLineLimit
                             text={get(original, PUBLISHER_NAME_PATH)}
                         />
-                    )}
+                    </Link>
                 </div>
             );
         },

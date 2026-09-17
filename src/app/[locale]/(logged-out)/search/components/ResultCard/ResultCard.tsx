@@ -243,10 +243,7 @@ const ResultCard = ({
         highlight?.description?.[0] ??
         metadata.summary.abstract;
     const datasetAliases = metadata.summary.datasetAliases;
-    const dataCustodianId = metadata.summary.publisher.gatewayId;
-    // if the below is false, its because the api has failed to find the team id based off the original uid for gatewayId
-    const isNumber = !Number.isNaN(dataCustodianId);
-    const linkHref = `/${RouteName.DATA_CUSTODIANS_ITEM}/${dataCustodianId}`;
+    const linkHref = `/${RouteName.DATA_CUSTODIANS_ITEM}/${team.id}`;
 
     return (
         <ListItem
@@ -287,34 +284,9 @@ const ResultCard = ({
                                         {metadata.summary.shortTitle}
                                     </Link>
                                 </h3>
-                                {isNumber && (
-                                    <Link
-                                        href={linkHref}
-                                        sx={{ display: "inline-block" }}>
-                                        <Typography
-                                            aria-description="Data Custodian"
-                                            sx={{
-                                                textDecoration: "uppercase",
-                                                fontWeight: 400,
-                                                fontSize: 14,
-                                                color: "secondary",
-                                                mb: 1.5,
-                                                mr: {
-                                                    sm: 0,
-                                                    md: 1,
-                                                },
-                                            }}>
-                                            {metadata.summary.publisher.name !==
-                                            undefined
-                                                ? metadata.summary.publisher
-                                                      .name
-                                                : metadata.summary.publisher
-                                                      .publisherName}
-                                        </Typography>
-                                    </Link>
-                                )}
-
-                                {!isNumber && (
+                                <Link
+                                    href={linkHref}
+                                    sx={{ display: "inline-block" }}>
                                     <Typography
                                         aria-description="Data Custodian"
                                         sx={{
@@ -334,7 +306,7 @@ const ResultCard = ({
                                             : metadata.summary.publisher
                                                   .publisherName}
                                     </Typography>
-                                )}
+                                </Link>
                             </div>
                             <div
                                 style={{
