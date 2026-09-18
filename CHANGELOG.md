@@ -1,3 +1,19 @@
+## [2.46.0](https://github.com/HDRUK/gateway-web/compare/v2.45.0...v2.46.0) (2026-09-18)
+
+### ✨ Features
+
+* **GAT-9401:** add DUO code chips, data use permissions, and conformsTo support to dataset pages ([67aaddd](https://github.com/HDRUK/gateway-web/commit/67aaddd9a258025c3ba1a6ba2a285a43c01ea9fd)), closes [GAT-9401](undefinedGAT-9401)
+
+### 🐛 Bug Fixes
+
+* **GAT-7337:** Stop excluding unreported population datasets by default (#1660) ([5702e7c](https://github.com/HDRUK/gateway-web/commit/5702e7c1e8b602cca2674e8b90e95255b7ce9533)), closes [GAT-7337](undefinedGAT-7337)
+* **GAT-7795:** fix banner overflow with long titles (#1661) ([d85e318](https://github.com/HDRUK/gateway-web/commit/d85e31847be0f587fd58a6938ceef1f7e3e3f1a5))
+* **GAT-8023:** Fix DAR question guidance lookup (#1654) ([a7c00bc](https://github.com/HDRUK/gateway-web/commit/a7c00bc315273436129369db801ebd861001a2d5))
+* **GAT-9457:** recover partner search from failed aggregation polls (#1650) ([9d39456](https://github.com/HDRUK/gateway-web/commit/9d39456cfa246b8384d2c07315b4f25bbdf8814c)), closes [GAT-9457](undefinedGAT-9457) [aggregation](undefinedgation)
+* **GAT-9583:** Fix stacked card overflow and title truncation (#1655) ([e1b64c5](https://github.com/HDRUK/gateway-web/commit/e1b64c5fe611b56f58bfa7ec9bf6aeaed5df0820))
+* **GAT-9587:** resolve "original.team is undefined" crash in search results table ([b51776f](https://github.com/HDRUK/gateway-web/commit/b51776f5582e9cfbb38c511be51e7166e75d6595)), closes [Gate](undefinedGate)
+* **GAT-9587:** use team id instead of gatewayId for data custodian links in search results ([74ef2af](https://github.com/HDRUK/gateway-web/commit/74ef2af0e84a422b92fffb17d8e19e6404b8248b)), closes [GAT-9587](undefinedGAT-9587) [gatewayId](undefinedgatewayId) [summary.publisher.gatewayId](undefinedgatewayId)
+
 ## [2.45.0](https://github.com/HDRUK/gateway-web/compare/v2.44.0...v2.45.0) (2026-09-17)
 
 ### ✨ Features
