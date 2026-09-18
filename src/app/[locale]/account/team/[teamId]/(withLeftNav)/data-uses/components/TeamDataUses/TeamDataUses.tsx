@@ -112,6 +112,7 @@ const TeamDataUses = ({ permissions, teamId }: TeamDataUsesProps) => {
             status: (
                 searchParams?.get("tab") || DataStatus.ACTIVE
             ).toLowerCase(),
+            page: "1",
         }));
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [searchParams?.get("tab")]);
