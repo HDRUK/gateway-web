@@ -550,6 +550,7 @@ const Search = ({ filters, schema }: SearchProps) => {
     });
 
     const renderResults = () =>
+        isDatasets &&
         resultsView === ViewType.TABLE &&
         !isMobile &&
         !isTabletOrLaptop &&
