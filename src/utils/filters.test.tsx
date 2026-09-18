@@ -1,4 +1,4 @@
-import { SearchCategory } from "@/interfaces/Search";
+import { SearchCategory, SearchQueryParams } from "@/interfaces/Search";
 import { generateFilterV1 } from "@/mocks/data";
 import {
     formatBucketCounts,
@@ -91,6 +91,67 @@ describe("Filter utils", () => {
                         dateRange: [],
                     },
                 },
+            });
+        });
+
+        describe("populationSize", () => {
+            const getPopulationSize = (populationSize: string[] = []) => {
+                const query = {
+                    publisherName: ["one"],
+                    populationSize,
+                    query: "diabetes",
+                    sort: "desc",
+                    page: "",
+                    per_page: "",
+                    type: SearchCategory.DATASETS,
+                } as SearchQueryParams;
+
+                return pickOnlyFilters("dataset", query).filters?.dataset
+                    ?.populationSize;
+            };
+
+            it("should include unreported populations by default", () => {
+                expect(getPopulationSize()).toEqual({
+                    from: undefined,
+                    to: undefined,
+                    includeUnreported: true,
+                });
+            });
+
+            it("should exclude unreported populations from zero when no range is set", () => {
+                expect(getPopulationSize(["excludeUnreported"])).toEqual({
+                    from: "0",
+                    to: undefined,
+                    includeUnreported: false,
+                });
+            });
+
+            it("should keep the range when unreported populations are included", () => {
+                expect(getPopulationSize(["1000", "5000"])).toEqual({
+                    from: "1000",
+                    to: "5000",
+                    includeUnreported: true,
+                });
+            });
+
+            it("should keep the range when unreported populations are excluded", () => {
+                expect(
+                    getPopulationSize(["1000", "5000", "excludeUnreported"])
+                ).toEqual({
+                    from: "1000",
+                    to: "5000",
+                    includeUnreported: false,
+                });
+            });
+
+            it("should read the range regardless of where the exclusion sits", () => {
+                expect(
+                    getPopulationSize(["excludeUnreported", "1000", "5000"])
+                ).toEqual({
+                    from: "1000",
+                    to: "5000",
+                    includeUnreported: false,
+                });
             });
         });
     });

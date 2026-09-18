@@ -463,7 +463,7 @@ const Search = ({ filters, schema }: SearchProps) => {
                 [FILTER_DATA_SUBTYPE]: [],
             });
         } else {
-            updatePath(filterType, filtered.join(","));
+            updatePath(filterType, filtered.join("|"));
         }
     };
 
@@ -550,6 +550,7 @@ const Search = ({ filters, schema }: SearchProps) => {
     });
 
     const renderResults = () =>
+        isDatasets &&
         resultsView === ViewType.TABLE &&
         !isMobile &&
         !isTabletOrLaptop &&

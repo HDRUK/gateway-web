@@ -6,6 +6,7 @@ import Box from "@/components/Box";
 import Chip from "@/components/Chip";
 import ShowMore from "@/components/ShowMore";
 import { colors } from "@/config/theme";
+import { EXCLUDE_UNREPORTED } from "@/consts/filters";
 import { CloseIcon } from "@/consts/icons";
 import { isQueryEmpty } from "@/utils/filters";
 
@@ -49,7 +50,13 @@ const FilterChips = ({
                             filterValues
                                 .filter(filterValue => filterValue)
                                 .map((filter: string) => {
-                                    const filterTranslationPath = `filters.${filterCategory}.${filterType}`;
+                                    const filterBasePath = `filters.${filterCategory}`;
+                                    const filterTranslationPath = `${filterBasePath}.${filterType}`;
+
+                                    const label =
+                                        filter === EXCLUDE_UNREPORTED
+                                            ? t(`${filterBasePath}.${filter}`)
+                                            : filter;
 
                                     return (
                                         <Tooltip
@@ -81,7 +88,7 @@ const FilterChips = ({
                                                 }}
                                                 color={color}
                                                 size={size}
-                                                label={filter}
+                                                label={label}
                                                 onDelete={() =>
                                                     handleDelete(
                                                         filterType as keyof SearchQueryParams,
