@@ -463,7 +463,7 @@ const Search = ({ filters, schema }: SearchProps) => {
                 [FILTER_DATA_SUBTYPE]: [],
             });
         } else {
-            updatePath(filterType, filtered.join(","));
+            updatePath(filterType, filtered.join("|"));
         }
     };
 
