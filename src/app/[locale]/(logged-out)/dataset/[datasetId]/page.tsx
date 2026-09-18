@@ -8,7 +8,8 @@ import Typography from "@/components/Typography";
 import ActiveListSidebar from "@/modules/ActiveListSidebar";
 import { DataStatus } from "@/consts/application";
 import { RouteName } from "@/consts/routeName";
-import { getDataset } from "@/utils/api";
+import { SCHEMA_NAME, SCHEMA_VERSION } from "@/consts/schema";
+import { getDataset, getSchemaFromTraser } from "@/utils/api";
 import { getLatestVersion } from "@/utils/dataset";
 import metaData from "@/utils/metadata";
 import ActionBar from "./components/ActionBar";
@@ -35,9 +36,6 @@ const DATASET_STAT_PATHS = [
     "metadata.metadata.accessibility.access.deliveryLeadTime",
 ];
 
-const SCHEMA_NAME = process.env.NEXT_PUBLIC_SCHEMA_NAME || "HDRUK";
-const SCHEMA_VERSION = process.env.NEXT_PUBLIC_SCHEMA_VERSION || "4.0.0";
-
 export default async function DatasetItemPage({
     params,
 }: {
@@ -45,14 +43,26 @@ export default async function DatasetItemPage({
 }) {
     const { datasetId } = await params;
 
-    const [data, googleRecommendedDataset] = await Promise.all([
+    const [data, googleRecommendedDataset, schema] = await Promise.all([
         getDataset(datasetId, SCHEMA_NAME, SCHEMA_VERSION, {
             suppressError: true,
         }),
         getDataset(datasetId, "SchemaOrg", "GoogleRecommended").catch(
             () => undefined
         ),
+        getSchemaFromTraser(SCHEMA_NAME, SCHEMA_VERSION).catch(() => undefined),
     ]);
+
+    const duoCodeDetails = Object.fromEntries(
+        (schema?.schema?.$defs?.DuoCodesEnum?.oneOf ?? []).map(option => [
+            option.const,
+            {
+                shortcode: option.shortcode,
+                label: option.title,
+                description: option.description,
+            },
+        ])
+    );
 
     // Note that the status check is only required under v1 - under v2, we can use
     // an endpoint that will not show the data if not active
@@ -194,6 +204,7 @@ export default async function DatasetItemPage({
                                 <DatasetContent
                                     data={datasetVersion}
                                     populatedSections={populatedSections}
+                                    duoCodeDetails={duoCodeDetails}
                                 />
                             </Box>
                             <Box
@@ -205,6 +216,9 @@ export default async function DatasetItemPage({
                                 }}>
                                 <Sources
                                     data={datasetVersion.metadata.metadata}
+                                    gwdmVersion={
+                                        datasetVersion.metadata.gwdmVersion
+                                    }
                                 />
                                 {data?.linkages && (
                                     <Linkages linkages={data.linkages} />

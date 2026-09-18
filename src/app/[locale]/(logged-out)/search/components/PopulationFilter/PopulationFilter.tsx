@@ -7,7 +7,7 @@ import BarSlider from "@/components/BarSlider";
 import Box from "@/components/Box";
 import CheckboxControlled from "@/components/CheckboxControlled";
 import Typography from "@/components/Typography";
-import { INCLUDE_UNREPORTED } from "@/consts/filters";
+import { EXCLUDE_UNREPORTED } from "@/consts/filters";
 
 const TRANSLATION_PATH = "pages.search.components.PopulationFilter";
 const UNREPORTED = "Unreported";
@@ -121,10 +121,10 @@ const PopulationFilter = ({
             </Box>
             <CheckboxControlled
                 formControlSx={{ pl: 1, pr: 1, textWrap: "wrap" }}
-                label={t(INCLUDE_UNREPORTED, { unreportedCount })}
+                label={t("includeUnreported", { unreportedCount })}
                 checked={
-                    !!selectedFilters?.populationSize?.includes(
-                        INCLUDE_UNREPORTED
+                    !selectedFilters?.populationSize?.includes(
+                        EXCLUDE_UNREPORTED
                     )
                 }
                 name="dataset-population-checkbox"

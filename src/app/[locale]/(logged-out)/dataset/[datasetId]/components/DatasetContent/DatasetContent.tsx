@@ -2,8 +2,9 @@
 
 import { Button } from "@hdruk/ui";
 import { tokens } from "@hdruk/ui/theme";
+import { Tooltip } from "@mui/material";
 import { createColumnHelper } from "@tanstack/react-table";
-import { get, isArray } from "lodash";
+import { get, isArray, isEmpty, isPlainObject, startCase } from "lodash";
 import { useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
 import { VersionItem } from "@/interfaces/Dataset";
@@ -37,6 +38,7 @@ import {
 } from "../../config";
 import {
     DatasetButtonItem,
+    DatasetFieldItem,
     DatasetFieldWrapper,
     ListContainer,
     ObservationTableWrapper,
@@ -49,6 +51,17 @@ const DOI_URL = "https://doi.org/";
 const DOI_NAME_PATH = "metadata.metadata.summary.doiName";
 const FOLLOWUP_PATH = "metadata.metadata.coverage.followUp";
 const CITATION_PATH = "metadata.metadata.accessibility.usage.resourceCreator";
+
+// GA4GH's OLS4 instance requires the term's OBO purl, percent-encoded twice
+// (once for the purl itself, once more because OLS4 treats the whole path
+// segment as needing re-encoding) - e.g. DUO:0000042 -> DUO_0000042 ->
+// http://purl.obolibrary.org/obo/DUO_0000042 -> doubly-encoded path segment.
+const getOlsLinkForDuoCode = (code: string): string => {
+    const purl = `http://purl.obolibrary.org/obo/${code.replace(":", "_")}`;
+    return `https://www.ebi.ac.uk/ols4/ontologies/duo/classes/${encodeURIComponent(
+        encodeURIComponent(purl)
+    )}`;
+};
 
 const columnHelper = createColumnHelper<Observation>();
 
@@ -88,12 +101,26 @@ const renderObservationsTable = (
     </ObservationTableWrapper>
 );
 
+const isEmptyValue = (value: unknown) =>
+    !value ||
+    value === -1 ||
+    (isArray(value) && !value.length) ||
+    (isPlainObject(value) && isEmpty(value));
+
+interface DuoCodeDetails {
+    shortcode: string;
+    label: string;
+    description: string;
+}
+
 const DatasetContent = ({
     data,
     populatedSections,
+    duoCodeDetails = {},
 }: {
     data: VersionItem;
     populatedSections: DatasetSection[];
+    duoCodeDetails?: Record<string, DuoCodeDetails>;
 }) => {
     const router = useRouter();
     const t = useTranslations(TRANSLATION_PATH);
@@ -147,6 +174,59 @@ const DatasetContent = ({
                     formatTextWithLinks(item),
                 ]);
             }
+            case FieldType.LIST_TEXT_LABELLED: {
+                const list = isArray(value)
+                    ? value
+                    : Array.from(new Set(splitStringList(value)));
+
+                return (
+                    <DatasetFieldWrapper sx={{ gap: 0.75 }}>
+                        {list.map(item => {
+                            const code = item.toString();
+                            const details = duoCodeDetails[code];
+
+                            if (!details) {
+                                return (
+                                    <DatasetFieldItem key={code} label={code} />
+                                );
+                            }
+
+                            const chipLabel = details.shortcode || code;
+
+                            return (
+                                <Tooltip
+                                    key={code}
+                                    describeChild
+                                    placement="top"
+                                    title={
+                                        <>
+                                            <Typography variant="subtitle1">
+                                                {`${
+                                                    details.label
+                                                } (${code.replace(":", " ")})`}
+                                            </Typography>
+                                            <Typography>
+                                                {details.description}
+                                            </Typography>
+                                            <Link
+                                                href={getOlsLinkForDuoCode(
+                                                    code
+                                                )}>
+                                                {t("viewOnOlsSite")}
+                                            </Link>
+                                        </>
+                                    }>
+                                    <DatasetFieldItem
+                                        label={chipLabel}
+                                        variant="outlined"
+                                        tabIndex={0}
+                                    />
+                                </Tooltip>
+                            );
+                        })}
+                    </DatasetFieldWrapper>
+                );
+            }
             case FieldType.LIST_LINK: {
                 const list = isArray(value)
                     ? value
@@ -168,6 +248,30 @@ const DatasetContent = ({
 
             case FieldType.LIST_DATASETTYPE: {
                 return value.map((item, i) => [i > 0 && ", ", item.name]);
+            }
+
+            case FieldType.KEY_VALUE: {
+                return (
+                    <ListContainer>
+                        {Object.entries(
+                            value as unknown as Record<string, unknown>
+                        )
+                            .filter(([, entry]) => !isEmptyValue(entry))
+                            .map(([key, entry]) => (
+                                <div key={key}>
+                                    <Typography
+                                        component="span"
+                                        fontWeight="medium">
+                                        {startCase(key)}
+                                    </Typography>
+                                    :{" "}
+                                    {isArray(entry)
+                                        ? entry.join(", ")
+                                        : String(entry)}
+                                </div>
+                            ))}
+                    </ListContainer>
+                );
             }
 
             default: {
@@ -281,11 +385,7 @@ const DatasetContent = ({
                                 section.fields.map(field => {
                                     let value = get(data, field.path);
 
-                                    if (
-                                        !value ||
-                                        value === -1 ||
-                                        (Array.isArray(value) && !value.length)
-                                    ) {
+                                    if (isEmptyValue(value)) {
                                         return null;
                                     }
 

@@ -133,7 +133,7 @@ const DarFieldArray = ({
                                     m: 0,
                                     py: 0,
                                     backgroundColor:
-                                        `${arrayName}.${fieldIndex}.${arrayField.name}` ===
+                                        `${arrayName}.${fieldIndex}.${arrayField.question_id}` ===
                                         selectedField
                                             ? theme.palette.grey[100]
                                             : "inherit",
@@ -145,7 +145,7 @@ const DarFieldArray = ({
                                     `${arrayName}.${fieldIndex}.${arrayField.question_id}`,
                                     () =>
                                         setSelectedField(
-                                            `${arrayName}.${fieldIndex}.${arrayField.name}`
+                                            `${arrayName}.${fieldIndex}.${arrayField.question_id}`
                                         ),
                                     getFileUploadFields?.(
                                         `${arrayName}.${fieldIndex}.${arrayField.question_id}`,
@@ -179,7 +179,7 @@ const DarFieldArray = ({
                                                         `${arrayName}.${fieldIndex}.${child.question_id}`,
                                                         () =>
                                                             setSelectedField(
-                                                                `${arrayName}.${fieldIndex}.${child.name}`
+                                                                `${arrayName}.${fieldIndex}.${child.question_id}`
                                                             ),
                                                         getFileUploadFields?.(
                                                             `${arrayName}.${fieldIndex}.${child.question_id}`,

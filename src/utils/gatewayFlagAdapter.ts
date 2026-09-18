@@ -10,7 +10,7 @@ export interface FeatureFlagsResponse {
     data: Features;
 }
 
-const getFeatures = async (): Promise<Record<string, boolean>> => {
+export const getFeatures = async (): Promise<Record<string, boolean>> => {
     try {
         const cookieStore = await cookies();
         const jwtToken = cookieStore?.get(config.JWT_COOKIE)?.value;

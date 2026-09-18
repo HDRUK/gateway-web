@@ -15,9 +15,10 @@ const TRANSLATION_PATH = "pages.dataset.components.Sources";
 
 interface SourcesProps {
     data: Metadata;
+    gwdmVersion?: string;
 }
 
-const Sources = ({ data }: SourcesProps) => {
+const Sources = ({ data, gwdmVersion }: SourcesProps) => {
     const t = useTranslations(TRANSLATION_PATH);
     const { datasetType } = data.provenance.origin;
 
@@ -70,6 +71,17 @@ const Sources = ({ data }: SourcesProps) => {
                     ? formatTextDelimiter(collectionSource)
                     : t("noCollectionSources")}
             </Typography>
+            {gwdmVersion && (
+                <>
+                    <Divider sx={{ my: 1 }} />
+                    <Typography variant="h4" component="p">
+                        <Typography component="span" variant="subtitle2">
+                            {`${t("schemaVersion")}: `}
+                        </Typography>
+                        {gwdmVersion}
+                    </Typography>
+                </>
+            )}
         </Paper>
     );
 };

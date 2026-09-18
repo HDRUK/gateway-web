@@ -19,13 +19,14 @@ const Banner = ({ title, subTitle, src }: BannerProps) => (
             display: "flex",
             alignItems: "center",
             justifyContent: "center",
-            height: "200px",
+            minHeight: "200px",
+            padding: `${theme.spacing(4)} 0`,
             background: `linear-gradient(97deg, #46AF93 4.05%, ${theme.palette.primary.main} 100%)`,
         }}>
         <div
             style={{
                 zIndex: 1,
-                position: "absolute",
+                position: "relative",
                 display: "flex",
                 textAlign: "center",
                 flexDirection: "column",

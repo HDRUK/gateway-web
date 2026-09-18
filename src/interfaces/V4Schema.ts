@@ -21,6 +21,15 @@ export interface Defs {
     DataUseLimitationV2: { enum: string[]; title: string; type: string };
     DataUseRequirementsV2: { enum: string[]; title: string; type: string };
     DataValue: Record<string, unknown>;
+    DuoCodesEnum: {
+        oneOf: {
+            const: string;
+            title: string;
+            shortcode: string;
+            description: string;
+        }[];
+        type: string;
+    };
     DatasetDescriptor: Record<string, unknown>;
     DeliveryLeadTimeV2: { enum: string[]; title: string; type: string };
     DemographicFrequency: Record<string, unknown>;

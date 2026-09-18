@@ -1,5 +1,6 @@
 import { Filter } from "@/interfaces/Filter";
 import { FILTER_DATA_SUBTYPE } from "@/config/forms/filters";
+import { SCHEMA_NAME, SCHEMA_VERSION } from "@/consts/schema";
 import { getFilters, getSchemaFromTraser } from "@/utils/api";
 import metaData, { noFollowRobots } from "@/utils/metadata";
 import Search from "./components/Search";
@@ -26,9 +27,6 @@ const SearchPage = async () => {
         }
         return filter;
     });
-
-    const SCHEMA_NAME = "HDRUK";
-    const SCHEMA_VERSION = "4.0.0";
 
     const { schema } = await getSchemaFromTraser(SCHEMA_NAME, SCHEMA_VERSION);
     return <Search filters={adjustedFilters} schema={schema} />;

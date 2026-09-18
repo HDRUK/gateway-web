@@ -56,6 +56,7 @@ import {
 } from "@/consts/createDataset";
 import { ArrowBackIosNewIcon, ArrowForwardIosIcon } from "@/consts/icons";
 import { RouteName } from "@/consts/routeName";
+import { SCHEMA_NAME, SCHEMA_VERSION } from "@/consts/schema";
 import {
     ACCOUNT,
     COMPONENTS,
@@ -92,9 +93,6 @@ interface CreateDatasetProps {
 }
 
 type FormValues = Record<string, unknown>;
-
-const SCHEMA_NAME = "HDRUK";
-const SCHEMA_VERSION = "4.0.0";
 
 const getMetadata = (isDraft: boolean) =>
     isDraft

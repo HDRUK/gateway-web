@@ -2,10 +2,10 @@
 
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { useForm } from "react-hook-form";
+import { tokens } from "@hdruk/ui/theme";
 import { get } from "lodash";
 import { useTranslations } from "next-intl";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
-import { tokens } from "@hdruk/ui/theme";
 import { BucketCheckbox, DateRange, Filter } from "@/interfaces/Filter";
 import { Aggregations, SearchCategory } from "@/interfaces/Search";
 import Accordion from "@/components/Accordion";
@@ -45,7 +45,7 @@ import {
 } from "@/config/forms/filters";
 import { SOURCE_GAT } from "@/config/forms/search";
 import { colors } from "@/config/theme";
-import { INCLUDE_UNREPORTED } from "@/consts/filters";
+import { EXCLUDE_UNREPORTED } from "@/consts/filters";
 import { ARDC_SOURCE_VALUE, HDRUK_SOURCE_VALUE } from "@/consts/search";
 import {
     formatBucketCounts,
@@ -431,20 +431,23 @@ const FilterPanel = ({
         populationSize?: number[],
         includeUnreported?: boolean
     ) => {
-        const formattedPopulationSize =
-            (populationSize &&
-                populationSize.map(number => number.toString())) ||
-            Object.keys(filterValues.populationSize);
+        const currentPopulationFilter =
+            selectedFilters[FILTER_POPULATION_SIZE] ?? [];
 
-        const completePopulationFilter =
-            includeUnreported &&
-            !Object.keys(filterValues.populationSize).includes(
-                INCLUDE_UNREPORTED
-            )
-                ? formattedPopulationSize.concat(INCLUDE_UNREPORTED)
-                : formattedPopulationSize.filter(
-                      item => item !== INCLUDE_UNREPORTED
-                  );
+        const formattedPopulationSize = populationSize
+            ? populationSize.map(number => number.toString())
+            : currentPopulationFilter.filter(
+                  item => item !== EXCLUDE_UNREPORTED
+              );
+
+        const excludeUnreported =
+            includeUnreported === undefined
+                ? currentPopulationFilter.includes(EXCLUDE_UNREPORTED)
+                : !includeUnreported;
+
+        const completePopulationFilter = excludeUnreported
+            ? formattedPopulationSize.concat(EXCLUDE_UNREPORTED)
+            : formattedPopulationSize;
 
         setFilterValues({
             ...filterValues,

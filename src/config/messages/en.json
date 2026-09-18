@@ -124,6 +124,7 @@
         "enabled": "Enabled",
         "all": "All",
         "notReported": "Not reported",
+        "viewOnOlsSite": "View on OLS site",
         "dar": {
             "status": {
                 "all": "All",
@@ -1367,6 +1368,7 @@
                         "filterResults": "Filters",
                         "dataset": {
                             "populationSize": "Population size",
+                            "excludeUnreported": "Exclude unreported",
                             "populationSizeTooltip": "Reported dataset population size in terms of number of people",
                             "datasetPopulation": "Dataset Population",
                             "dataType": "Dataset type",
@@ -1729,7 +1731,8 @@
                     "datasetTypes": "Dataset Types",
                     "datasetSubtypes": "Dataset Sub-types",
                     "collectionSources": "Collection Sources",
-                    "noCollectionSources": "No collection sources listed"
+                    "noCollectionSources": "No collection sources listed",
+                    "schemaVersion": "Schema Version"
                 }
             }
         },

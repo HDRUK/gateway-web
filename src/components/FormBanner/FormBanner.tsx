@@ -1,9 +1,10 @@
 "use client";
 
+import { Button } from "@hdruk/ui";
 import { Typography } from "@mui/material";
 import { useTranslations } from "next-intl";
 import { colors } from "@/config/theme";
-import { Button } from "@hdruk/ui";
+import { SCHEMA_BRANCH, SCHEMA_VERSION } from "@/consts/schema";
 import DownloadExternalFile from "../DownloadExternalFile";
 import { Column, DetailBanner, Justify, Wrapper } from "./FormBanner.styles";
 
@@ -16,8 +17,6 @@ interface FormBannerProps {
 }
 
 const TRANSLATION_PATH = "components.FormBanner";
-const SCHEMA_VERSION = process.env.NEXT_PUBLIC_SCHEMA_VERSION || "4.0.0";
-const SCHEMA_BRANCH = process.env.NEXT_PUBLIC_SCHEMA_BRANCH || "master";
 const FILE_DOWNLOAD_NAME = `HDRUK_${SCHEMA_VERSION}.example.json`;
 export const NAVBAR_ID = "form-navbar";
 

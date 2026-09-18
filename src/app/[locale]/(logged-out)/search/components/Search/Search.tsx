@@ -311,27 +311,35 @@ const Search = ({ filters, schema }: SearchProps) => {
         }
     );
 
-    const { data: v2Data, isValidating: isV2Searching } =
-        usePostSwr<SearchAggregationData>(
-            apis.searchV2AggregationUrl,
-            {
-                query: queryParams.query || undefined,
-                type: queryParams.type,
-                sort: queryParams.sort,
-                per_page: queryParams.per_page,
-                page: queryParams.page,
-                ...(isTypesenseSearch ? {} : { view_type: "mini" }),
-                ...pickedFilters,
-            },
-            {
-                keepPreviousData: true,
-                shouldFetch: externalSearchEnabled || isTypesenseSearch,
-                revalidateOnMount: true,
-            }
-        );
+    const {
+        data: v2Data,
+        isValidating: isV2Searching,
+        mutate: mutateAggregation,
+    } = usePostSwr<SearchAggregationData>(
+        apis.searchV2AggregationUrl,
+        {
+            query: queryParams.query || undefined,
+            type: queryParams.type,
+            sort: queryParams.sort,
+            per_page: queryParams.per_page,
+            page: queryParams.page,
+            ...(isTypesenseSearch ? {} : { view_type: "mini" }),
+            ...pickedFilters,
+        },
+        {
+            keepPreviousData: true,
+            shouldFetch: externalSearchEnabled || isTypesenseSearch,
+            revalidateOnMount: true,
+        }
+    );
 
     const { externalResults, isPolling: isExternalPolling } =
-        useLoadExternalData(v2Data, externalSearchEnabled, isV2Searching);
+        useLoadExternalData(
+            v2Data,
+            externalSearchEnabled,
+            isV2Searching,
+            mutateAggregation
+        );
 
     const ardcResult = externalResults[ARDC_SOURCE_VALUE] ?? null;
 
@@ -455,7 +463,7 @@ const Search = ({ filters, schema }: SearchProps) => {
                 [FILTER_DATA_SUBTYPE]: [],
             });
         } else {
-            updatePath(filterType, filtered.join(","));
+            updatePath(filterType, filtered.join("|"));
         }
     };
 
@@ -542,6 +550,7 @@ const Search = ({ filters, schema }: SearchProps) => {
     });
 
     const renderResults = () =>
+        isDatasets &&
         resultsView === ViewType.TABLE &&
         !isMobile &&
         !isTabletOrLaptop &&
@@ -1334,7 +1343,10 @@ const Search = ({ filters, schema }: SearchProps) => {
                                         role="status"
                                         aria-live="polite"
                                         id="result-summary">
-                                        <Typography variant="h3" role="alert">
+                                        <Typography
+                                            variant="articleLead"
+                                            component="p"
+                                            role="alert">
                                             {t("noResults")}
                                         </Typography>
                                     </Paper>
