@@ -1368,6 +1368,7 @@
                         "filterResults": "Filters",
                         "dataset": {
                             "populationSize": "Population size",
+                            "excludeUnreported": "Exclude unreported",
                             "populationSizeTooltip": "Reported dataset population size in terms of number of people",
                             "datasetPopulation": "Dataset Population",
                             "dataType": "Dataset type",

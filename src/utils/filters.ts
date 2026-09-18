@@ -12,7 +12,7 @@ import {
     FILTER_MATERIAL_TYPE,
     filtersList,
 } from "@/config/forms/filters";
-import { INCLUDE_UNREPORTED } from "@/consts/filters";
+import { EXCLUDE_UNREPORTED } from "@/consts/filters";
 
 const groupByType = (
     data: Filter[],
@@ -68,25 +68,26 @@ const pickOnlyFilters = (type: string, allSearchQueries: SearchQueryParams) => {
         return {};
     }
 
+    const populationFilters = filterQueries?.populationSize;
+    const excludeUnreported = !!populationFilters?.includes(EXCLUDE_UNREPORTED);
+
+    const [rangeFrom, rangeTo] =
+        populationFilters?.filter(item => item !== EXCLUDE_UNREPORTED) ?? [];
+
+    const populationFrom = !Number.isNaN(Number(rangeFrom))
+        ? rangeFrom
+        : undefined;
+
     const formattedFilterQueries =
         type === "dataset"
             ? {
                   ...filterQueries,
                   populationSize: {
-                      from: !Number.isNaN(
-                          Number(filterQueries?.populationSize?.[0])
-                      )
-                          ? filterQueries?.populationSize?.[0]
-                          : undefined,
-                      to: !Number.isNaN(
-                          Number(filterQueries?.populationSize?.[1])
-                      )
-                          ? filterQueries?.populationSize?.[1]
-                          : undefined,
-                      includeUnreported:
-                          !!filterQueries?.populationSize?.includes(
-                              INCLUDE_UNREPORTED
-                          ),
+                      from:
+                          populationFrom ??
+                          (excludeUnreported ? "0" : undefined),
+                      to: !Number.isNaN(Number(rangeTo)) ? rangeTo : undefined,
+                      includeUnreported: !excludeUnreported,
                   },
                   ...(filterQueries?.[FILTER_CONTAINS_BIOSAMPLES]?.includes(
                       FILTER_CONTAINS_BIOSAMPLES

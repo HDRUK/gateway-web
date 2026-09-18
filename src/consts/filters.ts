@@ -1,3 +1,3 @@
-const INCLUDE_UNREPORTED = "includeUnreported";
+const EXCLUDE_UNREPORTED = "excludeUnreported";
 
-export { INCLUDE_UNREPORTED };
+export { EXCLUDE_UNREPORTED };
