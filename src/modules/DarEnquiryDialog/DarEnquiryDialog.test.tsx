@@ -12,6 +12,8 @@ const renderTest = (props?: Partial<DarEnquiryDialogProps>) =>
             onGeneralEnquiryClick={mockGeneralEnquiryClick}
             createDARApplication={mockCreateDARApplication}
             isDarEnabled
+            hasPublishedDarTemplate={false}
+            teamName="Test team"
             url=""
             datasetIds={[1]}
             teamIds={[1]}
@@ -82,5 +84,32 @@ describe("<DarEnquiryDialog />", () => {
         fireEvent.click(generalButton);
 
         expect(mockGeneralEnquiryClick).toHaveBeenCalled();
+    });
+
+    it("links the access information button to the data access request section", () => {
+        renderTest({ url: "/dataset/123" });
+
+        expect(
+            screen.getByRole("link", { name: "Access information" })
+        ).toHaveAttribute("href", "/dataset/123#anchor-DataAccessRequest");
+    });
+
+    it("scrolls to the data access request section when already on the page", () => {
+        const section = document.createElement("div");
+        section.id = "anchor-DataAccessRequest";
+        section.scrollIntoView = jest.fn();
+        document.body.appendChild(section);
+
+        renderTest({ url: "/dataset/123" });
+
+        fireEvent.click(
+            screen.getByRole("link", { name: "Access information" })
+        );
+
+        expect(section.scrollIntoView).toHaveBeenCalledWith({
+            behavior: "smooth",
+        });
+
+        document.body.removeChild(section);
     });
 });
