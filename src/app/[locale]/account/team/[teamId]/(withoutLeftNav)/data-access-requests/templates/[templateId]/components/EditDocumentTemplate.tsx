@@ -2,11 +2,12 @@
 
 import { useCallback, useMemo, useState } from "react";
 import { Control, useForm } from "react-hook-form";
+import { Button } from "@hdruk/ui";
+import { tokens } from "@hdruk/ui/theme";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
 import * as yup from "yup";
-import { tokens } from "@hdruk/ui/theme";
 import { DarTemplate } from "@/interfaces/DataAccessRequest";
 import { UploadedFileMetadata } from "@/interfaces/FileUpload";
 import {
@@ -14,7 +15,6 @@ import {
     QuestionBankQuestionForm,
 } from "@/interfaces/QuestionBankQuestion";
 import Box from "@/components/Box";
-import { Button } from "@hdruk/ui";
 import Container from "@/components/Container";
 import Form from "@/components/Form";
 import InputWrapper from "@/components/InputWrapper";
@@ -299,7 +299,10 @@ const EditDocumentTemplate = ({
                             display: "flex",
                             justifyContent: "space-between",
                         }}>
-                        <Typography variant="h2" sx={{ m: 0 }}>
+                        <Typography
+                            variant="articleLead"
+                            component="h2"
+                            sx={{ m: 0 }}>
                             {t("title")}
                         </Typography>
                         <Box sx={{ display: "flex", gap: 2 }}>

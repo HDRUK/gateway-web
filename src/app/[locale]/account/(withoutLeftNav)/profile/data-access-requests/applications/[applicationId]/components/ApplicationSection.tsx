@@ -2,8 +2,9 @@
 
 import { Fragment, useEffect, useMemo, useState } from "react";
 import { Control, useForm } from "react-hook-form";
-import { yupResolver } from "@hookform/resolvers/yup";
+import { Button } from "@hdruk/ui";
 import { tokens } from "@hdruk/ui/theme";
+import { yupResolver } from "@hookform/resolvers/yup";
 import { Divider } from "@mui/material";
 import { get } from "lodash";
 import { useTranslations } from "next-intl";
@@ -20,7 +21,6 @@ import { DarReviewsResponse } from "@/interfaces/DataAccessReview";
 import { QuestionBankSection } from "@/interfaces/QuestionBankSection";
 import Box from "@/components/Box";
 import BoxContainer from "@/components/BoxContainer";
-import { Button } from "@hdruk/ui";
 import Chip from "@/components/Chip";
 import InputWrapper from "@/components/InputWrapper";
 import Link from "@/components/Link";
@@ -280,7 +280,7 @@ const ApplicationSection = ({
     const renderSectionHeader = (field: DarFormattedField) => (
         <>
             <Box sx={{ pl: 3, pr: 3 }}>
-                <Typography variant="h3" sx={{ m: 0 }}>
+                <Typography variant="articleLead" component="h3" sx={{ m: 0 }}>
                     {getSection(field.section_id)?.name}
                 </Typography>
             </Box>
@@ -578,7 +578,8 @@ const ApplicationSection = ({
                         <>
                             <Box sx={{ p: 3 }}>
                                 <Typography
-                                    variant="h2"
+                                    variant="articleLead"
+                                    component="h2"
                                     sx={{ p: 2, pl: 0, pb: 1 }}>
                                     {sections[sectionId]?.name}
                                 </Typography>
@@ -612,7 +613,8 @@ const ApplicationSection = ({
                                         <Box key={field.name} sx={{ p: 0 }}>
                                             <Box sx={{ pl: 3, pr: 3 }}>
                                                 <Typography
-                                                    variant="h3"
+                                                    variant="articleLead"
+                                                    component="h3"
                                                     sx={{
                                                         m: 0,
                                                     }}>
@@ -675,7 +677,8 @@ const ApplicationSection = ({
                                 <Box sx={{ flex: 1, overflowY: "auto", p: 0 }}>
                                     <Box>
                                         <Typography
-                                            variant="h3"
+                                            variant="articleLead"
+                                            component="h3"
                                             sx={{
                                                 display: "flex",
                                                 alignItems: "center",
@@ -802,16 +805,16 @@ const ApplicationSection = ({
 
                         <Box sx={{ gap: 1, p: 0, display: "flex" }}>
                             {isResearcher && isApplicationEditable && (
-                                    <Button
-                                        onClick={handleSubmit(
-                                            handleSave,
-                                            handleInvalidSubmit
-                                        )}
-                                        type="submit"
-                                        purpose="secondary">
-                                        {t("submit")}
-                                    </Button>
-                                )}
+                                <Button
+                                    onClick={handleSubmit(
+                                        handleSave,
+                                        handleInvalidSubmit
+                                    )}
+                                    type="submit"
+                                    purpose="secondary">
+                                    {t("submit")}
+                                </Button>
+                            )}
 
                             <Button
                                 onClick={() =>

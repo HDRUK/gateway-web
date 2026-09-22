@@ -1,12 +1,12 @@
-import { useTranslations } from "next-intl";
+import { Loading } from "@hdruk/ui";
 import { tokens } from "@hdruk/ui/theme";
+import { useTranslations } from "next-intl";
 import { DarTemplate } from "@/interfaces/DataAccessRequest";
 import { IconType } from "@/interfaces/Ui";
 import Box from "@/components/Box";
 import CardActions from "@/components/CardActions";
 import Chip from "@/components/Chip";
 import KeyValueList from "@/components/KeyValueList";
-import { Loading } from "@hdruk/ui";
 import Pagination from "@/components/Pagination";
 import Paper from "@/components/Paper";
 import ShowingXofX from "@/components/ShowingXofX";
@@ -88,8 +88,8 @@ const TemplateList = ({
                                             mb: 2,
                                         }}>
                                         <Typography
-                                            variant="h3"
-                                            sx={{ fontSize: 16 }}>
+                                            variant="body1"
+                                            component="h3">
                                             {t("cardTitle", {
                                                 createdAt: formatDate(
                                                     template.created_at,

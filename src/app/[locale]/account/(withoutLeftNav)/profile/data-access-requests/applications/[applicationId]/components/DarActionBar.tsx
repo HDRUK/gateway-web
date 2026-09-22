@@ -1,6 +1,7 @@
 "use client";
 
 import { useMemo, useState } from "react";
+import { Button } from "@hdruk/ui";
 import {
     Box,
     Collapse,
@@ -12,7 +13,6 @@ import {
 } from "@mui/material";
 import { useTranslations } from "next-intl";
 import { DataAccessRequestApplication } from "@/interfaces/DataAccessRequestApplication";
-import { Button } from "@hdruk/ui";
 import Chip from "@/components/Chip";
 import DarStatusTracker from "@/components/DarStatusTracker";
 import useGet from "@/hooks/useGet";
@@ -105,7 +105,10 @@ const DarActionBar = ({
             onMouseLeave={() => setVisible(false)}>
             <Grid container spacing={1}>
                 <Grid size={2}>
-                    <Typography variant="h2" color="primary">
+                    <Typography
+                        variant="articleLead"
+                        component="h2"
+                        color="primary">
                         {idTitle}
                     </Typography>
                 </Grid>
