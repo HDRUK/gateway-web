@@ -280,7 +280,7 @@ const ApplicationSection = ({
     const renderSectionHeader = (field: DarFormattedField) => (
         <>
             <Box sx={{ pl: 3, pr: 3 }}>
-                <Typography variant="h3" sx={{ m: 0 }}>
+                <Typography variant="articleLead" component="h3" sx={{ m: 0 }}>
                     {getSection(field.section_id)?.name}
                 </Typography>
             </Box>
@@ -578,7 +578,8 @@ const ApplicationSection = ({
                         <>
                             <Box sx={{ p: 3 }}>
                                 <Typography
-                                    variant="h2"
+                                    variant="articleLead"
+                                    component="h2"
                                     sx={{ p: 2, pl: 0, pb: 1 }}>
                                     {sections[sectionId]?.name}
                                 </Typography>
@@ -612,7 +613,8 @@ const ApplicationSection = ({
                                         <Box key={field.name} sx={{ p: 0 }}>
                                             <Box sx={{ pl: 3, pr: 3 }}>
                                                 <Typography
-                                                    variant="h3"
+                                                    variant="articleLead"
+                                                    component="h3"
                                                     sx={{
                                                         m: 0,
                                                     }}>
@@ -675,7 +677,8 @@ const ApplicationSection = ({
                                 <Box sx={{ flex: 1, overflowY: "auto", p: 0 }}>
                                     <Box>
                                         <Typography
-                                            variant="h3"
+                                            variant="articleLead"
+                                            component="h3"
                                             sx={{
                                                 display: "flex",
                                                 alignItems: "center",
