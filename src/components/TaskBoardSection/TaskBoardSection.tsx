@@ -33,10 +33,17 @@ const TaskBoardSection = ({
     return (
         <Paper sx={sx}>
             <Box>
-                <Typography variant="h2">{title}</Typography>
+                <Typography variant="articleLead" component="h2">
+                    {title}
+                </Typography>
                 <Typography>{description}</Typography>
             </Box>
-            <Paper sx={{ p: 1, backgroundColor: tokens.background.primary, border: 0 }}>
+            <Paper
+                sx={{
+                    p: 1,
+                    backgroundColor: tokens.background.primary,
+                    border: 0,
+                }}>
                 <SortableContext
                     id={id}
                     items={tasks}
