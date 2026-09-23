@@ -24,7 +24,7 @@ const DarGuidancePanel = ({ guidanceText }: DarGuidancePanelProps) => {
 
     const heading = (
         <Typography
-            variant="h3"
+            variant="articleLead"
             component={isStacked ? "span" : "h3"}
             sx={{
                 display: "flex",

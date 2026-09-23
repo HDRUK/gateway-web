@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState, useMemo } from "react";
+import { Button, Loading } from "@hdruk/ui";
 import { tokens } from "@hdruk/ui/theme";
 import { Box } from "@mui/material";
 import { useTranslations } from "next-intl";
@@ -13,7 +14,6 @@ import {
 import { QuestionBankQuestion } from "@/interfaces/QuestionBankQuestion";
 import { QuestionBankSection } from "@/interfaces/QuestionBankSection";
 import { TaskItem } from "@/interfaces/TaskBoard";
-import { Button, Loading } from "@hdruk/ui";
 import Container from "@/components/Container";
 import Paper from "@/components/Paper";
 import Sections from "@/components/Sections";
@@ -349,7 +349,10 @@ const EditTemplate = ({
                         display: "flex",
                         justifyContent: "space-between",
                     }}>
-                    <Typography variant="h2" sx={{ m: 0 }}>
+                    <Typography
+                        variant="articleLead"
+                        component="h2"
+                        sx={{ m: 0 }}>
                         {t("title")}
                     </Typography>
                     <Box sx={{ display: "flex", gap: 2 }}>
@@ -387,7 +390,10 @@ const EditTemplate = ({
                             {t("backLinkText")}
                         </Button>
 
-                        <Typography variant="h2" sx={{ mt: 2 }}>
+                        <Typography
+                            variant="articleLead"
+                            component="h2"
+                            sx={{ mt: 2 }}>
                             {currentSection?.name}
                         </Typography>
 

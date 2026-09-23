@@ -171,7 +171,7 @@ const QuestionItem = ({ task, setTasks }: QuestionItemProps) => {
                             <Box key={child.id}>
                                 <Typography
                                     gutterBottom
-                                    variant="h4"
+                                    variant="body1"
                                     component="p"
                                     sx={{ mb: 1 }}>
                                     <b>{child.title}</b>
@@ -179,7 +179,7 @@ const QuestionItem = ({ task, setTasks }: QuestionItemProps) => {
                                 <Typography
                                     sx={{ p: 1, pl: 0 }}
                                     gutterBottom
-                                    variant="h5"
+                                    variant="body2"
                                     component="p">
                                     {child.guidance}
                                 </Typography>
@@ -227,7 +227,7 @@ const QuestionItem = ({ task, setTasks }: QuestionItemProps) => {
                         }}>
                         <Typography
                             gutterBottom
-                            variant="h4"
+                            variant="body1"
                             component="div"
                             sx={{ mb: 1, fontWeight: "bold" }}>
                             {currentTask.title}
@@ -259,7 +259,7 @@ const QuestionItem = ({ task, setTasks }: QuestionItemProps) => {
                     <Typography
                         sx={{ p: 1, pl: 0 }}
                         gutterBottom
-                        variant="h5"
+                        variant="body2"
                         component="p">
                         {currentTask.guidance}
                     </Typography>

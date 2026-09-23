@@ -7,9 +7,8 @@ import BoxContainer from "@/components/BoxContainer";
 import Checkbox from "@/components/Checkbox";
 import CheckboxControlled from "@/components/CheckboxControlled";
 import FormInputWrapper from "@/components/FormInputWrapper";
-import theme from "@/config/theme";
 
-const MIN_COLUMN_WIDTH = theme.spacing(25);
+const MIN_COLUMN_WIDTH = "240px";
 
 export interface CheckboxGroupProps<TFieldValues extends FieldValues, TName>
     extends Omit<MuiCheckboxProps, "name"> {
@@ -91,7 +90,7 @@ const CheckboxGroup = <
                         direction === "row"
                             ? nColumns
                                 ? `repeat(${nColumns}, 1fr)`
-                                : `repeat(auto-fit, minmax(min(100%, ${MIN_COLUMN_WIDTH}), 1fr))`
+                                : `repeat(auto-fit, minmax(min(${MIN_COLUMN_WIDTH}, 100%), 1fr))`
                             : null,
                 }}>
                 {checkboxes.map(checkbox => (

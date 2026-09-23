@@ -1,5 +1,6 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import { useForm } from "react-hook-form";
+import { Button, Loading } from "@hdruk/ui";
 import { tokens } from "@hdruk/ui/theme";
 import { Divider, Typography } from "@mui/material";
 import DOMPurify from "isomorphic-dompurify";
@@ -7,7 +8,6 @@ import { useTranslations } from "next-intl";
 import { DarReviewsResponse } from "@/interfaces/DataAccessReview";
 import Box from "@/components/Box";
 import BoxContainer from "@/components/BoxContainer";
-import { Button, Loading } from "@hdruk/ui";
 import InputWrapper from "@/components/InputWrapper";
 import useAuth from "@/hooks/useAuth";
 import useGet from "@/hooks/useGet";
@@ -178,7 +178,7 @@ const DarMessages = ({
                                 mb: 3,
                             }}>
                             <Typography
-                                variant="h2"
+                                variant="articleLead"
                                 component="p"
                                 color={tokens.brand.primary}
                                 sx={{ m: 0 }}>
@@ -223,7 +223,10 @@ const DarMessages = ({
                         </Box>
                     )}
 
-                <Typography variant="h2" component="p" color={tokens.brand.primary}>
+                <Typography
+                    variant="articleLead"
+                    component="p"
+                    color={tokens.brand.primary}>
                     {t("messagingDashboard")}
                 </Typography>
                 <Typography>{t("messagingContent")}</Typography>

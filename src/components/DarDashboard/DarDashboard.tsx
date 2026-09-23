@@ -2,6 +2,7 @@
 
 import { useEffect, useMemo, useState } from "react";
 import { useForm } from "react-hook-form";
+import { Loading } from "@hdruk/ui";
 import { tokens } from "@hdruk/ui/theme";
 import { Typography } from "@mui/material";
 import { useTranslations } from "next-intl";
@@ -12,7 +13,6 @@ import Box from "@/components/Box";
 import DarApplicationCard from "@/components/DarApplicationCard";
 import DarApplicationGroup from "@/components/DarApplicationGroup";
 import InputWrapper from "@/components/InputWrapper";
-import { Loading } from "@hdruk/ui";
 import Pagination from "@/components/Pagination";
 import Paper from "@/components/Paper";
 import Tabs from "@/components/Tabs";
@@ -328,7 +328,9 @@ export default function DarDashboard({
                         alignItems: "center",
                     }}>
                     <Box sx={{ flexGrow: 1, p: 0 }}>
-                        <Typography variant="h2">{t("title")}</Typography>
+                        <Typography variant="articleLead" component="h2">
+                            {t("title")}
+                        </Typography>
                         <Typography>{t("intro")}</Typography>
                     </Box>
                 </Box>

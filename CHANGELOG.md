@@ -1,3 +1,12 @@
+## [2.46.1](https://github.com/HDRUK/gateway-web/compare/v2.46.0...v2.46.1) (2026-09-23)
+
+### 🐛 Bug Fixes
+
+* **GAT-8475:** fix patient pathway description rendering (#1665) ([81a1825](https://github.com/HDRUK/gateway-web/commit/81a182537352c75de3539700c86dfba6ce921575))
+* **GAT-8545:** reset to page one when changing data use status tab (#1664) ([91befba](https://github.com/HDRUK/gateway-web/commit/91befba05f24fc68482ef3e73c49832ad13de5bd)), closes [GAT-8545](undefinedGAT-8545)
+* **GAT-8619:** scroll to DAR section from enquiry modal (#1666) ([a87137c](https://github.com/HDRUK/gateway-web/commit/a87137c5f663ddbd80757c55a08d3f4a5256c4c6)), closes [GAT-8619](undefinedGAT-8619)
+* **GAT-9004:** fix guidance panel width shift (#1667) ([852f873](https://github.com/HDRUK/gateway-web/commit/852f873dc2f28e4cfebb785d950d8ea787d9c58d))
+
 ## [2.46.0](https://github.com/HDRUK/gateway-web/compare/v2.45.0...v2.46.0) (2026-09-18)
 
 ### ✨ Features

@@ -101,6 +101,7 @@ const DataCustodianNetwork = ({
                 sort: "name:desc",
                 filters: dataCustodianFilters ?? {},
                 view_type: "mini",
+                dataSource: HDRUK_SOURCE_VALUE,
             },
             { shouldFetch: !!isTypesenseSearchEnabled }
         );
