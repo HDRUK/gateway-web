@@ -12,6 +12,7 @@ interface Props {
     sectionId: number;
     sections: QuestionBankSection[];
     sectionCounts?: SectionCount[];
+    offsetTop?: string;
     handleLegendClick?: (itemIndex: number) => void;
 }
 
@@ -46,6 +47,7 @@ const Sections = ({
     sections,
     sectionId,
     sectionCounts,
+    offsetTop,
     handleLegendClick,
 }: Props) => {
     const legendItems = useMemo(() => {
@@ -61,6 +63,7 @@ const Sections = ({
         <FormLegend
             items={legendItems}
             handleClickItem={handleLegendClick}
+            offsetTop={offsetTop}
             removeMarginLeft
         />
     );

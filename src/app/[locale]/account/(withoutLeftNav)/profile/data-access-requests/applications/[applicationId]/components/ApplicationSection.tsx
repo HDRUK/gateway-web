@@ -24,7 +24,6 @@ import BoxContainer from "@/components/BoxContainer";
 import Chip from "@/components/Chip";
 import InputWrapper from "@/components/InputWrapper";
 import Link from "@/components/Link";
-import { MarkDownSanitizedWithHtml } from "@/components/MarkDownSanitizedWithHTML";
 import Paper from "@/components/Paper";
 import Sections from "@/components/Sections";
 import Typography from "@/components/Typography";
@@ -49,7 +48,7 @@ import {
     DarApplicationStatus,
     DarTemplateType,
 } from "@/consts/dataAccess";
-import { ArrowBackIosNewIcon, HelpOutlineIcon } from "@/consts/icons";
+import { ArrowBackIosNewIcon } from "@/consts/icons";
 import { RouteName } from "@/consts/routeName";
 import {
     buildDarAnswers,
@@ -70,6 +69,7 @@ import notFound from "@/app/not-found";
 import { DarActionBar } from "./DarActionBar";
 import DarFieldArray from "./DarFieldArray";
 import DarFormBanner from "./DarFormBanner";
+import DarGuidancePanel from "./DarGuidancePanel";
 import DarMessages from "./DarMessages";
 
 const TRANSLATION_PATH = "pages.account.team.dar.application.create";
@@ -535,7 +535,7 @@ const ApplicationSection = ({
             <Box
                 sx={{
                     display: "flex",
-                    flexDirection: "row",
+                    flexDirection: { xs: "column", md: "row" },
                     p: 0,
                 }}>
                 <Box
@@ -548,6 +548,7 @@ const ApplicationSection = ({
                         handleLegendClick={handleChangeSection}
                         sectionId={sectionId}
                         sections={parentSections || []}
+                        offsetTop={theme.spacing(2)}
                     />
                 </Box>
 
@@ -555,7 +556,7 @@ const ApplicationSection = ({
                     sx={{
                         m: 2,
                         flex: 5,
-                        minheight: "70vh",
+                        minHeight: "70vh",
                         display: "flex",
                         flexDirection: "column",
                     }}>
@@ -593,8 +594,8 @@ const ApplicationSection = ({
                     <Box
                         sx={{
                             display: "flex",
+                            flexDirection: { xs: "column", md: "row" },
                             p: 0,
-                            overflowY: "auto",
                             flex: 1,
                             minHeight: "30vh",
                             paddingBottom: 1,
@@ -672,52 +673,9 @@ const ApplicationSection = ({
                         )?.name !== messageSection.name &&
                             data.application_type !==
                                 DarTemplateType.DOCUMENT && (
-                                <Box sx={{ flex: 1, overflowY: "auto", p: 0 }}>
-                                    <Box>
-                                        <Typography
-                                            variant="h3"
-                                            sx={{
-                                                display: "flex",
-                                                alignItems: "center",
-                                                justifyContent: "center",
-                                                m: 0,
-                                            }}>
-                                            <HelpOutlineIcon
-                                                sx={{
-                                                    mr: 1,
-                                                    color: tokens.text.disabled,
-                                                    fontSize: 16,
-                                                }}
-                                            />
-                                            {t("guidance")}
-                                        </Typography>
-                                    </Box>
-                                    <Divider
-                                        variant="fullWidth"
-                                        sx={{ mb: 4 }}
-                                    />
-                                    <Box
-                                        sx={{
-                                            pt: 0,
-                                            pb: 0,
-                                            overflowWrap: "anywhere",
-                                        }}>
-                                        {guidanceText ? (
-                                            <MarkDownSanitizedWithHtml
-                                                content={guidanceText}
-                                            />
-                                        ) : (
-                                            <Typography
-                                                sx={{
-                                                    color: theme.palette
-                                                        .grey[500],
-                                                    textAlign: "center",
-                                                }}>
-                                                {t("defaultGuidance")}
-                                            </Typography>
-                                        )}
-                                    </Box>
-                                </Box>
+                                <DarGuidancePanel
+                                    guidanceText={guidanceText}
+                                />
                             )}
                     </Box>
                 </Paper>
