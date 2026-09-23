@@ -37,6 +37,7 @@ export interface DarEnquiryDialogProps {
 }
 
 const TRANSLATION_PATH = "modules.dialogs.DarEnquiryDialog";
+const DAR_SECTION_ANCHOR = "anchor-DataAccessRequest";
 
 const DarEnquiryDialog = ({
     onGeneralEnquiryClick,
@@ -66,6 +67,14 @@ const DarEnquiryDialog = ({
         hideDialog();
 
         onFeasibilityEnquiryClick();
+    };
+
+    const handleAccessInformation = () => {
+        hideDialog();
+
+        const section = document.getElementById(DAR_SECTION_ANCHOR);
+
+        section && section.scrollIntoView({ behavior: "smooth" });
     };
 
     const dialogTitle =
@@ -125,9 +134,10 @@ const DarEnquiryDialog = ({
                     </Button>
                 ) : (
                     <Button
-                        variant="text"
+                        purpose="primary"
                         component={Link}
-                        href={`${url}#anchor6`}>
+                        href={`${url}#${DAR_SECTION_ANCHOR}`}
+                        onClick={handleAccessInformation}>
                         {t("accessInformationButton")}
                     </Button>
                 )}

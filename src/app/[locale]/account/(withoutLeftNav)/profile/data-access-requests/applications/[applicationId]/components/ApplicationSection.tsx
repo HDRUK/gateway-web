@@ -2,8 +2,9 @@
 
 import { Fragment, useEffect, useMemo, useState } from "react";
 import { Control, useForm } from "react-hook-form";
-import { yupResolver } from "@hookform/resolvers/yup";
+import { Button } from "@hdruk/ui";
 import { tokens } from "@hdruk/ui/theme";
+import { yupResolver } from "@hookform/resolvers/yup";
 import { Divider } from "@mui/material";
 import { get } from "lodash";
 import { useTranslations } from "next-intl";
@@ -20,7 +21,6 @@ import { DarReviewsResponse } from "@/interfaces/DataAccessReview";
 import { QuestionBankSection } from "@/interfaces/QuestionBankSection";
 import Box from "@/components/Box";
 import BoxContainer from "@/components/BoxContainer";
-import { Button } from "@hdruk/ui";
 import Chip from "@/components/Chip";
 import InputWrapper from "@/components/InputWrapper";
 import Link from "@/components/Link";
@@ -700,6 +700,7 @@ const ApplicationSection = ({
                                         sx={{
                                             pt: 0,
                                             pb: 0,
+                                            overflowWrap: "anywhere",
                                         }}>
                                         {guidanceText ? (
                                             <MarkDownSanitizedWithHtml
@@ -802,16 +803,16 @@ const ApplicationSection = ({
 
                         <Box sx={{ gap: 1, p: 0, display: "flex" }}>
                             {isResearcher && isApplicationEditable && (
-                                    <Button
-                                        onClick={handleSubmit(
-                                            handleSave,
-                                            handleInvalidSubmit
-                                        )}
-                                        type="submit"
-                                        purpose="secondary">
-                                        {t("submit")}
-                                    </Button>
-                                )}
+                                <Button
+                                    onClick={handleSubmit(
+                                        handleSave,
+                                        handleInvalidSubmit
+                                    )}
+                                    type="submit"
+                                    purpose="secondary">
+                                    {t("submit")}
+                                </Button>
+                            )}
 
                             <Button
                                 onClick={() =>

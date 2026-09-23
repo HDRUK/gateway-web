@@ -1,5 +1,14 @@
+import { rest } from "msw";
 import mockRouter from "next-router-mock";
-import { render, screen, waitFor, within } from "@/utils/testUtils";
+import apis from "@/config/apis";
+import {
+    act,
+    fireEvent,
+    render,
+    screen,
+    waitFor,
+    within,
+} from "@/utils/testUtils";
 import { generateDataUse } from "@/mocks/data/dataUse";
 import { getTeamDataUsesV2 } from "@/mocks/handlers/teams/v2";
 import { server } from "@/mocks/server";
@@ -42,6 +51,46 @@ describe("TeamDataUses", () => {
                     "No active data uses found on the Gateway for your team."
                 )
             ).toBeInTheDocument();
+        });
+    });
+
+    it("should reset to page one when the status tab changes", async () => {
+        const requests: string[] = [];
+
+        server.use(
+            rest.get(
+                `${apis.teamsV2Url}/1/dur/status/:status`,
+                (req, res, ctx) => {
+                    requests.push(
+                        `${req.params.status}:${req.url.searchParams.get(
+                            "page"
+                        )}`
+                    );
+
+                    return res(
+                        ctx.json({ lastPage: 5, list: [generateDataUse()] })
+                    );
+                }
+            )
+        );
+
+        render(<TeamDataUses permissions={{}} teamId="1" />);
+
+        fireEvent.click(
+            await screen.findByRole("button", { name: "Go to page 2" })
+        );
+        await waitFor(() => expect(requests).toContain("active:2"));
+
+        await act(async () => {
+            await mockRouter.push({ query: { teamId: "5", tab: "DRAFT" } });
+        });
+
+        await waitFor(() => {
+            const draftRequests = requests.filter(request =>
+                request.startsWith("draft")
+            );
+
+            expect(draftRequests).toEqual(["draft:1"]);
         });
     });
 });

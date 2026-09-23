@@ -128,7 +128,7 @@ const datasetFields: DatasetSection[] = [
             },
             {
                 path: "metadata.metadata.coverage.pathway",
-                type: FieldType.LIST_TEXT,
+                type: FieldType.TEXT,
                 label: "Patient pathway description",
                 tooltip:
                     "Description of the patient pathway and any limitations the dataset may have with respect to pathway coverage. This could include if the dataset is from a single speciality or area, a single tier of care, linked across two tiers (e.g. primary and secondary care), or an integrated care record covering the whole patient pathway.",
