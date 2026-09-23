@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { tokens } from "@hdruk/ui/theme";
 import { Bookmark, BookmarkBorder } from "@mui/icons-material";
 import { ListItem, ListItemText } from "@mui/material";
+import DOMPurify from "isomorphic-dompurify";
 import { get } from "lodash";
 import { useTranslations } from "next-intl";
 import { usePathname, useSearchParams } from "next/navigation";
@@ -387,7 +388,7 @@ const ResultCard = ({
                                 variant="body2"
                                 color="text.gray"
                                 dangerouslySetInnerHTML={{
-                                    __html: formattedText,
+                                    __html: DOMPurify.sanitize(formattedText),
                                 }}
                             />
                             {!!datasetAliases?.length && (

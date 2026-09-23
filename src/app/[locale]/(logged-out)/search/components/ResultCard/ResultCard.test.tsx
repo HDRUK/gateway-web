@@ -128,4 +128,38 @@ describe("ResultCard", () => {
             screen.getByText(`Dataset population size: not reported`)
         ).toBeInTheDocument();
     });
+    it("should strip dangerous markup from a highlighted abstract before rendering", async () => {
+        const mockResult = generateDatasetMetadataMiniV1();
+        const { container } = render(
+            <ResultCard
+                result={{
+                    highlight: {
+                        abstract: [
+                            "<img src=x onerror=alert(1)>Safe<em>highlighted</em> text",
+                        ],
+                        description: ["string"],
+                    },
+                    metadata: mockResult,
+                    _id: "1",
+                    team: {
+                        id: 1,
+                        member_of: "",
+                        name: "",
+                        is_question_bank: false,
+                        is_dar: false,
+                        dar_modal_header: null,
+                        dar_modal_content: null,
+                        dar_modal_footer: null,
+                    },
+                }}
+                libraryData={[]}
+                mutateLibraries={jest.fn()}
+            />
+        );
+
+        expect(container.innerHTML).not.toContain("onerror");
+        expect(container.querySelector("img[onerror]")).not.toBeInTheDocument();
+        expect(container.innerHTML).toContain("<em>highlighted</em>");
+        expect(screen.getByText("Safe", { exact: false })).toBeInTheDocument();
+    });
 });
