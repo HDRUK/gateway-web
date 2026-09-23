@@ -323,6 +323,7 @@ const Search = ({ filters, schema }: SearchProps) => {
             sort: queryParams.sort,
             per_page: queryParams.per_page,
             page: queryParams.page,
+            dataSource,
             ...(isTypesenseSearch ? {} : { view_type: "mini" }),
             ...pickedFilters,
         },
