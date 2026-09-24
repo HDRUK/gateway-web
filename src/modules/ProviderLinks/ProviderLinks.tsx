@@ -1,3 +1,4 @@
+import { Button } from "@hdruk/ui";
 import { tokens } from "@hdruk/ui/theme";
 import { SvgIconComponent } from "@mui/icons-material";
 import { Typography } from "@mui/material";
@@ -5,7 +6,6 @@ import { useTranslations } from "next-intl";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import Box from "@/components/Box";
-import { Button } from "@hdruk/ui";
 import apis from "@/config/apis";
 import { colors } from "@/config/theme";
 import { InstituteIcon } from "@/consts/customIcons";
@@ -136,6 +136,7 @@ const ProviderLinks = ({
                                     p: 0,
                                     color: tokens.text.faded,
                                     display: "block",
+                                    textAlign: "left",
                                     lineHeight: "inherit",
                                     fontWeight: "inherit",
                                 }}
