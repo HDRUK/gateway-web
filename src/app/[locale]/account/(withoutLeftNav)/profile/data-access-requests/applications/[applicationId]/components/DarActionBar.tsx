@@ -10,6 +10,7 @@ import {
     Paper,
     Stack,
     Typography,
+    useMediaQuery,
 } from "@mui/material";
 import { useTranslations } from "next-intl";
 import { DataAccessRequestApplication } from "@/interfaces/DataAccessRequestApplication";
@@ -17,6 +18,7 @@ import Chip from "@/components/Chip";
 import DarStatusTracker from "@/components/DarStatusTracker";
 import useGet from "@/hooks/useGet";
 import apis from "@/config/apis";
+import theme from "@/config/theme";
 import {
     DarApplicationApprovalStatus,
     DarApplicationStatus,
@@ -77,9 +79,22 @@ const DarActionBar = ({
     );
 
     const datasetChips = data?.datasets?.map(x => (
-        <Chip label={x.dataset_title} key={x.dataset_id} />
+        <Chip
+            label={x.dataset_title}
+            key={x.dataset_id}
+            sx={{
+                height: "auto",
+                "& .MuiChip-label": {
+                    whiteSpace: "normal",
+                    overflowWrap: "anywhere",
+                },
+            }}
+        />
     ));
     const [visible, setVisible] = useState<boolean>(false);
+    const isMobile = useMediaQuery(theme.breakpoints.down("md"), {
+        noSsr: true,
+    });
 
     const lastActivity = data?.updated_at
         ? formatDate(data?.updated_at, DATE_FORMAT)
@@ -104,7 +119,7 @@ const DarActionBar = ({
             onMouseOver={() => setVisible(true)}
             onMouseLeave={() => setVisible(false)}>
             <Grid container spacing={1}>
-                <Grid size={2}>
+                <Grid size={{ xs: 12, md: 2 }}>
                     <Typography
                         variant="articleLead"
                         component="h2"
@@ -112,29 +127,43 @@ const DarActionBar = ({
                         {idTitle}
                     </Typography>
                 </Grid>
-                <Grid size={2} sx={{ alignItems: "center" }}>
-                    <Typography>{data?.project_title}</Typography>
+                <Grid
+                    size={{ xs: 12, md: 2 }}
+                    sx={{ alignItems: "center", minWidth: 0 }}>
+                    <Typography sx={{ overflowWrap: "anywhere" }}>
+                        {data?.project_title}
+                    </Typography>
                 </Grid>
             </Grid>
 
-            <Collapse in={visible}>
+            <Collapse in={visible || isMobile}>
                 <Box>
-                    <Grid container spacing={1} direction="row">
-                        <Grid size="auto">
+                    <Grid
+                        container
+                        spacing={1}
+                        direction={{ xs: "column", md: "row" }}>
+                        <Grid size="grow" sx={{ minWidth: 0 }}>
                             {typographyDisplay.map(({ label, value }) => (
                                 <Box
                                     key={label}
-                                    sx={{ display: "flex", gap: 2, mb: 0.5 }}>
+                                    sx={{
+                                        display: "flex",
+                                        gap: 2,
+                                        mb: 0.5,
+                                        minWidth: 0,
+                                    }}>
                                     <Typography
                                         color="grey"
                                         sx={{ minWidth: 120 }}>
                                         {label}
                                     </Typography>
-                                    <Typography>{value}</Typography>
+                                    <Typography sx={{ minWidth: 0 }}>
+                                        {value}
+                                    </Typography>
                                 </Box>
                             ))}
                         </Grid>
-                        <Grid sx={{ ml: "auto", mr: 2 }}>
+                        <Grid sx={{ ml: { xs: 0, md: "auto" }, mr: 2 }}>
                             <DarStatusTracker
                                 submissionStatus={
                                     data?.submission_status ||
