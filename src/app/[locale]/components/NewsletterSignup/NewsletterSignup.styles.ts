@@ -1,8 +1,9 @@
+import { tokens } from "@hdruk/ui/theme";
 import { styled } from "@mui/material";
 
 export const StyledNewsletterSignup = styled("div")(({ theme }) => ({
     p: 0,
-    color: "#fff",
+    color: tokens.text.secondaryBlack,
     backgroundColor: "#fff",
     zIndex: 1,
     display: "flex",
@@ -16,7 +17,7 @@ export const StyledNewsletterSignup = styled("div")(({ theme }) => ({
 }));
 
 export const StyledNewsletterSignupBackground = styled("div")(({ theme }) => ({
-    backgroundColor: theme.palette.secondary.main,
+    backgroundColor: tokens.brand.accentSecondary,
     position: "absolute",
     bottom: 0,
     top: 0,
