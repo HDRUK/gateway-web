@@ -1,3 +1,4 @@
+import { tokens } from "@hdruk/ui/theme";
 import { TypographyProps } from "@mui/material";
 import Image from "next/image";
 import Box from "@/components/Box";
@@ -27,7 +28,11 @@ const TitlePanel = ({ image, text, title, id }: TitlePanelProps) => {
                         lg: 360,
                     },
                 }}>
-                <TitleWithBg mb={2} title={title} />
+                <TitleWithBg
+                    mb={2}
+                    title={title}
+                    bgcolor={tokens.brand.secondary}
+                />
                 <Box
                     sx={{
                         minHeight: {
