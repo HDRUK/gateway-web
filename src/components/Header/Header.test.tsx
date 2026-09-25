@@ -1,5 +1,13 @@
 import Header from "@/components/Header";
-import { render, screen, waitFor, act } from "@/utils/testUtils";
+import {
+    render,
+    screen,
+    waitFor,
+    act,
+    fireEvent,
+    within,
+} from "@/utils/testUtils";
+import navItems from "@/config/nav";
 import { userV1 } from "@/mocks/data";
 import { getAuthInternal } from "@/mocks/handlers/auth";
 import { server } from "@/mocks/server";
@@ -36,6 +44,31 @@ describe("Header", () => {
         });
         expect(menuIconButton).toBeInTheDocument();
     });
+    it("navigation menu offers the site navigation only", async () => {
+        await act(() => render(<Header />));
+
+        await act(async () => {
+            fireEvent.click(
+                screen.getByRole("button", { name: "navigation menu" })
+            );
+        });
+
+        const menu = await screen.findByRole("menu");
+        const expected = navItems
+            .filter(item => !item.divider)
+            .flatMap(item =>
+                item.subItems
+                    ? item.subItems.map(subItem => subItem.label)
+                    : [item.label]
+            );
+
+        expect(
+            within(menu)
+                .getAllByRole("menuitem")
+                .map(item => item.textContent)
+        ).toEqual(expected);
+    });
+
     it("logo image is rendered", async () => {
         await act(() => render(<Header />));
 
