@@ -1,14 +1,13 @@
 "use client";
 
 import { useState } from "react";
+import { Button } from "@hdruk/ui";
+import { tokens } from "@hdruk/ui/theme";
 import { useTranslations } from "next-intl";
 import { usePathname } from "next/navigation";
-import { tokens } from "@hdruk/ui/theme";
 import { Dataset } from "@/interfaces/Dataset";
 import { FileExport } from "@/interfaces/FileExport";
-import { SearchCategory } from "@/interfaces/Search";
-import { Button } from "@hdruk/ui";
-import HeaderActionBar from "@/components/HeaderActionBar";
+import Box from "@/components/Box";
 import MenuDropdown from "@/components/MenuDropdown";
 import useAuth from "@/hooks/useAuth";
 import useDataAccessRequest from "@/hooks/useDataAccessRequest";
@@ -207,89 +206,79 @@ const ActionBar = ({ dataset }: ActionBarProps) => {
     };
 
     return (
-        <HeaderActionBar
-            backButtonText={t("label")}
-            backButtonHref={`/${RouteName.SEARCH}?type=${SearchCategory.DATASETS}`}
-            additionalContentSx={{
-                display: { xs: "grid", lg: "flex" },
-                width: { xs: "100%", lg: "auto" },
+        <Box
+            sx={{
+                display: "grid",
                 gap: 1,
                 p: 0,
                 gridTemplateColumns: {
                     xs: "repeat(2, minmax(0, 1fr))",
-                    lg: "none",
+                    sm: "minmax(0, 1fr)",
                 },
-            }}
-            additionalContent={
-                <>
-                    <Button onClick={handleGeneralEnquiryClick}>
-                        <QuestionAnswerIcon
-                            sx={{
-                                pr: 1,
-                                display: {
-                                    xs: "none",
-                                    sm: "inline-block",
-                                },
-                            }}
-                        />
-                        {t("generalEnquiryButtonText")}
-                    </Button>
-                    <Button onClick={handleFeasibilityEnquiryClick}>
-                        <QuestionAnswerIcon
-                            sx={{
-                                pr: 1,
-                                display: {
-                                    xs: "none",
-                                    sm: "inline-block",
-                                },
-                            }}
-                        />
-                        {t("feasibilityEnquiryButtonText")}
-                    </Button>
-                    <Button
-                        onClick={handleStartDarRequest}
-                        purpose="secondary">
-                        {t("submitApplication")}
-                    </Button>
+            }}>
+            <Button onClick={handleGeneralEnquiryClick}>
+                <QuestionAnswerIcon
+                    sx={{
+                        pr: 1,
+                        display: {
+                            xs: "none",
+                            sm: "inline-block",
+                        },
+                    }}
+                />
+                {t("generalEnquiryButtonText")}
+            </Button>
+            <Button onClick={handleFeasibilityEnquiryClick}>
+                <QuestionAnswerIcon
+                    sx={{
+                        pr: 1,
+                        display: {
+                            xs: "none",
+                            sm: "inline-block",
+                        },
+                    }}
+                />
+                {t("feasibilityEnquiryButtonText")}
+            </Button>
+            <Button onClick={handleStartDarRequest} purpose="secondary">
+                {t("submitApplication")}
+            </Button>
 
-                    <Button
-                        aria-label={t("downloadMetadata")}
-                        variant="text"
-                        startIcon={
-                            <DownloadIcon
-                                sx={{
-                                    fill: "primary",
-                                }}
-                            />
-                        }
-                        endIcon={
-                            <ChevronThinIcon
-                                fontSize="medium"
-                                style={{ color: "primary" }}
-                                sx={{
-                                    display: {
-                                        xs: "none",
-                                        sm: "inline-block",
-                                    },
-                                }}
-                            />
-                        }
+            <Button
+                aria-label={t("downloadMetadata")}
+                variant="text"
+                startIcon={
+                    <DownloadIcon
                         sx={{
-                            bgcolor: tokens.status.hovered,
-                            ml: { xs: 0, lg: 2 },
+                            fill: "primary",
                         }}
-                        onClick={handleOpenDropdownMenu}>
-                        {t("downloadMetadata")}
-                    </Button>
-                    <MenuDropdown
-                        handleClose={() => setAnchorElement(null)}
-                        menuItems={menuItems}
-                        anchorElement={anchorElement}
-                        title="downloads"
                     />
-                </>
-            }
-        />
+                }
+                endIcon={
+                    <ChevronThinIcon
+                        fontSize="medium"
+                        style={{ color: "primary" }}
+                        sx={{
+                            display: {
+                                xs: "none",
+                                sm: "inline-block",
+                            },
+                        }}
+                    />
+                }
+                sx={{
+                    bgcolor: tokens.status.hovered,
+                }}
+                onClick={handleOpenDropdownMenu}>
+                {t("downloadMetadata")}
+            </Button>
+            <MenuDropdown
+                handleClose={() => setAnchorElement(null)}
+                menuItems={menuItems}
+                anchorElement={anchorElement}
+                title="downloads"
+            />
+        </Box>
     );
 };
 
