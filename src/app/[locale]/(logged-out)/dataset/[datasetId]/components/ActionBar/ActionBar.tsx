@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { Button } from "@hdruk/ui";
-import { tokens } from "@hdruk/ui/theme";
+import { Bookmark, BookmarkBorder } from "@mui/icons-material";
 import { useTranslations } from "next-intl";
 import { usePathname } from "next/navigation";
 import { Dataset } from "@/interfaces/Dataset";
@@ -13,6 +13,7 @@ import useAuth from "@/hooks/useAuth";
 import useDataAccessRequest from "@/hooks/useDataAccessRequest";
 import useFeasibilityEnquiry from "@/hooks/useFeasibilityEnquiry";
 import useGeneralEnquiry from "@/hooks/useGeneralEnquiry";
+import useLibraryToggle from "@/hooks/useLibraryToggle";
 import getRequest from "@/services/api/get";
 import notificationService from "@/services/notification";
 import apis from "@/config/apis";
@@ -41,6 +42,11 @@ const ActionBar = ({ dataset }: ActionBarProps) => {
     const { showDARApplicationModal } = useDataAccessRequest();
 
     const t = useTranslations(TRANSLATION_PATH);
+
+    const { isInLibrary, toggleLibrary } = useLibraryToggle({
+        datasetId,
+        redirectPath: path,
+    });
 
     const { team } = dataset;
 
@@ -216,7 +222,10 @@ const ActionBar = ({ dataset }: ActionBarProps) => {
                     sm: "minmax(0, 1fr)",
                 },
             }}>
-            <Button onClick={handleGeneralEnquiryClick}>
+            <Button onClick={handleStartDarRequest}>
+                {t("submitApplication")}
+            </Button>
+            <Button onClick={handleGeneralEnquiryClick} purpose="secondary">
                 <QuestionAnswerIcon
                     sx={{
                         pr: 1,
@@ -228,7 +237,7 @@ const ActionBar = ({ dataset }: ActionBarProps) => {
                 />
                 {t("generalEnquiryButtonText")}
             </Button>
-            <Button onClick={handleFeasibilityEnquiryClick}>
+            <Button onClick={handleFeasibilityEnquiryClick} purpose="secondary">
                 <QuestionAnswerIcon
                     sx={{
                         pr: 1,
@@ -240,13 +249,15 @@ const ActionBar = ({ dataset }: ActionBarProps) => {
                 />
                 {t("feasibilityEnquiryButtonText")}
             </Button>
-            <Button onClick={handleStartDarRequest} purpose="secondary">
-                {t("submitApplication")}
+            <Button
+                onClick={toggleLibrary}
+                purpose="tertiary"
+                startIcon={isInLibrary ? <Bookmark /> : <BookmarkBorder />}>
+                {isInLibrary ? t("removeFromLibrary") : t("addToLibrary")}
             </Button>
-
             <Button
                 aria-label={t("downloadMetadata")}
-                variant="text"
+                purpose="tertiary"
                 startIcon={
                     <DownloadIcon
                         sx={{
@@ -266,9 +277,6 @@ const ActionBar = ({ dataset }: ActionBarProps) => {
                         }}
                     />
                 }
-                sx={{
-                    bgcolor: tokens.status.hovered,
-                }}
                 onClick={handleOpenDropdownMenu}>
                 {t("downloadMetadata")}
             </Button>
