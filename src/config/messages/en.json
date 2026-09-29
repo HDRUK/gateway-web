@@ -1690,7 +1690,9 @@
                     "downloadMetadata": "Download data",
                     "downloadStarted": "Your download has started",
                     "feasibilityEnquiryButtonText": "Make a feasibility enquiry",
-                    "generalEnquiryButtonText": "Make a general enquiry"
+                    "generalEnquiryButtonText": "Make a general enquiry",
+                    "addToLibrary": "Add to library",
+                    "removeFromLibrary": "Remove from library"
                 },
                 "ActiveLinks": {
                     "bookmarks": "Bookmarks"

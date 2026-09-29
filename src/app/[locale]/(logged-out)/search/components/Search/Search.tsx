@@ -383,7 +383,7 @@ const Search = ({ filters, schema }: SearchProps) => {
     );
 
     // Update the list of libraries
-    const { data: libraryData, mutate: mutateLibraries } = useGet<Library[]>(
+    const { mutate: mutateLibraries } = useGet<Library[]>(
         `${apis.librariesV1Url}?per_page=-1`,
         { shouldFetch: isLoggedIn }
     );
@@ -506,8 +506,6 @@ const Search = ({ filters, schema }: SearchProps) => {
                     <ResultCard
                         result={result as SearchResultDataset}
                         key={resultId}
-                        mutateLibraries={mutateLibraries}
-                        libraryData={libraryData}
                         isCohortDiscoveryDisabled={isCohortDiscoveryDisabled}
                     />
                 );

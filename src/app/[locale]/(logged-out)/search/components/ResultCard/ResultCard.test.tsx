@@ -27,8 +27,6 @@ describe("ResultCard", () => {
                         dar_modal_footer: null,
                     },
                 }}
-                libraryData={[]}
-                mutateLibraries={jest.fn()}
             />
         );
 
@@ -85,8 +83,6 @@ describe("ResultCard", () => {
                         dar_modal_footer: null,
                     },
                 }}
-                libraryData={[]}
-                mutateLibraries={jest.fn()}
             />
         );
         expect(screen.getByText(`Date range: n/a`)).toBeInTheDocument();
@@ -120,8 +116,6 @@ describe("ResultCard", () => {
                         dar_modal_footer: null,
                     },
                 }}
-                libraryData={[]}
-                mutateLibraries={jest.fn()}
             />
         );
         expect(
@@ -152,8 +146,6 @@ describe("ResultCard", () => {
                         dar_modal_footer: null,
                     },
                 }}
-                libraryData={[]}
-                mutateLibraries={jest.fn()}
             />
         );
 
