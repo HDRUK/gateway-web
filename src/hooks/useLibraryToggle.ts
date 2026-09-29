@@ -1,3 +1,4 @@
+import { KeyedMutator } from "swr";
 import { Library, NewLibrary } from "@/interfaces/Library";
 import ProvidersDialog from "@/modules/ProvidersDialog";
 import apis from "@/config/apis";
@@ -40,10 +41,13 @@ const useLibraryToggle = ({
         localeKey: "updateYourLibrary",
     });
 
-    const addToLibrary = () =>
-        addLibrary({ user_id: user?.id, dataset_id: datasetId }).then(() =>
+    const addToLibrary = () => {
+        if (!user) return;
+
+        addLibrary({ user_id: user.id, dataset_id: datasetId }).then(() =>
             mutateLibraries()
         );
+    };
 
     const { setPostLoginActionCookie } = usePostLoginAction({
         onAction: handlePostLoginAction
@@ -78,7 +82,11 @@ const useLibraryToggle = ({
         }
     };
 
-    return { isInLibrary: !!libraryItem, toggleLibrary, mutateLibraries };
+    return {
+        isInLibrary: !!libraryItem,
+        toggleLibrary,
+        mutateLibraries: mutateLibraries as KeyedMutator<Library[]>,
+    };
 };
 
 export default useLibraryToggle;
