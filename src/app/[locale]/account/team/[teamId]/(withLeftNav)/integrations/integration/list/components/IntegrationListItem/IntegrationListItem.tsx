@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { SxProps } from "@mui/material";
 import { useTranslations } from "next-intl";
 import { useParams } from "next/navigation";
 import { tokens } from "@hdruk/ui/theme";
@@ -23,6 +24,14 @@ import { RouteName } from "@/consts/routeName";
 import apiService from "@/services/api";
 import { formatDate } from "@/utils/date";
 import { toTitleCase } from "@/utils/string";
+
+const SPIN_SX: SxProps = {
+    animation: "spin 1s linear infinite",
+    "@keyframes spin": {
+        from: { transform: "rotate(0deg)" },
+        to: { transform: "rotate(360deg)" },
+    },
+};
 
 interface IntegrationListItemProps {
     index: number;
@@ -66,8 +75,10 @@ const IntegrationListItem = ({
         {
             action: handleRunNow,
             icon: runIcon,
+            iconSx: inProgress ? SPIN_SX : undefined,
             disabled: inProgress || !integration.enabled || !integration.tested,
             label: runLabel,
+            tooltip: inProgress ? "Synchronisation in progress" : runLabel,
         },
         {
             href: detailPath,
