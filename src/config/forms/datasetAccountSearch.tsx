@@ -1,4 +1,5 @@
 import { SearchIcon } from "@/consts/icons";
+import { SortDirection } from "@/consts/sort";
 import { inputComponents } from ".";
 import { getSortField, toggleDirection } from "./sortFields";
 
@@ -11,17 +12,17 @@ const sortByOptions = [
     {
         label: "Sort By Date of Last Update",
         value: "updated",
-        initialDirection: "desc",
+        initialDirection: SortDirection.DESC,
     },
     {
         label: "Sort By Date of Creation",
         value: "created",
-        initialDirection: "desc",
+        initialDirection: SortDirection.DESC,
     },
     {
         label: "Sort By Title",
         value: "metadata.summary.title",
-        initialDirection: "asc",
+        initialDirection: SortDirection.ASC,
     },
 ];
 

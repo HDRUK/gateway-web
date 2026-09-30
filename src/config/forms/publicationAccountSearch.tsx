@@ -1,3 +1,4 @@
+import { SortDirection } from "@/consts/sort";
 import { inputComponents } from ".";
 import { getSortField, toggleDirection } from "./sortFields";
 
@@ -10,17 +11,17 @@ const sortByOptions = [
     {
         label: "Sort By Date of Last Update",
         value: "updated_at",
-        initialDirection: "desc",
+        initialDirection: SortDirection.DESC,
     },
     {
         label: "Sort By Year of Publication",
         value: "year_of_publication",
-        initialDirection: "desc",
+        initialDirection: SortDirection.DESC,
     },
     {
         label: "Sort By Title",
         value: "paper_title",
-        initialDirection: "asc",
+        initialDirection: SortDirection.ASC,
     },
 ];
 

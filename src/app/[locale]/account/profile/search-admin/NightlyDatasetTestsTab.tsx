@@ -22,10 +22,11 @@ import {
 } from "@/consts/icons";
 import { formatDate } from "@/utils/date";
 import { FailedDatasetTest, NightlyDatasetTestResponse } from "@/interfaces/NightlyDatasetTest";
+import { SortDirection } from "@/consts/sort";
 
 interface Sort {
     key: string;
-    direction: string;
+    direction: SortDirection;
 }
 
 type StatColor = "info" | "success" | "error";
@@ -150,7 +151,7 @@ export default function NightlyDatasetTestsTab() {
 
     const [sort, setSort] = useState<Sort>({
         key: "statusCode",
-        direction: "asc",
+        direction: SortDirection.ASC,
     });
 
     const failedDatasets = useMemo(() => {
@@ -160,7 +161,7 @@ export default function NightlyDatasetTestsTab() {
 
         return [...list].sort((a, b) => {
             const diff = (a.statusCode ?? 0) - (b.statusCode ?? 0);
-            return sort.direction === "asc" ? diff : -diff;
+            return sort.direction === SortDirection.ASC ? diff : -diff;
         });
     }, [data, sort]);
 

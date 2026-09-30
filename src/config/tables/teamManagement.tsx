@@ -8,12 +8,13 @@ import ShowMoreTooltip from "@/components/ShowMoreTooltip";
 import SortIcon from "@/components/SortIcon";
 import TickCrossIcon from "@/components/TickCrossIcon";
 import { CloseIcon, EditIcon } from "@/consts/icons";
+import { SortDirection } from "@/consts/sort";
 import { formatDate } from "@/utils/date";
 import { getTeamAdmins } from "@/utils/user";
 
 interface getColumnsProps {
-    sort: { key: string; direction: string };
-    setSort: (sort: { key: string; direction: string }) => void;
+    sort: { key: string; direction: SortDirection };
+    setSort: (sort: { key: string; direction: SortDirection }) => void;
     translations: { [key: string]: string };
     permissions: { [key: string]: boolean };
     handleEdit: (id: number) => void;

@@ -17,6 +17,7 @@ import {
     cohortSearchDefaultValues,
     cohortSearchFilter,
 } from "@/config/forms/cohortAccountSearch";
+import { SortDirection } from "@/consts/sort";
 import { useFeatures } from "@/providers/FeatureProvider";
 import { getColumns } from "./CohortTable.utils";
 
@@ -26,7 +27,10 @@ const CohortTable = () => {
     const t = useTranslations(TRANSLATION_PATH);
 
     const [currentPage, setCurrentPage] = useState(1);
-    const [sort, setSort] = useState({ key: "created_at", direction: "desc" });
+    const [sort, setSort] = useState({
+        key: "created_at",
+        direction: SortDirection.DESC,
+    });
     const [requestStatus, setRequestStatus] = useState<CohortRequestStatus>();
 
     const { control, watch, setValue } = useForm({
@@ -37,7 +41,8 @@ const CohortTable = () => {
 
     const searchDebounced = useDebounce(watchAll.search, 500);
 
-    const isDefaultSort = sort.key === "created_at" && sort.direction === "desc";
+    const isDefaultSort =
+        sort.key === "created_at" && sort.direction === SortDirection.DESC;
 
     const queryParams = new URLSearchParams();
     queryParams.append(
