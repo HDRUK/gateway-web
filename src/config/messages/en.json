@@ -1001,7 +1001,10 @@
                             "title": "Predefined Integrations",
                             "create": "Add Predefined Integration",
                             "empty": "You have not created any predefined integrations yet.",
-                            "emptyAction": "Create one"
+                            "emptyAction": "Create one",
+                            "runNow": "Run now",
+                            "running": "Running",
+                            "runningTooltip": "Synchronisation in progress"
                         }
                     }
                 },
