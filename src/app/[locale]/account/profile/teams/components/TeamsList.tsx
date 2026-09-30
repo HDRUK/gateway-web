@@ -19,6 +19,7 @@ import {
 } from "@/config/forms/teamSearch";
 import { getColumns } from "@/config/tables/teamManagement";
 import { Routes } from "@/consts/routes";
+import { SortDirection } from "@/consts/sort";
 
 const TRANSLATION_PATH_TEAMS =
     "pages.account.profile.teams.components.TeamsList";
@@ -37,7 +38,10 @@ const TeamsList = ({
         "true" | "false"
     >();
 
-    const [sort, setSort] = useState({ key: "created_at", direction: "desc" });
+    const [sort, setSort] = useState({
+        key: "created_at",
+        direction: SortDirection.DESC,
+    });
     const [currentPage, setCurrentPage] = useState(1);
 
     const { control, watch, setValue } = useForm({
