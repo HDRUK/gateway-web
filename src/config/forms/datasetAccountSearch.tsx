@@ -1,5 +1,6 @@
 import { SearchIcon } from "@/consts/icons";
 import { inputComponents } from ".";
+import { getSortField, toggleDirection } from "./sortFields";
 
 const defaultValues = {
     sortField: "updated",
@@ -34,19 +35,7 @@ const searchFilter = {
     icon: SearchIcon,
 };
 
-const sortField = {
-    sx: { minWidth: 220 },
-    component: inputComponents.Select,
-    label: "",
-    options: sortByOptions,
-    name: "sortField",
-};
-
-const toggleDirection = {
-    component: inputComponents.ToggleDirection,
-    label: "",
-    name: "sortDirection",
-};
+const sortField = getSortField(sortByOptions);
 
 export {
     toggleDirection,

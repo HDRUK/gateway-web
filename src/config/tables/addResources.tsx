@@ -32,6 +32,21 @@ const isResourceSelected = (
     return !!currentResource.find(r => r.id === id);
 };
 
+const getTitleText = (
+    data: ResourceDataType,
+    resourceType: ResourceType
+): string | undefined => {
+    const textMap = {
+        [ResourceType.DATASET]: () =>
+            get(data, TITLE_LOCATION) || (data as ReducedDataset).shortTitle,
+        [ResourceType.DATA_USE]: () => (data as DataUse).project_title,
+        [ResourceType.PUBLICATION]: () => (data as Publication).paper_title,
+        [ResourceType.TOOL]: () => (data as Tool).name,
+    };
+
+    return textMap[resourceType]();
+};
+
 const getTitle = (data: ResourceDataType, resourceType: ResourceType) => {
     const getLink = (url?: string, text?: string) =>
         url ? (
@@ -52,34 +67,18 @@ const getTitle = (data: ResourceDataType, resourceType: ResourceType) => {
             </Typography>
         );
 
-    const titleMap = {
-        [ResourceType.DATASET]: () =>
-            getLink(
-                `/${RouteName.DATASET_ITEM}/${data.id}`,
-                get(data, TITLE_LOCATION) || (data as ReducedDataset).shortTitle
-            ),
-        [ResourceType.DATA_USE]: () =>
-            getLink(
-                `/${RouteName.DATA_USE_ITEM}/${data.id}`,
-                (data as DataUse).project_title
-            ),
-        [ResourceType.PUBLICATION]: () => {
-            const publicationData = data as Publication;
-            return getLink(
-                publicationData.full_text_url || publicationData.url,
-                publicationData.paper_title
-            );
-        },
-        [ResourceType.TOOL]: () => {
-            const toolData = data as Tool;
-            return getLink(
-                toolData.url || `/${RouteName.TOOL_ITEM}/${data.id}`,
-                toolData.name
-            );
-        },
+    const text = getTitleText(data, resourceType);
+
+    const urlMap = {
+        [ResourceType.DATASET]: () => `/${RouteName.DATASET_ITEM}/${data.id}`,
+        [ResourceType.DATA_USE]: () => `/${RouteName.DATA_USE_ITEM}/${data.id}`,
+        [ResourceType.PUBLICATION]: () =>
+            (data as Publication).full_text_url || (data as Publication).url,
+        [ResourceType.TOOL]: () =>
+            (data as Tool).url || `/${RouteName.TOOL_ITEM}/${data.id}`,
     };
 
-    return titleMap[resourceType]();
+    return getLink(urlMap[resourceType](), text);
 };
 
 const getDataProvider = (
@@ -139,6 +138,13 @@ const getColumns = ({
                                 )
                             }
                             size="large"
+                            inputProps={{
+                                "aria-label":
+                                    getTitleText(
+                                        rowData as ResourceDataType,
+                                        resourceType
+                                    ) || EMPTY_VALUE,
+                            }}
                         />
                     </div>
                 ) : (

@@ -1,6 +1,9 @@
 import { Control, useController } from "react-hook-form";
 import { Button } from "@hdruk/ui";
+import { useTranslations } from "next-intl";
 import { SortAscIcon, SortDescIcon } from "@/consts/icons";
+
+const TRANSLATION_PATH = "components.ToggleDirection";
 
 interface ToggleDirectionProps {
     control: Control;
@@ -8,6 +11,7 @@ interface ToggleDirectionProps {
 }
 
 const ToggleDirection = ({ control, name }: ToggleDirectionProps) => {
+    const t = useTranslations(TRANSLATION_PATH);
     const { field } = useController({
         name,
         control,
@@ -17,6 +21,11 @@ const ToggleDirection = ({ control, name }: ToggleDirectionProps) => {
         <Button
             sx={{ marginBottom: 2 }}
             purpose="link"
+            aria-label={
+                field.value === "desc"
+                    ? t("sortAscending")
+                    : t("sortDescending")
+            }
             onClick={() =>
                 field.onChange(field.value === "asc" ? "desc" : "asc")
             }>

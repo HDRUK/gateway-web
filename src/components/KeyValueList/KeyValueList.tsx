@@ -1,5 +1,5 @@
 import { ReactNode } from "react";
-import { colors } from "@/config/theme";
+import { tokens } from "@hdruk/ui/theme";
 import Box from "../Box";
 import Typography from "../Typography";
 
@@ -25,14 +25,17 @@ const KeyValueList = ({ rows }: KeyValueListProps) => {
                     }}>
                     <Typography
                         sx={{
-                            color: row.color || colors.grey500,
+                            color: row.color || tokens.text.faded,
                             fontSize: 13,
                         }}>
                         {row.key}:
                     </Typography>
                     <Typography
                         component="div"
-                        sx={{ fontSize: 13, color: row.color }}>
+                        sx={{
+                            fontSize: 13,
+                            color: row.color || tokens.text.secondaryBlack,
+                        }}>
                         {row.value}
                     </Typography>
                 </Box>

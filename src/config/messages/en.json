@@ -1990,6 +1990,10 @@
             "showLess": "Show less",
             "showMore": "Show more"
         },
+        "ToggleDirection": {
+            "sortAscending": "Sort ascending",
+            "sortDescending": "Sort descending"
+        },
         "FilterSection": {
             "placeholder": "I'm looking for...",
             "noFilters": "No filters available"
