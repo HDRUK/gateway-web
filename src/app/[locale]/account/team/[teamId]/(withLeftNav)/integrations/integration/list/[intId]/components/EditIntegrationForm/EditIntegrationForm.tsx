@@ -40,7 +40,8 @@ import { RouteName } from "@/consts/routeName";
 import apiService from "@/services/api";
 import { requiresSecretKey } from "@/utils/integrations";
 
-const POLL_INTERVAL_MS = 5000;
+const ACTIVE_POLL_INTERVAL_MS = 5000;
+const IDLE_POLL_INTERVAL_MS = 30000;
 
 const EditIntegrationForm = () => {
     const { push } = useRouter();
@@ -59,7 +60,9 @@ const EditIntegrationForm = () => {
         {
             shouldFetch: !!params?.teamId && !!params?.intId,
             refreshInterval: latestData =>
-                latestData?.is_running ? POLL_INTERVAL_MS : 0,
+                latestData?.is_running
+                    ? ACTIVE_POLL_INTERVAL_MS
+                    : IDLE_POLL_INTERVAL_MS,
         }
     );
 

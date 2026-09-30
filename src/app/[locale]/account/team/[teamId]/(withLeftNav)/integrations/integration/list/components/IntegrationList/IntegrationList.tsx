@@ -18,7 +18,8 @@ import { RouteName } from "@/consts/routeName";
 import IntegrationListItem from "../IntegrationListItem";
 
 const TRANSLATION_PATH = `pages.account.team.integrations.integrations.list`;
-const POLL_INTERVAL_MS = 5000;
+const ACTIVE_POLL_INTERVAL_MS = 5000;
+const IDLE_POLL_INTERVAL_MS = 30000;
 
 const IntegrationList = () => {
     const t = useTranslations(TRANSLATION_PATH);
@@ -32,8 +33,8 @@ const IntegrationList = () => {
             withPagination: true,
             refreshInterval: latestData =>
                 latestData?.list?.some(item => item.is_running)
-                    ? POLL_INTERVAL_MS
-                    : 0,
+                    ? ACTIVE_POLL_INTERVAL_MS
+                    : IDLE_POLL_INTERVAL_MS,
         }
     );
 
