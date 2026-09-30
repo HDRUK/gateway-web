@@ -45,6 +45,9 @@ const IntegrationListItem = ({
     onChanged,
 }: IntegrationListItemProps) => {
     const t = useTranslations("api");
+    const listT = useTranslations(
+        "pages.account.team.integrations.integrations.list"
+    );
     const params = useParams<{ teamId: string }>();
     const [runStatus, setRunStatus] = useState(FederationRunStatus.IDLE);
 
@@ -68,7 +71,7 @@ const IntegrationListItem = ({
         integration.is_running || runStatus === FederationRunStatus.RUNNING;
 
     const runIcon = inProgress ? AutorenewIcon : PlayArrowIcon;
-    const runLabel = inProgress ? "Running" : "Run now";
+    const runLabel = inProgress ? listT("running") : listT("runNow");
 
     const actions = [
         { href: detailPath, icon: EditIcon, label: "Edit" },
@@ -78,7 +81,7 @@ const IntegrationListItem = ({
             iconSx: inProgress ? SPIN_SX : undefined,
             disabled: inProgress || !integration.enabled || !integration.tested,
             label: runLabel,
-            tooltip: inProgress ? "Synchronisation in progress" : runLabel,
+            tooltip: inProgress ? listT("runningTooltip") : runLabel,
         },
         {
             href: detailPath,
