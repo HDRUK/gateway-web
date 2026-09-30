@@ -40,6 +40,8 @@ import { RouteName } from "@/consts/routeName";
 import apiService from "@/services/api";
 import { requiresSecretKey } from "@/utils/integrations";
 
+const POLL_INTERVAL_MS = 5000;
+
 const EditIntegrationForm = () => {
     const { push } = useRouter();
     const t = useTranslations("api");
@@ -54,7 +56,11 @@ const EditIntegrationForm = () => {
     };
     const { data: integration, mutate: mutateIntegration } = useGet<Integration>(
         `${apis.teamsV1Url}/${params?.teamId}/federations/${params?.intId}`,
-        { shouldFetch: !!params?.teamId && !!params?.intId }
+        {
+            shouldFetch: !!params?.teamId && !!params?.intId,
+            refreshInterval: latestData =>
+                latestData?.is_running ? POLL_INTERVAL_MS : 0,
+        }
     );
 
     const { team } = useGetTeam(params?.teamId as string);
@@ -372,6 +378,7 @@ const EditIntegrationForm = () => {
                             formState.isDirty ||
                             !tested ||
                             !enabled ||
+                            !!integration?.is_running ||
                             runNowStatus === FederationRunStatus.RUNNING
                         }
                         startIcon={
