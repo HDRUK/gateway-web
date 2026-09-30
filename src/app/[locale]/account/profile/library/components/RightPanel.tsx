@@ -197,7 +197,7 @@ const RightPanel = ({ selected, handleRemove }: RightPanelProps) => {
                                     <Typography
                                         component="span"
                                         sx={{
-                                            color: tokens.text.disabled,
+                                            color: tokens.text.faded,
                                             mr: 1,
                                         }}>
                                         {tDar("selectedDatasets")}
