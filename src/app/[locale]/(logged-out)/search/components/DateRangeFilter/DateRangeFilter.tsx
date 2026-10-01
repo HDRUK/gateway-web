@@ -121,6 +121,7 @@ const DateRangeFilter = ({
                 <IconButton
                     size="large"
                     edge="start"
+                    aria-label={t("applyDateRange")}
                     onClick={() => handleUpdate(dateRange)}
                     disabled={!!minYearError || !!maxYearError}>
                     <SearchIcon />
