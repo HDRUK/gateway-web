@@ -2,6 +2,7 @@
 
 import Image from "next/image";
 import Typography from "@/components/Typography";
+import { tokens } from "@hdruk/ui/theme";
 import theme from "@/config/theme";
 
 export interface BannerProps {
@@ -21,7 +22,7 @@ const Banner = ({ title, subTitle, src }: BannerProps) => (
             justifyContent: "center",
             minHeight: "200px",
             padding: `${theme.spacing(4)} 0`,
-            background: `linear-gradient(97deg, #46AF93 4.05%, ${theme.palette.primary.main} 100%)`,
+            background: `linear-gradient(97deg, ${tokens.brand.secondary} 4.05%, ${tokens.brand.primaryHovered} 100%)`,
         }}>
         <div
             style={{

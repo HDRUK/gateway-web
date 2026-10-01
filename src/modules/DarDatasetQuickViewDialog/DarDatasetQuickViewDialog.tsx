@@ -49,7 +49,7 @@ const CustodianDatasets: FC<CustodianDatasetsProps> = ({
     return (
         <Box key={group.custodian_id} sx={{ pl: 0, pr: 0 }}>
             {showCustodianName && (
-                <Typography variant="h3" mb={2}>
+                <Typography variant="h6" component="h3" mb={2}>
                     {group.custodian_name}
                 </Typography>
             )}
@@ -152,7 +152,9 @@ const DatasetQuickViewDialog = ({
             title={formattedTitle}
             onClose={() => hideDialog()}>
             <MuiDialogContent sx={{ paddingX: 4 }}>
-                <Typography variant="h3">{t("datasets")}</Typography>
+                <Typography variant="h6" component="h3">
+                    {t("datasets")}
+                </Typography>
 
                 {teamId &&
                     teamDatasets.map(group => (
@@ -170,7 +172,12 @@ const DatasetQuickViewDialog = ({
                         {teamId && (
                             <>
                                 <Divider sx={{ mt: 2 }} />
-                                <Typography variant="h3" p={0} mb={2} mt={4}>
+                                <Typography
+                                    variant="h6"
+                                    component="h3"
+                                    p={0}
+                                    mb={2}
+                                    mt={4}>
                                     {t("otherCustodianDatasets")}
                                 </Typography>
                             </>

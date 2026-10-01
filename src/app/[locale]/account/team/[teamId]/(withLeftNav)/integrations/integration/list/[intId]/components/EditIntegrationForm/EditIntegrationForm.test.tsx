@@ -468,4 +468,26 @@ describe("EditIntegrationForm", () => {
             { timeout: 4000 }
         );
     }, 10000);
+
+    it("should disable 'Run now' when the integration is already running server-side", async () => {
+        const mockIntegration = {
+            ...integrationV1,
+            id: 2,
+            federation_type: "DATASETS" as const,
+            enabled: true,
+            tested: true,
+            run_time_hour: 12,
+            run_time_minute: "30",
+            is_running: true,
+        };
+        server.use(getIntegrationV1({ data: mockIntegration }));
+
+        await act(() => render(<EditIntegrationForm />));
+
+        await waitFor(() => {
+            expect(
+                screen.getByRole("button", { name: "Run now" })
+            ).toBeDisabled();
+        });
+    });
 });

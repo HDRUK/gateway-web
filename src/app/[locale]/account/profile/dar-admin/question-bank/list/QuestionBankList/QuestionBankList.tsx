@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { Button, Loading } from "@hdruk/ui";
 import { useTranslations } from "next-intl";
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
@@ -8,7 +9,6 @@ import { PaginationType } from "@/interfaces/Pagination";
 import { QuestionBankQuestion } from "@/interfaces/QuestionBankQuestion";
 import Box from "@/components/Box";
 import BoxContainer from "@/components/BoxContainer";
-import { Button, Loading } from "@hdruk/ui";
 import Pagination from "@/components/Pagination";
 import Paper from "@/components/Paper";
 import ShowingXofX from "@/components/ShowingXofX";
@@ -145,7 +145,9 @@ const QuestionBankList = () => {
             <Paper>
                 <BoxContainer>
                     <Box sx={{ paddingBottom: 2 }}>
-                        <Typography variant="h2">{t("title")}</Typography>
+                        <Typography variant="articleLead" component="h2">
+                            {t("title")}
+                        </Typography>
                         <Typography>{t("text")}</Typography>
                         <Button
                             component={Link}

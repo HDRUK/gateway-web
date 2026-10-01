@@ -1,4 +1,5 @@
 import { inputComponents } from "@/config/forms";
+import { getSortField } from "@/config/forms/sortFields";
 import { SearchIcon } from "@/consts/icons";
 
 const defaultValues = {
@@ -17,13 +18,7 @@ const sortByOptions = [
     },
 ];
 
-const sortField = {
-    sx: { width: 220 },
-    component: inputComponents.Select,
-    label: "",
-    options: sortByOptions,
-    name: "sortField",
-};
+const sortField = getSortField(sortByOptions, { width: 220 });
 
 const searchFilter = {
     component: inputComponents.TextField,

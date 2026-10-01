@@ -204,7 +204,7 @@ const AddDatasetDialog = ({
     return (
         <Dialog title={t("title")} maxWidth="md">
             <MuiDialogContent sx={{ minHeight: "55vh" }}>
-                <Typography color={tokens.text.disabled}>{t("intro")}</Typography>
+                <Typography color={tokens.text.faded}>{t("intro")}</Typography>
 
                 <InputWrapper
                     setValue={setValue}

@@ -1,6 +1,8 @@
 "use client";
 
 import { useMemo } from "react";
+import { Button } from "@hdruk/ui";
+import { tokens } from "@hdruk/ui/theme";
 import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
 import { Typography, useMediaQuery } from "@mui/material";
 import { useTranslations } from "next-intl";
@@ -8,7 +10,7 @@ import Link from "next/link";
 import { PageTemplateHome } from "@/interfaces/Cms";
 import { SearchCategory } from "@/interfaces/Search";
 import Box from "@/components/Box";
-import { Button } from "@hdruk/ui";
+import HTMLVideoEmbed from "@/components/CohortDiscoveryInfo/HTMLVideoEmbed";
 import Container from "@/components/Container";
 import GradientBoxes from "@/components/GradientBoxes";
 import LogoSlider from "@/components/LogoSlider";
@@ -18,7 +20,6 @@ import theme, { colors } from "@/config/theme";
 import { ArrowForward } from "@/consts/icons";
 import { RouteName } from "@/consts/routeName";
 import InfoHoverPanel from "@/app/[locale]/components/InfoHoverPanel";
-import HTMLVideoEmbed from "@/components/CohortDiscoveryInfo/HTMLVideoEmbed";
 import NewsSection from "../NewsSection";
 import NewsletterSignup from "../NewsletterSignup";
 import { TeamContent, TeamImage, TeamWrapper } from "./Homepage.styles";
@@ -165,28 +166,30 @@ const HomePage = ({ cmsContent: { page, posts } }: HomePageProps) => {
         <>
             <Box
                 sx={{
+                    p: 0,
                     background: {
-                        sm: `linear-gradient(170deg, transparent 60%, ${colors.darkGreen50} calc(60% + 1px))`,
-                        lg: `linear-gradient(170deg, transparent 72%, ${colors.darkGreen50} calc(72% + 1px))`,
+                        sm: `linear-gradient(170deg, transparent 53%, ${colors.darkGreen50} calc(53% + 1px))`,
                     },
                 }}>
-                <Container>
-                    <InfoHoverPanel
-                        items={responsiveServices}
-                        itemsResources={responsiveServicesConnected}
-                        defaultImageSrc={
-                            StaticImages.LANDING_PAGE.welcome_image
-                        }
-                    />
-                </Container>
-            </Box>
-            <Box
-                sx={{
-                    background: colors.darkGreen50,
-                }}>
-                <Container>
-                    <GradientBoxes items={items} maxWidth={420} />
-                </Container>
+                <Box>
+                    <Container>
+                        <InfoHoverPanel
+                            items={responsiveServices}
+                            itemsResources={responsiveServicesConnected}
+                            defaultImageSrc={
+                                StaticImages.LANDING_PAGE.welcome_image
+                            }
+                        />
+                    </Container>
+                </Box>
+                <Box
+                    sx={{
+                        background: { xs: colors.darkGreen50, sm: "none" },
+                    }}>
+                    <Container>
+                        <GradientBoxes items={items} maxWidth={420} />
+                    </Container>
+                </Box>
             </Box>
             <Box
                 sx={{
@@ -199,7 +202,7 @@ const HomePage = ({ cmsContent: { page, posts } }: HomePageProps) => {
                         mb={2}
                         title={gatewayVideoHeader}
                         bgcolor="transparent"
-                        color="secondary.main"
+                        color={tokens.brand.secondary}
                         fontWeight="600"
                     />
                 </Container>
@@ -229,7 +232,7 @@ const HomePage = ({ cmsContent: { page, posts } }: HomePageProps) => {
                             variant="h2"
                             title={newsHeader}
                             bgcolor="transparent"
-                            color="secondary.main"
+                            color={tokens.brand.secondary}
                             fontWeight="600"
                         />
                         <Box
@@ -246,9 +249,7 @@ const HomePage = ({ cmsContent: { page, posts } }: HomePageProps) => {
                             <Button
                                 variant="text"
                                 component={Link}
-                                endIcon={
-                                    <ArrowForwardIosIcon />
-                                }
+                                endIcon={<ArrowForwardIosIcon />}
                                 href={RouteName.NEWS_EVENTS}>
                                 {t("newsEvents.seeAllLink")}
                             </Button>
@@ -269,7 +270,7 @@ const HomePage = ({ cmsContent: { page, posts } }: HomePageProps) => {
                         mb={2}
                         title={meetTheTeam.sectionName}
                         bgcolor="transparent"
-                        color="secondary.main"
+                        color={tokens.brand.secondary}
                         fontWeight="600"
                     />
                     <TeamWrapper>
@@ -315,7 +316,7 @@ const HomePage = ({ cmsContent: { page, posts } }: HomePageProps) => {
                     position: "relative",
                     zIndex: 1,
                     [theme.breakpoints.up(810)]: {
-                        marginTop: "-70px",
+                        paddingBottom: theme.spacing(5),
                     },
                 }}>
                 <Container
@@ -344,19 +345,6 @@ const HomePage = ({ cmsContent: { page, posts } }: HomePageProps) => {
                     <LogoSlider logos={logosFormatted} />
                 </Container>
             </Box>
-            <Box
-                sx={{
-                    display: "none",
-                    [theme.breakpoints.up(810)]: {
-                        position: "relative",
-                        zIndex: 0,
-                        height: "65px",
-                        width: "100%",
-                        backgroundColor: "#fff",
-                        display: "block",
-                    },
-                }}
-            />
         </>
     );
 };

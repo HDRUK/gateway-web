@@ -585,6 +585,9 @@
                     },
                     "entityType": {
                         "label": "Entity Type"
+                    },
+                    "remove": {
+                        "label": "Remove {name} from library"
                     }
                 },
                 "searchAdmin": {
@@ -1001,7 +1004,10 @@
                             "title": "Predefined Integrations",
                             "create": "Add Predefined Integration",
                             "empty": "You have not created any predefined integrations yet.",
-                            "emptyAction": "Create one"
+                            "emptyAction": "Create one",
+                            "runNow": "Run now",
+                            "running": "Running",
+                            "runningTooltip": "Synchronisation in progress"
                         }
                     }
                 },
@@ -1295,6 +1301,7 @@
                 "filters": "Filter(s)"
             },
             "dateSaved": "Date saved: {date}",
+            "deleteAction": "Delete saved search {name}",
             "deleteModal": {
                 "title": "Are you sure you want to delete {name}?",
                 "confirmButton": "Delete",
@@ -1690,7 +1697,9 @@
                     "downloadMetadata": "Download data",
                     "downloadStarted": "Your download has started",
                     "feasibilityEnquiryButtonText": "Make a feasibility enquiry",
-                    "generalEnquiryButtonText": "Make a general enquiry"
+                    "generalEnquiryButtonText": "Make a general enquiry",
+                    "addToLibrary": "Add to library",
+                    "removeFromLibrary": "Remove from library"
                 },
                 "ActiveLinks": {
                     "bookmarks": "Bookmarks"
@@ -1989,6 +1998,10 @@
         "ShowMore": {
             "showLess": "Show less",
             "showMore": "Show more"
+        },
+        "ToggleDirection": {
+            "sortAscending": "Sort ascending",
+            "sortDescending": "Sort descending"
         },
         "FilterSection": {
             "placeholder": "I'm looking for...",

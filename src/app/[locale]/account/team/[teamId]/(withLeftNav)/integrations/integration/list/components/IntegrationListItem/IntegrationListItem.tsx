@@ -1,6 +1,7 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useState } from "react";
+import { SxProps } from "@mui/material";
 import { useTranslations } from "next-intl";
 import { useParams } from "next/navigation";
 import { tokens } from "@hdruk/ui/theme";
@@ -15,7 +16,6 @@ import Typography from "@/components/Typography";
 import apis from "@/config/apis";
 import {
     AutorenewIcon,
-    CheckIcon,
     EditIcon,
     HistoryIcon,
     PlayArrowIcon,
@@ -25,8 +25,13 @@ import apiService from "@/services/api";
 import { formatDate } from "@/utils/date";
 import { toTitleCase } from "@/utils/string";
 
-const MIN_RUNNING_DISPLAY_MS = 600;
-const COMPLETE_DISPLAY_MS = 3000;
+const SPIN_SX: SxProps = {
+    animation: "spin 1s linear infinite",
+    "@keyframes spin": {
+        from: { transform: "rotate(0deg)" },
+        to: { transform: "rotate(360deg)" },
+    },
+};
 
 interface IntegrationListItemProps {
     index: number;
@@ -40,68 +45,43 @@ const IntegrationListItem = ({
     onChanged,
 }: IntegrationListItemProps) => {
     const t = useTranslations("api");
+    const listT = useTranslations(
+        "pages.account.team.integrations.integrations.list"
+    );
     const params = useParams<{ teamId: string }>();
     const [runStatus, setRunStatus] = useState(FederationRunStatus.IDLE);
-    const revertTimeoutRef = useRef<ReturnType<typeof setTimeout>>();
-
-    useEffect(() => {
-        return () => clearTimeout(revertTimeoutRef.current);
-    }, []);
 
     const detailPath = `/${RouteName.ACCOUNT}/${RouteName.TEAM}/${params?.teamId}/${RouteName.INTEGRATIONS}/${RouteName.INTEGRATION}/${RouteName.LIST}`;
 
     const handleRunNow = async () => {
         setRunStatus(FederationRunStatus.RUNNING);
 
-        const minDisplay = new Promise(resolve =>
-            setTimeout(resolve, MIN_RUNNING_DISPLAY_MS)
+        const response = await apiService.getRequest(
+            `${apis.teamsV1Url}/${params?.teamId}/federations/${integration.id}/run`,
+            { notificationOptions: { itemName: "Integration", t } }
         );
-        const [response] = await Promise.all([
-            apiService.getRequest(
-                `${apis.teamsV1Url}/${params?.teamId}/federations/${integration.id}/run`,
-                { notificationOptions: { itemName: "Integration", t } }
-            ),
-            minDisplay,
-        ]);
 
-        setRunStatus(
-            response !== null
-                ? FederationRunStatus.COMPLETE
-                : FederationRunStatus.IDLE
-        );
+        setRunStatus(FederationRunStatus.IDLE);
         if (response !== null) {
             onChanged?.();
-            revertTimeoutRef.current = setTimeout(
-                () => setRunStatus(FederationRunStatus.IDLE),
-                COMPLETE_DISPLAY_MS
-            );
         }
     };
 
-    const runIcon =
-        runStatus === FederationRunStatus.RUNNING
-            ? AutorenewIcon
-            : runStatus === FederationRunStatus.COMPLETE
-            ? CheckIcon
-            : PlayArrowIcon;
+    const inProgress =
+        integration.is_running || runStatus === FederationRunStatus.RUNNING;
 
-    const runLabel =
-        runStatus === FederationRunStatus.RUNNING
-            ? "Running"
-            : runStatus === FederationRunStatus.COMPLETE
-            ? "Complete"
-            : "Run now";
+    const runIcon = inProgress ? AutorenewIcon : PlayArrowIcon;
+    const runLabel = inProgress ? listT("running") : listT("runNow");
 
     const actions = [
         { href: detailPath, icon: EditIcon, label: "Edit" },
         {
             action: handleRunNow,
             icon: runIcon,
-            disabled:
-                runStatus !== FederationRunStatus.IDLE ||
-                !integration.enabled ||
-                !integration.tested,
+            iconSx: inProgress ? SPIN_SX : undefined,
+            disabled: inProgress || !integration.enabled || !integration.tested,
             label: runLabel,
+            tooltip: inProgress ? listT("runningTooltip") : runLabel,
         },
         {
             href: detailPath,

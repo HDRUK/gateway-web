@@ -11,7 +11,6 @@ import Typography from "@/components/Typography";
 import ProvidersDialog from "@/modules/ProvidersDialog";
 import useAuth from "@/hooks/useAuth";
 import useDialog from "@/hooks/useDialog";
-import { colors } from "@/config/theme";
 
 type HoverPanelItem = {
     id: string;
@@ -131,8 +130,7 @@ const InfoHoverPanel = ({
                 sx={{
                     color: {
                         xs: tokens.text.primaryWhite,
-                        sm: colors.green400,
-                        lg: tokens.text.primaryWhite,
+                        sm: tokens.brand.secondary,
                     },
                     fontSize: 24,
                     mt: 3,

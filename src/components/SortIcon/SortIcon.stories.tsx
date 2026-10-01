@@ -1,5 +1,6 @@
 import { useState } from "react";
 import type { Meta, StoryObj } from "@storybook/nextjs";
+import { SortDirection } from "@/consts/sort";
 import SortIcon from "./SortIcon";
 
 const meta: Meta<typeof SortIcon> = {
@@ -12,7 +13,10 @@ export default meta;
 type Story = StoryObj<typeof SortIcon>;
 
 const WrapperComponent = () => {
-    const [sort, setSort] = useState({ key: "created_at", direction: "asc" });
+    const [sort, setSort] = useState({
+        key: "created_at",
+        direction: SortDirection.ASC,
+    });
 
     return (
         <SortIcon

@@ -1,8 +1,10 @@
 import { get, isEmpty, pick, some } from "lodash";
+import { getTranslations } from "next-intl/server";
 import { notFound } from "next/navigation";
+import { SearchCategory } from "@/interfaces/Search";
 import Box from "@/components/Box";
 import BoxContainer from "@/components/BoxContainer";
-import LayoutDataItemPage from "@/components/LayoutDataItemPage";
+import HeaderActionBar from "@/components/HeaderActionBar";
 import Link from "@/components/Link";
 import Typography from "@/components/Typography";
 import ActiveListSidebar from "@/modules/ActiveListSidebar";
@@ -21,6 +23,17 @@ import Linkages from "./components/Linkages";
 import Publications from "./components/Publications";
 import Sources from "./components/Sources";
 import { datasetFields } from "./config";
+import {
+    areaSx,
+    backBarSx,
+    layoutSx,
+    leftColumnSx,
+    mainColumnSx,
+    navSx,
+    titleSx,
+} from "./page.styles";
+
+const TRANSLATION_PATH = "pages.dataset.components.ActionBar";
 
 export const metadata = metaData({
     title: "Dataset",
@@ -42,6 +55,7 @@ export default async function DatasetItemPage({
     params: Promise<{ datasetId: string }>;
 }) {
     const { datasetId } = await params;
+    const t = await getTranslations(TRANSLATION_PATH);
 
     const [data, googleRecommendedDataset, schema] = await Promise.all([
         getDataset(datasetId, SCHEMA_NAME, SCHEMA_VERSION, {
@@ -108,137 +122,92 @@ export default async function DatasetItemPage({
     );
 
     return (
-        <LayoutDataItemPage
-            navigation={<ActiveListSidebar items={activeLinkList} />}
-            body={
-                <>
+        <BoxContainer sx={layoutSx}>
+            <Box sx={leftColumnSx}>
+                <Box sx={areaSx("back")}>
+                    <HeaderActionBar
+                        backButtonText={t("label")}
+                        backButtonHref={`/${RouteName.SEARCH}?type=${SearchCategory.DATASETS}`}
+                        wrapperSx={backBarSx}
+                    />
+                </Box>
+                <Box sx={areaSx("actions")}>
                     <ActionBar dataset={datasetWithName} />
-                    <Box
-                        sx={{
-                            display: "flex",
-                            flexDirection: "column",
-                            gap: 2,
-                        }}>
-                        {datasetStats && (
-                            <Box sx={{ p: 0, gap: 2 }}>
-                                <Box
-                                    sx={{
-                                        display: "flex",
-                                        flexWrap: "wrap",
-                                        alignItems: "baseline",
-                                        gap: 1,
-                                        p: 0,
-                                    }}>
-                                    <Typography
-                                        variant="articleLead"
-                                        component="h2">
-                                        {
-                                            datasetVersion.metadata?.metadata
-                                                ?.summary?.title
-                                        }
-                                    </Typography>
-                                    {dataCustodianName && data?.team?.id && (
-                                        <>
-                                            <Typography
-                                                variant="articleLead"
-                                                component="span">
-                                                -
-                                            </Typography>
-                                            <Link
-                                                variant="articleLead"
-                                                href={`/${RouteName.DATA_CUSTODIANS_ITEM}/${data?.team?.id}`}>
-                                                {dataCustodianName}
-                                            </Link>
-                                        </>
-                                    )}
-                                </Box>
-                                <Box
-                                    sx={{
-                                        overflow: "hidden",
-                                        p: 0,
-                                    }}>
-                                    <DatasetStats data={datasetStats} />
-                                </Box>
-                            </Box>
-                        )}
-                        <BoxContainer
-                            sx={{
-                                gridTemplateColumns: {
-                                    sm: "2fr 1fr",
-                                },
-                                gap: {
-                                    xs: 1,
-                                    sm: 2,
-                                },
-                                p: 0,
-                            }}>
-                            <Box
-                                sx={{
-                                    p: 0,
-                                    display: "flex",
-                                    flexDirection: "column",
-                                    gap: 2,
-                                    overflow: "hidden",
-                                }}>
-                                <DatasetMindMap
-                                    data={datasetVersion}
-                                    teamId={data?.team?.id}
-                                    isCohortDiscovery={
-                                        data?.is_cohort_discovery
-                                    }
-                                    populatedSections={populatedSections}
-                                    linkageCounts={linkageCounts}
-                                    hasStructuralMetadata={
-                                        !!datasetVersion.metadata?.metadata
-                                            ?.structuralMetadata?.tables?.length
-                                    }
-                                    hasDemographics={
-                                        !!some(
-                                            datasetVersion.metadata?.metadata
-                                                ?.demographicFrequency,
-                                            value => value !== null
-                                        )
-                                    }
-                                />
-
-                                <DatasetContent
-                                    data={datasetVersion}
-                                    populatedSections={populatedSections}
-                                    duoCodeDetails={duoCodeDetails}
-                                />
-                            </Box>
-                            <Box
-                                sx={{
-                                    p: 0,
-                                    display: "flex",
-                                    flexDirection: "column",
-                                    gap: 2,
-                                }}>
-                                <Sources
-                                    data={datasetVersion.metadata.metadata}
-                                    gwdmVersion={
-                                        datasetVersion.metadata.gwdmVersion
-                                    }
-                                />
-                                {data?.linkages && (
-                                    <Linkages linkages={data.linkages} />
-                                )}
-
-                                <Publications data={data} />
-                            </Box>
-                            <Box />
-                        </BoxContainer>
-
-                        {googleRecommendedDataset && (
-                            <GoogleRecommended
-                                metadata={getLatestVersion(
-                                    googleRecommendedDataset
-                                )}
-                            />
-                        )}
-                    </Box>
-                </>
-            }
-        />
+                </Box>
+                <ActiveListSidebar items={activeLinkList} sx={navSx} />
+            </Box>
+            <Box sx={titleSx}>
+                <Typography variant="articleLead" component="h2">
+                    {datasetVersion.metadata?.metadata?.summary?.title}
+                </Typography>
+                {dataCustodianName && data?.team?.id && (
+                    <>
+                        <Typography variant="articleLead" component="span">
+                            -
+                        </Typography>
+                        <Link
+                            variant="articleLead"
+                            href={`/${RouteName.DATA_CUSTODIANS_ITEM}/${data?.team?.id}`}>
+                            {dataCustodianName}
+                        </Link>
+                    </>
+                )}
+            </Box>
+            {datasetStats && (
+                <Box sx={{ ...areaSx("stats"), overflow: "hidden" }}>
+                    <DatasetStats data={datasetStats} />
+                </Box>
+            )}
+            <Box sx={mainColumnSx}>
+                <Box sx={{ ...areaSx("mindmap"), overflow: "hidden" }}>
+                    <DatasetMindMap
+                        data={datasetVersion}
+                        teamId={data?.team?.id}
+                        isCohortDiscovery={data?.is_cohort_discovery}
+                        populatedSections={populatedSections}
+                        linkageCounts={linkageCounts}
+                        hasStructuralMetadata={
+                            !!datasetVersion.metadata?.metadata
+                                ?.structuralMetadata?.tables?.length
+                        }
+                        hasDemographics={
+                            !!some(
+                                datasetVersion.metadata?.metadata
+                                    ?.demographicFrequency,
+                                value => value !== null
+                            )
+                        }
+                    />
+                </Box>
+                <Box sx={areaSx("content")}>
+                    <DatasetContent
+                        data={datasetVersion}
+                        populatedSections={populatedSections}
+                        duoCodeDetails={duoCodeDetails}
+                    />
+                </Box>
+            </Box>
+            <Box sx={areaSx("sources")}>
+                <Sources
+                    data={datasetVersion.metadata.metadata}
+                    gwdmVersion={datasetVersion.metadata.gwdmVersion}
+                />
+            </Box>
+            <Box
+                sx={{
+                    ...areaSx("aside"),
+                    display: "flex",
+                    flexDirection: "column",
+                    gap: 2,
+                }}>
+                {data?.linkages && <Linkages linkages={data.linkages} />}
+                <Publications data={data} />
+            </Box>
+            {googleRecommendedDataset && (
+                <GoogleRecommended
+                    metadata={getLatestVersion(googleRecommendedDataset)}
+                />
+            )}
+        </BoxContainer>
     );
 }

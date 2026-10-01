@@ -39,7 +39,9 @@ const DarTemplatePage = () => {
                 flexDirection: "column",
                 alignItems: "center",
             }}>
-            <Typography variant="h2">{t("title")}</Typography>
+            <Typography variant="articleLead" component="h2">
+                {t("title")}
+            </Typography>
 
             <Box sx={{ display: "flex", gap: "40px" }}>
                 <ImageMediaCard

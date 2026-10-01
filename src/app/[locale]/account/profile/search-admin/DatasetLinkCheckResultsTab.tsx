@@ -17,6 +17,7 @@ import { RouteName } from "@/consts/routeName";
 import { ErrorIcon, DownloadIcon } from "@/consts/icons";
 import { downloadFile } from "@/utils/download";
 import { DatasetLinkCheckResult } from "@/interfaces/DatasetLinkCheckResult";
+import { SortDirection } from "@/consts/sort";
 
 const CSV_HEADERS = ["Team ID", "Team Name", "Dataset ID", "URL", "Status"];
 
@@ -43,7 +44,7 @@ const buildCsv = (results: DatasetLinkCheckResult[]): string => {
 
 interface Sort {
     key: string;
-    direction: string;
+    direction: SortDirection;
 }
 
 const TRANSLATION_PATH = "pages.account.profile.searchAdmin";
@@ -132,7 +133,7 @@ export default function DatasetLinkCheckResultsTab() {
     const [search, setSearch] = useState("");
     const [sort, setSort] = useState<Sort>({
         key: "teamName",
-        direction: "asc",
+        direction: SortDirection.ASC,
     });
 
     const results = useMemo(() => {
@@ -156,7 +157,7 @@ export default function DatasetLinkCheckResultsTab() {
                 diff = String(aValue).localeCompare(String(bValue));
             }
 
-            return sort.direction === "asc" ? diff : -diff;
+            return sort.direction === SortDirection.ASC ? diff : -diff;
         });
     }, [data, search, sort]);
 
