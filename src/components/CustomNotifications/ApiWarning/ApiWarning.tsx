@@ -1,8 +1,8 @@
 import React, { ReactNode, useCallback } from "react";
+import { Button } from "@hdruk/ui";
 import { CardActions, CardContent, CardHeader } from "@mui/material";
 import Card from "@mui/material/Card";
 import { SnackbarContent, CustomContentProps, closeSnackbar } from "notistack";
-import { Button } from "@hdruk/ui";
 
 interface ApiWarningProps extends CustomContentProps {
     id: string;
@@ -45,7 +45,7 @@ const ApiWarning = React.forwardRef<HTMLDivElement, ApiWarningProps>(
                     <CardActions style={{ justifyContent: "end", gap: "10px" }}>
                         {showDismissButton && (
                             <Button
-                                color="warning"
+                                purpose="tertiary"
                                 size="small"
                                 onClick={handleDismiss}>
                                 Dismiss

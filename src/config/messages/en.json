@@ -1360,7 +1360,10 @@
             "components": {
                 "Search": {
                     "toggleLabelTable": "Switch to table view",
-                    "toggleLabelList": "Switch to list view"
+                    "toggleLabelList": "Switch to list view",
+                    "showFilters": "Show filters",
+                    "hideFilters": "Hide filters",
+                    "searchResults": "Search results"
                 },
                 "PartnerResourcesBanner": {
                     "partnerResources": "Partner resources",
@@ -1459,7 +1462,8 @@
                 },
                 "DateRangeFilter": {
                     "to": "to",
-                    "minYearErrorMessage": "Please enter a valid starting year"
+                    "minYearErrorMessage": "Please enter a valid starting year",
+                    "applyDateRange": "Apply date range"
                 },
                 "FeasibilityEnquiryForm": {
                     "itemName": "Feasibility Enquiry item",
@@ -2066,7 +2070,8 @@
         "NestedFilterSection": {
             "placeholder": "I'm looking for...",
             "filterDisabled": "Filter option unavailable due to the options selected. To select this filter option, remove currently selected filter options.",
-            "noFilters": "No filters available"
+            "noFilters": "No filters available",
+            "subtypes": "{name} subtypes"
         },
         "DataAccessMessages": {
             "modalTitle": "Success!",

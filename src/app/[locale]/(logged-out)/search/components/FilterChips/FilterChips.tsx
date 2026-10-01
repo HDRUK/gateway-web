@@ -5,7 +5,6 @@ import { SearchQueryParams } from "@/interfaces/Search";
 import Box from "@/components/Box";
 import Chip from "@/components/Chip";
 import ShowMore from "@/components/ShowMore";
-import { colors } from "@/config/theme";
 import { EXCLUDE_UNREPORTED } from "@/consts/filters";
 import { CloseIcon } from "@/consts/icons";
 import { isQueryEmpty } from "@/utils/filters";
@@ -72,18 +71,21 @@ const FilterChips = ({
                                                     maxWidth: 200,
                                                     overflow: "hidden",
                                                     whiteSpace: "nowrap",
-                                                    color: tokens.text.primaryWhite,
+                                                    color: tokens.text
+                                                        .primaryWhite,
                                                     backgroundColor:
-                                                        colors.green400,
+                                                        tokens.status.success,
                                                     borderColor:
-                                                        colors.green400,
+                                                        tokens.status.success,
                                                     marginBottom: "4px",
                                                     "&:focus-visible": {
                                                         borderColor:
-                                                            tokens.status.needsAction,
+                                                            tokens.status
+                                                                .needsAction,
                                                         borderWidth: 2,
                                                         backgroundColor:
-                                                            colors.green400,
+                                                            tokens.status
+                                                                .success,
                                                     },
                                                 }}
                                                 color={color}

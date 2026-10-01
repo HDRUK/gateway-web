@@ -15,6 +15,7 @@ import {
     useMediaQuery,
     useTheme,
 } from "@mui/material";
+import { visuallyHidden } from "@mui/utils";
 import Cookies from "js-cookie";
 import { useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
@@ -1064,6 +1065,12 @@ const Search = ({ filters, schema }: SearchProps) => {
                                 ref={iconRef}
                                 size="large"
                                 edge="start"
+                                aria-label={
+                                    filterSidebarOpen
+                                        ? t("components.Search.hideFilters")
+                                        : t("components.Search.showFilters")
+                                }
+                                aria-expanded={filterSidebarOpen}
                                 onClick={() =>
                                     setFilterSidebarOpen(!filterSidebarOpen)
                                 }
@@ -1178,7 +1185,7 @@ const Search = ({ filters, schema }: SearchProps) => {
                                         <Box
                                             sx={{ display: "flex" }}
                                             id="result-summary"
-                                            role="alert"
+                                            role="status"
                                             aria-live="polite">
                                             {data &&
                                                 data.path?.includes(
@@ -1390,6 +1397,13 @@ const Search = ({ filters, schema }: SearchProps) => {
                                                               2
                                                           )}`,
                                             }}>
+                                            <Typography
+                                                variant="h2"
+                                                sx={visuallyHidden}>
+                                                {t(
+                                                    "components.Search.searchResults"
+                                                )}
+                                            </Typography>
                                             {isExternalSourceSelected && (
                                                 <Box
                                                     sx={{

@@ -1,8 +1,9 @@
 import React, { ReactNode, useCallback } from "react";
+import { Button } from "@hdruk/ui";
+import { tokens } from "@hdruk/ui/theme";
 import { CardActions, CardContent, CardHeader } from "@mui/material";
 import Card from "@mui/material/Card";
 import { SnackbarContent, CustomContentProps, closeSnackbar } from "notistack";
-import { Button } from "@hdruk/ui";
 
 interface ApiSuccessProps extends CustomContentProps {
     id: string;
@@ -21,17 +22,17 @@ const ApiSuccess = React.forwardRef<HTMLDivElement, ApiSuccessProps>(
             <SnackbarContent ref={ref} role="alert">
                 <Card
                     style={{
-                        backgroundColor: "#E2F3F0",
-                        borderColor: "#2C8267",
+                        backgroundColor: tokens.background.success,
+                        borderColor: tokens.status.success,
                         borderStyle: "solid",
-                        color: "#2C8267",
+                        color: tokens.status.successHover,
                         fontSize: "14px",
                         minWidth: "150px",
                     }}>
                     <CardHeader
                         title="Success"
                         subheaderTypographyProps={{
-                            color: "#2C8267",
+                            color: tokens.status.successHover,
                             fontSize: "14px",
                         }}
                         titleTypographyProps={{ fontSize: "18px" }}
@@ -40,7 +41,7 @@ const ApiSuccess = React.forwardRef<HTMLDivElement, ApiSuccessProps>(
                     <CardActions style={{ justifyContent: "end", gap: "10px" }}>
                         {showDismissButton && (
                             <Button
-                                color="success"
+                                purpose="tertiary"
                                 size="small"
                                 onClick={handleDismiss}>
                                 Dismiss
