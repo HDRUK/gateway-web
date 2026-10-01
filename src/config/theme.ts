@@ -484,8 +484,8 @@ const theme = createHdrukTheme({
         MuiChip: {
             styleOverrides: {
                 root: {
-                    "& .MuiChip-deleteIcon": {
-                        color: colors.black,
+                    "& .MuiChip-deleteIcon, & .MuiChip-deleteIcon:hover": {
+                        color: "inherit",
                     },
                     padding: 2,
                 },
