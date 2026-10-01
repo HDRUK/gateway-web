@@ -585,6 +585,9 @@
                     },
                     "entityType": {
                         "label": "Entity Type"
+                    },
+                    "remove": {
+                        "label": "Remove {name} from library"
                     }
                 },
                 "searchAdmin": {
@@ -1298,6 +1301,7 @@
                 "filters": "Filter(s)"
             },
             "dateSaved": "Date saved: {date}",
+            "deleteAction": "Delete saved search {name}",
             "deleteModal": {
                 "title": "Are you sure you want to delete {name}?",
                 "confirmButton": "Delete",
