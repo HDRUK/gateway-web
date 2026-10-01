@@ -231,11 +231,7 @@ const ResultCard = ({ result, isCohortDiscoveryDisabled }: ResultCardProps) => {
                                                 md: 1,
                                             },
                                         }}>
-                                        {metadata.summary.publisher.name !==
-                                        undefined
-                                            ? metadata.summary.publisher.name
-                                            : metadata.summary.publisher
-                                                  .publisherName}
+                                        {team.name}
                                     </Typography>
                                 </Link>
                             </div>

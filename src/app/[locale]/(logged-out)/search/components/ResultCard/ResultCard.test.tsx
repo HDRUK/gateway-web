@@ -19,7 +19,7 @@ describe("ResultCard", () => {
                     team: {
                         id: 1,
                         member_of: "",
-                        name: "",
+                        name: "Example Custodian Ltd",
                         is_question_bank: false,
                         is_dar: false,
                         dar_modal_header: null,
@@ -39,9 +39,7 @@ describe("ResultCard", () => {
         expect(
             screen.getByText(mockHighlight.abstract![0])
         ).toBeInTheDocument();
-        expect(
-            screen.getByText(mockResult.summary.publisher.publisherName)
-        ).toBeInTheDocument();
+        expect(screen.getByText("Example Custodian Ltd")).toBeInTheDocument();
         expect(
             screen.getByText(mockResult.summary.shortTitle)
         ).toBeInTheDocument();
@@ -51,6 +49,46 @@ describe("ResultCard", () => {
         expect(
             screen.getByText(formattedDate, { exact: false })
         ).toBeInTheDocument();
+    });
+    it("should label the data custodian with the owning team, not the metadata publisher", async () => {
+        const mockResult = generateDatasetMetadataMiniV1();
+        render(
+            <ResultCard
+                result={{
+                    highlight: mockHighlight,
+                    metadata: {
+                        ...mockResult,
+                        summary: {
+                            ...mockResult.summary,
+                            publisher: {
+                                gatewayId: 42,
+                                name: "Example Publisher Ltd",
+                                publisherName: "Example Publisher Ltd",
+                            },
+                        },
+                    },
+                    _id: "1",
+                    team: {
+                        id: 42,
+                        member_of: "",
+                        name: "Example Custodian Ltd",
+                        is_question_bank: false,
+                        has_published_dar_template: false,
+                        is_dar: false,
+                        dar_modal_header: null,
+                        dar_modal_content: null,
+                        dar_modal_footer: null,
+                    },
+                }}
+            />
+        );
+
+        expect(
+            screen.getByRole("link", { name: "Example Custodian Ltd" })
+        ).toHaveAttribute("href", "/data-custodian/42");
+        expect(
+            screen.queryByText("Example Publisher Ltd")
+        ).not.toBeInTheDocument();
     });
     it("should render n/a when no date", async () => {
         const mockResult = generateDatasetMetadataMiniV1();
