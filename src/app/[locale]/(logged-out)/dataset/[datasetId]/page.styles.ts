@@ -1,3 +1,4 @@
+import theme from "@hdruk/ui/theme";
 import { SxProps, Theme } from "@mui/material";
 
 export const layoutSx: SxProps<Theme> = {
@@ -21,6 +22,7 @@ export const layoutSx: SxProps<Theme> = {
         sm: "repeat(5, auto) 1fr",
         md: "repeat(5, auto) 1fr",
     },
+    "& *": { scrollMarginTop: { md: theme.spacing(7) } },
 };
 
 export const areaSx = (area: string): SxProps<Theme> => ({
@@ -31,8 +33,16 @@ export const areaSx = (area: string): SxProps<Theme> => ({
     minWidth: 0,
 });
 
+export const backSx: SxProps<Theme> = {
+    ...areaSx("back"),
+    position: { md: "sticky" },
+    top: { md: 0 },
+    zIndex: { md: "appBar" },
+    bgcolor: { md: "common.white" },
+};
+
 export const backBarSx: SxProps = {
-    clipPath: "inset(0 0 -100% 0)",
+    clipPath: { xs: "inset(0 0 -100% 0)", md: "none" },
 };
 
 export const titleSx: SxProps<Theme> = {
