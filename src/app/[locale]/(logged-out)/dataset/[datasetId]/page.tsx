@@ -26,6 +26,7 @@ import { datasetFields } from "./config";
 import {
     areaSx,
     backBarSx,
+    backSx,
     layoutSx,
     leftColumnSx,
     mainColumnSx,
@@ -124,7 +125,7 @@ export default async function DatasetItemPage({
     return (
         <BoxContainer sx={layoutSx}>
             <Box sx={leftColumnSx}>
-                <Box sx={areaSx("back")}>
+                <Box sx={backSx}>
                     <HeaderActionBar
                         backButtonText={t("label")}
                         backButtonHref={`/${RouteName.SEARCH}?type=${SearchCategory.DATASETS}`}
