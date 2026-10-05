@@ -32,7 +32,7 @@ const FormInfoLabel = ({
                     label={label}
                     sx={{
                         ...(disabled && {
-                            color: tokens.text.disabled,
+                            color: tokens.text.faded,
                         }),
                     }}
                     onClick={onClick}
@@ -65,7 +65,7 @@ const FormInfoLabel = ({
                             label={label}
                             sx={{
                                 ...(disabled && {
-                                    color: tokens.text.disabled,
+                                    color: tokens.text.faded,
                                 }),
                             }}
                         />

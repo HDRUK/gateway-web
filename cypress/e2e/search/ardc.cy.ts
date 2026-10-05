@@ -28,4 +28,22 @@ describe.skip("Search - ARDC external sources", () => {
             0
         );
     });
+
+    it("sends dataSource=HDRUK in the aggregation search request by default", () => {
+        cy.intercept("POST", "**/search/aggregation").as("aggregationSearch");
+        cy.visit(HDRUK_URL);
+
+        cy.wait("@aggregationSearch").then(({ request }) => {
+            expect(request.body.dataSource).to.eq("HDRUK");
+        });
+    });
+
+    it("sends dataSource=ARDC in the aggregation search request when viewing partner resources", () => {
+        cy.intercept("POST", "**/search/aggregation").as("aggregationSearch");
+        cy.visit(ARDC_URL);
+
+        cy.wait("@aggregationSearch").then(({ request }) => {
+            expect(request.body.dataSource).to.eq("ARDC");
+        });
+    });
 });

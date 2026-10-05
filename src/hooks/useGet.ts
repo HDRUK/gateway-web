@@ -17,7 +17,7 @@ interface Options<T> {
     errorNotificationsOn?: boolean;
     itemName?: string;
     action?: ReactNode;
-    refreshInterval?: number;
+    refreshInterval?: number | ((latestData: T | undefined) => number);
     fallbackData?: T;
     revalidateOnMount?: boolean;
     onSuccess?: (data: T | undefined) => void;
@@ -33,7 +33,7 @@ const useGet = <T>(url: string | null, options?: Options<T>): Response<T> => {
         errorNotificationsOn,
         shouldFetch = true,
         withPagination = false,
-        refreshInterval = false,
+        refreshInterval = 0,
         fallbackData,
         revalidateOnMount,
         onSuccess,

@@ -1,10 +1,11 @@
 import React from "react";
 import SortIcon from "@/components/SortIcon";
+import { SortDirection } from "@/consts/sort";
 import { fireEvent, render, screen } from "@/utils/testUtils";
 
 describe("SortIcon", () => {
     const setSortFn = jest.fn();
-    const sort = { key: "mockKey", direction: "asc" };
+    const sort = { key: "mockKey", direction: SortDirection.ASC };
 
     it("should render component with default icon", async () => {
         render(
@@ -29,6 +30,9 @@ describe("SortIcon", () => {
         );
 
         fireEvent.click(screen.getByTestId("ArrowDropUpIcon"));
-        expect(setSortFn).toBeCalledWith({ direction: "desc", key: "mockKey" });
+        expect(setSortFn).toBeCalledWith({
+            direction: SortDirection.DESC,
+            key: "mockKey",
+        });
     });
 });

@@ -13,7 +13,7 @@ const ReleasesPage = async () => {
                 title="Contact Us"
                 src="/images/banners/release-notes.png"
             />
-            <Container sx={{ background: "white", padding: 0 }} />
+            <Container sx={{ padding: 0 }} />
         </>
     );
 };

@@ -1,6 +1,6 @@
 import { useMemo } from "react";
 import { Typography, Box } from "@mui/material";
-import { colors } from "@/config/theme";
+import { tokens } from "@hdruk/ui/theme";
 
 interface CharacterLimitProps {
     limit: number;
@@ -17,10 +17,10 @@ const CharacterLimit = ({ limit, count }: CharacterLimitProps) => {
                 display: "flex",
                 justifyContent: "space-between",
             }}>
-            <Typography color={colors.grey500} fontSize={13}>
+            <Typography color={tokens.text.faded} fontSize={13}>
                 {limit} character limit
             </Typography>
-            <Typography color={colors.grey500} fontSize={13}>
+            <Typography color={tokens.text.faded} fontSize={13}>
                 ({countValue}/{limit})
             </Typography>
         </Box>

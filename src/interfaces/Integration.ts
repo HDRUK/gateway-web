@@ -17,6 +17,7 @@ interface Integration {
     enabled: boolean;
     tested: boolean;
     last_run_at: string | null;
+    is_running: boolean;
     error: boolean;
     error_text: string | null;
     notifications: Notification[] | undefined;

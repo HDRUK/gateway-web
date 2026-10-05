@@ -5,6 +5,7 @@ import {
     useFormState,
     useWatch,
 } from "react-hook-form";
+import { Button } from "@hdruk/ui";
 import { tokens } from "@hdruk/ui/theme";
 import { Divider } from "@mui/material";
 import { useTranslations } from "next-intl";
@@ -12,7 +13,6 @@ import { DarFormattedField } from "@/interfaces/DataAccessRequest";
 import { FileUploadFields } from "@/interfaces/FileUpload";
 import { Option } from "@/interfaces/Option";
 import Box from "@/components/Box";
-import { Button } from "@hdruk/ui";
 import Typography from "@/components/Typography";
 import theme from "@/config/theme";
 import { ARRAY_PREFIX } from "@/consts/dataAccess";
@@ -106,7 +106,7 @@ const DarFieldArray = ({
     return (
         <React.Fragment key={`${arrayName}${ARRAY_IDENTIFIER}`}>
             <Box sx={{ pl: 3, pr: 3 }}>
-                <Typography variant="h3" sx={{ m: 0 }}>
+                <Typography variant="h6" component="h3" sx={{ m: 0 }}>
                     {arrayName.replace(ARRAY_PREFIX, "")}
                 </Typography>
             </Box>

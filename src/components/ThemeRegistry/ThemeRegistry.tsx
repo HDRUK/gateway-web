@@ -1,6 +1,7 @@
 "use client";
 
 import * as React from "react";
+import { tokens } from "@hdruk/ui/theme";
 import CssBaseline from "@mui/material/CssBaseline";
 import GlobalStyles from "@mui/material/GlobalStyles";
 import { ThemeProvider } from "@mui/material/styles";
@@ -31,8 +32,7 @@ export default function ThemeRegistry({
                             minHeight: "100vh",
                             ...(isHome
                                 ? {
-                                      background:
-                                          "linear-gradient(97deg, #46AF93 4.05%, #475DA7 100%)",
+                                      background: `linear-gradient(97deg, ${tokens.brand.secondary} 4.05%, ${tokens.brand.primaryHovered} 100%)`,
                                   }
                                 : {}),
                         },

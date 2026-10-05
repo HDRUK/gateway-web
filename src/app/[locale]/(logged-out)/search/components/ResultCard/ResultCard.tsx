@@ -1,33 +1,27 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
+import { Button } from "@hdruk/ui";
 import { tokens } from "@hdruk/ui/theme";
 import { Bookmark, BookmarkBorder } from "@mui/icons-material";
 import { ListItem, ListItemText } from "@mui/material";
+import DOMPurify from "isomorphic-dompurify";
 import { get } from "lodash";
 import { useTranslations } from "next-intl";
 import { usePathname, useSearchParams } from "next/navigation";
-import { KeyedMutator } from "swr";
-import { Library, NewLibrary } from "@/interfaces/Library";
 import { SearchResultDataset } from "@/interfaces/Search";
 import Box from "@/components/Box";
-import { Button } from "@hdruk/ui";
 import CohortDiscoveryButton from "@/components/CohortDiscoveryButton";
 import Link from "@/components/Link";
 import MenuDropdown from "@/components/MenuDropdown";
 import Typography from "@/components/Typography";
 import DatasetQuickViewDialog from "@/modules/DatasetQuickViewDialog";
-import ProvidersDialog from "@/modules/ProvidersDialog";
 import useAuth from "@/hooks/useAuth";
 import useDataAccessRequest from "@/hooks/useDataAccessRequest";
-import useDelete from "@/hooks/useDelete";
 import useDialog from "@/hooks/useDialog";
 import useFeasibilityEnquiry from "@/hooks/useFeasibilityEnquiry";
 import useGeneralEnquiry from "@/hooks/useGeneralEnquiry";
-import usePost from "@/hooks/usePost";
-import usePostLoginActionCookie from "@/hooks/usePostLoginAction";
-import apis from "@/config/apis";
+import useLibraryToggle from "@/hooks/useLibraryToggle";
 import { CohortIcon, SpeechBubbleIcon } from "@/consts/customIcons";
 import { ChevronThinIcon } from "@/consts/icons";
-import { PostLoginActions } from "@/consts/postLoginActions";
 import { RouteName } from "@/consts/routeName";
 import { formatTextDelimiter } from "@/utils/dataset";
 import { getDateRange, getPopulationSize } from "@/utils/search";
@@ -35,27 +29,20 @@ import { Highlight, ResultTitle } from "./ResultCard.styles";
 
 interface ResultCardProps {
     result: SearchResultDataset;
-    libraryData: Library[];
-    mutateLibraries: KeyedMutator<Library[]>;
     isCohortDiscoveryDisabled: boolean;
 }
 
 const TRANSLATION_PATH = "pages.search.components.ResultCard";
 const COHORT_DISCOVERY_PATH = "isCohortDiscovery";
 
-const ResultCard = ({
-    result,
-    libraryData,
-    mutateLibraries,
-    isCohortDiscoveryDisabled,
-}: ResultCardProps) => {
+const ResultCard = ({ result, isCohortDiscoveryDisabled }: ResultCardProps) => {
     const t = useTranslations(TRANSLATION_PATH);
     const pathname = usePathname();
     const searchParams = useSearchParams();
     const { showDialog } = useDialog();
 
     const highlight = get(result, "highlight");
-    const { isLoggedIn, user } = useAuth();
+    const { isLoggedIn } = useAuth();
     const { _id: datasetId, metadata, team } = result;
     const showGeneralEnquiry = useGeneralEnquiry();
     const showFeasibilityEnquiry = useFeasibilityEnquiry();
@@ -63,27 +50,14 @@ const ResultCard = ({
 
     const resultId = `result-title-${datasetId}`;
 
-    const [isLibraryToggled, setLibraryToggle] = useState(false);
-
     const redirectPath = searchParams
         ? `${pathname}?${searchParams.toString()}`
         : pathname;
 
-    useEffect(() => {
-        const librariesDatasetIds: number[] = libraryData?.map(
-            a => a.dataset_id
-        );
-        if (librariesDatasetIds?.includes(Number(datasetId))) {
-            setLibraryToggle(true);
-        }
-    }, [libraryData, datasetId]);
-
-    const addLibrary = usePost<NewLibrary>(apis.librariesV1Url, {
-        itemName: `Library item`,
-    });
-
-    const deleteLibrary = useDelete(apis.librariesV1Url, {
-        itemName: `Library item`,
+    const { isInLibrary, toggleLibrary, mutateLibraries } = useLibraryToggle({
+        datasetId: +datasetId,
+        redirectPath,
+        handlePostLoginAction: false,
     });
 
     const handleClickQuickView = (
@@ -186,52 +160,9 @@ const ResultCard = ({
             : []),
     ];
 
-    const { setPostLoginActionCookie } = usePostLoginActionCookie({});
-
-    const handleToggleLibraryItem = async (
-        event: React.MouseEvent<HTMLElement>
-    ) => {
+    const handleToggleLibraryItem = (event: React.MouseEvent<HTMLElement>) => {
         event.stopPropagation();
-        if (isLoggedIn) {
-            if (!isLibraryToggled) {
-                const payload: NewLibrary = {
-                    user_id: user?.id,
-                    dataset_id: +datasetId,
-                };
-                addLibrary(payload).then(res => {
-                    if (res) {
-                        mutateLibraries();
-                        setLibraryToggle(true);
-                    }
-                });
-            } else {
-                const libraryIdToDelete = libraryData.find(
-                    element =>
-                        element.user_id === user?.id &&
-                        element.dataset_id === Number(datasetId)
-                )?.id;
-
-                if (!libraryIdToDelete) {
-                    return;
-                }
-
-                if (libraryIdToDelete) {
-                    await deleteLibrary(libraryIdToDelete);
-
-                    mutateLibraries();
-                    setLibraryToggle(false);
-                }
-            }
-        } else {
-            setPostLoginActionCookie(PostLoginActions.ADD_LIBRARY, {
-                datasetId: Number(datasetId),
-            });
-
-            showDialog(ProvidersDialog, {
-                isProvidersDialog: true,
-                redirectPath,
-            });
-        }
+        toggleLibrary();
     };
 
     if (!metadata) return null;
@@ -300,11 +231,7 @@ const ResultCard = ({
                                                 md: 1,
                                             },
                                         }}>
-                                        {metadata.summary.publisher.name !==
-                                        undefined
-                                            ? metadata.summary.publisher.name
-                                            : metadata.summary.publisher
-                                                  .publisherName}
+                                        {team.name}
                                     </Typography>
                                 </Link>
                             </div>
@@ -319,7 +246,7 @@ const ResultCard = ({
                                     onClick={handleToggleLibraryItem}
                                     variant="outlined"
                                     aria-label={
-                                        isLibraryToggled
+                                        isInLibrary
                                             ? t("removeFromLibrary")
                                             : `${t("addToLibrary")} for ${
                                                   metadata.summary.shortTitle
@@ -327,7 +254,7 @@ const ResultCard = ({
                                     }
                                     // color="secondary"
                                     startIcon={
-                                        isLibraryToggled ? (
+                                        isInLibrary ? (
                                             <Bookmark color="secondary" />
                                         ) : (
                                             <BookmarkBorder color="secondary" />
@@ -336,7 +263,7 @@ const ResultCard = ({
                                     sx={{
                                         alignSelf: "flex-start",
                                     }}>
-                                    {isLibraryToggled
+                                    {isInLibrary
                                         ? t("removeFromLibrary")
                                         : t("addToLibrary")}
                                 </Button>
@@ -387,7 +314,7 @@ const ResultCard = ({
                                 variant="body2"
                                 color="text.gray"
                                 dangerouslySetInnerHTML={{
-                                    __html: formattedText,
+                                    __html: DOMPurify.sanitize(formattedText),
                                 }}
                             />
                             {!!datasetAliases?.length && (

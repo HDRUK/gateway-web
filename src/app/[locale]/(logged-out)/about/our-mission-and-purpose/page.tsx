@@ -23,7 +23,7 @@ export default async function MissionsPage() {
         <>
             <Banner title="Our Mission and Purpose" />
             <Container
-                sx={{ background: "white", padding: 10 }}
+                sx={{ padding: 10 }}
                 className="wpStyles">
                 <div>
                     {!allMissionsAndPurposes.length && (

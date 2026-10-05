@@ -54,6 +54,7 @@ const LibraryTable = ({
                 handleRemove,
                 selected,
                 translations,
+                getRemoveLabel: (name: string) => t("remove.label", { name }),
             })}
             rows={results}
         />

@@ -141,7 +141,7 @@ describe("IntegrationListItem", () => {
         expect(screen.getByRole("button", { name: "Run now" })).toBeDisabled();
     });
 
-    it("should run the Run now action through Run now -> Running -> Complete -> Run now", async () => {
+    it("should run the Run now action through Run now -> Running -> Run now", async () => {
         server.use(getFederationRunV1({ teamId: 1, federationId: 2 }));
 
         render(<IntegrationListItem index={1} integration={integration} />);
@@ -159,19 +159,21 @@ describe("IntegrationListItem", () => {
 
         await waitFor(() => {
             expect(
-                screen.getByRole("button", { name: "Complete" })
-            ).toBeInTheDocument();
+                screen.getByRole("button", { name: "Run now" })
+            ).not.toBeDisabled();
         });
+    });
 
-        await waitFor(
-            () => {
-                expect(
-                    screen.getByRole("button", { name: "Run now" })
-                ).not.toBeDisabled();
-            },
-            { timeout: 4000 }
+    it("should show the Running state and disable the button when the integration is already running server-side", async () => {
+        render(
+            <IntegrationListItem
+                index={1}
+                integration={{ ...integration, is_running: true }}
+            />
         );
-    }, 10000);
+
+        expect(screen.getByRole("button", { name: "Running" })).toBeDisabled();
+    });
 
     it("should call onChanged after a successful Run now", async () => {
         server.use(getFederationRunV1({ teamId: 1, federationId: 2 }));

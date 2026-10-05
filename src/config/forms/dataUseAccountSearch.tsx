@@ -1,4 +1,6 @@
+import { SortDirection } from "@/consts/sort";
 import { inputComponents } from ".";
+import { getSortField, toggleDirection } from "./sortFields";
 
 const defaultValues = {
     sortField: "updated_at",
@@ -9,17 +11,17 @@ const sortByOptions = [
     {
         label: "Sort By date of latest activity",
         value: "updated_at",
-        initialDirection: "desc",
+        initialDirection: SortDirection.DESC,
     },
     {
         label: "Sort alphabetically by title",
         value: "project_title",
-        initialDirection: "asc",
+        initialDirection: SortDirection.ASC,
     },
     {
         label: "Sort by project start date",
         value: "project_start_date",
-        initialDirection: "desc",
+        initialDirection: SortDirection.DESC,
     },
 ];
 
@@ -32,19 +34,7 @@ const searchFilter = {
     label: "",
 };
 
-const sortField = {
-    sx: { minWidth: 220 },
-    component: inputComponents.Select,
-    label: "",
-    options: sortByOptions,
-    name: "sortField",
-};
-
-const toggleDirection = {
-    component: inputComponents.ToggleDirection,
-    label: "",
-    name: "sortDirection",
-};
+const sortField = getSortField(sortByOptions);
 
 export {
     toggleDirection,

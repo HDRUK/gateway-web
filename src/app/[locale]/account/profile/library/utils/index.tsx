@@ -15,11 +15,13 @@ const getColumns = ({
     handleRemove,
     selected,
     translations,
+    getRemoveLabel,
 }: {
     handleSelect: (data: SelectedLibrary) => void;
     handleRemove: (id: string | number) => void;
     selected: SelectedLibrary;
     translations: { [id: string]: string };
+    getRemoveLabel: (name: string) => string;
 }) => [
     columnHelper.display({
         id: "actions",
@@ -58,6 +60,7 @@ const getColumns = ({
                         size="large"
                         sx={{ p: 0 }}
                         iconSx={{ mr: 0 }}
+                        inputProps={{ "aria-label": name }}
                     />
                 </div>
             );
@@ -146,7 +149,9 @@ const getColumns = ({
         cell: ({ row: { original } }) => {
             return (
                 <div style={{ textAlign: "center" }}>
-                    <IconButton onClick={() => handleRemove(original.id)}>
+                    <IconButton
+                        aria-label={getRemoveLabel(original.name)}
+                        onClick={() => handleRemove(original.id)}>
                         <DeleteForeverIcon color="primary" />
                     </IconButton>
                 </div>

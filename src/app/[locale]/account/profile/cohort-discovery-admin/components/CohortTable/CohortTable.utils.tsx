@@ -17,12 +17,13 @@ import {
 import { SHORT_DATE_FORMAT } from "@/consts/date";
 import { SortByAlphaIcon, WarningIcon } from "@/consts/icons";
 import { RouteName } from "@/consts/routeName";
+import { SortDirection } from "@/consts/sort";
 import { formatDate, differenceInDays } from "@/utils/date";
 import { capitalise } from "@/utils/general";
 
 interface getColumnsProps {
-    sort: { key: string; direction: string };
-    setSort: (sort: { key: string; direction: string }) => void;
+    sort: { key: string; direction: SortDirection };
+    setSort: (sort: { key: string; direction: SortDirection }) => void;
     setRequestStatus: (status: string) => void;
     requestStatus?: CohortRequestStatus;
     translations: { [id: string]: string };
@@ -30,15 +31,15 @@ interface getColumnsProps {
 }
 
 const updateSort =
-    (key: string) => (prev: { key: string; direction: string }) => ({
+    (key: string) => (prev: { key: string; direction: SortDirection }) => ({
         ...prev,
         key,
         direction:
             prev.key === key
-                ? prev.direction === "asc"
-                    ? "desc"
-                    : "asc"
-                : "asc",
+                ? prev.direction === SortDirection.ASC
+                    ? SortDirection.DESC
+                    : SortDirection.ASC
+                : SortDirection.ASC,
     });
 
 const statusRadios = [

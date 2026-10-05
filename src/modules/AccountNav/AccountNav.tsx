@@ -32,7 +32,12 @@ const AccountNav = () => {
         return (
             <Box sx={{ display: "flex", gap: 1, alignItems: "center" }}>
                 <Skeleton variant="circular" width={36} height={36} />
-                <Skeleton variant="rectangular" width={80} height={20} />
+                <Skeleton
+                    variant="rectangular"
+                    width={80}
+                    height={20}
+                    sx={{ display: { xs: "none", sm: "block" } }}
+                />
             </Box>
         );
     }
@@ -40,25 +45,31 @@ const AccountNav = () => {
     if (isLoggedIn) {
         return (
             <>
-                <Box sx={{ display: "flex" }}>
-                    <InitialsBadge fullName={user?.name} />
-                    <Button
-                        disableRipple
-                        sx={{
-                            marginLeft: "5px",
-                            color: tokens.text.primaryWhite,
+                <Button
+                    disableRipple
+                    aria-label={t("DesktopNav.labels.myAccount")}
+                    sx={{
+                        display: "flex",
+                        alignItems: "center",
+                        gap: 1,
+                        minWidth: 0,
+                        color: tokens.text.primaryWhite,
 
-                            "&:focus&.Mui-focusVisible": {
-                                outlineColor: tokens.background.white,
-                                borderRadius: 0,
-                                textDecoration: "underline",
-                            },
-                        }}
-                        variant="text"
-                        onClick={handleOpenNav}>
+                        "&:focus&.Mui-focusVisible": {
+                            outlineColor: tokens.background.white,
+                            borderRadius: 0,
+                            textDecoration: "underline",
+                        },
+                    }}
+                    variant="text"
+                    onClick={handleOpenNav}>
+                    <InitialsBadge fullName={user?.name} />
+                    <Box
+                        component="span"
+                        sx={{ display: { xs: "none", sm: "inline" } }}>
                         {user?.firstname}
-                    </Button>
-                </Box>
+                    </Box>
+                </Button>
                 <MenuDropdown
                     anchorElement={anchorElement}
                     handleClose={() => {

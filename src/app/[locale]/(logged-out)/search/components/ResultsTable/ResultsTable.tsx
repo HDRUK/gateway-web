@@ -26,7 +26,6 @@ interface ResultTableProps {
 }
 
 const CONFORMS_TO_PATH = "metadata.accessibility.formatAndStandards.conformsTo";
-const PUBLISHER_NAME_PATH = "metadata.summary.publisher.name";
 const COHORT_DISCOVERY_PATH = "isCohortDiscovery";
 const ACCESS_SERVICE_PATH =
     "metadata.accessibility.access.accessServiceCategory";
@@ -103,9 +102,7 @@ const getColumns = ({
                                 block: "nearest",
                             });
                         }}>
-                        <EllipsisLineLimit
-                            text={get(original, PUBLISHER_NAME_PATH)}
-                        />
+                        <EllipsisLineLimit text={original.team.name} />
                     </Link>
                 </div>
             );

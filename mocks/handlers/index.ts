@@ -19,6 +19,7 @@ import {
     postIntegrationV1,
     postFederationsTestV1,
 } from "./integration/v1";
+import { getLibrariesV1 } from "./libraries";
 import { getLogoutV1, getLogoutInternal } from "./logout";
 import { getTeamV1 } from "./teams";
 import { getTeamDatasetsV2 } from "./teams/v2";
@@ -46,4 +47,5 @@ export const handlers = [
     getDatasetV2(),
     getDatasetsV2(),
     getDataUses(),
+    getLibrariesV1(),
 ];

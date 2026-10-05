@@ -277,6 +277,9 @@ const theme = createHdrukTheme({
                 },
                 label: {
                     width: "100%",
+                    "&.Mui-disabled": {
+                        color: tokens.text.faded,
+                    },
                 },
                 asterisk: {
                     color: tokens.status.error,
