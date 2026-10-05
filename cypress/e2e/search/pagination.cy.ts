@@ -1,5 +1,6 @@
 import { datasetSearchResultV1 } from "../../../mocks/data/dataset/v1/dataset.data";
 
+const FEATURE_FLAG = "V2_SearchAggregation";
 const PER_PAGE = 25;
 const NEXT = 'button[aria-label="Go to next page"]';
 
@@ -43,6 +44,21 @@ const visitPage = (page: number) => {
 };
 
 describe("Search - pagination", () => {
+    let flagWasEnabled = false;
+
+    before(() => {
+        cy.request(`${Cypress.env("API_URL")}/api/v1/features`).then(
+            ({ body }) => {
+                flagWasEnabled = !!body.data[FEATURE_FLAG];
+            }
+        );
+        cy.setFeatureFlag(FEATURE_FLAG, true);
+    });
+
+    after(() => {
+        cy.setFeatureFlag(FEATURE_FLAG, flagWasEnabled);
+    });
+
     describe("10 pages of results", () => {
         beforeEach(() => stubAggregation(250));
 
