@@ -1,3 +1,27 @@
+## [2.47.0](https://github.com/HDRUK/gateway-web/compare/v2.46.1...v2.47.0) (2026-10-05)
+
+### ✨ Features
+
+* **GAT-8557:** Make dataset page responsive (#1676) ([e83ea11](https://github.com/HDRUK/gateway-web/commit/e83ea118969136bbaae7814b7f6752d697c91b42)), closes [GAT-8557](undefinedGAT-8557)
+* **GAT-8558:** restructure header layout for mobile (#1674) ([f7d8e7e](https://github.com/HDRUK/gateway-web/commit/f7d8e7e7b32669d79295a98a4d95dcc4c39f510e)), closes [GAT-8558](undefinedGAT-8558)
+* **GAT-8611:** Align homepage with Figma for colour accessibility (#1675) ([98a3f74](https://github.com/HDRUK/gateway-web/commit/98a3f7416093cc75aa61169ac27d34b9cc084970)), closes [GAT-8611](undefinedGAT-8611)
+* **GAT-8699:** Add to library button on dataset page (#1678) ([3732e07](https://github.com/HDRUK/gateway-web/commit/3732e0750f47bb20df05ab9947e18816f619022a)), closes [GAT-8699](undefinedGAT-8699)
+* **GAT-9461:** Send the active dataSource with search aggregation requests ([271567b](https://github.com/HDRUK/gateway-web/commit/271567be5b78a66910a1593f6bc4d23daa4d249b)), closes [GAT-9461](undefinedGAT-9461) [aggregation](undefinedgation) [gateway-api](undefinedgateway-api) [Gateway](undefinedGateway) [gateway-web](undefinedgateway-web) [search/aggregation](undefinedgation)
+* **GAT-9608:** Run-now button reflects real sync state ([9f7d780](https://github.com/HDRUK/gateway-web/commit/9f7d78085540efba4a883b827f0377051b4d8454)), closes [GAT-9608](undefinedGAT-9608)
+
+### 🐛 Bug Fixes
+
+* **GAT-8613:** Update about page design (#1677) ([69c9e17](https://github.com/HDRUK/gateway-web/commit/69c9e17e48b47528da3422079e86b47eb16e24c1)), closes [GAT-8613](undefinedGAT-8613)
+* **GAT-8614:** Team management pages WCAG fixes (#1680) ([46160c4](https://github.com/HDRUK/gateway-web/commit/46160c44e2b220e568431e232cfaf25a7c49e912))
+* **GAT-8615:** WCAG fixes on profile pages (#1681) ([12283c9](https://github.com/HDRUK/gateway-web/commit/12283c9b4b9c3286843634d7f3b975c325d95062))
+* **GAT-8642:** update the base OS version (#1671) ([f252298](https://github.com/HDRUK/gateway-web/commit/f252298a18d54af133be9ec791e459c43d17df1f)), closes [GAT-8642](undefinedGAT-8642)
+* **GAT-9219:** Label search result custodian with the team name ([21cec7e](https://github.com/HDRUK/gateway-web/commit/21cec7e3c8b5519ed22fb0c04fb6bd9ff1bda15e)), closes [GAT-9219](undefinedGAT-9219)
+* **GAT-9577:** fix DAR typography and checkbox wrapping (#1668) ([351251f](https://github.com/HDRUK/gateway-web/commit/351251ffe98ae08a138c5541aaced1e252975f46))
+* **GAT-9598:** sanitize dataset abstract/description before rendering in search results ([ba2455d](https://github.com/HDRUK/gateway-web/commit/ba2455dd37355185d4798c37c45315c109ff1cd2)), closes [GAT-9598](undefinedGAT-9598)
+* **GAT-9603:** Make DAR guidance panel sticky and responsive (#1672) ([e9b129a](https://github.com/HDRUK/gateway-web/commit/e9b129a78a21ae93c002ae82654d05cd90bfbe05)), closes [GAT-9603](undefinedGAT-9603)
+* **GAT-9608:** add translations ([bfd87d0](https://github.com/HDRUK/gateway-web/commit/bfd87d075c00c02037fb2bb0bc90bd7562bc40ad)), closes [GAT-9608](undefinedGAT-9608)
+* **GAT-9608:** Fix polling + add tool tips + spinner ([d271dba](https://github.com/HDRUK/gateway-web/commit/d271dbaee613d48ebc28ee68794f872e61c342e8))
+
 ## [2.46.1](https://github.com/HDRUK/gateway-web/compare/v2.46.0...v2.46.1) (2026-09-23)
 
 ### 🐛 Bug Fixes
