@@ -466,7 +466,7 @@
                     "components": {
                         "TeamsList": {
                             "lastUpdated": "Last Updated",
-                            "dataProvider": "Data Custodian",
+                            "dataCustodian": "Data Custodian",
                             "teamAdmins": "Team admin(s)",
                             "questionBank": "Question Bank",
                             "action": "Action"
@@ -1328,8 +1328,8 @@
             "dataUseTooltip": "Find Data Uses / Research Projects: search and filter data uses / research projects / studies related to specific data sets and other features.",
             "tools": "Analysis Scripts & Software",
             "toolsTooltip": "Discover reusable community shared scripts and software: search for data analysis / cleaning / transformation / standardisation scripts related to specific datasets or general scripts and software.",
-            "dataProviders": "Data Custodians",
-            "dataProvidersTooltip": "Search Data Custodians, discover their associated resources (e.g. datasets, publications, analysis scripts & software), and find out how to contact them. ",
+            "dataCustodians": "Data Custodians",
+            "dataCustodiansTooltip": "Search Data Custodians, discover their associated resources (e.g. datasets, publications, analysis scripts & software), and find out how to contact them. ",
             "collections": "Collections / Networks",
             "collectionsTooltip": "Discover research resources: Datasets & BioSamples, Analysis Scripts & Software, Data Uses / Research Projects, and Publications grouped together by domain, disease, theme, or organisation.",
             "publications": "Publications",
@@ -1521,7 +1521,7 @@
                         "label": "Data Standard",
                         "tooltip": "Data models standards that the dataset has been stored in or transformed to"
                     },
-                    "dataProvider": {
+                    "dataCustodian": {
                         "label": "Data Custodian",
                         "tooltip": "Individual or organisation to be contacted for a dataset on the Gateway"
                     },
@@ -2239,7 +2239,7 @@
                 "addResources": "Add resources",
                 "headerAdd": "Action",
                 "headerName": "Name",
-                "dataProvider": "Data Custodian",
+                "dataCustodian": "Data Custodian",
                 "entityType": "Entity Type",
                 "radioDataset": "Datasets",
                 "radioDatause": "Data Uses",

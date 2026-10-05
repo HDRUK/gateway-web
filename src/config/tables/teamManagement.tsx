@@ -70,13 +70,13 @@ const getColumns = ({
                         alignItems: "center",
                     }}
                     textAlign="left">
-                    {translations.dataProvider}
+                    {translations.dataCustodian}
 
                     <SortIcon
                         setSort={setSort}
                         sort={sort}
                         sortKey="data_provider"
-                        ariaLabel={translations.dataProvider}
+                        ariaLabel={translations.dataCustodian}
                     />
                 </Box>
             ),

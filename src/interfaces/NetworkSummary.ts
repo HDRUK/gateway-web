@@ -1,5 +1,5 @@
 import { Collection } from "@/interfaces/Collection";
-import { DataProvider as DataCustodian } from "@/interfaces/DataProvider";
+import { DataCustodian } from "@/interfaces/DataCustodian";
 import { DataUse } from "@/interfaces/DataUse";
 import { DataCustodianDataset } from "@/interfaces/Dataset";
 import { Publication } from "@/interfaces/Publication";

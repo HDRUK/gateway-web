@@ -1,13 +1,13 @@
-import { SearchResultDataProvider } from "@/interfaces/Search";
+import { SearchResultDataCustodian } from "@/interfaces/Search";
 import CardStacked from "@/components/CardStacked";
 import { StaticImages } from "@/config/images";
 import { RouteName } from "@/consts/routeName";
 
-interface ResultCardDataProviderProps {
-    result: SearchResultDataProvider;
+interface ResultCardDataCustodianProps {
+    result: SearchResultDataCustodian;
 }
 
-const ResultCardDataProvider = ({ result }: ResultCardDataProviderProps) => {
+const ResultCardDataCustodian = ({ result }: ResultCardDataCustodianProps) => {
     const { _id: id } = result;
 
     return (
@@ -19,4 +19,4 @@ const ResultCardDataProvider = ({ result }: ResultCardDataProviderProps) => {
     );
 };
 
-export default ResultCardDataProvider;
+export default ResultCardDataCustodian;
