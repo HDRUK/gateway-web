@@ -30,7 +30,7 @@ import {
     SearchResult,
     SearchResultARDC,
     SearchResultCollection,
-    SearchResultDataProvider,
+    SearchResultDataCustodian,
     SearchResultDataUse,
     SearchResultDataset,
     SearchResultPublication,
@@ -80,7 +80,7 @@ import {
     TYPE_FIELD,
     VIEW_FIELD,
     sortByOptionsCollections,
-    sortByOptionsDataProviders,
+    sortByOptionsDataCustodians,
     sortByOptionsDataUse,
     sortByOptionsDataset,
     sortByOptionsPublications,
@@ -128,7 +128,7 @@ import PartnerResourcesBanner from "../PartnerResourcesBanner";
 import ResultCard from "../ResultCard";
 import ResultCardARDC from "../ResultCardARDC";
 import ResultCardCollection from "../ResultCardCollection";
-import ResultCardDataProvider from "../ResultCardDataProviders";
+import ResultCardDataCustodian from "../ResultCardDataCustodian";
 import ResultCardDataUse from "../ResultCardDataUse";
 import ResultCardPublication from "../ResultCardPublication/ResultCardPublication";
 import ResultCardTool from "../ResultCardTool/ResultCardTool";
@@ -411,9 +411,9 @@ const Search = ({ filters, schema }: SearchProps) => {
             tooltip: t("publicationsTooltip"),
         },
         {
-            label: t("dataProviders"),
+            label: t("dataCustodians"),
             value: SearchCategory.DATA_CUSTODIANS,
-            tooltip: t("dataProvidersTooltip"),
+            tooltip: t("dataCustodiansTooltip"),
         },
         {
             label: t("collections"),
@@ -427,7 +427,7 @@ const Search = ({ filters, schema }: SearchProps) => {
         [SearchCategory.DATA_USE]: t("dataUse"),
         [SearchCategory.TOOLS]: t("tools"),
         [SearchCategory.PUBLICATIONS]: t("publications"),
-        [SearchCategory.DATA_CUSTODIANS]: t("dataProviders"),
+        [SearchCategory.DATA_CUSTODIANS]: t("dataCustodians"),
         [SearchCategory.COLLECTIONS]: t("collections"),
     };
 
@@ -525,8 +525,8 @@ const Search = ({ filters, schema }: SearchProps) => {
                 );
             case SearchCategory.DATA_CUSTODIANS:
                 return (
-                    <ResultCardDataProvider
-                        result={result as SearchResultDataProvider}
+                    <ResultCardDataCustodian
+                        result={result as SearchResultDataCustodian}
                     />
                 );
             case SearchCategory.TOOLS:
@@ -591,7 +591,7 @@ const Search = ({ filters, schema }: SearchProps) => {
             case SearchCategory.COLLECTIONS:
                 return sortByOptionsCollections;
             case SearchCategory.DATA_CUSTODIANS:
-                return sortByOptionsDataProviders;
+                return sortByOptionsDataCustodians;
             default:
                 return sortByOptionsDataset;
         }

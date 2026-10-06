@@ -1,4 +1,4 @@
-export interface DataProvider {
+export interface DataCustodian {
     name: string;
     id?: string;
     introduction: string | null;

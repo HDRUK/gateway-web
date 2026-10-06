@@ -26,7 +26,7 @@ const ResourceTable = ({
     const tableTranslations = {
         headerAdd: t("headerAdd"),
         headerName: t("headerName"),
-        dataProvider: t("dataProvider"),
+        dataCustodian: t("dataCustodian"),
         entityType: t("entityType"),
         chipdataset: t("chipDataset"),
         chipdatause: t("chipDatause"),

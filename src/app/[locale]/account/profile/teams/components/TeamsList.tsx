@@ -85,7 +85,7 @@ const TeamsList = ({
             sort,
             translations: {
                 lastUpdated: t(`${TRANSLATION_PATH_TEAMS}.lastUpdated`),
-                dataProvider: t(`${TRANSLATION_PATH_TEAMS}.dataProvider`),
+                dataCustodian: t(`${TRANSLATION_PATH_TEAMS}.dataCustodian`),
                 teamAdmins: t(`${TRANSLATION_PATH_TEAMS}.teamAdmins`),
                 questionBank: t(`${TRANSLATION_PATH_COMMON}.questionBank`),
                 disabled: t(`${TRANSLATION_PATH_COMMON}.disabled`),
