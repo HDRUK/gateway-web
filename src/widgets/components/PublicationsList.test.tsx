@@ -57,8 +57,12 @@ describe("PublicationsList", () => {
         render(<PublicationsList items={items} branding={{}} />);
 
         const row = getRowByTitle("Outcomes of a synthetic respiratory cohort");
-        expect(within(row).getByText("Jane Doe, John Smith")).toBeInTheDocument();
-        expect(within(row).getByText("Journal of Examples")).toBeInTheDocument();
+        expect(
+            within(row).getByText("Jane Doe, John Smith")
+        ).toBeInTheDocument();
+        expect(
+            within(row).getByText("Journal of Examples")
+        ).toBeInTheDocument();
         expect(
             within(row).getByText("We describe outcomes for an example cohort.")
         ).toBeInTheDocument();
@@ -67,7 +71,9 @@ describe("PublicationsList", () => {
     it("formats authors and published year with fallbacks", () => {
         render(<PublicationsList items={items} branding={{}} />);
 
-        const row1 = getRowByTitle("Outcomes of a synthetic respiratory cohort");
+        const row1 = getRowByTitle(
+            "Outcomes of a synthetic respiratory cohort"
+        );
         expect(within(row1).getByText(/^Published:/i)).toHaveTextContent(
             /^Published:\s*2024$/
         );
