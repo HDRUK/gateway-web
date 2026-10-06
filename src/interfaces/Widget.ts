@@ -115,7 +115,7 @@ export interface PublicationItem {
     authors?: string;
     year_of_publication?: string;
     journal_name?: string;
-    url?: string;
+    abstract?: string;
 }
 
 export interface WidgetEntityData {
