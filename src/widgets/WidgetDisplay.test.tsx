@@ -8,6 +8,7 @@ import {
   CollectionItem,
   ScriptItem,
   DataUseItem,
+  PublicationItem,
 } from "@/interfaces/Widget";
 
 jest.mock("./hooks/useResultsByType");
@@ -47,11 +48,23 @@ const dataUses: DataUseItem[] = [
   },
 ];
 
+const publications: PublicationItem[] = [
+  {
+    id: 5,
+    team_id: 1,
+    paper_title: "Publication 1",
+    authors: "Jane Doe, John Smith",
+    journal_name: "Journal of Examples",
+    year_of_publication: "2024",
+  },
+];
+
 const mockData: WidgetEntityData = {
   datasets,
   collections,
   scripts,
   data_uses: dataUses,
+  publications,
   widget: {
     widget_name: "Test Widget",
     size_width: 800,
@@ -73,6 +86,7 @@ describe("WidgetDisplay", () => {
       collections,
       scripts,
       data_uses: dataUses,
+      publications,
     });
   });
 
@@ -107,6 +121,7 @@ describe("WidgetDisplay", () => {
       collections,
       scripts,
       data_uses: dataUses,
+      publications,
     });
 
     render(<WidgetDisplay data={noDatasets} />);
@@ -129,6 +144,7 @@ describe("WidgetDisplay", () => {
       collections: [],
       scripts: [],
       data_uses: [],
+      publications: [],
     };
 
     mockHook.mockReturnValue({
@@ -136,6 +152,7 @@ describe("WidgetDisplay", () => {
       collections: [],
       scripts: [],
       data_uses: [],
+      publications: [],
     });
 
     render(<WidgetDisplay data={empty} />);

@@ -8,6 +8,7 @@ const data: WidgetEntityData = {
     data_uses: [],
     scripts: [],
     collections: [],
+    publications: [],
     widget: {
         widget_name: "Contract widget",
         size_width: 400,

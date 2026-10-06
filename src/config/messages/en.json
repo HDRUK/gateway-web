@@ -1147,6 +1147,7 @@
                         "includedDataUsesRequired": "Select at least one item under Data Uses / Research Projects",
                         "includedScriptsRequired": "Select at least one item under Analysis Scripts & Software",
                         "includedCollectionsRequired": "Select at least one item under Collections",
+                        "includedPublicationsRequired": "Select at least one item under Publications",
                         "widget": "Widget",
                         "widgetName": "Widget name",
                         "size": "What size do you want your widget?",
@@ -1172,6 +1173,8 @@
                         "scripts": "Analysis Scripts & Software",
                         "collections": "Collections",
                         "selectCollections": "Select Collections",
+                        "publications": "Publications",
+                        "selectPublications": "Select Publications",
                         "cohortLinkInfo": "Add a button for the user to go to Cohort Discovery search within the Gateway",
                         "save": "Save and preview",
                         "cancel": "Cancel"

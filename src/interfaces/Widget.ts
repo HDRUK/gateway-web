@@ -18,6 +18,7 @@ export interface Widget {
     included_data_uses: number[];
     included_scripts: number[];
     included_collections: number[];
+    included_publications: number[];
     include_search_bar: boolean;
     include_cohort_link: boolean;
     size_width: number;
@@ -29,6 +30,7 @@ export interface Widget {
     has_datauses?: boolean;
     has_scripts?: boolean;
     has_collections?: boolean;
+    has_publications?: boolean;
     has_data_custodians?: boolean;
     permitted_domains: string[];
     branding_primary?: string;
@@ -56,7 +58,8 @@ export type WidgetCategory =
     | "datasets"
     | "data_uses"
     | "scripts"
-    | "collections";
+    | "collections"
+    | "publications";
 
 export interface DatasetItem {
     id: number;
@@ -103,11 +106,24 @@ export interface CollectionItem {
     image_link?: string;
 }
 
+export interface PublicationItem {
+    team_id?: number;
+    team_name?: string;
+    id: number;
+    name?: string;
+    paper_title?: string;
+    authors?: string;
+    year_of_publication?: string;
+    journal_name?: string;
+    url?: string;
+}
+
 export interface WidgetEntityData {
     datasets: DatasetItem[];
     data_uses: DataUseItem[];
     scripts: ScriptItem[];
     collections: CollectionItem[];
+    publications: PublicationItem[];
     widget: WidgetDetails;
 }
 
@@ -116,5 +132,6 @@ export interface WidgetResponse {
     durs: DataUseItem[];
     tools: ScriptItem[];
     collections: CollectionItem[];
+    publications: PublicationItem[];
     widget: WidgetDetails;
 }

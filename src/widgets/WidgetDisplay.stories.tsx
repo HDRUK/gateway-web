@@ -56,6 +56,16 @@ const data: WidgetEntityData = {
             name: "Respiratory Collection",
         },
     ],
+    publications: [
+        {
+            id: 6,
+            team_id: 1,
+            paper_title: "Synthetic cohort outcomes in respiratory care",
+            authors: "Jane Doe, John Smith",
+            journal_name: "Journal of Examples",
+            year_of_publication: "2024",
+        },
+    ],
     widget: {
         widget_name: "Storybook widget",
         size_width: 400,
@@ -80,6 +90,7 @@ export const Minimal: Story = {
             data_uses: [],
             scripts: [],
             collections: [],
+            publications: [],
             widget: {
                 ...data.widget,
                 include_search_bar: 0,
