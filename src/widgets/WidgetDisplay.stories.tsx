@@ -59,7 +59,6 @@ const data: WidgetEntityData = {
     publications: [
         {
             id: 6,
-            team_id: 1,
             paper_title: "Synthetic cohort outcomes in respiratory care",
             authors: "Jane Doe, John Smith",
             journal_name: "Journal of Examples",

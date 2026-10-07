@@ -1,3 +1,5 @@
+import type { Publication } from "./Publication";
+
 export interface WidgetBranding {
     primary?: string;
     secondary?: string;
@@ -106,16 +108,21 @@ export interface CollectionItem {
     image_link?: string;
 }
 
-export interface PublicationItem {
-    team_id?: number;
-    team_name?: string;
+export type PublicationItem = Pick<
+    Publication,
+    | "id"
+    | "paper_title"
+    | "authors"
+    | "year_of_publication"
+    | "journal_name"
+    | "abstract"
+>;
+
+export interface PublicationOption {
     id: number;
-    name?: string;
-    paper_title?: string;
-    authors?: string;
-    year_of_publication?: string;
-    journal_name?: string;
-    abstract?: string;
+    name: string;
+    team_id: number;
+    team_name: string | null;
 }
 
 export interface WidgetEntityData {
@@ -132,6 +139,6 @@ export interface WidgetResponse {
     durs: DataUseItem[];
     tools: ScriptItem[];
     collections: CollectionItem[];
-    publications: PublicationItem[];
+    publications: PublicationOption[];
     widget: WidgetDetails;
 }

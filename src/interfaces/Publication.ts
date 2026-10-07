@@ -20,7 +20,7 @@ export interface Publication {
     paper_doi: string;
     publication_type: string;
     journal_name: string;
-    abstract: string;
+    abstract: string | null;
     full_text_url: string;
     url: string;
     status: string;

@@ -51,10 +51,10 @@ const dataUses: DataUseItem[] = [
 const publications: PublicationItem[] = [
   {
     id: 5,
-    team_id: 1,
     paper_title: "Publication 1",
     authors: "Jane Doe, John Smith",
     journal_name: "Journal of Examples",
+    abstract: null,
     year_of_publication: "2024",
   },
 ];

@@ -78,7 +78,7 @@ export default function PublicationsList({ items }: PublicationsListProps) {
                                     fontSize={16}
                                     fontWeight={600}>
                                     <EllipsisLineLimit
-                                        text={result.paper_title ?? ""}
+                                        text={result.paper_title}
                                         component="span"
                                     />
                                 </Link>

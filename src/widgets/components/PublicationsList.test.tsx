@@ -6,7 +6,6 @@ import PublicationsList from "./PublicationsList";
 const items: PublicationItem[] = [
     {
         id: 3170,
-        team_id: 33,
         paper_title: "Outcomes of a synthetic respiratory cohort",
         authors: "Jane Doe, John Smith",
         journal_name: "Journal of Examples",
@@ -15,11 +14,10 @@ const items: PublicationItem[] = [
     },
     {
         id: 3174,
-        team_id: 33,
         paper_title: "Untitled preprint",
         authors: "",
         journal_name: "",
-        abstract: "",
+        abstract: null,
         year_of_publication: "",
     },
 ];
