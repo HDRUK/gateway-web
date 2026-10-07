@@ -107,7 +107,10 @@ const ProviderLinks = ({
                 <Box
                     key={group.key}
                     sx={{ padding: 0, marginTop: 3, marginBottom: 3 }}>
-                    <Typography variant="h4" sx={{ marginBottom: 1 }}>
+                    <Typography
+                        variant="h6"
+                        component="h4"
+                        sx={{ marginBottom: 1 }}>
                         {group.title}
                     </Typography>
                     <Typography variant="body2" sx={{ marginBottom: 2 }}>
