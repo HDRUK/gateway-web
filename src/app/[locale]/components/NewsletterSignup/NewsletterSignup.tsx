@@ -25,14 +25,7 @@ export default function NewsletterSignup({
         <StyledNewsletterSignup>
             <StyledNewsletterSignupBackground />
             <StyledNewsletterSignupCta>
-                <Typography
-                    variant="h2"
-                    sx={{
-                        fontSize: "1.75rem",
-                        [theme.breakpoints.up(810)]: {
-                            fontSize: "40px",
-                        },
-                    }}>
+                <Typography variant="h1" component="h2">
                     {title}
                 </Typography>
                 <Typography

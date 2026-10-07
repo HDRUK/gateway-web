@@ -197,8 +197,8 @@ const HomePage = ({ cmsContent: { page, posts } }: HomePageProps) => {
                 }}>
                 <Container sx={{ textAlign: "center" }}>
                     <TitleWithBg
-                        size="md"
-                        variant="h2"
+                        variant="h3"
+                        component="h2"
                         mb={2}
                         title={gatewayVideoHeader}
                         bgcolor="transparent"
@@ -228,8 +228,8 @@ const HomePage = ({ cmsContent: { page, posts } }: HomePageProps) => {
                 <Container>
                     <Box sx={{ position: "relative", mb: 2 }}>
                         <TitleWithBg
-                            size="md"
-                            variant="h2"
+                            variant="h3"
+                            component="h2"
                             title={newsHeader}
                             bgcolor="transparent"
                             color={tokens.brand.secondary}
@@ -265,8 +265,8 @@ const HomePage = ({ cmsContent: { page, posts } }: HomePageProps) => {
                 textAlign="center">
                 <Container>
                     <TitleWithBg
-                        size="md"
-                        variant="h2"
+                        variant="h3"
+                        component="h2"
                         mb={2}
                         title={meetTheTeam.sectionName}
                         bgcolor="transparent"
@@ -282,7 +282,7 @@ const HomePage = ({ cmsContent: { page, posts } }: HomePageProps) => {
                         <TeamContent>
                             <Typography
                                 sx={{
-                                    fontSize: { xs: 20, lg: 28 },
+                                    fontSize: theme.typography.h3.fontSize,
                                 }}>
                                 {meetTheTeam.title}
                             </Typography>
