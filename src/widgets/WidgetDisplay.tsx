@@ -12,6 +12,7 @@ import {
     CollectionItem,
     ScriptItem,
     DataUseItem,
+    PublicationItem,
 } from "@/interfaces/Widget";
 import theme from "@/config/theme";
 import { FULL_GATEWAY_URL } from "@/consts/urls";
@@ -20,6 +21,7 @@ import CollectionsGrid from "./components/CollectionGrid";
 import DataUsesList from "./components/DataUsesList";
 import DatasetsList from "./components/DatasetsList";
 import Header from "./components/Header";
+import PublicationsList from "./components/PublicationsList";
 import ScriptsList from "./components/ScriptsList";
 import { CATEGORIES } from "./consts";
 import useResultsByType from "./hooks/useResultsByType";
@@ -75,7 +77,7 @@ export default function WidgetDisplay({
     );
 
     const filteredMenuCategories = useMemo(
-        () => CATEGORIES.filter(category => data?.[category].length > 0),
+        () => CATEGORIES.filter(category => data?.[category]?.length > 0),
         [data]
     );
 
@@ -115,6 +117,13 @@ export default function WidgetDisplay({
                 return (
                     <ScriptsList
                         items={results as ScriptItem[]}
+                        branding={branding}
+                    />
+                );
+            case "publications":
+                return (
+                    <PublicationsList
+                        items={results as PublicationItem[]}
                         branding={branding}
                     />
                 );

@@ -5,6 +5,7 @@ export const CATEGORIES: WidgetCategory[] = [
     "data_uses",
     "scripts",
     "collections",
+    "publications",
 ];
 
 export const CATEGORY_LABEL: Record<WidgetCategory, string> = {
@@ -12,4 +13,5 @@ export const CATEGORY_LABEL: Record<WidgetCategory, string> = {
     data_uses: "Data Uses / Research Projects",
     scripts: "Analysis Scripts & Software",
     collections: "Collections",
+    publications: "Publications",
 };
