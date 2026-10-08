@@ -1,3 +1,9 @@
+## [2.47.1](https://github.com/HDRUK/gateway-web/compare/v2.47.0...v2.47.1) (2026-10-08)
+
+### 🐛 Bug Fixes
+
+* **GAT-9669:** Update cohort sign-in wording (#1692) ([6e71159](https://github.com/HDRUK/gateway-web/commit/6e71159768517a9367c4fea2143f135879f1d29a)), closes [GAT-9669](undefinedGAT-9669)
+
 ## [2.47.0](https://github.com/HDRUK/gateway-web/compare/v2.46.1...v2.47.0) (2026-10-05)
 
 ### ✨ Features
