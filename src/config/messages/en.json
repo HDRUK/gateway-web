@@ -1732,7 +1732,8 @@
                     "cohortDiscovery": "Access Cohort Discovery",
                     "curatedPublications": "Publications using this dataset (curated)",
                     "externalPublications": "Publications using this dataset (external search)",
-                    "coverageCompleteness": "Coverage and completeness"
+                    "coverageCompleteness": "Coverage and completeness",
+                    "label": "Explore this dataset"
                 },
                 "Linkages": {
                     "title": "Relationships:",
@@ -1925,6 +1926,9 @@
         }
     },
     "components": {
+        "MindMap": {
+            "opensInNewTab": "(opens in a new tab)"
+        },
         "CustomerSurvey": {
             "title": "How satisfactory is your experience with the Gateway today?",
             "tooltip-0": "Very Dissatisfied",

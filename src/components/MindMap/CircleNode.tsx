@@ -1,19 +1,24 @@
-import { Handle, Position, NodeProps } from "@xyflow/react";
+import { Node, Position, NodeProps } from "@xyflow/react";
 import theme from "@/config/theme";
 import EllipsisLineLimit from "../EllipsisLineLimit";
+import { HiddenHandle } from "./MindMap.styles";
+import { ROOT_SIZE } from "./layout";
 
-export interface CircleNodeData {
-    id: string;
+export type CircleNodeData = {
+    id: string | number;
     label: string;
-}
+    size?: number;
+};
 
-const CircleNode = ({ data: { id, label } }: NodeProps<CircleNodeData>) => {
+const CircleNode = ({
+    data: { id, label, size = ROOT_SIZE },
+}: NodeProps<Node<CircleNodeData>>) => {
     return (
         <div
             style={{
                 backgroundColor: theme.palette.greyCustom.light,
-                height: "140px",
-                width: "140px",
+                height: size,
+                width: size,
                 borderRadius: "50%",
                 display: "flex",
                 justifyContent: "center",
@@ -22,20 +27,20 @@ const CircleNode = ({ data: { id, label } }: NodeProps<CircleNodeData>) => {
                 position: "relative",
             }}>
             <div
-                id={id}
                 style={{
                     display: "inline-flex",
                     alignItems: "center",
-                    padding: "0 15px 0 20px",
+                    padding: theme.spacing(0, 2),
                     gap: "5px",
                 }}>
                 <EllipsisLineLimit text={label} maxLine={3} showToolTip />
             </div>
-            <Handle
+            <HiddenHandle
                 type="source"
                 position={Position.Left}
                 id={`${id}.connector`}
-                style={{ left: "50%", opacity: 0 }}
+                isConnectableStart={false}
+                style={{ left: "50%" }}
             />
         </div>
     );
