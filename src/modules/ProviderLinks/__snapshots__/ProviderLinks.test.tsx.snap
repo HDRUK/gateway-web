@@ -9,14 +9,14 @@ exports[`ProviderLinks should match snapshot 1`] = `
       class="MuiBox-root mui-style-hp0c5l"
     >
       <h4
-        class="MuiTypography-root MuiTypography-h4 mui-style-1wb7xw7-MuiTypography-root"
+        class="MuiTypography-root MuiTypography-h6 mui-style-zqogxd-MuiTypography-root"
       >
         <span
           class="MuiBox-root mui-style-1w7ybou"
         >
           Preferred Access
         </span>
-         (including 
+         (including option to apply for 
         <span
           class="MuiBox-root mui-style-1w7ybou"
         >
@@ -27,7 +27,7 @@ exports[`ProviderLinks should match snapshot 1`] = `
       <p
         class="MuiTypography-root MuiTypography-body2 mui-style-eqn6jt-MuiTypography-root"
       >
-        You can sign in using one of the supported sign-in options below to access the full platform experience, including Cohort Discovery and all associated features.
+        You can sign in using one of the supported options below to access the full platform experience. Once signed in, you can separately apply for Cohort Discovery and access all associated features.
       </p>
       <div
         class="MuiBox-root mui-style-1k5ajcd"
@@ -93,7 +93,7 @@ exports[`ProviderLinks should match snapshot 1`] = `
       class="MuiBox-root mui-style-hp0c5l"
     >
       <h4
-        class="MuiTypography-root MuiTypography-h4 mui-style-1wb7xw7-MuiTypography-root"
+        class="MuiTypography-root MuiTypography-h6 mui-style-zqogxd-MuiTypography-root"
       >
         <span
           class="MuiBox-root mui-style-1w7ybou"
