@@ -6,33 +6,47 @@ import { inputComponents } from ".";
 const defaultValues = {
     name: "",
     organisation: "",
-    number: "",
-    query: "",
+    contact_number: "",
+    project_title: "",
+    research_aim: "",
+    other_datasets: "",
+    dataset_parts_known: "",
+    funding: "",
+    potential_research_benefit: "",
 };
 
 const validationSchema = yup
     .object({
-        number: yup
+        contact_number: yup
             .string()
+            .trim()
             .transform(value => (value === "" ? null : value))
             .nullable()
             .matches(REGEX_PHONE, "Contact number is not valid")
             .label("Contact number"),
-        project_title: yup.string().required().min(2).label("Project title"),
+        project_title: yup
+            .string()
+            .trim()
+            .required()
+            .min(2)
+            .label("Project title"),
         organisation: yup
             .string()
+            .trim()
             .required("Applicant organisation is a required field"),
         research_aim: yup
             .string()
+            .trim()
             .required()
             .max(1500)
             .label("Research aim or question"),
         other_datasets: yup.string().required("Please select an option"),
         dataset_parts_known: yup.string().required("Please select an option"),
-        funding: yup.string().required().max(1500).label("Funding"),
+        funding: yup.string().trim().required().max(1500).label("Funding"),
         from: yup.string().required("Please select an option"),
         potential_research_benefit: yup
             .string()
+            .trim()
             .required()
             .max(1500)
             .label("Potential research benefits"),
