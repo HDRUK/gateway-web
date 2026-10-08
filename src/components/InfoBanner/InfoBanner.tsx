@@ -58,8 +58,12 @@ const InfoBanner = ({
             anchorOrigin={anchorOrigin}
             sx={{
                 position: "static",
+                [theme.breakpoints.up("sm")]: {
+                    transform: "none",
+                },
                 "> div": {
                     borderRadius: 0,
+                    flexGrow: 1,
                 },
                 ...sx,
             }}
