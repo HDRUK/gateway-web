@@ -1,7 +1,8 @@
 "use client";
 
+import { useId } from "react";
 import Typography from "@mui/material/Typography";
-import { hasValidValue } from "@/utils/dataset";
+import { hasValidValue, scrollToSection } from "@/utils/dataset";
 import TooltipIcon from "../TooltipIcon";
 import {
     InfoWrapper,
@@ -35,17 +36,13 @@ const DatasetStatCard = ({
     enableScroll,
     targetScroll,
 }: DatasetStatCardProps) => {
-    const descriptionId = `desc-${targetScroll}`;
+    const descriptionId = useId();
+    const isButton = enableScroll && !helperText;
 
-    const handleScroll = () => {
-        document?.getElementById(targetScroll)!.scrollIntoView({
-            behavior: "smooth",
-            block: "start",
-        });
-    };
+    const handleScroll = () => scrollToSection(targetScroll);
 
     const handleKeyDown = (e: React.KeyboardEvent<HTMLDivElement>) => {
-        if (enableScroll && (e.key === "Enter" || e.key === " ")) {
+        if (e.key === "Enter" || e.key === " ") {
             e.preventDefault();
             handleScroll();
         }
@@ -53,12 +50,13 @@ const DatasetStatCard = ({
 
     return (
         <StatCard
-            tabIndex={0}
-            onClick={enableScroll ? handleScroll : undefined}
-            onKeyDown={handleKeyDown}
+            role={isButton ? "button" : undefined}
+            tabIndex={isButton ? 0 : undefined}
+            onClick={isButton ? handleScroll : undefined}
+            onKeyDown={isButton ? handleKeyDown : undefined}
             aria-describedby={descriptionId}
             sx={{
-                ...(enableScroll ? { cursor: "pointer" } : {}),
+                ...(isButton ? { cursor: "pointer" } : {}),
                 width: { xs: "60%", sm: "40%", lg: "100%" },
                 flexShrink: 0,
                 scrollSnapAlign: "start",

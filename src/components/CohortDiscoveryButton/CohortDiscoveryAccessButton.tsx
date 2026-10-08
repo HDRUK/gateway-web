@@ -1,4 +1,4 @@
-import { CircularProgress, Tooltip } from "@mui/material";
+import { Tooltip } from "@mui/material";
 import { Button } from "@hdruk/ui";
 import { CohortDiscoveryButtonProps } from "./CohortDiscoveryButton";
 
@@ -30,14 +30,11 @@ const CohortDiscoveryAccessButton = ({
                     onClick={onClick}
                     data-testid={testId}
                     color={color}
-                    disabled={disabledOuter || isLoading}
+                    loading={isLoading}
+                    disabled={disabledOuter}
                     sx={forceWhiteText ? { color: "white" } : undefined}
                     {...restProps}>
-                    {isLoading ? (
-                        <CircularProgress size={20} color="inherit" />
-                    ) : (
-                        label
-                    )}
+                    {label}
                 </Button>
             </span>
         </Tooltip>
