@@ -1,3 +1,9 @@
+## [2.47.2](https://github.com/HDRUK/gateway-web/compare/v2.47.1...v2.47.2) (2026-10-08)
+
+### 🐛 Bug Fixes
+
+* **GAT-0000:** Banner size (#1696) ([73d079e](https://github.com/HDRUK/gateway-web/commit/73d079e7475ff1a2957ccbb61c704e85f1e391d9)), closes [GAT-0000](undefinedGAT-0000)
+
 ## [2.47.1](https://github.com/HDRUK/gateway-web/compare/v2.47.0...v2.47.1) (2026-10-08)
 
 ### 🐛 Bug Fixes
