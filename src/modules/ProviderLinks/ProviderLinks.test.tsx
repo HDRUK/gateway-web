@@ -28,7 +28,7 @@ describe("ProviderLinks", () => {
 
         expect(
             screen.getByRole("heading", {
-                name: /Preferred Access \(including applying for Cohort Discovery/,
+                name: /Preferred Access \(including option to apply for Cohort Discovery/,
             })
         ).toBeInTheDocument();
         expect(
