@@ -5,21 +5,23 @@ import { inputComponents } from ".";
 const defaultValues = {
     name: "",
     organisation: "",
-    number: "",
+    contact_number: "",
     query: "",
 };
 
 const validationSchema = yup
     .object({
-        number: yup
+        contact_number: yup
             .string()
+            .trim()
             .transform(value => (value === "" ? null : value))
             .nullable()
             .matches(REGEX_PHONE, "Contact number is not valid")
             .label("Contact number"),
-        query: yup.string().required().max(1500).label("Your enquiry"),
+        query: yup.string().trim().required().max(1500).label("Your enquiry"),
         organisation: yup
             .string()
+            .trim()
             .required("Applicant organisation is a required field"),
         from: yup.string().required("Please select an option"),
     })
