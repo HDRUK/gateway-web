@@ -1,3 +1,9 @@
+## [2.48.0](https://github.com/HDRUK/gateway-web/compare/v2.47.2...v2.48.0) (2026-10-09)
+
+### ✨ Features
+
+* **GAT-9686:** Feature flag to disable login (#1699) ([13c829e](https://github.com/HDRUK/gateway-web/commit/13c829e0e6e3ac7ec7644e1edadf731f238ce1f4)), closes [GAT-9686](undefinedGAT-9686)
+
 ## [2.47.2](https://github.com/HDRUK/gateway-web/compare/v2.47.1...v2.47.2) (2026-10-08)
 
 ### 🐛 Bug Fixes
