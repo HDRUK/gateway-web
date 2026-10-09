@@ -310,7 +310,7 @@
                     "labels": {
                         "datasets": "Datasets",
                         "datauses": "Data Uses",
-                        "tools": "Analysis Scripts",
+                        "tools": "Analysis Scripts & Software",
                         "publications": "Publications",
                         "collections": "Collections",
                         "gmiApiDatasets": "GMI/API Datasets",
@@ -1617,7 +1617,7 @@
                     "unknownString": "Unknown"
                 },
                 "DatausesContent": {
-                    "title": "Data uses",
+                    "title": "Data Uses",
                     "heading": "Data Uses ({ length })",
                     "associatedHeading": "Associated data uses"
                 },
@@ -1629,7 +1629,7 @@
                 "ToolsContent": {
                     "title": "Analysis Scripts & Software",
                     "heading": "Analysis Scripts & Software ({ length })",
-                    "associatedHeading": "Associated analysis scripts, tools and software"
+                    "associatedHeading": "Associated analysis scripts & software"
                 },
                 "ServiceOfferingsContent": {
                     "heading": "Service offerings ({ length })"
@@ -1656,8 +1656,8 @@
                 "DataCustodianContent": {
                     "title": "Data Custodians",
                     "datasets": "Datasets ({ length })",
-                    "datause": "Data Use ({ length })",
-                    "tools": "Tools ({ length })",
+                    "datause": "Data Uses ({ length })",
+                    "tools": "Analysis Scripts & Software ({ length })",
                     "publications": "Publications ({ length })",
                     "collections": "Collections ({ length })"
                 },
@@ -1669,7 +1669,7 @@
                     "unknownString": "Unknown"
                 },
                 "DatausesContent": {
-                    "title": "Data uses",
+                    "title": "Data Uses",
                     "heading": "Data Uses ({ length })",
                     "associatedHeading": "Associated data uses"
                 },
@@ -1679,9 +1679,9 @@
                     "associatedHeading": "Associated publications"
                 },
                 "ToolsContent": {
-                    "title": "Analysis scripts, tools and software",
+                    "title": "Analysis Scripts & Software",
                     "heading": "Analysis Scripts & Software ({ length })",
-                    "associatedHeading": "Associated analysis scripts, tools and software"
+                    "associatedHeading": "Associated analysis scripts & software"
                 },
                 "ServiceOfferingsContent": {
                     "heading": "Service offerings ({ length })"
@@ -1851,7 +1851,7 @@
             "collections": "Related Collections",
             "authors": "Associated Authors",
             "authorsTooltip": "People who authored this analysis script, tool or software.",
-            "backLabel": "Back to Tools search results",
+            "backLabel": "Back to Analysis Scripts & Software search results",
             "components": {
                 "DatasetsContent": {
                     "title": "Datasets that the analysis, tool or software can be applied to",
@@ -2071,7 +2071,7 @@
         "CollectionCard": {
             "users": "Users",
             "entities": "Entities",
-            "entitiesCounts": "Datasets ({nDatasets}), Data Uses ({nDur}), Publications ({nPublications}), Tools ({nTools})",
+            "entitiesCounts": "Datasets ({nDatasets}), Data Uses ({nDur}), Publications ({nPublications}), Analysis Scripts & Software ({nTools})",
             "lastActivity": "Last activity"
         },
         "NestedFilterSection": {
@@ -2253,7 +2253,7 @@
                 "radioPublication": "Publications",
                 "radioTool": "Analysis Scripts & Software",
                 "chipDataset": "Dataset",
-                "chipDatause": "Data use",
+                "chipDatause": "Data Use",
                 "chipPublication": "Publication",
                 "chipTool": "Analysis Scripts & Software",
                 "noResults": "No results found"
