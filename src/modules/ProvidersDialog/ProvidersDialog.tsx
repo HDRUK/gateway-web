@@ -8,9 +8,11 @@ import BulletList from "@/components/BulletList";
 import { Button, Loading } from "@hdruk/ui";
 import Dialog from "@/components/Dialog";
 import Link from "@/components/Link";
+import Typography from "@/components/Typography";
 import useDialog from "@/hooks/useDialog";
 import useFullPathname from "@/hooks/useFullPathname";
 import { CUSTOMER_PORTAL_SUPPORT_URL } from "@/config/hrefs";
+import { useFeatures } from "@/providers/FeatureProvider";
 import ProviderLinks from "../ProviderLinks";
 
 const TRANSLATIONS_PROVIDERS_DIALOG = "modules.dialogs.ProvidersDialog";
@@ -23,6 +25,7 @@ const ProvidersDialog = () => {
 
     const { hideDialog, store } = useDialog();
     const pathname = useFullPathname();
+    const { isLoginDisabled } = useFeatures();
 
     useEffect(() => {
         setInstitutionSelectVisible(false);
@@ -38,7 +41,11 @@ const ProvidersDialog = () => {
             onClose={() => hideDialog()}
             open={!!store?.dialogProps?.isProvidersDialog}>
             <MuiDialogContent sx={{ paddingX: 8 }}>
-                {!institutionSelectVisible && (
+                {isLoginDisabled && (
+                    <Typography>{t("loginDisabled")}</Typography>
+                )}
+
+                {!isLoginDisabled && !institutionSelectVisible && (
                     <>
                         <p>{t("intro1")}</p>
 
