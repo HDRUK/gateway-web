@@ -12,11 +12,13 @@ import useAccountMenu from "@/hooks/useAccountMenu";
 import useAuth from "@/hooks/useAuth";
 import useDialog from "@/hooks/useDialog";
 import { useIsHomePage } from "@/hooks/useIsHomePage";
+import { useFeatures } from "@/providers/FeatureProvider";
 
 const AccountNav = () => {
     const { showDialog } = useDialog();
     const t = useTranslations("components");
     const isHomePage = useIsHomePage();
+    const { isLoginDisabled } = useFeatures();
     const [anchorElement, setAnchorElement] = useState<null | HTMLElement>(
         null
     );
@@ -79,6 +81,10 @@ const AccountNav = () => {
                 />
             </>
         );
+    }
+
+    if (isLoginDisabled) {
+        return null;
     }
 
     return (

@@ -10,6 +10,7 @@ import Dialog from "@/components/Dialog";
 import Link from "@/components/Link";
 import useDialog from "@/hooks/useDialog";
 import useFullPathname from "@/hooks/useFullPathname";
+import { useFeatures } from "@/providers/FeatureProvider";
 import { CUSTOMER_PORTAL_SUPPORT_URL } from "@/config/hrefs";
 import ProviderLinks from "../ProviderLinks";
 
@@ -23,6 +24,7 @@ const ProvidersDialog = () => {
 
     const { hideDialog, store } = useDialog();
     const pathname = useFullPathname();
+    const { isLoginDisabled } = useFeatures();
 
     useEffect(() => {
         setInstitutionSelectVisible(false);
@@ -38,7 +40,9 @@ const ProvidersDialog = () => {
             onClose={() => hideDialog()}
             open={!!store?.dialogProps?.isProvidersDialog}>
             <MuiDialogContent sx={{ paddingX: 8 }}>
-                {!institutionSelectVisible && (
+                {isLoginDisabled && <p>{t("loginDisabled")}</p>}
+
+                {!isLoginDisabled && !institutionSelectVisible && (
                     <>
                         <p>{t("intro1")}</p>
 
