@@ -76,6 +76,7 @@ export default async function RootLayout(props: {
             rawFeatures.V3_CustodianDashboard ?? false,
         isSafePeopleRegistrySSOEnabled:
             rawFeatures.SafePeopleRegistrySSOEnabled ?? false,
+        isLoginDisabled: rawFeatures.LoginDisabled ?? false,
     };
 
     if (includeBanners) {

@@ -52,3 +52,8 @@ export const isSafePeopleRegistrySSOEnabled = flag({
     key: "SafePeopleRegistrySSOEnabled",
     adapter,
 });
+
+export const isLoginDisabled = flag({
+    key: "LoginDisabled",
+    adapter,
+});

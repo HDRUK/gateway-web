@@ -2168,7 +2168,8 @@
                 "notPreferredAccessTitle": "<bold>Non-preferred Access</bold>",
                 "notPreferredAccessText": "You can sign in using one of the supported sign-in options below to access the core Gateway features but <highlight>excludes Cohort Discovery</highlight> and all associated features.",
                 "suggestAnother": "Suggest another identity provider",
-                "selectAnother": "Select another provider"
+                "selectAnother": "Select another provider",
+                "loginDisabled": "Sign in is temporarily unavailable. Please try again later."
             },
             "SignInDialog": {
                 "title": "Sign in",
