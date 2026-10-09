@@ -4,6 +4,7 @@ import apis from "@/config/apis";
 import config from "@/config/config";
 import { sessionHeader, sessionPrefix } from "@/config/session";
 import { getUserFromToken } from "@/utils/cookies";
+import { expiredJwtCookie } from "@/utils/expiredJwtCookie";
 import { getSessionCookie } from "@/utils/getSessionCookie";
 import { logger } from "@/utils/logger";
 
@@ -36,6 +37,14 @@ export async function GET() {
                     },
                 }
             );
+
+            if (response.status === 401) {
+                const signedOut = NextResponse.json({
+                    data: { isLoggedIn: false },
+                });
+                signedOut.headers.set("Set-Cookie", expiredJwtCookie());
+                return signedOut;
+            }
 
             const json = await response.json();
 
