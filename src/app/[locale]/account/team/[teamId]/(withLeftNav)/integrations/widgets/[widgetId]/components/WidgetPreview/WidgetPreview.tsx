@@ -1,14 +1,14 @@
 "use client";
 
-import { useMemo } from "react";
+import { useMemo, useState } from "react";
+import { Button, Loading } from "@hdruk/ui";
 import { tokens } from "@hdruk/ui/theme";
-import { Grid, TextareaAutosize, Typography } from "@mui/material";
+import { Grid, Tab, Tabs, TextareaAutosize, Typography } from "@mui/material";
 import { useTranslations } from "next-intl";
 import Link from "next/link";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { WidgetEntityData } from "@/interfaces/Widget";
 import Box from "@/components/Box";
-import { Button, Loading } from "@hdruk/ui";
 import Paper from "@/components/Paper";
 import useGet from "@/hooks/useGet";
 import notificationService from "@/services/notification";
@@ -16,7 +16,7 @@ import apis from "@/config/apis";
 import theme from "@/config/theme";
 import { RouteName } from "@/consts/routeName";
 import WidgetDisplay from "@/widgets/WidgetDisplay";
-import { TabValues } from "../../const";
+import { CodeFormat, TabValues } from "../../const";
 import { generateCspDirective, generateWidgetCode } from "./utils";
 
 interface WidgetPreviewProps {
@@ -33,6 +33,7 @@ const WidgetPreview = ({ teamId, widgetId }: WidgetPreviewProps) => {
     const pathname = usePathname();
     const searchParams = useSearchParams();
     const t = useTranslations(TRANSLATION_PATH);
+    const [codeFormat, setCodeFormat] = useState(CodeFormat.HTML);
 
     const changeTab = (targetTab: TabValues) => {
         const params = new URLSearchParams(searchParams);
@@ -58,8 +59,9 @@ const WidgetPreview = ({ teamId, widgetId }: WidgetPreviewProps) => {
                 teamId,
                 widgetId,
                 gatewayUrl: GATEWAY_URL,
+                format: codeFormat,
             }),
-        [data, teamId, widgetId]
+        [codeFormat, data, teamId, widgetId]
     );
 
     return (
@@ -88,18 +90,42 @@ const WidgetPreview = ({ teamId, widgetId }: WidgetPreviewProps) => {
                     </Typography>
                     <Typography sx={{ mb: 2 }}>{t("codeIntro")}</Typography>
 
-                    <TextareaAutosize
-                        maxRows={20}
-                        style={{
-                            backgroundColor: tokens.background.primary,
-                            border: 0,
-                            width: "100%",
-                            padding: theme.spacing(2),
-                        }}
-                        aria-label="Widget code"
-                        defaultValue={widgetCode}
-                        readOnly
-                    />
+                    <Tabs
+                        value={codeFormat}
+                        onChange={(_, value: CodeFormat) =>
+                            setCodeFormat(value)
+                        }
+                        aria-label={t("codeFormat")}>
+                        <Tab
+                            value={CodeFormat.HTML}
+                            label={t("formatHtml")}
+                            id={`widget-code-tab-${CodeFormat.HTML}`}
+                            aria-controls="widget-code-panel"
+                        />
+                        <Tab
+                            value={CodeFormat.REACT}
+                            label={t("formatReact")}
+                            id={`widget-code-tab-${CodeFormat.REACT}`}
+                            aria-controls="widget-code-panel"
+                        />
+                    </Tabs>
+                    <div
+                        role="tabpanel"
+                        id="widget-code-panel"
+                        aria-labelledby={`widget-code-tab-${codeFormat}`}>
+                        <TextareaAutosize
+                            maxRows={20}
+                            style={{
+                                backgroundColor: tokens.background.primary,
+                                border: 0,
+                                width: "100%",
+                                padding: theme.spacing(2),
+                            }}
+                            aria-label="Widget code"
+                            value={widgetCode}
+                            readOnly
+                        />
+                    </div>
                     <Button
                         onClick={() => copyToClipboard(widgetCode)}
                         sx={{ mt: 1 }}>

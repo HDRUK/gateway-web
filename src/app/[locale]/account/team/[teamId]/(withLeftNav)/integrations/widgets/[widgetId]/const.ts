@@ -3,6 +3,11 @@ export enum TabValues {
     PREVIEW = "preview",
 }
 
+export enum CodeFormat {
+    HTML = "html",
+    REACT = "react",
+}
+
 export const DATA_CUSTODIAN_LIMIT = 25;
 
 export const WIDGET_ID_CREATE = "create";
