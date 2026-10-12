@@ -42,4 +42,22 @@ const getDatasetV2 = (data: Dataset = datasetV1, status = 200) => {
     });
 };
 
-export { getDatasetsV2, getDatasetV2 };
+const putDatasetCohortDiscoveryV2 = (status = 200) => {
+    return rest.put(
+        `${apis.datasetsV2Url}/:id/cohort-discovery`,
+        (req, res, ctx) => {
+            if (status !== 200) {
+                return res(
+                    ctx.status(status),
+                    ctx.json(`Request failed with status code ${status}`)
+                );
+            }
+            return res(
+                ctx.status(status),
+                ctx.json<{ message: string }>({ message: "success" })
+            );
+        }
+    );
+};
+
+export { getDatasetsV2, getDatasetV2, putDatasetCohortDiscoveryV2 };

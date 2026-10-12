@@ -7,7 +7,11 @@ import { getAuthInternal } from "./auth";
 import { getCMSReleaseV1 } from "./cms";
 import { getCohortRequestsV1 } from "./cohortRequest";
 import { getDataUses } from "./dataUses";
-import { getDatasetsV2, getDatasetV2 } from "./datasets";
+import {
+    getDatasetsV2,
+    getDatasetV2,
+    putDatasetCohortDiscoveryV2,
+} from "./datasets";
 import {
     getFiltersV1,
     postFilterV1,
@@ -46,6 +50,7 @@ export const handlers = [
     getCMSReleaseV1(),
     getDatasetV2(),
     getDatasetsV2(),
+    putDatasetCohortDiscoveryV2(),
     getDataUses(),
     getLibrariesV1(),
 ];

@@ -830,7 +830,15 @@
                                     "label": "Duplicate dataset metadata"
                                 },
                                 "archive": {
-                                    "label": "Archive dataset metadata so it is no longer live on the Gateway"
+                                    "label": "Archive",
+                                    "tooltip": "Archive dataset metadata so it is no longer live on the Gateway"
+                                },
+                                "more": {
+                                    "label": "More actions"
+                                },
+                                "cohortDiscovery": {
+                                    "include": "Include in Cohort Discovery",
+                                    "exclude": "Exclude from Cohort Discovery"
                                 }
                             }
                         },

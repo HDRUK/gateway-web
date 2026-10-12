@@ -11,6 +11,7 @@ import { DataStatus } from "@/consts/application";
 import { getLatestVersion } from "@/utils/dataset";
 import { formatDate } from "@/utils/date";
 import CardActions from "../CardActions";
+import DatasetCardMenu, { DatasetMenuAction } from "./DatasetCardMenu";
 
 interface DatasetCardProps {
     dataset: Dataset;
@@ -20,9 +21,16 @@ interface DatasetCardProps {
         action?: (id: number) => void;
         label: string;
     }[];
+    getMenuActions?: (dataset: Dataset) => DatasetMenuAction[];
+    menuLabel?: string;
 }
 
-const DatasetCard = ({ dataset, actions }: DatasetCardProps) => {
+const DatasetCard = ({
+    dataset,
+    actions,
+    getMenuActions,
+    menuLabel,
+}: DatasetCardProps) => {
     const latestMetadata = getLatestVersion(dataset);
 
     if (!latestMetadata) return null;
@@ -45,6 +53,8 @@ const DatasetCard = ({ dataset, actions }: DatasetCardProps) => {
         API: "API",
         GMI: "Predefined Integration",
     };
+
+    const menuActions = getMenuActions ? getMenuActions(dataset) : [];
 
     return (
         <Paper data-testid="dataset-card" sx={{ mb: 2 }}>
@@ -85,20 +95,18 @@ const DatasetCard = ({ dataset, actions }: DatasetCardProps) => {
                                         "DD MMMM YYYY HH:mm"
                                     ),
                                 },
+                                {
+                                    key: "Created",
+                                    value: originMapping[dataset.create_origin],
+                                },
+                                {
+                                    key: "Cohort Discovery",
+                                    value: dataset.is_cohort_discovery
+                                        ? "Included"
+                                        : "Excluded",
+                                },
                             ]}
                         />
-                    </Box>
-                    <Box
-                        sx={{
-                            p: 0,
-                            alignItems: "end",
-                            justifyContent: "end",
-                            display: "flex",
-                        }}>
-                        <Typography fontSize={13}>
-                            {originMapping[dataset.create_origin]} created
-                            dataset
-                        </Typography>
                     </Box>
                 </Box>
                 <Box sx={{ p: 0, borderLeft: `solid 1px ${tokens.status.faded}` }}>
@@ -115,6 +123,13 @@ const DatasetCard = ({ dataset, actions }: DatasetCardProps) => {
                                 : undefined
                         }
                     />
+                    {menuActions.length > 0 && menuLabel && (
+                        <DatasetCardMenu
+                            dataset={dataset}
+                            label={menuLabel}
+                            actions={menuActions}
+                        />
+                    )}
                 </Box>
             </Box>
         </Paper>

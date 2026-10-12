@@ -4,7 +4,7 @@ import {
     ROLE_HDRUK_SUPERADMIN,
 } from "@/consts/roles";
 import { generateRoleV1 } from "@/mocks/data";
-import { getPermissions } from "./permissions";
+import { getPermissions, isSuperAdmin } from "./permissions";
 
 const userRoles: Role[] = [
     generateRoleV1({
@@ -23,6 +23,11 @@ const teamRoles: Role[] = [
 ];
 
 describe("Permissions utils", () => {
+    it("should identify a superadmin from their roles", () => {
+        expect(isSuperAdmin(userRoles)).toBe(true);
+        expect(isSuperAdmin(teamRoles)).toBe(false);
+        expect(isSuperAdmin(undefined)).toBe(false);
+    });
     it("should return a permissions object for team admin", () => {
         const result = getPermissions([], teamRoles);
         expect(result["custodians.delete"]).toBeTruthy();

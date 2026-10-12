@@ -1,4 +1,5 @@
 import { Role } from "@/interfaces/Role";
+import { ROLE_HDRUK_SUPERADMIN } from "@/consts/roles";
 
 const getPermissions = (
     userRoles: Role[] = [],
@@ -46,4 +47,7 @@ const hasPermissions = (
     return userPermissions.some(p => pagePermissions?.includes(p));
 };
 
-export { getPermissions, hasPermissions };
+const isSuperAdmin = (roles: Role[] = []) =>
+    roles.some(role => role.name === ROLE_HDRUK_SUPERADMIN);
+
+export { getPermissions, hasPermissions, isSuperAdmin };
