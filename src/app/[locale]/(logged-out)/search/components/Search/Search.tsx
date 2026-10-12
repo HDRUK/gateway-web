@@ -461,8 +461,8 @@ const Search = ({ filters, schema }: SearchProps) => {
             removeArrayQueryAndPush(filterType, removedFilter);
         } else if (filterType === FILTER_DATA_TYPE) {
             updatePathMultiple({
-                [FILTER_DATA_TYPE]: filtered,
-                [FILTER_DATA_SUBTYPE]: [],
+                [FILTER_DATA_TYPE]: filtered.join("|"),
+                [FILTER_DATA_SUBTYPE]: "",
             });
         } else {
             updatePath(filterType, filtered.join("|"));
@@ -728,20 +728,19 @@ const Search = ({ filters, schema }: SearchProps) => {
                     type: string,
                     datasetNamesArray: string[]
                 ) => {
-                    onQuerySubmit({
-                        query,
-                    });
                     setDatasetNamesArray(datasetNamesArray);
                     setQueryParams({
                         ...queryParams,
                         pmc: type,
                         query,
                         source: EUROPE_PMC_SOURCE_FIELD,
+                        [PAGE_FIELD]: "1",
                     });
                     updatePathMultiple({
                         pmc: type,
                         query,
                         source: EUROPE_PMC_SOURCE_FIELD,
+                        [PAGE_FIELD]: "1",
                     });
                 }}
                 defaultQuery={queryParams.query}
@@ -749,7 +748,7 @@ const Search = ({ filters, schema }: SearchProps) => {
                 isDataset={queryParams.pmc === "dataset"}
             />
         );
-    }, [datasetNamesArray, onQuerySubmit, queryParams, updatePathMultiple]);
+    }, [datasetNamesArray, queryParams, updatePathMultiple]);
 
     const europePmcModalAction = () =>
         showDialog(PublicationSearchDialogMemoised);

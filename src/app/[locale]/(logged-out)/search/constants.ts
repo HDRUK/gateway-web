@@ -1,4 +1,38 @@
+import * as Filters from "@/config/forms/filters";
+
 export const STATIC_FILTER_SOURCE = "source";
 export const STATIC_FILTER_DATA_SOURCE = "dataSource";
 export const GATEWAY_SOURCE_FIELD = "GAT";
 export const EUROPE_PMC_SOURCE_FIELD = "FED";
+export const SEARCH_PER_PAGE = "25";
+
+export const ARRAY_FILTERS = [
+    Filters.FILTER_DATA_USE_TITLES,
+    Filters.FILTER_PUBLISHER_NAME,
+    Filters.FILTER_COLLECTION_NAME,
+    Filters.FILTER_COLLECTION_NAMES,
+    Filters.FILTER_GEOGRAPHIC_LOCATION,
+    Filters.FILTER_DATE_RANGE,
+    Filters.FILTER_ORGANISATION_NAME,
+    Filters.FILTER_DATA_SET_TITLES,
+    Filters.FILTER_DATA_TYPE,
+    Filters.FILTER_DATA_SUBTYPE,
+    Filters.FILTER_PUBLICATION_DATE,
+    Filters.FILTER_PUBLICATION_TYPE,
+    Filters.FILTER_SECTOR,
+    Filters.FILTER_DATA_PROVIDER,
+    Filters.FILTER_DATA_CUSTODIAN_NETWORK,
+    Filters.FILTER_ACCESS_SERVICE,
+    Filters.FILTER_POPULATION_SIZE,
+    Filters.FILTER_PROGRAMMING_LANGUAGE,
+    Filters.FILTER_TYPE_CATEGORY,
+    Filters.FILTER_CONTAINS_BIOSAMPLES,
+    Filters.FILTER_MATERIAL_TYPE,
+    Filters.FILTER_FORMAT_STANDARDS,
+    Filters.FILTER_COHORT_DISCOVERY,
+] as const;
+
+export const ALLOW_EMPTY_FILTERS: string[] = [
+    Filters.FILTER_DATE_RANGE,
+    Filters.FILTER_PUBLICATION_DATE,
+];
