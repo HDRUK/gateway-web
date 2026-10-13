@@ -12,7 +12,7 @@ import Typography from "@/components/Typography";
 import useDialog from "@/hooks/useDialog";
 import useFullPathname from "@/hooks/useFullPathname";
 import { CUSTOMER_PORTAL_SUPPORT_URL } from "@/config/hrefs";
-import { useFeatures } from "@/providers/FeatureProvider";
+import useLoginProviders from "@/hooks/useLoginProviders";
 import ProviderLinks from "../ProviderLinks";
 
 const TRANSLATIONS_PROVIDERS_DIALOG = "modules.dialogs.ProvidersDialog";
@@ -25,7 +25,10 @@ const ProvidersDialog = () => {
 
     const { hideDialog, store } = useDialog();
     const pathname = useFullPathname();
-    const { isLoginDisabled } = useFeatures();
+    // Every provider being switched off individually leaves sign-in just as
+    // unavailable as the global kill switch does, and should say so rather
+    // than show an empty dialog.
+    const { any: anyProviderEnabled } = useLoginProviders();
 
     useEffect(() => {
         setInstitutionSelectVisible(false);
@@ -41,11 +44,11 @@ const ProvidersDialog = () => {
             onClose={() => hideDialog()}
             open={!!store?.dialogProps?.isProvidersDialog}>
             <MuiDialogContent sx={{ paddingX: 8 }}>
-                {isLoginDisabled && (
+                {!anyProviderEnabled && (
                     <Typography>{t("loginDisabled")}</Typography>
                 )}
 
-                {!isLoginDisabled && !institutionSelectVisible && (
+                {anyProviderEnabled && !institutionSelectVisible && (
                     <>
                         <p>{t("intro1")}</p>
 
