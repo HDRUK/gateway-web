@@ -6,6 +6,7 @@ import { IconType } from "@/interfaces/Ui";
 import Box from "@/components/Box";
 import BoxContainer from "@/components/BoxContainer";
 import DatasetCard from "@/components/DatasetCard";
+import { DatasetMenuAction } from "@/components/DatasetCard/DatasetCardMenu";
 import DownloadFile from "@/components/DownloadFile";
 import InputWrapper from "@/components/InputWrapper";
 import Pagination from "@/components/Pagination";
@@ -33,6 +34,8 @@ interface DatasetTabProps {
         action?: (id: number) => void;
         label: string;
     }[];
+    getMenuActions: (dataset: Dataset) => DatasetMenuAction[];
+    menuLabel: string;
     lastPage?: number;
     from?: number;
     to?: number;
@@ -47,6 +50,8 @@ interface DatasetTabProps {
 
 const DatasetTab = ({
     actions,
+    getMenuActions,
+    menuLabel,
     list,
     label,
     lastPage,
@@ -113,6 +118,8 @@ const DatasetTab = ({
                 .map(dataset => (
                     <DatasetCard
                         actions={actions}
+                        getMenuActions={getMenuActions}
+                        menuLabel={menuLabel}
                         key={dataset.id}
                         dataset={dataset}
                     />

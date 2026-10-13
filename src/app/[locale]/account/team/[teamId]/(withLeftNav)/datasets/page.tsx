@@ -2,7 +2,7 @@ import BoxContainer from "@/components/BoxContainer";
 import ProtectedAccountRoute from "@/components/ProtectedAccountRoute";
 import { getTeam, getUser } from "@/utils/api";
 import metaData, { noFollowRobots } from "@/utils/metadata";
-import { getPermissions } from "@/utils/permissions";
+import { getPermissions, isSuperAdmin } from "@/utils/permissions";
 import { getTeamUser } from "@/utils/user";
 import TeamDatasets from "./components/TeamDatasets";
 
@@ -29,7 +29,11 @@ export default async function TeamDatasetsPage({
             permissions={permissions}
             pagePermissions={["datasets.read"]}>
             <BoxContainer sx={{ gap: 0 }}>
-                <TeamDatasets permissions={permissions} teamId={teamId} />
+                <TeamDatasets
+                    permissions={permissions}
+                    teamId={teamId}
+                    isSuperAdmin={isSuperAdmin(user.roles)}
+                />
             </BoxContainer>
         </ProtectedAccountRoute>
     );

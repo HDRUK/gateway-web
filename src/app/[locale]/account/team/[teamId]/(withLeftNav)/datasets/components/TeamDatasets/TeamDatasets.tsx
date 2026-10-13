@@ -9,6 +9,7 @@ import { Dataset } from "@/interfaces/Dataset";
 import { PaginationType } from "@/interfaces/Pagination";
 import Box from "@/components/Box";
 import { Button } from "@hdruk/ui";
+import { DatasetMenuAction } from "@/components/DatasetCard/DatasetCardMenu";
 import Paper from "@/components/Paper";
 import Tabs from "@/components/Tabs";
 import Typography from "@/components/Typography";
@@ -18,6 +19,7 @@ import useDialog from "@/hooks/useDialog";
 import useGet from "@/hooks/useGet";
 import useModal from "@/hooks/useModal";
 import usePatch from "@/hooks/usePatch";
+import usePut from "@/hooks/usePut";
 import apis from "@/config/apis";
 import {
     datasetSearchDefaultValues,
@@ -27,6 +29,7 @@ import { DataStatus } from "@/consts/application";
 import {
     AddIcon,
     ArchiveIcon,
+    CohortIcon,
     ContentCopyIcon,
     EditIcon,
     UnarchiveIcon,
@@ -53,11 +56,16 @@ interface CountStatus {
 interface TeamDatasetsProps {
     permissions: { [key: string]: boolean };
     teamId: string;
+    isSuperAdmin: boolean;
 }
 
 const TRANSLATION_PATH = `${PAGES}.${ACCOUNT}.${TEAM}.${DATASETS}.${COMPONENTS}.TeamDatasets`;
 
-const TeamDatasets = ({ permissions, teamId }: TeamDatasetsProps) => {
+const TeamDatasets = ({
+    permissions,
+    teamId,
+    isSuperAdmin,
+}: TeamDatasetsProps) => {
     const t = useTranslations(TRANSLATION_PATH);
     const { showModal } = useModal();
     const { showDialog } = useDialog();
@@ -156,6 +164,11 @@ const TeamDatasets = ({ permissions, teamId }: TeamDatasetsProps) => {
         localeKey: "archiveDataset",
     });
 
+    const putDataset = usePut<{ is_cohort_discovery: boolean }>(
+        apis.datasetsV2Url,
+        { itemName: "Dataset" }
+    );
+
     useEffect(() => {
         window.scrollTo({ top: 0 });         
     }, [queryParams.page]);
@@ -168,6 +181,14 @@ const TeamDatasets = ({ permissions, teamId }: TeamDatasetsProps) => {
         () => permissions["datasets.create"],
         [permissions]
     );
+
+    const archiveDataset = async (id: number) => {
+        await patchDataset(id, {
+            status: DataStatus.ARCHIVED,
+        });
+        mutateDatasets();
+        mutateCount();
+    };
 
     const actions = [
         ...(permissions["datasets.update"] && tab !== DataStatus.ARCHIVED
@@ -221,22 +242,57 @@ const TeamDatasets = ({ permissions, teamId }: TeamDatasetsProps) => {
                   },
               ]
             : []),
-        ...(showArchiveButton
+        ...(showArchiveButton && !isSuperAdmin
             ? [
                   {
-                      action: async (id: number) => {
-                          await patchDataset(id, {
-                              status: DataStatus.ARCHIVED,
-                          });
-                          mutateDatasets();
-                          mutateCount();
-                      },
+                      action: archiveDataset,
                       icon: ArchiveIcon,
-                      label: t("actions.archive.label"),
+                      label: t("actions.archive.tooltip"),
                   },
               ]
             : []),
     ];
+
+    const getMenuActions = (dataset: Dataset): DatasetMenuAction[] => {
+        if (!isSuperAdmin) {
+            return [];
+        }
+
+        return [
+            ...(dataset.status === DataStatus.ACTIVE
+                ? [
+                      {
+                          action: async ({
+                              id,
+                              is_cohort_discovery,
+                          }: Dataset) => {
+                              await putDataset(`${id}/cohort-discovery`, {
+                                  is_cohort_discovery: !is_cohort_discovery,
+                              });
+                              mutateDatasets();
+                          },
+                          icon: CohortIcon,
+                          label: t(
+                              dataset.is_cohort_discovery
+                                  ? "actions.cohortDiscovery.exclude"
+                                  : "actions.cohortDiscovery.include"
+                          ),
+                      },
+                  ]
+                : []),
+            ...(showArchiveButton && dataset.create_origin === "MANUAL"
+                ? [
+                      {
+                          action: ({ id }: Dataset) => archiveDataset(id),
+                          color: "error" as const,
+                          icon: ArchiveIcon,
+                          label: t("actions.archive.label"),
+                          tooltip: t("actions.archive.tooltip"),
+                      },
+                  ]
+                : []),
+        ];
+    };
 
     const tabsList = [
         {
@@ -274,6 +330,8 @@ const TeamDatasets = ({ permissions, teamId }: TeamDatasetsProps) => {
                 }
                 isLoading={isLoading}
                 actions={actions}
+                getMenuActions={getMenuActions}
+                menuLabel={t("actions.more.label")}
             />
         ),
     }));

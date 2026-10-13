@@ -65,6 +65,7 @@ import KeyboardDoubleArrowDownIcon from "@mui/icons-material/KeyboardDoubleArrow
 import LaunchIcon from "@mui/icons-material/Launch";
 import LockIcon from "@mui/icons-material/Lock";
 import MenuIcon from "@mui/icons-material/Menu";
+import MoreHorizIcon from "@mui/icons-material/MoreHoriz";
 import NightsStayOutlinedIcon from "@mui/icons-material/NightsStayOutlined";
 import OpenInNewIcon from "@mui/icons-material/OpenInNew";
 import PeopleAltOutlinedIcon from "@mui/icons-material/PeopleAltOutlined";
@@ -190,4 +191,5 @@ export {
     NightsStayOutlinedIcon,
     PeopleAltOutlinedIcon,
     GroupRemoveIcon,
+    MoreHorizIcon,
 };
