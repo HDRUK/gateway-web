@@ -1,8 +1,9 @@
 import { act } from "@testing-library/react";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
-import { renderHook } from "@/utils/testUtils";
 import { SearchCategory } from "@/interfaces/Search";
+import searchFormConfig from "@/config/forms/search";
 import { HDRUK_SOURCE_VALUE } from "@/consts/search";
+import { renderHook } from "@/utils/testUtils";
 import { useQueryParams } from "./useQueryParams";
 
 jest.mock("next/navigation", () => ({
@@ -27,11 +28,15 @@ describe("useQueryParams", () => {
     describe("initialisation", () => {
         it("uses defaults when URL has no params", () => {
             const { result } = renderHook(() => useQueryParams());
-            expect(result.current.queryParams.type).toBe(SearchCategory.DATASETS);
+            expect(result.current.queryParams.type).toBe(
+                SearchCategory.DATASETS
+            );
             expect(result.current.queryParams.page).toBe("1");
             expect(result.current.queryParams.per_page).toBe("25");
             expect(result.current.queryParams.query).toBe("");
-            expect(result.current.queryParams.dataSource).toBe(HDRUK_SOURCE_VALUE);
+            expect(result.current.queryParams.dataSource).toBe(
+                HDRUK_SOURCE_VALUE
+            );
         });
 
         it("reads query, sort, page and type from URL params", () => {
@@ -50,9 +55,57 @@ describe("useQueryParams", () => {
             expect(result.current.queryParams.type).toBe(SearchCategory.TOOLS);
         });
 
+        it("re-syncs when the URL type changes externally", () => {
+            (useSearchParams as jest.Mock).mockReturnValue(
+                makeSearchParams({
+                    type: SearchCategory.DATASETS,
+                    query: "cancer",
+                    publisherName: "NHS",
+                })
+            );
+            const { result, rerender } = renderHook(() => useQueryParams());
+            expect(result.current.queryParams.type).toBe(
+                SearchCategory.DATASETS
+            );
+
+            (useSearchParams as jest.Mock).mockReturnValue(
+                makeSearchParams({ type: SearchCategory.COLLECTIONS })
+            );
+            rerender();
+            expect(result.current.queryParams.type).toBe(
+                SearchCategory.COLLECTIONS
+            );
+            expect(result.current.queryParams.query).toBe("");
+            expect(result.current.queryParams.publisherName).toBeUndefined();
+        });
+
+        it("keeps state set by resetQueryParamState when the URL catches up", () => {
+            (useSearchParams as jest.Mock).mockReturnValue(
+                makeSearchParams({
+                    type: SearchCategory.DATASETS,
+                    query: "cancer",
+                })
+            );
+            const { result, rerender } = renderHook(() => useQueryParams());
+            act(() =>
+                result.current.resetQueryParamState(SearchCategory.COLLECTIONS)
+            );
+
+            (useSearchParams as jest.Mock).mockReturnValue(
+                makeSearchParams({ type: SearchCategory.COLLECTIONS })
+            );
+            rerender();
+            expect(result.current.queryParams.type).toBe(
+                SearchCategory.COLLECTIONS
+            );
+            expect(result.current.queryParams.query).toBe("cancer");
+        });
+
         it("parses pipe-delimited array params", () => {
             (useSearchParams as jest.Mock).mockReturnValue(
-                makeSearchParams({ publisherName: "NHS|UKHSA|Genomics England" })
+                makeSearchParams({
+                    publisherName: "NHS|UKHSA|Genomics England",
+                })
             );
             const { result } = renderHook(() => useQueryParams());
             expect(result.current.queryParams.publisherName).toEqual([
@@ -106,6 +159,17 @@ describe("useQueryParams", () => {
             expect(pushed).toContain("sort=alpha");
             expect(pushed).toContain("page=2");
             expect(pushed).toContain("query=cancer");
+        });
+
+        it("removes params whose value is undefined", () => {
+            (useSearchParams as jest.Mock).mockReturnValue(
+                makeSearchParams({ query: "cancer", page: "2" })
+            );
+            const { result } = renderHook(() => useQueryParams());
+            act(() => result.current.updatePathMultiple({ query: undefined }));
+            const pushed = mockPush.mock.calls[0][0] as string;
+            expect(pushed).not.toContain("query");
+            expect(pushed).toContain("page=2");
         });
     });
 
@@ -162,6 +226,7 @@ describe("useQueryParams", () => {
                     query: "cancer",
                     publisherName: "NHS",
                     page: "3",
+                    sort: "popularity",
                 })
             );
             const { result } = renderHook(() => useQueryParams());
@@ -171,6 +236,7 @@ describe("useQueryParams", () => {
             const { queryParams } = result.current;
             expect(queryParams.type).toBe(SearchCategory.TOOLS);
             expect(queryParams.page).toBe("1");
+            expect(queryParams.sort).toBe(searchFormConfig.defaultValues.sort);
             expect(queryParams.publisherName).toBeUndefined();
             expect(queryParams.dataSource).toBe(HDRUK_SOURCE_VALUE);
         });
