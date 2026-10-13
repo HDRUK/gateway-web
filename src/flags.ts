@@ -57,3 +57,31 @@ export const isLoginDisabled = flag({
     key: "LoginDisabled",
     adapter,
 });
+
+// Per-provider sign-in kill switches. Each is enforced by the API as well -
+// hiding a button here stops people starting a login through a provider that
+// is failing, but only the API can refuse one already in flight.
+export const isLoginGoogleEnabled = flag({
+    key: "LoginGoogleEnabled",
+    adapter,
+});
+
+export const isLoginAzureEnabled = flag({
+    key: "LoginAzureEnabled",
+    adapter,
+});
+
+export const isLoginLinkedInEnabled = flag({
+    key: "LoginLinkedInEnabled",
+    adapter,
+});
+
+export const isLoginOpenAthensEnabled = flag({
+    key: "LoginOpenAthensEnabled",
+    adapter,
+});
+
+export const isLoginRegistryEnabled = flag({
+    key: "LoginRegistryEnabled",
+    adapter,
+});

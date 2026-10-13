@@ -37,6 +37,10 @@ export const errors: { [char: number]: Error } = {
     423: {
         message: "This page is currently locked",
     },
+    503: {
+        message:
+            "Sign in with this provider is temporarily unavailable. Please try another sign-in option, or try again later.",
+    },
     500: {
         message:
             "Uh oh, our internal server has experienced an error, feel free to message us if the problem persists",

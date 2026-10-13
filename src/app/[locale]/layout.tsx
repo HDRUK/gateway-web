@@ -77,6 +77,15 @@ export default async function RootLayout(props: {
         isSafePeopleRegistrySSOEnabled:
             rawFeatures.SafePeopleRegistrySSOEnabled ?? false,
         isLoginDisabled: rawFeatures.LoginDisabled ?? false,
+        // Per-provider sign-in switches default to *enabled* when the flag is
+        // missing, unlike the release gates above: if the features fetch comes
+        // back short, leaving a provider up is a far smaller failure than
+        // locking everyone out of signing in.
+        isLoginGoogleEnabled: rawFeatures.LoginGoogleEnabled ?? true,
+        isLoginAzureEnabled: rawFeatures.LoginAzureEnabled ?? true,
+        isLoginLinkedInEnabled: rawFeatures.LoginLinkedInEnabled ?? true,
+        isLoginOpenAthensEnabled: rawFeatures.LoginOpenAthensEnabled ?? true,
+        isLoginRegistryEnabled: rawFeatures.LoginRegistryEnabled ?? true,
     };
 
     if (includeBanners) {
