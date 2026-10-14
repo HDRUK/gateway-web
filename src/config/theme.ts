@@ -341,6 +341,16 @@ const theme = createHdrukTheme({
                 },
             },
         },
+        MuiDrawer: {
+            variants: [
+                {
+                    props: { variant: "temporary" },
+                    style: ({ theme }) => ({
+                        zIndex: theme.zIndex.modal,
+                    }),
+                },
+            ],
+        },
         MuiCard: {
             styleOverrides: {
                 root: {
