@@ -29,6 +29,116 @@ describe("Autocomplete", () => {
         expect(screen.getByText("Select an option")).toBeInTheDocument();
     });
 
+    describe("selecting without a default value", () => {
+        const duoCodes = [
+            {
+                value: "DUO:0000042",
+                label: "DUO:0000042 (general research use)",
+            },
+            {
+                value: "DUO:0000021",
+                label: "DUO:0000021 (ethics approval required)",
+            },
+        ];
+
+        const getChipLabel = (
+            options: { value: string | number; label: string }[],
+            selected: unknown
+        ) =>
+            options.find(option => option.value === selected)?.label ??
+            String(selected ?? "");
+
+        const CurrentValue = ({
+            control,
+        }: {
+            control: Control<{ fieldName?: string[] }>;
+        }) => {
+            const value = useWatch({ control, name: "fieldName" });
+
+            return <div data-testid="current-value">{value?.join(",")}</div>;
+        };
+
+        const UncontrolledWrapper = () => {
+            const { control } = useForm<{ fieldName?: string[] }>();
+
+            return (
+                <>
+                    <Autocomplete
+                        control={control}
+                        label="GA4GH Data Use Ontology (DUO) codes"
+                        name="fieldName"
+                        options={duoCodes}
+                        getChipLabel={getChipLabel}
+                        multiple
+                    />
+                    <CurrentValue control={control} />
+                </>
+            );
+        };
+
+        const select = async (label: string) => {
+            await userEvent.click(screen.getByRole("combobox"));
+            await userEvent.click(screen.getByRole("option", { name: label }));
+        };
+
+        it("should show the selected option's label on its chip", async () => {
+            render(<UncontrolledWrapper />);
+
+            await select("DUO:0000042 (general research use)");
+
+            expect(
+                screen.getByText("DUO:0000042 (general research use)", {
+                    selector: ".MuiChip-label",
+                })
+            ).toBeInTheDocument();
+            expect(
+                screen.queryByText("[object Object]")
+            ).not.toBeInTheDocument();
+        });
+
+        it("should keep chips in step with the form value when one is removed", async () => {
+            render(<UncontrolledWrapper />);
+
+            await select("DUO:0000042 (general research use)");
+            await select("DUO:0000021 (ethics approval required)");
+
+            const chip = screen
+                .getByText("DUO:0000042 (general research use)", {
+                    selector: ".MuiChip-label",
+                })
+                .closest(".MuiChip-root") as HTMLElement;
+
+            await userEvent.click(
+                chip.querySelector(".MuiChip-deleteIcon") as HTMLElement
+            );
+
+            expect(screen.getByTestId("current-value")).toHaveTextContent(
+                "DUO:0000021"
+            );
+            expect(
+                screen.getAllByText(/^DUO:/, { selector: ".MuiChip-label" })
+            ).toHaveLength(1);
+            expect(
+                screen.getByText("DUO:0000021 (ethics approval required)", {
+                    selector: ".MuiChip-label",
+                })
+            ).toBeInTheDocument();
+        });
+
+        it("should mark a chosen option as selected when the list is reopened", async () => {
+            render(<UncontrolledWrapper />);
+
+            await select("DUO:0000042 (general research use)");
+            await userEvent.click(screen.getByRole("combobox"));
+
+            expect(
+                screen.getByRole("option", {
+                    name: "DUO:0000042 (general research use)",
+                })
+            ).toHaveAttribute("aria-selected", "true");
+        });
+    });
+
     describe("tag overflow", () => {
         const createValues = (total: number) =>
             Array.from({ length: total }, (_, index) => `10.1000/doi${index}`);
