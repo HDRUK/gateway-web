@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { Banner } from "@hdruk/ui";
 import { Select, MenuItem, InputAdornment } from "@mui/material";
 import { useTranslations } from "next-intl";
 import { DashboardEntityCount } from "@/interfaces/Dashboard";
@@ -16,6 +17,7 @@ import ImproveYourUsageWidget from "@/modules/ImproveYourUsageWidget/ImproveYour
 import LearnMoreWidget from "@/modules/LearnMoreWidget/LearnMoreWidget";
 import OtherViewsWidget from "@/modules/OtherViewsWidget/OtherViewsWidget";
 import apis from "@/config/apis";
+import { CUSTOMER_PORTAL_SUPPORT_URL } from "@/config/hrefs";
 import { CalendarMonthOutlinedIcon } from "@/consts/icons";
 import { formatDate } from "@/utils/date";
 import ResourceCounts from "./components/ResourceCounts/ResourceCounts";
@@ -60,50 +62,74 @@ const Dashboard = ({ teamId, initialCounts }: DashboardProps) => {
 
     return (
         <BoxContainer sx={{ gap: 2, gridTemplateColumns: "minmax(0, 1fr)" }}>
-            <Paper>
-                <Box
-                    sx={{
-                        display: "flex",
-                        justifyContent: "space-between",
-                        alignItems: "flex-start",
-                        flexWrap: "wrap",
-                        gap: 2,
+            <BoxContainer
+                sx={{
+                    gap: 2,
+                    position: "sticky",
+                    top: 0,
+                    zIndex: "appBar",
+                    bgcolor: "background.default",
+                }}>
+                <Banner
+                    tag={t("betaBanner.tag")}
+                    closable
+                    action={{
+                        label: t("betaBanner.action"),
+                        href: CUSTOMER_PORTAL_SUPPORT_URL,
+                        target: "_blank",
                     }}>
-                    <Box>
-                        <Typography variant="h2" component="h1">
-                            {t("title")}
-                        </Typography>
-                        <Typography>{t("text")}</Typography>
+                    {t("betaBanner.message")}
+                </Banner>
+                <Paper>
+                    <Box
+                        sx={{
+                            display: "flex",
+                            justifyContent: "space-between",
+                            alignItems: "flex-start",
+                            flexWrap: "wrap",
+                            gap: 2,
+                        }}>
+                        <Box>
+                            <Typography variant="h2" component="h1">
+                                {t("title")}
+                            </Typography>
+                            <Typography>{t("text")}</Typography>
+                        </Box>
+                        <Box
+                            sx={{
+                                display: "flex",
+                                alignItems: "center",
+                                gap: 2,
+                            }}>
+                            <Select
+                                size="small"
+                                value={period}
+                                onChange={e => setPeriod(e.target.value)}
+                                inputProps={{ "aria-label": t("choosePeriod") }}
+                                startAdornment={
+                                    <InputAdornment position="start">
+                                        <CalendarMonthOutlinedIcon
+                                            sx={{ fontSize: 18 }}
+                                        />
+                                    </InputAdornment>
+                                }
+                                sx={{ minWidth: 180 }}>
+                                {PERIODS.map(({ value }) => (
+                                    <MenuItem key={value} value={value}>
+                                        {t(`periods.${value}`)}
+                                    </MenuItem>
+                                ))}
+                            </Select>
+                            <DownloadFile
+                                apiPath={downloadUrl}
+                                buttonText={t("download")}
+                                buttonSx={{ mb: 0 }}
+                                variant="contained"
+                            />
+                        </Box>
                     </Box>
-                    <Box sx={{ display: "flex", alignItems: "center", gap: 2 }}>
-                        <Select
-                            size="small"
-                            value={period}
-                            onChange={e => setPeriod(e.target.value)}
-                            inputProps={{ "aria-label": t("choosePeriod") }}
-                            startAdornment={
-                                <InputAdornment position="start">
-                                    <CalendarMonthOutlinedIcon
-                                        sx={{ fontSize: 18 }}
-                                    />
-                                </InputAdornment>
-                            }
-                            sx={{ minWidth: 180 }}>
-                            {PERIODS.map(({ value }) => (
-                                <MenuItem key={value} value={value}>
-                                    {t(`periods.${value}`)}
-                                </MenuItem>
-                            ))}
-                        </Select>
-                        <DownloadFile
-                            apiPath={downloadUrl}
-                            buttonText={t("download")}
-                            buttonSx={{ mb: 0 }}
-                            variant="contained"
-                        />
-                    </Box>
-                </Box>
-            </Paper>
+                </Paper>
+            </BoxContainer>
             <Paper>
                 <ResourceCounts
                     teamId={teamId}
