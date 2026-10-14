@@ -65,10 +65,10 @@ const Dashboard = ({ teamId, initialCounts }: DashboardProps) => {
             <BoxContainer
                 sx={{
                     gap: 2,
-                    position: "sticky",
-                    top: 0,
-                    zIndex: "appBar",
-                    bgcolor: "background.default",
+                    position: { md: "sticky" },
+                    top: { md: 0 },
+                    zIndex: { md: "appBar" },
+                    bgcolor: { md: "background.default" },
                 }}>
                 <Banner
                     highlight={t("betaBanner.highlight")}
