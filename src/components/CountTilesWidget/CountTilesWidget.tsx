@@ -4,12 +4,14 @@ import { tokens } from "@hdruk/ui/theme";
 import Skeleton from "@mui/material/Skeleton";
 import Box from "@/components/Box";
 import Paper from "@/components/Paper";
+import TooltipIcon from "@/components/TooltipIcon";
 import Typography from "@/components/Typography";
 
 export interface CountTile {
     key: string;
     label: string;
     count?: number;
+    tooltip?: string;
 }
 
 interface CountTilesWidgetProps {
@@ -54,7 +56,7 @@ const CountTilesWidget = ({
                     m: 0,
                     p: 0,
                 }}>
-                {items.map(({ key, label, count }) => (
+                {items.map(({ key, label, count, tooltip }) => (
                     <Box
                         key={key}
                         sx={{
@@ -65,7 +67,17 @@ const CountTilesWidget = ({
                             p: 2,
                             bgcolor: tokens.background.primary,
                         }}>
-                        <Typography component="dt">{label}</Typography>
+                        <Typography component="dt">
+                            {tooltip ? (
+                                <TooltipIcon
+                                    boxSx={{ justifyContent: "flex-start" }}
+                                    label={label}
+                                    content={tooltip}
+                                />
+                            ) : (
+                                label
+                            )}
+                        </Typography>
                         <Typography variant="h1" component="dd" sx={{ m: 0 }}>
                             {(count ?? 0).toLocaleString()}
                         </Typography>

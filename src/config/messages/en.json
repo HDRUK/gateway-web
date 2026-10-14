@@ -251,7 +251,7 @@
         "account": {
             "dashboard": {
                 "title": "Dashboard",
-                "text": "Here's the latest activity from researchers accessing your Gateway resources.",
+                "text": "Here's a view of activity related to your content on the HDR Gateway.",
                 "betaBanner": {
                     "tag": "BETA",
                     "message": "This dashboard will be periodically improved based on usage and user feedback.",
@@ -266,23 +266,28 @@
                     "last_month": "Last month"
                 },
                 "datasetViews": {
-                    "title": "Dataset views",
+                    "title": "Dataset Views",
+                    "tooltip": "Total times a page is viewed by any user (includes views from your team members). Includes whenever someone loads a page of your website OR the active site changes the browser history state (e.g. the browser's navigation record reflects what you're viewing, rather than necessarily opening a brand-new page).",
                     "noData": "No data to display"
                 },
                 "datasetViewsBar": {
                     "mostTitle": "Most Dataset Views",
                     "leastTitle": "Least Dataset Views",
+                    "tooltip": "Page views are those by any user (includes views from your team members). Includes whenever someone loads a page of your website OR the active site changes the browser history state (e.g. the browser's navigation record reflects what you're viewing, rather than necessarily opening a brand-new page).",
                     "showLeast": "Show least views",
                     "showMost": "Show most views",
                     "viewsLabel": "Views",
                     "noData": "No data to display"
                 },
                 "otherViews": {
-                    "title": "Other views",
+                    "title": "Other Entity Views",
                     "loading": "Loading other views",
                     "labels": {
                         "collections": "Collections",
                         "dataCustodian": "Data Custodian page"
+                    },
+                    "tooltips": {
+                        "dataCustodian": "Number of times any user has viewed your Data Custodian profile page. Views are those by any user (includes views from your team members). Includes whenever someone loads a page of your website OR the active site changes the browser history state (e.g. the browser's navigation record reflects what you're viewing, rather than necessarily opening a brand-new page)."
                     }
                 },
                 "enquiries": {
@@ -307,7 +312,7 @@
                     "title": "Learn more about the Gateway"
                 },
                 "resources": {
-                    "title": "Your resources",
+                    "title": "{teamName} Resources",
                     "chooseResources": "Choose resources",
                     "addedThisPeriod": "{count} added this period",
                     "scrollLeft": "Show previous resources",
