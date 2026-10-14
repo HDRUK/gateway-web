@@ -65,13 +65,14 @@ const Dashboard = ({ teamId, initialCounts }: DashboardProps) => {
             <BoxContainer
                 sx={{
                     gap: 2,
-                    position: { md: "sticky" },
-                    top: { md: 0 },
-                    zIndex: { md: "appBar" },
-                    bgcolor: { md: "background.default" },
+                    position: "sticky",
+                    top: 0,
+                    zIndex: "appBar",
+                    bgcolor: "background.default",
                 }}>
                 <Banner
                     tag={t("betaBanner.tag")}
+                    closable
                     action={{
                         label: t("betaBanner.action"),
                         href: CUSTOMER_PORTAL_SUPPORT_URL,
