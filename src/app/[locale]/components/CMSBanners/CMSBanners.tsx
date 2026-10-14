@@ -25,11 +25,12 @@ const CMSBanners = ({ data }: { data: HomepageBannerNode[] }) => {
                     return !!description || !!heading ? (
                         <Banner
                             key={`${heading}${description}`}
-                            highlight={heading}
-                            actionLabel={
-                                linkText && linkUrl ? linkText : undefined
+                            tag={heading}
+                            action={
+                                linkText && linkUrl
+                                    ? { label: linkText, href: linkUrl }
+                                    : undefined
                             }
-                            slotProps={{ action: { href: linkUrl } }}
                             closable
                             closeLabel={t("ariaCloseButtonLabel")}>
                             {description}

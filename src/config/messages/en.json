@@ -253,7 +253,7 @@
                 "title": "Dashboard",
                 "text": "Here's the latest activity from researchers accessing your Gateway resources.",
                 "betaBanner": {
-                    "highlight": "BETA",
+                    "tag": "BETA",
                     "message": "This dashboard will be periodically improved based on usage and user feedback.",
                     "action": "Share feedback"
                 },

@@ -71,14 +71,11 @@ const Dashboard = ({ teamId, initialCounts }: DashboardProps) => {
                     bgcolor: { md: "background.default" },
                 }}>
                 <Banner
-                    highlight={t("betaBanner.highlight")}
-                    actionLabel={t("betaBanner.action")}
-                    slotProps={{
-                        action: {
-                            href: CUSTOMER_PORTAL_SUPPORT_URL,
-                            target: "_blank",
-                            rel: "noreferrer",
-                        },
+                    tag={t("betaBanner.tag")}
+                    action={{
+                        label: t("betaBanner.action"),
+                        href: CUSTOMER_PORTAL_SUPPORT_URL,
+                        target: "_blank",
                     }}>
                     {t("betaBanner.message")}
                 </Banner>
