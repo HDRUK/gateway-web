@@ -76,6 +76,9 @@ const labelOf = (selected: SelectedType) =>
     (typeof selected === "object" ? selected.label : undefined) ??
     String(selected);
 
+const isSameValue = (option: SelectedType, value: SelectedType) =>
+    value != null && valueOf(option) === valueOf(value);
+
 const Autocomplete = <T extends FieldValues>(props: AutocompleteProps<T>) => {
     const {
         label,
@@ -157,15 +160,13 @@ const Autocomplete = <T extends FieldValues>(props: AutocompleteProps<T>) => {
                 {...restProps}
                 {...rootAttributes}
                 ref={ref}
-                value={value}
+                value={value ?? (multiple ? [] : null)}
                 onBlur={onBlur}
                 freeSolo={freeSolo}
                 multiple={multiple}
-                defaultValue={[]}
                 getOptionLabel={option => {
                     if (isLoadingOptions) return "Loading...";
                     if (!option) return "";
-                    // defaultValue [] also reaches single selects
                     if (Array.isArray(option) && option.length === 0) return "";
                     if (typeof option === "object") return option.label;
                     return (
@@ -175,11 +176,7 @@ const Autocomplete = <T extends FieldValues>(props: AutocompleteProps<T>) => {
                     );
                 }}
                 isOptionEqualToValue={
-                    multiple
-                        ? isOptionEqualToValue
-                        : (option, value) =>
-                              value != null &&
-                              valueOf(option) === valueOf(value)
+                    multiple ? isOptionEqualToValue ?? isSameValue : isSameValue
                 }
                 options={options}
                 disabled={disabled}
