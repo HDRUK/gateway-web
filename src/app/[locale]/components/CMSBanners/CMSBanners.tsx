@@ -1,10 +1,8 @@
 "use client";
 
-import { Button } from "@hdruk/ui";
-import { Box, Typography } from "@mui/material";
+import { Banner } from "@hdruk/ui";
 import { useTranslations } from "next-intl";
 import { HomepageBannerNode } from "@/interfaces/Homepage";
-import InfoBanner from "@/components/InfoBanner";
 
 const TRANSLATION_PATH = "components.CMSBanner";
 
@@ -25,53 +23,17 @@ const CMSBanners = ({ data }: { data: HomepageBannerNode[] }) => {
                     },
                 }) => {
                     return !!description || !!heading ? (
-                        <InfoBanner
+                        <Banner
                             key={`${heading}${description}`}
-                            ariaCloseButtonLabel={t("ariaCloseButtonLabel")}
-                            isDismissable
-                            action={
-                                linkText &&
-                                linkUrl && (
-                                    <Button
-                                        component="a"
-                                        color="greyCustom"
-                                        href={linkUrl}
-                                        disableElevation>
-                                        {linkText}
-                                    </Button>
-                                )
+                            highlight={heading}
+                            actionLabel={
+                                linkText && linkUrl ? linkText : undefined
                             }
-                            message={
-                                <Box
-                                    sx={{
-                                        display: "flex",
-                                        gap: 2,
-                                        alignItems: "center",
-                                        width: "100%",
-                                    }}>
-                                    <Typography
-                                        variant="h3"
-                                        color="warning"
-                                        fontWeight="500"
-                                        sx={{
-                                            mb: 0,
-                                            color: "yellowCustom.main",
-                                        }}>
-                                        {heading}
-                                    </Typography>
-                                    <Box
-                                        sx={{
-                                            display: "flex",
-                                            alignItems: "center",
-                                            flexGrow: 1,
-                                        }}>
-                                        <Typography sx={{ flexGrow: 1 }}>
-                                            {description}
-                                        </Typography>
-                                    </Box>
-                                </Box>
-                            }
-                        />
+                            slotProps={{ action: { href: linkUrl } }}
+                            closable
+                            closeLabel={t("ariaCloseButtonLabel")}>
+                            {description}
+                        </Banner>
                     ) : null;
                 }
             )}
