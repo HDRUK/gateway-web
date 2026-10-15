@@ -1,5 +1,10 @@
 const createNextIntlPlugin = require("next-intl/plugin");
+const createMDX = require("@next/mdx");
+const generateTemplateRegistry = require("./scripts/generateTemplateRegistry");
 const withNextIntl = createNextIntlPlugin();
+const withMDX = createMDX();
+
+generateTemplateRegistry();
 
 const allowAllHeader = [
     { key: "Access-Control-Allow-Credentials", value: "true" },
@@ -13,6 +18,7 @@ const allowAllHeader = [
 
 const nextConfig = {
     reactStrictMode: true,
+    pageExtensions: ["ts", "tsx", "js", "jsx"],
     env: {
         API_V1_URL: process.env.NEXT_PUBLIC_API_V1_URL,
         API_V1_IP_URL: process.env.NEXT_PUBLIC_API_V1_IP_URL,
@@ -113,4 +119,4 @@ const nextConfig = {
     },
 };
 
-module.exports = withNextIntl(nextConfig);
+module.exports = withMDX(withNextIntl(nextConfig));

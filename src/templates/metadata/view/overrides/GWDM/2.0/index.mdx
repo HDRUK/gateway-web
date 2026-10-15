@@ -1,0 +1,32 @@
+{/**
+  * Override for GWDM 2.0 - the schema most older published datasets are still
+  * stored in. No sibling components.tsx exists, so this template gets the
+  * base vocabulary only, which is all it needs.
+  *
+  * This file exists to demonstrate zero-edit authoring: it was added by
+  * creating this one file, with no change to the registry or anywhere else.
+  *
+  * @typedef {import("@/generated/schemas/GWDM/2.2").Gwdm22} Gwdm22
+  * @typedef {import("../../../baseComponents").BaseVocabulary} MDXProvidedComponents
+  *
+  * @typedef Props
+  * @property {Gwdm22} data
+  * @property {string} [title]
+  */}
+
+export const meta = {
+  description:
+    "Minimal override for legacy GWDM 2.0 - a lead paragraph then the generic view.",
+};
+
+<Article>
+
+# {props.title}
+
+This dataset is stored in **GWDM 2.0**, an earlier version of the Gateway
+Working Data Model. It renders here with no version-specific field mapping -
+every heading and description below comes from the 2.0 schema itself.
+
+<MetadataView />
+
+</Article>

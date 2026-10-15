@@ -61,6 +61,33 @@ describe("ActiveListSidebar", () => {
         expect(window.scrollTo).not.toHaveBeenCalled();
     });
 
+    it("prefers an item's anchorId over its position", () => {
+        const slug = document.createElement("div");
+        slug.id = "section-documentation";
+        slug.scrollIntoView = jest.fn();
+        document.body.appendChild(slug);
+
+        setScreenWidth(1440);
+        render(
+            <ActiveListSidebar
+                items={[
+                    { label: "Summary", anchorId: "section-summary" },
+                    {
+                        label: "Documentation",
+                        anchorId: "section-documentation",
+                    },
+                ]}
+            />
+        );
+
+        fireEvent.click(screen.getByRole("button", { name: "Documentation" }));
+
+        expect(slug.scrollIntoView).toHaveBeenCalled();
+        expect(section.scrollIntoView).not.toHaveBeenCalled();
+
+        document.body.removeChild(slug);
+    });
+
     it("scrolls to the section minus the mobile offset on mobile", () => {
         setScreenWidth(390);
         render(<ActiveListSidebar items={items} />);

@@ -30,7 +30,7 @@ jobs:
               - "src/app/api/widget/**"
               - "src/app/[locale]/account/team/[teamId]/(withLeftNav)/integrations/widgets/**"
               - "src/interfaces/Widget.ts"
-              - "widgetBuilder.ts"
+              - "scripts/widgetBuilder.ts"
               - "next.config.js"
 
       - name: Label PR

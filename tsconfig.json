@@ -32,5 +32,8 @@
         ".next/dev/types/**/*.ts",
         "jest.config.js"
     ],
-    "exclude": ["node_modules", "cypress", "cypress.config.ts"]
+    "exclude": ["node_modules", "cypress", "cypress.config.ts"],
+    "mdx": {
+        "checkMdx": true
+    }
 }

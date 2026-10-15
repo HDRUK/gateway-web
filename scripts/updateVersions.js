@@ -7,7 +7,7 @@ if (!newVersion) {
     process.exit(1);
   }
 function updateChartYamlVersion(newVersion) {
-    const chartFilePath = path.resolve(__dirname, "chart/gateway-web/Chart.yaml");
+    const chartFilePath = path.resolve(__dirname, "..", "chart/gateway-web/Chart.yaml");
     const chartContent = fs.readFileSync(chartFilePath, "utf8");
   
     const updatedContent = chartContent.replace(
@@ -20,7 +20,7 @@ function updateChartYamlVersion(newVersion) {
     console.log(`Updated chart/Chart.yaml to version ${newVersion}`);
   }
 function updatePackageJsonVersion(newVersion) {
-  const packageJsonPath = path.resolve(__dirname, "package.json");
+  const packageJsonPath = path.resolve(__dirname, "..", "package.json");
   const packageJsonContent = fs.readFileSync(packageJsonPath, "utf8");
 
   const packageJson = JSON.parse(packageJsonContent);
