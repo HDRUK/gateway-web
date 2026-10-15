@@ -267,13 +267,13 @@
                 },
                 "datasetViews": {
                     "title": "Dataset Views",
-                    "tooltip": "Total times a page is viewed by any user (includes views from your team members). Includes whenever someone loads a page of your website OR the active site changes the browser history state (e.g. the browser's navigation record reflects what you're viewing, rather than necessarily opening a brand-new page).",
+                    "tooltip": "Page views are tracked by Google Analytics. Reported page views may be incomplete or estimated as not all users provide consent for analytics. These figures reflect the total times a page is viewed by any user, including duplicates from the same person and views from your team members.",
                     "noData": "No data to display"
                 },
                 "datasetViewsBar": {
                     "mostTitle": "Most Dataset Views",
                     "leastTitle": "Least Dataset Views",
-                    "tooltip": "Page views are those by any user (includes views from your team members). Includes whenever someone loads a page of your website OR the active site changes the browser history state (e.g. the browser's navigation record reflects what you're viewing, rather than necessarily opening a brand-new page).",
+                    "tooltip": "Page views are tracked by Google Analytics. Reported page views may be incomplete or estimated as not all users provide consent for analytics. These figures reflect the total times a page is viewed by any user, including duplicates from the same person and views from your team members.",
                     "showLeast": "Show least views",
                     "showMost": "Show most views",
                     "viewsLabel": "Views",
@@ -287,7 +287,7 @@
                         "dataCustodian": "Data Custodian page"
                     },
                     "tooltips": {
-                        "dataCustodian": "Number of times any user has viewed your Data Custodian profile page. Views are those by any user (includes views from your team members). Includes whenever someone loads a page of your website OR the active site changes the browser history state (e.g. the browser's navigation record reflects what you're viewing, rather than necessarily opening a brand-new page)."
+                        "dataCustodian": "Number of times any user has viewed your Data Custodian profile page. Page views are tracked by Google Analytics. Reported page views may be incomplete or estimated as not all users provide consent for analytics. These figures reflect the total times a page is viewed by any user, including duplicates from the same person and views from your team members."
                     }
                 },
                 "enquiries": {
