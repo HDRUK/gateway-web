@@ -2,6 +2,7 @@ import { Alert, Divider } from "@mui/material";
 import Box from "@/components/Box";
 import MetadataTemplate from "@/templates/metadata/view/MetadataTemplate";
 import { getMetadataTemplate } from "@/templates/metadata/view/registry";
+import { getDataset } from "@/utils/api";
 import metaData, { noFollowRobots } from "@/utils/metadata";
 import ControlsPanel from "./components/ControlsPanel";
 import SchemaPicker from "./components/SchemaPicker";
@@ -9,7 +10,6 @@ import {
     buildLiveContext,
     resolveEffectiveSchema,
 } from "./lib/buildLiveContext";
-import { fetchLiveDataset } from "./lib/fetchLiveDataset";
 import { fetchAvailableSchemas, fetchSchema } from "./lib/fetchSchema";
 
 export const metadata = metaData(
@@ -34,9 +34,11 @@ export default async function DatasetV2Page({
     const [{ datasetId }, query] = await Promise.all([params, searchParams]);
     const { schema_model: schemaModel, schema_version: schemaVersion } = query;
 
-    const [available, { dataset, error }] = await Promise.all([
+    const [available, dataset] = await Promise.all([
         fetchAvailableSchemas(),
-        fetchLiveDataset(datasetId, schemaModel, schemaVersion),
+        getDataset(datasetId, schemaModel, schemaVersion, {
+            suppressError: true,
+        }).catch(() => undefined),
     ]);
 
     const picker = (
@@ -48,13 +50,16 @@ export default async function DatasetV2Page({
         />
     );
 
-    if (!dataset) {
+    if (!dataset?.versions?.length) {
         return (
             <Box>
                 <ControlsPanel summary={`dataset ${datasetId} - failed`}>
                     {picker}
                 </ControlsPanel>
-                <Alert severity="error">{error}</Alert>
+                <Alert severity="error">
+                    Could not load dataset {datasetId}
+                    {schemaModel && ` as ${schemaModel} ${schemaVersion}`}.
+                </Alert>
             </Box>
         );
     }

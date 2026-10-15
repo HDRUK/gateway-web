@@ -42,18 +42,22 @@ There is no list to update and no import to add. A folder per version means a
 template can grow its own components, notes or tests without cluttering the
 schema folder.
 
-Then restart the dev server. A generator (`generateTemplateRegistry.js` at the
-repo root) scans the folder and rewrites `registry.generated.ts` with static
-imports. It runs automatically from `next.config.js` whenever `next dev` or
-`next build` starts, so the only reason to run it by hand is to inspect the
-output:
+Then restart the dev server. A generator
+([`scripts/generateTemplateRegistry.js`](../../../../scripts/generateTemplateRegistry.js))
+scans the folder and rewrites `registry.generated.ts` with static imports. It
+runs automatically from `next.config.js` whenever `next dev` or `next build`
+starts, so the only reason to run it by hand is to inspect the output:
 
 ```bash
 npm run generate:template-registry
 ```
 
 Because `next.config.js` is read once at startup, a _new_ template needs a dev
-server restart. Editing an existing one hot-reloads normally.
+server restart. Editing an existing one hot-reloads normally. Commit the
+regenerated `registry.generated.ts` alongside the new template.
+
+If the new template is for a schema version with no generated types yet, add
+them as well — see [Generated schema types](#generated-schema-types).
 
 > Codegen rather than a dynamic `import()` because this code is built four ways
 > — Turbopack dev, Turbopack build, webpack Storybook, and Jest with no bundler
@@ -94,6 +98,35 @@ Spread `makeBaseComponents(ctx)` first or the template loses `<Article>`,
 closes over the dataset, so templates use bare tags with no data wiring. The
 `Vocabulary` type is what gives the `.mdx` typed tags — see
 [Typing a template](#typing-a-template).
+
+## Previewing a template
+
+The preview page at `/dataset/v2/{datasetId}` renders a live dataset through
+this system. It is not linked from the site and is marked `noindex`.
+
+```
+/dataset/v2/1234                                          native GWDM version
+/dataset/v2/1234?schema_model=HDRUK&schema_version=4.1.0  translated to HDRUK 4.1.0
+```
+
+1. The dataset comes from `getDataset` in `@/utils/api`, the same call the
+   normal dataset page makes. That means the environment's v2 API, sent with
+   the user's cookies. `schema_model`/`schema_version` are passed straight
+   through, so the API does the translation.
+2. With no query, the page renders the dataset's own GWDM version. With one,
+   it renders the requested schema and the controls panel marks it
+   "(translated)".
+3. The JSON Schema for that schema and version is fetched from schemata-2 at
+   `NEXT_PUBLIC_SCHEMA_BRANCH`. Labels, tooltips and render strategies come
+   from it, so if it is missing the page warns and the generic view is empty.
+4. `getMetadataTemplate` picks the template as described in
+   [Which template wins](#which-template-wins). The controls panel shows which
+   source file was chosen.
+
+The schema picker in the controls panel lists every schema version that
+schemata-2 publishes. A dataset that fails to load or translate shows an
+error with the picker still available, rather than a 404, so a bad choice can
+be undone.
 
 ## What the default rendering does
 
@@ -181,6 +214,34 @@ narrowing comes from `BaseVocabulary<keyof Hdruk410>` in `components.tsx`.
 
 `Default.mdx` and templates with no `components.tsx` point
 `MDXProvidedComponents` at `BaseVocabulary` instead.
+
+### Generated schema types
+
+The models under `src/generated/schemas/{SCHEMA_NAME}/{version}.ts` are
+compiled from `hdr_schemata/models/{SCHEMA_NAME}/{version}/schema.json` in
+[HDRUK/schemata-2](https://github.com/HDRUK/schemata-2) by
+[`scripts/generateSchemaTypes.ts`](../../../../scripts/generateSchemaTypes.ts).
+Unlike the template registry, this does **not** run on `next dev` or
+`next build`. It fetches over the network, so run it by hand and commit the
+output:
+
+```bash
+npm run generate:schema-types
+```
+
+-   **Which versions** are listed in `TARGETS` at the top of the script —
+    currently `HDRUK` `4.1.0` and `GWDM` `2.2`. Adding a schema version means
+    adding it there; the script does not discover versions on its own.
+-   **Which branch** of schemata-2 comes from `NEXT_PUBLIC_SCHEMA_BRANCH`,
+    defaulting to `master`, the same constant the app uses at runtime. Generate
+    against the branch the deployed app reads, or the types will describe a
+    schema the data does not match.
+-   **Re-run it** whenever the upstream schema changes. Nothing flags drift:
+    the types simply go stale.
+-   Run both generators from the repo root via `npm run`. They resolve their
+    output paths from the working directory.
+-   Duplicate `$defs` titles come out suffixed (`Documentation1`,
+    `Coverage1`). That is `json-schema-to-typescript`'s doing and is harmless.
 
 > **This is editor-only.** `tsc` cannot parse `.mdx` at all, so `npm run
 ts-lint` will never check a template and neither will CI. The diagnostics

@@ -101,13 +101,13 @@ export function buildLiveContext(dataset: Dataset): LiveContextParts {
         section.fields.some(field => !isEmpty(get(datasetVersion, field.path)))
     );
 
-    // The v1 response carries link_type directly on each publication, unlike
-    // the nested dataset_versions shape Dataset["publications"] describes.
     const publications = (dataset.publications ?? []) as unknown as {
-        link_type?: string;
+        dataset_versions?: { link_type?: string }[];
     }[];
     const countByLinkType = (type: string) =>
-        publications.filter(pub => pub.link_type === type).length;
+        publications.filter(pub =>
+            pub.dataset_versions?.some(version => version.link_type === type)
+        ).length;
 
     return {
         dataset,
