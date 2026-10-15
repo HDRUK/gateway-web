@@ -1,0 +1,114 @@
+{/**
+  * Full bespoke landing page for HDR UK 4.1.0, mirroring the production
+  * dataset page. Every tag below is supplied pre-bound to this dataset by
+  * components.tsx - there is nothing to import and no data wiring here.
+  *
+  * `MDXProvidedComponents` types the tags: an unknown tag name, a bad prop, or
+  * a `name` that is not a section of this schema are all flagged in the
+  * editor. `Props` types `props.data` to the generated model for this exact
+  * schema version.
+  *
+  * @typedef {import("@/generated/schemas/HDRUK/4.1.0").Hdruk410} Hdruk410
+  * @typedef {import("./components").Vocabulary} MDXProvidedComponents
+  *
+  * @typedef Props
+  * @property {Hdruk410} data
+  * @property {string} [title]
+  * @property {string} [dataCustodianName]
+  */}
+
+export const meta = {
+  description: "Full landing page - mirrors the production dataset page.",
+};
+
+<DatasetLayout>
+
+  <Column name="left">
+    <Region area="back"><BackToSearch /></Region>
+    <Region area="actions"><ActionBar /></Region>
+
+{/* The nav sits in an earlier column than the content, so it cannot observe
+    what rendered - the order is declared here and must match the
+    <DatasetSection> list below. Labels and empty-section filtering still come
+    from the schema, so a section with no data drops out of both at once. */}
+    <SectionNav sections={[
+      "summary",
+      "documentation",
+      "provenance",
+      "coverage",
+      "accessibility",
+      "enrichmentAndLinkage",
+      "observations",
+      "structuralMetadata",
+      "demographicFrequency",
+      "omics",
+    ]} />
+  </Column>
+
+  <Region area="title">
+
+# {props.title}
+
+<DataCustodianLink />
+
+  </Region>
+
+  <Region area="stats"><DatasetStats /></Region>
+
+  <Column name="main">
+    <Region area="mindmap"><DatasetMindMap /></Region>
+
+    <Region area="content">
+
+{/* Each section renders its fields as label/value rows, with labels,
+    tooltips and ordering taken from the schema rather than a hardcoded path
+    list. Nested objects are walked down to their leaves, so a value one or
+    three levels deep reads as one flat row either way.
+
+    Arrays decide their own shape: uniform objects become a table, objects
+    with nesting of their own become an accordion each, and lists of short
+    values - including the legacy `;,;`-delimited strings - become chips.
+    None of that needs saying here.
+
+    <DatasetSection name="x"><Thing /></DatasetSection> hands the section's
+    data to the child instead. Add `fields` to keep the rows as well, and
+    `exclude` to drop the fields the child has already covered.
+
+    A section with no data renders nothing, so every section can stay listed. */}
+
+      {/* Opens with the abstract as prose, then the remaining summary fields */}
+      <DatasetSection name="summary" fields exclude={["abstract"]}>
+        <Prose field="abstract" />
+      </DatasetSection>
+
+      <DatasetSection name="documentation" />
+      <DatasetSection name="provenance" />
+      <DatasetSection name="coverage" />
+      <DatasetSection name="accessibility" />
+      <DatasetSection name="enrichmentAndLinkage" />
+      <DatasetSection name="observations" />
+      {/* The translation emits one table per column, all named alike, so this
+          section merges them before rendering - see
+          components/StructuralMetadata. */}
+      <DatasetSection name="structuralMetadata">
+        ### test heading here
+        <StructuralMetadata />
+      </DatasetSection>
+      <DatasetSection name="demographicFrequency" />
+      <DatasetSection name="omics" />
+
+      {/* Identifier, version and timestamps are record-keeping, not content:
+          one compact strip rather than four full-width sections */}
+      <FieldStrip fields={["identifier", "version", "issued", "modified"]} />
+
+    </Region>
+  </Column>
+
+  <Region area="sources"><Sources /></Region>
+
+  <Region area="aside">
+    <Linkages />
+    <Publications />
+  </Region>
+
+</DatasetLayout>

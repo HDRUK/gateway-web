@@ -1,0 +1,29 @@
+{/**
+  * Global fallback template. Used for any schema and version with no entry
+  * under overrides/. Everything shown is derived from the dataset's own JSON
+  * Schema - no field list is hardcoded here, so this renders correctly for a
+  * schema nobody has written a template for.
+  *
+  * `data` is deliberately untyped here: this template must work for every
+  * schema, so it has no single generated model to point at. Overrides do type
+  * it - see overrides/HDRUK/4.1.0/index.mdx.
+  *
+  * @typedef {import("./baseComponents").BaseVocabulary} MDXProvidedComponents
+  *
+  * @typedef Props
+  * @property {Record<string, unknown>} data
+  * @property {string} [title]
+  */}
+
+export const meta = {
+  description:
+    "Generic schema-driven fallback - renders any metadata from its JSON Schema.",
+};
+
+<Article>
+
+# {props.title}
+
+<MetadataView />
+
+</Article>

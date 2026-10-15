@@ -32,6 +32,8 @@ const ActiveListSidebar = ({
 }: {
     items: {
         label: string;
+        /** Target element id. Falls back to the positional `anchor{n}`. */
+        anchorId?: string;
     }[];
     disableSticky?: boolean;
     sx?: SxProps<Theme>;
@@ -69,7 +71,8 @@ const ActiveListSidebar = ({
 
     const handleScroll = useCallback(
         (id: number) => {
-            const section = document.querySelector<HTMLElement>(`#anchor${id}`);
+            const anchorId = items[id - 1]?.anchorId ?? `anchor${id}`;
+            const section = document.getElementById(anchorId);
             const heading = section?.querySelector<HTMLElement>("h2");
 
             if (section) {
@@ -94,7 +97,7 @@ const ActiveListSidebar = ({
                 }
             }
         },
-        [isDatasetPage, isMobile]
+        [isDatasetPage, isMobile, items]
     );
 
     return (

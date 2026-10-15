@@ -1,0 +1,81 @@
+{/**
+  * Partial override for GWDM 2.2. Shows the three levels of control an .mdx
+  * template has over rendering:
+  *
+  *   1. let the schema decide     - plain <MetadataView /> for everything
+  *   2. pick WHICH data renders   - scope with `path`
+  *   3. pick HOW it renders       - pass `components` to override a strategy
+  *
+  * `MDXProvidedComponents` types every tag below; `Props` types `props.data`
+  * to this schema version, so destructuring it is autocompleted.
+  *
+  * @typedef {import("@/generated/schemas/GWDM/2.2").Gwdm22} Gwdm22
+  * @typedef {import("./components").Vocabulary} MDXProvidedComponents
+  *
+  * @typedef Props
+  * @property {Gwdm22} data
+  * @property {Record<string, unknown>} schema
+  * @property {string} [title]
+  */}
+
+export const meta = {
+  description:
+    "Partial override - bespoke framing for provenance and coverage, generic view for the rest.",
+};
+
+<Article>
+
+# {props.title}
+
+<SchemaNote>
+  This dataset is described using the **Gateway Working Data Model**, version
+  2.2 - a different schema family to HDR UK, with its own sections such as
+  `linkage`, `projectGrants` and `datasetFilters`. Nothing on this page is
+  hardcoded against those field names: the headings, labels and tooltips all
+  come from the schema's own `title` and `description` entries.
+</SchemaNote>
+
+## Level 1 - the default
+
+Each section's fields are label/value rows, nested objects walked down to
+their leaves. Lists render as chips, including this schema's legacy
+`;,;`-delimited strings - `keywords` arrives as one long string and still
+comes out as one chip per keyword.
+
+<MetadataView path="summary" />
+
+## Level 2 - scoping with `path`
+
+`path` resolves the data and the schema together, unwrapping `$ref`s at each
+hop. That is the only way to reach a nested node: every property in these
+schemas is an `allOf`/`anyOf` wrapper, so `props.schema.properties.summary`
+has no `.properties` of its own to index into.
+
+<MetadataView path="summary.publisher" />
+
+The explicit form is still there for data you have computed yourself, where
+there is no path to point at:
+
+<MetadataView
+  data={{ ...props.data.summary, abstract: undefined }}
+  schema={props.schema.properties.summary}
+/>
+
+## Level 3 - overriding a renderer
+
+Here the *section wrapper* is replaced rather than the values, by overriding
+`Section`. The field rendering underneath is untouched.
+
+{/* The components map resolves JSX element NAMES, not bare identifiers, so an
+    injected component is referenced as <CardSection /> rather than passed
+    directly as `Section: CardSection`. */}
+
+<MetadataView path="coverage" components={{ Section: p => <CardSection {...p} /> }} />
+
+## Linked publications
+
+An array of DOIs, rendered by the same default as every other list.
+
+<MetadataView path="linkage" />
+
+</Article>

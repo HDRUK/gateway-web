@@ -21,8 +21,8 @@ const config = [
             "**/node_modules/**",
             "**/coverage/**",
             "mocks/**",
-            "datasetsPageTester.ts",
-            "datasetsSchemaTester.ts",
+            "scripts/datasetsPageTester.ts",
+            "scripts/datasetsSchemaTester.ts",
         ],
     },
 
@@ -138,6 +138,7 @@ const config = [
                         "jest.config.js",
                         "jest.setup.js",
                         "**/testUtils.tsx",
+                        "scripts/generateSchemaTypes.ts",
                     ],
                 },
             ],
