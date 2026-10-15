@@ -1,6 +1,7 @@
 import { Dayjs } from "dayjs";
 import type { Dataset } from "./Dataset";
 import { Keyword } from "./Keyword";
+import type { Publication } from "./Publication";
 import { Team } from "./Team";
 import { User } from "./User";
 
@@ -33,6 +34,7 @@ export interface DataUse {
     gateway_outputs_papers: string[];
     non_gateway_outputs: string[];
     outputs: DurOutput[];
+    publications: Pick<Publication, "id" | "paper_title">[];
     project_title: string;
     project_id_text: string;
     organisation_name: string;
