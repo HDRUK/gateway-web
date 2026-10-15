@@ -254,11 +254,12 @@
                 "text": "Here's the latest activity from researchers accessing your Gateway resources.",
                 "download": "Download",
                 "choosePeriod": "Choose time period",
-                "periods": {
-                    "last_12_months": "Last 12 months",
-                    "last_6_months": "Last 6 months",
-                    "last_3_months": "Last 3 months",
-                    "last_month": "Last month"
+                "shortcuts": {
+                    "lastMonth": "Last month",
+                    "last3Months": "Last 3 months",
+                    "last6Months": "Last 6 months",
+                    "lastYear": "Last year",
+                    "allTime": "All time"
                 },
                 "datasetViews": {
                     "title": "Dataset views",

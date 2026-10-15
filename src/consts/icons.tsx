@@ -47,7 +47,6 @@ import FilterAltOffIcon from "@mui/icons-material/FilterAltOff";
 import FilterAltOutlinedIcon from "@mui/icons-material/FilterAltOutlined";
 import FlagOutlinedIcon from "@mui/icons-material/FlagOutlined";
 import FolderSharedOutlinedIcon from "@mui/icons-material/FolderSharedOutlined";
-import CalendarMonthOutlinedIcon from "@mui/icons-material/CalendarMonthOutlined";
 import GridViewOutlinedIcon from "@mui/icons-material/GridViewOutlined";
 import GroupRemoveIcon from "@mui/icons-material/GroupRemove";
 import GroupsIcon from "@mui/icons-material/Groups";
@@ -181,7 +180,6 @@ export {
     ErrorIcon,
     ArrowUpwardIcon,
     GridViewOutlinedIcon,
-    CalendarMonthOutlinedIcon,
     HistoryIcon,
     PlayArrowIcon,
     EmailOutlinedIcon,
