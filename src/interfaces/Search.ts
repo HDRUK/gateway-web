@@ -156,7 +156,7 @@ export interface SearchResultCollection extends SearchResultBase {
     team: Team | null;
 }
 
-export interface SearchResultDataProvider extends SearchResultBase {
+export interface SearchResultDataCustodian extends SearchResultBase {
     name: string;
     team_logo?: string;
 }
@@ -173,7 +173,7 @@ export type SearchResult =
     | SearchResultPublication
     | SearchResultCollection
     | SearchResultTool
-    | SearchResultDataProvider
+    | SearchResultDataCustodian
     | SearchResultDataCustodianCol;
 
 export interface SearchForm {

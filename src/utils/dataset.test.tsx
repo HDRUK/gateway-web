@@ -2,6 +2,7 @@ import {
     escapeMarkdownUnderscores,
     formatTextDelimiter,
     formatYearStat,
+    getSectionAnchorId,
     hasValidValue,
     parseLeadTime,
     splitStringList,
@@ -116,6 +117,14 @@ describe("Dataset utils", () => {
             expect(
                 formatTextDelimiter(" ,, Health research,,,NHS study ,  ")
             ).toEqual("Health research, NHS study");
+        });
+    });
+
+    describe("getSectionAnchorId", () => {
+        it("removes spaces from the section name", () => {
+            expect(getSectionAnchorId("Data Access Request")).toEqual(
+                "anchor-DataAccessRequest"
+            );
         });
     });
 });

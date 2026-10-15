@@ -14,7 +14,7 @@ export const StatCard = styled(Card)(() => ({
     minHeight: "121px",
     outline: "none",
     "&:hover, &:focus-visible": {
-        boxShadow: `0 0 0 3px ${colors.yellow500}`,
+        boxShadow: `inset 0 0 0 ${tokens.stroke.thick}px ${colors.yellow500}`,
         transition: "box-shadow 0.2s ease-in-out",
     },
 }));

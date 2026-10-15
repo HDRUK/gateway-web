@@ -44,5 +44,6 @@ export default function useFilterByCustodian(
         apply("included_data_uses", entityData.durs);
         apply("included_scripts", entityData.tools);
         apply("included_collections", entityData.collections);
-    }, [entityData, allowedTeams]);
+        apply("included_publications", entityData.publications);
+    }, [entityData, allowedTeams, form]);
 }

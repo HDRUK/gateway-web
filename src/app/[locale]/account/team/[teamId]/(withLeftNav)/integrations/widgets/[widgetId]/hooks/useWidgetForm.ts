@@ -43,6 +43,11 @@ const ENTITY_TYPES = [
         field: "included_collections",
         message: "includedCollectionsRequired",
     },
+    {
+        toggle: "has_publications",
+        field: "included_publications",
+        message: "includedPublicationsRequired",
+    },
 ] as const;
 
 export default function useWidgetForm(
@@ -80,6 +85,7 @@ export default function useWidgetForm(
             included_data_uses: [],
             included_scripts: [],
             included_collections: [],
+            included_publications: [],
             permitted_domains: [],
             keep_proportions: false,
             include_search_bar:
@@ -115,6 +121,10 @@ export default function useWidgetForm(
                 templateType === CUSTODIAN
                     ? true
                     : !!widget?.included_collections?.length,
+            has_publications:
+                templateType === CUSTODIAN
+                    ? true
+                    : !!widget?.included_publications?.length,
         }),
         [defaultCustodians, templateType, widget]
     );
@@ -256,6 +266,7 @@ export default function useWidgetForm(
             has_datauses?: boolean;
             has_scripts?: boolean;
             has_collections?: boolean;
+            has_publications?: boolean;
         }
     ) => {
         const p = { ...payload };
@@ -264,11 +275,13 @@ export default function useWidgetForm(
         if (p.has_datauses === false) p.included_data_uses = [];
         if (p.has_scripts === false) p.included_scripts = [];
         if (p.has_collections === false) p.included_collections = [];
+        if (p.has_publications === false) p.included_publications = [];
 
         delete p.has_datasets;
         delete p.has_datauses;
         delete p.has_scripts;
         delete p.has_collections;
+        delete p.has_publications;
 
         return p;
     };

@@ -310,7 +310,7 @@
                     "labels": {
                         "datasets": "Datasets",
                         "datauses": "Data Uses",
-                        "tools": "Analysis Scripts",
+                        "tools": "Analysis Scripts & Software",
                         "publications": "Publications",
                         "collections": "Collections",
                         "gmiApiDatasets": "GMI/API Datasets",
@@ -466,7 +466,7 @@
                     "components": {
                         "TeamsList": {
                             "lastUpdated": "Last Updated",
-                            "dataProvider": "Data Custodian",
+                            "dataCustodian": "Data Custodian",
                             "teamAdmins": "Team admin(s)",
                             "questionBank": "Question Bank",
                             "action": "Action"
@@ -830,7 +830,15 @@
                                     "label": "Duplicate dataset metadata"
                                 },
                                 "archive": {
-                                    "label": "Archive dataset metadata so it is no longer live on the Gateway"
+                                    "label": "Archive",
+                                    "tooltip": "Archive dataset metadata so it is no longer live on the Gateway"
+                                },
+                                "more": {
+                                    "label": "More actions"
+                                },
+                                "cohortDiscovery": {
+                                    "include": "Include in Cohort Discovery",
+                                    "exclude": "Exclude from Cohort Discovery"
                                 }
                             }
                         },
@@ -1147,6 +1155,7 @@
                         "includedDataUsesRequired": "Select at least one item under Data Uses / Research Projects",
                         "includedScriptsRequired": "Select at least one item under Analysis Scripts & Software",
                         "includedCollectionsRequired": "Select at least one item under Collections",
+                        "includedPublicationsRequired": "Select at least one item under Publications",
                         "widget": "Widget",
                         "widgetName": "Widget name",
                         "size": "What size do you want your widget?",
@@ -1172,6 +1181,8 @@
                         "scripts": "Analysis Scripts & Software",
                         "collections": "Collections",
                         "selectCollections": "Select Collections",
+                        "publications": "Publications",
+                        "selectPublications": "Select Publications",
                         "cohortLinkInfo": "Add a button for the user to go to Cohort Discovery search within the Gateway",
                         "save": "Save and preview",
                         "cancel": "Cancel"
@@ -1180,6 +1191,9 @@
                         "codeCopied": "Code copied to clipboard",
                         "codeTitle": "Here's the code you need",
                         "codeIntro": "You'll just need to copy and paste the code below into the HTML on your site. Come back here if you need to make any changes.",
+                        "codeFormat": "Code format",
+                        "formatHtml": "HTML",
+                        "formatReact": "React",
                         "cspTitle": "Note",
                         "cspIntro": "If your site uses a Content Security Policy (CSP), make sure to include the following directive in your header:",
                         "copyCode": "Copy code",
@@ -1328,8 +1342,8 @@
             "dataUseTooltip": "Find Data Uses / Research Projects: search and filter data uses / research projects / studies related to specific data sets and other features.",
             "tools": "Analysis Scripts & Software",
             "toolsTooltip": "Discover reusable community shared scripts and software: search for data analysis / cleaning / transformation / standardisation scripts related to specific datasets or general scripts and software.",
-            "dataProviders": "Data Custodians",
-            "dataProvidersTooltip": "Search Data Custodians, discover their associated resources (e.g. datasets, publications, analysis scripts & software), and find out how to contact them. ",
+            "dataCustodians": "Data Custodians",
+            "dataCustodiansTooltip": "Search Data Custodians, discover their associated resources (e.g. datasets, publications, analysis scripts & software), and find out how to contact them. ",
             "collections": "Collections / Networks",
             "collectionsTooltip": "Discover research resources: Datasets & BioSamples, Analysis Scripts & Software, Data Uses / Research Projects, and Publications grouped together by domain, disease, theme, or organisation.",
             "publications": "Publications",
@@ -1360,7 +1374,10 @@
             "components": {
                 "Search": {
                     "toggleLabelTable": "Switch to table view",
-                    "toggleLabelList": "Switch to list view"
+                    "toggleLabelList": "Switch to list view",
+                    "showFilters": "Show filters",
+                    "hideFilters": "Hide filters",
+                    "searchResults": "Search results"
                 },
                 "PartnerResourcesBanner": {
                     "partnerResources": "Partner resources",
@@ -1459,7 +1476,8 @@
                 },
                 "DateRangeFilter": {
                     "to": "to",
-                    "minYearErrorMessage": "Please enter a valid starting year"
+                    "minYearErrorMessage": "Please enter a valid starting year",
+                    "applyDateRange": "Apply date range"
                 },
                 "FeasibilityEnquiryForm": {
                     "itemName": "Feasibility Enquiry item",
@@ -1517,7 +1535,7 @@
                         "label": "Data Standard",
                         "tooltip": "Data models standards that the dataset has been stored in or transformed to"
                     },
-                    "dataProvider": {
+                    "dataCustodian": {
                         "label": "Data Custodian",
                         "tooltip": "Individual or organisation to be contacted for a dataset on the Gateway"
                     },
@@ -1610,7 +1628,7 @@
                     "unknownString": "Unknown"
                 },
                 "DatausesContent": {
-                    "title": "Data uses",
+                    "title": "Data Uses",
                     "heading": "Data Uses ({ length })",
                     "associatedHeading": "Associated data uses"
                 },
@@ -1622,7 +1640,7 @@
                 "ToolsContent": {
                     "title": "Analysis Scripts & Software",
                     "heading": "Analysis Scripts & Software ({ length })",
-                    "associatedHeading": "Associated analysis scripts, tools and software"
+                    "associatedHeading": "Associated analysis scripts & software"
                 },
                 "ServiceOfferingsContent": {
                     "heading": "Service offerings ({ length })"
@@ -1649,8 +1667,8 @@
                 "DataCustodianContent": {
                     "title": "Data Custodians",
                     "datasets": "Datasets ({ length })",
-                    "datause": "Data Use ({ length })",
-                    "tools": "Tools ({ length })",
+                    "datause": "Data Uses ({ length })",
+                    "tools": "Analysis Scripts & Software ({ length })",
                     "publications": "Publications ({ length })",
                     "collections": "Collections ({ length })"
                 },
@@ -1662,7 +1680,7 @@
                     "unknownString": "Unknown"
                 },
                 "DatausesContent": {
-                    "title": "Data uses",
+                    "title": "Data Uses",
                     "heading": "Data Uses ({ length })",
                     "associatedHeading": "Associated data uses"
                 },
@@ -1672,9 +1690,9 @@
                     "associatedHeading": "Associated publications"
                 },
                 "ToolsContent": {
-                    "title": "Analysis scripts, tools and software",
+                    "title": "Analysis Scripts & Software",
                     "heading": "Analysis Scripts & Software ({ length })",
-                    "associatedHeading": "Associated analysis scripts, tools and software"
+                    "associatedHeading": "Associated analysis scripts & software"
                 },
                 "ServiceOfferingsContent": {
                     "heading": "Service offerings ({ length })"
@@ -1725,7 +1743,8 @@
                     "cohortDiscovery": "Access Cohort Discovery",
                     "curatedPublications": "Publications using this dataset (curated)",
                     "externalPublications": "Publications using this dataset (external search)",
-                    "coverageCompleteness": "Coverage and completeness"
+                    "coverageCompleteness": "Coverage and completeness",
+                    "label": "Explore this dataset"
                 },
                 "Linkages": {
                     "title": "Relationships:",
@@ -1843,7 +1862,7 @@
             "collections": "Related Collections",
             "authors": "Associated Authors",
             "authorsTooltip": "People who authored this analysis script, tool or software.",
-            "backLabel": "Back to Tools search results",
+            "backLabel": "Back to Analysis Scripts & Software search results",
             "components": {
                 "DatasetsContent": {
                     "title": "Datasets that the analysis, tool or software can be applied to",
@@ -1918,6 +1937,9 @@
         }
     },
     "components": {
+        "MindMap": {
+            "opensInNewTab": "(opens in a new tab)"
+        },
         "CustomerSurvey": {
             "title": "How satisfactory is your experience with the Gateway today?",
             "tooltip-0": "Very Dissatisfied",
@@ -2060,13 +2082,14 @@
         "CollectionCard": {
             "users": "Users",
             "entities": "Entities",
-            "entitiesCounts": "Datasets ({nDatasets}), Data Uses ({nDur}), Publications ({nPublications}), Tools ({nTools})",
+            "entitiesCounts": "Datasets ({nDatasets}), Data Uses ({nDur}), Publications ({nPublications}), Analysis Scripts & Software ({nTools})",
             "lastActivity": "Last activity"
         },
         "NestedFilterSection": {
             "placeholder": "I'm looking for...",
             "filterDisabled": "Filter option unavailable due to the options selected. To select this filter option, remove currently selected filter options.",
-            "noFilters": "No filters available"
+            "noFilters": "No filters available",
+            "subtypes": "{name} subtypes"
         },
         "DataAccessMessages": {
             "modalTitle": "Success!",
@@ -2235,14 +2258,14 @@
                 "addResources": "Add resources",
                 "headerAdd": "Action",
                 "headerName": "Name",
-                "dataProvider": "Data Custodian",
+                "dataCustodian": "Data Custodian",
                 "entityType": "Entity Type",
                 "radioDataset": "Datasets",
                 "radioDatause": "Data Uses",
                 "radioPublication": "Publications",
                 "radioTool": "Analysis Scripts & Software",
                 "chipDataset": "Dataset",
-                "chipDatause": "Data use",
+                "chipDatause": "Data Use",
                 "chipPublication": "Publication",
                 "chipTool": "Analysis Scripts & Software",
                 "noResults": "No results found"

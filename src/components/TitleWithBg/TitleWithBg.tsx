@@ -5,12 +5,11 @@ import Typography from "@/components/Typography";
 interface TitleWithBgProps extends TypographyProps {
     title: string;
     bgcolor?: string;
-    size?: "md" | "lg";
 }
 
 const TitleWithBg = ({
     variant = "h1",
-    size = "lg",
+    component,
     title,
     color = "white",
     noWrap = true,
@@ -18,11 +17,6 @@ const TitleWithBg = ({
     bgcolor = "secondary.main",
     ...rest
 }: TitleWithBgProps) => {
-    const fontSizes = {
-        md: { xs: 20, sm: 20, lg: 28 },
-        lg: { xs: 24, sm: 28, lg: 40 },
-    };
-
     return (
         <Box
             sx={{
@@ -33,9 +27,10 @@ const TitleWithBg = ({
             }}
             {...rest}>
             <Typography
-                sx={{ fontSize: fontSizes[size], mb: 0 }}
+                sx={{ mb: 0 }}
                 color={color}
                 variant={variant}
+                component={component}
                 noWrap={noWrap}
                 fontWeight={fontWeight}>
                 {title}

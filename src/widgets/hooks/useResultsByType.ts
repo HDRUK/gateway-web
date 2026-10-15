@@ -7,6 +7,7 @@ import {
     CollectionItem,
     ScriptItem,
     DataUseItem,
+    PublicationItem,
 } from "@/interfaces/Widget";
 import useTextFilter from "./useTextFilter";
 
@@ -15,6 +16,7 @@ type ResultsByType = {
     collections: CollectionItem[];
     data_uses: DataUseItem[];
     scripts: ScriptItem[];
+    publications: PublicationItem[];
 };
 
 export default function useResultsByType(
@@ -40,12 +42,17 @@ export default function useResultsByType(
             ["name", "description"],
             searchValue
         );
+        const publicationsFilter = makeTextFilter<PublicationItem>(
+            ["paper_title", "authors", "journal_name"],
+            searchValue
+        );
 
         return {
             datasets: (data.datasets ?? []).filter(datasetsFilter),
             collections: (data.collections ?? []).filter(collectionsFilter),
             data_uses: (data.data_uses ?? []).filter(dataUsesFilter),
             scripts: (data.scripts ?? []).filter(scriptsFilter),
+            publications: (data.publications ?? []).filter(publicationsFilter),
         };
     }, [data, makeTextFilter, searchValue]);
 }

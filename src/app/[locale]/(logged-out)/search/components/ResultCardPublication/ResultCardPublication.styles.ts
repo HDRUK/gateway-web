@@ -12,7 +12,7 @@ export const PublicationTitle = styled(Link)(() => ({
 }));
 
 export const PublicationYear = styled(Typography)(({ theme }) => ({
-    color: tokens.text.disabled,
+    color: tokens.text.faded,
     flexShrink: 0,
     marginLeft: theme.spacing(2),
 }));

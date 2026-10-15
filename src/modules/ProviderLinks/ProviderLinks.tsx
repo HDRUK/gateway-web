@@ -9,13 +9,15 @@ import Box from "@/components/Box";
 import apis from "@/config/apis";
 import { colors } from "@/config/theme";
 import { InstituteIcon } from "@/consts/customIcons";
-import { useFeatures } from "@/providers/FeatureProvider";
+import useLoginProviders from "@/hooks/useLoginProviders";
 
 interface LinkItem {
     label: string;
     href?: string;
     image?: string;
     Icon?: SvgIconComponent;
+    /** Whether this provider's feature flag currently allows sign-in. */
+    enabled: boolean;
 }
 
 interface ProviderGroup {
@@ -48,7 +50,7 @@ const ProviderLinks = ({
 }: ProviderLinksProps) => {
     const t = useTranslations("modules.dialogs.ProvidersDialog");
     const { push } = useRouter();
-    const { isSafePeopleRegistrySSOEnabled } = useFeatures();
+    const providers = useLoginProviders();
 
     let effectiveRedirectPath = "";
 
@@ -65,21 +67,20 @@ const ProviderLinks = ({
                 {
                     label: t("socialProviders.openAthens"),
                     Icon: InstituteIcon,
+                    enabled: providers.openAthens,
                 },
                 {
                     label: t("socialProviders.azure"),
                     href: `${apis.authAzureV1Url}${effectiveRedirectPath}`,
                     image: "microsoft-logo.png",
+                    enabled: providers.azure,
                 },
-                ...(isSafePeopleRegistrySSOEnabled
-                    ? [
-                          {
-                              label: t("socialProviders.registry"),
-                              href: `${apis.authRegistryV1Url}${effectiveRedirectPath}`,
-                              image: "safepeopleregistry-logo.svg",
-                          },
-                      ]
-                    : []),
+                {
+                    label: t("socialProviders.registry"),
+                    href: `${apis.authRegistryV1Url}${effectiveRedirectPath}`,
+                    image: "safepeopleregistry-logo.svg",
+                    enabled: providers.registry,
+                },
             ],
         },
         {
@@ -91,19 +92,30 @@ const ProviderLinks = ({
                     label: t("socialProviders.google"),
                     href: `${apis.authGoogleV1Url}${effectiveRedirectPath}`,
                     image: "google-logo.png",
+                    enabled: providers.google,
                 },
                 {
                     label: t("socialProviders.linkedIn"),
                     href: `${apis.authLinkedinV1Url}${effectiveRedirectPath}`,
                     image: "linkedIn-logo.png",
+                    enabled: providers.linkedIn,
                 },
             ],
         },
     ];
 
+    // A group whose providers are all switched off would otherwise render as a
+    // heading and an explanatory paragraph above nothing at all.
+    const enabledGroups = providerGroups
+        .map(group => ({
+            ...group,
+            links: group.links.filter(link => link.enabled),
+        }))
+        .filter(group => group.links.length > 0);
+
     return (
         <Box sx={{ padding: 0 }}>
-            {providerGroups.map(group => (
+            {enabledGroups.map(group => (
                 <Box
                     key={group.key}
                     sx={{ padding: 0, marginTop: 3, marginBottom: 3 }}>

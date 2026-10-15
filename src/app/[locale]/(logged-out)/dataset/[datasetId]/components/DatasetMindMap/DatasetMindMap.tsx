@@ -14,9 +14,12 @@ import {
     initialEdges,
     connectionLineStyle,
 } from "@/config/mindmaps/dataset";
+import { getSectionAnchorId, scrollToSection } from "@/utils/dataset";
 import { DatasetSection } from "../../config";
 
 const TRANSLATION_PATH = "pages.dataset.components.DatasetMindMap";
+
+const PREFERRED_HEIGHT = 370;
 
 interface DatasetMindMapProps extends ReactFlowProps {
     data: VersionItem;
@@ -74,6 +77,7 @@ const DatasetMindMap = ({
                 let hidden = false;
                 let cohort = false;
                 let { label } = node.data;
+                let labelPrefix: string | undefined;
 
                 const { title } = data.metadata.metadata.summary;
                 const safeTitle = encodeURIComponent(title);
@@ -106,6 +110,7 @@ const DatasetMindMap = ({
                     label =
                         data.metadata.metadata.summary.dataCustodian?.name ||
                         node.data.label;
+                    labelPrefix = node.data.label;
                 } else if (node.id === "node-curatedPublications") {
                     const entityCount = linkageCounts.publications_using;
                     if (!entityCount) {
@@ -132,25 +137,20 @@ const DatasetMindMap = ({
                         hidden = true;
                     }
                 } else if (node.data.href?.includes("scrollTo:")) {
+                    const sectionName = node.data.href.replace("scrollTo:", "");
                     const canScrollToSection =
-                        (hasStructuralMetadata &&
+                        ((hasStructuralMetadata &&
                             node.data.name === "structuralMetadata") ||
-                        (hasDemographics && node.data.name === "demographics");
-
-                    if (canScrollToSection) {
-                        const sectionIndex = populatedSections.findIndex(
-                            section =>
-                                node.data.href?.includes(section.sectionName)
+                            (hasDemographics &&
+                                node.data.name === "demographics")) &&
+                        populatedSections.some(
+                            section => section.sectionName === sectionName
                         );
 
+                    if (canScrollToSection) {
                         href = null;
                         action = () =>
-                            document
-                                ?.querySelector(`#anchor${sectionIndex}`)
-                                ?.scrollIntoView({
-                                    behavior: "smooth",
-                                    block: "start",
-                                });
+                            scrollToSection(getSectionAnchorId(sectionName));
                     } else {
                         hidden = true;
                         empty.push(node.id);
@@ -159,12 +159,13 @@ const DatasetMindMap = ({
 
                 return {
                     ...node,
+                    hidden,
                     data: {
                         ...node.data,
                         label,
+                        labelPrefix,
                         href,
                         action,
-                        hidden,
                         cohort,
                     },
                 };
@@ -187,8 +188,7 @@ const DatasetMindMap = ({
     ]);
 
     return (
-        <Paper
-            sx={{ borderRadius: `${tokens.radius.medium}px`, height: "370px" }}>
+        <Paper sx={{ borderRadius: `${tokens.radius.medium}px` }}>
             <MindMap
                 panOnDrag={panOnDrag}
                 panOnScroll={panOnScroll}
@@ -197,6 +197,8 @@ const DatasetMindMap = ({
                 zoomOnDoubleClick={zoomOnDoubleClick}
                 nodesDraggable={nodesDraggable}
                 {...rest}
+                aria-label={t("label")}
+                preferredHeight={PREFERRED_HEIGHT}
                 rootNode={hydratedRootNode}
                 outerNodes={hydratedOuterNodes}
                 initialEdges={initialEdges.filter(

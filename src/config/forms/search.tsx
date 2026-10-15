@@ -155,7 +155,7 @@ export const sortByOptionsCollections = [
     },
 ];
 
-export const sortByOptionsDataProviders = [
+export const sortByOptionsDataCustodians = [
     {
         label: "Sort by most relevant",
         value: "score:desc",

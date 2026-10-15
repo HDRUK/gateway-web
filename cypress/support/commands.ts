@@ -52,18 +52,23 @@ Cypress.Commands.add("setFeatureFlag", (name: string, enabled: boolean) => {
     const email = Cypress.env("SUPERUSER_EMAIL");
     const password = Cypress.env("TEST_USER_PASSWORD");
 
-    cy.request({
-        method: "POST",
-        url: API_URL,
-        body: { email, password },
-    }).then(({ body }) => {
-        cy.request({
-            method: "PUT",
-            url: Cypress.env("API_URL") + `/api/v1/features/${name}`,
-            headers: { Authorization: `Bearer ${body.access_token}` },
-            body: { enabled },
-        });
-    });
+    cy.request(Cypress.env("API_URL") + "/api/v1/features").then(
+        ({ body: features }) => {
+            if (!!features.data[name] === enabled) return;
+
+            cy.request({
+                method: "POST",
+                url: API_URL,
+                body: { email, password },
+            }).then(({ body }) => {
+                cy.request({
+                    method: "PUT",
+                    url: Cypress.env("API_URL") + `/api/v1/features/${name}`,
+                    headers: { Authorization: `Bearer ${body.access_token}` },
+                });
+            });
+        }
+    );
 });
 
 declare global {

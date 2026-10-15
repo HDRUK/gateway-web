@@ -110,9 +110,9 @@ const getColumns = ({
         header: () => (
             <Tooltip
                 describeChild
-                title={translations.dataProviderTooltip}
+                title={translations.dataCustodianTooltip}
                 tabIndex={0}>
-                {translations.dataProviderLabel}
+                {translations.dataCustodianLabel}
             </Tooltip>
         ),
         size: 120,
@@ -282,8 +282,8 @@ const ResultTable = ({ results, showLibraryModal }: ResultTableProps) => {
         dateRangePublisherTooltip: t("dateRangePublisher.tooltip"),
         dataStandardLabel: t("dataStandard.label"),
         dataStandardTooltip: t("dataStandard.tooltip"),
-        dataProviderLabel: t("dataProvider.label"),
-        dataProviderTooltip: t("dataProvider.tooltip"),
+        dataCustodianLabel: t("dataCustodian.label"),
+        dataCustodianTooltip: t("dataCustodian.tooltip"),
         accessServiceLabel: t("accessService.label"),
         accessServiceTooltip: t("accessService.tooltip"),
         cohortDiscoveryLabel: t("cohortDiscovery.label"),

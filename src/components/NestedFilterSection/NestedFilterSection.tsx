@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo } from "react";
+import { useId, useMemo, useState } from "react";
 import {
     Control,
     ControllerRenderProps,
@@ -9,17 +9,17 @@ import {
     UseFormSetValue,
     useController,
 } from "react-hook-form";
-import { Skeleton, Tooltip } from "@mui/material";
+import { Collapse, IconButton, Skeleton, Tooltip } from "@mui/material";
 import { cloneDeep, isEmpty } from "lodash";
 import { useTranslations } from "next-intl";
 import { BucketCheckbox } from "@/interfaces/Filter";
 import { CountType } from "@/interfaces/Search";
-import Accordion from "@/components/Accordion";
 import Box from "@/components/Box";
 import CheckboxControlled from "@/components/CheckboxControlled";
 import HTMLContent from "@/components/HTMLContent";
 import TextField from "@/components/TextField";
 import Typography from "@/components/Typography";
+import { ChevronThinIcon } from "@/consts/customIcons";
 import { SearchIcon } from "@/consts/icons";
 import ClearFilterButton from "@/app/[locale]/(logged-out)/search/components/ClearFilterButton";
 
@@ -184,6 +184,8 @@ const NestedFilterSection = <TFieldValues extends FieldValues>({
     resetFilterSection,
 }: NestedFilterSectionProps<TFieldValues>) => {
     const t = useTranslations("components.NestedFilterSection");
+    const idPrefix = useId();
+    const [expanded, setExpanded] = useState<string[]>([]);
     const { field } = useController({
         control,
         name: filterSection as Path<TFieldValues>,
@@ -242,7 +244,7 @@ const NestedFilterSection = <TFieldValues extends FieldValues>({
                 sx={{ p: 0, maxHeight: 226, overflow: "auto" }}>
                 {checkboxes
                     .filter(checkbox => checkbox.count > 0)
-                    .map(checkbox => {
+                    .map((checkbox, index) => {
                         const { label, ...formattedRow } = cloneDeep(checkbox);
 
                         const outerDisabled =
@@ -266,6 +268,9 @@ const NestedFilterSection = <TFieldValues extends FieldValues>({
                         }
 
                         if (checkbox.subBuckets?.length > 1) {
+                            const isExpanded = expanded.includes(label);
+                            const regionId = `${idPrefix}-${index}`;
+
                             return (
                                 <div
                                     style={{ width: "100%" }}
@@ -276,82 +281,122 @@ const NestedFilterSection = <TFieldValues extends FieldValues>({
                                                 ? t("filterDisabled")
                                                 : ""
                                         }>
-                                        <Accordion
-                                            heading={
-                                                <CheckboxControlled
-                                                    rawLabel={label}
-                                                    {...formattedRow}
-                                                    formControlSx={{
-                                                        pl: 1,
-                                                        pr: 1,
-                                                        py: 1,
-                                                    }}
-                                                    checked={
-                                                        (checkboxValues &&
-                                                            checkboxValues[
-                                                                checkbox.label
-                                                            ]) ||
-                                                        false
-                                                    }
-                                                    name={checkbox.label}
-                                                    onChange={(
-                                                        event,
-                                                        value
-                                                    ) => {
-                                                        return handleCheckboxChange(
-                                                            {
-                                                                [event.target
-                                                                    .name]:
-                                                                    value,
-                                                            }
-                                                        );
-                                                    }}
-                                                    count={checkbox.count}
-                                                    checkboxSx={{ p: 0.5 }}
-                                                    stopPropagation
-                                                    disabled={outerDisabled}
-                                                />
-                                            }
-                                            contents={
-                                                <NestedCheckboxes
-                                                    label={label}
-                                                    checkbox={checkbox}
-                                                    nestedCounts={nestedCounts}
-                                                    checkboxValues={
-                                                        checkboxValues
-                                                    }
-                                                    nestedCheckboxValues={
-                                                        nestedCheckboxValues
-                                                    }
-                                                    handleCheckboxChange={
-                                                        handleCheckboxChange
-                                                    }
-                                                    field={field}
-                                                    disabledText={t(
-                                                        "filterDisabled"
-                                                    )}
-                                                />
-                                            }
-                                            variant="plain"
-                                            iconLeft
-                                            noIndent
+                                        <Box
                                             sx={{
+                                                p: 0,
                                                 pl: 0.7,
-                                                display: "flex",
-                                                flexDirection: "column",
                                                 maxWidth: "100%",
-                                                ".MuiAccordionSummary-content":
-                                                    {
-                                                        margin: 0,
-                                                    },
-                                                "&:before": { display: "none" },
-                                                "&.MuiAccordion-root.Mui-expanded":
-                                                    {
-                                                        mt: 0,
-                                                        mb: 0,
-                                                    },
-                                            }}
-                                        />
+                                            }}>
+                                            <Box
+                                                sx={{
+                                                    p: 0,
+                                                    display: "flex",
+                                                    alignItems: "center",
+                                                }}>
+                                                <IconButton
+                                                    aria-label={t("subtypes", {
+                                                        name: label,
+                                                    })}
+                                                    aria-expanded={isExpanded}
+                                                    aria-controls={regionId}
+                                                    onClick={() =>
+                                                        setExpanded(
+                                                            isExpanded
+                                                                ? expanded.filter(
+                                                                      e =>
+                                                                          e !==
+                                                                          label
+                                                                  )
+                                                                : [
+                                                                      ...expanded,
+                                                                      label,
+                                                                  ]
+                                                        )
+                                                    }
+                                                    sx={{ p: 0 }}>
+                                                    <ChevronThinIcon
+                                                        color="primary"
+                                                        sx={{
+                                                            transform: `rotate(${
+                                                                isExpanded
+                                                                    ? 180
+                                                                    : 0
+                                                            }deg)`,
+                                                        }}
+                                                    />
+                                                </IconButton>
+                                                <Box
+                                                    sx={{
+                                                        p: 0,
+                                                        ml: 1,
+                                                        flexGrow: 1,
+                                                    }}>
+                                                    <CheckboxControlled
+                                                        rawLabel={label}
+                                                        {...formattedRow}
+                                                        formControlSx={{
+                                                            pl: 1,
+                                                            pr: 1,
+                                                            py: 1,
+                                                            "& .MuiFormControlLabel-root .MuiFormControlLabel-label":
+                                                                { pt: 0.625 },
+                                                        }}
+                                                        checked={
+                                                            (checkboxValues &&
+                                                                checkboxValues[
+                                                                    checkbox
+                                                                        .label
+                                                                ]) ||
+                                                            false
+                                                        }
+                                                        name={checkbox.label}
+                                                        onChange={(
+                                                            event,
+                                                            value
+                                                        ) => {
+                                                            return handleCheckboxChange(
+                                                                {
+                                                                    [event
+                                                                        .target
+                                                                        .name]:
+                                                                        value,
+                                                                }
+                                                            );
+                                                        }}
+                                                        count={checkbox.count}
+                                                        checkboxSx={{ p: 0.5 }}
+                                                        stopPropagation
+                                                        disabled={outerDisabled}
+                                                    />
+                                                </Box>
+                                            </Box>
+                                            <Collapse
+                                                in={isExpanded}
+                                                id={regionId}>
+                                                <Box sx={{ p: 0, pb: 2 }}>
+                                                    <NestedCheckboxes
+                                                        label={label}
+                                                        checkbox={checkbox}
+                                                        nestedCounts={
+                                                            nestedCounts
+                                                        }
+                                                        checkboxValues={
+                                                            checkboxValues
+                                                        }
+                                                        nestedCheckboxValues={
+                                                            nestedCheckboxValues
+                                                        }
+                                                        handleCheckboxChange={
+                                                            handleCheckboxChange
+                                                        }
+                                                        field={field}
+                                                        disabledText={t(
+                                                            "filterDisabled"
+                                                        )}
+                                                    />
+                                                </Box>
+                                            </Collapse>
+                                        </Box>
                                     </Tooltip>
                                 </div>
                             );

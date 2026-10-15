@@ -1,5 +1,5 @@
-import { renderHook } from "@/utils/testUtils";
 import { ARDC_SOURCE_VALUE, HDRUK_SOURCE_VALUE } from "@/consts/search";
+import { renderHook } from "@/utils/testUtils";
 import { useSearchData } from "./useSearchData";
 
 const baseProps = {
@@ -205,20 +205,38 @@ describe("useSearchData", () => {
     });
 
     describe("pagination", () => {
-        it("calculates lastPage correctly", () => {
-            const v2Data = makeV2Data(HDRUK_SOURCE_VALUE, { total: 50 });
-            const { result } = renderHook(() =>
-                useSearchData({ ...baseProps, v2Data, perPage: "25" })
-            );
-            expect(result.current?.lastPage).toBe(2);
-        });
+        it.each([
+            [0, 1],
+            [1, 1],
+            [25, 1],
+            [26, 2],
+            [50, 2],
+            [75, 3],
+            [100, 4],
+            [250, 10],
+        ])(
+            "calculates lastPage from a total of %i as %i",
+            (total, lastPage) => {
+                const v2Data = makeV2Data(HDRUK_SOURCE_VALUE, { total });
+                const { result } = renderHook(() =>
+                    useSearchData({ ...baseProps, v2Data, perPage: "25" })
+                );
+                expect(result.current?.lastPage).toBe(lastPage);
+            }
+        );
 
-        it("returns lastPage of 1 when total is 0", () => {
-            const v2Data = makeV2Data(HDRUK_SOURCE_VALUE, { total: 0 });
+        it("returns the last page of a 10 page result set", () => {
+            const v2Data = makeV2Data(HDRUK_SOURCE_VALUE, {
+                hits: Array.from({ length: 25 }, (_, i) => ({ id: `${i}` })),
+                total: 250,
+            });
             const { result } = renderHook(() =>
-                useSearchData({ ...baseProps, v2Data })
+                useSearchData({ ...baseProps, v2Data, page: "10" })
             );
-            expect(result.current?.lastPage).toBe(1);
+            expect(result.current?.list).toHaveLength(25);
+            expect(result.current?.lastPage).toBe(10);
+            expect(result.current?.from).toBe(226);
+            expect(result.current?.to).toBe(250);
         });
 
         it("calculates from and to for page 2", () => {

@@ -6,7 +6,6 @@ export interface NodeValue {
     label?: string;
     href?: string;
     source?: string;
-    hidden?: boolean;
     cohort?: boolean;
 }
 
@@ -23,7 +22,8 @@ export const nodeValueToRectNode = (
     let position; // connector position
     let origin; // origin of node for positioning
     const radius = 140; // distance away from the center
-    let color = theme.palette.secondary.main;
+    const horizontalRadius = 120;
+    let color = theme.palette.brand.secondary;
 
     if (angleRad <= 2 * Math.PI && angleRad > 1 * Math.PI) {
         origin = [1, 0.5];
@@ -36,7 +36,7 @@ export const nodeValueToRectNode = (
 
     // calculate the position of the box
     const spacingFactor = 0.4; // If extra nodes are added in future, increase this spacingFactor to stop nodes overlapping vertically
-    const x = centerX + radius * Math.sin(angleRad);
+    const x = centerX + horizontalRadius * Math.sin(angleRad);
     const y =
         centerY +
         (Math.abs(index - (nNodes - 1) / 2) - nNodes / 4) *
@@ -56,7 +56,6 @@ export const nodeValueToRectNode = (
             position,
             color,
             href: node.href,
-            hidden: node.hidden,
             source: node.source,
             cohort: node.cohort,
         },

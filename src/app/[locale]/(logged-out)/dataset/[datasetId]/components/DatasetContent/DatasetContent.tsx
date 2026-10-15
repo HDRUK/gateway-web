@@ -26,6 +26,7 @@ import {
     escapeMarkdownUnderscores,
     formatTextDelimiter,
     formatTextWithLinks,
+    getSectionAnchorId,
     splitStringList,
 } from "@/utils/dataset";
 import { formatDate } from "@/utils/date";
@@ -288,10 +289,7 @@ const DatasetContent = ({
     return (
         <Paper sx={{ borderRadius: `${tokens.radius.medium}px`, p: 2 }}>
             {populatedSections.map((section, index) => {
-                const id = `anchor-${section.sectionName.replaceAll(
-                    /\s/g,
-                    ""
-                )}`;
+                const id = getSectionAnchorId(section.sectionName);
                 return (
                     <div
                         key={`${section.sectionName}_section`}

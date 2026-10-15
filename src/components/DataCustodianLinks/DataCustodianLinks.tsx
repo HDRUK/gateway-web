@@ -1,10 +1,10 @@
 import { Box, BoxProps, List, ListItem, Typography } from "@mui/material";
 import { useTranslations } from "next-intl";
-import { DataProvider } from "@/interfaces/DataProvider";
+import { DataCustodian } from "@/interfaces/DataCustodian";
 import Link from "@/components/Link";
 
 interface DataCustodianLinksProps extends BoxProps {
-    data: Pick<DataProvider, "service" | "url">;
+    data: Pick<DataCustodian, "service" | "url">;
 }
 
 const TRANSLATIONS_NAMESPACE_TEAM_MEMBERS =

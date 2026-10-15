@@ -47,12 +47,12 @@ export const SearchInput = styled(TextFieldBase)(() => ({
 }));
 
 export const ExplainerText = styled(Typography)(() => ({
-    color: tokens.text.disabled,
+    color: tokens.text.faded,
     fontSize: "1rem",
 }));
 
 export const ExplainerLink = styled(Link)(() => ({
     display: "inline-block",
-    color: tokens.brand.secondary,
+    color: tokens.brand.secondaryHovered,
     fontSize: "1rem",
 }));

@@ -125,6 +125,25 @@ const formatTextDelimiter = (text: string | string[] | number) => {
     }
 };
 
+const getSectionAnchorId = (sectionName: string) =>
+    `anchor-${sectionName.replaceAll(/\s/g, "")}`;
+
+const scrollToSection = (anchorId: string) => {
+    const section = document.getElementById(anchorId);
+
+    if (!section) {
+        return;
+    }
+
+    section.scrollIntoView({ behavior: "smooth", block: "start" });
+
+    const heading = section.querySelector<HTMLElement>("h2");
+
+    if (heading) {
+        heading.focus({ preventScroll: true });
+    }
+};
+
 export {
     escapeMarkdownUnderscores,
     formatYearStat,
@@ -135,4 +154,6 @@ export {
     splitStringList,
     formatTextWithLinks,
     formatTextDelimiter,
+    getSectionAnchorId,
+    scrollToSection,
 };

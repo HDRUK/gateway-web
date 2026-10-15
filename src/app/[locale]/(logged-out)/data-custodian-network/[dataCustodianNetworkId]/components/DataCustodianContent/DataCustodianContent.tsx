@@ -3,7 +3,7 @@
 import { Fragment } from "react";
 import { Link, Typography } from "@mui/material";
 import { useTranslations } from "next-intl";
-import { DataProvider as DataCustodians } from "@/interfaces/DataProvider";
+import { DataCustodian } from "@/interfaces/DataCustodian";
 import AccordionSectionSplit from "@/components/AccordionSectionSplit";
 import Box from "@/components/Box";
 import { RouteName } from "@/consts/routeName";
@@ -12,7 +12,7 @@ const TRANSLATION_PATH =
     "pages.dataCustodianNetwork.components.DataCustodianContent";
 
 interface DataCustodianContentProps {
-    dataCustodians: DataCustodians[];
+    dataCustodians: DataCustodian[];
     anchorIndex: number;
 }
 
@@ -30,7 +30,7 @@ export default function DataCustodianContent({
         tools_count,
         collections_count,
         durs_count,
-    }: DataCustodians) => (
+    }: DataCustodian) => (
         <Fragment key={`data-custodian-${id}`}>
             <Link href={`/${RouteName.DATA_CUSTODIANS_ITEM}/${id}`}>
                 {name}

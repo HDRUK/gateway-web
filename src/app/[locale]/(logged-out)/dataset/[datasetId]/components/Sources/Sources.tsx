@@ -22,12 +22,9 @@ const Sources = ({ data, gwdmVersion }: SourcesProps) => {
     const t = useTranslations(TRANSLATION_PATH);
     const { datasetType } = data.provenance.origin;
 
-    const datasetSubTypeArray = [];
-    datasetType.forEach(item => {
-        if (item.subTypes?.length > 0) {
-            datasetSubTypeArray.push(item.subTypes);
-        }
-    });
+    const datasetSubTypeArray = datasetType.flatMap(
+        item => item.subTypes ?? []
+    );
     // This is using HDRUK schema so it's not collectionSituation as in the GWDM case
     const { collectionSource } = data.provenance.origin;
 

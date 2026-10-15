@@ -73,13 +73,18 @@ const ActiveListSidebar = ({
             const heading = section?.querySelector<HTMLElement>("h2");
 
             if (section) {
-                const rect = section.getBoundingClientRect();
-                const desiredScroll =
-                    window.pageYOffset +
-                    rect.top -
-                    (isMobile ? MOBILE_SCROLL_OFFSET : 0);
+                if (isMobile) {
+                    const rect = section.getBoundingClientRect();
+                    const desiredScroll =
+                        window.pageYOffset + rect.top - MOBILE_SCROLL_OFFSET;
 
-                window.scrollTo({ top: desiredScroll, behavior: "smooth" });
+                    window.scrollTo({ top: desiredScroll, behavior: "smooth" });
+                } else {
+                    section.scrollIntoView({
+                        behavior: "smooth",
+                        block: "start",
+                    });
+                }
 
                 heading?.focus({ preventScroll: true });
                 setActiveItem(id);

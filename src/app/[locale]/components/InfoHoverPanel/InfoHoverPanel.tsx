@@ -126,13 +126,13 @@ const InfoHoverPanel = ({
             </Box>
 
             <Typography
-                variant="h2"
+                variant="h4"
+                component="h2"
                 sx={{
                     color: {
                         xs: tokens.text.primaryWhite,
                         sm: tokens.brand.secondary,
                     },
-                    fontSize: 24,
                     mt: 3,
                     mb: 1,
                 }}>

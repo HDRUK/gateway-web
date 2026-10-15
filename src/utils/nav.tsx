@@ -19,8 +19,8 @@ import {
     GridViewOutlinedIcon,
     AdminPanelSettingsIcon,
 } from "@/consts/icons";
-import { ROLE_HDRUK_SUPERADMIN } from "@/consts/roles";
 import { RouteName } from "@/consts/routeName";
+import { isSuperAdmin } from "@/utils/permissions";
 
 const navIcon = (Icon: React.ElementType) => <Icon fontSize="inherit" />;
 
@@ -46,7 +46,7 @@ const getProfileNav = (
             label: "Saved searches",
             href: `/${RouteName.ACCOUNT}/${RouteName.PROFILE}/${RouteName.SAVED_SEARCHES}`,
         },
-        ...(roles?.some(role => role.name === ROLE_HDRUK_SUPERADMIN)
+        ...(isSuperAdmin(roles)
             ? [
                   {
                       icon: navIcon(AdminPanelSettingsIcon),

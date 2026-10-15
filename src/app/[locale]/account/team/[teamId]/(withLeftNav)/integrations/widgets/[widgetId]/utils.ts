@@ -28,3 +28,5 @@ export const isOptionEqualToValue = (
     option: { value: string | number; label: string },
     value: string | number
 ) => option.value === value;
+
+export const groupByTeam = (option: { team?: string }) => option.team;

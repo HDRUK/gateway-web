@@ -189,7 +189,7 @@ const getColumns = ({
                     />
                 </div>
             ),
-            header: () => <span>{tableTranslations.dataProvider}</span>,
+            header: () => <span>{tableTranslations.dataCustodian}</span>,
             size: 20,
         }),
         columnHelper.display({

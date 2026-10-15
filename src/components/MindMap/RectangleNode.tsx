@@ -1,19 +1,25 @@
 import { Button } from "@hdruk/ui";
-import { Handle, Position, NodeProps } from "@xyflow/react";
+import { Node, Position, NodeProps } from "@xyflow/react";
+import { useTranslations } from "next-intl";
 import CohortDiscoveryButton from "@/components/CohortDiscoveryButton";
 import Link from "@/components/Link";
 import theme from "@/config/theme";
 import { LaunchIcon } from "@/consts/icons";
+import { HiddenHandle, HiddenText, NodeBox } from "./MindMap.styles";
 
-export interface RectangleNodeData {
-    id: string;
+const TRANSLATION_PATH = "components.MindMap";
+
+export type RectangleNodeData = {
+    id: string | number;
     label: string;
-    href: string;
-    nodeSx: React.CSSProperties;
+    labelPrefix?: string;
+    href?: string | null;
+    action?: (() => void) | null;
+    cohort?: boolean;
+    nodeSx?: React.CSSProperties;
     color: string;
     position: Position;
-    hidden: boolean;
-}
+};
 
 /**
  * Nodes sit on a saturated background, so their content is always light. Set
@@ -23,12 +29,24 @@ export interface RectangleNodeData {
 const NODE_CONTENT_COLOR = theme.palette.common.white;
 
 const RectangleNode = ({
-    data: { id, label, href, nodeSx, position, color, hidden, action, cohort },
-}: NodeProps<RectangleNodeData>) => {
-    if (hidden) return null;
+    data: {
+        id,
+        label,
+        labelPrefix,
+        href,
+        action,
+        cohort,
+        nodeSx,
+        position,
+        color,
+    },
+}: NodeProps<Node<RectangleNodeData>>) => {
+    const t = useTranslations(TRANSLATION_PATH);
+
+    const prefix = labelPrefix && <HiddenText>{`${labelPrefix}: `}</HiddenText>;
 
     return (
-        <div
+        <NodeBox
             style={{
                 color: NODE_CONTENT_COLOR,
                 background:
@@ -37,10 +55,14 @@ const RectangleNode = ({
                         : theme.palette.greyCustom.main,
                 padding: "14px",
                 ...nodeSx,
-                opacity: hidden ? 0 : 1,
-                pointerEvents: hidden ? "none" : "inherit",
+                pointerEvents: "auto",
             }}>
-            <Handle type="target" position={position} id={`${id}.bottom`} />
+            <HiddenHandle
+                type="target"
+                position={position}
+                id={`${id}.bottom`}
+                isConnectableStart={false}
+            />
             {href ? (
                 <Link
                     href={href}
@@ -48,17 +70,17 @@ const RectangleNode = ({
                     color="inherit"
                     target="_blank"
                     rel="noopener noreferrer"
-                    id={id}
                     style={{
                         display: "inline-flex",
                         alignItems: "center",
                     }}>
+                    {prefix}
                     {label}
-                    <LaunchIcon fontSize="small" />
+                    <LaunchIcon fontSize="inherit" />
+                    <HiddenText>{t("opensInNewTab")}</HiddenText>
                 </Link>
             ) : action ? (
                 <Button
-                    id={id}
                     onClick={action}
                     color="inherit"
                     variant="text"
@@ -67,6 +89,7 @@ const RectangleNode = ({
                         lineHeight: "inherit",
                         color: NODE_CONTENT_COLOR,
                     }}>
+                    {prefix}
                     {label}
                 </Button>
             ) : cohort ? (
@@ -81,9 +104,12 @@ const RectangleNode = ({
                     }}
                 />
             ) : (
-                <div id={id}>{label}</div>
+                <div>
+                    {prefix}
+                    {label}
+                </div>
             )}
-        </div>
+        </NodeBox>
     );
 };
 

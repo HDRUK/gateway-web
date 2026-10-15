@@ -30,9 +30,19 @@ const CheckboxControlled = (props: CheckboxProps) => {
         ...rest
     } = props;
 
+    const hasCount = count !== undefined && !!rawLabel;
+
     return (
         <FormControl fullWidth={fullWidth} sx={{ m: 0, ...formControlSx }}>
             <FormControlLabel
+                sx={{
+                    ...(hasCount && { alignItems: "flex-start" }),
+                    "& .MuiFormControlLabel-label": {
+                        minWidth: 0,
+                        whiteSpace: "normal",
+                        ...(hasCount && { pt: 1.25 }),
+                    },
+                }}
                 control={
                     <StyledCheckbox
                         size={size}
@@ -42,19 +52,22 @@ const CheckboxControlled = (props: CheckboxProps) => {
                     />
                 }
                 label={
-                    count !== undefined && rawLabel ? (
+                    hasCount ? (
                         <Box
                             sx={{
                                 p: 0,
                                 display: "flex",
                                 flexDirection: "row",
                                 justifyContent: "space-between",
+                                "& > :first-of-type": { minWidth: 0 },
                             }}>
                             <EllipsisLineLimit
                                 text={rawLabel}
                                 showToolTip={rawLabel?.length > 70}
                             />
-                            <Typography sx={{ ml: 1 }} fontWeight={400}>
+                            <Typography
+                                sx={{ ml: 1, flexShrink: 0 }}
+                                fontWeight={400}>
                                 {count}
                             </Typography>
                         </Box>

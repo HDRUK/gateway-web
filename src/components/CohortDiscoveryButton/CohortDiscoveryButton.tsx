@@ -4,7 +4,6 @@ import { useCallback, useEffect, useMemo, useRef } from "react";
 import {
     ButtonProps,
     Chip,
-    CircularProgress,
     Stack,
     SxProps,
     Tooltip,
@@ -371,14 +370,11 @@ const CohortDiscoveryButton = ({
                     color={color}
                     variant={variant}
                     purpose={purpose}
-                    disabled={isLoading || isDisabled}
+                    loading={isLoading}
+                    disabled={isDisabled}
                     sx={{ width: "100%", ...sx }}
                     {...restProps}>
-                    {isLoading ? (
-                        <CircularProgress size={20} color="inherit" />
-                    ) : (
-                        label ?? t("buttonText")
-                    )}
+                    {label ?? t("buttonText")}
                 </Button>
             </Box>
         </Tooltip>

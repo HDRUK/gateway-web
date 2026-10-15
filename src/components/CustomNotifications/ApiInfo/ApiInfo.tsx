@@ -1,8 +1,9 @@
 import React, { ReactNode, useCallback } from "react";
+import { Button } from "@hdruk/ui";
+import { tokens } from "@hdruk/ui/theme";
 import { CardActions, CardContent, CardHeader } from "@mui/material";
 import Card from "@mui/material/Card";
 import { SnackbarContent, CustomContentProps, closeSnackbar } from "notistack";
-import { Button } from "@hdruk/ui";
 
 interface ApiInfoProps extends CustomContentProps {
     id: string;
@@ -24,13 +25,13 @@ const ApiInfo = React.forwardRef<HTMLDivElement, ApiInfoProps>(
                         backgroundColor: "#E3F4FB",
                         borderColor: "#4E95C8",
                         borderStyle: "solid",
-                        color: "#4E95C8",
+                        color: tokens.status.information,
                         fontSize: "14px",
                     }}>
                     <CardHeader
                         title="Warning"
                         subheaderTypographyProps={{
-                            color: "#4E95C8",
+                            color: tokens.status.information,
                             fontSize: "14px",
                         }}
                         titleTypographyProps={{ fontSize: "18px" }}
@@ -39,7 +40,7 @@ const ApiInfo = React.forwardRef<HTMLDivElement, ApiInfoProps>(
                     <CardActions style={{ justifyContent: "end", gap: "10px" }}>
                         {showDismissButton && (
                             <Button
-                                color="warning"
+                                purpose="tertiary"
                                 size="small"
                                 onClick={handleDismiss}>
                                 Dismiss

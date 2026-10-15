@@ -29,6 +29,8 @@ const TitlePanel = ({ image, text, title, id }: TitlePanelProps) => {
                     },
                 }}>
                 <TitleWithBg
+                    variant="h3"
+                    component="h1"
                     mb={2}
                     title={title}
                     bgcolor={tokens.brand.secondary}

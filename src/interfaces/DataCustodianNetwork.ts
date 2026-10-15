@@ -1,4 +1,4 @@
-import { DataProvider } from "./DataProvider";
+import { DataCustodian } from "./DataCustodian";
 import { DataCustodianDataset } from "./Dataset";
 import { User } from "./User";
 
@@ -128,5 +128,5 @@ export interface EntitiesSummaryData {
 
 export interface NetworkCustodiansSummaryData {
     id: number;
-    teams_counts: DataProvider[];
+    teams_counts: DataCustodian[];
 }

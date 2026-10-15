@@ -1,8 +1,9 @@
 import React, { ReactNode, useCallback } from "react";
+import { Button } from "@hdruk/ui";
+import { tokens } from "@hdruk/ui/theme";
 import { CardActions, CardContent, CardHeader } from "@mui/material";
 import Card from "@mui/material/Card";
 import { SnackbarContent, CustomContentProps, closeSnackbar } from "notistack";
-import { Button } from "@hdruk/ui";
 
 interface ApiErrorProps extends CustomContentProps {
     id: string;
@@ -23,17 +24,17 @@ const ApiError = React.forwardRef<HTMLDivElement, ApiErrorProps>(
             <SnackbarContent ref={ref} role="alert">
                 <Card
                     style={{
-                        backgroundColor: "#FFECF1",
-                        borderColor: "#DC3645",
+                        backgroundColor: tokens.background.error,
+                        borderColor: tokens.status.error,
                         borderStyle: "solid",
-                        color: "#DC3645",
+                        color: tokens.text.error,
                         fontSize: "14px",
                     }}>
                     <CardHeader
                         title={title}
                         subheader={message}
                         subheaderTypographyProps={{
-                            color: "#DC3645",
+                            color: tokens.text.error,
                             fontSize: "14px",
                         }}
                         titleTypographyProps={{ fontSize: "18px" }}
@@ -50,7 +51,7 @@ const ApiError = React.forwardRef<HTMLDivElement, ApiErrorProps>(
                     <CardActions style={{ justifyContent: "end", gap: "10px" }}>
                         {showDismissButton && (
                             <Button
-                                color="error"
+                                purpose="tertiary"
                                 size="small"
                                 onClick={handleDismiss}>
                                 Dismiss

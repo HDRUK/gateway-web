@@ -20,7 +20,7 @@ import {
     DATA_CUSTODIAN_LIMIT,
     SIZE_PRESETS,
 } from "../../const";
-import { getChipLabel, isOptionEqualToValue } from "../../utils";
+import { getChipLabel, groupByTeam, isOptionEqualToValue } from "../../utils";
 
 const TRANSLATION_PATH = `pages.account.team.widgets.edit`;
 
@@ -58,18 +58,29 @@ const WidgetConfigForm = ({
     const t = useTranslations(TRANSLATION_PATH);
     const { control, handleSubmit, watch, setValue, formState } = form;
 
-    const [hasDatasets, hasDatauses, hasScripts, hasCollections] = useWatch({
+    const [
+        hasDatasets,
+        hasDatauses,
+        hasScripts,
+        hasCollections,
+        hasPublications,
+    ] = useWatch({
         control,
         name: [
             "has_datasets",
             "has_datauses",
             "has_scripts",
             "has_collections",
+            "has_publications",
         ],
     });
 
     const hasEntityType =
-        hasDatasets || hasDatauses || hasScripts || hasCollections;
+        hasDatasets ||
+        hasDatauses ||
+        hasScripts ||
+        hasCollections ||
+        hasPublications;
 
     const applyBranding = useCallback(
         (palette: (typeof BRANDING_PRESETS)[number]["palette"]) => {
@@ -116,7 +127,7 @@ const WidgetConfigForm = ({
                     label: "Select Datasets",
                     component: inputComponents.Autocomplete,
                     multiple: true,
-                    groupBy: option => option.team,
+                    groupBy: groupByTeam,
                     options: formatEntityOptions("datasets", "id", "title"),
                     getChipLabel,
                     isOptionEqualToValue,
@@ -151,7 +162,7 @@ const WidgetConfigForm = ({
                     isOptionEqualToValue,
                     marginLeft: true,
                     showWhen: "has_datauses",
-                    groupBy: option => option.team,
+                    groupBy: groupByTeam,
                     selectAllButton: (
                         <Button
                             onClick={() =>
@@ -178,7 +189,7 @@ const WidgetConfigForm = ({
                     isOptionEqualToValue,
                     marginLeft: true,
                     showWhen: "has_scripts",
-                    groupBy: option => option.team,
+                    groupBy: groupByTeam,
                     selectAllButton: (
                         <Button
                             onClick={() =>
@@ -205,13 +216,43 @@ const WidgetConfigForm = ({
                     isOptionEqualToValue,
                     marginLeft: true,
                     showWhen: "has_collections",
-                    groupBy: option => option.team,
+                    groupBy: groupByTeam,
                     selectAllButton: (
                         <Button
                             onClick={() =>
                                 selectAllOptions(
                                     "included_collections",
                                     "collections"
+                                )
+                            }
+                            purpose="link">
+                            Select all
+                        </Button>
+                    ),
+                    chipColor: "success",
+                },
+                {
+                    name: "has_publications",
+                    label: t("publications"),
+                    component: inputComponents.Checkbox,
+                },
+                {
+                    name: "included_publications",
+                    label: t("selectPublications"),
+                    component: inputComponents.Autocomplete,
+                    multiple: true,
+                    options: formatEntityOptions("publications", "id", "name"),
+                    getChipLabel,
+                    isOptionEqualToValue,
+                    marginLeft: true,
+                    showWhen: "has_publications",
+                    groupBy: groupByTeam,
+                    selectAllButton: (
+                        <Button
+                            onClick={() =>
+                                selectAllOptions(
+                                    "included_publications",
+                                    "publications"
                                 )
                             }
                             purpose="link">

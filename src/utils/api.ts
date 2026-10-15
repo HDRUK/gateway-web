@@ -21,7 +21,6 @@ import {
 } from "@/interfaces/DataAccessRequestApplication";
 import { DarReviewsResponse } from "@/interfaces/DataAccessReview";
 import {
-    DataCustodianNetwork,
     DatasetsSummaryData,
     EntitiesSummaryData,
     NetworkCustodiansSummaryData,
@@ -427,14 +426,6 @@ async function getNetworkSummary(
     return await get<NetworkSummary>(
         `${apis.dataCustodianNetworkV2UrlIP}/${networkId}/summary`,
         options
-    );
-}
-
-async function getDataCustodianNetworks(
-    networkId: string
-): Promise<DataCustodianNetwork> {
-    return await get<DataCustodianNetwork>(
-        `${apis.dataCustodianNetworkV1UrlIP}/${networkId}`
     );
 }
 
@@ -865,7 +856,6 @@ export {
     getCohort,
     getReducedTool,
     getReducedCollection,
-    getDataCustodianNetworks,
     getDataset,
     getTeamDataset,
     getDataUse,

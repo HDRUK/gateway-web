@@ -802,6 +802,7 @@ const FilterPanel = ({
                         setValue={setValue}
                         control={control}
                         filterItem={filterItem}
+                        ariaLabel={t(label)}
                         resetFilterSection={() => resetFilterSection(label)}
                         counts={formatBucketCounts(
                             get(aggregations, label)?.buckets
@@ -824,6 +825,7 @@ const FilterPanel = ({
                         setValue={setValue}
                         control={control}
                         filterItem={filterItem}
+                        ariaLabel={t(label)}
                         resetFilterSection={() => resetFilterSection(label)}
                         counts={formatBucketCounts(
                             get(aggregations, label)?.buckets
@@ -926,6 +928,7 @@ const FilterPanel = ({
                 return (
                     <Accordion
                         key={label}
+                        id={`filter-${label}`}
                         sx={{
                             background: tokens.background.white,
                             boxShadow: "none",

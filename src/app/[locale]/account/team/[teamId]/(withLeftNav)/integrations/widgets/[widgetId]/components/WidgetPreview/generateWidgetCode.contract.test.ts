@@ -1,4 +1,5 @@
 import { Unit, WidgetEntityData } from "@/interfaces/Widget";
+import { CodeFormat } from "../../const";
 import { generateCspDirective, generateWidgetCode } from "./utils";
 
 const GATEWAY_URL = "https://web.example.hdruk.cloud";
@@ -8,6 +9,7 @@ const data: WidgetEntityData = {
     data_uses: [],
     scripts: [],
     collections: [],
+    publications: [],
     widget: {
         widget_name: "Contract widget",
         size_width: 400,
@@ -45,6 +47,43 @@ describe("Widget embed contract: generateWidgetCode", () => {
     it("returns an empty string until widget data has loaded", () => {
         expect(
             generateWidgetCode({
+                data: undefined,
+                teamId: "21",
+                widgetId: 7,
+                gatewayUrl: GATEWAY_URL,
+            })
+        ).toBe("");
+    });
+});
+
+describe("Widget embed contract: generateWidgetCode (React)", () => {
+    const code = generateWidgetCode({
+        format: CodeFormat.REACT,
+        data,
+        teamId: "21",
+        widgetId: 7,
+        gatewayUrl: GATEWAY_URL,
+    });
+
+    it("produces the exact JSX snippet third parties paste into their React sites", () => {
+        expect(code).toMatchInlineSnapshot(
+            `"<div style={{ position: "relative", width: "400px", height: "592px", maxWidth: "100%" }}><iframe title="HDR Gateway Widget" src="https://web.example.hdruk.cloud/widgets/21-7" style={{ position: "absolute", top: 0, left: 0, width: "100%", height: "100%", border: 0 }} allowFullScreen /></div>"`
+        );
+    });
+
+    it("points the iframe at /widgets/{teamId}-{widgetId}", () => {
+        expect(code).toContain(`src="${GATEWAY_URL}/widgets/21-7"`);
+    });
+
+    it("keeps the iframe full-screen capable and responsive", () => {
+        expect(code).toContain("allowFullScreen");
+        expect(code).toContain(`maxWidth: "100%"`);
+    });
+
+    it("returns an empty string until widget data has loaded", () => {
+        expect(
+            generateWidgetCode({
+                format: CodeFormat.REACT,
                 data: undefined,
                 teamId: "21",
                 widgetId: 7,

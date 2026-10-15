@@ -22,6 +22,8 @@ import { getShortenedText } from "@/utils/string";
 import ClearFilterButton from "@/app/[locale]/(logged-out)/search/components/ClearFilterButton";
 import HTMLContent from "../HTMLContent";
 
+const OMIT_DEFAULT_ARIA_READONLY = null as unknown as boolean;
+
 interface FilterSectionProps<TFieldValues extends FieldValues> {
     filterItem: { label: string; value: string; buckets: BucketCheckbox[] };
     control: Control<TFieldValues>;
@@ -34,6 +36,7 @@ interface FilterSectionProps<TFieldValues extends FieldValues> {
     handleCheckboxChange: (updates: { [key: string]: boolean }) => void;
     setValue: UseFormSetValue<TFieldValues>;
     resetFilterSection: () => void;
+    ariaLabel?: string;
 }
 const FilterSection = <TFieldValues extends FieldValues>({
     filterItem,
@@ -47,6 +50,7 @@ const FilterSection = <TFieldValues extends FieldValues>({
     handleCheckboxChange,
     setValue,
     resetFilterSection,
+    ariaLabel,
 }: FilterSectionProps<TFieldValues>) => {
     const t = useTranslations("components.FilterSection");
     const { field } = useController({
@@ -93,7 +97,7 @@ const FilterSection = <TFieldValues extends FieldValues>({
         const formattedText = getShortenedText(label, SEARCH_FILTER_CHAR_LIMIT);
 
         return (
-            <div key={key} style={style}>
+            <div key={key} style={style} role="listitem">
                 <CheckboxControlled
                     rawLabel={formattedText}
                     label={<HTMLContent content={formattedText} />}
@@ -143,7 +147,10 @@ const FilterSection = <TFieldValues extends FieldValues>({
                                     maxWidth: "100%",
                                 }}
                                 style={{ width: "100%" }}
-                                role=""
+                                role="list"
+                                aria-label={ariaLabel}
+                                aria-readonly={OMIT_DEFAULT_ARIA_READONLY}
+                                containerRole="presentation"
                             />
                         );
                     }}

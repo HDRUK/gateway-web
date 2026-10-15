@@ -15,6 +15,7 @@ import {
     useMediaQuery,
     useTheme,
 } from "@mui/material";
+import { visuallyHidden } from "@mui/utils";
 import Cookies from "js-cookie";
 import { useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
@@ -29,7 +30,7 @@ import {
     SearchResult,
     SearchResultARDC,
     SearchResultCollection,
-    SearchResultDataProvider,
+    SearchResultDataCustodian,
     SearchResultDataUse,
     SearchResultDataset,
     SearchResultPublication,
@@ -79,7 +80,7 @@ import {
     TYPE_FIELD,
     VIEW_FIELD,
     sortByOptionsCollections,
-    sortByOptionsDataProviders,
+    sortByOptionsDataCustodians,
     sortByOptionsDataUse,
     sortByOptionsDataset,
     sortByOptionsPublications,
@@ -127,7 +128,7 @@ import PartnerResourcesBanner from "../PartnerResourcesBanner";
 import ResultCard from "../ResultCard";
 import ResultCardARDC from "../ResultCardARDC";
 import ResultCardCollection from "../ResultCardCollection";
-import ResultCardDataProvider from "../ResultCardDataProviders";
+import ResultCardDataCustodian from "../ResultCardDataCustodian";
 import ResultCardDataUse from "../ResultCardDataUse";
 import ResultCardPublication from "../ResultCardPublication/ResultCardPublication";
 import ResultCardTool from "../ResultCardTool/ResultCardTool";
@@ -410,9 +411,9 @@ const Search = ({ filters, schema }: SearchProps) => {
             tooltip: t("publicationsTooltip"),
         },
         {
-            label: t("dataProviders"),
+            label: t("dataCustodians"),
             value: SearchCategory.DATA_CUSTODIANS,
-            tooltip: t("dataProvidersTooltip"),
+            tooltip: t("dataCustodiansTooltip"),
         },
         {
             label: t("collections"),
@@ -426,7 +427,7 @@ const Search = ({ filters, schema }: SearchProps) => {
         [SearchCategory.DATA_USE]: t("dataUse"),
         [SearchCategory.TOOLS]: t("tools"),
         [SearchCategory.PUBLICATIONS]: t("publications"),
-        [SearchCategory.DATA_CUSTODIANS]: t("dataProviders"),
+        [SearchCategory.DATA_CUSTODIANS]: t("dataCustodians"),
         [SearchCategory.COLLECTIONS]: t("collections"),
     };
 
@@ -460,8 +461,8 @@ const Search = ({ filters, schema }: SearchProps) => {
             removeArrayQueryAndPush(filterType, removedFilter);
         } else if (filterType === FILTER_DATA_TYPE) {
             updatePathMultiple({
-                [FILTER_DATA_TYPE]: filtered,
-                [FILTER_DATA_SUBTYPE]: [],
+                [FILTER_DATA_TYPE]: filtered.join("|"),
+                [FILTER_DATA_SUBTYPE]: "",
             });
         } else {
             updatePath(filterType, filtered.join("|"));
@@ -524,8 +525,8 @@ const Search = ({ filters, schema }: SearchProps) => {
                 );
             case SearchCategory.DATA_CUSTODIANS:
                 return (
-                    <ResultCardDataProvider
-                        result={result as SearchResultDataProvider}
+                    <ResultCardDataCustodian
+                        result={result as SearchResultDataCustodian}
                     />
                 );
             case SearchCategory.TOOLS:
@@ -590,7 +591,7 @@ const Search = ({ filters, schema }: SearchProps) => {
             case SearchCategory.COLLECTIONS:
                 return sortByOptionsCollections;
             case SearchCategory.DATA_CUSTODIANS:
-                return sortByOptionsDataProviders;
+                return sortByOptionsDataCustodians;
             default:
                 return sortByOptionsDataset;
         }
@@ -727,20 +728,19 @@ const Search = ({ filters, schema }: SearchProps) => {
                     type: string,
                     datasetNamesArray: string[]
                 ) => {
-                    onQuerySubmit({
-                        query,
-                    });
                     setDatasetNamesArray(datasetNamesArray);
                     setQueryParams({
                         ...queryParams,
                         pmc: type,
                         query,
                         source: EUROPE_PMC_SOURCE_FIELD,
+                        [PAGE_FIELD]: "1",
                     });
                     updatePathMultiple({
                         pmc: type,
                         query,
                         source: EUROPE_PMC_SOURCE_FIELD,
+                        [PAGE_FIELD]: "1",
                     });
                 }}
                 defaultQuery={queryParams.query}
@@ -748,7 +748,7 @@ const Search = ({ filters, schema }: SearchProps) => {
                 isDataset={queryParams.pmc === "dataset"}
             />
         );
-    }, [datasetNamesArray, onQuerySubmit, queryParams, updatePathMultiple]);
+    }, [datasetNamesArray, queryParams, updatePathMultiple]);
 
     const europePmcModalAction = () =>
         showDialog(PublicationSearchDialogMemoised);
@@ -1064,6 +1064,12 @@ const Search = ({ filters, schema }: SearchProps) => {
                                 ref={iconRef}
                                 size="large"
                                 edge="start"
+                                aria-label={
+                                    filterSidebarOpen
+                                        ? t("components.Search.hideFilters")
+                                        : t("components.Search.showFilters")
+                                }
+                                aria-expanded={filterSidebarOpen}
                                 onClick={() =>
                                     setFilterSidebarOpen(!filterSidebarOpen)
                                 }
@@ -1178,7 +1184,7 @@ const Search = ({ filters, schema }: SearchProps) => {
                                         <Box
                                             sx={{ display: "flex" }}
                                             id="result-summary"
-                                            role="alert"
+                                            role="status"
                                             aria-live="polite">
                                             {data &&
                                                 data.path?.includes(
@@ -1390,6 +1396,13 @@ const Search = ({ filters, schema }: SearchProps) => {
                                                               2
                                                           )}`,
                                             }}>
+                                            <Typography
+                                                variant="h2"
+                                                sx={visuallyHidden}>
+                                                {t(
+                                                    "components.Search.searchResults"
+                                                )}
+                                            </Typography>
                                             {isExternalSourceSelected && (
                                                 <Box
                                                     sx={{
