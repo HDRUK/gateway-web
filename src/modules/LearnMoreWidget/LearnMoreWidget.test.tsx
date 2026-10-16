@@ -16,7 +16,7 @@ describe("LearnMoreWidget", () => {
         expect(iframe).toHaveAttribute(
             "src",
             expect.stringContaining(
-                "youtube.com/embed/videoseries?list=PLBI5k9SgYrIvz_h0hq83yFnTM4t9P569b"
+                "youtube.com/embed/nnAa5J5xqD0?list=PLBI5k9SgYrIvz_h0hq83yFnTM4t9P569b"
             )
         );
     });

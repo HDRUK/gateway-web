@@ -6,7 +6,8 @@ import Typography from "@/components/Typography";
 import { IFrameWrapper } from "@/styles/IFrameContainer.styles";
 
 const PLAYLIST_ID = "PLBI5k9SgYrIvz_h0hq83yFnTM4t9P569b";
-const EMBED_URL = `https://www.youtube.com/embed/videoseries?list=${PLAYLIST_ID}&rel=0`;
+const START_VIDEO_ID = "nnAa5J5xqD0";
+const EMBED_URL = `https://www.youtube.com/embed/${START_VIDEO_ID}?list=${PLAYLIST_ID}&rel=0`;
 
 const LearnMoreWidget = () => {
     const t = useTranslations("pages.account.dashboard.learnMore");
