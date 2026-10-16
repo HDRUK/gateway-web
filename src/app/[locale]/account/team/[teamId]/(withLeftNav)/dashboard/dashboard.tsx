@@ -32,6 +32,8 @@ interface DashboardCounts {
 
 interface DashboardProps {
     teamId: string;
+    teamName: string;
+    isDarEnabled: boolean;
     initialCounts: DashboardCounts;
 }
 
@@ -53,7 +55,12 @@ const getPeriodDates = (period: string) => {
     };
 };
 
-const Dashboard = ({ teamId, initialCounts }: DashboardProps) => {
+const Dashboard = ({
+    teamId,
+    teamName,
+    isDarEnabled,
+    initialCounts,
+}: DashboardProps) => {
     const t = useTranslations("pages.account.dashboard");
     const [period, setPeriod] = useState("last_12_months");
 
@@ -133,6 +140,7 @@ const Dashboard = ({ teamId, initialCounts }: DashboardProps) => {
             <Paper>
                 <ResourceCounts
                     teamId={teamId}
+                    teamName={teamName}
                     startDate={startDate}
                     endDate={endDate}
                     initialCounts={initialCounts}
@@ -165,6 +173,7 @@ const Dashboard = ({ teamId, initialCounts }: DashboardProps) => {
                 />
                 <EnquiriesWidget
                     teamId={teamId}
+                    isDarEnabled={isDarEnabled}
                     startDate={startDate}
                     endDate={endDate}
                 />

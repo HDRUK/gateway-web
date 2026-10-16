@@ -18,6 +18,7 @@ import { useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
 import Box from "@/components/Box";
 import Paper from "@/components/Paper";
+import TooltipIcon from "@/components/TooltipIcon";
 import Typography from "@/components/Typography";
 import useGet from "@/hooks/useGet";
 import apis from "@/config/apis";
@@ -178,7 +179,15 @@ const DatasetViewsBarWidget = ({
                 flexDirection: "column",
             }}>
             <Box sx={{ pt: 2, px: 2 }}>
-                <Typography variant="h2">{title}</Typography>
+                <TooltipIcon
+                    boxSx={{ justifyContent: "flex-start", mb: 2 }}
+                    label={
+                        <Typography variant="h2" sx={{ mb: 0 }}>
+                            {title}
+                        </Typography>
+                    }
+                    content={t("tooltip")}
+                />
             </Box>
             {entries.length === 0 ? (
                 <Box
