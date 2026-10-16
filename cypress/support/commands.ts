@@ -39,7 +39,7 @@ Cypress.Commands.add("waitForApiIdle", () => {
         { method: "GET", url: `${Cypress.env("API_URL")}/**` },
         req => {
             pending++;
-            req.continue(() => {
+            req.on("after:response", () => {
                 pending--;
             });
         }
