@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { DateRangePicker } from "@hdruk/ui";
+import { Banner, DateRangePicker } from "@hdruk/ui";
 import type { DateRange } from "@hdruk/ui";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
@@ -21,6 +21,7 @@ import ImproveYourUsageWidget from "@/modules/ImproveYourUsageWidget/ImproveYour
 import LearnMoreWidget from "@/modules/LearnMoreWidget/LearnMoreWidget";
 import OtherViewsWidget from "@/modules/OtherViewsWidget/OtherViewsWidget";
 import apis from "@/config/apis";
+import { CUSTOMER_PORTAL_SUPPORT_URL } from "@/config/hrefs";
 import ResourceCounts from "./components/ResourceCounts/ResourceCounts";
 
 interface DashboardCounts {
@@ -69,49 +70,73 @@ const Dashboard = ({ teamId, initialCounts }: DashboardProps) => {
 
     return (
         <BoxContainer sx={{ gap: 2, gridTemplateColumns: "minmax(0, 1fr)" }}>
-            <Paper>
-                <Box
-                    sx={{
-                        display: "flex",
-                        justifyContent: "space-between",
-                        alignItems: "flex-start",
-                        flexWrap: "wrap",
-                        gap: 2,
+            <BoxContainer
+                sx={{
+                    gap: 2,
+                    position: "sticky",
+                    top: 0,
+                    zIndex: "appBar",
+                    bgcolor: "background.default",
+                }}>
+                <Banner
+                    tag={t("betaBanner.tag")}
+                    closable
+                    action={{
+                        label: t("betaBanner.action"),
+                        href: CUSTOMER_PORTAL_SUPPORT_URL,
+                        target: "_blank",
                     }}>
-                    <Box>
-                        <Typography variant="h2" component="h1">
-                            {t("title")}
-                        </Typography>
-                        <Typography>{t("text")}</Typography>
-                    </Box>
-                    <Box sx={{ display: "flex", alignItems: "center", gap: 2 }}>
-                        <LocalizationProvider
-                            dateAdapter={AdapterDayjs}
-                            adapterLocale="en-gb">
-                            <DateRangePicker
-                                value={range}
-                                onChange={setRange}
-                                disableFuture
-                                minDate={MIN_DATE}
-                                hideLabel
-                                label={t("choosePeriod")}
-                                shortcuts={SHORTCUTS.map(
-                                    ({ key, getValue }) => ({
-                                        label: t(`shortcuts.${key}`),
-                                        getValue,
-                                    })
-                                )}
+                    {t("betaBanner.message")}
+                </Banner>
+                <Paper>
+                    <Box
+                        sx={{
+                            display: "flex",
+                            justifyContent: "space-between",
+                            alignItems: "flex-start",
+                            flexWrap: "wrap",
+                            gap: 2,
+                        }}>
+                        <Box>
+                            <Typography variant="h2" component="h1">
+                                {t("title")}
+                            </Typography>
+                            <Typography>{t("text")}</Typography>
+                        </Box>
+                        <Box
+                            sx={{
+                                display: "flex",
+                                alignItems: "center",
+                                gap: 2,
+                            }}>
+                            <LocalizationProvider
+                                dateAdapter={AdapterDayjs}
+                                adapterLocale="en-gb">
+                                <DateRangePicker
+                                    value={range}
+                                    onChange={setRange}
+                                    disableFuture
+                                    minDate={MIN_DATE}
+                                    hideLabel
+                                    label={t("choosePeriod")}
+                                    shortcuts={SHORTCUTS.map(
+                                        ({ key, getValue }) => ({
+                                            label: t(`shortcuts.${key}`),
+                                            getValue,
+                                        })
+                                    )}
+                                />
+                            </LocalizationProvider>
+                            <DownloadFile
+                                apiPath={downloadUrl}
+                                buttonText={t("download")}
+                                buttonSx={{ mb: 0 }}
+                                variant="contained"
                             />
-                        </LocalizationProvider>
-                        <DownloadFile
-                            apiPath={downloadUrl}
-                            buttonText={t("download")}
-                            buttonSx={{ mb: 0 }}
-                            variant="contained"
-                        />
+                        </Box>
                     </Box>
-                </Box>
-            </Paper>
+                </Paper>
+            </BoxContainer>
             <Paper>
                 <ResourceCounts
                     teamId={teamId}

@@ -252,6 +252,11 @@
             "dashboard": {
                 "title": "Dashboard",
                 "text": "Here's the latest activity from researchers accessing your Gateway resources.",
+                "betaBanner": {
+                    "tag": "BETA",
+                    "message": "This dashboard will be periodically improved based on usage and user feedback.",
+                    "action": "Share feedback"
+                },
                 "download": "Download",
                 "choosePeriod": "Choose time period",
                 "shortcuts": {
@@ -1832,6 +1837,8 @@
             "privacyEnhancementsTooltip": "Description of the tools or software used to reduce level of identifiable data being shared",
             "outputs": "Link to research outputs",
             "outputsTooltip": "A URL link to any academic or non-academic research outputs, including code or software",
+            "publications": "Publications",
+            "publicationsTooltip": "Publications held on the Gateway that are linked to this data use",
             "gatewayOutputsTools": "Link to research outputs",
             "gatewayOutputsToolsTooltip": "A URL link to any academic or non-academic research outputs, including code or software",
             "gatewayOutputsPapers": "Link to research outputs",
