@@ -27,9 +27,25 @@ Cypress.Commands.add("login", (user: string) => {
     }).then(response => {
         expect(response.status).to.eq(200);
         const jwt = response.body.access_token;
-        cy.setCookie("token", jwt);
+        cy.setCookie("token", jwt, { path: "/" });
         cy.reload();
+        cy.getCookie("token").should("have.property", "value", jwt);
     });
+});
+
+Cypress.Commands.add("loginSession", (user: string) => {
+    cy.session(
+        user,
+        () => {
+            cy.visit("/");
+            cy.login(user);
+        },
+        {
+            validate: () => {
+                cy.getCookie("token").should("exist");
+            },
+        }
+    );
 });
 
 Cypress.Commands.add("waitForApiIdle", () => {
@@ -76,6 +92,7 @@ declare global {
         interface Chainable {
             checkA11yPage: () => void;
             login: (user: string) => void;
+            loginSession: (user: string) => void;
             waitForApiIdle: () => void;
             setFeatureFlag: (name: string, enabled: boolean) => void;
         }

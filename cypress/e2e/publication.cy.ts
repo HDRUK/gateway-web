@@ -22,10 +22,7 @@ const createPublication = () => {
 };
 
 beforeEach(() => {
-    cy.session("custodianTeamAdmin1", () => {
-        cy.visit("/");
-        cy.login("custodianTeamAdmin1");
-    });
+    cy.loginSession("custodianTeamAdmin1");
 });
 
 describe("Publication - creation", () => {

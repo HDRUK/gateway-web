@@ -61,10 +61,7 @@ const completeDatasetForm = () => {
 };
 
 beforeEach(() => {
-    cy.session("darManagerAndMetadatamanger", () => {
-        cy.visit("/");
-        cy.login("darManagerAndMetadatamanger");
-    });
+    cy.loginSession("darManagerAndMetadatamanger");
 });
 
 describe("Dataset - creation", () => {
