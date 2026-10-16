@@ -1,6 +1,5 @@
 import "cypress-axe";
 import { getUserForLogin } from "./utils/getUserForLogin";
-import { getTokenClaims } from "./utils/tokenClaims";
 
 const API_URL = Cypress.env("API_URL") + "/api/v1/auth";
 
@@ -28,30 +27,9 @@ Cypress.Commands.add("login", (user: string) => {
     }).then(response => {
         expect(response.status).to.eq(200);
         const jwt = response.body.access_token;
-        Cypress.env("lastLogin", {
-            user,
-            at: Math.floor(Date.now() / 1000),
-            claims: getTokenClaims(jwt),
-        });
-        cy.setCookie("token", jwt, { path: "/" });
+        cy.setCookie("token", jwt);
         cy.reload();
-        cy.getCookie("token").should("have.property", "value", jwt);
     });
-});
-
-Cypress.Commands.add("loginSession", (user: string) => {
-    cy.session(
-        user,
-        () => {
-            cy.visit("/");
-            cy.login(user);
-        },
-        {
-            validate: () => {
-                cy.getCookie("token").should("exist");
-            },
-        }
-    );
 });
 
 Cypress.Commands.add("waitForApiIdle", () => {
@@ -61,7 +39,7 @@ Cypress.Commands.add("waitForApiIdle", () => {
         { method: "GET", url: `${Cypress.env("API_URL")}/**` },
         req => {
             pending++;
-            req.on("after:response", () => {
+            req.continue(() => {
                 pending--;
             });
         }
@@ -98,7 +76,6 @@ declare global {
         interface Chainable {
             checkA11yPage: () => void;
             login: (user: string) => void;
-            loginSession: (user: string) => void;
             waitForApiIdle: () => void;
             setFeatureFlag: (name: string, enabled: boolean) => void;
         }

@@ -260,17 +260,6 @@ jobs:
           browser: ${{ steps.setup-chrome.outputs.chrome-path }}
           headless: true
 
-      - name: Upload e2e diagnostics
-        if: failure()
-        uses: actions/upload-artifact@v4
-        with:
-          name: e2e-diagnostics
-          retention-days: 1
-          path: |
-            cypress/screenshots
-            next.log
-          if-no-files-found: ignore
-
       # - name: Upload Cypress video
       #   uses: actions/upload-artifact@v4
       #   if: always()

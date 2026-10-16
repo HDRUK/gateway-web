@@ -13,7 +13,10 @@ const createCollection = () => {
 };
 
 beforeEach(() => {
-    cy.loginSession("custodianTeamAdmin1");
+    cy.session("custodianTeamAdmin1", () => {
+        cy.visit("/");
+        cy.login("custodianTeamAdmin1");
+    });
 });
 
 describe("Collection - creation", () => {
