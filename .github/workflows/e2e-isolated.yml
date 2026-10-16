@@ -265,12 +265,10 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: e2e-diagnostics
+          retention-days: 1
           path: |
             cypress/screenshots
             next.log
-            gateway-api/laravel.log
-            gateway-api/queue.log
-            gateway-api/storage/logs
           if-no-files-found: ignore
 
       # - name: Upload Cypress video

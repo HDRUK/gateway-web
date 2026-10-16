@@ -1,5 +1,6 @@
 import "cypress-axe";
 import { getUserForLogin } from "./utils/getUserForLogin";
+import { getTokenClaims } from "./utils/tokenClaims";
 
 const API_URL = Cypress.env("API_URL") + "/api/v1/auth";
 
@@ -27,6 +28,11 @@ Cypress.Commands.add("login", (user: string) => {
     }).then(response => {
         expect(response.status).to.eq(200);
         const jwt = response.body.access_token;
+        Cypress.env("lastLogin", {
+            user,
+            at: Math.floor(Date.now() / 1000),
+            claims: getTokenClaims(jwt),
+        });
         cy.setCookie("token", jwt, { path: "/" });
         cy.reload();
         cy.getCookie("token").should("have.property", "value", jwt);
