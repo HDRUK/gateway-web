@@ -1766,6 +1766,20 @@
                     "collectionSources": "Collection Sources",
                     "noCollectionSources": "No collection sources listed",
                     "schemaVersion": "Schema Version"
+                },
+                "DatasetPageShell": {
+                    "schemaUnavailable": "The detailed metadata for this dataset can't be shown right now. Please try again later."
+                },
+                "MetadataFormat": {
+                    "title": "Metadata format",
+                    "schema": "Schema",
+                    "schemaVersion": "Schema version",
+                    "partner": "Partner",
+                    "metadataVersion": "Metadata version",
+                    "issued": "First published",
+                    "modified": "Last modified",
+                    "viewSchema": "View {schema} schema definition",
+                    "schemaDefinition": "schema definition"
                 }
             }
         },
