@@ -2,38 +2,33 @@
 
 import { useEffect, useMemo, useState } from "react";
 import { useForm } from "react-hook-form";
+import { Button } from "@hdruk/ui";
+import { tokens } from "@hdruk/ui/theme";
 import { useTranslations } from "next-intl";
 import { useParams, useSearchParams } from "next/navigation";
-import { tokens } from "@hdruk/ui/theme";
 import { Dataset } from "@/interfaces/Dataset";
 import { PaginationType } from "@/interfaces/Pagination";
 import Box from "@/components/Box";
-import { Button } from "@hdruk/ui";
 import { DatasetMenuAction } from "@/components/DatasetCard/DatasetCardMenu";
 import Paper from "@/components/Paper";
 import Tabs from "@/components/Tabs";
 import Typography from "@/components/Typography";
 import AddDatasetDialog from "@/modules/AddDatasetDialog";
+import useActivationCheck from "@/hooks/useActivationCheck";
+import useAuth from "@/hooks/useAuth";
 import useDebounce from "@/hooks/useDebounce";
 import useDialog from "@/hooks/useDialog";
 import useGet from "@/hooks/useGet";
-import useModal from "@/hooks/useModal";
 import usePatch from "@/hooks/usePatch";
 import usePut from "@/hooks/usePut";
+import notificationService from "@/services/notification";
 import apis from "@/config/apis";
 import {
     datasetSearchDefaultValues,
     sortByOptions,
 } from "@/config/forms/datasetAccountSearch";
 import { DataStatus } from "@/consts/application";
-import {
-    AddIcon,
-    ArchiveIcon,
-    CohortIcon,
-    ContentCopyIcon,
-    EditIcon,
-    UnarchiveIcon,
-} from "@/consts/icons";
+import { AddIcon, CohortIcon, ContentCopyIcon, EditIcon } from "@/consts/icons";
 import { RouteName } from "@/consts/routeName";
 import {
     ACCOUNT,
@@ -44,6 +39,7 @@ import {
     TITLE,
     TEXT,
 } from "@/consts/translation";
+import { loadDatasetActivation } from "@/utils/activation";
 import { capitalise } from "@/utils/general";
 import DatasetTab from "../DatasetTab";
 
@@ -67,8 +63,9 @@ const TeamDatasets = ({
     isSuperAdmin,
 }: TeamDatasetsProps) => {
     const t = useTranslations(TRANSLATION_PATH);
-    const { showModal } = useModal();
     const { showDialog } = useDialog();
+    const { user } = useAuth();
+    const checkActivation = useActivationCheck();
     const searchParams = useSearchParams();
     const params = useParams<{ teamId: string }>();
     const tab = searchParams?.get("tab");
@@ -162,6 +159,7 @@ const TeamDatasets = ({
 
     const patchDataset = usePatch(baseDatasetsUrl, {
         localeKey: "archiveDataset",
+        successNotificationsOn: false,
     });
 
     const putDataset = usePut<{ is_cohort_discovery: boolean }>(
@@ -170,25 +168,39 @@ const TeamDatasets = ({
     );
 
     useEffect(() => {
-        window.scrollTo({ top: 0 });         
+        window.scrollTo({ top: 0 });
     }, [queryParams.page]);
 
-    const showArchiveButton =
-        tab !== DataStatus.ARCHIVED && permissions["datasets.delete"];
-    const showUnarchiveButton =
-        tab === DataStatus.ARCHIVED && permissions["datasets.update"];
+    const handleStatusChange = async (id: number, status: DataStatus) => {
+        if (status === DataStatus.ACTIVE) {
+            const dataset = data?.list.find(item => item.id === id);
+            const canActivate =
+                !!dataset &&
+                (await checkActivation({
+                    load: loadDatasetActivation(
+                        baseDatasetsUrl,
+                        dataset,
+                        user?.email
+                    ),
+                }));
+
+            if (!canActivate) {
+                return;
+            }
+        }
+
+        const result = await patchDataset(id, { status });
+        mutateDatasets();
+        mutateCount();
+
+        if (result !== null) {
+            notificationService.apiSuccess(t(`actions.statusChange.${status}`));
+        }
+    };
     const showAddNewButton = useMemo(
         () => permissions["datasets.create"],
         [permissions]
     );
-
-    const archiveDataset = async (id: number) => {
-        await patchDataset(id, {
-            status: DataStatus.ARCHIVED,
-        });
-        mutateDatasets();
-        mutateCount();
-    };
 
     const actions = [
         ...(permissions["datasets.update"] && tab !== DataStatus.ARCHIVED
@@ -207,47 +219,6 @@ const TeamDatasets = ({
                       icon: ContentCopyIcon,
                       label: t("actions.duplicate.label"),
                       query: { duplicate: "true" },
-                  },
-              ]
-            : []),
-        ...(showUnarchiveButton
-            ? [
-                  {
-                      action: (id: number) => {
-                          showModal({
-                              tertiaryButton: {
-                                  onAction: async () => {
-                                      await patchDataset(id, {
-                                          status: DataStatus.ACTIVE,
-                                      });
-                                      mutateDatasets();
-                                      mutateCount();
-                                  },
-                                  buttonText: t("actions.unarchive.buttonText"),
-                              },
-                              onSuccess: async () => {
-                                  await patchDataset(id, {
-                                      status: DataStatus.DRAFT,
-                                  });
-                                  mutateDatasets();
-                                  mutateCount();
-                              },
-                              confirmText: t("actions.unarchive.confirmText"),
-                              title: t("actions.unarchive.title"),
-                              content: t("actions.unarchive.content"),
-                          });
-                      },
-                      icon: UnarchiveIcon,
-                      label: t("actions.unarchive.label"),
-                  },
-              ]
-            : []),
-        ...(showArchiveButton && !isSuperAdmin
-            ? [
-                  {
-                      action: archiveDataset,
-                      icon: ArchiveIcon,
-                      label: t("actions.archive.tooltip"),
                   },
               ]
             : []),
@@ -277,17 +248,6 @@ const TeamDatasets = ({
                                   ? "actions.cohortDiscovery.exclude"
                                   : "actions.cohortDiscovery.include"
                           ),
-                      },
-                  ]
-                : []),
-            ...(showArchiveButton && dataset.create_origin === "MANUAL"
-                ? [
-                      {
-                          action: ({ id }: Dataset) => archiveDataset(id),
-                          color: "error" as const,
-                          icon: ArchiveIcon,
-                          label: t("actions.archive.label"),
-                          tooltip: t("actions.archive.tooltip"),
                       },
                   ]
                 : []),
@@ -330,6 +290,16 @@ const TeamDatasets = ({
                 }
                 isLoading={isLoading}
                 actions={actions}
+                onStatusChange={
+                    permissions["datasets.update"]
+                        ? handleStatusChange
+                        : undefined
+                }
+                disabledStatusOptions={
+                    permissions["datasets.delete"]
+                        ? undefined
+                        : [DataStatus.ARCHIVED]
+                }
                 getMenuActions={getMenuActions}
                 menuLabel={t("actions.more.label")}
             />

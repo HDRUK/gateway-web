@@ -4,11 +4,15 @@ import { IconType } from "@/interfaces/Ui";
 import Box from "@/components/Box";
 import Paper from "@/components/Paper";
 import Typography from "@/components/Typography";
+import { DataStatus } from "@/consts/application";
 import { formatDate } from "@/utils/date";
 import CardActions from "../CardActions";
 import KeyValueList from "../KeyValueList";
+import StatusMenu from "../StatusMenu";
 
 interface ToolCardProps {
+    onStatusChange?: (id: number, status: DataStatus) => void;
+    disabledStatusOptions?: DataStatus[];
     tool: Tool;
     actions: {
         icon: IconType;
@@ -18,7 +22,12 @@ interface ToolCardProps {
     }[];
 }
 
-const ToolCard = ({ tool, actions }: ToolCardProps) => {
+const ToolCard = ({
+    tool,
+    actions,
+    onStatusChange,
+    disabledStatusOptions,
+}: ToolCardProps) => {
     const { type_category, name, user, updated_at } = tool;
 
     return (
@@ -26,7 +35,9 @@ const ToolCard = ({ tool, actions }: ToolCardProps) => {
             <Box
                 sx={{
                     display: "grid",
-                    gridTemplateColumns: "repeat(1, 1fr 50px)",
+                    gridTemplateColumns: onStatusChange
+                        ? "1fr auto 50px"
+                        : "repeat(1, 1fr 50px)",
                     p: 0,
                 }}>
                 <Box
@@ -71,7 +82,20 @@ const ToolCard = ({ tool, actions }: ToolCardProps) => {
                         />
                     </Box>
                 </Box>
-                <Box sx={{ p: 0, borderLeft: `solid 1px ${tokens.status.faded}` }}>
+                {onStatusChange && (
+                    <Box>
+                        <StatusMenu
+                            status={tool.status as DataStatus}
+                            onChange={status => onStatusChange(tool.id, status)}
+                            disabledOptions={disabledStatusOptions}
+                        />
+                    </Box>
+                )}
+                <Box
+                    sx={{
+                        p: 0,
+                        borderLeft: `solid 1px ${tokens.status.faded}`,
+                    }}>
                     <CardActions actions={actions} id={tool.id} />
                 </Box>
             </Box>

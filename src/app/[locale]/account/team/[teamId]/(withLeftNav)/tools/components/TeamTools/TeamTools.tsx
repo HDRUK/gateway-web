@@ -2,27 +2,29 @@
 
 import { useEffect, useMemo, useState } from "react";
 import { useForm } from "react-hook-form";
+import { Button } from "@hdruk/ui";
+import { tokens } from "@hdruk/ui/theme";
 import { useTranslations } from "next-intl";
 import { useRouter, useSearchParams } from "next/navigation";
-import { tokens } from "@hdruk/ui/theme";
 import { PaginationType } from "@/interfaces/Pagination";
 import { Tool } from "@/interfaces/Tool";
 import Box from "@/components/Box";
-import { Button } from "@hdruk/ui";
 import Paper from "@/components/Paper";
 import Tabs from "@/components/Tabs";
 import Typography from "@/components/Typography";
+import useActivationCheck from "@/hooks/useActivationCheck";
 import useDebounce from "@/hooks/useDebounce";
 import useGet from "@/hooks/useGet";
-import useModal from "@/hooks/useModal";
 import usePatch from "@/hooks/usePatch";
+import notificationService from "@/services/notification";
 import apis from "@/config/apis";
+import { toolValidationSchema } from "@/config/forms/tool";
 import {
     searchDefaultValues,
     sortByOptions,
 } from "@/config/forms/toolAccountSearch";
 import { DataStatus } from "@/consts/application";
-import { AddIcon, ArchiveIcon, EditIcon, UnarchiveIcon } from "@/consts/icons";
+import { AddIcon, EditIcon } from "@/consts/icons";
 import { RouteName } from "@/consts/routeName";
 import {
     ACCOUNT,
@@ -33,6 +35,10 @@ import {
     TEXT,
     TOOLS,
 } from "@/consts/translation";
+import {
+    getToolActivationValues,
+    loadEntityActivation,
+} from "@/utils/activation";
 import { capitalise } from "@/utils/general";
 import ToolsTab from "../ToolsTab";
 
@@ -52,10 +58,9 @@ const TRANSLATION_PATH = `${PAGES}.${ACCOUNT}.${TEAM}.${TOOLS}.${COMPONENTS}.Tea
 
 const TeamTools = ({ permissions, teamId, userId }: TeamToolsProps) => {
     const t = useTranslations(TRANSLATION_PATH);
+    const checkActivation = useActivationCheck();
     const router = useRouter();
-    const { showModal } = useModal();
     const searchParams = useSearchParams();
-    const tab = searchParams?.get("tab");
 
     const [initialSort] = sortByOptions.filter(
         o => o.value === searchDefaultValues.sortField
@@ -146,16 +151,35 @@ const TeamTools = ({ permissions, teamId, userId }: TeamToolsProps) => {
 
     const patchTool = usePatch<Partial<Tool>>(baseToolsUrl, {
         itemName: "Tool",
+        successNotificationsOn: false,
     });
 
     useEffect(() => {
-        window.scrollTo({ top: 0 });         
+        window.scrollTo({ top: 0 });
     }, [queryParams.page]);
 
-    const showArchiveButton =
-        tab !== DataStatus.ARCHIVED && permissions["tools.delete"];
-    const showUnarchiveButton =
-        tab === DataStatus.ARCHIVED && permissions["tools.update"];
+    const handleStatusChange = async (id: number, status: DataStatus) => {
+        if (
+            status === DataStatus.ACTIVE &&
+            !(await checkActivation({
+                load: loadEntityActivation(
+                    `${baseToolsUrl}/${id}`,
+                    toolValidationSchema,
+                    getToolActivationValues
+                ),
+            }))
+        ) {
+            return;
+        }
+
+        const result = await patchTool(id, { status });
+        mutateTools();
+        mutateCount();
+
+        if (result !== null) {
+            notificationService.apiSuccess(t(`actions.statusChange.${status}`));
+        }
+    };
     const showAddNewButton = useMemo(() => {
         return teamId ? permissions["tools.create"] : true;
     }, [permissions]);
@@ -169,53 +193,6 @@ const TeamTools = ({ permissions, teamId, userId }: TeamToolsProps) => {
                           : `/${RouteName.ACCOUNT}/${RouteName.PROFILE}/${RouteName.TOOLS}`,
                       icon: EditIcon,
                       label: t("actions.edit.label"),
-                  },
-              ]
-            : []),
-        ...(showUnarchiveButton
-            ? [
-                  {
-                      action: (id: number) => {
-                          showModal({
-                              tertiaryButton: {
-                                  onAction: async () => {
-                                      await patchTool(id, {
-                                          status: DataStatus.ACTIVE,
-                                      });
-                                      mutateTools();
-                                      mutateCount();
-                                  },
-                                  buttonText: t("actions.unarchive.buttonText"),
-                              },
-                              onSuccess: async () => {
-                                  await patchTool(id, {
-                                      status: DataStatus.DRAFT,
-                                  });
-                                  mutateTools();
-                                  mutateCount();
-                              },
-                              confirmText: t("actions.unarchive.confirmText"),
-                              title: t("actions.unarchive.title"),
-                              content: t("actions.unarchive.content"),
-                          });
-                      },
-                      icon: UnarchiveIcon,
-                      label: t("actions.unarchive.label"),
-                  },
-              ]
-            : []),
-        ...(showArchiveButton
-            ? [
-                  {
-                      action: async (id: number) => {
-                          await patchTool(id, {
-                              status: DataStatus.ARCHIVED,
-                          });
-                          mutateTools();
-                          mutateCount();
-                      },
-                      icon: ArchiveIcon,
-                      label: t("actions.archive.label"),
                   },
               ]
             : []),
@@ -257,6 +234,14 @@ const TeamTools = ({ permissions, teamId, userId }: TeamToolsProps) => {
                 }
                 isLoading={isLoading}
                 actions={actions}
+                onStatusChange={
+                    permissions["tools.update"] ? handleStatusChange : undefined
+                }
+                disabledStatusOptions={
+                    permissions["tools.delete"]
+                        ? undefined
+                        : [DataStatus.ARCHIVED]
+                }
             />
         ),
     }));

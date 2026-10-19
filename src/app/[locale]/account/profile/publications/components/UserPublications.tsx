@@ -2,30 +2,36 @@
 
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
+import { Button } from "@hdruk/ui";
+import { tokens } from "@hdruk/ui/theme";
 import { useTranslations } from "next-intl";
 import { useSearchParams } from "next/navigation";
-import { tokens } from "@hdruk/ui/theme";
 import { PaginationType } from "@/interfaces/Pagination";
 import { Publication } from "@/interfaces/Publication";
 import Box from "@/components/Box";
-import { Button } from "@hdruk/ui";
 import Paper from "@/components/Paper";
 import Tabs from "@/components/Tabs";
 import Typography from "@/components/Typography";
 import AddPublicationDialog from "@/modules/AddPublicationDialog";
+import useActivationCheck from "@/hooks/useActivationCheck";
 import useDebounce from "@/hooks/useDebounce";
 import useDialog from "@/hooks/useDialog";
 import useGet from "@/hooks/useGet";
-import useModal from "@/hooks/useModal";
 import usePatch from "@/hooks/usePatch";
+import notificationService from "@/services/notification";
 import apis from "@/config/apis";
+import { publicationValidationSchema } from "@/config/forms/publication";
 import {
     publicationSearchDefaultValues,
     sortByOptions,
 } from "@/config/forms/publicationAccountSearch";
 import { DataStatus } from "@/consts/application";
-import { AddIcon, ArchiveIcon, EditIcon, UnarchiveIcon } from "@/consts/icons";
+import { AddIcon, EditIcon } from "@/consts/icons";
 import { RouteName } from "@/consts/routeName";
+import {
+    getPublicationActivationValues,
+    loadEntityActivation,
+} from "@/utils/activation";
 import { capitalise } from "@/utils/general";
 import PublicationTab from "./PublicationTab";
 
@@ -49,11 +55,9 @@ const UserPublications = ({
     teamId,
 }: UserPublicationProps) => {
     const t = useTranslations(TRANSLATION_PATH);
+    const checkActivation = useActivationCheck();
     const { showDialog } = useDialog();
-    const { showModal } = useModal();
     const searchParams = useSearchParams();
-
-    const tab = searchParams?.get("tab");
 
     const [initialSort] = sortByOptions.filter(
         o => o.value === publicationSearchDefaultValues.sortField
@@ -134,12 +138,31 @@ const UserPublications = ({
 
     const patchPublication = usePatch(basePublicationsUrl, {
         itemName: "Publication",
+        successNotificationsOn: false,
     });
 
-    const showArchiveButton =
-        tab !== DataStatus.ARCHIVED && permissions["papers.delete"];
-    const showUnarchiveButton =
-        tab === DataStatus.ARCHIVED && permissions["papers.update"];
+    const handleStatusChange = async (id: number, status: DataStatus) => {
+        if (
+            status === DataStatus.ACTIVE &&
+            !(await checkActivation({
+                load: loadEntityActivation(
+                    `${basePublicationsUrl}/${id}`,
+                    publicationValidationSchema,
+                    getPublicationActivationValues
+                ),
+            }))
+        ) {
+            return;
+        }
+
+        const result = await patchPublication(id, { status });
+        mutatePublications();
+        mutateCount();
+
+        if (result !== null) {
+            notificationService.apiSuccess(t(`actions.statusChange.${status}`));
+        }
+    };
 
     const { data: counts, mutate: mutateCount } = useGet<CountStatus>(
         `${basePublicationsUrl}/count/status`
@@ -160,53 +183,6 @@ const UserPublications = ({
                           : `/${RouteName.ACCOUNT}/${RouteName.PROFILE}/${RouteName.PUBLICATIONS}`,
                       icon: EditIcon,
                       label: t("actions.edit.label"),
-                  },
-              ]
-            : []),
-        ...(showUnarchiveButton
-            ? [
-                  {
-                      action: (id: number) => {
-                          showModal({
-                              tertiaryButton: {
-                                  onAction: async () => {
-                                      await patchPublication(id, {
-                                          status: DataStatus.ACTIVE,
-                                      });
-                                      mutatePublications();
-                                      mutateCount();
-                                  },
-                                  buttonText: t("actions.unarchive.buttonText"),
-                              },
-                              onSuccess: async () => {
-                                  await patchPublication(id, {
-                                      status: DataStatus.DRAFT,
-                                  });
-                                  mutatePublications();
-                                  mutateCount();
-                              },
-                              confirmText: t("actions.unarchive.confirmText"),
-                              title: t("actions.unarchive.title"),
-                              content: t("actions.unarchive.content"),
-                          });
-                      },
-                      icon: UnarchiveIcon,
-                      label: t("actions.unarchive.label"),
-                  },
-              ]
-            : []),
-        ...(showArchiveButton
-            ? [
-                  {
-                      action: async (id: number) => {
-                          await patchPublication(id, {
-                              status: DataStatus.ARCHIVED,
-                          });
-                          mutatePublications();
-                          mutateCount();
-                      },
-                      icon: ArchiveIcon,
-                      label: t("actions.archive.label"),
                   },
               ]
             : []),
@@ -247,6 +223,16 @@ const UserPublications = ({
                 }
                 isLoading={isLoading}
                 actions={actions}
+                onStatusChange={
+                    permissions["papers.update"]
+                        ? handleStatusChange
+                        : undefined
+                }
+                disabledStatusOptions={
+                    permissions["papers.delete"]
+                        ? undefined
+                        : [DataStatus.ARCHIVED]
+                }
             />
         ),
     }));

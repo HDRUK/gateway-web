@@ -14,6 +14,7 @@ import {
     sortField,
     toggleDirection,
 } from "@/config/forms/collectionAccountSearch";
+import { DataStatus } from "@/consts/application";
 
 const TRANSLATION_PATH =
     "pages.account.team.collections.components.CollectionsTab";
@@ -26,6 +27,8 @@ interface CollectionsTabProps {
         action?: (id: number) => void;
         label: string;
     }[];
+    onStatusChange?: (id: number, status: DataStatus) => void;
+    disabledStatusOptions?: DataStatus[];
     lastPage?: number;
     from?: number;
     to?: number;
@@ -40,6 +43,8 @@ interface CollectionsTabProps {
 
 const CollectionsTab = ({
     actions,
+    onStatusChange,
+    disabledStatusOptions,
     list,
     label,
     lastPage,
@@ -98,6 +103,8 @@ const CollectionsTab = ({
                 .map(collection => (
                     <CollectionCard
                         actions={actions}
+                        onStatusChange={onStatusChange}
+                        disabledStatusOptions={disabledStatusOptions}
                         key={collection.id}
                         collection={collection}
                     />

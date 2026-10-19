@@ -510,15 +510,10 @@
                             "edit": {
                                 "label": "Edit a publication"
                             },
-                            "archive": {
-                                "label": "Archive a publication"
-                            },
-                            "unarchive": {
-                                "label": "Unarchive publication so it is live on the Gateway",
-                                "title": "Unarchive a publication",
-                                "buttonText": "Make Active",
-                                "confirmText": "Make Draft",
-                                "content": "Select whether you would like to move this publication to Active (this will make your publication available within search results) or Draft (where you can edit the publication before making it available within search results)."
+                            "statusChange": {
+                                "ACTIVE": "You have made 1 publication active and can now find the publication in the Active tab. The publication will now show up in search results.",
+                                "DRAFT": "You have moved 1 publication to draft and can now find the publication in the Draft tab. The publication will no longer show up in search results.",
+                                "ARCHIVED": "You have archived 1 publication and can now find the publication in the Archived tab. The publication will no longer show up in search results."
                             }
                         }
                     }
@@ -694,18 +689,13 @@
                             "text": "View, add, edit, archive and check the status of your data uses.",
                             "title": "Data Use",
                             "actions": {
-                                "unarchive": {
-                                    "buttonText": "Make Active",
-                                    "confirmText": "Make Draft",
-                                    "title": "Unarchive this data use",
-                                    "content": "Select whether you would like to move this data use to Active (this will make your data use available within search results) or Draft (where you can edit the data use before making it available within search results).",
-                                    "label": "Unarchive data use"
-                                },
                                 "edit": {
                                     "label": "Edit data use"
                                 },
-                                "archive": {
-                                    "label": "Archive data use so it is no longer live on the Gateway"
+                                "statusChange": {
+                                    "ACTIVE": "You have made 1 data use active and can now find the data use in the Active tab. The data use will now show up in search results.",
+                                    "DRAFT": "You have moved 1 data use to draft and can now find the data use in the Draft tab. The data use will no longer show up in search results.",
+                                    "ARCHIVED": "You have archived 1 data use and can now find the data use in the Archived tab. The data use will no longer show up in search results."
                                 }
                             }
                         }
@@ -816,22 +806,11 @@
                                 "text": "Update and duplicate this dataset."
                             },
                             "actions": {
-                                "unarchive": {
-                                    "buttonText": "Make Active",
-                                    "confirmText": "Make Draft",
-                                    "title": "Unarchive this dataset",
-                                    "content": "Select whether you would like to move this dataset to Active (this will make your dataset available within search results) or Draft (where you can edit the dataset metadata before making it available within search results).",
-                                    "label": "Unarchive dataset"
-                                },
                                 "edit": {
                                     "label": "Edit dataset metadata"
                                 },
                                 "duplicate": {
                                     "label": "Duplicate dataset metadata"
-                                },
-                                "archive": {
-                                    "label": "Archive",
-                                    "tooltip": "Archive dataset metadata so it is no longer live on the Gateway"
                                 },
                                 "more": {
                                     "label": "More actions"
@@ -839,6 +818,11 @@
                                 "cohortDiscovery": {
                                     "include": "Include in Cohort Discovery",
                                     "exclude": "Exclude from Cohort Discovery"
+                                },
+                                "statusChange": {
+                                    "ACTIVE": "You have made 1 dataset active and can now find the dataset metadata in the Active tab. The dataset will now show up in search results.",
+                                    "DRAFT": "You have moved 1 dataset to draft and can now find the dataset metadata in the Draft tab. The dataset will no longer show up in search results.",
+                                    "ARCHIVED": "You have archived 1 dataset and can now find the dataset metadata in the Archived tab. The dataset will no longer show up in search results."
                                 }
                             }
                         },
@@ -898,18 +882,13 @@
                             "text": " View, add, edit, archive and check the status of your collections.",
                             "create": "Add new Collection",
                             "actions": {
-                                "unarchive": {
-                                    "buttonText": "Make Active",
-                                    "confirmText": "Make Draft",
-                                    "title": "Unarchive the Collection so it is live on the Gateway",
-                                    "content": "Select whether you would like to move this to Active (this will make your collection available within search results) or Draft (where you can edit the metadata before making it available within search results).",
-                                    "label": "Unarchive the Collection so it is live on the Gateway"
-                                },
                                 "edit": {
                                     "label": "Edit Collection metadata"
                                 },
-                                "archive": {
-                                    "label": "Archive the Collection so it is no longer live on the Gateway"
+                                "statusChange": {
+                                    "ACTIVE": "You have made 1 collection active and can now find the collection in the Active tab. The collection will now show up in search results.",
+                                    "DRAFT": "You have moved 1 collection to draft and can now find the collection in the Draft tab. The collection will no longer show up in search results.",
+                                    "ARCHIVED": "You have archived 1 collection and can now find the collection in the Archived tab. The collection will no longer show up in search results."
                                 }
                             }
                         },
@@ -937,18 +916,13 @@
                             "text": "View, add, edit, archive and check the status of your analysis script, tools and software.",
                             "create": "Add new",
                             "actions": {
-                                "unarchive": {
-                                    "buttonText": "Make Active",
-                                    "confirmText": "Make Draft",
-                                    "title": "Unarchive analysis script, tool or software metadata so it is live on the Gateway",
-                                    "content": "Select whether you would like to move this to Active (this will make your tool available within search results) or Draft (where you can edit the metadata before making it available within search results).",
-                                    "label": "Unarchive analysis script, tool or software metadata so it is live on the Gateway"
-                                },
                                 "edit": {
                                     "label": "Edit analysis script, tool or software metadata"
                                 },
-                                "archive": {
-                                    "label": "Archive analysis script, tool or software metadata so it is no longer live on the Gateway"
+                                "statusChange": {
+                                    "ACTIVE": "You have made 1 analysis script, tool or software active and can now find it in the Active tab. It will now show up in search results.",
+                                    "DRAFT": "You have moved 1 analysis script, tool or software to draft and can now find it in the Draft tab. It will no longer show up in search results.",
+                                    "ARCHIVED": "You have archived 1 analysis script, tool or software and can now find it in the Archived tab. It will no longer show up in search results."
                                 }
                             }
                         }
