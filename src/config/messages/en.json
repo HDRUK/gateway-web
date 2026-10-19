@@ -2374,6 +2374,10 @@
     "hooks": {
         "UseDataAccessRequest": {
             "failedToCreate": "Failed to create DAR application"
+        },
+        "UseActivationCheck": {
+            "title": "Not quite done",
+            "message": "Fix these fields, then try again."
         }
     }
 }

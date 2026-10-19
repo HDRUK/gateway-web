@@ -11,7 +11,10 @@ import {
     getTeamIdFromPid,
     getUser,
 } from "@/utils/api";
-import { extractNamesFromDataType } from "@/utils/extractNamesFromDataTypes";
+import {
+    getDatasetMetadataPath,
+    getDatasetTypeValues,
+} from "@/utils/datasetForm";
 import metaData, { noFollowRobots } from "@/utils/metadata";
 import { getPermissions } from "@/utils/permissions";
 import { getTeamUser } from "@/utils/user";
@@ -46,29 +49,10 @@ export default async function TeamDatasetPage({
         isDraft ? "" : SCHEMA_VERSION
     );
 
-    const getMetadata = (isDraft: boolean) =>
-        isDraft
-            ? "versions[0].metadata.original_metadata"
-            : "versions[0].metadata.metadata";
+    const latestMetadata = get(dataset, getDatasetMetadataPath(isDraft));
 
-    const metadataLocation = getMetadata(isDraft);
-
-    const latestMetadata = get(dataset, metadataLocation);
-
-    interface DataSetTypeArrayType {
-        name: string;
-        subTypes: string[];
-    }
-    const dataSetTypes: DataSetTypeArrayType[] =
-        get(latestMetadata, "provenance.origin.datasetType") ?? [];
-
-    const datasetTypesForForm = dataSetTypes.map(item => {
-        return {
-            "Dataset type": item.name,
-            "Dataset subtypes": item.subTypes,
-        };
-    });
-    const dataTypes = extractNamesFromDataType(dataSetTypes);
+    const datasetTypeValues = getDatasetTypeValues(latestMetadata);
+    const dataTypes = datasetTypeValues["Dataset type"];
 
     const dataCustodianIdentifier = get(
         latestMetadata,
@@ -90,8 +74,7 @@ export default async function TeamDatasetPage({
 
     formJSON.defaultValues = {
         ...formJSON.defaultValues,
-        "Dataset type": dataTypes,
-        "Dataset Type Array": datasetTypesForForm,
+        ...datasetTypeValues,
     };
 
     return (
