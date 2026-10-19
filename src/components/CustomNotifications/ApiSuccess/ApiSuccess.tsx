@@ -1,7 +1,7 @@
 import React, { ReactNode, useCallback } from "react";
 import { Button } from "@hdruk/ui";
 import { tokens } from "@hdruk/ui/theme";
-import { CardActions, CardContent, CardHeader } from "@mui/material";
+import { CardActions, CardHeader } from "@mui/material";
 import Card from "@mui/material/Card";
 import { SnackbarContent, CustomContentProps, closeSnackbar } from "notistack";
 
@@ -31,13 +31,13 @@ const ApiSuccess = React.forwardRef<HTMLDivElement, ApiSuccessProps>(
                     }}>
                     <CardHeader
                         title="Success"
+                        subheader={message}
                         subheaderTypographyProps={{
                             color: tokens.status.successHover,
                             fontSize: "14px",
                         }}
                         titleTypographyProps={{ fontSize: "18px" }}
                     />
-                    <CardContent>{message}</CardContent>
                     <CardActions style={{ justifyContent: "end", gap: "10px" }}>
                         {showDismissButton && (
                             <Button
