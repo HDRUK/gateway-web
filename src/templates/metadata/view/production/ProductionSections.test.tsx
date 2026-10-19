@@ -1,4 +1,5 @@
 import { useRouter } from "next/navigation";
+import userEvent from "@testing-library/user-event";
 import { render, screen, within } from "@/utils/testUtils";
 import ProductionSections from "./ProductionSections";
 
@@ -109,6 +110,29 @@ describe("ProductionSections", () => {
             .parentElement as HTMLElement;
         expect(within(section).getByText("Observed Node")).toBeInTheDocument();
         expect(within(section).getByText("Persons")).toBeInTheDocument();
+    });
+
+    /**
+     * REGRESSION: the GWDM page renders stored tables directly, so "Open table"
+     * is the first place a record with no `columns` reaches a renderer. The
+     * throw happened on click, inside the modal, and took the page with it.
+     */
+    it("opens the structural metadata table for a record with no columns", async () => {
+        render(
+            <ProductionSections
+                data={{
+                    structuralMetadata: [
+                        { name: "Patients", description: "One row per patient." },
+                    ],
+                }}
+            />
+        );
+
+        await userEvent.click(
+            screen.getByRole("button", { name: "Open table" })
+        );
+
+        expect(await screen.findByText("Patients")).toBeInTheDocument();
     });
 
     it("renders nothing when no production section has data", () => {
