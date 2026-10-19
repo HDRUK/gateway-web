@@ -1,5 +1,5 @@
-import { cloneDeep, get, set, uniq } from "lodash";
-import { Schema, ValidationError } from "yup";
+import { cloneDeep, get, set } from "lodash";
+import { Schema } from "yup";
 import { Dataset, Metadata } from "@/interfaces/Dataset";
 import { FormHydrationSchema } from "@/interfaces/FormHydration";
 import apis from "@/config/apis";
@@ -34,29 +34,6 @@ interface Collaborator {
     id: number;
     pivot: { role: string };
 }
-
-const getActivationErrors = async (
-    schema: Schema,
-    values: object,
-    labels: Record<string, string> = {}
-): Promise<string[]> => {
-    try {
-        await schema.validate(values, { abortEarly: false });
-        return [];
-    } catch (error) {
-        if (!ValidationError.isError(error)) {
-            throw error;
-        }
-
-        const errors = error.inner.length ? error.inner : [error];
-
-        return uniq(
-            errors.map(({ path = "", message }) =>
-                labels[path] ? `${labels[path]}: ${message}` : message
-            )
-        );
-    }
-};
 
 const getLinkedItems = (items?: LinkedItem[]) =>
     items?.map(({ id, link_type }) => ({ id, link_type })) || [];
@@ -173,7 +150,6 @@ const loadDatasetActivation =
 export type { ActivationTarget, FetchData };
 
 export {
-    getActivationErrors,
     getCollectionActivationValues,
     getPublicationActivationValues,
     getToolActivationValues,

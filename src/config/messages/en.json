@@ -2382,8 +2382,8 @@
             "failedToCreate": "Failed to create DAR application"
         },
         "UseActivationCheck": {
-            "title": "Not quite done",
-            "message": "Fix these fields, then try again."
+            "title": "Not quite ready",
+            "message": "There are some required fields missing values. Please complete these fields on the form to make this metadata active."
         }
     }
 }
