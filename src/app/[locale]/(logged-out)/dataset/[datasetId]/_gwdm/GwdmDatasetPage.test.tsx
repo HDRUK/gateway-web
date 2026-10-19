@@ -53,12 +53,18 @@ describe("GwdmDatasetPage", () => {
         (useRouter as jest.Mock).mockReturnValue({ push: jest.fn() });
     });
 
-    it("requests the dataset as native GWDM, with no schema translation", async () => {
+    /**
+     * REGRESSION: GWDM must be asked for, never assumed. Dropping the model
+     * here would mean relying on the API defaulting to GWDM, and that default
+     * belongs to the caller's partner - CRUK and PRUK read their own schemas
+     * from the same endpoint.
+     */
+    it("asks the API for GWDM explicitly, with no version", async () => {
         serve(generateHdrukGwdmDataset());
 
         await renderPage("42");
 
-        expect(getDataset).toHaveBeenCalledWith("42", undefined, undefined, {
+        expect(getDataset).toHaveBeenCalledWith("42", "GWDM", undefined, {
             suppressError: true,
         });
     });

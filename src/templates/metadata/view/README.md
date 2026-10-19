@@ -2,8 +2,12 @@
 
 How a dataset's metadata is rendered on the Gateway dataset page.
 
-The Gateway renders **native GWDM only**. The v2 API returns GWDM when no
-schema is requested and says which version in `data.schema`; the page fetches
+The Gateway renders **native GWDM only**. The page asks the v2 API for GWDM
+explicitly (`?schema_model=GWDM`, no version - GWDM is the storage model, so
+the version is whatever the dataset is stored as); the API says which version
+in `data.schema`. Requesting it matters: with no schema requested the API
+applies the caller's partner default from `config/partners.php`, which CRUK and
+other external consumers depend on. The page then fetches
 that version's JSON Schema from TRASER, and every label, tooltip and layout
 decision comes from it. CRUK, PRUK and HDRUK datasets are all stored as GWDM,
 so one renderer handles all of them - a partner never needs code to have its
