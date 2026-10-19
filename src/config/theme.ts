@@ -28,13 +28,11 @@ export type buttonColourType =
 
 declare module "@mui/material/styles" {
     interface Palette {
-        warningCustom: Palette["primary"];
         greyCustom: Palette["primary"];
         yellowCustom: Palette["primary"];
     }
 
     interface PaletteOptions {
-        warningCustom?: PaletteOptions["primary"];
         greyCustom?: PaletteOptions["primary"];
         yellowCustom?: PaletteOptions["primary"];
     }
@@ -109,12 +107,6 @@ const palette = {
         light: "#E9DB5D",
         dark: "#A29415",
         contrastText: tokens.text.secondaryBlack,
-    },
-    warningCustom: {
-        main: colors.amber500,
-        light: "#E9DB5D",
-        dark: "#A29415",
-        contrastText: colors.black,
     },
 };
 

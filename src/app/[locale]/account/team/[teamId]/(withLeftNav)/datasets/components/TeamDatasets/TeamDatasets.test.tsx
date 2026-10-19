@@ -346,4 +346,35 @@ describe("TeamDatasets", () => {
             await screen.findByRole("menuitemradio", { name: "Archived" })
         ).toHaveAttribute("aria-disabled", "true");
     });
+
+    it("should allow archiving but not other status changes with only delete permission", async () => {
+        const mockDatasets = [
+            generateDatasetForTeamV1("1.0", {
+                create_origin: "MANUAL",
+                status: "ACTIVE",
+            }),
+        ];
+        server.use(getTeamDatasetsV2(mockDatasets));
+        render(
+            <TeamDatasets
+                permissions={{ "datasets.delete": true }}
+                teamId="1"
+                isSuperAdmin={false}
+            />
+        );
+
+        const card = await screen.findByTestId("dataset-card");
+        fireEvent.click(
+            within(card).getByRole("button", {
+                name: "Status: Active. Change status",
+            })
+        );
+
+        expect(
+            await screen.findByRole("menuitemradio", { name: "Archived" })
+        ).not.toHaveAttribute("aria-disabled");
+        expect(
+            screen.getByRole("menuitemradio", { name: "Draft" })
+        ).toHaveAttribute("aria-disabled", "true");
+    });
 });

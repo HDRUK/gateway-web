@@ -291,15 +291,19 @@ const TeamDatasets = ({
                 isLoading={isLoading}
                 actions={actions}
                 onStatusChange={
-                    permissions["datasets.update"]
+                    permissions["datasets.update"] ||
+                    permissions["datasets.delete"]
                         ? handleStatusChange
                         : undefined
                 }
-                disabledStatusOptions={
-                    permissions["datasets.delete"]
-                        ? undefined
-                        : [DataStatus.ARCHIVED]
-                }
+                disabledStatusOptions={[
+                    ...(permissions["datasets.update"]
+                        ? []
+                        : [DataStatus.ACTIVE, DataStatus.DRAFT]),
+                    ...(permissions["datasets.delete"]
+                        ? []
+                        : [DataStatus.ARCHIVED]),
+                ]}
                 getMenuActions={getMenuActions}
                 menuLabel={t("actions.more.label")}
             />

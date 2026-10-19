@@ -232,12 +232,21 @@ const TeamCollections = ({
                 }
                 isLoading={isLoading}
                 actions={actions}
-                onStatusChange={showEditButton ? handleStatusChange : undefined}
-                disabledStatusOptions={
-                    permissions["collections.delete"] || !teamId
-                        ? undefined
-                        : [DataStatus.ARCHIVED]
+                onStatusChange={
+                    showEditButton ||
+                    permissions["collections.delete"] ||
+                    !teamId
+                        ? handleStatusChange
+                        : undefined
                 }
+                disabledStatusOptions={[
+                    ...(showEditButton
+                        ? []
+                        : [DataStatus.ACTIVE, DataStatus.DRAFT]),
+                    ...(permissions["collections.delete"] || !teamId
+                        ? []
+                        : [DataStatus.ARCHIVED]),
+                ]}
             />
         ),
     }));

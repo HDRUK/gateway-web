@@ -112,14 +112,18 @@ const loadDatasetActivation =
             metadata,
             "summary.dataCustodian.identifier"
         );
-        const dataCustodianId = Number.isNaN(Number(dataCustodianIdentifier))
-            ? await fetchData<string>(
-                  `${apis.teamsV1Url}/${dataCustodianIdentifier || ""}/id`
-              )
-            : dataCustodianIdentifier;
+        let dataCustodianId: string | null = dataCustodianIdentifier || null;
+
+        if (dataCustodianId && Number.isNaN(Number(dataCustodianId))) {
+            dataCustodianId = await fetchData<string>(
+                `${apis.teamsV1Url}/${dataCustodianId}/id`
+            );
+        }
 
         const formJSON = await fetchData<FormHydrationSchema>(
-            `${apis.formHydrationV1Url}?name=${SCHEMA_NAME}&version=${SCHEMA_VERSION}&dataTypes=${
+            `${
+                apis.formHydrationV1Url
+            }?name=${SCHEMA_NAME}&version=${SCHEMA_VERSION}&dataTypes=${
                 datasetTypeValues["Dataset type"]
             }${dataCustodianId ? `&team_id=${dataCustodianId}` : ""}`
         );

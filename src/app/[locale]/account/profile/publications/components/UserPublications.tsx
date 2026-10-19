@@ -224,15 +224,18 @@ const UserPublications = ({
                 isLoading={isLoading}
                 actions={actions}
                 onStatusChange={
-                    permissions["papers.update"]
+                    permissions["papers.update"] || permissions["papers.delete"]
                         ? handleStatusChange
                         : undefined
                 }
-                disabledStatusOptions={
-                    permissions["papers.delete"]
-                        ? undefined
-                        : [DataStatus.ARCHIVED]
-                }
+                disabledStatusOptions={[
+                    ...(permissions["papers.update"]
+                        ? []
+                        : [DataStatus.ACTIVE, DataStatus.DRAFT]),
+                    ...(permissions["papers.delete"]
+                        ? []
+                        : [DataStatus.ARCHIVED]),
+                ]}
             />
         ),
     }));

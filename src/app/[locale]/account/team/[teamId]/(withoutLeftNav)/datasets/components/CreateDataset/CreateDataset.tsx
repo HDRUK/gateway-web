@@ -63,6 +63,11 @@ import {
     PAGES,
     TEAM,
 } from "@/consts/translation";
+import {
+    getDatasetDefaultFormValues,
+    getDatasetMetadataPath,
+    withoutRevisionUrlValidation,
+} from "@/utils/datasetForm";
 import { getToday } from "@/utils/date";
 import {
     mapExistingDatasetToFormFields,
@@ -76,11 +81,6 @@ import {
     renderFormHydrationField,
     getDatasetValidationSchema,
 } from "@/utils/formHydration";
-import {
-    getDatasetDefaultFormValues,
-    getDatasetMetadataPath,
-    withoutRevisionUrlValidation,
-} from "@/utils/datasetForm";
 import { capitalise, decodeHtmlEntity, splitCamelcase } from "@/utils/general";
 import IntroScreen from "../IntroScreen";
 import StructuralMetadataSection from "../StructuralMetadata";
@@ -263,9 +263,9 @@ const CreateDataset = ({
         itemName: "Dataset",
     });
 
-    const yupSchema = getDatasetValidationSchema(
-        currentFormJSON.validation,
-        isDraft
+    const yupSchema = useMemo(
+        () => getDatasetValidationSchema(currentFormJSON.validation, isDraft),
+        [currentFormJSON.validation, isDraft]
     );
 
     const methods = useForm<FormValues>({

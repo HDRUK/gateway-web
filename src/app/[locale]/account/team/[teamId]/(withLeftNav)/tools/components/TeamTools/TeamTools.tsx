@@ -235,13 +235,18 @@ const TeamTools = ({ permissions, teamId, userId }: TeamToolsProps) => {
                 isLoading={isLoading}
                 actions={actions}
                 onStatusChange={
-                    permissions["tools.update"] ? handleStatusChange : undefined
+                    permissions["tools.update"] || permissions["tools.delete"]
+                        ? handleStatusChange
+                        : undefined
                 }
-                disabledStatusOptions={
-                    permissions["tools.delete"]
-                        ? undefined
-                        : [DataStatus.ARCHIVED]
-                }
+                disabledStatusOptions={[
+                    ...(permissions["tools.update"]
+                        ? []
+                        : [DataStatus.ACTIVE, DataStatus.DRAFT]),
+                    ...(permissions["tools.delete"]
+                        ? []
+                        : [DataStatus.ARCHIVED]),
+                ]}
             />
         ),
     }));

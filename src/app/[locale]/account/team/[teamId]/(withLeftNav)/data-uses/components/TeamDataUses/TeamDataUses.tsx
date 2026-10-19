@@ -229,13 +229,16 @@ const TeamDataUses = ({ permissions, teamId }: TeamDataUsesProps) => {
                 isLoading={isLoading}
                 actions={actions}
                 onStatusChange={
-                    permissions["dur.update"] ? handleStatusChange : undefined
+                    permissions["dur.update"] || permissions["dur.delete"]
+                        ? handleStatusChange
+                        : undefined
                 }
-                disabledStatusOptions={
-                    permissions["dur.delete"]
-                        ? undefined
-                        : [DataStatus.ARCHIVED]
-                }
+                disabledStatusOptions={[
+                    ...(permissions["dur.update"]
+                        ? []
+                        : [DataStatus.ACTIVE, DataStatus.DRAFT]),
+                    ...(permissions["dur.delete"] ? [] : [DataStatus.ARCHIVED]),
+                ]}
             />
         ),
     }));
