@@ -2124,6 +2124,12 @@
             "title": "Cohort Discovery",
             "whatCanIDo": "What can I do in Cohort Discovery?",
             "learnAbout": "Learn about Cohort Discovery and gain access to the service"
+        },
+        "StatusMenu": {
+            "label": "Status: {status}. Change status",
+            "ACTIVE": "Active",
+            "DRAFT": "Draft",
+            "ARCHIVED": "Archived"
         }
     },
     "modules": {

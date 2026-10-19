@@ -145,13 +145,9 @@ const theme = createHdrukTheme({
         MuiMenuItem: {
             styleOverrides: {
                 root: ({ theme }) => ({
-                    "&:focus": {
-                        backgroundColor: tokens.background.white,
-
-                        "&.Mui-focusVisible": {
-                            outline: `3px solid ${theme.palette.primary.main}`,
-                            outlineOffset: "-3px",
-                        },
+                    "&.Mui-focusVisible": {
+                        outline: `3px solid ${theme.palette.primary.main}`,
+                        outlineOffset: "-3px",
                     },
                     "&:hover": {
                         backgroundColor: theme.palette.grey[200],
