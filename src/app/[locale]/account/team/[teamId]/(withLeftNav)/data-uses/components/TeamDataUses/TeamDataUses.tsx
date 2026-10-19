@@ -168,8 +168,7 @@ const TeamDataUses = ({ permissions, teamId }: TeamDataUsesProps) => {
         }
 
         const result = await patchDataUse(id, { status });
-        mutateDataUses();
-        mutateCount();
+        await Promise.all([mutateDataUses(), mutateCount()]);
 
         if (result !== null) {
             notificationService.apiSuccess(t(`actions.statusChange.${status}`));
@@ -229,16 +228,13 @@ const TeamDataUses = ({ permissions, teamId }: TeamDataUsesProps) => {
                 isLoading={isLoading}
                 actions={actions}
                 onStatusChange={
-                    permissions["dur.update"] || permissions["dur.delete"]
-                        ? handleStatusChange
-                        : undefined
+                    permissions["dur.update"] ? handleStatusChange : undefined
                 }
-                disabledStatusOptions={[
-                    ...(permissions["dur.update"]
-                        ? []
-                        : [DataStatus.ACTIVE, DataStatus.DRAFT]),
-                    ...(permissions["dur.delete"] ? [] : [DataStatus.ARCHIVED]),
-                ]}
+                disabledStatusOptions={
+                    permissions["dur.delete"]
+                        ? undefined
+                        : [DataStatus.ARCHIVED]
+                }
             />
         ),
     }));

@@ -21,6 +21,7 @@ const ApiSuccess = React.forwardRef<HTMLDivElement, ApiSuccessProps>(
         return (
             <SnackbarContent ref={ref} role="alert">
                 <Card
+                    sx={{ maxWidth: "sm" }}
                     style={{
                         backgroundColor: tokens.background.success,
                         borderColor: tokens.status.success,

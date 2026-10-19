@@ -156,8 +156,7 @@ const UserPublications = ({
         }
 
         const result = await patchPublication(id, { status });
-        mutatePublications();
-        mutateCount();
+        await Promise.all([mutatePublications(), mutateCount()]);
 
         if (result !== null) {
             notificationService.apiSuccess(t(`actions.statusChange.${status}`));
@@ -224,18 +223,15 @@ const UserPublications = ({
                 isLoading={isLoading}
                 actions={actions}
                 onStatusChange={
-                    permissions["papers.update"] || permissions["papers.delete"]
+                    permissions["papers.update"]
                         ? handleStatusChange
                         : undefined
                 }
-                disabledStatusOptions={[
-                    ...(permissions["papers.update"]
-                        ? []
-                        : [DataStatus.ACTIVE, DataStatus.DRAFT]),
-                    ...(permissions["papers.delete"]
-                        ? []
-                        : [DataStatus.ARCHIVED]),
-                ]}
+                disabledStatusOptions={
+                    permissions["papers.delete"]
+                        ? undefined
+                        : [DataStatus.ARCHIVED]
+                }
             />
         ),
     }));

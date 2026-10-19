@@ -190,8 +190,7 @@ const TeamDatasets = ({
         }
 
         const result = await patchDataset(id, { status });
-        mutateDatasets();
-        mutateCount();
+        await Promise.all([mutateDatasets(), mutateCount()]);
 
         if (result !== null) {
             notificationService.apiSuccess(t(`actions.statusChange.${status}`));
@@ -291,19 +290,15 @@ const TeamDatasets = ({
                 isLoading={isLoading}
                 actions={actions}
                 onStatusChange={
-                    permissions["datasets.update"] ||
-                    permissions["datasets.delete"]
+                    permissions["datasets.update"]
                         ? handleStatusChange
                         : undefined
                 }
-                disabledStatusOptions={[
-                    ...(permissions["datasets.update"]
-                        ? []
-                        : [DataStatus.ACTIVE, DataStatus.DRAFT]),
-                    ...(permissions["datasets.delete"]
-                        ? []
-                        : [DataStatus.ARCHIVED]),
-                ]}
+                disabledStatusOptions={
+                    permissions["datasets.delete"]
+                        ? undefined
+                        : [DataStatus.ARCHIVED]
+                }
                 getMenuActions={getMenuActions}
                 menuLabel={t("actions.more.label")}
             />

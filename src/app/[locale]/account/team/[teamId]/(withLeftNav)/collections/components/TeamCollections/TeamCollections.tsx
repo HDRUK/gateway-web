@@ -169,8 +169,7 @@ const TeamCollections = ({
         }
 
         const result = await patchCollection(id, { status });
-        mutateCollections();
-        mutateCount();
+        await Promise.all([mutateCollections(), mutateCount()]);
 
         if (result !== null) {
             notificationService.apiSuccess(t(`actions.statusChange.${status}`));
@@ -232,21 +231,12 @@ const TeamCollections = ({
                 }
                 isLoading={isLoading}
                 actions={actions}
-                onStatusChange={
-                    showEditButton ||
-                    permissions["collections.delete"] ||
-                    !teamId
-                        ? handleStatusChange
-                        : undefined
+                onStatusChange={showEditButton ? handleStatusChange : undefined}
+                disabledStatusOptions={
+                    permissions["collections.delete"] || !teamId
+                        ? undefined
+                        : [DataStatus.ARCHIVED]
                 }
-                disabledStatusOptions={[
-                    ...(showEditButton
-                        ? []
-                        : [DataStatus.ACTIVE, DataStatus.DRAFT]),
-                    ...(permissions["collections.delete"] || !teamId
-                        ? []
-                        : [DataStatus.ARCHIVED]),
-                ]}
             />
         ),
     }));

@@ -63,15 +63,16 @@ const StatusMenu = ({
                     )
                 }
                 iconPosition="end"
-                disabled={isUpdating}
                 aria-busy={isUpdating}
                 aria-label={t("label", { status: t(status) })}
                 aria-haspopup="menu"
                 aria-controls={open ? `${id}-menu` : undefined}
                 aria-expanded={open}
-                onClick={(event: MouseEvent<HTMLElement>) =>
-                    setAnchorEl(event.currentTarget)
-                }
+                onClick={(event: MouseEvent<HTMLElement>) => {
+                    if (!isUpdating) {
+                        setAnchorEl(event.currentTarget);
+                    }
+                }}
             />
             <Menu
                 id={`${id}-menu`}

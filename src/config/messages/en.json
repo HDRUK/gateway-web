@@ -2357,7 +2357,8 @@
         },
         "UseActivationCheck": {
             "title": "Not quite ready",
-            "message": "There are some required fields missing values. Please complete these fields on the form to make this metadata active."
+            "message": "There are some required fields missing values. Please complete these fields on the form to make this metadata active.",
+            "error": "There has been a problem checking this can be made active. Please try again."
         }
     }
 }

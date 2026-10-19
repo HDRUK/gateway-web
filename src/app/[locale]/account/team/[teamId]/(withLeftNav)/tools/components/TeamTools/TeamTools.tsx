@@ -173,8 +173,7 @@ const TeamTools = ({ permissions, teamId, userId }: TeamToolsProps) => {
         }
 
         const result = await patchTool(id, { status });
-        mutateTools();
-        mutateCount();
+        await Promise.all([mutateTools(), mutateCount()]);
 
         if (result !== null) {
             notificationService.apiSuccess(t(`actions.statusChange.${status}`));
@@ -235,18 +234,13 @@ const TeamTools = ({ permissions, teamId, userId }: TeamToolsProps) => {
                 isLoading={isLoading}
                 actions={actions}
                 onStatusChange={
-                    permissions["tools.update"] || permissions["tools.delete"]
-                        ? handleStatusChange
-                        : undefined
+                    permissions["tools.update"] ? handleStatusChange : undefined
                 }
-                disabledStatusOptions={[
-                    ...(permissions["tools.update"]
-                        ? []
-                        : [DataStatus.ACTIVE, DataStatus.DRAFT]),
-                    ...(permissions["tools.delete"]
-                        ? []
-                        : [DataStatus.ARCHIVED]),
-                ]}
+                disabledStatusOptions={
+                    permissions["tools.delete"]
+                        ? undefined
+                        : [DataStatus.ARCHIVED]
+                }
             />
         ),
     }));

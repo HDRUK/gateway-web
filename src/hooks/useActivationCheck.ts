@@ -17,17 +17,21 @@ const useActivationCheck = () => {
         })) as T | null;
 
     return async ({ load }: ActivationCheck) => {
-        const target = await load(fetchData);
+        try {
+            const target = await load(fetchData);
 
-        if (!target) {
-            return false;
+            if (!target) {
+                return false;
+            }
+
+            if (await target.schema.isValid(target.values)) {
+                return true;
+            }
+
+            notificationService.apiError(t("message"), { title: t("title") });
+        } catch {
+            notificationService.apiError(t("error"));
         }
-
-        if (await target.schema.isValid(target.values)) {
-            return true;
-        }
-
-        notificationService.apiError(t("message"), { title: t("title") });
 
         return false;
     };
