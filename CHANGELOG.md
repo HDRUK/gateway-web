@@ -1,3 +1,26 @@
+## [2.49.0](https://github.com/HDRUK/gateway-web/compare/v2.48.0...v2.49.0) (2026-10-15)
+
+### ✨ Features
+
+* **GAT-7285:** spider diagram accessibility improvements (#1693) ([1f9f612](https://github.com/HDRUK/gateway-web/commit/1f9f612bb1feccf2133d2b071b8e929c74876c7d)), closes [GAT-7285](undefinedGAT-7285)
+* **GAT-8695:** Link statistics to entity search (#1688) ([fbc1111](https://github.com/HDRUK/gateway-web/commit/fbc1111ae716bff14a7a68bfc19eb531eb2d2c5b)), closes [GAT-8695](undefinedGAT-8695)
+* **GAT-8704:** sticky header bar on dataset page (#1685) ([4a8fd76](https://github.com/HDRUK/gateway-web/commit/4a8fd76d0afbd046cbba3e3356ce575e1cdf5b88)), closes [GAT-8704](undefinedGAT-8704)
+* **GAT-8716:** Add react widget embed code (#1704) ([33f5e27](https://github.com/HDRUK/gateway-web/commit/33f5e27a386a1d64e8bbc51f4c6bab8bae412b76)), closes [GAT-8716](undefinedGAT-8716)
+* **GAT-8806:** Add cohort admin toggle (#1703) ([a54ce7a](https://github.com/HDRUK/gateway-web/commit/a54ce7a4a1b6bedfb3d01f04b5e4e898d9d6bfa6)), closes [GAT-8806](undefinedGAT-8806)
+* **GAT-8885:** Add publications to widgets (#1690) ([35ae8f0](https://github.com/HDRUK/gateway-web/commit/35ae8f0d10cd22c05f1c90b1917c38fac064e88b)), closes [GAT-8885](undefinedGAT-8885)
+* **GAT-9580:** Update data uses & tools labels (#1697) ([b515792](https://github.com/HDRUK/gateway-web/commit/b51579295f03dc3037485c9c01ece0a514637ab0)), closes [GAT-9580](undefinedGAT-9580)
+* **GAT-9686:** Feature flag to disable login (#1699) ([224ee48](https://github.com/HDRUK/gateway-web/commit/224ee48dc66326968958c7f875c4b0b18c95197e)), closes [GAT-9686](undefinedGAT-9686)
+* **GAT-9689:** Adds ability to turn individual social providers on a… (#1705) ([ea6fbbe](https://github.com/HDRUK/gateway-web/commit/ea6fbbe9f3ba96baf537e41043ad19c2c060b448)), closes [GAT-9689](undefinedGAT-9689)
+
+### 🐛 Bug Fixes
+
+* **GAT-7423:** Tidy Data Provider references (#1689) ([af43863](https://github.com/HDRUK/gateway-web/commit/af43863d82b9f5c9180874b9c7b746c15bcccbef)), closes [GAT-7423](undefinedGAT-7423)
+* **GAT-8612:** fix subtype display (#1686) ([e34b315](https://github.com/HDRUK/gateway-web/commit/e34b31551b35ff599648d76ec460082f55d29b01))
+* **GAT-8616:** Search WCAG (#1683) ([cfd02ca](https://github.com/HDRUK/gateway-web/commit/cfd02ca22b3963e160ca1e772d41e42516ebaa9f)), closes [GAT-8616](undefinedGAT-8616)
+* **GAT-8908:** Additional pagination tests (#1687) ([a80c3d6](https://github.com/HDRUK/gateway-web/commit/a80c3d6b8fe96f25363295cea69222a86f087aed)), closes [GAT-8908](undefinedGAT-8908)
+* **GAT-9597:** Correct search params (#1706) ([cbab27a](https://github.com/HDRUK/gateway-web/commit/cbab27ad225cf0b4b87b60abdb646e53fc70258d)), closes [GAT-9597](undefinedGAT-9597)
+* **GAT-9640:** Correct homepage font sizes (#1691) ([d971ad0](https://github.com/HDRUK/gateway-web/commit/d971ad0fcdbd9741ac211356bb15b922d7ac0eb7)), closes [GAT-9640](undefinedGAT-9640)
+
 ## [2.48.0](https://github.com/HDRUK/gateway-web/compare/v2.47.2...v2.48.0) (2026-10-09)
 
 ### ✨ Features
