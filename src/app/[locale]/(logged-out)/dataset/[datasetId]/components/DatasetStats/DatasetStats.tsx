@@ -16,8 +16,21 @@ import { truncateUrl } from "@/utils/truncateUrl";
 
 const TRANSLATION_PATH = "pages.dataset.components.DatasetStats";
 
-const DatasetStats = ({ data }: { data: Partial<VersionItem> }) => {
+interface DatasetStatsProps {
+    data: Partial<VersionItem>;
+    /**
+     * Maps a stat's scroll target onto the anchor to scroll to instead. The
+     * production page's own anchors are used for any target not listed; the
+     * GWDM page maps them onto its schema-derived sections. A plain object
+     * rather than a function so it can cross the server/client boundary.
+     */
+    scrollTargets?: Record<string, string>;
+}
+
+const DatasetStats = ({ data, scrollTargets }: DatasetStatsProps) => {
     const t = useTranslations(TRANSLATION_PATH);
+    const resolveScrollTarget = (target: string) =>
+        scrollTargets?.[target] ?? target;
 
     const spatialCoverage = get(data, "metadata.metadata.coverage.spatial");
     const populationStat = formatTextDelimiter(
@@ -53,7 +66,7 @@ const DatasetStats = ({ data }: { data: Partial<VersionItem> }) => {
             unit: t("populationUnit"),
             iconSrc: "/images/dataset/bar-chart.svg",
             largeStatText: true,
-            targetScroll: "anchor-Documentation",
+            targetScroll: resolveScrollTarget("anchor-Documentation"),
             enableScroll: populationStat
                 ? populationStat.toString() === "-1"
                     ? false
@@ -65,7 +78,7 @@ const DatasetStats = ({ data }: { data: Partial<VersionItem> }) => {
             stat: yearsStat,
             iconSrc: "/images/dataset/calendar.svg",
             largeStatText: true,
-            targetScroll: "anchor-Coverage",
+            targetScroll: resolveScrollTarget("anchor-Coverage"),
             enableScroll: !!yearsStat,
         },
         {
@@ -73,7 +86,7 @@ const DatasetStats = ({ data }: { data: Partial<VersionItem> }) => {
             noStatText: t("notReported"),
             stat: tissueStat ?? "",
             iconSrc: "/images/dataset/lungs.svg",
-            targetScroll: "anchor-Provenance",
+            targetScroll: resolveScrollTarget("anchor-Provenance"),
             enableScroll: !!tissueStat,
         },
         {
@@ -81,7 +94,7 @@ const DatasetStats = ({ data }: { data: Partial<VersionItem> }) => {
             noStatText: t("notReported"),
             stat: coverageStat,
             iconSrc: "/images/dataset/map.svg",
-            targetScroll: "anchor-Coverage",
+            targetScroll: resolveScrollTarget("anchor-Coverage"),
             enableScroll: !!coverageStat,
         },
         {
@@ -97,7 +110,7 @@ const DatasetStats = ({ data }: { data: Partial<VersionItem> }) => {
                 )?.[1]
             }`,
             iconSrc: "/images/dataset/clock-white.svg",
-            targetScroll: "anchor-DataAccessRequest",
+            targetScroll: resolveScrollTarget("anchor-DataAccessRequest"),
             enableScroll: !!leadTimeStat,
         },
     ];

@@ -438,10 +438,11 @@ async function getDataset(
     const baseUrl = `${apis.datasetsV2UrlIP}/${datasetId}`;
     const params = new URLSearchParams();
 
-    if (schemaModel && schemaVersion) {
-        params.append("schema_model", schemaModel);
-        params.append("schema_version", schemaVersion);
-    }
+    // Sent independently: GWDM is the storage model, so asking for it needs no
+    // version. Every other model still requires the pair, which the API enforces.
+    if (schemaModel) params.append("schema_model", schemaModel);
+    if (schemaVersion) params.append("schema_version", schemaVersion);
+
     const queryString = params.toString();
 
     return await get<Dataset>(
