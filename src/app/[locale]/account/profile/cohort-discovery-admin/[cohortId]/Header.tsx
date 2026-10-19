@@ -50,7 +50,7 @@ export default function Header({
                         <Chip
                             size="small"
                             label={capitalise(cohortRequest?.request_status)}
-                            color={statusMapping[cohortRequest?.request_status]}
+                            {...statusMapping[cohortRequest?.request_status]}
                         />
                     </Box>
                 )}
@@ -69,11 +69,9 @@ export default function Header({
                             label={capitalise(
                                 cohortRequest?.nhse_sde_request_status
                             )}
-                            color={
-                                NHSSDEStatusMapping[
-                                    cohortRequest?.nhse_sde_request_status
-                                ]
-                            }
+                            {...NHSSDEStatusMapping[
+                                cohortRequest?.nhse_sde_request_status
+                            ]}
                         />
                     </Box>
                 )}

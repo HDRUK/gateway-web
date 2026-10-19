@@ -63,15 +63,6 @@ declare module "@mui/material/Switch" {
         large: true;
     }
 }
-declare module "@mui/material/Chip" {
-    interface ChipPropsColorOverrides {
-        warningCustom: true;
-        alias: true;
-        greyCustom: true;
-        yellowCustom: true;
-    }
-}
-
 declare module "@mui/material/SvgIcon" {
     interface SvgIconPropsSizeOverrides {
         xsmall: true;
@@ -124,10 +115,6 @@ const palette = {
         light: "#E9DB5D",
         dark: "#A29415",
         contrastText: colors.black,
-    },
-    alias: {
-        backgroundColor: tokens.status.archived,
-        contrastText: tokens.background.white,
     },
 };
 
@@ -483,58 +470,6 @@ const theme = createHdrukTheme({
                     },
                 },
             },
-        },
-        MuiChip: {
-            styleOverrides: {
-                root: {
-                    "& .MuiChip-deleteIcon, & .MuiChip-deleteIcon:hover": {
-                        color: "inherit",
-                    },
-                    padding: 2,
-                },
-            },
-            variants: [
-                {
-                    props: { color: "success" },
-                    style: {
-                        background: colors.green400,
-                        color: tokens.background.white,
-                    },
-                },
-                {
-                    props: { color: "secondary" },
-                    style: {
-                        color: tokens.background.white,
-                    },
-                },
-                {
-                    props: { color: "warningCustom" },
-                    style: {
-                        background: colors.orange300,
-                    },
-                },
-                {
-                    props: { color: "yellowCustom" },
-                    style: {
-                        background: tokens.status.warning,
-                        color: tokens.text.warning,
-                    },
-                },
-                {
-                    props: { color: "alias" },
-                    style: {
-                        backgroundColor: palette.alias.backgroundColor,
-                        color: palette.alias.contrastText,
-                    },
-                },
-                {
-                    props: { color: "greyCustom" },
-                    style: {
-                        backgroundColor: tokens.status.faded,
-                        color: tokens.background.white,
-                    },
-                },
-            ],
         },
     },
     customShadows: {
