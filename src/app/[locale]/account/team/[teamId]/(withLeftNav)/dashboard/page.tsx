@@ -1,6 +1,6 @@
 import { notFound } from "next/navigation";
+import { getDashboardEntityCount, getTeam } from "@/utils/api";
 import metaData, { noFollowRobots } from "@/utils/metadata";
-import { getDashboardEntityCount } from "@/utils/api";
 import { isCustodianDashboardEnabled } from "@/flags";
 import Dashboard from "./dashboard";
 
@@ -23,8 +23,9 @@ export default async function DashboardPage({
         return notFound();
     }
 
-    const [datasets, datauses, tools, collections, publications] =
+    const [team, datasets, datauses, tools, collections, publications] =
         await Promise.all([
+            getTeam(teamId),
             getDashboardEntityCount(teamId, "datasets"),
             getDashboardEntityCount(teamId, "datauses"),
             getDashboardEntityCount(teamId, "tools"),
@@ -35,6 +36,8 @@ export default async function DashboardPage({
     return (
         <Dashboard
             teamId={teamId}
+            teamName={team.name}
+            isDarEnabled={team.is_question_bank}
             initialCounts={{ datasets, datauses, tools, collections, publications }}
         />
     );

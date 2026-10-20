@@ -251,7 +251,7 @@
         "account": {
             "dashboard": {
                 "title": "Dashboard",
-                "text": "Here's the latest activity from researchers accessing your Gateway resources.",
+                "text": "Here's a view of activity related to your content on the HDR Gateway.",
                 "betaBanner": {
                     "tag": "BETA",
                     "message": "This dashboard will be periodically improved based on usage and user feedback.",
@@ -259,30 +259,36 @@
                 },
                 "download": "Download",
                 "choosePeriod": "Choose time period",
-                "periods": {
-                    "last_12_months": "Last 12 months",
-                    "last_6_months": "Last 6 months",
-                    "last_3_months": "Last 3 months",
-                    "last_month": "Last month"
+                "shortcuts": {
+                    "lastMonth": "Last month",
+                    "last3Months": "Last 3 months",
+                    "last6Months": "Last 6 months",
+                    "lastYear": "Last year",
+                    "allTime": "All time"
                 },
                 "datasetViews": {
-                    "title": "Dataset views",
+                    "title": "Dataset Views",
+                    "tooltip": "Page views are tracked by Google Analytics. Reported page views may be incomplete or estimated as not all users provide consent for analytics. These figures reflect the total times a page is viewed by any user, including duplicates from the same person and views from your team members.",
                     "noData": "No data to display"
                 },
                 "datasetViewsBar": {
                     "mostTitle": "Most Dataset Views",
                     "leastTitle": "Least Dataset Views",
+                    "tooltip": "Page views are tracked by Google Analytics. Reported page views may be incomplete or estimated as not all users provide consent for analytics. These figures reflect the total times a page is viewed by any user, including duplicates from the same person and views from your team members.",
                     "showLeast": "Show least views",
                     "showMost": "Show most views",
                     "viewsLabel": "Views",
                     "noData": "No data to display"
                 },
                 "otherViews": {
-                    "title": "Other views",
+                    "title": "Other Entity Views",
                     "loading": "Loading other views",
                     "labels": {
                         "collections": "Collections",
                         "dataCustodian": "Data Custodian page"
+                    },
+                    "tooltips": {
+                        "dataCustodian": "Number of times any user has viewed your Data Custodian profile page. Page views are tracked by Google Analytics. Reported page views may be incomplete or estimated as not all users provide consent for analytics. These figures reflect the total times a page is viewed by any user, including duplicates from the same person and views from your team members."
                     }
                 },
                 "enquiries": {
@@ -307,7 +313,7 @@
                     "title": "Learn more about the Gateway"
                 },
                 "resources": {
-                    "title": "Your resources",
+                    "title": "{teamName} Resources",
                     "chooseResources": "Choose resources",
                     "addedThisPeriod": "{count} added this period",
                     "scrollLeft": "Show previous resources",
@@ -1720,6 +1726,20 @@
                     "collectionSources": "Collection Sources",
                     "noCollectionSources": "No collection sources listed",
                     "schemaVersion": "Schema Version"
+                },
+                "DatasetPageShell": {
+                    "schemaUnavailable": "The detailed metadata for this dataset can't be shown right now. Please try again later."
+                },
+                "MetadataFormat": {
+                    "title": "Metadata format",
+                    "schema": "Schema",
+                    "schemaVersion": "Schema version",
+                    "partner": "Partner",
+                    "metadataVersion": "Metadata version",
+                    "issued": "First published",
+                    "modified": "Last modified",
+                    "viewSchema": "View {schema} schema definition",
+                    "schemaDefinition": "schema definition"
                 }
             }
         },

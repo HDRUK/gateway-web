@@ -14,6 +14,9 @@ import { SCHEMA_NAME, SCHEMA_VERSION } from "@/consts/schema";
 import { getDataset, getSchemaFromTraser } from "@/utils/api";
 import { getLatestVersion } from "@/utils/dataset";
 import metaData from "@/utils/metadata";
+import { isGwdmDatasetPageEnabled } from "@/flags";
+import GwdmDatasetPage from "./_gwdm/GwdmDatasetPage";
+import { toDuoCodeDetails } from "./_gwdm/lib/duoCodeDetails";
 import ActionBar from "./components/ActionBar";
 import DatasetContent from "./components/DatasetContent";
 import DatasetMindMap from "./components/DatasetMindMap";
@@ -56,6 +59,13 @@ export default async function DatasetItemPage({
     params: Promise<{ datasetId: string }>;
 }) {
     const { datasetId } = await params;
+
+    // Same URL, either page: the flag only chooses the renderer, so every
+    // existing link to /dataset/{id} keeps working whichever is on.
+    if (await isGwdmDatasetPageEnabled()) {
+        return GwdmDatasetPage({ datasetId });
+    }
+
     const t = await getTranslations(TRANSLATION_PATH);
 
     const [data, googleRecommendedDataset, schema] = await Promise.all([
@@ -68,16 +78,7 @@ export default async function DatasetItemPage({
         getSchemaFromTraser(SCHEMA_NAME, SCHEMA_VERSION).catch(() => undefined),
     ]);
 
-    const duoCodeDetails = Object.fromEntries(
-        (schema?.schema?.$defs?.DuoCodesEnum?.oneOf ?? []).map(option => [
-            option.const,
-            {
-                shortcode: option.shortcode,
-                label: option.title,
-                description: option.description,
-            },
-        ])
-    );
+    const duoCodeDetails = toDuoCodeDetails(schema);
 
     // Note that the status check is only required under v1 - under v2, we can use
     // an endpoint that will not show the data if not active

@@ -1,5 +1,15 @@
 const createNextIntlPlugin = require("next-intl/plugin");
+const createMDX = require("@next/mdx");
+const generateTemplateRegistry = require("./scripts/generateTemplateRegistry");
+
 const withNextIntl = createNextIntlPlugin();
+// Metadata view templates (src/templates/metadata/view/overrides/**/index.mdx)
+// are imported as components, never routed - pageExtensions stays unchanged.
+const withMDX = createMDX();
+
+// Registers every template folder. next.config.js is read once at startup,
+// so a new template needs a dev server restart; edits hot-reload.
+generateTemplateRegistry();
 
 const allowAllHeader = [
     { key: "Access-Control-Allow-Credentials", value: "true" },
@@ -113,4 +123,4 @@ const nextConfig = {
     },
 };
 
-module.exports = withNextIntl(nextConfig);
+module.exports = withMDX(withNextIntl(nextConfig));
