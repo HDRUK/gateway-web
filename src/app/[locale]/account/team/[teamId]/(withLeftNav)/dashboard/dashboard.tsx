@@ -34,6 +34,8 @@ interface DashboardCounts {
 
 interface DashboardProps {
     teamId: string;
+    teamName: string;
+    isDarEnabled: boolean;
     initialCounts: DashboardCounts;
 }
 
@@ -60,7 +62,12 @@ const SHORTCUTS = [
 const toApiDate = (date: DateRange[number]) =>
     date ? date.format("YYYY-MM-DD") : "";
 
-const Dashboard = ({ teamId, initialCounts }: DashboardProps) => {
+const Dashboard = ({
+    teamId,
+    teamName,
+    isDarEnabled,
+    initialCounts,
+}: DashboardProps) => {
     const t = useTranslations("pages.account.dashboard");
     const [range, setRange] = useState<DateRange>(lastPeriod(1, "year"));
 
@@ -140,6 +147,7 @@ const Dashboard = ({ teamId, initialCounts }: DashboardProps) => {
             <Paper>
                 <ResourceCounts
                     teamId={teamId}
+                    teamName={teamName}
                     startDate={startDate}
                     endDate={endDate}
                     initialCounts={initialCounts}
@@ -172,6 +180,7 @@ const Dashboard = ({ teamId, initialCounts }: DashboardProps) => {
                 />
                 <EnquiriesWidget
                     teamId={teamId}
+                    isDarEnabled={isDarEnabled}
                     startDate={startDate}
                     endDate={endDate}
                 />

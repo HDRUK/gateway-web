@@ -22,7 +22,14 @@ const defaultCounts = {
 
 describe("Dashboard", () => {
     it("updates download URL when period is changed", async () => {
-        render(<Dashboard teamId="42" initialCounts={defaultCounts} />);
+        render(
+            <Dashboard
+                teamId="42"
+                teamName="Team"
+                isDarEnabled
+                initialCounts={defaultCounts}
+            />
+        );
 
         fireEvent.click(screen.getByRole("button", { name: /^Choose range/ }));
         fireEvent.click(screen.getByRole("button", { name: "Last month" }));

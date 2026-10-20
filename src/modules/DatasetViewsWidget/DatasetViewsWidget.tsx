@@ -6,6 +6,7 @@ import { LineChart } from "@mui/x-charts/LineChart";
 import { useTranslations } from "next-intl";
 import Box from "@/components/Box";
 import Paper from "@/components/Paper";
+import TooltipIcon from "@/components/TooltipIcon";
 import Typography from "@/components/Typography";
 import useGet from "@/hooks/useGet";
 import apis from "@/config/apis";
@@ -98,9 +99,15 @@ const DatasetViewsWidget = ({
                     pt: 2,
                     px: 2,
                 }}>
-                <Typography variant="h2">
-                    {total.toLocaleString()} {t("title")}
-                </Typography>
+                <TooltipIcon
+                    boxSx={{ justifyContent: "flex-start", mb: 2 }}
+                    label={
+                        <Typography variant="h2" sx={{ mb: 0 }}>
+                            {total.toLocaleString()} {t("title")}
+                        </Typography>
+                    }
+                    content={t("tooltip")}
+                />
             </Box>
             {points.length === 0 ? (
                 <Box
