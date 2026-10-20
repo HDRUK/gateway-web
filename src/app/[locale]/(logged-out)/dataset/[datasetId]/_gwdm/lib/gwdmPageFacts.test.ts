@@ -1,6 +1,8 @@
 import { get } from "lodash";
 import {
+    crocodGwdm23Metadata,
     crukGwdm21Metadata,
+    generateCrocodGwdmDataset,
     generateCrukGwdmDataset,
     generateGwdmDataset,
     generateHdrukGwdmDataset,
@@ -76,6 +78,37 @@ describe("buildGwdmPageFacts", () => {
         expect(
             buildGwdmPageFacts(generateCrukGwdmDataset()).hasStructuralMetadata
         ).toBe(false);
+    });
+
+    it("detects a clinical trial case study from GWDM 2.3's recordType", () => {
+        expect(
+            buildGwdmPageFacts(generateCrocodGwdmDataset()).isCaseStudy
+        ).toBe(true);
+        expect(buildGwdmPageFacts(generateHdrukGwdmDataset()).isCaseStudy).toBe(
+            false
+        );
+        expect(
+            buildGwdmPageFacts(
+                withMetadata({
+                    required: {
+                        ...(crocodGwdm23Metadata.required as object),
+                        recordType: "dataset",
+                    },
+                    crocod: crocodGwdm23Metadata.crocod,
+                })
+            ).isCaseStudy
+        ).toBe(false);
+    });
+
+    it("treats a case study without case study content as a dataset", () => {
+        const facts = buildGwdmPageFacts(
+            withMetadata({
+                required: crocodGwdm23Metadata.required,
+                crocod: null,
+            })
+        );
+
+        expect(facts.isCaseStudy).toBe(false);
     });
 
     it("detects demographics only when a value is present", () => {

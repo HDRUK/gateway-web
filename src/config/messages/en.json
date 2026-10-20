@@ -1717,7 +1717,8 @@
                     "isPartOf": "Dataset is part of ({ count })",
                     "isDerivedFrom": "Datasets this derives from ({ count })",
                     "linkedDatasets": "Linked Datasets ({ count })",
-                    "isMemberOf": "Similar Datasets ({ count })"
+                    "isMemberOf": "Similar Datasets ({ count })",
+                    "waveOf": "Wave of ({ count })"
                 },
                 "Sources": {
                     "dataCustodian": "Data Custodian",

@@ -1,0 +1,53 @@
+{/**
+  * A clinical trial case study (GWDM 2.3 `crocod`, `required.recordType`
+  * "caseStudy"). The trial's own content lives under `crocod`; its title,
+  * acronym, participant count, years and locations live in the core GWDM
+  * sections, so the facts strip reaches into summary, provenance and coverage
+  * for them. DatasetPageShell drops the dataset-only chrome (access requests,
+  * stats, mind map) for case studies.
+  *
+  * Learnings and read-more links use this template's components.tsx; the
+  * rest is the shared vocabulary, labelled from the GWDM schema.
+  *
+  * `meta.sections` drives the section nav and must list the sections below,
+  * in the same order - the DatasetPageShell contract test checks it. The nav
+  * only links to top-level GWDM sections, so the case study is one entry.
+  *
+  * @typedef {import("./components").CaseStudyVocabulary} MDXProvidedComponents
+  */}
+
+export const meta = {
+  description:
+    "Clinical trial case study - trial summary, design, governance, health systems data and learnings.",
+  sections: ["crocod"],
+};
+
+{/* Start and end show as years: case studies record the trial's years. */}
+<TrialFacts
+  fields={[
+    "provenance.temporal.startDate",
+    "provenance.temporal.endDate",
+    "summary.populationSize",
+    "coverage.spatial",
+  ]}
+/>
+
+{/* Trial summary: status, therapeutic area, lay summary, background. */}
+<DatasetSection
+  name="crocod"
+  exclude={[
+    "trialDesign",
+    "governance",
+    "healthSystemsData",
+    "learnings",
+    "publications",
+    "readMore",
+  ]}
+/>
+
+<MetadataView path="crocod.trialDesign" />
+<MetadataView path="crocod.governance" />
+<MetadataView path="crocod.healthSystemsData" />
+<MetadataView path="crocod.learnings" />
+<MetadataView path="crocod.publications" />
+<MetadataView path="crocod.readMore" />
