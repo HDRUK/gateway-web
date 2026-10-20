@@ -58,6 +58,7 @@ import useDataAccessRequest from "@/hooks/useDataAccessRequest";
 import useDialog from "@/hooks/useDialog";
 import useGTMEvent from "@/hooks/useGTMEvent";
 import useGet from "@/hooks/useGet";
+import useNavigationProgress from "@/hooks/useNavigationProgress";
 import usePost from "@/hooks/usePost";
 import usePostLoginAction from "@/hooks/usePostLoginAction";
 import usePostSwr from "@/hooks/usePostSwr";
@@ -357,6 +358,8 @@ const Search = ({ filters, schema }: SearchProps) => {
         externalSearchEnabled || isTypesenseSearch
             ? isV2Searching || (isExternalSourceSelected && isExternalPolling)
             : isV1Searching;
+
+    useNavigationProgress(isSearching);
 
     const data = useSearchData({
         isDatasets,

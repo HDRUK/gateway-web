@@ -9,6 +9,7 @@ import { HDRGlobals } from "@/components/HDRGlobals";
 import Header from "@/components/Header";
 import { LightBox } from "@/components/LightBox";
 import NavigationEvents from "@/components/NavigationEvents";
+import NavigationProgress from "@/components/NavigationProgress";
 import SupportPopOut from "@/components/SupportPopOut";
 import ThemeRegistry from "@/components/ThemeRegistry/ThemeRegistry";
 import ProvidersDialog from "@/modules/ProvidersDialog";
@@ -119,6 +120,7 @@ export default async function RootLayout(props: {
                                         <CustomerSurvey />
                                         <Suspense fallback={null}>
                                             <NavigationEvents />
+                                            <NavigationProgress />
                                             <PageTracker />
                                         </Suspense>
                                     </ActionBarProvider>
