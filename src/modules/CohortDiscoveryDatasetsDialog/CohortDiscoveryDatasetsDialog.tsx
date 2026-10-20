@@ -109,12 +109,7 @@ const CohortDiscoveryDatasetsDialog = ({
 
     return (
         <Dialog title={t("title")} maxWidth="md">
-            <MuiDialogContent
-                sx={{
-                    display: "flex",
-                    mt: 3,
-                    justifyContent: "center",
-                }}>
+            <MuiDialogContent sx={{ mt: 3 }}>
                 {!data && <Loading />}
                 {data && (
                     <Table<SearchResultDataset>
