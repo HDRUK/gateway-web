@@ -18,6 +18,8 @@ src/templates/metadata/view/
   overrides/
     HDRUK/default/index.mdx   the Gateway default - the existing page's layout
     CRUK/default/index.mdx    CRUK's arrangement (demonstration)
+    PRUK/default/index.mdx    PRUK - population (GWDM 2.3+) after the summary
+    CROCOD/default/           clinical trial case studies (GWDM 2.3 crocod)
   components/                 template vocabulary shared by every template
     DatasetSection/  FieldStrip/  Prose/  SectionNav/
   baseComponents.tsx          binds that vocabulary to the dataset
@@ -59,9 +61,9 @@ is mapped onto the design-system `Typography`/`Link` by
 the same `@hdruk/ui` theme tokens as the rest of the site.
 
 `DatasetPageShell.test.tsx` enforces this. It renders **every registered
-template** against GWDM 2.0 and 2.1 fixtures and fails if the action bar, title,
-custodian link or Sources are missing, or if any section nav link points at a
-section that did not render. A new template is covered the moment it exists.
+template** against GWDM 2.0, 2.1 and 2.3 fixtures and fails if the action bar
+(except on a case study), title, custodian link or Sources are missing, or if
+any section nav link points at a section that did not render. A new template is covered the moment it exists.
 
 **Values render exactly as the production page renders them.**
 [`gateway/gatewayComponents.tsx`](./gateway/gatewayComponents.tsx) maps the
@@ -79,6 +81,15 @@ a compatibility view built by `lib/gwdmPageFacts.ts` (custodian from
 `summary.publisher`, material types from `tissuesSampleCollection`, GWDM's flat
 `structuralMetadata` array as `{ tables }`), and maps their hard-coded scroll
 anchors onto GWDM section anchors via `GWDM_SCROLL_TARGETS`.
+
+## Case studies
+
+GWDM 2.3 adds `required.recordType` (`dataset` or `caseStudy`). A case study
+is not a requestable dataset, so when its record has `recordType: "caseStudy"`
+and `crocod` content the shell drops the action bar, stats and mind map (see
+`isCaseStudy` in `lib/gwdmPageFacts.ts`). Without `crocod` it is shown as a
+dataset. The section nav links only to top-level GWDM sections, so a case
+study's nav has a single `crocod` entry.
 
 ## The HDRUK default mirrors the existing page
 
@@ -109,7 +120,8 @@ overrides/{partner}/{gwdmVersion}  ->  overrides/{partner}/default
 | Dataset                      | Resolves to                       |
 | ---------------------------- | --------------------------------- |
 | CRUK, GWDM 2.1               | `CRUK/default`                    |
-| PRUK, GWDM 2.2               | `HDRUK/default` (no PRUK folder)  |
+| PRUK, GWDM 2.3               | `PRUK/default`                    |
+| CROCOD case study, GWDM 2.3  | `CROCOD/default`                  |
 | HDRUK, GWDM 2.2              | `HDRUK/default`, or `HDRUK/2.2` if created |
 
 `HDRUK/default` must exist; resolution throws without it. A partner folder is
@@ -193,6 +205,8 @@ laid out as a row. Both get the `#section-{key}` anchor the nav links to.
 They are generated from schemata-2 - the same files TRASER serves - by
 `npm run generate:schema-types`, which fetches over the network and does not
 run on build. Re-run it when the upstream schema changes and commit the output.
+GWDM 2.3 is listed as a target but is not generated until schemata-2
+publishes it; the script fails on the first version it cannot fetch.
 
 Template type checking is **editor-only** (`"mdx": { "checkMdx": true }` in
 `tsconfig.json`, via the MDX language server); `tsc` cannot read `.mdx`. The
@@ -203,4 +217,5 @@ contract test is what CI relies on.
 Jest compiles templates with [`jest/mdxTransform.js`](../../../../jest/mdxTransform.js),
 which runs `@mdx-js/mdx` in a child process (it is ESM-only, and CI's Node 20
 cannot `require()` it). Fixtures in `mocks/data/dataset/gwdm` are synthetic
-GWDM 2.0 (HDRUK) and 2.1 (CRUK) records alongside the real public GWDM schemas.
+GWDM 2.0 (HDRUK) and 2.1 (CRUK) records and GWDM 2.3 PRUK and CROCOD records
+alongside the real public GWDM schemas.

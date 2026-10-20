@@ -23,7 +23,7 @@ export interface FieldStripProps {
     components?: MetadataViewComponents;
 }
 
-const StripContainer = ({ children }: ContainerProps) =>
+export const StripContainer = ({ children }: ContainerProps) =>
     Children.count(children) === 0 ? null : (
         <Box
             sx={{
@@ -39,7 +39,7 @@ const StripContainer = ({ children }: ContainerProps) =>
         </Box>
     );
 
-const StripCell = ({ label, children }: SectionProps) => (
+export const StripCell = ({ label, children }: SectionProps) => (
     <Box sx={{ p: 0 }}>
         <Typography
             variant="caption"

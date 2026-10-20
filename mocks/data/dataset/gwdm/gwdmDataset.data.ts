@@ -1,6 +1,11 @@
 import { Dataset } from "@/interfaces/Dataset";
 import { generatePageDataSetV1 } from "../v1";
-import { crukGwdm21Metadata, hdrukGwdm20Metadata } from "./gwdmMetadata.data";
+import {
+    crocodGwdm23Metadata,
+    crukGwdm21Metadata,
+    hdrukGwdm20Metadata,
+    prukGwdm23Metadata,
+} from "./gwdmMetadata.data";
 
 interface GwdmDatasetOptions {
     partner: string;
@@ -58,4 +63,21 @@ export const generateCrukGwdmDataset = (): Dataset =>
         gwdmVersion: "2.1",
         metadata: crukGwdm21Metadata,
         sourceSchema: { model: "CRUK", version: "1.0.0" },
+    });
+
+export const generatePrukGwdmDataset = (): Dataset =>
+    generateGwdmDataset({
+        partner: "PRUK",
+        gwdmVersion: "2.3",
+        metadata: prukGwdm23Metadata,
+        sourceSchema: { model: "PRUK", version: "1.0.0" },
+    });
+
+/** A clinical trial case study: `required.recordType` "caseStudy". */
+export const generateCrocodGwdmDataset = (): Dataset =>
+    generateGwdmDataset({
+        partner: "CROCOD",
+        gwdmVersion: "2.3",
+        metadata: crocodGwdm23Metadata,
+        sourceSchema: { model: "CROCOD", version: "1.0.0" },
     });

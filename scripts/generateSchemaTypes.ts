@@ -14,6 +14,7 @@ const TARGETS: { name: string; version: string }[] = [
     { name: "GWDM", version: "2.0" },
     { name: "GWDM", version: "2.1" },
     { name: "GWDM", version: "2.2" },
+    { name: "GWDM", version: "2.3" },
 ];
 
 const SCHEMATA_RAW = `https://raw.githubusercontent.com/HDRUK/schemata-2/${SCHEMA_BRANCH}`;

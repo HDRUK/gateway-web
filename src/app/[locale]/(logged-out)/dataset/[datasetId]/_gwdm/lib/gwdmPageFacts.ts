@@ -37,6 +37,13 @@ export interface GwdmPageFacts {
     hasStructuralMetadata: boolean;
     hasDemographics: boolean;
     /**
+     * A clinical trial case study (GWDM 2.3 `required.recordType`), which has
+     * no data to request, so the page drops its dataset-only chrome. Only
+     * when the case study content is present too - otherwise the record is
+     * shown as a dataset rather than as an empty case study.
+     */
+    isCaseStudy: boolean;
+    /**
      * The dataset version reshaped onto the HDRUK paths that the production
      * chrome components (DatasetStats, DatasetMindMap, ActionBar) still read.
      * A compatibility view only - retire it once those components read
@@ -165,6 +172,9 @@ export const buildGwdmPageFacts = (dataset: Dataset): GwdmPageFacts => {
             !!demographics &&
             typeof demographics === "object" &&
             some(demographics as object, value => value !== null),
+        isCaseStudy:
+            readString(metadata, "required.recordType") === "caseStudy" &&
+            !isEmpty(metadata.crocod),
         legacyVersion: buildLegacyVersion(version, metadata, custodianName),
     };
 };

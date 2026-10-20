@@ -8,24 +8,43 @@
  */
 
 import { GeneratedTemplate } from "./meta";
-import T0, { meta as m0 } from "./overrides/CRUK/default/index.mdx";
-import T1, { meta as m1 } from "./overrides/HDRUK/default/index.mdx";
+import T0, { meta as m0 } from "./overrides/CROCOD/default/index.mdx";
+import { makeComponents as c0 } from "./overrides/CROCOD/default/components";
+import T1, { meta as m1 } from "./overrides/CRUK/default/index.mdx";
+import T2, { meta as m2 } from "./overrides/HDRUK/default/index.mdx";
+import T3, { meta as m3 } from "./overrides/PRUK/default/index.mdx";
 
 export const generatedTemplates: GeneratedTemplate[] = [
+    {
+        partner: "CROCOD",
+        version: "default",
+        source: "overrides/CROCOD/default/index.mdx",
+        Template: T0,
+        meta: m0,
+        makeComponents: c0,
+    },
     {
         partner: "CRUK",
         version: "default",
         source: "overrides/CRUK/default/index.mdx",
-        Template: T0,
-        meta: m0,
+        Template: T1,
+        meta: m1,
         makeComponents: undefined,
     },
     {
         partner: "HDRUK",
         version: "default",
         source: "overrides/HDRUK/default/index.mdx",
-        Template: T1,
-        meta: m1,
+        Template: T2,
+        meta: m2,
+        makeComponents: undefined,
+    },
+    {
+        partner: "PRUK",
+        version: "default",
+        source: "overrides/PRUK/default/index.mdx",
+        Template: T3,
+        meta: m3,
         makeComponents: undefined,
     },
 ];

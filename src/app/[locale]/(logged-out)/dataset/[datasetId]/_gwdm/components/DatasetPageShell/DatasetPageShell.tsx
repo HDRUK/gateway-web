@@ -62,6 +62,10 @@ export interface DatasetPageShellProps {
  * publications and the JSON-LD script - lives here, so it is identical for
  * every partner and GWDM version and no template can remove it. A template
  * only arranges the metadata content in the "content" area.
+ *
+ * A clinical trial case study is not a requestable dataset, so it drops the
+ * dataset-only chrome: the action bar (access requests, enquiries, library,
+ * downloads), stats and mind map.
  */
 const DatasetPageShell = ({
     dataset,
@@ -161,7 +165,9 @@ const DatasetPageShell = ({
                         flexDirection: "column",
                         gap: 2,
                     }}>
-                    <ActionBar dataset={chromeDataset} />
+                    {!facts.isCaseStudy && (
+                        <ActionBar dataset={chromeDataset} />
+                    )}
                     <MetadataFormat
                         sourceSchema={facts.sourceSchema}
                         partner={facts.partner}
@@ -212,26 +218,30 @@ const DatasetPageShell = ({
                 )}
             </Box>
 
-            <Box sx={{ ...areaSx("stats"), overflow: "hidden" }}>
-                <DatasetStats
-                    data={facts.legacyVersion}
-                    scrollTargets={scrollTargets}
-                />
-            </Box>
-
-            <Box sx={mainColumnSx}>
-                <Box sx={{ ...areaSx("mindmap"), overflow: "hidden" }}>
-                    <DatasetMindMap
+            {!facts.isCaseStudy && (
+                <Box sx={{ ...areaSx("stats"), overflow: "hidden" }}>
+                    <DatasetStats
                         data={facts.legacyVersion}
-                        teamId={dataset.team?.id}
-                        isCohortDiscovery={dataset.is_cohort_discovery}
-                        populatedSections={mindMapSections}
-                        linkageCounts={linkageCounts}
-                        hasStructuralMetadata={facts.hasStructuralMetadata}
-                        hasDemographics={facts.hasDemographics}
                         scrollTargets={scrollTargets}
                     />
                 </Box>
+            )}
+
+            <Box sx={mainColumnSx}>
+                {!facts.isCaseStudy && (
+                    <Box sx={{ ...areaSx("mindmap"), overflow: "hidden" }}>
+                        <DatasetMindMap
+                            data={facts.legacyVersion}
+                            teamId={dataset.team?.id}
+                            isCohortDiscovery={dataset.is_cohort_discovery}
+                            populatedSections={mindMapSections}
+                            linkageCounts={linkageCounts}
+                            hasStructuralMetadata={facts.hasStructuralMetadata}
+                            hasDemographics={facts.hasDemographics}
+                            scrollTargets={scrollTargets}
+                        />
+                    </Box>
+                )}
                 <Box
                     sx={areaSx("content")}
                     data-template-source={resolved.source}>

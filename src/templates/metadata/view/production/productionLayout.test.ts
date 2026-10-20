@@ -3,6 +3,7 @@ import { datasetFields } from "@/app/[locale]/(logged-out)/dataset/[datasetId]/c
 import gwdm20 from "@/mocks/data/dataset/gwdm/schemas/GWDM-2.0.json";
 import gwdm21 from "@/mocks/data/dataset/gwdm/schemas/GWDM-2.1.json";
 import gwdm22 from "@/mocks/data/dataset/gwdm/schemas/GWDM-2.2.json";
+import gwdm23 from "@/mocks/data/dataset/gwdm/schemas/GWDM-2.3.json";
 import {
     buildProductionSections,
     DATA_ONLY_GWDM_PATHS,
@@ -11,7 +12,12 @@ import {
     UNAVAILABLE_IN_GWDM,
 } from "./productionLayout";
 
-const schemas = [gwdm20, gwdm21, gwdm22] as JSONSchemaDocument[];
+const schemas = [
+    gwdm20,
+    gwdm21,
+    gwdm22,
+    gwdm23,
+] as JSONSchemaDocument[];
 
 const inSomeGwdmVersion = (path: string) =>
     schemas.some(schema => !!resolveAtPath(schema, {}, path));
