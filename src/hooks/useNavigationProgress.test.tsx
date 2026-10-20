@@ -18,17 +18,17 @@ describe("useNavigationProgress", () => {
     });
 
     it("starts and ends progress with the loading state", () => {
-        const { rerender } = renderHook(
-            ({ isLoading }) => useNavigationProgress(isLoading),
-            { initialProps: { isLoading: false } }
-        );
+        let isLoading = false;
+        const { rerender } = renderHook(() => useNavigationProgress(isLoading));
 
         expect(started).not.toHaveBeenCalled();
 
-        rerender({ isLoading: true });
+        isLoading = true;
+        rerender();
         expect(started).toHaveBeenCalledTimes(1);
 
-        rerender({ isLoading: false });
+        isLoading = false;
+        rerender();
         expect(ended).toHaveBeenCalledTimes(1);
         expect(ended.mock.calls[0][0].detail).toBe(
             started.mock.calls[0][0].detail
