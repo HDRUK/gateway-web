@@ -7,10 +7,14 @@ import Box from "@/components/Box";
 import KeyValueList from "@/components/KeyValueList";
 import Paper from "@/components/Paper";
 import Typography from "@/components/Typography";
+import { DataStatus } from "@/consts/application";
 import { formatDate } from "@/utils/date";
 import CardActions from "../CardActions";
+import StatusMenu from "../StatusMenu";
 
 interface PublicationCardProps {
+    onStatusChange?: (id: number, status: DataStatus) => void;
+    disabledStatusOptions?: DataStatus[];
     publication: Publication;
     actions: {
         icon: IconType;
@@ -20,7 +24,12 @@ interface PublicationCardProps {
     }[];
 }
 
-const PublicationCard = ({ publication, actions }: PublicationCardProps) => {
+const PublicationCard = ({
+    publication,
+    actions,
+    onStatusChange,
+    disabledStatusOptions,
+}: PublicationCardProps) => {
     const {
         updated_at,
         authors,
@@ -34,7 +43,9 @@ const PublicationCard = ({ publication, actions }: PublicationCardProps) => {
             <Box
                 sx={{
                     display: "grid",
-                    gridTemplateColumns: "repeat(1, 1fr 50px)",
+                    gridTemplateColumns: onStatusChange
+                        ? "1fr auto 50px"
+                        : "repeat(1, 1fr 50px)",
                     p: 0,
                 }}>
                 <Box sx={{ p: 2, fontSize: 13 }}>
@@ -66,7 +77,22 @@ const PublicationCard = ({ publication, actions }: PublicationCardProps) => {
                     />
                 </Box>
 
-                <Box sx={{ p: 0, borderLeft: `solid 1px ${tokens.status.faded}` }}>
+                {onStatusChange && (
+                    <Box>
+                        <StatusMenu
+                            status={publication.status as DataStatus}
+                            onChange={status =>
+                                onStatusChange(publication.id, status)
+                            }
+                            disabledOptions={disabledStatusOptions}
+                        />
+                    </Box>
+                )}
+                <Box
+                    sx={{
+                        p: 0,
+                        borderLeft: `solid 1px ${tokens.status.faded}`,
+                    }}>
                     <CardActions actions={actions} id={publication.id} />
                 </Box>
             </Box>

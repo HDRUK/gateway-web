@@ -199,11 +199,9 @@ const CohortAccessStepper = ({
                                 <Chip
                                     size="small"
                                     label={capitalise(accessStatus)}
-                                    color={
-                                        expiringSoon
-                                            ? "yellowCustom"
-                                            : statusMapping[accessStatus]
-                                    }
+                                    {...(expiringSoon
+                                        ? { color: "warning" }
+                                        : statusMapping[accessStatus])}
                                 />
                                 {daysRemaining != null && (
                                     <Box
@@ -238,7 +236,7 @@ const CohortAccessStepper = ({
                                         label={capitalise(
                                             COHORT_STATUS.PENDING
                                         )}
-                                        color="greyCustom"
+                                        variant="outlined"
                                     />
                                 </>
                             )}

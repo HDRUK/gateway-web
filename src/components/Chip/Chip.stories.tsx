@@ -27,8 +27,8 @@ export const Color: Story = {
             <ChipComponent label="I'm an info Chip" color="info" />
             <ChipComponent label="I'm a warning Chip" color="warning" />
             <ChipComponent
-                label="I'm a warning (amber) Chip"
-                color="warningCustom"
+                label="I'm a needs action Chip"
+                color="needsAction"
             />
             <ChipComponent label="I'm an error Chip" color="error" />
         </Stack>

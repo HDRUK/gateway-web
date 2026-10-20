@@ -18,6 +18,7 @@ import {
     sortField,
     toggleDirection,
 } from "@/config/forms/datasetAccountSearch";
+import { DataStatus } from "@/consts/application";
 import {
     PAGES,
     ACCOUNT,
@@ -34,6 +35,8 @@ interface DatasetTabProps {
         action?: (id: number) => void;
         label: string;
     }[];
+    onStatusChange?: (id: number, status: DataStatus) => void;
+    disabledStatusOptions?: DataStatus[];
     getMenuActions: (dataset: Dataset) => DatasetMenuAction[];
     menuLabel: string;
     lastPage?: number;
@@ -50,6 +53,8 @@ interface DatasetTabProps {
 
 const DatasetTab = ({
     actions,
+    onStatusChange,
+    disabledStatusOptions,
     getMenuActions,
     menuLabel,
     list,
@@ -118,6 +123,8 @@ const DatasetTab = ({
                 .map(dataset => (
                     <DatasetCard
                         actions={actions}
+                        onStatusChange={onStatusChange}
+                        disabledStatusOptions={disabledStatusOptions}
                         getMenuActions={getMenuActions}
                         menuLabel={menuLabel}
                         key={dataset.id}

@@ -28,13 +28,11 @@ export type buttonColourType =
 
 declare module "@mui/material/styles" {
     interface Palette {
-        warningCustom: Palette["primary"];
         greyCustom: Palette["primary"];
         yellowCustom: Palette["primary"];
     }
 
     interface PaletteOptions {
-        warningCustom?: PaletteOptions["primary"];
         greyCustom?: PaletteOptions["primary"];
         yellowCustom?: PaletteOptions["primary"];
     }
@@ -63,15 +61,6 @@ declare module "@mui/material/Switch" {
         large: true;
     }
 }
-declare module "@mui/material/Chip" {
-    interface ChipPropsColorOverrides {
-        warningCustom: true;
-        alias: true;
-        greyCustom: true;
-        yellowCustom: true;
-    }
-}
-
 declare module "@mui/material/SvgIcon" {
     interface SvgIconPropsSizeOverrides {
         xsmall: true;
@@ -119,16 +108,6 @@ const palette = {
         dark: "#A29415",
         contrastText: tokens.text.secondaryBlack,
     },
-    warningCustom: {
-        main: colors.amber500,
-        light: "#E9DB5D",
-        dark: "#A29415",
-        contrastText: colors.black,
-    },
-    alias: {
-        backgroundColor: tokens.status.archived,
-        contrastText: tokens.background.white,
-    },
 };
 
 const subtleShadow = "1px 1px 3px 0 rgba(0,0,0,.09)";
@@ -158,13 +137,9 @@ const theme = createHdrukTheme({
         MuiMenuItem: {
             styleOverrides: {
                 root: ({ theme }) => ({
-                    "&:focus": {
-                        backgroundColor: tokens.background.white,
-
-                        "&.Mui-focusVisible": {
-                            outline: `3px solid ${theme.palette.primary.main}`,
-                            outlineOffset: "-3px",
-                        },
+                    "&.Mui-focusVisible": {
+                        outline: `3px solid ${theme.palette.primary.main}`,
+                        outlineOffset: "-3px",
                     },
                     "&:hover": {
                         backgroundColor: theme.palette.grey[200],
@@ -493,58 +468,6 @@ const theme = createHdrukTheme({
                     },
                 },
             },
-        },
-        MuiChip: {
-            styleOverrides: {
-                root: {
-                    "& .MuiChip-deleteIcon, & .MuiChip-deleteIcon:hover": {
-                        color: "inherit",
-                    },
-                    padding: 2,
-                },
-            },
-            variants: [
-                {
-                    props: { color: "success" },
-                    style: {
-                        background: colors.green400,
-                        color: tokens.background.white,
-                    },
-                },
-                {
-                    props: { color: "secondary" },
-                    style: {
-                        color: tokens.background.white,
-                    },
-                },
-                {
-                    props: { color: "warningCustom" },
-                    style: {
-                        background: colors.orange300,
-                    },
-                },
-                {
-                    props: { color: "yellowCustom" },
-                    style: {
-                        background: tokens.status.warning,
-                        color: tokens.text.warning,
-                    },
-                },
-                {
-                    props: { color: "alias" },
-                    style: {
-                        backgroundColor: palette.alias.backgroundColor,
-                        color: palette.alias.contrastText,
-                    },
-                },
-                {
-                    props: { color: "greyCustom" },
-                    style: {
-                        backgroundColor: tokens.status.faded,
-                        color: tokens.background.white,
-                    },
-                },
-            ],
         },
     },
     customShadows: {

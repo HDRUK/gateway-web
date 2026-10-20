@@ -19,6 +19,27 @@ window.scrollTo = jest.fn();
 const renderTeamDatasets = () =>
     render(<TeamDatasets permissions={{}} teamId="1" isSuperAdmin={false} />);
 
+const getActivationHandlers = (
+    dataset: ReturnType<typeof generateDatasetForTeamV1>,
+    validation: object[],
+    onHydration = jest.fn()
+) => [
+    rest.get(`${apis.teamsV2Url}/1/datasets/:id`, (req, res, ctx) =>
+        res(ctx.json({ data: dataset }))
+    ),
+    rest.get(`${apis.teamsV1Url}/:pid/id`, (req, res, ctx) =>
+        res(ctx.json({ data: "1" }))
+    ),
+    rest.get(apis.formHydrationV1Url, (req, res, ctx) => {
+        onHydration();
+        return res(
+            ctx.json({
+                data: { schema_fields: [], validation, defaultValues: {} },
+            })
+        );
+    }),
+];
+
 describe("TeamDatasets", () => {
     it("should render all datasets (filtered on BE)", async () => {
         const mockDatasets = [
@@ -202,34 +223,103 @@ describe("TeamDatasets", () => {
         }
     );
 
-    it("should show archive as an icon, and no menu, for non-superadmins", async () => {
+    it("should make a draft dataset active from the status menu", async () => {
         const mockDatasets = [
             generateDatasetForTeamV1("1.0", {
                 create_origin: "MANUAL",
-                status: "ACTIVE",
+                status: "DRAFT",
             }),
         ];
-        server.use(getTeamDatasetsV2(mockDatasets));
+        const onPatch = jest.fn();
+        server.use(
+            getTeamDatasetsV2(mockDatasets),
+            ...getActivationHandlers(mockDatasets[0], []),
+            rest.patch(
+                `${apis.teamsV2Url}/1/datasets/:id`,
+                async (req, res, ctx) => {
+                    onPatch(req.params.id, await req.json());
+                    return res(ctx.json({ message: "success" }));
+                }
+            )
+        );
         render(
             <TeamDatasets
-                permissions={{ "datasets.delete": true }}
+                permissions={{ "datasets.update": true }}
                 teamId="1"
                 isSuperAdmin={false}
             />
         );
 
         const card = await screen.findByTestId("dataset-card");
-        expect(
+        fireEvent.click(
             within(card).getByRole("button", {
-                name: "Archive dataset metadata so it is no longer live on the Gateway",
+                name: "Status: Draft. Change status",
             })
-        ).toBeInTheDocument();
-        expect(
-            within(card).queryByRole("button", { name: "More actions" })
-        ).not.toBeInTheDocument();
+        );
+        fireEvent.click(
+            await screen.findByRole("menuitemradio", { name: "Active" })
+        );
+
+        await waitFor(() => {
+            expect(onPatch).toHaveBeenCalledWith(`${mockDatasets[0].id}`, {
+                status: "ACTIVE",
+            });
+        });
     });
 
-    it("should show archive in the menu for superadmins", async () => {
+    it("should not make a dataset active when it fails validation", async () => {
+        const mockDatasets = [
+            generateDatasetForTeamV1("1.0", {
+                create_origin: "MANUAL",
+                status: "DRAFT",
+            }),
+        ];
+        const onHydration = jest.fn();
+        const onPatch = jest.fn();
+        server.use(
+            getTeamDatasetsV2(mockDatasets),
+            ...getActivationHandlers(
+                mockDatasets[0],
+                [{ title: "Missing field", type: "string", required: true }],
+                onHydration
+            ),
+            rest.patch(`${apis.teamsV2Url}/1/datasets/:id`, (req, res, ctx) => {
+                onPatch();
+                return res(ctx.json({ message: "success" }));
+            })
+        );
+        render(
+            <TeamDatasets
+                permissions={{ "datasets.update": true }}
+                teamId="1"
+                isSuperAdmin={false}
+            />
+        );
+
+        const card = await screen.findByTestId("dataset-card");
+        fireEvent.click(
+            within(card).getByRole("button", {
+                name: "Status: Draft. Change status",
+            })
+        );
+        fireEvent.click(
+            await screen.findByRole("menuitemradio", { name: "Active" })
+        );
+
+        await waitFor(() => {
+            expect(onHydration).toHaveBeenCalled();
+        });
+        await waitFor(() => {
+            expect(
+                within(card).getByRole("button", {
+                    name: "Status: Draft. Change status",
+                })
+            ).not.toHaveAttribute("aria-busy", "true");
+        });
+        expect(onPatch).not.toHaveBeenCalled();
+    });
+
+    it("should only allow archiving with delete permission", async () => {
         const mockDatasets = [
             generateDatasetForTeamV1("1.0", {
                 create_origin: "MANUAL",
@@ -239,25 +329,21 @@ describe("TeamDatasets", () => {
         server.use(getTeamDatasetsV2(mockDatasets));
         render(
             <TeamDatasets
-                permissions={{ "datasets.delete": true }}
+                permissions={{ "datasets.update": true }}
                 teamId="1"
-                isSuperAdmin
+                isSuperAdmin={false}
             />
         );
 
         const card = await screen.findByTestId("dataset-card");
-        expect(
-            within(card).queryByRole("button", {
-                name: "Archive dataset metadata so it is no longer live on the Gateway",
-            })
-        ).not.toBeInTheDocument();
-
         fireEvent.click(
-            within(card).getByRole("button", { name: "More actions" })
+            within(card).getByRole("button", {
+                name: "Status: Active. Change status",
+            })
         );
 
         expect(
-            await screen.findByRole("menuitem", { name: "Archive" })
-        ).toBeInTheDocument();
+            await screen.findByRole("menuitemradio", { name: "Archived" })
+        ).toHaveAttribute("aria-disabled", "true");
     });
 });

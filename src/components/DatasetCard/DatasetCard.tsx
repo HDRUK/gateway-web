@@ -1,5 +1,5 @@
-import { get } from "lodash";
 import { tokens } from "@hdruk/ui/theme";
+import { get } from "lodash";
 import { Dataset } from "@/interfaces/Dataset";
 import { IconType } from "@/interfaces/Ui";
 import Box from "@/components/Box";
@@ -11,9 +11,12 @@ import { DataStatus } from "@/consts/application";
 import { getLatestVersion } from "@/utils/dataset";
 import { formatDate } from "@/utils/date";
 import CardActions from "../CardActions";
+import StatusMenu from "../StatusMenu";
 import DatasetCardMenu, { DatasetMenuAction } from "./DatasetCardMenu";
 
 interface DatasetCardProps {
+    onStatusChange?: (id: number, status: DataStatus) => void;
+    disabledStatusOptions?: DataStatus[];
     dataset: Dataset;
     actions: {
         icon: IconType;
@@ -30,6 +33,8 @@ const DatasetCard = ({
     actions,
     getMenuActions,
     menuLabel,
+    onStatusChange,
+    disabledStatusOptions,
 }: DatasetCardProps) => {
     const latestMetadata = getLatestVersion(dataset);
 
@@ -61,7 +66,10 @@ const DatasetCard = ({
             <Box
                 sx={{
                     display: "grid",
-                    gridTemplateColumns: "repeat(1, 1fr 50px)",
+                    gridTemplateColumns:
+                        onStatusChange && dataset.create_origin === "MANUAL"
+                            ? "1fr auto 50px"
+                            : "repeat(1, 1fr 50px)",
                     p: 0,
                 }}>
                 <Box
@@ -109,7 +117,22 @@ const DatasetCard = ({
                         />
                     </Box>
                 </Box>
-                <Box sx={{ p: 0, borderLeft: `solid 1px ${tokens.status.faded}` }}>
+                {onStatusChange && dataset.create_origin === "MANUAL" && (
+                    <Box>
+                        <StatusMenu
+                            status={dataset.status as DataStatus}
+                            onChange={status =>
+                                onStatusChange(dataset.id, status)
+                            }
+                            disabledOptions={disabledStatusOptions}
+                        />
+                    </Box>
+                )}
+                <Box
+                    sx={{
+                        p: 0,
+                        borderLeft: `solid 1px ${tokens.status.faded}`,
+                    }}>
                     <CardActions
                         actions={
                             dataset.create_origin === "MANUAL"

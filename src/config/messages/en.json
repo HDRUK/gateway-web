@@ -521,16 +521,7 @@
                             "edit": {
                                 "label": "Edit a publication"
                             },
-                            "archive": {
-                                "label": "Archive a publication"
-                            },
-                            "unarchive": {
-                                "label": "Unarchive publication so it is live on the Gateway",
-                                "title": "Unarchive a publication",
-                                "buttonText": "Make Active",
-                                "confirmText": "Make Draft",
-                                "content": "Select whether you would like to move this publication to Active (this will make your publication available within search results) or Draft (where you can edit the publication before making it available within search results)."
-                            }
+                            "entityName": "publication"
                         }
                     }
                 },
@@ -705,19 +696,10 @@
                             "text": "View, add, edit, archive and check the status of your data uses.",
                             "title": "Data Use",
                             "actions": {
-                                "unarchive": {
-                                    "buttonText": "Make Active",
-                                    "confirmText": "Make Draft",
-                                    "title": "Unarchive this data use",
-                                    "content": "Select whether you would like to move this data use to Active (this will make your data use available within search results) or Draft (where you can edit the data use before making it available within search results).",
-                                    "label": "Unarchive data use"
-                                },
                                 "edit": {
                                     "label": "Edit data use"
                                 },
-                                "archive": {
-                                    "label": "Archive data use so it is no longer live on the Gateway"
-                                }
+                                "entityName": "data use"
                             }
                         }
                     }
@@ -827,22 +809,11 @@
                                 "text": "Update and duplicate this dataset."
                             },
                             "actions": {
-                                "unarchive": {
-                                    "buttonText": "Make Active",
-                                    "confirmText": "Make Draft",
-                                    "title": "Unarchive this dataset",
-                                    "content": "Select whether you would like to move this dataset to Active (this will make your dataset available within search results) or Draft (where you can edit the dataset metadata before making it available within search results).",
-                                    "label": "Unarchive dataset"
-                                },
                                 "edit": {
                                     "label": "Edit dataset metadata"
                                 },
                                 "duplicate": {
                                     "label": "Duplicate dataset metadata"
-                                },
-                                "archive": {
-                                    "label": "Archive",
-                                    "tooltip": "Archive dataset metadata so it is no longer live on the Gateway"
                                 },
                                 "more": {
                                     "label": "More actions"
@@ -850,7 +821,8 @@
                                 "cohortDiscovery": {
                                     "include": "Include in Cohort Discovery",
                                     "exclude": "Exclude from Cohort Discovery"
-                                }
+                                },
+                                "entityName": "dataset"
                             }
                         },
                         "UploadDataset": {
@@ -909,19 +881,10 @@
                             "text": " View, add, edit, archive and check the status of your collections.",
                             "create": "Add new Collection",
                             "actions": {
-                                "unarchive": {
-                                    "buttonText": "Make Active",
-                                    "confirmText": "Make Draft",
-                                    "title": "Unarchive the Collection so it is live on the Gateway",
-                                    "content": "Select whether you would like to move this to Active (this will make your collection available within search results) or Draft (where you can edit the metadata before making it available within search results).",
-                                    "label": "Unarchive the Collection so it is live on the Gateway"
-                                },
                                 "edit": {
                                     "label": "Edit Collection metadata"
                                 },
-                                "archive": {
-                                    "label": "Archive the Collection so it is no longer live on the Gateway"
-                                }
+                                "entityName": "collection"
                             }
                         },
                         "CollectionsTab": {
@@ -948,19 +911,10 @@
                             "text": "View, add, edit, archive and check the status of your analysis script, tools and software.",
                             "create": "Add new",
                             "actions": {
-                                "unarchive": {
-                                    "buttonText": "Make Active",
-                                    "confirmText": "Make Draft",
-                                    "title": "Unarchive analysis script, tool or software metadata so it is live on the Gateway",
-                                    "content": "Select whether you would like to move this to Active (this will make your tool available within search results) or Draft (where you can edit the metadata before making it available within search results).",
-                                    "label": "Unarchive analysis script, tool or software metadata so it is live on the Gateway"
-                                },
                                 "edit": {
                                     "label": "Edit analysis script, tool or software metadata"
                                 },
-                                "archive": {
-                                    "label": "Archive analysis script, tool or software metadata so it is no longer live on the Gateway"
-                                }
+                                "entityName": "analysis script, tool or software"
                             }
                         }
                     }
@@ -2151,6 +2105,17 @@
             "title": "Cohort Discovery",
             "whatCanIDo": "What can I do in Cohort Discovery?",
             "learnAbout": "Learn about Cohort Discovery and gain access to the service"
+        },
+        "StatusMenu": {
+            "label": "Status: {status}. Change status",
+            "changed": {
+                "ACTIVE": "The {entity} is now active and will appear in search results. You can find and edit the {entity} in the Active tab.",
+                "DRAFT": "The {entity} is now draft and will no longer appear in search results. You can find and edit the {entity} in the Draft tab.",
+                "ARCHIVED": "The {entity} is now archived and will no longer appear in search results. You can find and edit the {entity} in the Archived tab."
+            },
+            "ACTIVE": "Active",
+            "DRAFT": "Draft",
+            "ARCHIVED": "Archived"
         }
     },
     "modules": {
@@ -2401,6 +2366,11 @@
     "hooks": {
         "UseDataAccessRequest": {
             "failedToCreate": "Failed to create DAR application"
+        },
+        "UseActivationCheck": {
+            "title": "Not quite ready",
+            "message": "There are some required fields missing values. Please complete these fields on the form to make this metadata active.",
+            "error": "There has been a problem checking this can be made active. Please try again."
         }
     }
 }

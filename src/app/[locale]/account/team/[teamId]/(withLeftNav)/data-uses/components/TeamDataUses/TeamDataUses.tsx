@@ -2,27 +2,29 @@
 
 import { useEffect, useMemo, useState } from "react";
 import { useForm } from "react-hook-form";
+import { Button } from "@hdruk/ui";
+import { tokens } from "@hdruk/ui/theme";
 import { useTranslations } from "next-intl";
 import { useParams, useRouter, useSearchParams } from "next/navigation";
-import { tokens } from "@hdruk/ui/theme";
 import { DataUse } from "@/interfaces/DataUse";
 import { PaginationType } from "@/interfaces/Pagination";
 import Box from "@/components/Box";
-import { Button } from "@hdruk/ui";
 import Paper from "@/components/Paper";
 import Tabs from "@/components/Tabs";
 import Typography from "@/components/Typography";
+import useActivationCheck from "@/hooks/useActivationCheck";
 import useDebounce from "@/hooks/useDebounce";
 import useGet from "@/hooks/useGet";
-import useModal from "@/hooks/useModal";
 import usePatch from "@/hooks/usePatch";
+import notificationService from "@/services/notification";
 import apis from "@/config/apis";
+import { dataUseValidationSchema } from "@/config/forms/dataUse";
 import {
     dataUseSearchDefaultValues,
     sortByOptions,
 } from "@/config/forms/dataUseAccountSearch";
 import { DataStatus } from "@/consts/application";
-import { AddIcon, ArchiveIcon, EditIcon, UnarchiveIcon } from "@/consts/icons";
+import { AddIcon, EditIcon } from "@/consts/icons";
 import { RouteName } from "@/consts/routeName";
 import {
     ACCOUNT,
@@ -33,6 +35,7 @@ import {
     TITLE,
     TEXT,
 } from "@/consts/translation";
+import { loadEntityActivation } from "@/utils/activation";
 import { capitalise } from "@/utils/general";
 import DataUseTab from "../DataUseTab";
 
@@ -51,11 +54,11 @@ const TRANSLATION_PATH = `${PAGES}.${ACCOUNT}.${TEAM}.${DATA_USES}.${COMPONENTS}
 
 const TeamDataUses = ({ permissions, teamId }: TeamDataUsesProps) => {
     const t = useTranslations(TRANSLATION_PATH);
+    const tStatus = useTranslations("components.StatusMenu");
+    const checkActivation = useActivationCheck();
     const router = useRouter();
-    const { showModal } = useModal();
     const searchParams = useSearchParams();
     const params = useParams<{ teamId: string }>();
-    const tab = searchParams?.get("tab");
 
     const [initialSort] = sortByOptions.filter(
         o => o.value === dataUseSearchDefaultValues.sortField
@@ -145,16 +148,37 @@ const TeamDataUses = ({ permissions, teamId }: TeamDataUsesProps) => {
 
     const patchDataUse = usePatch<Partial<DataUse>>(baseDurUrl, {
         itemName: "Data Use",
+        successNotificationsOn: false,
     });
 
     useEffect(() => {
         window.scrollTo({ top: 0 });
     }, [queryParams.page]);
 
-    const showArchiveButton =
-        tab !== DataStatus.ARCHIVED && permissions["dur.delete"];
-    const showUnarchiveButton =
-        tab === DataStatus.ARCHIVED && permissions["dur.update"];
+    const handleStatusChange = async (id: number, status: DataStatus) => {
+        if (
+            status === DataStatus.ACTIVE &&
+            !(await checkActivation({
+                load: loadEntityActivation(
+                    `${baseDurUrl}/${id}`,
+                    dataUseValidationSchema
+                ),
+            }))
+        ) {
+            return;
+        }
+
+        const result = await patchDataUse(id, { status });
+        await Promise.all([mutateDataUses(), mutateCount()]);
+
+        if (result !== null) {
+            notificationService.apiSuccess(
+                tStatus(`changed.${status}`, {
+                    entity: t("actions.entityName"),
+                })
+            );
+        }
+    };
     const showAddNewButton = useMemo(
         () => permissions["roles.dar-m.update"],
         [permissions]
@@ -167,53 +191,6 @@ const TeamDataUses = ({ permissions, teamId }: TeamDataUsesProps) => {
                       href: `/${RouteName.ACCOUNT}/${RouteName.TEAM}/${params?.teamId}/${RouteName.DATA_USES}`,
                       icon: EditIcon,
                       label: t("actions.edit.label"),
-                  },
-              ]
-            : []),
-        ...(showUnarchiveButton
-            ? [
-                  {
-                      action: (id: number) => {
-                          showModal({
-                              tertiaryButton: {
-                                  onAction: async () => {
-                                      await patchDataUse(id, {
-                                          status: DataStatus.ACTIVE,
-                                      });
-                                      mutateDataUses();
-                                      mutateCount();
-                                  },
-                                  buttonText: t("actions.unarchive.buttonText"),
-                              },
-                              onSuccess: async () => {
-                                  await patchDataUse(id, {
-                                      status: DataStatus.DRAFT,
-                                  });
-                                  mutateDataUses();
-                                  mutateCount();
-                              },
-                              confirmText: t("actions.unarchive.confirmText"),
-                              title: t("actions.unarchive.title"),
-                              content: t("actions.unarchive.content"),
-                          });
-                      },
-                      icon: UnarchiveIcon,
-                      label: t("actions.unarchive.label"),
-                  },
-              ]
-            : []),
-        ...(showArchiveButton
-            ? [
-                  {
-                      action: async (id: number) => {
-                          await patchDataUse(id, {
-                              status: DataStatus.ARCHIVED,
-                          });
-                          mutateDataUses();
-                          mutateCount();
-                      },
-                      icon: ArchiveIcon,
-                      label: t("actions.archive.label"),
                   },
               ]
             : []),
@@ -255,6 +232,14 @@ const TeamDataUses = ({ permissions, teamId }: TeamDataUsesProps) => {
                 }
                 isLoading={isLoading}
                 actions={actions}
+                onStatusChange={
+                    permissions["dur.update"] ? handleStatusChange : undefined
+                }
+                disabledStatusOptions={
+                    permissions["dur.delete"]
+                        ? undefined
+                        : [DataStatus.ARCHIVED]
+                }
             />
         ),
     }));
