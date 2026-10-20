@@ -54,6 +54,7 @@ const TeamCollections = ({
     userId,
 }: TeamCollectionsProps) => {
     const t = useTranslations(TRANSLATION_PATH);
+    const tStatus = useTranslations("components.StatusMenu");
     const checkActivation = useActivationCheck();
     const router = useRouter();
     const searchParams = useSearchParams();
@@ -172,7 +173,11 @@ const TeamCollections = ({
         await Promise.all([mutateCollections(), mutateCount()]);
 
         if (result !== null) {
-            notificationService.apiSuccess(t(`actions.statusChange.${status}`));
+            notificationService.apiSuccess(
+                tStatus(`changed.${status}`, {
+                    entity: t("actions.entityName"),
+                })
+            );
         }
     };
     const showAddNewButton = useMemo(

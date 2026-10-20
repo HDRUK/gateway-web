@@ -55,6 +55,7 @@ const UserPublications = ({
     teamId,
 }: UserPublicationProps) => {
     const t = useTranslations(TRANSLATION_PATH);
+    const tStatus = useTranslations("components.StatusMenu");
     const checkActivation = useActivationCheck();
     const { showDialog } = useDialog();
     const searchParams = useSearchParams();
@@ -159,7 +160,11 @@ const UserPublications = ({
         await Promise.all([mutatePublications(), mutateCount()]);
 
         if (result !== null) {
-            notificationService.apiSuccess(t(`actions.statusChange.${status}`));
+            notificationService.apiSuccess(
+                tStatus(`changed.${status}`, {
+                    entity: t("actions.entityName"),
+                })
+            );
         }
     };
 

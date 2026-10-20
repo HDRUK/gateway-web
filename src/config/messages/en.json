@@ -515,11 +515,7 @@
                             "edit": {
                                 "label": "Edit a publication"
                             },
-                            "statusChange": {
-                                "ACTIVE": "You have made 1 publication active and can now find the publication in the Active tab. The publication will now show up in search results.",
-                                "DRAFT": "You have moved 1 publication to draft and can now find the publication in the Draft tab. The publication will no longer show up in search results.",
-                                "ARCHIVED": "You have archived 1 publication and can now find the publication in the Archived tab. The publication will no longer show up in search results."
-                            }
+                            "entityName": "publication"
                         }
                     }
                 },
@@ -697,11 +693,7 @@
                                 "edit": {
                                     "label": "Edit data use"
                                 },
-                                "statusChange": {
-                                    "ACTIVE": "You have made 1 data use active and can now find the data use in the Active tab. The data use will now show up in search results.",
-                                    "DRAFT": "You have moved 1 data use to draft and can now find the data use in the Draft tab. The data use will no longer show up in search results.",
-                                    "ARCHIVED": "You have archived 1 data use and can now find the data use in the Archived tab. The data use will no longer show up in search results."
-                                }
+                                "entityName": "data use"
                             }
                         }
                     }
@@ -824,11 +816,7 @@
                                     "include": "Include in Cohort Discovery",
                                     "exclude": "Exclude from Cohort Discovery"
                                 },
-                                "statusChange": {
-                                    "ACTIVE": "You have made 1 dataset active and can now find the dataset metadata in the Active tab. The dataset will now show up in search results.",
-                                    "DRAFT": "You have moved 1 dataset to draft and can now find the dataset metadata in the Draft tab. The dataset will no longer show up in search results.",
-                                    "ARCHIVED": "You have archived 1 dataset and can now find the dataset metadata in the Archived tab. The dataset will no longer show up in search results."
-                                }
+                                "entityName": "dataset"
                             }
                         },
                         "UploadDataset": {
@@ -890,11 +878,7 @@
                                 "edit": {
                                     "label": "Edit Collection metadata"
                                 },
-                                "statusChange": {
-                                    "ACTIVE": "You have made 1 collection active and can now find the collection in the Active tab. The collection will now show up in search results.",
-                                    "DRAFT": "You have moved 1 collection to draft and can now find the collection in the Draft tab. The collection will no longer show up in search results.",
-                                    "ARCHIVED": "You have archived 1 collection and can now find the collection in the Archived tab. The collection will no longer show up in search results."
-                                }
+                                "entityName": "collection"
                             }
                         },
                         "CollectionsTab": {
@@ -924,11 +908,7 @@
                                 "edit": {
                                     "label": "Edit analysis script, tool or software metadata"
                                 },
-                                "statusChange": {
-                                    "ACTIVE": "You have made 1 analysis script, tool or software active and can now find it in the Active tab. It will now show up in search results.",
-                                    "DRAFT": "You have moved 1 analysis script, tool or software to draft and can now find it in the Draft tab. It will no longer show up in search results.",
-                                    "ARCHIVED": "You have archived 1 analysis script, tool or software and can now find it in the Archived tab. It will no longer show up in search results."
-                                }
+                                "entityName": "analysis script, tool or software"
                             }
                         }
                     }
@@ -2108,6 +2088,11 @@
         },
         "StatusMenu": {
             "label": "Status: {status}. Change status",
+            "changed": {
+                "ACTIVE": "The {entity} is now active and will appear in search results. You can find and edit the {entity} in the Active tab.",
+                "DRAFT": "The {entity} is now draft and will no longer appear in search results. You can find and edit the {entity} in the Draft tab.",
+                "ARCHIVED": "The {entity} is now archived and will no longer appear in search results. You can find and edit the {entity} in the Archived tab."
+            },
             "ACTIVE": "Active",
             "DRAFT": "Draft",
             "ARCHIVED": "Archived"

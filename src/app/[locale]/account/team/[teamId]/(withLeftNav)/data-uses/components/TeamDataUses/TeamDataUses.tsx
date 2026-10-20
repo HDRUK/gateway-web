@@ -54,6 +54,7 @@ const TRANSLATION_PATH = `${PAGES}.${ACCOUNT}.${TEAM}.${DATA_USES}.${COMPONENTS}
 
 const TeamDataUses = ({ permissions, teamId }: TeamDataUsesProps) => {
     const t = useTranslations(TRANSLATION_PATH);
+    const tStatus = useTranslations("components.StatusMenu");
     const checkActivation = useActivationCheck();
     const router = useRouter();
     const searchParams = useSearchParams();
@@ -171,7 +172,11 @@ const TeamDataUses = ({ permissions, teamId }: TeamDataUsesProps) => {
         await Promise.all([mutateDataUses(), mutateCount()]);
 
         if (result !== null) {
-            notificationService.apiSuccess(t(`actions.statusChange.${status}`));
+            notificationService.apiSuccess(
+                tStatus(`changed.${status}`, {
+                    entity: t("actions.entityName"),
+                })
+            );
         }
     };
     const showAddNewButton = useMemo(

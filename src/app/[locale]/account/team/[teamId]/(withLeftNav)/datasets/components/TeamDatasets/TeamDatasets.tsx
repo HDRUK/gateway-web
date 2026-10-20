@@ -63,6 +63,7 @@ const TeamDatasets = ({
     isSuperAdmin,
 }: TeamDatasetsProps) => {
     const t = useTranslations(TRANSLATION_PATH);
+    const tStatus = useTranslations("components.StatusMenu");
     const { showDialog } = useDialog();
     const { user } = useAuth();
     const checkActivation = useActivationCheck();
@@ -193,7 +194,11 @@ const TeamDatasets = ({
         await Promise.all([mutateDatasets(), mutateCount()]);
 
         if (result !== null) {
-            notificationService.apiSuccess(t(`actions.statusChange.${status}`));
+            notificationService.apiSuccess(
+                tStatus(`changed.${status}`, {
+                    entity: t("actions.entityName"),
+                })
+            );
         }
     };
     const showAddNewButton = useMemo(

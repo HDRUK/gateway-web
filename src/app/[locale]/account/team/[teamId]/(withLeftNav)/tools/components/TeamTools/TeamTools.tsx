@@ -58,6 +58,7 @@ const TRANSLATION_PATH = `${PAGES}.${ACCOUNT}.${TEAM}.${TOOLS}.${COMPONENTS}.Tea
 
 const TeamTools = ({ permissions, teamId, userId }: TeamToolsProps) => {
     const t = useTranslations(TRANSLATION_PATH);
+    const tStatus = useTranslations("components.StatusMenu");
     const checkActivation = useActivationCheck();
     const router = useRouter();
     const searchParams = useSearchParams();
@@ -176,7 +177,11 @@ const TeamTools = ({ permissions, teamId, userId }: TeamToolsProps) => {
         await Promise.all([mutateTools(), mutateCount()]);
 
         if (result !== null) {
-            notificationService.apiSuccess(t(`actions.statusChange.${status}`));
+            notificationService.apiSuccess(
+                tStatus(`changed.${status}`, {
+                    entity: t("actions.entityName"),
+                })
+            );
         }
     };
     const showAddNewButton = useMemo(() => {
