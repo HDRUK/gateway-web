@@ -30,6 +30,7 @@ export default function CardStacked({
                 href={href}
                 sx={{
                     color: tokens.text.primaryWhite,
+                    textDecoration: "none",
                     px: 3,
                     py: 2,
                     display: "flex",
