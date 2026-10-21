@@ -51,7 +51,7 @@ const NHS_SDE_FINAL_STATUSES: string[] = [
 const statusMapping: Record<string, ChipProps> = {
     [COHORT_STATUS.APPROVED]: { color: "secondary" },
     [COHORT_STATUS.RENEWING]: { color: "primary" },
-    [COHORT_STATUS.REJECTED]: { color: "warning" },
+    [COHORT_STATUS.REJECTED]: { color: "error" },
     [COHORT_STATUS.PENDING]: { variant: "outlined" },
     [COHORT_STATUS.BANNED]: { color: "error" },
     [COHORT_STATUS.SUSPENDED]: { color: "needsAction" },
