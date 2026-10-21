@@ -20,12 +20,14 @@ const statusChipProps: Record<DataStatus, ChipProps> = {
 export interface StatusMenuProps {
     status: DataStatus;
     onChange: (status: DataStatus) => Promise<void> | void;
+    options?: DataStatus[];
     disabledOptions?: DataStatus[];
 }
 
 const StatusMenu = ({
     status,
     onChange,
+    options = Object.values(DataStatus),
     disabledOptions = [],
 }: StatusMenuProps) => {
     const t = useTranslations(TRANSLATION_PATH);
@@ -80,7 +82,7 @@ const StatusMenu = ({
                 open={open}
                 onClose={() => setAnchorEl(null)}
                 slotProps={{ list: { "aria-labelledby": `${id}-button` } }}>
-                {Object.values(DataStatus).map(option => (
+                {options.map(option => (
                     <MenuItem
                         key={option}
                         role="menuitemradio"

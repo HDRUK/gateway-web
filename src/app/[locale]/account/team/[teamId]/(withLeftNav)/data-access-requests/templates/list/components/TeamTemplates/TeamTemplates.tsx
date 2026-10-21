@@ -14,8 +14,11 @@ import Typography from "@/components/Typography";
 import DarApplicationActionDialog from "@/modules/DarApplicationActionDialog";
 import useDelete from "@/hooks/useDelete";
 import useDialog from "@/hooks/useDialog";
+import usePatch from "@/hooks/usePatch";
 import usePost from "@/hooks/usePost";
+import notificationService from "@/services/notification";
 import apis from "@/config/apis";
+import { DataStatus } from "@/consts/application";
 import { ContentCopyIcon, EditIcon, DeleteIcon } from "@/consts/icons";
 import { RouteName } from "@/consts/routeName";
 import TemplateList from "../TemplateList";
@@ -61,6 +64,22 @@ const TeamTemplates = ({
         itemName: "DAR Template",
         successNotificationsOn: false,
     });
+
+    const patchTemplate = usePatch(apis.dataAccessTemplateV1Url, {
+        itemName: "DAR Template",
+        successNotificationsOn: false,
+    });
+
+    const handleStatusChange = async (id: number, status: DataStatus) => {
+        const result = await patchTemplate(id, {
+            published: status === DataStatus.ACTIVE,
+        });
+        refresh();
+
+        if (result !== null) {
+            notificationService.apiSuccess(t(`statusChanged.${status}`));
+        }
+    };
 
     const handleDuplicateTemplate = async (selectedId: number) => {
         const selectedTemplate = templateData?.list.find(
@@ -160,6 +179,12 @@ const TeamTemplates = ({
                 }}
                 isLoading={false}
                 actions={actions}
+                onStatusChange={
+                    permissions?.["data-access-template.update"]
+                        ? handleStatusChange
+                        : undefined
+                }
+                statusOptions={[DataStatus.DRAFT, DataStatus.ACTIVE]}
                 from={templateData.from}
                 to={templateData.to}
                 lastPage={templateData.lastPage}
