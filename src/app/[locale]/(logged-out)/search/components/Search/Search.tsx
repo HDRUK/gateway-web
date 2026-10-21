@@ -1225,7 +1225,7 @@ const Search = ({ filters, schema }: SearchProps) => {
                                                                 !isDownloading &&
                                                                 downloadSearchResults()
                                                             }
-                                                            color="greyCustom"
+                                                            purpose="tertiary"
                                                             startIcon={
                                                                 <DownloadIcon />
                                                             }
@@ -1240,7 +1240,7 @@ const Search = ({ filters, schema }: SearchProps) => {
                                                         </Button>
                                                     )}
                                                 <Button
-                                                    color="greyCustom"
+                                                    purpose="tertiary"
                                                     disabled={!hasSearched}
                                                     onClick={handleSaveClick}
                                                     startIcon={

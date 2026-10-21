@@ -99,7 +99,7 @@ const palette = {
     greyCustom: {
         light: tokens.status.grey,
         main: colors.grey400,
-        dark: "#A29415",
+        dark: colors.grey500,
         contrastText: tokens.text.secondaryBlack,
     },
     yellowCustom: {
