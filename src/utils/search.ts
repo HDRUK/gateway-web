@@ -76,6 +76,19 @@ const getSaveSearchFilters = (
         .filter(({ terms }) => !!terms);
 };
 
+const getSavedSearchPayload = (
+    filters: Filter[],
+    queryParams: SearchQueryParams,
+    name: string
+) => ({
+    search_term: queryParams.query || "",
+    sort_order: queryParams.sort || "",
+    name,
+    search_endpoint: queryParams.type,
+    filters: getSaveSearchFilters(filters, queryParams),
+    enabled: true,
+});
+
 const getUrlFromSearchParams = (
     type: string,
     search_term: string,
@@ -108,6 +121,7 @@ export {
     getDateRange,
     getFiltersFromSaveSearch,
     getPopulationSize,
+    getSavedSearchPayload,
     getSaveSearchFilters,
     getUrlFromSearchParams,
     hasMinimumSearchCharLength,

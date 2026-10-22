@@ -5,9 +5,9 @@ import { useForm } from "react-hook-form";
 import { tokens } from "@hdruk/ui/theme";
 import { get } from "lodash";
 import { useTranslations } from "next-intl";
-import { usePathname, useRouter, useSearchParams } from "next/navigation";
+import { useSearchParams } from "next/navigation";
 import { BucketCheckbox, DateRange, Filter } from "@/interfaces/Filter";
-import { Aggregations, SearchCategory } from "@/interfaces/Search";
+import { Aggregations } from "@/interfaces/Search";
 import Accordion from "@/components/Accordion";
 import Box from "@/components/Box";
 import FilterSection from "@/components/FilterSection";
@@ -160,6 +160,7 @@ const filterCountStyles = {
     backgroundColor: colors.green400,
     width: "25px",
     height: "25px",
+    flexShrink: 0,
     color: tokens.text.primaryWhite,
     display: "flex",
     alignItems: "center",
@@ -175,7 +176,7 @@ const FilterPanel = ({
     updateStaticFilter,
     getParamString,
     showEuropePmcModal,
-    resetQueryParamState,
+    onClearAll,
     schemadefs,
     providerCounts,
     dataSource,
@@ -191,9 +192,9 @@ const FilterPanel = ({
     ) => void;
     aggregations?: Aggregations;
     updateStaticFilter: (filterSection: string, value: string) => void;
-    getParamString: (paramName: string) => string | null;
+    getParamString: (paramName: string) => string | undefined;
     showEuropePmcModal: () => void;
-    resetQueryParamState: (selectedType: SearchCategory) => void;
+    onClearAll: () => void;
     schemadefs;
     providerCounts?: { [key: string]: number | null };
     dataSource?: string;
@@ -203,8 +204,6 @@ const FilterPanel = ({
     const { isExternalSourcesEnabled } = useFeatures();
 
     const searchParams = useSearchParams();
-    const pathname = usePathname();
-    const router = useRouter();
     const fireGTMEvent = useGTMEvent();
 
     // filterValues controls the selected values of each filter
@@ -253,7 +252,7 @@ const FilterPanel = ({
                 [STATIC_FILTER_DATA_SOURCE]: { [HDRUK_SOURCE_VALUE]: true },
             }));
         }
-    }, [filterCategory, dataSource]);
+    }, [filterCategory, dataSource, getParamString]);
 
     // useForm applys to the search fields above each filter (other components, such as checkboxes/map are controlled)
     const { control, setValue } = useForm<{
@@ -501,22 +500,7 @@ const FilterPanel = ({
     const resetAllFilters = () => {
         setFilterValues(EMPTY_FILTERS);
 
-        const type = searchParams.get("type");
-        const sort = searchParams.get("sort");
-        const newParams = new URLSearchParams();
-        if (type) {
-            newParams.set("type", type);
-        }
-        if (sort) {
-            newParams.set("sort", sort);
-        }
-
-        const newPath = `${pathname}?${newParams.toString()}`;
-        router.push(newPath, { scroll: false });
-
-        resetQueryParamState(
-            type ? (type as SearchCategory) : SearchCategory.DATASETS
-        );
+        onClearAll();
     };
 
     const updateCheckboxes = (
@@ -961,7 +945,7 @@ const FilterPanel = ({
                                     p: 0,
                                     m: 0,
                                     flexDirection: "row",
-                                    alignContent: "center",
+                                    alignItems: "center",
                                     justifyContent: "space-between",
                                     width: "100%",
                                     pr: 3.25,

@@ -22,6 +22,7 @@ interface SortProps {
     submitAction: (value: string) => void;
     sortOptions: Options[];
     iconised: boolean;
+    disabled?: boolean;
 }
 
 const Sort = ({
@@ -30,6 +31,7 @@ const Sort = ({
     submitAction,
     sortOptions,
     iconised,
+    disabled = false,
 }: SortProps) => {
     const t = useTranslations(TRANSLATION_PATH);
     const theme = useTheme();
@@ -40,7 +42,11 @@ const Sort = ({
         },
     });
 
-    const [options, setOptions] = useState<Options[]>([]);
+    const [options, setOptions] = useState<Options[]>(() =>
+        sortOptions.some(option => option.value === defaultValue)
+            ? sortOptions
+            : []
+    );
 
     const watchSort = watch(sortName);
 
@@ -74,6 +80,7 @@ const Sort = ({
                 control={control}
                 {...searchFormConfig.sort}
                 options={options}
+                disabled={disabled}
                 formControlSx={{
                     marginBottom: 0,
                     "& .MuiOutlinedInput-root": {

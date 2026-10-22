@@ -1,10 +1,13 @@
 import { faker } from "@faker-js/faker";
 import { ReadonlyURLSearchParams } from "next/navigation";
+import { Filter } from "@/interfaces/Filter";
+import { SearchCategory, SearchQueryParams } from "@/interfaces/Search";
 import { generateDatasetMetadataV1 } from "@/mocks/data/dataset";
 import {
     getAllParams,
     getDateRange,
     getPopulationSize,
+    getSavedSearchPayload,
     getUrlFromSearchParams,
     hasMinimumSearchCharLength,
 } from "./search";
@@ -200,6 +203,32 @@ describe("Search utils", () => {
             const url = getUrlFromSearchParams("datause", "", {}, "title:asc");
 
             expect(url).toBe(`${basePath}?type=datause&sort=title%3Aasc`);
+        });
+    });
+
+    describe("getSavedSearchPayload", () => {
+        it("builds the payload from the search params and type filters", () => {
+            const filters = [
+                { id: 1, keys: "publisherName", type: "dataset" },
+                { id: 2, keys: "typeCategory", type: "tool" },
+            ] as Filter[];
+            const queryParams = {
+                query: "asthma",
+                sort: "title:asc",
+                type: SearchCategory.DATASETS,
+                publisherName: ["NHS"],
+            } as SearchQueryParams;
+
+            expect(
+                getSavedSearchPayload(filters, queryParams, "My search")
+            ).toEqual({
+                search_term: "asthma",
+                sort_order: "title:asc",
+                name: "My search",
+                search_endpoint: "datasets",
+                filters: [{ id: 1, terms: ["NHS"] }],
+                enabled: true,
+            });
         });
     });
 });
