@@ -93,6 +93,14 @@ interface SearchResultBase {
 export interface SearchResultDataset extends SearchResultBase {
     highlight: Highlight;
     metadata: Metadata;
+    /** The partner context that owns the dataset, e.g. "HDRUK" or "CRUK". */
+    partner_context?: string;
+    /**
+     * The owning partner's display name, present only when that context is not
+     * this deployment's own - so its presence is what decides whether the
+     * result shows a "via ..." provenance line.
+     */
+    partner_name?: string | null;
     team: {
         id: number;
         member_of: string;

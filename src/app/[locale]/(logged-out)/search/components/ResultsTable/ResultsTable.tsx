@@ -7,6 +7,7 @@ import { Library } from "@/interfaces/Library";
 import { SearchResultDataset } from "@/interfaces/Search";
 import EllipsisLineLimit from "@/components/EllipsisLineLimit";
 import Link from "@/components/Link";
+import PartnerProvenance from "@/components/PartnerProvenance";
 import Paper from "@/components/Paper";
 import Table from "@/components/Table";
 import useAuth from "@/hooks/useAuth";
@@ -104,6 +105,7 @@ const getColumns = ({
                         }}>
                         <EllipsisLineLimit text={original.team.name} />
                     </Link>
+                    <PartnerProvenance partnerName={original.partner_name} />
                 </div>
             );
         },
@@ -115,7 +117,9 @@ const getColumns = ({
                 {translations.dataCustodianLabel}
             </Tooltip>
         ),
-        size: 120,
+        // Wider than the other centred columns: the cell can carry a wrapped
+        // custodian name and a provenance line beneath it.
+        size: 160,
     }),
 
     columnHelper.display({
