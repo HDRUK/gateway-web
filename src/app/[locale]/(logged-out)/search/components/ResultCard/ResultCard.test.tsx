@@ -90,6 +90,45 @@ describe("ResultCard", () => {
             screen.queryByText("Example Publisher Ltd")
         ).not.toBeInTheDocument();
     });
+    const renderCardFromPartner = (partnerName?: string) => {
+        const mockResult = generateDatasetMetadataMiniV1();
+
+        return render(
+            <ResultCard
+                result={{
+                    highlight: mockHighlight,
+                    metadata: mockResult,
+                    _id: "1",
+                    partner_name: partnerName,
+                    team: {
+                        id: 42,
+                        member_of: "",
+                        name: "Example Custodian Ltd",
+                        is_question_bank: false,
+                        has_published_dar_template: false,
+                        is_dar: false,
+                        dar_modal_header: null,
+                        dar_modal_content: null,
+                        dar_modal_footer: null,
+                    },
+                }}
+                isCohortDiscoveryDisabled={false}
+            />
+        );
+    };
+
+    it("marks a result that came from another partner context", async () => {
+        renderCardFromPartner("Cancer Research UK");
+
+        expect(screen.getByText("Cancer Research UK")).toBeInTheDocument();
+    });
+
+    it("leaves our own results unmarked", async () => {
+        renderCardFromPartner();
+
+        expect(screen.queryByText(/^via/)).not.toBeInTheDocument();
+    });
+
     it("should render n/a when no date", async () => {
         const mockResult = generateDatasetMetadataMiniV1();
         const mockWithoutData = {

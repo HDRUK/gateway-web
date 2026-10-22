@@ -2117,6 +2117,10 @@
             "ACTIVE": "Active",
             "DRAFT": "Draft",
             "ARCHIVED": "Archived"
+        },
+        "PartnerProvenance": {
+            "via": "via <name></name>",
+            "tooltip": "Published by {partner} and surfaced on the Gateway."
         }
     },
     "modules": {
