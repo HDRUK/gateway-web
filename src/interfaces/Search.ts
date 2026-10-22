@@ -22,6 +22,9 @@ import {
     FILTER_MATERIAL_TYPE,
     FILTER_FORMAT_STANDARDS,
     FILTER_COHORT_DISCOVERY,
+    FILTER_PUBLICATION_LINK_TYPE,
+    FILTER_CATEGORY,
+    FILTER_LICENSE,
 } from "@/config/forms/filters";
 import { PMC_TYPE_FIELD } from "@/config/forms/search";
 import { DataSource } from "@/consts/search";
@@ -266,6 +269,9 @@ export interface SearchQueryParams {
     [PMC_TYPE_FIELD]: string | undefined;
     [FILTER_FORMAT_STANDARDS]: string[] | undefined;
     [FILTER_COHORT_DISCOVERY]: string[] | undefined;
+    [FILTER_PUBLICATION_LINK_TYPE]: string[] | undefined;
+    [FILTER_CATEGORY]: string[] | undefined;
+    [FILTER_LICENSE]: string[] | undefined;
 }
 
 export type CountType = { [key: string]: number };

@@ -8,14 +8,15 @@ import {
 } from "@/interfaces/Search";
 import { RouteName } from "@/consts/routeName";
 import { FILTER_TYPE_MAPPING, SEARCH_CHAR_LIMIT } from "@/consts/search";
-import { formatDate } from "./date";
+import { DEFAULT_FORMAT_LOCALE } from "@/consts/urls";
+import { formatYear } from "./date";
 
 const getDateRange = (metadata: Metadata) => {
     const endDate = get(metadata, "provenance.temporal.endDate");
     const startDate = get(metadata, "provenance.temporal.startDate");
     if (!endDate && !startDate) return "n/a";
-    return `${startDate ? formatDate(startDate, "YYYY") : ""}-${
-        endDate ? formatDate(endDate, "YYYY") : ""
+    return `${startDate ? formatYear(startDate) : ""}-${
+        endDate ? formatYear(endDate) : ""
     }`;
 };
 
@@ -27,7 +28,7 @@ const getPopulationSize = (
 
     const population = get(metadata, "summary.populationSize");
     return population && typeof population === "number" && population > 0
-        ? (population as number).toLocaleString()
+        ? (population as number).toLocaleString(DEFAULT_FORMAT_LOCALE)
         : notReportedLabel;
 };
 

@@ -47,6 +47,7 @@ const ResultCardPublication = ({ result }: ResultCardPublicationProps) => {
                     disableTypography
                     primary={
                         <Typography
+                            component="div"
                             sx={{
                                 display: "flex",
                                 flexDirection: {

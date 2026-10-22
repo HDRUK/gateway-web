@@ -105,4 +105,17 @@ describe("usePostSwr", () => {
             expect(result.current.data).toEqual(searchResults);
         });
     });
+
+    it("uses fallback data without requesting it", async () => {
+        const { result } = renderHook(() =>
+            usePostSwr(
+                apis.searchV2AggregationUrl,
+                { query: "asthma" },
+                { fallbackData: searchResults }
+            )
+        );
+
+        await waitFor(() => expect(result.current.data).toEqual(searchResults));
+        expect(mockPostRequest).not.toHaveBeenCalled();
+    });
 });

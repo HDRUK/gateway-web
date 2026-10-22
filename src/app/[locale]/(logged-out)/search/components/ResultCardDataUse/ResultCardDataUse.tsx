@@ -101,7 +101,7 @@ const ResultCardDataUse = ({ result }: ResultCardProps) => {
                 secondary={
                     <>
                         <ResultRow>
-                            <ResultRowCategory>
+                            <ResultRowCategory component="div">
                                 <TooltipText
                                     content={t(
                                         `leadOrganisation${TOOLTIP_SUFFIX}`
@@ -124,7 +124,7 @@ const ResultCardDataUse = ({ result }: ResultCardProps) => {
                         </ResultRow>
 
                         <ResultRow>
-                            <ResultRowCategory>
+                            <ResultRowCategory component="div">
                                 <TooltipText
                                     content={t(`datasets${TOOLTIP_SUFFIX}`)}
                                     label={t("datasets")}
@@ -174,7 +174,7 @@ const ResultCardDataUse = ({ result }: ResultCardProps) => {
                         </ResultRow>
 
                         <ResultRow>
-                            <ResultRowCategory>
+                            <ResultRowCategory component="div">
                                 <TooltipText
                                     content={t(
                                         `dataCustodian${TOOLTIP_SUFFIX}`

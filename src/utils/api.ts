@@ -53,6 +53,7 @@ import {
     CACHE_DAR_ANSWERS,
     CACHE_DAR_REVIEWS,
     DEFAULT_CACHE_REVALIDATE,
+    FILTERS_CACHE_REVALIDATE,
 } from "@/consts/cache";
 import { getUserFromToken } from "@/utils/cookies";
 import { getSessionCookie } from "./getSessionCookie";
@@ -73,10 +74,11 @@ async function get<T>(
     },
     headers: object = {}
 ): Promise<T> {
-    const cookieStore = await cookies();
-    const jwt = cookieStore.get(config.JWT_COOKIE);
-    const session = await getSessionCookie();
-    const { cache, suppressError, serveRaw } = options;
+    const { cache, suppressError, serveRaw, isPublic } = options;
+    const jwt = isPublic
+        ? undefined
+        : (await cookies()).get(config.JWT_COOKIE);
+    const session = isPublic ? "" : await getSessionCookie();
     const nextConfig = cache
         ? {
               next: {
@@ -89,8 +91,10 @@ async function get<T>(
     const res = await fetch(url, {
         headers: {
             ...headers,
-            Authorization: `Bearer ${jwt?.value}`,
-            [sessionHeader]: sessionPrefix + session,
+            ...(!isPublic && {
+                Authorization: `Bearer ${jwt?.value}`,
+                [sessionHeader]: sessionPrefix + session,
+            }),
         },
         ...nextConfig,
     });
@@ -283,10 +287,11 @@ async function post<T>(
 async function getFilters(): Promise<Filter[]> {
     const cache: Cache = {
         tags: ["filters"],
+        revalidate: FILTERS_CACHE_REVALIDATE,
     };
     return get<Filter[]>(
         `${apis.filtersV1UrlIP}?per_page=${FILTERS_PER_PAGE}`,
-        { cache }
+        { cache, isPublic: true }
     );
 }
 
@@ -526,6 +531,7 @@ async function getSchemaFromTraser(
                 tags: [`traser-schema-${schemaName}-${schemaVersion}`],
             },
             serveRaw: true,
+            isPublic: true,
         }
     );
 }
