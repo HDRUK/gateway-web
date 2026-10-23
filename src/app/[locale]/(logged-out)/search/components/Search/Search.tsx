@@ -312,9 +312,8 @@ const Search = ({ filters, schema, initialView }: SearchProps) => {
                     showLibraryModal={showLibraryModal}
                 />
 
-                {!isExternalSourceSelected && (
+                {!isExternalSourceSelected && !resultsState.showLoading && (
                     <Pagination
-                        isLoading={isSearching}
                         page={parseInt(queryParams.page, 10)}
                         count={data?.lastPage}
                         onChange={(
