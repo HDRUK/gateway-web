@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useTranslations } from "next-intl";
-import { useRouter } from "next/navigation";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { useSWRConfig } from "swr";
 import { FileExport } from "@/interfaces/FileExport";
 import { Filter } from "@/interfaces/Filter";
@@ -37,17 +37,17 @@ interface UseSearchActionsParams {
     queryParams: SearchQueryParams;
     filters: Filter[];
     resultsView: string;
-    redirectPath: string;
 }
 
 const useSearchActions = ({
     queryParams,
     filters,
     resultsView,
-    redirectPath,
 }: UseSearchActionsParams) => {
     const t = useTranslations(TRANSLATION_PATH);
     const router = useRouter();
+    const pathname = usePathname();
+    const searchParams = useSearchParams();
     const { isLoggedIn } = useAuth();
     const { showDialog, hideDialog } = useDialog();
     const { showSidebar } = useSidebar();
@@ -162,7 +162,9 @@ const useSearchActions = ({
 
             showDialog(ProvidersDialog, {
                 isProvidersDialog: true,
-                redirectPath,
+                redirectPath: searchParams
+                    ? `${pathname}?${searchParams.toString()}`
+                    : pathname,
             });
         }
     };

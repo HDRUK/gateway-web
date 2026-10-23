@@ -1,4 +1,5 @@
 import { useMemo } from "react";
+import { useSearchParams } from "next/navigation";
 import {
     SearchAggregationData,
     SearchPaginationType,
@@ -9,22 +10,20 @@ import useNavigationProgress from "@/hooks/useNavigationProgress";
 import usePostSwr from "@/hooks/usePostSwr";
 import apis from "@/config/apis";
 import { ARDC_SOURCE_VALUE } from "@/consts/search";
+import { useFeatures } from "@/providers/FeatureProvider";
 import {
     getSearchMode,
     getV1SearchBody,
     getV1SearchUrl,
     getV2SearchBody,
-    SearchFeatureFlags,
     shouldFetchV1,
 } from "../utils/searchRequest";
 import useLoadExternalData from "./useLoadExternalData";
 import { useSearchData } from "./useSearchData";
 
-const useSearchResults = (
-    queryParams: SearchQueryParams,
-    flags: SearchFeatureFlags,
-    forceSearch: boolean
-) => {
+const useSearchResults = (queryParams: SearchQueryParams) => {
+    const flags = useFeatures();
+    const forceSearch = useSearchParams()?.get("force") !== null;
     const searchMode = getSearchMode(queryParams, flags);
     const {
         isDatasets,

@@ -18,7 +18,6 @@ import { PAGE_FIELD, QUERY_FIELD, VIEW_FIELD } from "@/config/forms/search";
 import { FilterAltOutlinedIcon } from "@/consts/icons";
 import { ARDC_SOURCE_VALUE, FILTER_TYPE_MAPPING } from "@/consts/search";
 import { cleanSearchFilters, getAllSelectedFilters } from "@/utils/filters";
-import { useFeatures } from "@/providers/FeatureProvider";
 import {
     DEFAULT_SORT_OPTIONS,
     EXCLUDED_DOWNLOAD_CATEGORIES,
@@ -63,12 +62,9 @@ interface SearchProps {
 }
 
 const Search = ({ filters, schema, initialView }: SearchProps) => {
-    const { isExternalSourcesEnabled, isTypesenseSearchEnabled } =
-        useFeatures();
     const [filterDrawerOpen, setFilterDrawerOpen] = useState(false);
     const {
         queryParams,
-        pathname,
         searchParams,
         getParamString,
         setSearchParams,
@@ -80,15 +76,8 @@ const Search = ({ filters, schema, initialView }: SearchProps) => {
 
     const theme = useTheme();
     const isMobile = useMediaQuery(theme.breakpoints.only("xs"));
-    const isTabletOrLaptop = useMediaQuery(
-        theme.breakpoints.between("sm", "lg")
-    );
+    const isCompact = useMediaQuery(theme.breakpoints.down("lg"));
 
-    const redirectPath = searchParams
-        ? `${pathname}?${searchParams.toString()}`
-        : pathname;
-
-    const forceSearch = searchParams?.get("force") !== null;
     const hasSearched = getHasSearched(searchParams);
 
     const { resultsView, toggleView } = useResultsView(
@@ -105,12 +94,13 @@ const Search = ({ filters, schema, initialView }: SearchProps) => {
         isExternalPolling,
         ardcResult,
         hdrukTotal,
-    } = useSearchResults(
-        queryParams,
-        { isExternalSourcesEnabled, isTypesenseSearchEnabled },
-        forceSearch
-    );
-    const { isDatasets, dataSource, isExternalSourceSelected } = searchMode;
+    } = useSearchResults(queryParams);
+    const {
+        isDatasets,
+        dataSource,
+        isExternalSourceSelected,
+        externalSearchEnabled,
+    } = searchMode;
 
     const {
         isDownloading,
@@ -121,7 +111,6 @@ const Search = ({ filters, schema, initialView }: SearchProps) => {
         queryParams,
         filters,
         resultsView,
-        redirectPath,
     });
 
     const showEuropePmcModal = usePublicationSearchDialog(
@@ -144,14 +133,9 @@ const Search = ({ filters, schema, initialView }: SearchProps) => {
         [queryParams]
     );
 
-    const filterCount = useMemo(
-        () =>
-            Object.values(selectedFilters).reduce<number>(
-                (total, value) =>
-                    total + (Array.isArray(value) ? value.length : 0),
-                0
-            ),
-        [selectedFilters]
+    const filterCount = Object.values(selectedFilters).reduce<number>(
+        (total, value) => total + (Array.isArray(value) ? value.length : 0),
+        0
     );
 
     const isEuropePmcNoQuery = isEuropePmcSearchNoQuery(queryParams);
@@ -169,8 +153,7 @@ const Search = ({ filters, schema, initialView }: SearchProps) => {
     const showTable =
         queryParams.type === SearchCategory.DATASETS &&
         resultsView === ViewType.TABLE &&
-        !isMobile &&
-        !isTabletOrLaptop &&
+        !isCompact &&
         !isExternalSourceSelected;
 
     const removeFilter = (
@@ -271,7 +254,7 @@ const Search = ({ filters, schema, initialView }: SearchProps) => {
                     <SearchActionBar
                         data={data}
                         showSummary={resultsState.showSummary}
-                        isCompact={isMobile || isTabletOrLaptop}
+                        isCompact={isCompact}
                         sort={queryParams.sort}
                         sortOptions={
                             SORT_OPTIONS_BY_CATEGORY[queryParams.type] ??
@@ -323,9 +306,8 @@ const Search = ({ filters, schema, initialView }: SearchProps) => {
                     />
                 )}
 
-                {isDatasets &&
+                {externalSearchEnabled &&
                     !isExternalSourceSelected &&
-                    isExternalSourcesEnabled &&
                     ((ardcResult?.total ?? 0) > 0 ||
                         isSearching ||
                         isExternalPolling) && (

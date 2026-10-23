@@ -72,7 +72,6 @@ export const useQueryParams = () => {
 
     return {
         queryParams,
-        pathname,
         searchParams,
         getParamString,
         setSearchParams,

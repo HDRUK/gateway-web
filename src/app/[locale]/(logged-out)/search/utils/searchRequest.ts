@@ -113,4 +113,3 @@ export {
     isPmcDatasetSearch,
     shouldFetchV1,
 };
-export type { SearchFeatureFlags };
