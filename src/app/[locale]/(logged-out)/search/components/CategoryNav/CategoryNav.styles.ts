@@ -9,10 +9,11 @@ export const navRoot = {
     backgroundColor: "white",
 };
 
-export const tabBox = (scrollable: boolean) => ({
-    paddingLeft: !scrollable ? "45px" : "5px",
-    paddingRight: !scrollable ? "45px" : "5px",
-});
+export const tabBox = {
+    paddingX: 0.5,
+    "& .MuiTabs-list > :first-of-type": { marginLeft: "auto" },
+    "& .MuiTabs-list > :last-of-type": { marginRight: "auto" },
+};
 
 export const tabRoot = { padding: 0, display: { xs: "none", sm: "block" } };
 

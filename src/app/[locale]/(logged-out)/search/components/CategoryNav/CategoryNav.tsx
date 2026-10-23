@@ -2,7 +2,7 @@
 
 import { MouseEvent, useState } from "react";
 import { Button } from "@hdruk/ui";
-import { Box, Menu, MenuItem, useMediaQuery } from "@mui/material";
+import { Box, Menu, MenuItem } from "@mui/material";
 import { useTranslations } from "next-intl";
 import { usePathname, useRouter } from "next/navigation";
 import { SearchCategory } from "@/interfaces/Search";
@@ -34,13 +34,6 @@ const CategoryNav = ({ type, query }: CategoryNavProps) => {
     const pathname = usePathname();
     const [anchorEl, setAnchorEl] = useState<HTMLElement | null>(null);
 
-    // This is a bit hacky because this is the exact width of the tabs with content,
-    // so it's susceptible to changes in font size or content.
-    // This is required because there's a documented feature (i.e. bug) in MUI Tabs
-    // that they can't simultaneously support centering AND scroll bars, so we have
-    // to do it ourselves.
-    const scrollableTabs = useMediaQuery("(max-width:1372px)");
-
     const categoryTabs = SEARCH_CATEGORY_TABS.map(({ value, labelKey }) => ({
         label: t(labelKey),
         value,
@@ -57,14 +50,12 @@ const CategoryNav = ({ type, query }: CategoryNavProps) => {
         <Box sx={navRoot}>
             <Tabs
                 tabs={categoryTabs}
-                tabBoxSx={tabBox(scrollableTabs)}
+                tabBoxSx={tabBox}
                 rootBoxSx={tabRoot}
                 variant={TabVariant.SEARCH}
                 paramName={TYPE_FIELD}
                 persistParams={[QUERY_FIELD]}
-                tabVariant={scrollableTabs ? "scrollable" : "standard"}
-                scrollButtons="on"
-                centered={!scrollableTabs}
+                tabVariant="scrollable"
             />
             <Box sx={mobileNav}>
                 <Button
