@@ -8,6 +8,7 @@ interface GetOptions {
     cache?: Cache;
     withPagination?: boolean;
     serveRaw?: boolean;
+    isPublic?: boolean;
 }
 
 export type { GetOptions, Cache };

@@ -1,8 +1,9 @@
 import React from "react";
 import "@testing-library/jest-dom";
-import { render, screen, fireEvent } from "@/utils/testUtils";
+import { Filter } from "@/interfaces/Filter";
 import { Aggregations } from "@/interfaces/Search";
-import { Filter } from "@/interfaces/Filter"; // used to cast mockSourceData
+import { render, screen, fireEvent } from "@/utils/testUtils";
+// used to cast mockSourceData
 import FilterPanel from "./FilterPanel";
 
 jest.mock("@/providers/FeatureProvider", () => ({
@@ -77,7 +78,7 @@ const defaultProps = {
     updateStaticFilter: jest.fn(),
     getParamString: jest.fn(),
     showEuropePmcModal: jest.fn(),
-    resetQueryParamState: jest.fn(),
+    onClearAll: jest.fn(),
     schemadefs: {},
 };
 
@@ -212,7 +213,7 @@ describe("FilterPanel", () => {
         expect(screen.getByText("clearAll")).toBeInTheDocument();
     });
 
-    it("calls resetQueryParamState when clear all filters is clicked", () => {
+    it("calls onClearAll when clear all filters is clicked", () => {
         render(
             <FilterPanel
                 {...defaultProps}
@@ -222,6 +223,6 @@ describe("FilterPanel", () => {
 
         fireEvent.click(screen.getByText("clearAll"));
 
-        expect(defaultProps.resetQueryParamState).toHaveBeenCalled();
+        expect(defaultProps.onClearAll).toHaveBeenCalled();
     });
 });

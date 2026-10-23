@@ -1,26 +1,24 @@
-import { Typography, styled } from "@mui/material";
-import Box from "@/components/Box";
-
-export const ActionBar = styled(Box)(({ theme }) => ({
-    justifyContent: "space-between",
+export const content = {
     display: "flex",
-    alignItems: "center",
-    padding: "1em",
-    width: "100%",
-    textAlign: "left",
+    flexDirection: "column",
+    my: 2,
+    mx: 0,
+};
 
-    [theme.breakpoints.down("sm")]: {
-        flexDirection: "column",
-    },
-}));
+export const filterRow = {
+    display: "flex",
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "flex-start",
+    pt: 0,
+    gap: 2,
+};
 
-export const ResultLimitText = styled(Typography)(() => ({
-    fontWeight: 500,
-}));
-
-export const toggleViewButton = {
-    "& .MuiButton-startIcon": { color: "success.main" },
-    "&:hover .MuiButton-startIcon, &:focus-visible .MuiButton-startIcon": {
-        color: "inherit",
-    },
+export const mobileFiltersButton = {
+    display: { xs: "inline-flex", sm: "none" },
+    height: "100%",
+    marginLeft: "auto",
+    flexShrink: 0,
+    mt: 2,
+    mb: 1,
 };

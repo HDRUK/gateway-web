@@ -96,8 +96,7 @@ const Sort = ({
                     aria-controls="sort-menu"
                     aria-haspopup="true"
                     onClick={handleClick}
-                    aria-label="Open to show sort options"
-                    title="Open to show sort options">
+                    aria-label="Open to show sort options">
                     {options.map(option =>
                         option.value === watchSort ? (
                             <option.icon key={option.value} />

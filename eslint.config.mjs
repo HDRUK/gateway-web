@@ -20,6 +20,7 @@ const config = [
             "**/node_modules/**",
             "**/coverage/**",
             "mocks/**",
+            "src/generated/**",
             "datasetsPageTester.ts",
             "datasetsSchemaTester.ts",
         ],
