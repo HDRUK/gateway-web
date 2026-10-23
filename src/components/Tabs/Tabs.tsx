@@ -43,8 +43,7 @@ export interface TabProps {
     variant?: TabVariant;
     paramName?: string;
     renderTabContent?: boolean;
-    persistParams?: boolean;
-    persistParamKeys?: string[];
+    persistParams?: boolean | string[];
     defaultSelectedTab?: string;
     tabVariant?: string;
     handleChange?: (e: SyntheticEvent, value: string) => void;
@@ -59,16 +58,15 @@ const tooltipWrapper = (title: string) => (children: ReactElement) => {
 };
 
 const CustomLink = forwardRef<
-    HTMLAnchorElement & { param: string; persist: boolean },
+    HTMLAnchorElement & { param: string; persist: boolean | string[] },
     {
         href: string;
         children: ReactNode;
         param: string;
-        persist: boolean;
-        persistKeys: string[];
+        persist: boolean | string[];
         tooltip?: string;
     }
->(({ href, children, param, persist, persistKeys, tooltip, ...rest }, ref) => {
+>(({ href, children, param, persist, tooltip, ...rest }, ref) => {
     const searchParams = useSearchParams();
     const pathname = usePathname();
 
@@ -90,16 +88,17 @@ const CustomLink = forwardRef<
                 scroll={false}
                 href={{
                     pathname,
-                    query: persist
-                        ? currentQuery
-                        : {
-                              [param]: href,
-                              ...Object.fromEntries(
-                                  persistKeys
-                                      .filter(key => currentQuery[key])
-                                      .map(key => [key, currentQuery[key]])
-                              ),
-                          },
+                    query:
+                        persist === true
+                            ? currentQuery
+                            : {
+                                  [param]: href,
+                                  ...Object.fromEntries(
+                                      (persist || [])
+                                          .filter(key => currentQuery[key])
+                                          .map(key => [key, currentQuery[key]])
+                                  ),
+                              },
                 }}>
                 {children}
             </Link>
@@ -117,7 +116,6 @@ const Tabs = ({
     paramName = "tab",
     renderTabContent = true,
     persistParams = true,
-    persistParamKeys = [],
     defaultSelectedTab,
     tabVariant = "",
     ariaLabel,
@@ -174,7 +172,6 @@ const Tabs = ({
                                 }
                                 param={paramName}
                                 persist={persistParams}
-                                persistKeys={persistParamKeys}
                                 tooltip={tooltip}
                                 aria-description={tooltip}
                             />

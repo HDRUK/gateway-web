@@ -3,7 +3,7 @@
 import { Button } from "@hdruk/ui";
 import { BookmarkBorder } from "@mui/icons-material";
 import FormatListBulletedIcon from "@mui/icons-material/FormatListBulleted";
-import { Box, IconButton, Skeleton, Tooltip } from "@mui/material";
+import { Box, IconButton, Tooltip } from "@mui/material";
 import { useTranslations } from "next-intl";
 import { ViewType } from "@/interfaces/Search";
 import { IconType } from "@/interfaces/Ui";
@@ -15,7 +15,6 @@ import Sort from "../Sort";
 import {
     ActionBar,
     controls,
-    hiddenText,
     ResultLimitText,
     resultLimit,
     resultSummary,
@@ -35,7 +34,6 @@ interface ResultSummary {
 
 interface SearchActionBarProps {
     data?: ResultSummary;
-    isLoading?: boolean;
     showSummary: boolean;
     isCompact: boolean;
     sort?: string;
@@ -53,7 +51,6 @@ interface SearchActionBarProps {
 
 const SearchActionBar = ({
     data,
-    isLoading = false,
     showSummary,
     isCompact,
     sort,
@@ -75,31 +72,21 @@ const SearchActionBar = ({
 
     return (
         <>
-            <Box
-                sx={resultLimit}
-                id="result-summary2"
-                role="alert"
-                aria-live="polite">
-                <ResultLimitText
-                    sx={
-                        !isLoading && exceedsResultLimit(data)
-                            ? undefined
-                            : hiddenText
-                    }>
-                    {t("resultLimit")}
-                </ResultLimitText>
-            </Box>
+            {exceedsResultLimit(data) && (
+                <Box
+                    sx={resultLimit}
+                    id="result-summary2"
+                    role="alert"
+                    aria-live="polite">
+                    <ResultLimitText>{t("resultLimit")}</ResultLimitText>
+                </Box>
+            )}
             <ActionBar>
                 <Box
                     sx={resultSummary}
                     id="result-summary"
                     role="status"
                     aria-live="polite">
-                    {isLoading && (
-                        <Skeleton>
-                            <ShowingXofX from={1} to={25} total={100} />
-                        </Skeleton>
-                    )}
                     {showSummary &&
                         data &&
                         (shouldHideTotal(data) ? (
@@ -129,7 +116,6 @@ const SearchActionBar = ({
                                 submitAction={onSortChange}
                                 sortOptions={sortOptions}
                                 iconised={false}
-                                disabled={isLoading}
                             />
                         </Box>
                         {canDownload && (
@@ -176,7 +162,6 @@ const SearchActionBar = ({
                             submitAction={onSortChange}
                             sortOptions={sortOptions}
                             iconised
-                            disabled={isLoading}
                         />
 
                         {canDownload && (

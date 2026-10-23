@@ -1,5 +1,4 @@
 import { useMemo } from "react";
-import { unstable_serialize } from "swr";
 import {
     SearchAggregationData,
     SearchPaginationType,
@@ -21,17 +20,10 @@ import {
 import useLoadExternalData from "./useLoadExternalData";
 import { useSearchData } from "./useSearchData";
 
-export interface InitialSearchResults {
-    key: string;
-    data: unknown;
-}
-
 const useSearchResults = (
     queryParams: SearchQueryParams,
     flags: SearchFeatureFlags,
-    forceSearch: boolean,
-    initialResults?: InitialSearchResults,
-    isPending = false
+    forceSearch: boolean
 ) => {
     const searchMode = getSearchMode(queryParams, flags);
     const {
@@ -42,48 +34,32 @@ const useSearchResults = (
         isTypesenseSearch,
     } = searchMode;
 
-    const getInitialData = <T>(url: string, body: object) =>
-        initialResults?.key === unstable_serialize([url, body])
-            ? (initialResults.data as T)
-            : undefined;
-
-    const v1Url = getV1SearchUrl(queryParams);
-    const v1Body = getV1SearchBody(queryParams);
-    const v2Body = getV2SearchBody(queryParams, searchMode);
-    const v1InitialData = getInitialData<SearchPaginationType<SearchResult>>(
-        v1Url,
-        v1Body
-    );
-    const v2InitialData = getInitialData<SearchAggregationData>(
-        apis.searchV2AggregationUrl,
-        v2Body
-    );
-
     const { data: v1Data, isLoading: isV1Searching } = usePostSwr<
         SearchPaginationType<SearchResult>
-    >(v1Url, v1Body, {
-        keepPreviousData: !v1InitialData,
+    >(getV1SearchUrl(queryParams), getV1SearchBody(queryParams), {
+        keepPreviousData: true,
         withPagination: true,
-        shouldFetch:
-            !isPending && shouldFetchV1(queryParams, searchMode, forceSearch),
-        fallbackData: v1InitialData,
+        shouldFetch: shouldFetchV1(queryParams, searchMode, forceSearch),
     });
 
     const {
         data: v2Data,
         isValidating: isV2Searching,
         mutate: mutateAggregation,
-    } = usePostSwr<SearchAggregationData>(apis.searchV2AggregationUrl, v2Body, {
-        keepPreviousData: !v2InitialData,
-        shouldFetch: !isPending && (externalSearchEnabled || isTypesenseSearch),
-        revalidateOnMount: v2InitialData ? undefined : true,
-        fallbackData: v2InitialData,
-    });
+    } = usePostSwr<SearchAggregationData>(
+        apis.searchV2AggregationUrl,
+        getV2SearchBody(queryParams, searchMode),
+        {
+            keepPreviousData: true,
+            shouldFetch: externalSearchEnabled || isTypesenseSearch,
+            revalidateOnMount: true,
+        }
+    );
 
     const { externalResults, isPolling: isExternalPolling } =
         useLoadExternalData(
             v2Data,
-            !isPending && externalSearchEnabled,
+            externalSearchEnabled,
             isV2Searching,
             mutateAggregation
         );
@@ -97,10 +73,9 @@ const useSearchResults = (
     }, [v2Data, externalResults]);
 
     const isSearching =
-        isPending ||
-        (externalSearchEnabled || isTypesenseSearch
+        externalSearchEnabled || isTypesenseSearch
             ? isV2Searching || (isExternalSourceSelected && isExternalPolling)
-            : isV1Searching);
+            : isV1Searching;
 
     useNavigationProgress(isSearching);
 

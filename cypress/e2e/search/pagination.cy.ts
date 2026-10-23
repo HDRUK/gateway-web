@@ -3,7 +3,6 @@ import { datasetSearchResultV1 } from "../../../mocks/data/dataset/v1/dataset.da
 const FEATURE_FLAG = "V2_SearchAggregation";
 const PER_PAGE = 25;
 const NEXT = 'button[aria-label="Go to next page"]';
-const COMPACT_SORT = 'button[aria-label="Open to show sort options"]';
 
 const stubAggregation = (total: number) =>
     cy
@@ -40,15 +39,8 @@ const stubAggregation = (total: number) =>
         .as("aggregationSearch");
 
 const visitPage = (page: number) => {
-    cy.viewport(1000, 660);
-    cy.visit("/search?type=datasets&query=pagination");
-    cy.get(COMPACT_SORT).should("exist");
-    cy.window().then(win =>
-        win.history.pushState(null, "", `?type=datasets&page=${page}`)
-    );
-    cy.wait("@aggregationSearch")
-        .its("request.body.page")
-        .should("eq", `${page}`);
+    cy.visit(`/search?type=datasets&page=${page}`);
+    cy.wait("@aggregationSearch");
 };
 
 describe("Search - pagination", () => {

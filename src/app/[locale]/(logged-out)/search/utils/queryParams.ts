@@ -132,18 +132,6 @@ const getCategoryHref = (
         ...(query && { [QUERY_FIELD]: query }),
     })}`;
 
-const toURLSearchParams = (
-    params: Record<string, string | string[] | undefined>
-) => {
-    const searchParams = new URLSearchParams();
-
-    Object.entries(params).forEach(([key, value]) => {
-        [value ?? []].flat().forEach(item => searchParams.append(key, item));
-    });
-
-    return searchParams;
-};
-
 const getClearAllPatch = (): SearchParamsPatch =>
     Object.fromEntries(ARRAY_FILTERS.map(key => [key, undefined]));
 
@@ -192,7 +180,5 @@ export {
     getRemoveFilterPatch,
     getSearchKey,
     parseQueryParams,
-    removeFilterValue,
-    toURLSearchParams,
 };
 export type { SearchParamsPatch };

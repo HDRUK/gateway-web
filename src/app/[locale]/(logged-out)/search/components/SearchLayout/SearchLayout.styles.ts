@@ -35,6 +35,7 @@ export const layoutBody = {
 };
 
 export const filterSidebar = {
+    display: { xs: "none", sm: "block" },
     width: FILTER_SIDEBAR_WIDTH,
     flexShrink: 0,
     whiteSpace: "nowrap",
@@ -58,6 +59,7 @@ export const filterSidebarContent = {
 };
 
 export const filterSidebarToggle = (theme: Theme, open: boolean) => ({
+    display: { xs: "none", sm: "inline-flex" },
     position: "absolute",
     zIndex: theme.zIndex.modal,
     borderRadius: "50%",

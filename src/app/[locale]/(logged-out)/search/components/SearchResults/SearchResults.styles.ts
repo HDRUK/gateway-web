@@ -1,5 +1,4 @@
-import { styled, Theme } from "@mui/material";
-import { visuallyHidden } from "@mui/utils";
+import { Theme } from "@mui/material";
 
 export const noResults = { textAlign: "center", p: 5, mb: 2 };
 
@@ -24,10 +23,3 @@ export const externalLink = {
     display: "flex",
     mt: 2,
 };
-
-export const refreshing = (theme: Theme) => ({
-    opacity: theme.palette.action.disabledOpacity,
-    transition: theme.transitions.create("opacity"),
-});
-
-export const StatusLabel = styled("span")(visuallyHidden);

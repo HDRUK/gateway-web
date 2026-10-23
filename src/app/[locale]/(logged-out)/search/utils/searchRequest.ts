@@ -55,13 +55,10 @@ const shouldFetchV1 = (
         (queryParams.source === EUROPE_PMC_SOURCE_FIELD &&
             !!queryParams.query));
 
-const getV1SearchUrl = (
-    queryParams: SearchQueryParams,
-    baseUrl = apis.searchV1Url
-) => {
+const getV1SearchUrl = (queryParams: SearchQueryParams) => {
     const isPublications = queryParams.type === SearchCategory.PUBLICATIONS;
 
-    return `${baseUrl}/${queryParams.type}?${
+    return `${apis.searchV1Url}/${queryParams.type}?${
         isPublications ? "" : "view_type=mini&"
     }per_page=${queryParams.per_page}&page=${queryParams.page}&sort=${
         queryParams.sort
@@ -100,36 +97,6 @@ const getV2SearchBody = (queryParams: SearchQueryParams, mode: SearchMode) => ({
     ...getSearchFilters(queryParams),
 });
 
-const getSearchRequest = (
-    queryParams: SearchQueryParams,
-    mode: SearchMode,
-    forceSearch: boolean,
-    internal = false
-) => {
-    if (mode.externalSearchEnabled || mode.isTypesenseSearch) {
-        return {
-            url: internal
-                ? apis.searchV2AggregationUrlIP
-                : apis.searchV2AggregationUrl,
-            body: getV2SearchBody(queryParams, mode),
-            withPagination: false,
-        };
-    }
-
-    if (shouldFetchV1(queryParams, mode, forceSearch)) {
-        return {
-            url: getV1SearchUrl(
-                queryParams,
-                internal ? apis.searchV1UrlIP : apis.searchV1Url
-            ),
-            body: getV1SearchBody(queryParams),
-            withPagination: true,
-        };
-    }
-
-    return null;
-};
-
 const getArdcSearchUrl = (query?: string) =>
     `${ARDC_SEARCH_URL}${query ? `&q=${encodeURIComponent(query)}` : ""}`;
 
@@ -138,7 +105,6 @@ export {
     getPmcDatasetNames,
     getSearchFilters,
     getSearchMode,
-    getSearchRequest,
     getV1SearchBody,
     getV1SearchUrl,
     getV2SearchBody,
@@ -147,4 +113,4 @@ export {
     isPmcDatasetSearch,
     shouldFetchV1,
 };
-export type { SearchFeatureFlags, SearchMode };
+export type { SearchFeatureFlags };

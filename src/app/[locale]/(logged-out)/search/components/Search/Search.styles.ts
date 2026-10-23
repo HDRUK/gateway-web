@@ -15,6 +15,7 @@ export const filterRow = {
 };
 
 export const mobileFiltersButton = {
+    display: { xs: "inline-flex", sm: "none" },
     height: "100%",
     marginLeft: "auto",
     flexShrink: 0,

@@ -1,5 +1,4 @@
-import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
-import { Skeleton, TableContainer, Tooltip } from "@mui/material";
+import { TableContainer, Tooltip } from "@mui/material";
 import { createColumnHelper } from "@tanstack/react-table";
 import { get } from "lodash";
 import { useTranslations } from "next-intl";
@@ -20,14 +19,11 @@ import { CheckIcon } from "@/consts/icons";
 import { RouteName } from "@/consts/routeName";
 import { formatTextDelimiter } from "@/utils/dataset";
 import { getDateRange, getPopulationSize } from "@/utils/search";
-import { SKELETON_RESULT_COUNT } from "../../constants";
 import ActionDropdown from "../ActionDropdown";
-import ButtonSkeleton from "../ResultCardSkeleton/ButtonSkeleton";
 
 interface ResultTableProps {
     results: SearchResultDataset[];
     showLibraryModal: (props: { datasetId: number }) => void;
-    loading?: boolean;
 }
 
 const CONFORMS_TO_PATH = "metadata.accessibility.formatAndStandards.conformsTo";
@@ -266,18 +262,8 @@ const getColumns = ({
 ];
 
 const RESULTS_TABLE_TRANSLATION_PATH = "pages.search.components.ResultsTable";
-const skeletonRows = Array.from(
-    { length: SKELETON_RESULT_COUNT },
-    () => ({} as SearchResultDataset)
-);
-
-const ResultTable = ({
-    results,
-    showLibraryModal,
-    loading = false,
-}: ResultTableProps) => {
+const ResultTable = ({ results, showLibraryModal }: ResultTableProps) => {
     const t = useTranslations(RESULTS_TABLE_TRANSLATION_PATH);
-    const tResultCard = useTranslations("pages.search.components.ResultCard");
     const { isLoggedIn, user } = useAuth();
 
     const { requestStatus, hasAccess } = useCohortStatus(user?.id);
@@ -312,36 +298,6 @@ const ResultTable = ({
         hasTechnicalMetadataTooltip: t("hasTechnicalMetadata.tooltip"),
     };
 
-    const renderSkeletonCell = (columnId?: string) => {
-        if (columnId === "actions") {
-            return (
-                <ButtonSkeleton
-                    sx={{ py: 0.5 }}
-                    skeletonSx={{ mx: "auto" }}
-                    endIcon={<ArrowDropDownIcon />}>
-                    {tResultCard("actions")}
-                </ButtonSkeleton>
-            );
-        }
-        if (columnId === "title") {
-            return (
-                <>
-                    <Skeleton />
-                    <Skeleton width="60%" />
-                </>
-            );
-        }
-        return <Skeleton />;
-    };
-
-    const columns = getColumns({
-        translations,
-        libraryData,
-        showLibraryModal,
-        mutateLibraries,
-        isCohortDiscoveryDisabled,
-    });
-
     return (
         <Paper
             sx={{
@@ -351,15 +307,14 @@ const ResultTable = ({
             }}>
             <TableContainer>
                 <Table<SearchResultDataset>
-                    columns={
-                        loading
-                            ? columns.map(column => ({
-                                  ...column,
-                                  cell: () => renderSkeletonCell(column.id),
-                              }))
-                            : columns
-                    }
-                    rows={loading ? skeletonRows : results}
+                    columns={getColumns({
+                        translations,
+                        libraryData,
+                        showLibraryModal,
+                        mutateLibraries,
+                        isCohortDiscoveryDisabled,
+                    })}
+                    rows={results}
                 />
             </TableContainer>
         </Paper>

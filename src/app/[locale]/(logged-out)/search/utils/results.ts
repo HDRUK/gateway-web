@@ -1,5 +1,5 @@
 import { SearchCategory, ViewType } from "@/interfaces/Search";
-import { EXCLUDED_DOWNLOAD_CATEGORIES, RESULT_LIMIT } from "../constants";
+import { RESULT_LIMIT } from "../constants";
 
 interface ResultTotals {
     elastic_total: number;
@@ -57,18 +57,16 @@ const getResultsState = ({
     isEuropePmcSearchNoQuery,
 }: ResultsStateParams) => {
     const showResults =
+        !isSearching &&
         !isEuropePmcSearchNoQuery &&
         !!data?.list?.length &&
         !!data?.path?.includes(type);
 
     return {
         showResults,
-        showSummary: !isSearching && !!data?.path?.includes(type),
-        isRefreshing: showResults && isSearching,
-        showSkeleton:
-            !isEuropePmcSearchNoQuery &&
-            !showResults &&
-            (isSearching || data === undefined),
+        showSummary: !!data?.path?.includes(type),
+        showLoading:
+            !isEuropePmcSearchNoQuery && (isSearching || data === undefined),
         showNoResults:
             !isSearching &&
             data !== undefined &&
@@ -78,46 +76,10 @@ const getResultsState = ({
     };
 };
 
-const getFilterCount = (selectedFilters: Record<string, unknown>) =>
-    Object.values(selectedFilters).reduce<number>(
-        (total, value) => total + (Array.isArray(value) ? value.length : 0),
-        0
-    );
-
-const canDownloadResults = (
-    type: SearchCategory,
-    isExternalSourceSelected: boolean
-) => !EXCLUDED_DOWNLOAD_CATEGORIES.includes(type) && !isExternalSourceSelected;
-
-interface PartnerBannerParams {
-    isDatasets: boolean;
-    isExternalSourceSelected: boolean;
-    isExternalSourcesEnabled?: boolean;
-    partnerTotal: number;
-    isSearching: boolean;
-    isExternalPolling: boolean;
-}
-
-const showPartnerBanner = ({
-    isDatasets,
-    isExternalSourceSelected,
-    isExternalSourcesEnabled,
-    partnerTotal,
-    isSearching,
-    isExternalPolling,
-}: PartnerBannerParams) =>
-    isDatasets &&
-    !isExternalSourceSelected &&
-    !!isExternalSourcesEnabled &&
-    (partnerTotal > 0 || isSearching || isExternalPolling);
-
 export {
-    canDownloadResults,
     exceedsResultLimit,
     getResultsView,
-    getFilterCount,
     getResultsListLayout,
     getResultsState,
     shouldHideTotal,
-    showPartnerBanner,
 };

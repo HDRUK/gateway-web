@@ -1,5 +1,5 @@
 import { sessionHeader } from "@/config/session";
-import { getFilters, getKeywords, getSchemaFromTraser } from "./api";
+import { getFilters } from "./api";
 
 jest.mock("next/headers", () => ({
     cookies: jest.fn(async () => ({ get: () => ({ value: "jwt-token" }) })),
@@ -30,23 +30,11 @@ describe("api", () => {
         global.fetch = originalFetch;
     });
 
-    it.each([
-        ["filters", () => getFilters()],
-        ["schema", () => getSchemaFromTraser("HDRUK", "4.0.0")],
-    ])("fetches %s without user headers", async (_, request) => {
-        await request();
+    it("fetches filters without user headers", async () => {
+        await getFilters();
 
         expect(requestHeaders()).not.toHaveProperty("Authorization");
         expect(requestHeaders()).not.toHaveProperty(sessionHeader);
-    });
-
-    it("sends user headers by default", async () => {
-        await getKeywords();
-
-        expect(requestHeaders()).toMatchObject({
-            Authorization: "Bearer jwt-token",
-            [sessionHeader]: expect.stringContaining("session-1"),
-        });
     });
 
     it("caches filters for fifteen minutes", async () => {

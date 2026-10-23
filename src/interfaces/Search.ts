@@ -317,7 +317,3 @@ export interface SearchAggregationResponse {
     message: string;
     data: SearchAggregationData;
 }
-
-export interface SearchPageProps {
-    searchParams: Promise<Record<string, string | string[] | undefined>>;
-}

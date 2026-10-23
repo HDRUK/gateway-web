@@ -39,5 +39,3 @@ export const controls = {
 };
 
 export const sortWrapper = { p: 0 };
-
-export const hiddenText = { visibility: "hidden" };

@@ -21,6 +21,7 @@ import { cleanSearchFilters, getAllSelectedFilters } from "@/utils/filters";
 import { useFeatures } from "@/providers/FeatureProvider";
 import {
     DEFAULT_SORT_OPTIONS,
+    EXCLUDED_DOWNLOAD_CATEGORIES,
     SORT_OPTIONS_BY_CATEGORY,
     STATIC_FILTER_DATA_SOURCE,
 } from "../../constants";
@@ -28,9 +29,7 @@ import usePublicationSearchDialog from "../../hooks/usePublicationSearchDialog";
 import { useQueryParams } from "../../hooks/useQueryParams";
 import useResultsView from "../../hooks/useResultsView";
 import useSearchActions from "../../hooks/useSearchActions";
-import useSearchResults, {
-    InitialSearchResults,
-} from "../../hooks/useSearchResults";
+import useSearchResults from "../../hooks/useSearchResults";
 import { useStaticFilterUpdate } from "../../hooks/useStaticFilterUpdate";
 import {
     getClearAllPatch,
@@ -38,12 +37,7 @@ import {
     getHasSearched,
     getRemoveFilterPatch,
 } from "../../utils/queryParams";
-import {
-    canDownloadResults,
-    getFilterCount,
-    getResultsState,
-    showPartnerBanner,
-} from "../../utils/results";
+import { getResultsState } from "../../utils/results";
 import {
     getPmcDatasetNames,
     getSearchFilters,
@@ -65,18 +59,10 @@ const TRANSLATION_PATH = "pages.search";
 interface SearchProps {
     filters: Filter[];
     schema: Schema;
-    initialResults?: InitialSearchResults;
     initialView?: string;
-    isPending?: boolean;
 }
 
-const Search = ({
-    filters,
-    schema,
-    initialResults,
-    initialView,
-    isPending = false,
-}: SearchProps) => {
+const Search = ({ filters, schema, initialView }: SearchProps) => {
     const { isExternalSourcesEnabled, isTypesenseSearchEnabled } =
         useFeatures();
     const [filterDrawerOpen, setFilterDrawerOpen] = useState(false);
@@ -122,9 +108,7 @@ const Search = ({
     } = useSearchResults(
         queryParams,
         { isExternalSourcesEnabled, isTypesenseSearchEnabled },
-        forceSearch,
-        initialResults,
-        isPending
+        forceSearch
     );
     const { isDatasets, dataSource, isExternalSourceSelected } = searchMode;
 
@@ -138,7 +122,6 @@ const Search = ({
         filters,
         resultsView,
         redirectPath,
-        isPending,
     });
 
     const showEuropePmcModal = usePublicationSearchDialog(
@@ -149,9 +132,6 @@ const Search = ({
     const handleUpdateStaticFilter = useStaticFilterUpdate(setSearchParams);
 
     useEffect(() => {
-        if (isPending) {
-            return;
-        }
         fireGTMEvent({
             event: "search_performed",
             search_term: queryParams.query || "",
@@ -165,7 +145,12 @@ const Search = ({
     );
 
     const filterCount = useMemo(
-        () => getFilterCount(selectedFilters),
+        () =>
+            Object.values(selectedFilters).reduce<number>(
+                (total, value) =>
+                    total + (Array.isArray(value) ? value.length : 0),
+                0
+            ),
         [selectedFilters]
     );
 
@@ -252,7 +237,6 @@ const Search = ({
                 <CategoryNav
                     type={queryParams.type}
                     query={queryParams.query}
-                    isMobile={isMobile}
                 />
             }>
             <Box sx={content} aria-busy={isSearching}>
@@ -271,26 +255,21 @@ const Search = ({
                             }
                         />
                     )}
-                    {isMobile && (
-                        <Button
-                            purpose="secondary"
-                            size="small"
-                            onClick={() => setFilterDrawerOpen(true)}
-                            startIcon={
-                                <FilterAltOutlinedIcon color="secondary" />
-                            }
-                            sx={mobileFiltersButton}>
-                            {t("filtersApplied", {
-                                count: filterCount,
-                            })}
-                        </Button>
-                    )}
+                    <Button
+                        purpose="secondary"
+                        size="small"
+                        onClick={() => setFilterDrawerOpen(true)}
+                        startIcon={<FilterAltOutlinedIcon color="secondary" />}
+                        sx={mobileFiltersButton}>
+                        {t("filtersApplied", {
+                            count: filterCount,
+                        })}
+                    </Button>
                 </Box>
 
-                {!isEuropePmcNoQuery && (
+                {!isSearching && !isEuropePmcNoQuery && (
                     <SearchActionBar
                         data={data}
-                        isLoading={isSearching}
                         showSummary={resultsState.showSummary}
                         isCompact={isMobile || isTabletOrLaptop}
                         sort={queryParams.sort}
@@ -299,10 +278,11 @@ const Search = ({
                             DEFAULT_SORT_OPTIONS
                         }
                         onSortChange={onSortChange}
-                        canDownload={canDownloadResults(
-                            queryParams.type,
-                            isExternalSourceSelected
-                        )}
+                        canDownload={
+                            !EXCLUDED_DOWNLOAD_CATEGORIES.includes(
+                                queryParams.type
+                            ) && !isExternalSourceSelected
+                        }
                         isDownloading={isDownloading}
                         onDownload={downloadSearchResults}
                         canSave={hasSearched}
@@ -317,7 +297,6 @@ const Search = ({
                     data={data}
                     type={queryParams.type}
                     query={queryParams.query}
-                    isSearching={isSearching}
                     state={resultsState}
                     isExternalSourceSelected={isExternalSourceSelected}
                     showTable={showTable}
@@ -333,39 +312,38 @@ const Search = ({
                     showLibraryModal={showLibraryModal}
                 />
 
-                {!isExternalSourceSelected &&
-                    !resultsState.showSkeleton &&
-                    !!data && (
-                        <Pagination
-                            isLoading={isSearching}
-                            page={parseInt(queryParams.page, 10)}
-                            count={data?.lastPage}
-                            onChange={(
-                                e: React.ChangeEvent<unknown>,
-                                page: number
-                            ) => setSearchParams({ [PAGE_FIELD]: `${page}` })}
-                        />
-                    )}
-
-                {showPartnerBanner({
-                    isDatasets,
-                    isExternalSourceSelected,
-                    isExternalSourcesEnabled,
-                    partnerTotal: ardcResult?.total ?? 0,
-                    isSearching,
-                    isExternalPolling,
-                }) && (
-                    <PartnerResourcesBanner
-                        isLoading={isSearching || isExternalPolling}
-                        count={ardcResult?.total ?? 0}
-                        providerLogo={ardcResult?.provider_logo ?? undefined}
-                        onViewPartnerResources={() =>
-                            setSearchParams({
-                                [STATIC_FILTER_DATA_SOURCE]: ARDC_SOURCE_VALUE,
-                            })
-                        }
+                {!isExternalSourceSelected && (
+                    <Pagination
+                        isLoading={isSearching}
+                        page={parseInt(queryParams.page, 10)}
+                        count={data?.lastPage}
+                        onChange={(
+                            e: React.ChangeEvent<unknown>,
+                            page: number
+                        ) => setSearchParams({ [PAGE_FIELD]: `${page}` })}
                     />
                 )}
+
+                {isDatasets &&
+                    !isExternalSourceSelected &&
+                    isExternalSourcesEnabled &&
+                    ((ardcResult?.total ?? 0) > 0 ||
+                        isSearching ||
+                        isExternalPolling) && (
+                        <PartnerResourcesBanner
+                            isLoading={isSearching || isExternalPolling}
+                            count={ardcResult?.total ?? 0}
+                            providerLogo={
+                                ardcResult?.provider_logo ?? undefined
+                            }
+                            onViewPartnerResources={() =>
+                                setSearchParams({
+                                    [STATIC_FILTER_DATA_SOURCE]:
+                                        ARDC_SOURCE_VALUE,
+                                })
+                            }
+                        />
+                    )}
             </Box>
         </SearchLayout>
     );

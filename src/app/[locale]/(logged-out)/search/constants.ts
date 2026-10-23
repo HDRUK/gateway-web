@@ -51,7 +51,6 @@ export const ALLOW_EMPTY_FILTERS: string[] = [
 ];
 
 export const RESULT_LIMIT = 100;
-export const SKELETON_RESULT_COUNT = Number(SEARCH_PER_PAGE);
 
 export const EXCLUDED_DOWNLOAD_CATEGORIES: string[] = [
     SearchCategory.PUBLICATIONS,

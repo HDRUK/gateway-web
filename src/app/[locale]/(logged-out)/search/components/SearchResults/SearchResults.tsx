@@ -1,7 +1,7 @@
 "use client";
 
 import { ComponentProps } from "react";
-import { Button } from "@hdruk/ui";
+import { Button, Loading } from "@hdruk/ui";
 import { Box, Typography, useTheme } from "@mui/material";
 import { visuallyHidden } from "@mui/utils";
 import { useTranslations } from "next-intl";
@@ -16,13 +16,11 @@ import {
     SearchResultPublication,
     SearchResultTool,
 } from "@/interfaces/Search";
-import CardStackedSkeleton from "@/components/CardStacked/CardStackedSkeleton";
 import Paper from "@/components/Paper";
 import useAuth from "@/hooks/useAuth";
 import { useCohortStatus } from "@/hooks/useCohortStatus";
 import { isAwaitingCohortDecision } from "@/consts/cohortDiscovery";
 import { OpenInNewIcon } from "@/consts/icons";
-import { SKELETON_RESULT_COUNT } from "../../constants";
 import { getResultsListLayout, getResultsState } from "../../utils/results";
 import { getArdcSearchUrl } from "../../utils/searchRequest";
 import DataCustodianNetwork from "../DataCustodianNetwork";
@@ -32,7 +30,6 @@ import ResultCardCollection from "../ResultCardCollection";
 import ResultCardDataCustodian from "../ResultCardDataCustodian";
 import ResultCardDataUse from "../ResultCardDataUse";
 import ResultCardPublication from "../ResultCardPublication/ResultCardPublication";
-import ResultCardSkeleton from "../ResultCardSkeleton";
 import ResultCardTool from "../ResultCardTool/ResultCardTool";
 import ResultsList from "../ResultsList";
 import ResultsTable from "../ResultsTable";
@@ -41,9 +38,7 @@ import {
     externalLink,
     externalNotice,
     noResults,
-    refreshing,
     resultsSection,
-    StatusLabel,
 } from "./SearchResults.styles";
 
 const TRANSLATION_PATH = "pages.search";
@@ -52,7 +47,6 @@ interface SearchResultsProps {
     data?: { list: SearchResult[]; path?: string };
     type: SearchCategory;
     query?: string;
-    isSearching: boolean;
     state: ReturnType<typeof getResultsState>;
     isExternalSourceSelected: boolean;
     showTable: boolean;
@@ -67,7 +61,6 @@ const SearchResults = ({
     data,
     type,
     query,
-    isSearching,
     state,
     isExternalSourceSelected,
     showTable,
@@ -144,49 +137,10 @@ const SearchResults = ({
     };
 
     const isCollections = type === SearchCategory.COLLECTIONS;
-    const isTiled = getResultsListLayout(type).variant === "tiled";
-    const skeletonItems = Array.from(
-        { length: SKELETON_RESULT_COUNT },
-        (_, index) =>
-            isTiled ? (
-                <CardStackedSkeleton key={index} />
-            ) : (
-                <ResultCardSkeleton key={index} />
-            )
-    );
 
     return (
         <>
-            <StatusLabel role="status">
-                {isSearching ? t("loadingAriaLabel") : ""}
-            </StatusLabel>
-
-            {(state.showSkeleton || state.showResults) && isCollections && (
-                <>
-                    <DataCustodianNetwork searchParams={networkSearchParams} />
-                    <Typography fontWeight={600} sx={collectionsHeader}>
-                        {t("collectionsHeader")}
-                    </Typography>
-                </>
-            )}
-            {state.showSkeleton && (
-                <Box
-                    sx={resultsSection(theme, isCollections)}
-                    aria-hidden
-                    data-testid="search-results-skeleton">
-                    {showTable ? (
-                        <ResultsTable
-                            results={[]}
-                            showLibraryModal={showLibraryModal}
-                            loading
-                        />
-                    ) : (
-                        <ResultsList {...getResultsListLayout(type)}>
-                            {skeletonItems}
-                        </ResultsList>
-                    )}
-                </Box>
-            )}
+            {state.showLoading && <Loading label={t("loadingAriaLabel")} />}
 
             {state.showNoResults && (
                 <Paper sx={noResults} role="status" aria-live="polite">
@@ -198,54 +152,55 @@ const SearchResults = ({
                     </Typography>
                 </Paper>
             )}
+            {state.showResults && isCollections && (
+                <>
+                    <DataCustodianNetwork searchParams={networkSearchParams} />
+                    <Typography fontWeight={600} sx={collectionsHeader}>
+                        {t("collectionsHeader")}
+                    </Typography>
+                </>
+            )}
             {state.showResults && (
-                    <Box
-                        component="section"
-                        aria-describedby="result-summary"
-                        aria-label="results list"
-                        sx={{
-                            ...resultsSection(theme, isCollections),
-                            ...(state.isRefreshing && refreshing(theme)),
-                        }}>
-                        <Typography variant="h2" sx={visuallyHidden}>
-                            {t("components.Search.searchResults")}
-                        </Typography>
-                        {isExternalSourceSelected && (
-                            <Box sx={externalNotice}>
-                                <OpenInNewIcon fontSize="small" />
-                                <Typography variant="body2">
-                                    {t("partnerDatasetsNewTab")}
-                                </Typography>
-                            </Box>
-                        )}
-                        {showTable ? (
-                            <ResultsTable
-                                results={data?.list as SearchResultDataset[]}
-                                showLibraryModal={showLibraryModal}
-                            />
-                        ) : (
-                            <ResultsList {...getResultsListLayout(type)}>
-                                {data?.list.map(result =>
-                                    renderResultCard(result)
-                                )}
-                            </ResultsList>
-                        )}
-                        {isExternalSourceSelected && (
-                            <Box sx={externalLink}>
-                                <Button
-                                    component="a"
-                                    purpose="secondary"
-                                    href={getArdcSearchUrl(query)}
-                                    target="_blank"
-                                    rel="noopener noreferrer"
-                                    endIcon={
-                                        <OpenInNewIcon fontSize="small" />
-                                    }>
-                                    {t("viewAllPartnerResults")}
-                                </Button>
-                            </Box>
-                        )}
-                    </Box>
+                <Box
+                    component="section"
+                    aria-describedby="result-summary"
+                    aria-label="results list"
+                    sx={resultsSection(theme, isCollections)}>
+                    <Typography variant="h2" sx={visuallyHidden}>
+                        {t("components.Search.searchResults")}
+                    </Typography>
+                    {isExternalSourceSelected && (
+                        <Box sx={externalNotice}>
+                            <OpenInNewIcon fontSize="small" />
+                            <Typography variant="body2">
+                                {t("partnerDatasetsNewTab")}
+                            </Typography>
+                        </Box>
+                    )}
+                    {showTable ? (
+                        <ResultsTable
+                            results={data?.list as SearchResultDataset[]}
+                            showLibraryModal={showLibraryModal}
+                        />
+                    ) : (
+                        <ResultsList {...getResultsListLayout(type)}>
+                            {data?.list.map(result => renderResultCard(result))}
+                        </ResultsList>
+                    )}
+                    {isExternalSourceSelected && (
+                        <Box sx={externalLink}>
+                            <Button
+                                component="a"
+                                purpose="secondary"
+                                href={getArdcSearchUrl(query)}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                endIcon={<OpenInNewIcon fontSize="small" />}>
+                                {t("viewAllPartnerResults")}
+                            </Button>
+                        </Box>
+                    )}
+                </Box>
             )}
         </>
     );

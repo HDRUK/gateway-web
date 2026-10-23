@@ -38,7 +38,6 @@ interface UseSearchActionsParams {
     filters: Filter[];
     resultsView: string;
     redirectPath: string;
-    isPending?: boolean;
 }
 
 const useSearchActions = ({
@@ -46,7 +45,6 @@ const useSearchActions = ({
     filters,
     resultsView,
     redirectPath,
-    isPending = false,
 }: UseSearchActionsParams) => {
     const t = useTranslations(TRANSLATION_PATH);
     const router = useRouter();
@@ -153,7 +151,7 @@ const useSearchActions = ({
     };
 
     const { setPostLoginActionCookie } = usePostLoginAction({
-        onAction: isPending ? undefined : handlePostLoginAction,
+        onAction: handlePostLoginAction,
     });
 
     const handleSaveClick = () => {

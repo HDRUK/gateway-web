@@ -12,7 +12,7 @@ interface Response<T> {
     mutate: KeyedMutator<T>;
 }
 
-interface Options<T> {
+interface Options {
     localeKey?: string;
     withPagination?: boolean;
     shouldFetch?: boolean;
@@ -22,13 +22,12 @@ interface Options<T> {
     itemName?: string;
     action?: ReactNode;
     revalidateOnMount?: boolean;
-    fallbackData?: T;
 }
 
 const usePostSwr = <T>(
     url: string,
     formData?: unknown,
-    options?: Options<T>
+    options?: Options
 ): Response<T> => {
     const {
         localeKey,
@@ -40,7 +39,6 @@ const usePostSwr = <T>(
         withPagination = false,
         shouldFetch = true,
         revalidateOnMount,
-        fallbackData,
     } = options || {};
     const t = useTranslations("api");
 
@@ -75,7 +73,6 @@ const usePostSwr = <T>(
             refreshInterval: 0,
             errorRetryCount: 2,
             revalidateOnMount,
-            fallbackData,
         }
     );
 
