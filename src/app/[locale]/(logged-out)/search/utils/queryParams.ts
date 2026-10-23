@@ -1,10 +1,5 @@
 import { SearchCategory, SearchQueryParams } from "@/interfaces/Search";
-import {
-    FILTER_DATA_SUBTYPE,
-    FILTER_DATA_TYPE,
-    FILTER_DATE_RANGE,
-    FILTER_PUBLICATION_DATE,
-} from "@/config/forms/filters";
+import { FILTER_DATA_SUBTYPE, FILTER_DATA_TYPE } from "@/config/forms/filters";
 import searchFormConfig, {
     PAGE_FIELD,
     PMC_TYPE_FIELD,
@@ -13,6 +8,7 @@ import searchFormConfig, {
     TYPE_FIELD,
     VIEW_FIELD,
 } from "@/config/forms/search";
+import { EXCLUDE_UNREPORTED } from "@/consts/filters";
 import { HDRUK_SOURCE_VALUE } from "@/consts/search";
 import {
     ALLOW_EMPTY_FILTERS,
@@ -77,7 +73,8 @@ const removeFilterValue = (
     values: string[],
     removedFilter: string
 ) =>
-    filterType === FILTER_DATE_RANGE || filterType === FILTER_PUBLICATION_DATE
+    ALLOW_EMPTY_FILTERS.includes(filterType) &&
+    removedFilter !== EXCLUDE_UNREPORTED
         ? values.map(value => (value === removedFilter ? "" : value))
         : values.filter(value => value !== removedFilter);
 

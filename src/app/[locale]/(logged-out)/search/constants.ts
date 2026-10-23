@@ -48,6 +48,7 @@ export const ARRAY_FILTERS = [
 export const ALLOW_EMPTY_FILTERS: string[] = [
     Filters.FILTER_DATE_RANGE,
     Filters.FILTER_PUBLICATION_DATE,
+    Filters.FILTER_POPULATION_SIZE,
 ];
 
 export const RESULT_LIMIT = 100;

@@ -63,6 +63,7 @@ describe("queryParams utils", () => {
                 dataType: "Health|Imaging",
                 dataSubType: "MRI",
                 dateRange: "2010|2020",
+                populationSize: "100|5000|excludeUnreported",
             })
         );
 
@@ -82,6 +83,24 @@ describe("queryParams utils", () => {
             expect(
                 getRemoveFilterPatch(queryParams, "dateRange", "2010")
             ).toEqual({ dateRange: ["", "2020"] });
+        });
+
+        it("blanks the value in a population range", () => {
+            expect(
+                getRemoveFilterPatch(queryParams, "populationSize", "100")
+            ).toEqual({
+                populationSize: ["", "5000", "excludeUnreported"],
+            });
+        });
+
+        it("removes the unreported exclusion from a population range", () => {
+            expect(
+                getRemoveFilterPatch(
+                    queryParams,
+                    "populationSize",
+                    "excludeUnreported"
+                )
+            ).toEqual({ populationSize: ["100", "5000"] });
         });
     });
 });

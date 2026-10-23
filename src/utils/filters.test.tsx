@@ -144,6 +144,14 @@ describe("Filter utils", () => {
                 });
             });
 
+            it("should leave a removed lower bound unset", () => {
+                expect(getPopulationSize(["", "5000"])).toEqual({
+                    from: undefined,
+                    to: "5000",
+                    includeUnreported: true,
+                });
+            });
+
             it("should read the range regardless of where the exclusion sits", () => {
                 expect(
                     getPopulationSize(["excludeUnreported", "1000", "5000"])
