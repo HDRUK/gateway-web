@@ -62,6 +62,23 @@ describe("StatusMenu", () => {
         expect(onChange).not.toHaveBeenCalled();
     });
 
+    it("lists only the given options", () => {
+        render(
+            <StatusMenu
+                status={DataStatus.DRAFT}
+                onChange={onChange}
+                options={[DataStatus.DRAFT, DataStatus.ACTIVE]}
+            />
+        );
+
+        fireEvent.click(screen.getByRole("button"));
+
+        expect(screen.getAllByRole("menuitemradio")).toHaveLength(2);
+        expect(
+            screen.queryByRole("menuitemradio", { name: "Archived" })
+        ).not.toBeInTheDocument();
+    });
+
     it("disables the given options", () => {
         render(
             <StatusMenu

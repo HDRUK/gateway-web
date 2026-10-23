@@ -10,7 +10,9 @@ import KeyValueList from "@/components/KeyValueList";
 import Pagination from "@/components/Pagination";
 import Paper from "@/components/Paper";
 import ShowingXofX from "@/components/ShowingXofX";
+import StatusMenu from "@/components/StatusMenu";
 import Typography from "@/components/Typography";
+import { DataStatus } from "@/consts/application";
 import { formatDate } from "@/utils/date";
 
 interface TemplateListProps {
@@ -21,6 +23,8 @@ interface TemplateListProps {
         action?: (id: number) => void;
         label: string;
     }[];
+    onStatusChange?: (id: number, status: DataStatus) => void;
+    statusOptions?: DataStatus[];
     lastPage?: number;
     from?: number;
     to?: number;
@@ -32,6 +36,8 @@ interface TemplateListProps {
 
 const TemplateList = ({
     actions,
+    onStatusChange,
+    statusOptions,
     list,
     lastPage,
     from,
@@ -65,7 +71,9 @@ const TemplateList = ({
                         <Box
                             sx={{
                                 display: "grid",
-                                gridTemplateColumns: "repeat(1, 1fr 50px)",
+                                gridTemplateColumns: onStatusChange
+                                    ? "1fr auto 50px"
+                                    : "repeat(1, 1fr 50px)",
                                 p: 0,
                             }}>
                             <Box
@@ -107,12 +115,6 @@ const TemplateList = ({
                                     <KeyValueList
                                         rows={[
                                             {
-                                                key: t("published"),
-                                                value: template.published
-                                                    ? "Yes"
-                                                    : "No",
-                                            },
-                                            {
                                                 key: t("numberOfQuestions"),
                                                 value: template.questions
                                                     .length,
@@ -128,6 +130,21 @@ const TemplateList = ({
                                     />
                                 </Box>
                             </Box>
+                            {onStatusChange && (
+                                <Box>
+                                    <StatusMenu
+                                        status={
+                                            template.published
+                                                ? DataStatus.ACTIVE
+                                                : DataStatus.DRAFT
+                                        }
+                                        options={statusOptions}
+                                        onChange={status =>
+                                            onStatusChange(template.id, status)
+                                        }
+                                    />
+                                </Box>
+                            )}
                             <Box
                                 sx={{
                                     p: 0,

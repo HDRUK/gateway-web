@@ -1043,7 +1043,6 @@
                             "intro": "View, edit or create new Data Access Request Templates",
                             "cardTitle": "DAR template created {createdAt}",
                             "noTemplates": "No templates found for your team.",
-                            "published": "Published",
                             "lastActivity": "Last activity",
                             "numberOfQuestions": "Number of questions",
                             "back": "Back to DAR template management",
@@ -1059,7 +1058,11 @@
                                 }
                             },
                             "draft": "Draft",
-                            "active": "Active"
+                            "active": "Active",
+                            "statusChanged": {
+                                "ACTIVE": "The template is now active. Any previously active template has been moved to Draft.",
+                                "DRAFT": "The template is now draft. You can find and edit it in the Draft tab."
+                            }
                         },
                         "createModal": {
                             "web": {
