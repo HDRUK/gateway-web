@@ -2,6 +2,7 @@
   "name": "gateway-web-2",
   "version": "2.49.0",
   "private": true,
+  "license": "MIT",
   "scripts": {
     "dev": "next dev",
     "build": "next build",
