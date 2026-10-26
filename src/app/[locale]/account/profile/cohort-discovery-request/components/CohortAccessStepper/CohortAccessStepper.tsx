@@ -7,8 +7,7 @@ import QueryBuilderIcon from "@mui/icons-material/QueryBuilder";
 import { Box } from "@mui/material";
 import { useTranslations } from "next-intl";
 import { templateRepeatFields } from "@/interfaces/Cms";
-import { Button, Loading } from "@hdruk/ui";
-import Chip from "@/components/Chip";
+import { Button, Chip, Loading } from "@hdruk/ui";
 import CohortDiscoveryButton from "@/components/CohortDiscoveryButton";
 import Link from "@/components/Link";
 import Paper from "@/components/Paper";
@@ -199,11 +198,11 @@ const CohortAccessStepper = ({
                                 <Chip
                                     size="small"
                                     label={capitalise(accessStatus)}
-                                    color={
-                                        expiringSoon
-                                            ? "yellowCustom"
-                                            : statusMapping[accessStatus]
-                                    }
+                                    {...(expiringSoon
+                                        ? { color: "warning" }
+                                        : accessStatus === COHORT_STATUS.PENDING
+                                        ? { color: "archived" }
+                                        : statusMapping[accessStatus])}
                                 />
                                 {daysRemaining != null && (
                                     <Box
@@ -238,7 +237,7 @@ const CohortAccessStepper = ({
                                         label={capitalise(
                                             COHORT_STATUS.PENDING
                                         )}
-                                        color="greyCustom"
+                                        color="archived"
                                     />
                                 </>
                             )}

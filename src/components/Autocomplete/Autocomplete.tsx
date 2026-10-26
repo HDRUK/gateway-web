@@ -11,6 +11,7 @@ import {
     Tooltip,
 } from "@mui/material";
 import MuiAutocomplete, {
+    AutocompleteProps as MuiAutocompleteProps,
     autocompleteClasses,
     createFilterOptions,
 } from "@mui/material/Autocomplete";
@@ -25,11 +26,14 @@ export type OptionsType = {
     icon?: IconType;
 };
 
+export type SelectedType = OptionsType | ValueType;
+
+type MuiProps = MuiAutocompleteProps<SelectedType, boolean, false, boolean>;
+
 export interface AutocompleteProps<T extends FieldValues> {
     label: string;
     info?: string;
     extraInfo?: string;
-    getOptionLabel?: () => string;
     disabled?: boolean;
     startAdornmentIcon?: ReactNode;
     createLabel?: string;
@@ -38,7 +42,10 @@ export interface AutocompleteProps<T extends FieldValues> {
     clearOnBlur?: boolean;
     handleHomeEndKeys?: boolean;
     multiple?: boolean;
-    getChipLabel?: (options: OptionsType[], value: ValueType) => void;
+    getChipLabel?: (
+        options: OptionsType[],
+        value: SelectedType
+    ) => string | undefined;
     freeSolo?: boolean;
     selectOnFocus?: boolean;
     placeholder?: string;
@@ -53,14 +60,24 @@ export interface AutocompleteProps<T extends FieldValues> {
     clearIcon?: boolean;
     chipColor?: keyof ChipPropsColorOverrides;
     maxLabelLength?: number;
-}
-
-interface SearchOptions {
-    value: unknown;
-    label: string;
+    isOptionEqualToValue?: MuiProps["isOptionEqualToValue"];
+    onInputChange?: MuiProps["onInputChange"];
+    loading?: boolean;
+    groupBy?: MuiProps["groupBy"];
+    sx?: MuiProps["sx"];
 }
 
 const MAX_DISPLAYED_TAGS = 20;
+
+const valueOf = (selected: SelectedType) =>
+    typeof selected === "object" ? selected.value : selected;
+
+const labelOf = (selected: SelectedType) =>
+    (typeof selected === "object" ? selected.label : undefined) ??
+    String(selected);
+
+const isSameValue = (option: SelectedType, value: SelectedType) =>
+    value != null && valueOf(option) === valueOf(value);
 
 const Autocomplete = <T extends FieldValues>(props: AutocompleteProps<T>) => {
     const {
@@ -86,24 +103,27 @@ const Autocomplete = <T extends FieldValues>(props: AutocompleteProps<T>) => {
         clearIcon = false,
         chipColor,
         maxLabelLength = 40,
+        isOptionEqualToValue,
         ...restProps
     } = props;
 
     const [expanded, setExpanded] = useState(false);
 
     const {
-        field,
+        field: { ref, value, onBlur, onChange, name: fieldName },
         fieldState: { error },
     } = useController({
         name,
         control,
     });
 
+    const rootAttributes = { name: fieldName };
+
     const filterOptions = (
-        searchOptions: SearchOptions[],
-        params: FilterOptionsState<SearchOptions>
-    ) => {
-        const filtered = createFilterOptions<SearchOptions>()(
+        searchOptions: SelectedType[],
+        params: FilterOptionsState<SelectedType>
+    ): SelectedType[] => {
+        const filtered = createFilterOptions<SelectedType>()(
             searchOptions,
             params
         );
@@ -111,17 +131,20 @@ const Autocomplete = <T extends FieldValues>(props: AutocompleteProps<T>) => {
         const { inputValue } = params;
 
         const isExisting = searchOptions.some(
-            option => inputValue === option.label
+            option => inputValue === labelOf(option)
         );
 
-        if (inputValue !== "" && !isExisting) {
-            filtered.push({
-                value: inputValue,
-                label: `${createLabel} "${inputValue}"`,
-            });
-        }
-        return filtered;
+        return inputValue !== "" && !isExisting
+            ? [
+                  ...filtered,
+                  {
+                      value: inputValue,
+                      label: `${createLabel} "${inputValue}"`,
+                  },
+              ]
+            : filtered;
     };
+
     return (
         <FormInputWrapper
             name={name}
@@ -132,28 +155,29 @@ const Autocomplete = <T extends FieldValues>(props: AutocompleteProps<T>) => {
             error={error}
             disabled={disabled}
             required={required}>
-            <MuiAutocomplete
+            <MuiAutocomplete<SelectedType, boolean, false, boolean>
                 id={id || name}
-                {...field}
                 {...restProps}
+                {...rootAttributes}
+                ref={ref}
+                value={value ?? (multiple ? [] : null)}
+                onBlur={onBlur}
                 freeSolo={freeSolo}
                 multiple={multiple}
-                defaultValue={[]}
-                getOptionLabel={(option: string) => {
+                getOptionLabel={option => {
                     if (isLoadingOptions) return "Loading...";
                     if (!option) return "";
                     if (Array.isArray(option) && option.length === 0) return "";
-                    if (typeof option === "object") return option?.label;
+                    if (typeof option === "object") return option.label;
                     return (
                         options.find(
                             item => item.value.toString() === option.toString()
                         )?.label ?? option.toString()
                     );
                 }}
-                {...(!multiple && {
-                    isOptionEqualToValue: (option, value) =>
-                        option.value === value?.value || option.value === value,
-                })}
+                isOptionEqualToValue={
+                    multiple ? isOptionEqualToValue ?? isSameValue : isSameValue
+                }
                 options={options}
                 disabled={disabled}
                 renderTags={(tagValue, getTagProps) => {
@@ -170,10 +194,9 @@ const Autocomplete = <T extends FieldValues>(props: AutocompleteProps<T>) => {
                             const tagProps = getTagProps({ index });
                             const { key, ...restTagProps } = tagProps;
 
-                            const rawLabel =
-                                typeof getChipLabel === "function"
-                                    ? getChipLabel(options, option)
-                                    : option?.label ?? String(option);
+                            const rawLabel = getChipLabel
+                                ? getChipLabel(options, option)
+                                : labelOf(option);
 
                             const truncated =
                                 rawLabel && rawLabel.length > maxLabelLength
@@ -189,7 +212,6 @@ const Autocomplete = <T extends FieldValues>(props: AutocompleteProps<T>) => {
                                     size="small"
                                     color={chipColor ?? undefined}
                                     {...restTagProps}
-                                    key={option?.label}
                                 />
                             );
 
@@ -225,25 +247,17 @@ const Autocomplete = <T extends FieldValues>(props: AutocompleteProps<T>) => {
                                         : `+ ${additionalOptions} more`
                                 }
                                 onMouseDown={event => event.preventDefault()}
-                                onClick={() => setExpanded(!expanded)}
+                                onClick={() => setExpanded(prev => !prev)}
                             />
                         ) : null,
                     ];
                 }}
-                onChange={(_, value) => {
-                    let newValue: ValueType | ValueType[] | null = null;
-
-                    if (Array.isArray(value)) {
-                        newValue = value.map(v =>
-                            typeof v === "object" ? v.value : v
-                        );
-                    } else if (typeof value === "object" && value !== null) {
-                        newValue = value.value;
+                onChange={(_, selected) => {
+                    if (Array.isArray(selected)) {
+                        onChange(selected.map(valueOf));
                     } else {
-                        newValue = value;
+                        onChange(selected === null ? null : valueOf(selected));
                     }
-
-                    field.onChange(newValue);
                 }}
                 {...(canCreate && {
                     filterOptions,
@@ -271,19 +285,12 @@ const Autocomplete = <T extends FieldValues>(props: AutocompleteProps<T>) => {
                         size="small"
                     />
                 )}
-                renderOption={(props, item) => (
-                    <li {...props} key={item.value as string}>
-                        <ListItemText>{item.label}</ListItemText>
+                renderOption={(optionProps, item, { selected }) => (
+                    <li {...optionProps} key={valueOf(item)}>
+                        <ListItemText>{labelOf(item)}</ListItemText>
+                        {clearIcon && selected && <ClearIcon />}
                     </li>
                 )}
-                {...(clearIcon && {
-                    renderOption: (props, item, { selected }) => (
-                        <li {...props} key={item.value as string}>
-                            <ListItemText>{item.label}</ListItemText>
-                            {selected && <ClearIcon />}
-                        </li>
-                    ),
-                })}
                 noOptionsText={
                     isLoadingOptions ? <Loading size={30} /> : noOptionsText
                 }

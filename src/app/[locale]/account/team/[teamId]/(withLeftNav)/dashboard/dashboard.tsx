@@ -1,7 +1,12 @@
 "use client";
 
 import { useState } from "react";
-import { Select, MenuItem, InputAdornment } from "@mui/material";
+import { Banner, DateRangePicker } from "@hdruk/ui";
+import type { DateRange } from "@hdruk/ui";
+import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
+import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
+import dayjs, { ManipulateType } from "dayjs";
+import "dayjs/locale/en-gb";
 import { useTranslations } from "next-intl";
 import { DashboardEntityCount } from "@/interfaces/Dashboard";
 import Box from "@/components/Box";
@@ -16,8 +21,7 @@ import ImproveYourUsageWidget from "@/modules/ImproveYourUsageWidget/ImproveYour
 import LearnMoreWidget from "@/modules/LearnMoreWidget/LearnMoreWidget";
 import OtherViewsWidget from "@/modules/OtherViewsWidget/OtherViewsWidget";
 import apis from "@/config/apis";
-import { CalendarMonthOutlinedIcon } from "@/consts/icons";
-import { formatDate } from "@/utils/date";
+import { CUSTOMER_PORTAL_SUPPORT_URL } from "@/config/hrefs";
 import ResourceCounts from "./components/ResourceCounts/ResourceCounts";
 
 interface DashboardCounts {
@@ -30,83 +34,120 @@ interface DashboardCounts {
 
 interface DashboardProps {
     teamId: string;
+    teamName: string;
+    isDarEnabled: boolean;
     initialCounts: DashboardCounts;
 }
 
-const PERIODS = [
-    { value: "last_12_months", months: 12 },
-    { value: "last_6_months", months: 6 },
-    { value: "last_3_months", months: 3 },
-    { value: "last_month", months: 1 },
-];
+const MIN_DATE = dayjs("2024-11-01");
 
-const getPeriodDates = (period: string) => {
-    const end = new Date();
-    const start = new Date();
-    const months = PERIODS.find(p => p.value === period)?.months ?? 12;
-    start.setMonth(start.getMonth() - months);
-    return {
-        startDate: formatDate(start, "YYYY-MM-DD") ?? "",
-        endDate: formatDate(end, "YYYY-MM-DD") ?? "",
-    };
+const startOfToday = () => dayjs().startOf("day");
+
+const lastPeriod = (amount: number, unit: ManipulateType) => (): DateRange => {
+    const today = startOfToday();
+    const start = today.subtract(amount, unit);
+    return [start.isBefore(MIN_DATE) ? MIN_DATE : start, today];
 };
 
-const Dashboard = ({ teamId, initialCounts }: DashboardProps) => {
-    const t = useTranslations("pages.account.dashboard");
-    const [period, setPeriod] = useState("last_12_months");
+const allTime = (): DateRange => [MIN_DATE, startOfToday()];
 
-    const { startDate, endDate } = getPeriodDates(period);
+const SHORTCUTS = [
+    { key: "lastMonth", getValue: lastPeriod(1, "month") },
+    { key: "last3Months", getValue: lastPeriod(3, "month") },
+    { key: "last6Months", getValue: lastPeriod(6, "month") },
+    { key: "lastYear", getValue: lastPeriod(1, "year") },
+    { key: "allTime", getValue: allTime },
+];
+
+const toApiDate = (date: DateRange[number]) =>
+    date ? date.format("YYYY-MM-DD") : "";
+
+const Dashboard = ({
+    teamId,
+    teamName,
+    isDarEnabled,
+    initialCounts,
+}: DashboardProps) => {
+    const t = useTranslations("pages.account.dashboard");
+    const [range, setRange] = useState<DateRange>(lastPeriod(1, "year"));
+
+    const startDate = toApiDate(range[0]);
+    const endDate = toApiDate(range[1]);
     const downloadUrl = `${apis.apiV3Url}/teams/${teamId}/dashboard/download/csv?startDate=${startDate}&endDate=${endDate}`;
 
     return (
         <BoxContainer sx={{ gap: 2, gridTemplateColumns: "minmax(0, 1fr)" }}>
-            <Paper>
-                <Box
-                    sx={{
-                        display: "flex",
-                        justifyContent: "space-between",
-                        alignItems: "flex-start",
-                        flexWrap: "wrap",
-                        gap: 2,
+            <BoxContainer
+                sx={{
+                    gap: 2,
+                    position: "sticky",
+                    top: 0,
+                    zIndex: "appBar",
+                    bgcolor: "background.default",
+                }}>
+                <Banner
+                    tag={t("betaBanner.tag")}
+                    closable
+                    action={{
+                        label: t("betaBanner.action"),
+                        href: CUSTOMER_PORTAL_SUPPORT_URL,
+                        target: "_blank",
                     }}>
-                    <Box>
-                        <Typography variant="h2" component="h1">
-                            {t("title")}
-                        </Typography>
-                        <Typography>{t("text")}</Typography>
+                    {t("betaBanner.message")}
+                </Banner>
+                <Paper>
+                    <Box
+                        sx={{
+                            display: "flex",
+                            justifyContent: "space-between",
+                            alignItems: "flex-start",
+                            flexWrap: "wrap",
+                            gap: 2,
+                        }}>
+                        <Box>
+                            <Typography variant="h2" component="h1">
+                                {t("title")}
+                            </Typography>
+                            <Typography>{t("text")}</Typography>
+                        </Box>
+                        <Box
+                            sx={{
+                                display: "flex",
+                                alignItems: "center",
+                                gap: 2,
+                            }}>
+                            <LocalizationProvider
+                                dateAdapter={AdapterDayjs}
+                                adapterLocale="en-gb">
+                                <DateRangePicker
+                                    value={range}
+                                    onChange={setRange}
+                                    disableFuture
+                                    minDate={MIN_DATE}
+                                    hideLabel
+                                    label={t("choosePeriod")}
+                                    shortcuts={SHORTCUTS.map(
+                                        ({ key, getValue }) => ({
+                                            label: t(`shortcuts.${key}`),
+                                            getValue,
+                                        })
+                                    )}
+                                />
+                            </LocalizationProvider>
+                            <DownloadFile
+                                apiPath={downloadUrl}
+                                buttonText={t("download")}
+                                buttonSx={{ mb: 0 }}
+                                variant="contained"
+                            />
+                        </Box>
                     </Box>
-                    <Box sx={{ display: "flex", alignItems: "center", gap: 2 }}>
-                        <Select
-                            size="small"
-                            value={period}
-                            onChange={e => setPeriod(e.target.value)}
-                            inputProps={{ "aria-label": t("choosePeriod") }}
-                            startAdornment={
-                                <InputAdornment position="start">
-                                    <CalendarMonthOutlinedIcon
-                                        sx={{ fontSize: 18 }}
-                                    />
-                                </InputAdornment>
-                            }
-                            sx={{ minWidth: 180 }}>
-                            {PERIODS.map(({ value }) => (
-                                <MenuItem key={value} value={value}>
-                                    {t(`periods.${value}`)}
-                                </MenuItem>
-                            ))}
-                        </Select>
-                        <DownloadFile
-                            apiPath={downloadUrl}
-                            buttonText={t("download")}
-                            buttonSx={{ mb: 0 }}
-                            variant="contained"
-                        />
-                    </Box>
-                </Box>
-            </Paper>
+                </Paper>
+            </BoxContainer>
             <Paper>
                 <ResourceCounts
                     teamId={teamId}
+                    teamName={teamName}
                     startDate={startDate}
                     endDate={endDate}
                     initialCounts={initialCounts}
@@ -139,6 +180,7 @@ const Dashboard = ({ teamId, initialCounts }: DashboardProps) => {
                 />
                 <EnquiriesWidget
                     teamId={teamId}
+                    isDarEnabled={isDarEnabled}
                     startDate={startDate}
                     endDate={endDate}
                 />

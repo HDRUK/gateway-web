@@ -235,7 +235,7 @@ const getColumns = ({
                         <Chip
                             size="small"
                             label={capitalise(original.request_status || "")}
-                            color={statusMapping[original.request_status]}
+                            {...statusMapping[original.request_status]}
                         />
                     </div>
                 ),
@@ -440,11 +440,9 @@ const getColumns = ({
                                     " "
                                 )
                             )}
-                            color={
-                                NHSSDEStatusMapping[
-                                    original.nhse_sde_request_status
-                                ]
-                            }
+                            {...NHSSDEStatusMapping[
+                                original.nhse_sde_request_status
+                            ]}
                         />
                     </div>
                 ),

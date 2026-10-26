@@ -83,6 +83,13 @@ describe("Dataset utils", () => {
             );
         });
 
+        it("escapes underscores separated by a single character", () => {
+            // e.g. GWDM dataset filter ids - an unescaped pair renders as italics.
+            expect(escapeMarkdownUnderscores("0_0_0_10_2")).toEqual(
+                "0\\_0\\_0\\_10\\_2"
+            );
+        });
+
         it("does not escape leading or trailing underscores", () => {
             expect(escapeMarkdownUnderscores("_italic_")).toEqual("_italic_");
         });

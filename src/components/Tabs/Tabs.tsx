@@ -43,7 +43,7 @@ export interface TabProps {
     variant?: TabVariant;
     paramName?: string;
     renderTabContent?: boolean;
-    persistParams?: boolean;
+    persistParams?: boolean | string[];
     defaultSelectedTab?: string;
     tabVariant?: string;
     handleChange?: (e: SyntheticEvent, value: string) => void;
@@ -58,12 +58,12 @@ const tooltipWrapper = (title: string) => (children: ReactElement) => {
 };
 
 const CustomLink = forwardRef<
-    HTMLAnchorElement & { param: string; persist: boolean },
+    HTMLAnchorElement & { param: string; persist: boolean | string[] },
     {
         href: string;
         children: ReactNode;
         param: string;
-        persist: boolean;
+        persist: boolean | string[];
         tooltip?: string;
     }
 >(({ href, children, param, persist, tooltip, ...rest }, ref) => {
@@ -88,7 +88,17 @@ const CustomLink = forwardRef<
                 scroll={false}
                 href={{
                     pathname,
-                    query: persist ? currentQuery : { [param]: href },
+                    query:
+                        persist === true
+                            ? currentQuery
+                            : {
+                                  [param]: href,
+                                  ...Object.fromEntries(
+                                      (persist || [])
+                                          .filter(key => currentQuery[key])
+                                          .map(key => [key, currentQuery[key]])
+                                  ),
+                              },
                 }}>
                 {children}
             </Link>

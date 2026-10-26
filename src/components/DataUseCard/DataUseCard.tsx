@@ -8,11 +8,15 @@ import KeyValueList from "@/components/KeyValueList";
 import Paper from "@/components/Paper";
 import ShowMore from "@/components/ShowMore";
 import Typography from "@/components/Typography";
+import { DataStatus } from "@/consts/application";
 import { RouteName } from "@/consts/routeName";
 import { formatDate } from "@/utils/date";
 import CardActions from "../CardActions";
+import StatusMenu from "../StatusMenu";
 
 interface DataUseCardProps {
+    onStatusChange?: (id: number, status: DataStatus) => void;
+    disabledStatusOptions?: DataStatus[];
     dataUse: DataUse;
     actions: {
         icon: IconType;
@@ -22,7 +26,12 @@ interface DataUseCardProps {
     }[];
 }
 
-const DataUseCard = ({ dataUse, actions }: DataUseCardProps) => {
+const DataUseCard = ({
+    dataUse,
+    actions,
+    onStatusChange,
+    disabledStatusOptions,
+}: DataUseCardProps) => {
     const params = useParams<{ locale: string }>();
     const title = dataUse.project_title;
     const providerName = dataUse.team.name;
@@ -33,7 +42,9 @@ const DataUseCard = ({ dataUse, actions }: DataUseCardProps) => {
             <Box
                 sx={{
                     display: "grid",
-                    gridTemplateColumns: "repeat(1, 1fr 50px)",
+                    gridTemplateColumns: onStatusChange
+                        ? "1fr auto 50px"
+                        : "repeat(1, 1fr 50px)",
                     p: 0,
                 }}>
                 <Box
@@ -109,7 +120,22 @@ const DataUseCard = ({ dataUse, actions }: DataUseCardProps) => {
                         />
                     </Box>
                 </Box>
-                <Box sx={{ p: 0, borderLeft: `solid 1px ${tokens.status.faded}` }}>
+                {onStatusChange && (
+                    <Box>
+                        <StatusMenu
+                            status={dataUse.status as DataStatus}
+                            onChange={status =>
+                                onStatusChange(dataUse.id, status)
+                            }
+                            disabledOptions={disabledStatusOptions}
+                        />
+                    </Box>
+                )}
+                <Box
+                    sx={{
+                        p: 0,
+                        borderLeft: `solid 1px ${tokens.status.faded}`,
+                    }}>
                     <CardActions actions={actions} id={dataUse.id} />
                 </Box>
             </Box>

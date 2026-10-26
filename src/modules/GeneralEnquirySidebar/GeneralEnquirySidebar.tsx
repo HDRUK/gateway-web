@@ -5,7 +5,11 @@ import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { Typography } from "@mui/material";
 import { useTranslations } from "next-intl";
-import { DatasetEnquiry, Enquiry } from "@/interfaces/Enquiry";
+import {
+    DatasetEnquiry,
+    GeneralEnquiryFormValues,
+    GeneralEnquiryPayload,
+} from "@/interfaces/Enquiry";
 import Box from "@/components/Box";
 import BoxContainer from "@/components/BoxContainer";
 import { Button } from "@hdruk/ui";
@@ -35,20 +39,24 @@ const GeneralEnquirySidebar = ({
 
     const { user } = useAuth();
 
-    const sendEnquiry = usePost<Enquiry>(apis.enquiryThreadsV1Url, {
-        itemName: "Enquiry item",
-    });
+    const sendEnquiry = usePost<GeneralEnquiryPayload>(
+        apis.enquiryThreadsV1Url,
+        {
+            itemName: "Enquiry item",
+        }
+    );
 
     const emailValues = user ? getEmails(user) : [""];
 
     const defaultEmailValue = emailValues[0];
 
-    const { control, handleSubmit, reset } = useForm<Enquiry>({
+    const { control, handleSubmit, reset } = useForm<GeneralEnquiryFormValues>({
         mode: "onTouched",
         resolver: yupResolver(generalEnquiryValidationSchema),
         defaultValues: {
             ...generalEnquiryDefaultValues,
-            ...user,
+            name: user?.name ?? "",
+            organisation: user?.organisation ?? "",
             from: defaultEmailValue,
         },
     });
@@ -78,15 +86,18 @@ const GeneralEnquirySidebar = ({
         }
     }
 
-    const submitForm = async (formData: Enquiry) => {
-        if (!user) return;
-        const minUser = { id: user.id };
+    const submitForm = async (formData: GeneralEnquiryFormValues) => {
+        if (!user) {
+            return;
+        }
+        const { from, organisation, contact_number, query } = formData;
 
-        const payload = {
-            ...minUser,
-            ...formData,
+        const payload: GeneralEnquiryPayload = {
+            from,
+            organisation,
+            query,
             project_title: "",
-            contact_number: formData.contact_number || "", // If not provided, formData.contact_number is null, but we need a string
+            contact_number: contact_number || "",
             datasets: datasets.map(item => ({
                 dataset_id: item.datasetId,
                 team_id: item.teamId,
@@ -111,7 +122,8 @@ const GeneralEnquirySidebar = ({
         }
         reset({
             ...generalEnquiryDefaultValues,
-            ...user,
+            name: user.name,
+            organisation: user.organisation,
             from: defaultEmailValue,
         });
     }, [reset, user]);

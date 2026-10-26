@@ -53,6 +53,7 @@ import {
     CACHE_DAR_ANSWERS,
     CACHE_DAR_REVIEWS,
     DEFAULT_CACHE_REVALIDATE,
+    FILTERS_CACHE_REVALIDATE,
 } from "@/consts/cache";
 import { getUserFromToken } from "@/utils/cookies";
 import { getSessionCookie } from "./getSessionCookie";
@@ -73,10 +74,11 @@ async function get<T>(
     },
     headers: object = {}
 ): Promise<T> {
-    const cookieStore = await cookies();
-    const jwt = cookieStore.get(config.JWT_COOKIE);
-    const session = await getSessionCookie();
-    const { cache, suppressError, serveRaw } = options;
+    const { cache, suppressError, serveRaw, isPublic } = options;
+    const jwt = isPublic
+        ? undefined
+        : (await cookies()).get(config.JWT_COOKIE);
+    const session = isPublic ? "" : await getSessionCookie();
     const nextConfig = cache
         ? {
               next: {
@@ -89,8 +91,10 @@ async function get<T>(
     const res = await fetch(url, {
         headers: {
             ...headers,
-            Authorization: `Bearer ${jwt?.value}`,
-            [sessionHeader]: sessionPrefix + session,
+            ...(!isPublic && {
+                Authorization: `Bearer ${jwt?.value}`,
+                [sessionHeader]: sessionPrefix + session,
+            }),
         },
         ...nextConfig,
     });
@@ -283,10 +287,11 @@ async function post<T>(
 async function getFilters(): Promise<Filter[]> {
     const cache: Cache = {
         tags: ["filters"],
+        revalidate: FILTERS_CACHE_REVALIDATE,
     };
     return get<Filter[]>(
         `${apis.filtersV1UrlIP}?per_page=${FILTERS_PER_PAGE}`,
-        { cache }
+        { cache, isPublic: true }
     );
 }
 
@@ -438,10 +443,11 @@ async function getDataset(
     const baseUrl = `${apis.datasetsV2UrlIP}/${datasetId}`;
     const params = new URLSearchParams();
 
-    if (schemaModel && schemaVersion) {
-        params.append("schema_model", schemaModel);
-        params.append("schema_version", schemaVersion);
-    }
+    // Sent independently: GWDM is the storage model, so asking for it needs no
+    // version. Every other model still requires the pair, which the API enforces.
+    if (schemaModel) params.append("schema_model", schemaModel);
+    if (schemaVersion) params.append("schema_version", schemaVersion);
+
     const queryString = params.toString();
 
     return await get<Dataset>(
@@ -525,6 +531,7 @@ async function getSchemaFromTraser(
                 tags: [`traser-schema-${schemaName}-${schemaVersion}`],
             },
             serveRaw: true,
+            isPublic: true,
         }
     );
 }

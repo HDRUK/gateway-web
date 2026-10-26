@@ -245,7 +245,8 @@ const NestedFilterSection = <TFieldValues extends FieldValues>({
                 {checkboxes
                     .filter(checkbox => checkbox.count > 0)
                     .map((checkbox, index) => {
-                        const { label, ...formattedRow } = cloneDeep(checkbox);
+                        const { label, subBuckets, ...formattedRow } =
+                            cloneDeep(checkbox);
 
                         const outerDisabled =
                             checkboxValues &&
@@ -256,7 +257,7 @@ const NestedFilterSection = <TFieldValues extends FieldValues>({
                                 checkbox.label
                             );
 
-                        if (checkbox.subBuckets === undefined) {
+                        if (subBuckets === undefined) {
                             return (
                                 <Skeleton
                                     key={checkbox.label}
@@ -267,7 +268,7 @@ const NestedFilterSection = <TFieldValues extends FieldValues>({
                             );
                         }
 
-                        if (checkbox.subBuckets?.length > 1) {
+                        if (subBuckets?.length > 1) {
                             const isExpanded = expanded.includes(label);
                             const regionId = `${idPrefix}-${index}`;
 

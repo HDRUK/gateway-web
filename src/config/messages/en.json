@@ -251,33 +251,44 @@
         "account": {
             "dashboard": {
                 "title": "Dashboard",
-                "text": "Here's the latest activity from researchers accessing your Gateway resources.",
+                "text": "Here's a view of activity related to your content on the HDR Gateway.",
+                "betaBanner": {
+                    "tag": "BETA",
+                    "message": "This dashboard will be periodically improved based on usage and user feedback.",
+                    "action": "Share feedback"
+                },
                 "download": "Download",
                 "choosePeriod": "Choose time period",
-                "periods": {
-                    "last_12_months": "Last 12 months",
-                    "last_6_months": "Last 6 months",
-                    "last_3_months": "Last 3 months",
-                    "last_month": "Last month"
+                "shortcuts": {
+                    "lastMonth": "Last month",
+                    "last3Months": "Last 3 months",
+                    "last6Months": "Last 6 months",
+                    "lastYear": "Last year",
+                    "allTime": "All time"
                 },
                 "datasetViews": {
-                    "title": "Dataset views",
+                    "title": "Dataset Views",
+                    "tooltip": "Page views are tracked by Google Analytics. Reported page views may be incomplete or estimated as not all users provide consent for analytics. These figures reflect the total times a page is viewed by any user, including duplicates from the same person and views from your team members.",
                     "noData": "No data to display"
                 },
                 "datasetViewsBar": {
                     "mostTitle": "Most Dataset Views",
                     "leastTitle": "Least Dataset Views",
+                    "tooltip": "Page views are tracked by Google Analytics. Reported page views may be incomplete or estimated as not all users provide consent for analytics. These figures reflect the total times a page is viewed by any user, including duplicates from the same person and views from your team members.",
                     "showLeast": "Show least views",
                     "showMost": "Show most views",
                     "viewsLabel": "Views",
                     "noData": "No data to display"
                 },
                 "otherViews": {
-                    "title": "Other views",
+                    "title": "Other Entity Views",
                     "loading": "Loading other views",
                     "labels": {
                         "collections": "Collections",
                         "dataCustodian": "Data Custodian page"
+                    },
+                    "tooltips": {
+                        "dataCustodian": "Number of times any user has viewed your Data Custodian profile page. Page views are tracked by Google Analytics. Reported page views may be incomplete or estimated as not all users provide consent for analytics. These figures reflect the total times a page is viewed by any user, including duplicates from the same person and views from your team members."
                     }
                 },
                 "enquiries": {
@@ -302,7 +313,7 @@
                     "title": "Learn more about the Gateway"
                 },
                 "resources": {
-                    "title": "Your resources",
+                    "title": "{teamName} Resources",
                     "chooseResources": "Choose resources",
                     "addedThisPeriod": "{count} added this period",
                     "scrollLeft": "Show previous resources",
@@ -510,16 +521,7 @@
                             "edit": {
                                 "label": "Edit a publication"
                             },
-                            "archive": {
-                                "label": "Archive a publication"
-                            },
-                            "unarchive": {
-                                "label": "Unarchive publication so it is live on the Gateway",
-                                "title": "Unarchive a publication",
-                                "buttonText": "Make Active",
-                                "confirmText": "Make Draft",
-                                "content": "Select whether you would like to move this publication to Active (this will make your publication available within search results) or Draft (where you can edit the publication before making it available within search results)."
-                            }
+                            "entityName": "publication"
                         }
                     }
                 },
@@ -649,7 +651,11 @@
                     "emailPreviewRendering": "Rendering...",
                     "emailPreviewError": "Couldn't render a preview. Check the MJML in the body field for errors.",
                     "usersTab": "Users",
-                    "usersWarning": "Dragon's Ahead! This page allows the complete deletion of user accounts. There is no coming back from this. You have been warned. Please ensure you know what you're doing. You cannot delete users who currently own live entities. You must first transfer ownership, or delete the entity."
+                    "usersWarning": "Dragon's Ahead! This page allows the complete deletion of user accounts. There is no coming back from this. You have been warned. Please ensure you know what you're doing. You cannot delete users who currently own live entities. You must first transfer ownership, or delete the entity.",
+                    "sessionsTab": "Sessions",
+                    "sessionsTitle": "Sessions",
+                    "sessionsInfo": "Revoking all sessions invalidates every Gateway sign-in token issued up to now. Every user, including you, is signed out immediately and must sign in again. Use this in response to a suspected token or secret compromise.",
+                    "revokeAllSessions": "Revoke all sessions"
                 }
             },
             "team": {
@@ -694,19 +700,10 @@
                             "text": "View, add, edit, archive and check the status of your data uses.",
                             "title": "Data Use",
                             "actions": {
-                                "unarchive": {
-                                    "buttonText": "Make Active",
-                                    "confirmText": "Make Draft",
-                                    "title": "Unarchive this data use",
-                                    "content": "Select whether you would like to move this data use to Active (this will make your data use available within search results) or Draft (where you can edit the data use before making it available within search results).",
-                                    "label": "Unarchive data use"
-                                },
                                 "edit": {
                                     "label": "Edit data use"
                                 },
-                                "archive": {
-                                    "label": "Archive data use so it is no longer live on the Gateway"
-                                }
+                                "entityName": "data use"
                             }
                         }
                     }
@@ -816,22 +813,11 @@
                                 "text": "Update and duplicate this dataset."
                             },
                             "actions": {
-                                "unarchive": {
-                                    "buttonText": "Make Active",
-                                    "confirmText": "Make Draft",
-                                    "title": "Unarchive this dataset",
-                                    "content": "Select whether you would like to move this dataset to Active (this will make your dataset available within search results) or Draft (where you can edit the dataset metadata before making it available within search results).",
-                                    "label": "Unarchive dataset"
-                                },
                                 "edit": {
                                     "label": "Edit dataset metadata"
                                 },
                                 "duplicate": {
                                     "label": "Duplicate dataset metadata"
-                                },
-                                "archive": {
-                                    "label": "Archive",
-                                    "tooltip": "Archive dataset metadata so it is no longer live on the Gateway"
                                 },
                                 "more": {
                                     "label": "More actions"
@@ -839,7 +825,8 @@
                                 "cohortDiscovery": {
                                     "include": "Include in Cohort Discovery",
                                     "exclude": "Exclude from Cohort Discovery"
-                                }
+                                },
+                                "entityName": "dataset"
                             }
                         },
                         "UploadDataset": {
@@ -898,19 +885,10 @@
                             "text": " View, add, edit, archive and check the status of your collections.",
                             "create": "Add new Collection",
                             "actions": {
-                                "unarchive": {
-                                    "buttonText": "Make Active",
-                                    "confirmText": "Make Draft",
-                                    "title": "Unarchive the Collection so it is live on the Gateway",
-                                    "content": "Select whether you would like to move this to Active (this will make your collection available within search results) or Draft (where you can edit the metadata before making it available within search results).",
-                                    "label": "Unarchive the Collection so it is live on the Gateway"
-                                },
                                 "edit": {
                                     "label": "Edit Collection metadata"
                                 },
-                                "archive": {
-                                    "label": "Archive the Collection so it is no longer live on the Gateway"
-                                }
+                                "entityName": "collection"
                             }
                         },
                         "CollectionsTab": {
@@ -937,19 +915,10 @@
                             "text": "View, add, edit, archive and check the status of your analysis script, tools and software.",
                             "create": "Add new",
                             "actions": {
-                                "unarchive": {
-                                    "buttonText": "Make Active",
-                                    "confirmText": "Make Draft",
-                                    "title": "Unarchive analysis script, tool or software metadata so it is live on the Gateway",
-                                    "content": "Select whether you would like to move this to Active (this will make your tool available within search results) or Draft (where you can edit the metadata before making it available within search results).",
-                                    "label": "Unarchive analysis script, tool or software metadata so it is live on the Gateway"
-                                },
                                 "edit": {
                                     "label": "Edit analysis script, tool or software metadata"
                                 },
-                                "archive": {
-                                    "label": "Archive analysis script, tool or software metadata so it is no longer live on the Gateway"
-                                }
+                                "entityName": "analysis script, tool or software"
                             }
                         }
                     }
@@ -1078,7 +1047,6 @@
                             "intro": "View, edit or create new Data Access Request Templates",
                             "cardTitle": "DAR template created {createdAt}",
                             "noTemplates": "No templates found for your team.",
-                            "published": "Published",
                             "lastActivity": "Last activity",
                             "numberOfQuestions": "Number of questions",
                             "back": "Back to DAR template management",
@@ -1094,7 +1062,11 @@
                                 }
                             },
                             "draft": "Draft",
-                            "active": "Active"
+                            "active": "Active",
+                            "statusChanged": {
+                                "ACTIVE": "The template is now active. Any previously active template has been moved to Draft.",
+                                "DRAFT": "The template is now draft. You can find and edit it in the Draft tab."
+                            }
                         },
                         "createModal": {
                             "web": {
@@ -1752,7 +1724,8 @@
                     "isPartOf": "Dataset is part of ({ count })",
                     "isDerivedFrom": "Datasets this derives from ({ count })",
                     "linkedDatasets": "Linked Datasets ({ count })",
-                    "isMemberOf": "Similar Datasets ({ count })"
+                    "isMemberOf": "Similar Datasets ({ count })",
+                    "waveOf": "Wave of ({ count })"
                 },
                 "Sources": {
                     "dataCustodian": "Data Custodian",
@@ -1761,6 +1734,20 @@
                     "collectionSources": "Collection Sources",
                     "noCollectionSources": "No collection sources listed",
                     "schemaVersion": "Schema Version"
+                },
+                "DatasetPageShell": {
+                    "schemaUnavailable": "The detailed metadata for this dataset can't be shown right now. Please try again later."
+                },
+                "MetadataFormat": {
+                    "title": "Metadata format",
+                    "schema": "Schema",
+                    "schemaVersion": "Schema version",
+                    "partner": "Partner",
+                    "metadataVersion": "Metadata version",
+                    "issued": "First published",
+                    "modified": "Last modified",
+                    "viewSchema": "View {schema} schema definition",
+                    "schemaDefinition": "schema definition"
                 }
             }
         },
@@ -1831,6 +1818,8 @@
             "privacyEnhancementsTooltip": "Description of the tools or software used to reduce level of identifiable data being shared",
             "outputs": "Link to research outputs",
             "outputsTooltip": "A URL link to any academic or non-academic research outputs, including code or software",
+            "publications": "Publications",
+            "publicationsTooltip": "Publications held on the Gateway that are linked to this data use",
             "gatewayOutputsTools": "Link to research outputs",
             "gatewayOutputsToolsTooltip": "A URL link to any academic or non-academic research outputs, including code or software",
             "gatewayOutputsPapers": "Link to research outputs",
@@ -2124,6 +2113,21 @@
             "title": "Cohort Discovery",
             "whatCanIDo": "What can I do in Cohort Discovery?",
             "learnAbout": "Learn about Cohort Discovery and gain access to the service"
+        },
+        "StatusMenu": {
+            "label": "Status: {status}. Change status",
+            "changed": {
+                "ACTIVE": "The {entity} is now active and will appear in search results. You can find and edit the {entity} in the Active tab.",
+                "DRAFT": "The {entity} is now draft and will no longer appear in search results. You can find and edit the {entity} in the Draft tab.",
+                "ARCHIVED": "The {entity} is now archived and will no longer appear in search results. You can find and edit the {entity} in the Archived tab."
+            },
+            "ACTIVE": "Active",
+            "DRAFT": "Draft",
+            "ARCHIVED": "Archived"
+        },
+        "PartnerProvenance": {
+            "via": "via <name></name>",
+            "tooltip": "Published by {partner} and surfaced on the Gateway."
         }
     },
     "modules": {
@@ -2200,6 +2204,14 @@
                 "title": "Delete a Team",
                 "message": "Are you sure you want to delete {TEAM_NAME}?",
                 "confirmButton": "Delete",
+                "cancelButton": "Cancel"
+            },
+            "RevokeAllTokensDialog": {
+                "title": "Revoke all sessions",
+                "message": "Every user will be signed out of the Gateway immediately and will need to sign in again. This cannot be undone.",
+                "selfWarning": "This includes you: you will be signed out as soon as you confirm.",
+                "acknowledge": "I understand that every user, including me, will be signed out",
+                "confirmButton": "Sign everyone out",
                 "cancelButton": "Cancel"
             },
             "ReindexConfirmDialog": {
@@ -2374,6 +2386,11 @@
     "hooks": {
         "UseDataAccessRequest": {
             "failedToCreate": "Failed to create DAR application"
+        },
+        "UseActivationCheck": {
+            "title": "Not quite ready",
+            "message": "There are some required fields missing values. Please complete these fields on the form to make this metadata active.",
+            "error": "There has been a problem checking this can be made active. Please try again."
         }
     }
 }

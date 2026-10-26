@@ -1,3 +1,4 @@
+import { ChipProps } from "@mui/material/Chip";
 import { RouteName } from "@/consts/routeName";
 
 const COHORT_STATUS = {
@@ -47,24 +48,24 @@ const NHS_SDE_FINAL_STATUSES: string[] = [
     NHS_SDE_STATUS.SUSPENDED,
 ];
 
-const statusMapping = {
-    [COHORT_STATUS.APPROVED]: "secondary",
-    [COHORT_STATUS.RENEWING]: "primary",
-    [COHORT_STATUS.REJECTED]: "warning",
-    [COHORT_STATUS.PENDING]: "greyCustom",
-    [COHORT_STATUS.BANNED]: "error",
-    [COHORT_STATUS.SUSPENDED]: "warningCustom",
-    [COHORT_STATUS.EXPIRED]: "error",
+const statusMapping: Record<string, ChipProps> = {
+    [COHORT_STATUS.APPROVED]: { color: "secondary" },
+    [COHORT_STATUS.RENEWING]: { color: "primary" },
+    [COHORT_STATUS.REJECTED]: { color: "error" },
+    [COHORT_STATUS.PENDING]: { variant: "outlined" },
+    [COHORT_STATUS.BANNED]: { color: "error" },
+    [COHORT_STATUS.SUSPENDED]: { color: "needsAction" },
+    [COHORT_STATUS.EXPIRED]: { color: "error" },
 };
 
-const NHSSDEStatusMapping = {
-    [NHS_SDE_STATUS.IN_PROCESS]: "greyCustom",
-    [NHS_SDE_STATUS.APPROVAL_REQUESTED]: "primary",
-    [NHS_SDE_STATUS.APPROVED]: "secondary",
-    [NHS_SDE_STATUS.REJECTED]: "warning",
-    [NHS_SDE_STATUS.BANNED]: "error",
-    [NHS_SDE_STATUS.SUSPENDED]: "warningCustom",
-    [NHS_SDE_STATUS.EXPIRED]: "default",
+const NHSSDEStatusMapping: Record<string, ChipProps> = {
+    [NHS_SDE_STATUS.IN_PROCESS]: { variant: "outlined" },
+    [NHS_SDE_STATUS.APPROVAL_REQUESTED]: { color: "primary" },
+    [NHS_SDE_STATUS.APPROVED]: { color: "secondary" },
+    [NHS_SDE_STATUS.REJECTED]: { color: "warning" },
+    [NHS_SDE_STATUS.BANNED]: { color: "error" },
+    [NHS_SDE_STATUS.SUSPENDED]: { color: "needsAction" },
+    [NHS_SDE_STATUS.EXPIRED]: { color: "default" },
 };
 
 const NHS_SDE_FILTER = "The NHS Research Secure Data Environment (SDE) Network";

@@ -5,8 +5,7 @@ import { tokens } from "@hdruk/ui/theme";
 import WarningAmberIcon from "@mui/icons-material/WarningAmber";
 import { Box } from "@mui/material";
 import { useTranslations } from "next-intl";
-import { Button, Loading } from "@hdruk/ui";
-import Chip from "@/components/Chip";
+import { Button, Chip, ChipProps, Loading } from "@hdruk/ui";
 import IndicateNhseSdeAccessButton from "@/components/IndicateNhseSdeAccessButton";
 import Link from "@/components/Link";
 import Paper from "@/components/Paper";
@@ -17,7 +16,6 @@ import { useCohortStatus } from "@/hooks/useCohortStatus";
 import useModal from "@/hooks/useModal";
 import usePost from "@/hooks/usePost";
 import apis from "@/config/apis";
-import { colors } from "@/config/theme";
 import {
     COHORT_ABOUT_HREF,
     NHS_SDE_FINAL_STATUSES,
@@ -100,16 +98,16 @@ const NhsSdeAccessStepper = () => {
         return STEP_STATE.PENDING;
     };
 
-    const badge = !hasAccess
+    const badge: Pick<ChipProps, "label" | "color"> | null = !hasAccess
         ? null
         : approvalRequested
-        ? { label: t("badgePending"), bg: tokens.status.faded }
+        ? { label: t("badgePending"), color: "archived" }
         : inProcess || (applied && canApply)
-        ? { label: t("badgeAwaitingAction"), bg: tokens.status.needsAction }
+        ? { label: t("badgeAwaitingAction"), color: "needsAction" }
         : isApproved
-        ? { label: capitalise(nhs), bg: colors.green400 }
+        ? { label: capitalise(nhs), color: "success" }
         : isNegative
-        ? { label: capitalise(nhs), bg: tokens.status.error }
+        ? { label: capitalise(nhs), color: "error" }
         : null;
 
     const openConfirmModal = () => {
@@ -264,11 +262,7 @@ const NhsSdeAccessStepper = () => {
                 <>
                     {badge && (
                         <Box sx={{ mb: 3 }}>
-                            <Chip
-                                size="small"
-                                label={badge.label}
-                                sx={{ bgcolor: badge.bg, color: tokens.text.primaryWhite }}
-                            />
+                            <Chip size="small" {...badge} />
                         </Box>
                     )}
 

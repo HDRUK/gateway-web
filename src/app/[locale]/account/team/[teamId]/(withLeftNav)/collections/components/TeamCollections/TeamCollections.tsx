@@ -2,28 +2,34 @@
 
 import { useEffect, useMemo, useState } from "react";
 import { useForm } from "react-hook-form";
+import { Button } from "@hdruk/ui";
+import { tokens } from "@hdruk/ui/theme";
 import { useTranslations } from "next-intl";
 import { useRouter, useSearchParams } from "next/navigation";
-import { tokens } from "@hdruk/ui/theme";
 import { Collection } from "@/interfaces/Collection";
 import { PaginationType } from "@/interfaces/Pagination";
 import Box from "@/components/Box";
-import { Button } from "@hdruk/ui";
 import Paper from "@/components/Paper";
 import Tabs from "@/components/Tabs";
 import Typography from "@/components/Typography";
+import useActivationCheck from "@/hooks/useActivationCheck";
 import useDebounce from "@/hooks/useDebounce";
 import useGet from "@/hooks/useGet";
-import useModal from "@/hooks/useModal";
 import usePatch from "@/hooks/usePatch";
+import notificationService from "@/services/notification";
 import apis from "@/config/apis";
+import { collectionValidationSchema } from "@/config/forms/collection";
 import {
     searchDefaultValues,
     sortByOptions,
 } from "@/config/forms/collectionAccountSearch";
 import { DataStatus } from "@/consts/application";
-import { AddIcon, ArchiveIcon, EditIcon, UnarchiveIcon } from "@/consts/icons";
+import { AddIcon, EditIcon } from "@/consts/icons";
 import { RouteName } from "@/consts/routeName";
+import {
+    getCollectionActivationValues,
+    loadEntityActivation,
+} from "@/utils/activation";
 import { capitalise } from "@/utils/general";
 import CollectionsTab from "../CollectionsTab";
 
@@ -48,10 +54,10 @@ const TeamCollections = ({
     userId,
 }: TeamCollectionsProps) => {
     const t = useTranslations(TRANSLATION_PATH);
+    const tStatus = useTranslations("components.StatusMenu");
+    const checkActivation = useActivationCheck();
     const router = useRouter();
-    const { showModal } = useModal();
     const searchParams = useSearchParams();
-    const tab = searchParams?.get("tab");
 
     const [initialSort] = sortByOptions.filter(
         o => o.value === searchDefaultValues.sortField
@@ -142,18 +148,38 @@ const TeamCollections = ({
 
     const patchCollection = usePatch<Partial<Collection>>(baseCollectionsUrl, {
         localeKey: "archiveCollection",
+        successNotificationsOn: false,
     });
 
     useEffect(() => {
         window.scrollTo({ top: 0 });
     }, [queryParams.page]);
 
-    const showArchiveButton =
-        tab !== DataStatus.ARCHIVED &&
-        (permissions["collections.delete"] || !teamId);
-    const showUnarchiveButton =
-        tab === DataStatus.ARCHIVED &&
-        (permissions["collections.update"] || !teamId);
+    const handleStatusChange = async (id: number, status: DataStatus) => {
+        if (
+            status === DataStatus.ACTIVE &&
+            !(await checkActivation({
+                load: loadEntityActivation(
+                    `${baseCollectionsUrl}/${id}`,
+                    collectionValidationSchema,
+                    getCollectionActivationValues
+                ),
+            }))
+        ) {
+            return;
+        }
+
+        const result = await patchCollection(id, { status });
+        await Promise.all([mutateCollections(), mutateCount()]);
+
+        if (result !== null) {
+            notificationService.apiSuccess(
+                tStatus(`changed.${status}`, {
+                    entity: t("actions.entityName"),
+                })
+            );
+        }
+    };
     const showAddNewButton = useMemo(
         () => permissions["collections.create"] || !teamId,
         [permissions]
@@ -169,53 +195,6 @@ const TeamCollections = ({
                           : `/${RouteName.ACCOUNT}/${RouteName.PROFILE}/${RouteName.COLLECTIONS}`,
                       icon: EditIcon,
                       label: t("actions.edit.label"),
-                  },
-              ]
-            : []),
-        ...(showUnarchiveButton
-            ? [
-                  {
-                      action: (id: number) => {
-                          showModal({
-                              tertiaryButton: {
-                                  onAction: async () => {
-                                      await patchCollection(id, {
-                                          status: DataStatus.ACTIVE,
-                                      });
-                                      mutateCollections();
-                                      mutateCount();
-                                  },
-                                  buttonText: t("actions.unarchive.buttonText"),
-                              },
-                              onSuccess: async () => {
-                                  await patchCollection(id, {
-                                      status: DataStatus.DRAFT,
-                                  });
-                                  mutateCollections();
-                                  mutateCount();
-                              },
-                              confirmText: t("actions.unarchive.confirmText"),
-                              title: t("actions.unarchive.title"),
-                              content: t("actions.unarchive.content"),
-                          });
-                      },
-                      icon: UnarchiveIcon,
-                      label: t("actions.unarchive.label"),
-                  },
-              ]
-            : []),
-        ...(showArchiveButton
-            ? [
-                  {
-                      action: async (id: number) => {
-                          await patchCollection(id, {
-                              status: DataStatus.ARCHIVED,
-                          });
-                          mutateCollections();
-                          mutateCount();
-                      },
-                      icon: ArchiveIcon,
-                      label: t("actions.archive.label"),
                   },
               ]
             : []),
@@ -257,6 +236,12 @@ const TeamCollections = ({
                 }
                 isLoading={isLoading}
                 actions={actions}
+                onStatusChange={showEditButton ? handleStatusChange : undefined}
+                disabledStatusOptions={
+                    permissions["collections.delete"] || !teamId
+                        ? undefined
+                        : [DataStatus.ARCHIVED]
+                }
             />
         ),
     }));

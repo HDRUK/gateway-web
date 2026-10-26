@@ -22,6 +22,9 @@ import {
     FILTER_MATERIAL_TYPE,
     FILTER_FORMAT_STANDARDS,
     FILTER_COHORT_DISCOVERY,
+    FILTER_PUBLICATION_LINK_TYPE,
+    FILTER_CATEGORY,
+    FILTER_LICENSE,
 } from "@/config/forms/filters";
 import { PMC_TYPE_FIELD } from "@/config/forms/search";
 import { DataSource } from "@/consts/search";
@@ -93,6 +96,14 @@ interface SearchResultBase {
 export interface SearchResultDataset extends SearchResultBase {
     highlight: Highlight;
     metadata: Metadata;
+    /** The partner context that owns the dataset, e.g. "HDRUK" or "CRUK". */
+    partner_context?: string;
+    /**
+     * The owning partner's display name, present only when that context is not
+     * this deployment's own - so its presence is what decides whether the
+     * result shows a "via ..." provenance line.
+     */
+    partner_name?: string | null;
     team: {
         id: number;
         member_of: string;
@@ -258,6 +269,9 @@ export interface SearchQueryParams {
     [PMC_TYPE_FIELD]: string | undefined;
     [FILTER_FORMAT_STANDARDS]: string[] | undefined;
     [FILTER_COHORT_DISCOVERY]: string[] | undefined;
+    [FILTER_PUBLICATION_LINK_TYPE]: string[] | undefined;
+    [FILTER_CATEGORY]: string[] | undefined;
+    [FILTER_LICENSE]: string[] | undefined;
 }
 
 export type CountType = { [key: string]: number };

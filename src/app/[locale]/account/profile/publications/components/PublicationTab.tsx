@@ -14,6 +14,7 @@ import {
     sortField,
     toggleDirection,
 } from "@/config/forms/publicationAccountSearch";
+import { DataStatus } from "@/consts/application";
 
 const TRANSLATION_PATH =
     "pages.account.profile.publications.components.PublicationTab";
@@ -26,6 +27,8 @@ interface PublicationTabProps {
         action?: (id: number) => void;
         label: string;
     }[];
+    onStatusChange?: (id: number, status: DataStatus) => void;
+    disabledStatusOptions?: DataStatus[];
     lastPage?: number;
     from?: number;
     to?: number;
@@ -40,6 +43,8 @@ interface PublicationTabProps {
 
 const PublicationTab = ({
     actions,
+    onStatusChange,
+    disabledStatusOptions,
     list,
     label,
     lastPage,
@@ -98,6 +103,8 @@ const PublicationTab = ({
                 .map(publication => (
                     <PublicationCard
                         actions={actions}
+                        onStatusChange={onStatusChange}
+                        disabledStatusOptions={disabledStatusOptions}
                         key={publication.id}
                         publication={publication}
                     />

@@ -726,7 +726,7 @@ const ApplicationSection = ({
                                                       teamApplication.approval_status
                                                   )
                                                 ? "success"
-                                                : "warningCustom"
+                                                : "needsAction"
                                         }
                                     />
                                 )}

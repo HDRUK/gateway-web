@@ -7,6 +7,7 @@ import {
 } from "react-hook-form";
 import dayjs from "dayjs";
 import { get, isArray, isEmpty, isObject, set } from "lodash";
+import { buildYup } from "schema-to-yup";
 import { ComponentTypes } from "@/interfaces/ComponentTypes";
 import { Metadata, Revision } from "@/interfaces/Dataset";
 import { FileUploadFields } from "@/interfaces/FileUpload";
@@ -401,6 +402,15 @@ const generateValidationRules = (
     return transformedObject;
 };
 
+const getDatasetValidationSchema = (
+    validation: FormHydrationValidation[],
+    isDraft = false
+) =>
+    buildYup({
+        type: "object",
+        properties: !isDraft ? generateValidationRules(validation) : {},
+    });
+
 const convertRevisionsToArray = (data: {
     revisions: Revision | Revision[] | null;
 }) => {
@@ -647,6 +657,7 @@ export {
     renderFormHydrationField,
     formatValidationItems,
     generateValidationRules,
+    getDatasetValidationSchema,
     formGetFieldsCompletedCount,
     mapFormFieldsForSubmission,
     mapExistingDatasetToFormFields,

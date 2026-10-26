@@ -77,6 +77,7 @@ const ResultCardTool = ({ result }: ResultCardToolProps) => {
                 secondary={
                     <ToolDescription
                         maxLine={2}
+                        component="div"
                         text={
                             description ? (
                                 <MarkDownSanitizedWithHtml
