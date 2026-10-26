@@ -651,7 +651,11 @@
                     "emailPreviewRendering": "Rendering...",
                     "emailPreviewError": "Couldn't render a preview. Check the MJML in the body field for errors.",
                     "usersTab": "Users",
-                    "usersWarning": "Dragon's Ahead! This page allows the complete deletion of user accounts. There is no coming back from this. You have been warned. Please ensure you know what you're doing. You cannot delete users who currently own live entities. You must first transfer ownership, or delete the entity."
+                    "usersWarning": "Dragon's Ahead! This page allows the complete deletion of user accounts. There is no coming back from this. You have been warned. Please ensure you know what you're doing. You cannot delete users who currently own live entities. You must first transfer ownership, or delete the entity.",
+                    "sessionsTab": "Sessions",
+                    "sessionsTitle": "Sessions",
+                    "sessionsInfo": "Revoking all sessions invalidates every Gateway sign-in token issued up to now. Every user, including you, is signed out immediately and must sign in again. Use this in response to a suspected token or secret compromise.",
+                    "revokeAllSessions": "Revoke all sessions"
                 }
             },
             "team": {
@@ -2200,6 +2204,14 @@
                 "title": "Delete a Team",
                 "message": "Are you sure you want to delete {TEAM_NAME}?",
                 "confirmButton": "Delete",
+                "cancelButton": "Cancel"
+            },
+            "RevokeAllTokensDialog": {
+                "title": "Revoke all sessions",
+                "message": "Every user will be signed out of the Gateway immediately and will need to sign in again. This cannot be undone.",
+                "selfWarning": "This includes you: you will be signed out as soon as you confirm.",
+                "acknowledge": "I understand that every user, including me, will be signed out",
+                "confirmButton": "Sign everyone out",
                 "cancelButton": "Cancel"
             },
             "ReindexConfirmDialog": {
