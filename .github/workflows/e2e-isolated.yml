@@ -248,10 +248,16 @@ jobs:
           restore-keys: |
             e2e-cypress-${{ runner.os }}-
 
+      - name: Setup Chrome
+        id: setup-chrome
+        uses: browser-actions/setup-chrome@v2.2.0
+        with:
+          chrome-version: 155.0.8059.84
+
       - name: Run Cypress Tests
         uses: cypress-io/github-action@v6
         with:
-          browser: chrome
+          browser: ${{ steps.setup-chrome.outputs.chrome-path }}
           headless: true
 
       # - name: Upload Cypress video
