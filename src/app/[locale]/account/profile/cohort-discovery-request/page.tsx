@@ -4,7 +4,7 @@ import CohortDiscoveryCoverPage from "./components/CohortDiscoveryCoverPage";
 
 export const metadata = metaData(
     {
-        title: "CohortDiscovery",
+        title: "Cohort Discovery - My Access Request",
         description: "",
     },
     noFollowRobots
