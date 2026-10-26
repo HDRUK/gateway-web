@@ -1,3 +1,9 @@
+## [2.49.1](https://github.com/HDRUK/gateway-web/compare/v2.49.0...v2.49.1) (2026-10-26)
+
+### 🐛 Bug Fixes
+
+* **GAT-9999:** Update next version (#1727) ([3ffbef2](https://github.com/HDRUK/gateway-web/commit/3ffbef27d89850fddbacc98f3b1548500d4935a7)), closes [GAT-9999](undefinedGAT-9999)
+
 ## [2.49.0](https://github.com/HDRUK/gateway-web/compare/v2.48.0...v2.49.0) (2026-10-15)
 
 ### ✨ Features
