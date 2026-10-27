@@ -23,7 +23,7 @@ export default function Header({
             <Typography variant="h2">
                 {cohortRequest.user.name}
                 <Typography
-                    sx={{ ml: 1, color: "GrayText", fontSize: 18 }}
+                    sx={{ ml: 1, color: "text.secondary", fontSize: 18 }}
                     variant="body1"
                     component="span">
                     {cohortRequest.user.email}

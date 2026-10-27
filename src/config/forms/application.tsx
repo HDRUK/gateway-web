@@ -68,6 +68,7 @@ const formFields = [
 const editFormFields = [
     {
         name: "enabled",
+        "aria-label": "Enabled",
         component: inputComponents.SwitchInline,
         formControlSx: { alignItems: "center" },
         required: true,

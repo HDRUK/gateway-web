@@ -1,6 +1,6 @@
 import { useId } from "react";
-import { Box, CardActions } from "@mui/material";
 import { Button } from "@hdruk/ui";
+import { Box, CardActions } from "@mui/material";
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
 import CardMedia from "@mui/material/CardMedia";
@@ -9,7 +9,7 @@ import { ArrowForward } from "@/consts/icons";
 import { formatDate } from "@/utils/date";
 import EllipsisLineLimit from "../EllipsisLineLimit";
 import Link from "../Link";
-import { DateBox } from "./NewsSummaryCard.styles";
+import { DateBox, DateText } from "./NewsSummaryCard.styles";
 
 interface NewsSummaryCardProps {
     buttonText: string;
@@ -50,11 +50,12 @@ const NewsSummaryCard = ({
                 component="img"
                 height={imageHeight}
                 image={imageLink}
-                alt={imageAlt}
+                alt={imageAlt ?? ""}
             />
-            <DateBox aria-label={formatDate(date, "DD MMMM YYYY")}>
-                <div>{formatDate(date, "MMM")}</div>
-                <div>{formatDate(date, "DD")}</div>
+            <DateBox>
+                <div aria-hidden="true">{formatDate(date, "MMM")}</div>
+                <div aria-hidden="true">{formatDate(date, "DD")}</div>
+                <DateText>{formatDate(date, "DD MMMM YYYY")}</DateText>
             </DateBox>
             <CardContent>
                 <Typography
@@ -80,9 +81,7 @@ const NewsSummaryCard = ({
             {variant === "feature" && (
                 <CardActions>
                     <Link href={url} color="primary" passHref>
-                        <Button
-                            variant="text"
-                            endIcon={<ArrowForward />}>
+                        <Button variant="text" endIcon={<ArrowForward />}>
                             {buttonText}
                         </Button>
                     </Link>

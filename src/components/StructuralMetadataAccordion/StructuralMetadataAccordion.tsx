@@ -134,7 +134,7 @@ const StructuralMetadataAccordion = ({
                                 </TableHead>
                                 <TableBody
                                     sx={{
-                                        color: tokens.text.disabled,
+                                        color: tokens.text.faded,
                                     }}>
                                     {item?.rows.map(row => (
                                         <TableRow key={row.name}>

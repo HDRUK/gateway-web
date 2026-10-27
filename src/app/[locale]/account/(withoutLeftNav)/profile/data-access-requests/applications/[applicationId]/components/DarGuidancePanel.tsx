@@ -57,7 +57,7 @@ const DarGuidancePanel = ({ guidanceText }: DarGuidancePanelProps) => {
             ) : (
                 <Typography
                     sx={{
-                        color: theme.palette.grey[500],
+                        color: tokens.text.faded,
                         textAlign: isStacked ? "left" : "center",
                     }}>
                     {t("defaultGuidance")}

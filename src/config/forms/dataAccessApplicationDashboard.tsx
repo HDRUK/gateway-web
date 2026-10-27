@@ -27,6 +27,7 @@ const searchFilter = {
     name: "searchTitle",
     placeholder: "I'm looking for...",
     label: "",
+    inputProps: { "aria-label": "Search data access requests" },
     icon: SearchIcon,
     formControlSx: { mb: 0 },
 };

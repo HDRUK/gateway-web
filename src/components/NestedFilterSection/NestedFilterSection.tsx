@@ -167,6 +167,7 @@ interface NestedFilterSectionProps<TFieldValues extends FieldValues> {
     }) => void;
     setValue: UseFormSetValue<TFieldValues>;
     resetFilterSection: () => void;
+    ariaLabel?: string;
 }
 const NestedFilterSection = <TFieldValues extends FieldValues>({
     filterItem,
@@ -182,6 +183,7 @@ const NestedFilterSection = <TFieldValues extends FieldValues>({
     handleCheckboxChange,
     setValue,
     resetFilterSection,
+    ariaLabel,
 }: NestedFilterSectionProps<TFieldValues>) => {
     const t = useTranslations("components.NestedFilterSection");
     const idPrefix = useId();
@@ -232,6 +234,7 @@ const NestedFilterSection = <TFieldValues extends FieldValues>({
                 name={filterSection as Path<TFieldValues>}
                 label=""
                 placeholder={placeholder || t("placeholder")}
+                inputProps={{ "aria-label": ariaLabel }}
                 icon={SearchIcon}
                 showClearButton
                 setValue={setValue}

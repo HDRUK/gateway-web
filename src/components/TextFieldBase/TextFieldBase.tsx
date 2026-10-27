@@ -7,13 +7,13 @@ import {
     useController,
 } from "react-hook-form";
 import { SerializedStyles } from "@emotion/react";
+import { tokens } from "@hdruk/ui/theme";
 import {
     InputAdornment,
     OutlinedInput,
     IconButton,
     SxProps,
 } from "@mui/material";
-import { tokens } from "@hdruk/ui/theme";
 import { IconType } from "@/interfaces/Ui";
 import FormInputWrapper from "@/components/FormInputWrapper";
 import theme from "@/config/theme";
@@ -102,7 +102,9 @@ const TextFieldBase = <
             required={required}
             formControlSx={formControlSx}>
             <OutlinedInput
-                aria-describedby={info ? `${name}-information` : undefined}
+                aria-describedby={
+                    info && !horizontalForm ? `${name}-information` : undefined
+                }
                 fullWidth={fullWidth}
                 size="small"
                 disabled={disabled}

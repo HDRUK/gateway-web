@@ -5,7 +5,7 @@ export const Content = styled("div")(({ theme }) => ({
         fontSize: 18,
     },
     a: {
-        color: theme.palette.secondary.main,
+        color: theme.palette.link.main,
         ":hover": {
             textDecoration: "none",
         },

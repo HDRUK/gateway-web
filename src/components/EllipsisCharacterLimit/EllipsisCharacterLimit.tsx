@@ -1,6 +1,6 @@
 import { ReactNode } from "react";
-import { Chip, Tooltip } from "@mui/material";
 import { Button, ButtonProps } from "@hdruk/ui";
+import { Chip, Tooltip } from "@mui/material";
 import ConditionalWrapper from "@/components/ConditionalWrapper";
 import { getShortenedText } from "@/utils/string";
 
@@ -12,23 +12,23 @@ interface EllipsisCharacterLimitProps extends ButtonProps {
     action?: () => void;
 }
 
-const tooltipWrapper = (text: string) => (children: ReactNode) => {
-    return (
-        <Tooltip title={text} placement="bottom">
+const tooltipWrapper = (text: string) => {
+    const TooltipWrapper = (children: ReactNode) => (
+        <Tooltip title={text} placement="bottom" describeChild>
             <span>{children}</span>
         </Tooltip>
     );
+    return TooltipWrapper;
 };
 
-const buttonWrapper =
-    (rest: ButtonProps = {}) =>
-    (children: ReactNode) => {
-        return (
-            <Button size="small" {...rest}>
-                {children}
-            </Button>
-        );
-    };
+const buttonWrapper = (rest: ButtonProps = {}) => {
+    const ButtonWrapper = (children: ReactNode) => (
+        <Button size="small" {...rest}>
+            {children}
+        </Button>
+    );
+    return ButtonWrapper;
+};
 
 const EllipsisCharacterLimit = ({
     text,

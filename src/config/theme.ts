@@ -91,9 +91,6 @@ export const colors = {
 };
 
 const palette = {
-    secondary: {
-        main: colors.green400,
-    },
     // `main` is the resting fill and `dark` the hover: MUI derives every
     // button state from these, so the shades carry the whole colour.
     greyCustom: {
@@ -164,7 +161,7 @@ const theme = createHdrukTheme({
                 indicator: {
                     height: 3,
                     borderRadius: 3,
-                    backgroundColor: palette.secondary.main,
+                    backgroundColor: colors.green400,
                 },
             },
         },

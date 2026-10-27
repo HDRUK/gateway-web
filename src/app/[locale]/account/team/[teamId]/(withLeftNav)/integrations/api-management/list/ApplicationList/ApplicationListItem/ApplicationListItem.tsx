@@ -1,5 +1,6 @@
 "use client";
 
+import { tokens } from "@hdruk/ui/theme";
 import { Card } from "@mui/material";
 import Link from "next/link";
 import { useParams } from "next/navigation";
@@ -44,7 +45,7 @@ const ApplicationListItem = ({ application }: ApplicationListItemProps) => {
                             sx={{
                                 textAlign: "right",
                                 verticalAlign: "top",
-                                color: "#868E96",
+                                color: tokens.text.faded,
                             }}>
                             Created - {formatDate(application.created_at)}
                         </Typography>

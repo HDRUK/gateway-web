@@ -19,7 +19,7 @@ const getColumns = (): ColumnDef<Log>[] => {
             id: "request_status",
             cell: ({ row: { original } }) => {
                 return (
-                    <Typography color="GrayText">
+                    <Typography color="text.secondary">
                         {original.request_status}
                     </Typography>
                 );
@@ -31,7 +31,7 @@ const getColumns = (): ColumnDef<Log>[] => {
             id: "nhse_sde_request_status",
             cell: ({ row: { original } }) => {
                 return (
-                    <Typography color="GrayText">
+                    <Typography color="text.secondary">
                         {original.nhse_sde_request_status}
                     </Typography>
                 );
@@ -43,7 +43,7 @@ const getColumns = (): ColumnDef<Log>[] => {
             id: "updated_at",
             cell: ({ row: { original } }) => {
                 return (
-                    <Typography color="GrayText">
+                    <Typography color="text.secondary">
                         {formatDate(original.updated_at, "DD/MM/YYYY")}
                     </Typography>
                 );
@@ -55,7 +55,9 @@ const getColumns = (): ColumnDef<Log>[] => {
             id: "details",
             cell: ({ row: { original } }) => {
                 return (
-                    <Typography color="GrayText">{original.details}</Typography>
+                    <Typography color="text.secondary">
+                        {original.details}
+                    </Typography>
                 );
             },
             header: () => <span>Details</span>,

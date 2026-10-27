@@ -65,6 +65,7 @@ export interface AutocompleteProps<T extends FieldValues> {
     loading?: boolean;
     groupBy?: MuiProps["groupBy"];
     sx?: MuiProps["sx"];
+    ariaLabel?: string;
 }
 
 const MAX_DISPLAYED_TAGS = 20;
@@ -104,6 +105,7 @@ const Autocomplete = <T extends FieldValues>(props: AutocompleteProps<T>) => {
         chipColor,
         maxLabelLength = 40,
         isOptionEqualToValue,
+        ariaLabel,
         ...restProps
     } = props;
 
@@ -194,9 +196,10 @@ const Autocomplete = <T extends FieldValues>(props: AutocompleteProps<T>) => {
                             const tagProps = getTagProps({ index });
                             const { key, ...restTagProps } = tagProps;
 
-                            const rawLabel = getChipLabel
-                                ? getChipLabel(options, option)
-                                : labelOf(option);
+                            const rawLabel =
+                                (getChipLabel &&
+                                    getChipLabel(options, option)) ??
+                                labelOf(option);
 
                             const truncated =
                                 rawLabel && rawLabel.length > maxLabelLength
@@ -220,6 +223,7 @@ const Autocomplete = <T extends FieldValues>(props: AutocompleteProps<T>) => {
                                     key={key}
                                     title={rawLabel}
                                     enterDelay={400}
+                                    describeChild
                                     arrow>
                                     {/* Tooltip needs a single child */}
                                     <span style={{ display: "inline-flex" }}>
@@ -267,6 +271,12 @@ const Autocomplete = <T extends FieldValues>(props: AutocompleteProps<T>) => {
                         {...params}
                         sx={{ padding: 0 }}
                         placeholder={placeholder}
+                        slotProps={{
+                            htmlInput: {
+                                ...params.inputProps,
+                                "aria-label": ariaLabel,
+                            },
+                        }}
                         InputProps={{
                             ...params.InputProps,
                             ...(startAdornmentIcon && {

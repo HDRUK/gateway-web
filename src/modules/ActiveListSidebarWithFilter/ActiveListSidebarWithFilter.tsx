@@ -3,6 +3,7 @@
 import { useState, useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { Box } from "@mui/material";
+import { useTranslations } from "next-intl";
 import { Filter, FilterItem, FilterValues } from "@/interfaces/Filter";
 import FilterSection from "@/components/FilterSection";
 import { FILTER_PUBLISHER_NAME } from "@/config/forms/filters";
@@ -22,6 +23,9 @@ const ActiveListSidebarWithFilter = ({
     filterValues: FilterValues;
     onFilterChange: (values: FilterValues) => void;
 }) => {
+    const t = useTranslations(
+        "pages.search.components.FilterPanel.filters.dataset"
+    );
     const [filterItem, setFilterItem] = useState<FilterItem>();
 
     useEffect(() => {
@@ -77,6 +81,7 @@ const ActiveListSidebarWithFilter = ({
                             countsDisabled={true}
                             handleCheckboxChange={handleCheckboxChange}
                             setValue={setValue}
+                            ariaLabel={t(FILTER_PUBLISHER_NAME)}
                         />
                     </Box>
                 )}

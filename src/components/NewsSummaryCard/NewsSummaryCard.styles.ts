@@ -1,4 +1,5 @@
 import { styled } from "@mui/material";
+import { visuallyHidden } from "@mui/utils";
 
 export const DateBox = styled("div")({
     textAlign: "center",
@@ -11,3 +12,5 @@ export const DateBox = styled("div")({
     background:
         "linear-gradient(141.65deg, #3DB28C 16.7%, #3DAE8D 29.38%, #3FA291 40.25%, #418F97 52.02%, #4474A0 62.89%, #475DA7 71.04%)",
 });
+
+export const DateText = styled("span")(visuallyHidden);

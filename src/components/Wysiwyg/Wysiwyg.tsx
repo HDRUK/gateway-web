@@ -28,6 +28,14 @@ const Wysiwyg = <
 
     const editor = useEditor({
         extensions: EXTENSIONS,
+        editorProps: {
+            attributes: {
+                role: "textbox",
+                "aria-multiline": "true",
+                "aria-label": label,
+                ...(info && { "aria-describedby": `${name}-information` }),
+            },
+        },
         onUpdate({ editor }) {
             field.onChange(JSON.stringify(editor.getJSON()));
         },

@@ -88,6 +88,9 @@ const TeamsList = ({
                 dataCustodian: t(`${TRANSLATION_PATH_TEAMS}.dataCustodian`),
                 teamAdmins: t(`${TRANSLATION_PATH_TEAMS}.teamAdmins`),
                 questionBank: t(`${TRANSLATION_PATH_COMMON}.questionBank`),
+                filterQuestionBank: t(`${TRANSLATION_PATH_COMMON}.filterBy`, {
+                    COLUMN: t(`${TRANSLATION_PATH_COMMON}.questionBank`),
+                }),
                 disabled: t(`${TRANSLATION_PATH_COMMON}.disabled`),
                 enabled: t(`${TRANSLATION_PATH_COMMON}.enabled`),
                 all: t(`${TRANSLATION_PATH_COMMON}.all`),

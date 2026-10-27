@@ -761,6 +761,7 @@ const FilterPanel = ({
                             setValue={setValue}
                             control={control}
                             filterItem={filterItem}
+                            ariaLabel={t(label)}
                             resetFilterSection={() =>
                                 resetNestedFilterSection(
                                     label,

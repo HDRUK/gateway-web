@@ -36,7 +36,11 @@ const CardActions = ({ actions, id, query }: CardActionsProps) => {
             }).toString();
 
             return (
-                <Tooltip key={label} placement="left" title={tooltip ?? label}>
+                <Tooltip
+                    key={label}
+                    placement="left"
+                    title={tooltip ?? label}
+                    describeChild>
                     {/* Tooltip's hover listener needs a non-disabled element to
                         attach to - a disabled <button> fires no mouse events. */}
                     <span>

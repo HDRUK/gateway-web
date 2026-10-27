@@ -22,7 +22,9 @@ import { getShortenedText } from "@/utils/string";
 import ClearFilterButton from "@/app/[locale]/(logged-out)/search/components/ClearFilterButton";
 import HTMLContent from "../HTMLContent";
 
-const OMIT_DEFAULT_ARIA_READONLY = null as unknown as boolean;
+const OMIT_DEFAULT_ARIA_READONLY = {
+    "aria-readonly": null as unknown as boolean,
+};
 
 interface FilterSectionProps<TFieldValues extends FieldValues> {
     filterItem: { label: string; value: string; buckets: BucketCheckbox[] };
@@ -126,6 +128,7 @@ const FilterSection = <TFieldValues extends FieldValues>({
                 name={filterSection as Path<TFieldValues>}
                 label=""
                 placeholder={placeholder || t("placeholder")}
+                inputProps={{ "aria-label": ariaLabel }}
                 icon={SearchIcon}
                 showClearButton
                 setValue={setValue}
@@ -149,7 +152,7 @@ const FilterSection = <TFieldValues extends FieldValues>({
                                 style={{ width: "100%" }}
                                 role="list"
                                 aria-label={ariaLabel}
-                                aria-readonly={OMIT_DEFAULT_ARIA_READONLY}
+                                {...OMIT_DEFAULT_ARIA_READONLY}
                                 containerRole="presentation"
                             />
                         );
