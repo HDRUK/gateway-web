@@ -20,17 +20,20 @@ src/templates/metadata/view/
     CRUK/default/index.mdx    CRUK's arrangement (demonstration)
     PRUK/default/index.mdx    PRUK - population (GWDM 2.3+) after the summary
     CROCOD/default/           clinical trial case studies (GWDM 2.3 crocod)
-  components/                 template vocabulary shared by every template
-    DatasetSection/  FieldStrip/  Prose/  SectionNav/
-  baseComponents.tsx          binds that vocabulary to the dataset
-  resolveTemplate.ts          resolution chain (pure, unit-tested)
+  gateway/                    Gateway renderers and special sections
+  production/                 the existing page's layout, from GWDM
+  baseComponents.tsx          binds the vocabulary to the dataset, Gateway-styled
   registry.ts                 resolves against the generated registry
   registry.generated.ts       AUTO-GENERATED - never edit
-  meta.ts                     shared types
 ```
 
-The generic renderer lives in [`src/modules/MetadataView`](../../../modules/MetadataView).
-It is schema-agnostic.
+The renderer (`MetadataView`), the template vocabulary (`DatasetSection`,
+`FieldStrip`, `Prose`, `SectionNav`), template resolution and the registry
+generator come from [`@hdruk/gwdm-view`](https://github.com/HDRUK/hdruk-gwdm-view),
+which the Population Research Gateway shares. They are schema-agnostic and
+unbranded; this folder supplies the Gateway's look through the package's
+`components`, `specialSections`, `Markdown` and `Nav` options. Changes to the
+renderer itself go in that package.
 
 ## Turning it on
 
@@ -136,10 +139,9 @@ Create one file - the path is the registration:
 src/templates/metadata/view/overrides/PRUK/default/index.mdx
 ```
 
-Restart the dev server. `next.config.js` runs
-[`scripts/generateTemplateRegistry.js`](../../../../scripts/generateTemplateRegistry.js)
-on startup, which rewrites `registry.generated.ts`; commit that alongside the
-template. Run `npm run generate:template-registry` to do it by hand.
+Restart the dev server. `next.config.js` runs the package's
+`generateTemplateRegistry` on startup, which rewrites `registry.generated.ts`;
+commit that alongside the template. Run `npm run generate:template-registry` to do it by hand.
 
 Every template exports `meta`:
 

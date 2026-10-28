@@ -1,5 +1,5 @@
+import { JSONSchemaDocument } from "@hdruk/gwdm-view";
 import { useRouter } from "next/navigation";
-import { JSONSchemaDocument } from "@/modules/MetadataView";
 import useModal from "@/hooks/useModal";
 import { fireEvent, render, screen } from "@/utils/testUtils";
 import { makeBaseComponents } from "../baseComponents";

@@ -1,3 +1,4 @@
+import { JSONSchemaDocument, SectionNav } from "@hdruk/gwdm-view";
 import { tokens } from "@hdruk/ui/theme";
 import { Alert } from "@mui/material";
 import { useTranslations } from "next-intl";
@@ -10,7 +11,6 @@ import Link from "@/components/Link";
 import Paper from "@/components/Paper";
 import Typography from "@/components/Typography";
 import ActiveListSidebar from "@/modules/ActiveListSidebar";
-import { JSONSchemaDocument } from "@/modules/MetadataView";
 import { RouteName } from "@/consts/routeName";
 import { getLatestVersion } from "@/utils/dataset";
 import ActionBar from "@/app/[locale]/(logged-out)/dataset/[datasetId]/components/ActionBar";
@@ -30,7 +30,6 @@ import {
     titleSx,
 } from "@/app/[locale]/(logged-out)/dataset/[datasetId]/page.styles";
 import { makeBaseComponents } from "@/templates/metadata/view/baseComponents";
-import SectionNav from "@/templates/metadata/view/components/SectionNav";
 import { buildProductionSections } from "@/templates/metadata/view/production/productionLayout";
 import {
     GeneratedTemplate,
@@ -193,6 +192,7 @@ const DatasetPageShell = ({
                                 sections={resolved.meta.sections}
                                 data={data}
                                 schema={schema ?? {}}
+                                Nav={ActiveListSidebar}
                                 sx={navSx}
                             />
                         )}

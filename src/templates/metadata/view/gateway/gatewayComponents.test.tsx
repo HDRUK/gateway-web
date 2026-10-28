@@ -1,5 +1,5 @@
+import { JSONSchemaDocument, MetadataView } from "@hdruk/gwdm-view";
 import { useRouter } from "next/navigation";
-import MetadataView, { JSONSchemaDocument } from "@/modules/MetadataView";
 import { fireEvent, render, screen, within } from "@/utils/testUtils";
 import { gatewayComponents, makeGatewayComponents } from "./gatewayComponents";
 

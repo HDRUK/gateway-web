@@ -1,7 +1,7 @@
+import { JSONSchemaDocument, sectionHasContent } from "@hdruk/gwdm-view";
 import { cookies } from "next/headers";
 import { useRouter } from "next/navigation";
 import { Dataset } from "@/interfaces/Dataset";
-import { JSONSchemaDocument, sectionHasContent } from "@/modules/MetadataView";
 import { RouteName } from "@/consts/routeName";
 import { fireEvent, render, screen, within } from "@/utils/testUtils";
 import {

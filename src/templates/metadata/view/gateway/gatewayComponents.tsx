@@ -1,10 +1,4 @@
 import { ComponentType, Fragment } from "react";
-import { uniq } from "lodash";
-import Box from "@/components/Box";
-import BoxContainer from "@/components/BoxContainer";
-import { MarkDownSanitizedWithHtml } from "@/components/MarkDownSanitizedWithHTML";
-import TooltipText from "@/components/TooltipText";
-import Typography from "@/components/Typography";
 import {
     isEmptyValue,
     labelFor,
@@ -14,7 +8,13 @@ import {
     sectionAnchorId,
     SectionProps,
     tableColumnKeys,
-} from "@/modules/MetadataView";
+} from "@hdruk/gwdm-view";
+import { uniq } from "lodash";
+import Box from "@/components/Box";
+import BoxContainer from "@/components/BoxContainer";
+import { MarkDownSanitizedWithHtml } from "@/components/MarkDownSanitizedWithHTML";
+import TooltipText from "@/components/TooltipText";
+import Typography from "@/components/Typography";
 import {
     escapeMarkdownUnderscores,
     formatTextWithLinks,

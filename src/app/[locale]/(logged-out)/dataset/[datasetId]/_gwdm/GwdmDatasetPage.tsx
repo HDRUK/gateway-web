@@ -1,5 +1,5 @@
+import { JSONSchemaDocument } from "@hdruk/gwdm-view";
 import { notFound } from "next/navigation";
-import { JSONSchemaDocument } from "@/modules/MetadataView";
 import { DataStatus } from "@/consts/application";
 import {
     GWDM_SCHEMA_NAME,

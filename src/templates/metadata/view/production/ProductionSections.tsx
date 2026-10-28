@@ -1,11 +1,11 @@
 import { ReactNode } from "react";
+import { RendererProps } from "@hdruk/gwdm-view";
 import { FieldType } from "@/interfaces/FieldType";
 import Box from "@/components/Box";
 import BoxContainer from "@/components/BoxContainer";
 import Link from "@/components/Link";
 import TooltipText from "@/components/TooltipText";
 import Typography from "@/components/Typography";
-import { RendererProps } from "@/modules/MetadataView";
 import { getSectionAnchorId } from "@/utils/dataset";
 import { DuoCodeDetails } from "@/app/[locale]/(logged-out)/dataset/[datasetId]/_gwdm/lib/duoCodeDetails";
 import DuoCodeChips from "@/app/[locale]/(logged-out)/dataset/[datasetId]/components/DatasetContent/DuoCodeChips";

@@ -1,10 +1,10 @@
-import { get, isEmpty, some, uniq } from "lodash";
-import { Dataset, DatasetSchemaInfo, VersionItem } from "@/interfaces/Dataset";
 import {
     isDelimitedList,
     sectionAnchorId,
     splitDelimitedList,
-} from "@/modules/MetadataView";
+} from "@hdruk/gwdm-view";
+import { get, isEmpty, some, uniq } from "lodash";
+import { Dataset, DatasetSchemaInfo, VersionItem } from "@/interfaces/Dataset";
 
 /** The partner used when the API does not say which context owns a dataset. */
 const FALLBACK_PARTNER = "HDRUK";

@@ -25,7 +25,7 @@
     "build:widget": "tsx ./widgetBuilder.ts",
     "cypress:open": "cypress open",
     "cypress:run": "cypress run",
-    "generate:template-registry": "node ./scripts/generateTemplateRegistry.js",
+    "generate:template-registry": "gwdm-view-registry --dir src/templates/metadata/view",
     "generate:schema-types": "tsx ./scripts/generateSchemaTypes.ts"
   },
   "dependencies": {
@@ -38,6 +38,7 @@
     "@emotion/server": "^11.10.0",
     "@emotion/styled": "^11.14.1",
     "@faker-js/faker": "^7.6.0",
+    "@hdruk/gwdm-view": "^0.1.0",
     "@hdruk/ui": "^1.9.1",
     "@hookform/resolvers": "^3.1.0",
     "@mdx-js/loader": "^3.1.1",
