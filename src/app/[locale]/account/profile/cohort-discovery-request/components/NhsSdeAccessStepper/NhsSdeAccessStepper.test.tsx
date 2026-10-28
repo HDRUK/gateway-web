@@ -73,9 +73,16 @@ const baseStatus = {
     hasAccess: false,
     nhseSdeRequestStatus: null,
     requestExpiry: null,
+    nhseSdeRequestExpiry: null,
     isLoading: false,
     hasFetched: true,
     refetch: jest.fn(),
+};
+
+const daysFromNow = (days: number) => {
+    const date = new Date();
+    date.setDate(date.getDate() + days);
+    return date.toISOString();
 };
 
 const baseFeatures = { isNhsSdeApplicationsEnabled: true };
@@ -219,6 +226,34 @@ describe("NhsSdeAccessStepper", () => {
         renderStepper();
 
         expect(screen.getByText("Approved")).toBeInTheDocument();
+    });
+
+    it("shows the days remaining in the NHS access period", () => {
+        mockUseCohortStatus.mockReturnValue({
+            ...baseStatus,
+            hasAccess: true,
+            nhseSdeRequestStatus: "APPROVED",
+            nhseSdeRequestExpiry: daysFromNow(545),
+        });
+
+        renderStepper();
+
+        expect(
+            screen.getByText(/days remaining in current access period/)
+        ).toBeInTheDocument();
+    });
+
+    it("warns once NHS access is expiring soon", () => {
+        mockUseCohortStatus.mockReturnValue({
+            ...baseStatus,
+            hasAccess: true,
+            nhseSdeRequestStatus: "APPROVED",
+            nhseSdeRequestExpiry: daysFromNow(14),
+        });
+
+        renderStepper();
+
+        expect(screen.getByText(/Access expiring in/)).toBeInTheDocument();
     });
 
     it("hides all the steps once NHS access has been granted", () => {

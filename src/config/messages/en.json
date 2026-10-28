@@ -388,6 +388,7 @@
                         "moreInfo": "More information about this service can be found <link>here</link>",
                         "badgeAwaitingAction": "Awaiting Action",
                         "badgePending": "Pending",
+                        "accessLimitedNote": "SDE access is limited by access to Gateway Cohort Discovery",
                         "step1Title": "Existing Cohort Discovery Access",
                         "step1Text": "All users must first request access to the Cohort Discovery tool via the HDR UK Gateway. Once approved you may request additional access to view NHS SDE Network datasets.\nIf you are unsure what this means, please first follow steps on the <link>How to request access</link> page.",
                         "applyButton": "Apply for NHS Research SDE Cohort Data Access",

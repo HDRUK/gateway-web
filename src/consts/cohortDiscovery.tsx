@@ -49,7 +49,7 @@ const NHS_SDE_FINAL_STATUSES: string[] = [
 ];
 
 const statusMapping: Record<string, ChipProps> = {
-    [COHORT_STATUS.APPROVED]: { color: "secondary" },
+    [COHORT_STATUS.APPROVED]: { color: "success" },
     [COHORT_STATUS.RENEWING]: { color: "primary" },
     [COHORT_STATUS.REJECTED]: { color: "error" },
     [COHORT_STATUS.PENDING]: { variant: "outlined" },
@@ -61,7 +61,7 @@ const statusMapping: Record<string, ChipProps> = {
 const NHSSDEStatusMapping: Record<string, ChipProps> = {
     [NHS_SDE_STATUS.IN_PROCESS]: { variant: "outlined" },
     [NHS_SDE_STATUS.APPROVAL_REQUESTED]: { color: "primary" },
-    [NHS_SDE_STATUS.APPROVED]: { color: "secondary" },
+    [NHS_SDE_STATUS.APPROVED]: { color: "success" },
     [NHS_SDE_STATUS.REJECTED]: { color: "warning" },
     [NHS_SDE_STATUS.BANNED]: { color: "error" },
     [NHS_SDE_STATUS.SUSPENDED]: { color: "needsAction" },
