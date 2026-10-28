@@ -4,7 +4,6 @@ import { ReactNode, useRef, useState } from "react";
 import { Button, Chip, Loading } from "@hdruk/ui";
 import { tokens } from "@hdruk/ui/theme";
 import CheckCircleIcon from "@mui/icons-material/CheckCircle";
-import QueryBuilderIcon from "@mui/icons-material/QueryBuilder";
 import { Box } from "@mui/material";
 import { useTranslations } from "next-intl";
 import { templateRepeatFields } from "@/interfaces/Cms";
@@ -27,6 +26,7 @@ import {
 import { differenceInDays } from "@/utils/date";
 import { capitalise } from "@/utils/general";
 import ProfileForm from "@/app/[locale]/account/profile/components/ProfileForm";
+import AccessDaysRemaining from "../AccessDaysRemaining";
 import CohortRequestTermsDialog from "../CohortRequestTermsDialog";
 import CohortUserDeclaration from "../CohortUserDeclaration";
 import { CircleState, StepNode, StepTitle } from "../Stepper";
@@ -80,10 +80,6 @@ const CohortAccessStepper = ({
         hasAccess &&
         daysRemaining != null &&
         daysRemaining <= COHORT_EXPIRY_WARNING_DAYS;
-
-    const indicatorColour = expiringSoon
-        ? tokens.text.warning
-        : tokens.text.faded;
 
     /* a renewing user still holds their approved access until it lapses */
     const accessStatus = isRenewing ? COHORT_STATUS.APPROVED : requestStatus;
@@ -207,26 +203,10 @@ const CohortAccessStepper = ({
                                         : statusMapping[accessStatus])}
                                 />
                                 {daysRemaining != null && (
-                                    <Box
-                                        sx={{
-                                            display: "flex",
-                                            alignItems: "center",
-                                            gap: 1,
-                                        }}>
-                                        <QueryBuilderIcon
-                                            sx={{ color: indicatorColour }}
-                                        />
-                                        <Typography
-                                            sx={{ color: indicatorColour }}>
-                                            {expiringSoon
-                                                ? tCd("accessExpiringIn", {
-                                                      days: daysRemaining,
-                                                  })
-                                                : `${daysRemaining} ${tCd(
-                                                      "daysRemaining"
-                                                  )}`}
-                                        </Typography>
-                                    </Box>
+                                    <AccessDaysRemaining
+                                        daysRemaining={daysRemaining}
+                                        expiringSoon={expiringSoon}
+                                    />
                                 )}
                             </Box>
                             {isRenewing && (

@@ -18,14 +18,19 @@ import usePost from "@/hooks/usePost";
 import apis from "@/config/apis";
 import {
     COHORT_ABOUT_HREF,
+    COHORT_EXPIRY_WARNING_DAYS,
+    COHORT_STATUS,
     NHS_SDE_FINAL_STATUSES,
     NHS_SDE_NEGATIVE_STATUSES,
     NHS_SDE_STATUS,
+    statusMapping,
     STEP_STATE,
 } from "@/consts/cohortDiscovery";
+import { differenceInDays } from "@/utils/date";
 import { capitalise } from "@/utils/general";
 import { revalidateCacheAction } from "@/app/actions/revalidateCacheAction";
 import { useFeatures } from "@/providers/FeatureProvider";
+import AccessDaysRemaining from "../AccessDaysRemaining";
 import { CircleState, StepNode, StepTitle } from "../Stepper";
 
 const TRANSLATION_PATH = "pages.account.profile.cohortDiscovery.nhsStepper";
@@ -51,6 +56,7 @@ const NhsSdeAccessStepper = () => {
     const {
         hasAccess,
         nhseSdeRequestStatus,
+        nhseSdeRequestExpiry,
         isLoading: statusLoading,
         hasFetched,
         refetch,
@@ -75,6 +81,13 @@ const NhsSdeAccessStepper = () => {
     const isNegative = !!nhs && NHS_SDE_NEGATIVE_STATUSES.includes(nhs);
     const isFinal = !!nhs && NHS_SDE_FINAL_STATUSES.includes(nhs);
     const canApply = !nhs || nhs === NHS_SDE_STATUS.EXPIRED;
+
+    const daysRemaining =
+        isApproved && nhseSdeRequestExpiry
+            ? differenceInDays(nhseSdeRequestExpiry, new Date())
+            : null;
+    const expiringSoon =
+        daysRemaining != null && daysRemaining <= COHORT_EXPIRY_WARNING_DAYS;
 
     const activeStep = (() => {
         if (!hasAccess) return STEP.EXISTING_ACCESS;
@@ -105,7 +118,12 @@ const NhsSdeAccessStepper = () => {
         : inProcess || (applied && canApply)
         ? { label: t("badgeAwaitingAction"), color: "needsAction" }
         : isApproved
-        ? { label: capitalise(nhs), color: "success" }
+        ? {
+              label: capitalise(nhs),
+              color: expiringSoon
+                  ? "warning"
+                  : statusMapping[COHORT_STATUS.APPROVED].color,
+          }
         : isNegative
         ? { label: capitalise(nhs), color: "error" }
         : null;
@@ -268,8 +286,21 @@ const NhsSdeAccessStepper = () => {
             ) : (
                 <>
                     {badge && (
-                        <Box sx={{ mb: 3 }}>
+                        <Box
+                            sx={{
+                                display: "flex",
+                                alignItems: "center",
+                                gap: 2,
+                                mb: 3,
+                            }}>
                             <Chip size="small" {...badge} />
+                            {daysRemaining != null && (
+                                <AccessDaysRemaining
+                                    daysRemaining={daysRemaining}
+                                    expiringSoon={expiringSoon}
+                                    note={t("accessLimitedNote")}
+                                />
+                            )}
                         </Box>
                     )}
 
