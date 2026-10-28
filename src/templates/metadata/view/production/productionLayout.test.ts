@@ -1,4 +1,4 @@
-import { JSONSchemaDocument, resolveAtPath } from "@/modules/MetadataView";
+import { JSONSchemaDocument, resolveAtPath } from "@hdruk/gwdm-view";
 import { datasetFields } from "@/app/[locale]/(logged-out)/dataset/[datasetId]/config";
 import gwdm20 from "@/mocks/data/dataset/gwdm/schemas/GWDM-2.0.json";
 import gwdm21 from "@/mocks/data/dataset/gwdm/schemas/GWDM-2.1.json";

@@ -1,17 +1,20 @@
 import { ComponentType, Fragment } from "react";
-import Box from "@/components/Box";
-import BulletList from "@/components/BulletList";
-import { MarkDownSanitizedWithHtml } from "@/components/MarkDownSanitizedWithHTML";
-import Typography from "@/components/Typography";
-import MetadataView, {
+import {
     isEmptyValue,
     labelFor,
+    MetadataView,
     MetadataViewComponents,
     RendererProps,
     resolveAtPath,
     resolveSchemaNode,
+    StripCell,
+    StripContainer,
     valueHasContent,
-} from "@/modules/MetadataView";
+} from "@hdruk/gwdm-view";
+import Box from "@/components/Box";
+import BulletList from "@/components/BulletList";
+import { MarkDownSanitizedWithHtml } from "@/components/MarkDownSanitizedWithHTML";
+import Typography from "@/components/Typography";
 import { escapeMarkdownUnderscores } from "@/utils/dataset";
 import { formatDate } from "@/utils/date";
 import {
@@ -19,7 +22,6 @@ import {
     makeBaseComponents,
     MetadataViewContext,
 } from "../../../baseComponents";
-import { StripCell, StripContainer } from "../../../components/FieldStrip";
 import {
     makeGatewayComponents,
     toList,

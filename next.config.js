@@ -1,6 +1,7 @@
 const createNextIntlPlugin = require("next-intl/plugin");
+const path = require("path");
 const createMDX = require("@next/mdx");
-const generateTemplateRegistry = require("./scripts/generateTemplateRegistry");
+const { generateTemplateRegistry } = require("@hdruk/gwdm-view/registry");
 
 const withNextIntl = createNextIntlPlugin();
 // Metadata view templates (src/templates/metadata/view/overrides/**/index.mdx)
@@ -9,7 +10,9 @@ const withMDX = createMDX();
 
 // Registers every template folder. next.config.js is read once at startup,
 // so a new template needs a dev server restart; edits hot-reload.
-generateTemplateRegistry();
+generateTemplateRegistry({
+    dir: path.join(__dirname, "src", "templates", "metadata", "view"),
+});
 
 const allowAllHeader = [
     { key: "Access-Control-Allow-Credentials", value: "true" },
