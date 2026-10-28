@@ -32,6 +32,7 @@ const searchFilter = {
     name: "searchTitle",
     placeholder: "Search Analysis Scripts & Software titles",
     label: "",
+    inputProps: { "aria-label": "Search Analysis Scripts & Software titles" },
 };
 
 const sortField = getSortField(sortByOptions);

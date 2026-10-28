@@ -1,5 +1,6 @@
 import { Dispatch, SetStateAction, useEffect, useState } from "react";
 import { useController, Control, useForm, FieldError } from "react-hook-form";
+import { Button, Loading } from "@hdruk/ui";
 import { tokens } from "@hdruk/ui/theme";
 import { IconButton, List, ListItem, Stack, SxProps } from "@mui/material";
 import { get } from "lodash";
@@ -14,7 +15,6 @@ import { DeleteForeverOutlinedIcon } from "@/consts/icons";
 import { ImageValidationError } from "@/consts/image";
 import { validateImageDimensions } from "@/utils/imageValidation";
 import { sanitiseString } from "@/utils/sanitiseString";
-import { Button, Loading } from "@hdruk/ui";
 import FormInputWrapper from "../FormInputWrapper";
 import Link from "../Link";
 import Typography from "../Typography";
@@ -335,7 +335,7 @@ const UploadFile = ({
                                 </Button>
 
                                 <Typography
-                                    color={tokens.text.disabled}
+                                    color={tokens.text.faded}
                                     sx={{ mt: 2 }}>
                                     {file?.name ||
                                         (acceptedFileTypes

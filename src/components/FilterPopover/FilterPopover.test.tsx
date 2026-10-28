@@ -14,6 +14,7 @@ describe("FilterPopover", () => {
     it("should open popover and render radio buttons", async () => {
         render(
             <FilterPopover
+                ariaLabel="Filter"
                 name="filter_status"
                 radios={radios}
                 setFilter={setFilterFn}
@@ -28,6 +29,7 @@ describe("FilterPopover", () => {
     it("should call setFilter with new filter value", async () => {
         render(
             <FilterPopover
+                ariaLabel="Filter"
                 name="filter_status"
                 radios={radios}
                 setFilter={setFilterFn}

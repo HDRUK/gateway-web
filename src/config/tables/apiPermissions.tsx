@@ -41,6 +41,13 @@ const getColumns = <T extends FieldValues>(
                         control={control}
                         name={`${original.name}.${key}`}
                         formControlSx={{ mb: 0 }}
+                        slotProps={{
+                            input: {
+                                "aria-label": `${capitalise(key)} ${
+                                    original.label
+                                }`,
+                            },
+                        }}
                         disabled={
                             key === "read" &&
                             columnReadDisabled[

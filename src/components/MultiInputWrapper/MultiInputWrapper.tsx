@@ -32,7 +32,12 @@ const MultiInputWrapper = <
                 <>
                     <Typography>{field.label}</Typography>
                     {field?.guidance ? (
-                        <Typography sx={{ color: "grey", fontSize: 12, ml: 1 }}>
+                        <Typography
+                            sx={{
+                                color: "text.secondary",
+                                fontSize: 12,
+                                ml: 1,
+                            }}>
                             {field.guidance}
                         </Typography>
                     ) : null}

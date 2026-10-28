@@ -37,7 +37,7 @@ const getColumns = ({
             id: "email",
             header: () => <Box textAlign="left">Email</Box>,
             cell: ({ row: { original } }) => (
-                <Typography color="GrayText">
+                <Typography color="text.secondary">
                     {original.preferred_email || original.email}
                 </Typography>
             ),

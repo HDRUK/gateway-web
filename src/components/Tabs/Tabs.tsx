@@ -49,12 +49,13 @@ export interface TabProps {
     handleChange?: (e: SyntheticEvent, value: string) => void;
 }
 
-const tooltipWrapper = (title: string) => (children: ReactElement) => {
-    return (
+const tooltipWrapper = (title: string) => {
+    const TooltipWrapper = (children: ReactElement) => (
         <Tooltip title={title} describeChild>
             {children}
         </Tooltip>
     );
+    return TooltipWrapper;
 };
 
 const CustomLink = forwardRef<
@@ -65,8 +66,11 @@ const CustomLink = forwardRef<
         param: string;
         persist: boolean | string[];
         tooltip?: string;
+        hasPanel?: boolean;
+        "aria-controls"?: string;
     }
->(({ href, children, param, persist, tooltip, ...rest }, ref) => {
+>(({ href, children, param, persist, tooltip, hasPanel, ...rest }, ref) => {
+    const { "aria-controls": ariaControls, ...linkProps } = rest;
     const searchParams = useSearchParams();
     const pathname = usePathname();
 
@@ -84,7 +88,8 @@ const CustomLink = forwardRef<
             <Link
                 ref={ref}
                 passHref
-                {...rest}
+                {...linkProps}
+                aria-controls={hasPanel ? ariaControls : undefined}
                 scroll={false}
                 href={{
                     pathname,
@@ -106,6 +111,8 @@ const CustomLink = forwardRef<
     );
 });
 
+CustomLink.displayName = "CustomLink";
+
 const Tabs = ({
     tabs,
     centered = false,
@@ -123,7 +130,10 @@ const Tabs = ({
 }: TabProps) => {
     const searchParams = useSearchParams();
     const currentTab = searchParams?.get(paramName);
-    const selectedTab = currentTab || defaultSelectedTab || tabs[0].value;
+    const selectedTab =
+        tabs.find(tab => tab.value === currentTab)?.value ||
+        defaultSelectedTab ||
+        tabs[0].value;
 
     return (
         <Box sx={{ width: "100%", typography: "body1", ...rootBoxSx }}>
@@ -152,30 +162,32 @@ const Tabs = ({
                         }}
                         centered={centered}
                         onChange={handleChange}>
-                        {tabs.map(({ label, value, tooltip, disabled, icon }) => (
-                            <MuiTab<ElementType>
-                                id={`tab-${value}`}
-                                component={CustomLink}
-                                disableRipple
-                                color="secondary"
-                                key={value}
-                                href={value}
-                                disabled={disabled}
-                                value={value}
-                                label={label}
-                                icon={icon}
-                                iconPosition="start"
-                                css={
-                                    variant === TabVariant.SEARCH
-                                        ? tabsStyle.search
-                                        : tabsStyle.normal
-                                }
-                                param={paramName}
-                                persist={persistParams}
-                                tooltip={tooltip}
-                                aria-description={tooltip}
-                            />
-                        ))}
+                        {tabs.map(
+                            ({ label, value, tooltip, disabled, icon }) => (
+                                <MuiTab<ElementType>
+                                    component={CustomLink}
+                                    disableRipple
+                                    color="secondary"
+                                    key={value}
+                                    href={value}
+                                    disabled={disabled}
+                                    value={value}
+                                    label={label}
+                                    icon={icon}
+                                    iconPosition="start"
+                                    css={
+                                        variant === TabVariant.SEARCH
+                                            ? tabsStyle.search
+                                            : tabsStyle.normal
+                                    }
+                                    param={paramName}
+                                    persist={persistParams}
+                                    hasPanel={renderTabContent}
+                                    tooltip={tooltip}
+                                    aria-description={tooltip}
+                                />
+                            )
+                        )}
                     </MuiTabList>
                 </Paper>
 
@@ -184,7 +196,6 @@ const Tabs = ({
                 {renderTabContent &&
                     tabs.map(({ value, content }) => (
                         <MuiTabPanel
-                            aria-labelledby={`tab-${value}`}
                             sx={{ padding: 0 }}
                             key={value}
                             value={value}>

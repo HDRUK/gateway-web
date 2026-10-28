@@ -13,6 +13,7 @@ const formFields = [
         name: "searchTitleDescription",
         placeholder: "Search titles and descriptions",
         label: "",
+        inputProps: { "aria-label": "Search titles and descriptions" },
         icon: SearchIcon,
     },
 ];

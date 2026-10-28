@@ -119,6 +119,7 @@
         "publish": "Publish",
         "cancel": "Cancel",
         "update": "Update",
+        "filterBy": "Filter by {COLUMN}",
         "questionBank": "Question Bank",
         "disabled": "Disabled",
         "enabled": "Enabled",
@@ -2037,6 +2038,21 @@
         "Loading": {
             "text": "Loading"
         },
+        "TextTime": {
+            "hour": "{LABEL} hour",
+            "minute": "{LABEL} minute"
+        },
+        "Wysiwyg": {
+            "undo": "Undo",
+            "redo": "Redo",
+            "bold": "Bold",
+            "italic": "Italic",
+            "underline": "Underline",
+            "code": "Code",
+            "bulletedList": "Bulleted list",
+            "numberedList": "Numbered list",
+            "link": "Insert link"
+        },
         "ProtectedRoute": {
             "title": "Protected route",
             "text": "You must be logged in to view this content"
@@ -2270,6 +2286,7 @@
                 "cancel": "Cancel",
                 "addResources": "Add resources",
                 "headerAdd": "Action",
+                "remove": "Remove",
                 "headerName": "Name",
                 "dataCustodian": "Data Custodian",
                 "entityType": "Entity Type",

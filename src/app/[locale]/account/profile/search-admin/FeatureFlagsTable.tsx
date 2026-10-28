@@ -1,8 +1,8 @@
 "use client";
 
 import { useMemo, useState } from "react";
-import { useTranslations } from "next-intl";
 import { Divider, Skeleton, Switch } from "@mui/material";
+import { useTranslations } from "next-intl";
 import Box from "@/components/Box";
 import Paper from "@/components/Paper";
 import Typography from "@/components/Typography";
@@ -73,6 +73,11 @@ export default function FeatureFlagsTable({ userId }: { userId?: string }) {
                 <Switch
                     checked={editingEnabled}
                     onChange={() => setEditingEnabled(prev => !prev)}
+                    slotProps={{
+                        input: {
+                            "aria-label": t("enableEditing"),
+                        },
+                    }}
                 />
             </Box>
             <Divider />
@@ -92,6 +97,11 @@ export default function FeatureFlagsTable({ userId }: { userId?: string }) {
                         <Switch
                             disabled={!editingEnabled}
                             checked={!!feature.value}
+                            slotProps={{
+                                input: {
+                                    "aria-label": feature.name,
+                                },
+                            }}
                             onChange={() =>
                                 toggle(feature.name, null).then(mutate)
                             }

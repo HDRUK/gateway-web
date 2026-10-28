@@ -59,6 +59,9 @@ export default function ActionMenu({
 }: ActionMenuProps) {
     const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
     const open = Boolean(anchorEl);
+    const id = React.useId();
+    const buttonId = `${id}-button`;
+    const menuId = `${id}-menu`;
     const handleClick = (event: React.MouseEvent<HTMLElement>) => {
         setAnchorEl(event.currentTarget);
     };
@@ -69,8 +72,8 @@ export default function ActionMenu({
     return (
         <div>
             <Button
-                id="action-menu-button"
-                aria-controls={open ? "action-menu" : undefined}
+                id={buttonId}
+                aria-controls={open ? menuId : undefined}
                 aria-haspopup="true"
                 aria-expanded={open ? "true" : undefined}
                 color={buttonColor}
@@ -82,9 +85,9 @@ export default function ActionMenu({
                 {label}
             </Button>
             <StyledMenu
-                id="action-menu"
+                id={menuId}
                 MenuListProps={{
-                    "aria-labelledby": "action-menu-button",
+                    "aria-labelledby": buttonId,
                 }}
                 anchorEl={anchorEl}
                 open={open}

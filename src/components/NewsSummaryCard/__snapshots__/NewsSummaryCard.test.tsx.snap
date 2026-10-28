@@ -14,15 +14,23 @@ exports[`NewsSummaryCard should render component 1`] = `
       src="/images/account/teams/integrations/create.jpg"
     />
     <div
-      aria-label="01 January 2023"
       class="mui-style-1gqr2ff"
     >
-      <div>
+      <div
+        aria-hidden="true"
+      >
         Jan
       </div>
-      <div>
+      <div
+        aria-hidden="true"
+      >
         01
       </div>
+      <span
+        class="mui-style-1ftw2zb"
+      >
+        01 January 2023
+      </span>
     </div>
     <div
       class="MuiCardContent-root mui-style-zajgoz-MuiCardContent-root"

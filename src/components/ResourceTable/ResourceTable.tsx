@@ -25,6 +25,7 @@ const ResourceTable = ({
 
     const tableTranslations = {
         headerAdd: t("headerAdd"),
+        remove: t("remove"),
         headerName: t("headerName"),
         dataCustodian: t("dataCustodian"),
         entityType: t("entityType"),

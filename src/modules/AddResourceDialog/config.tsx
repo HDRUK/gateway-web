@@ -9,6 +9,7 @@ export const defaultValues = {
 
 export const searchResource = {
     label: "",
+    inputProps: { "aria-label": "Enter the title of the resource" },
     component: inputComponents.TextField,
     showClearButton: true,
     variant: "outlined",

@@ -153,7 +153,7 @@ const DarActionBar = ({
                                         minWidth: 0,
                                     }}>
                                     <Typography
-                                        color="grey"
+                                        color="text.secondary"
                                         sx={{ minWidth: 120 }}>
                                         {label}
                                     </Typography>

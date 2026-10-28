@@ -38,6 +38,7 @@ const SwitchInline = <
         formControlSx,
         extraInfo,
         label,
+        "aria-label": ariaLabel,
         ...rest
     } = props;
 
@@ -64,7 +65,7 @@ const SwitchInline = <
                     m: 0,
                 }}
                 control={
-                    <Tooltip title={title}>
+                    <Tooltip title={title} describeChild>
                         <span>
                             <Switch
                                 size={size}
@@ -75,10 +76,13 @@ const SwitchInline = <
                                 checked={fieldProps.value}
                                 inputRef={ref}
                                 sx={{ ...switchSx, mb: 0 }}
-                                inputProps={{
-                                    "aria-describedby": extraInfo
-                                        ? `${name}-description`
-                                        : undefined,
+                                slotProps={{
+                                    input: {
+                                        "aria-label": ariaLabel,
+                                        "aria-describedby": extraInfo
+                                            ? `${name}-description`
+                                            : undefined,
+                                    },
                                 }}
                             />
                         </span>

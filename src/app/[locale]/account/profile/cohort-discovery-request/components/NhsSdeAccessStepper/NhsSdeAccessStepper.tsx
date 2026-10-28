@@ -1,11 +1,11 @@
 "use client";
 
 import { ReactNode, useState } from "react";
+import { Button, Chip, ChipProps, Loading } from "@hdruk/ui";
 import { tokens } from "@hdruk/ui/theme";
 import WarningAmberIcon from "@mui/icons-material/WarningAmber";
 import { Box } from "@mui/material";
 import { useTranslations } from "next-intl";
-import { Button, Chip, ChipProps, Loading } from "@hdruk/ui";
 import IndicateNhseSdeAccessButton from "@/components/IndicateNhseSdeAccessButton";
 import Link from "@/components/Link";
 import Paper from "@/components/Paper";
@@ -157,7 +157,7 @@ const NhsSdeAccessStepper = () => {
                     {!hasAccess && (
                         <Typography
                             component="div"
-                            color={tokens.text.disabled}
+                            color={tokens.text.faded}
                             sx={{ whiteSpace: "pre-line" }}>
                             {t.rich("step1Text", {
                                 link: chunks => (
@@ -180,74 +180,81 @@ const NhsSdeAccessStepper = () => {
         },
         {
             titleKey: "step2Title",
-            extra: state => state === STEP_STATE.ACTIVE && (
-                <>
-                    <Box
-                        sx={{
-                            display: "flex",
-                            gap: 2,
-                            mt: 1,
-                            mb: 2,
-                            flexWrap: "wrap",
-                        }}>
-                        <RequestNhseSdeAccessButton
-                            variant="outlined"
-                            color="secondary"
-                            label={t("openFormButton")}
-                            action={() => setFormOpened(true)}
-                            refetchCohort={refetch}
-                        />
-                        {(inProcess || formOpened) && (
-                            <Button
-                                data-testid="nhs-sde-confirm-form-button"
-                                color="greyCustom"
-                                onClick={() => setFormCompleted(true)}>
-                                {t("confirmFormButton")}
-                            </Button>
-                        )}
-                    </Box>
-                    <Typography component="div" color={tokens.text.disabled}>
-                        {t.rich("step2Text", {
-                            link: chunks => (
-                                <Link
-                                    href={REGISTRATION_INFO_URL}
-                                    target="_blank"
-                                    rel="noopener noreferrer">
-                                    {chunks}
-                                </Link>
-                            ),
-                        })}
-                    </Typography>
-                    <Box
-                        sx={{
-                            display: "flex",
-                            alignItems: "center",
-                            gap: 1,
-                            mt: 1,
-                        }}>
-                        <WarningAmberIcon
-                            sx={{ color: tokens.status.error, fontSize: 18 }}
-                        />
-                        <Typography color={tokens.status.error}>
-                            {t("step2Warning")}
+            extra: state =>
+                state === STEP_STATE.ACTIVE && (
+                    <>
+                        <Box
+                            sx={{
+                                display: "flex",
+                                gap: 2,
+                                mt: 1,
+                                mb: 2,
+                                flexWrap: "wrap",
+                            }}>
+                            <RequestNhseSdeAccessButton
+                                variant="outlined"
+                                color="secondary"
+                                label={t("openFormButton")}
+                                action={() => setFormOpened(true)}
+                                refetchCohort={refetch}
+                            />
+                            {(inProcess || formOpened) && (
+                                <Button
+                                    data-testid="nhs-sde-confirm-form-button"
+                                    color="greyCustom"
+                                    onClick={() => setFormCompleted(true)}>
+                                    {t("confirmFormButton")}
+                                </Button>
+                            )}
+                        </Box>
+                        <Typography component="div" color={tokens.text.faded}>
+                            {t.rich("step2Text", {
+                                link: chunks => (
+                                    <Link
+                                        href={REGISTRATION_INFO_URL}
+                                        target="_blank"
+                                        rel="noopener noreferrer">
+                                        {chunks}
+                                    </Link>
+                                ),
+                            })}
                         </Typography>
-                    </Box>
-                </>
-            ),
+                        <Box
+                            sx={{
+                                display: "flex",
+                                alignItems: "center",
+                                gap: 1,
+                                mt: 1,
+                            }}>
+                            <WarningAmberIcon
+                                sx={{
+                                    color: tokens.status.error,
+                                    fontSize: 18,
+                                }}
+                            />
+                            <Typography color={tokens.status.error}>
+                                {t("step2Warning")}
+                            </Typography>
+                        </Box>
+                    </>
+                ),
         },
         {
             titleKey: "step3Title",
-            extra: state => state === STEP_STATE.ACTIVE && (
-                <>
-                    <Typography color={tokens.text.disabled} sx={{ mt: 1, mb: 2 }}>
-                        {t("step3Text")}
-                    </Typography>
-                    <IndicateNhseSdeAccessButton
-                        label={t("indicateButton")}
-                        action={openConfirmModal}
-                    />
-                </>
-            ),
+            extra: state =>
+                state === STEP_STATE.ACTIVE && (
+                    <>
+                        <Typography
+                            color={tokens.text.faded}
+                            sx={{ mt: 1, mb: 2 }}>
+                            {t("step3Text")}
+                        </Typography>
+                        <IndicateNhseSdeAccessButton
+                            label={t("indicateButton")}
+                            action={openConfirmModal}
+                        />
+                    </>
+                ),
         },
         {
             titleKey: "step4Title",
@@ -269,7 +276,7 @@ const NhsSdeAccessStepper = () => {
             {loading ? (
                 <Loading />
             ) : !isNhsSdeApplicationsEnabled ? (
-                <Typography component="div" color={tokens.text.disabled}>
+                <Typography component="div" color={tokens.text.faded}>
                     {tCd.rich("nhseSdeTemporaryText", {
                         mailto: chunks => (
                             <Link href={`mailto:${chunks}`}>{chunks}</Link>

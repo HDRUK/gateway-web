@@ -2,8 +2,8 @@
 
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
-import { useTranslations } from "next-intl";
 import { tokens } from "@hdruk/ui/theme";
+import { useTranslations } from "next-intl";
 import { OptionsType } from "@/components/Autocomplete/Autocomplete";
 import Box from "@/components/Box";
 import CheckboxControlled from "@/components/CheckboxControlled";
@@ -168,7 +168,7 @@ const IntroScreen = ({
                 <Typography variant="articleLead" component="h2">
                     {t("checkboxIntro")}
                 </Typography>
-                <Typography sx={{ color: tokens.text.disabled, pb: 2 }}>
+                <Typography sx={{ color: tokens.text.faded, pb: 2 }}>
                     {t("selectAll")}
                 </Typography>
 

@@ -10,12 +10,13 @@ interface EllipsisLineLimitProps {
     component?: ElementType;
 }
 
-const tooltipWrapper = (text: string) => (children: ReactNode) => {
-    return (
-        <Tooltip title={text} placement="bottom">
+const tooltipWrapper = (text: string) => {
+    const TooltipWrapper = (children: ReactNode) => (
+        <Tooltip title={text} placement="bottom" describeChild>
             <span>{children}</span>
         </Tooltip>
     );
+    return TooltipWrapper;
 };
 
 const EllipsisLineLimit = ({

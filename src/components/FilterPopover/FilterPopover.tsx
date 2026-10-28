@@ -1,6 +1,7 @@
 import { ChangeEvent, useState } from "react";
 import { useForm, FieldValues } from "react-hook-form";
-import { IconButton, Popover } from "@mui/material";
+import { IconButton } from "@hdruk/ui";
+import { Popover } from "@mui/material";
 import Box from "@/components/Box";
 import RadioGroup from "@/components/RadioGroup";
 import { FilterAltIcon, FilterAltOffIcon } from "@/consts/icons";
@@ -10,9 +11,10 @@ interface FilterPopoverProps {
     filter?: string;
     radios: { label: string; value: string }[];
     name: string;
+    ariaLabel: string;
 }
 
-interface FilterCheckboxesProps extends FilterPopoverProps {
+interface FilterCheckboxesProps extends Omit<FilterPopoverProps, "ariaLabel"> {
     handleClose: () => void;
 }
 
@@ -59,6 +61,7 @@ const FilterPopover = ({
     setFilter,
     name,
     radios,
+    ariaLabel,
 }: FilterPopoverProps) => {
     const [anchorEl, setAnchorEl] = useState<HTMLElement | null>(null);
 
@@ -77,7 +80,14 @@ const FilterPopover = ({
 
     return (
         <>
-            <IconButton sx={{ p: 0 }} disableRipple onClick={handlePopoverOpen}>
+            <IconButton
+                sx={{ p: 0 }}
+                disableRipple
+                aria-label={ariaLabel}
+                aria-haspopup="true"
+                aria-expanded={open}
+                aria-controls={id}
+                onClick={handlePopoverOpen}>
                 <FilterIcon fontSize="small" />
             </IconButton>
             <Popover

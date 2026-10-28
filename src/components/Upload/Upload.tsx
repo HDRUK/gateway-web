@@ -1,9 +1,9 @@
 import { Control, useController } from "react-hook-form";
+import { Button } from "@hdruk/ui";
 import { FormControl, FormControlLabel, Stack, SxProps } from "@mui/material";
 import Input, { InputProps } from "@mui/material/Input";
 import { visuallyHidden } from "@mui/utils";
 import { UploadFileIcon } from "@/consts/icons";
-import { Button } from "@hdruk/ui";
 
 export interface UploadProps extends InputProps {
     label: string;
@@ -56,9 +56,9 @@ const Upload = (props: UploadProps) => {
             <FormControlLabel
                 control={
                     <Input
-                        aria-label={label}
                         inputProps={{
                             accept: acceptFileTypes,
+                            "aria-label": label,
                         }}
                         type="file"
                         {...rest}
