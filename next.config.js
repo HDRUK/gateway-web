@@ -13,6 +13,9 @@ const withMDX = createMDX();
 generateTemplateRegistry({
     dir: path.join(__dirname, "src", "templates", "metadata", "view"),
 });
+generateTemplateRegistry({
+    dir: path.join(__dirname, "src", "templates", "metadata", "form"),
+});
 
 const allowAllHeader = [
     { key: "Access-Control-Allow-Credentials", value: "true" },

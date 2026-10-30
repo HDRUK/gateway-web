@@ -6,6 +6,7 @@ import Box from "@/components/Box";
 import KeyValueList from "@/components/KeyValueList";
 import Paper from "@/components/Paper";
 import Typography from "@/components/Typography";
+import { useFeatures } from "@/providers/FeatureProvider";
 import { nonManualDatasetCardActions } from "@/consts/actions";
 import { DataStatus } from "@/consts/application";
 import { getLatestVersion } from "@/utils/dataset";
@@ -36,6 +37,7 @@ const DatasetCard = ({
     onStatusChange,
     disabledStatusOptions,
 }: DatasetCardProps) => {
+    const { isSchemaOnboardingFormEnabled } = useFeatures();
     const latestMetadata = getLatestVersion(dataset);
 
     if (!latestMetadata) return null;
@@ -113,6 +115,20 @@ const DatasetCard = ({
                                         ? "Included"
                                         : "Excluded",
                                 },
+                                ...(isSchemaOnboardingFormEnabled &&
+                                dataset.source_schema
+                                    ? [
+                                          {
+                                              key: "Schema",
+                                              value: [
+                                                  dataset.source_schema.model,
+                                                  dataset.source_schema.version,
+                                              ]
+                                                  .filter(Boolean)
+                                                  .join(" "),
+                                          },
+                                      ]
+                                    : []),
                             ]}
                         />
                     </Box>
