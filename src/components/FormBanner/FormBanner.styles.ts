@@ -39,7 +39,14 @@ export const Column = styled("div")<ColumnProps>(({ emphasis, justify }) => ({
     justifyContent: "center",
     gap: emphasis ? theme.spacing(0.5) : "initial",
     "> p": { fontWeight: emphasis ? 600 : "inherit" },
-    "> .MuiButton-text, .MuiButton-link": { color: tokens.text.primaryWhite },
+    "> .MuiButton-text, .MuiButton-link": {
+        color: tokens.text.primaryWhite,
+        "&.Mui-disabled": {
+            backgroundColor: "transparent",
+            color: tokens.text.primaryWhite,
+            opacity: theme.palette.action.disabledOpacity,
+        },
+    },
     [theme.breakpoints.up("md")]: {
         justifyContent: justify || "center",
     },

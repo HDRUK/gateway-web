@@ -32,6 +32,10 @@ import { FormHydrationSchema } from "@/interfaces/FormHydration";
 import { Keyword } from "@/interfaces/Keyword";
 import { MetricsResponse } from "@/interfaces/Metrics";
 import { NetworkSummary } from "@/interfaces/NetworkSummary";
+import {
+    OnboardingForm,
+    OnboardingFormQuery,
+} from "@/interfaces/OnboardingForm";
 import { PaginationType } from "@/interfaces/Pagination";
 import { Publication } from "@/interfaces/Publication";
 import { QuestionBankSection } from "@/interfaces/QuestionBankSection";
@@ -75,9 +79,7 @@ async function get<T>(
     headers: object = {}
 ): Promise<T> {
     const { cache, suppressError, serveRaw, isPublic } = options;
-    const jwt = isPublic
-        ? undefined
-        : (await cookies()).get(config.JWT_COOKIE);
+    const jwt = isPublic ? undefined : (await cookies()).get(config.JWT_COOKIE);
     const session = isPublic ? "" : await getSessionCookie();
     const nextConfig = cache
         ? {
@@ -551,6 +553,78 @@ async function getFormHydration(
     );
 }
 
+async function getOnboardingForm(
+    teamId: string,
+    { model, version, datasetId }: OnboardingFormQuery = {}
+): Promise<OnboardingForm> {
+    const params = new URLSearchParams();
+    if (model && version) {
+        params.append("model", model);
+        params.append("version", version);
+    }
+    if (datasetId) {
+        params.append("dataset_id", datasetId);
+    }
+    const queryString = params.toString();
+    const baseUrl = `${apis.teamsV2UrlIP}/${teamId}/form_hydration`;
+
+    return get<OnboardingForm>(
+        queryString ? `${baseUrl}?${queryString}` : baseUrl
+    );
+}
+
+interface ApiResponse {
+    ok: boolean;
+    status: number;
+    body: Record<string, unknown>;
+}
+
+async function sendTeamDataset(
+    method: "POST" | "PUT",
+    url: string,
+    payload: unknown
+): Promise<ApiResponse> {
+    const cookieStore = await cookies();
+    const jwt = cookieStore.get(config.JWT_COOKIE);
+    const session = await getSessionCookie();
+    const res = await fetch(url, {
+        method,
+        headers: {
+            Authorization: `Bearer ${jwt?.value}`,
+            "Content-Type": "application/json",
+            [sessionHeader]: sessionPrefix + session,
+        },
+        body: JSON.stringify(payload),
+    });
+
+    let body: Record<string, unknown> = {};
+    try {
+        body = await res.json();
+    } catch {
+        body = {};
+    }
+    if (!res.ok) {
+        logger.error(
+            JSON.stringify(body, null, 2),
+            session,
+            `api.${method.toLowerCase()}:${url}`
+        );
+    }
+    return { ok: res.ok, status: res.status, body };
+}
+
+async function saveTeamDataset(
+    teamId: string,
+    datasetId: string | undefined,
+    query: string,
+    payload: unknown
+): Promise<ApiResponse> {
+    const baseUrl = `${apis.teamsV2UrlIP}/${teamId}/datasets`;
+    return datasetId
+        ? sendTeamDataset("PUT", `${baseUrl}/${datasetId}?${query}`, payload)
+        : sendTeamDataset("POST", `${baseUrl}?${query}`, payload);
+}
+
 async function getDarSections(): Promise<QuestionBankSection[]> {
     return get<QuestionBankSection[]>(apis.dataAccessSectionV1UrlIP, {
         cache: {
@@ -865,6 +939,8 @@ export {
     getReducedCollection,
     getDataset,
     getTeamDataset,
+    getOnboardingForm,
+    saveTeamDataset,
     getDataUse,
     getFilters,
     getKeywords,

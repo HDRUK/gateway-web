@@ -730,6 +730,8 @@
                             "makeActive": "Make active",
                             "checkboxIntro": "Select all dataset themes relevant to your metadata, this determines the metadata form questions:",
                             "selectAll": "Select all that apply",
+                            "datasetThemes": "Select all dataset themes relevant to your metadata",
+                            "selectDatasetTypes": "Please select dataset types on Welcome and form builder",
                             "uploadSuccess": "Your data has been successfully uploaded",
                             "dataCustodian": "Data Custodian",
                             "checkboxes": {
@@ -786,6 +788,16 @@
                         "EditDataset": {
                             "editButton": "Update",
                             "duplicateButton": "Duplicate"
+                        },
+                        "SchemaDatasetForm": {
+                            "introStep": "Welcome and form builder",
+                            "schemaPicker": "Metadata schema",
+                            "switchSchemaTitle": "Switch metadata schema",
+                            "switchSchemaConfirm": "Switching schema clears the answers you have entered. Are you sure you want to continue?",
+                            "switchSchemaConfirmText": "Switch schema",
+                            "switchSchemaCancelText": "Cancel",
+                            "serverErrorsTag": "These answers don't meet the Gateway's requirements yet",
+                            "saveFailed": "The dataset could not be saved"
                         },
                         "CreateDataUse": {
                             "downloadTitle": "Download template",

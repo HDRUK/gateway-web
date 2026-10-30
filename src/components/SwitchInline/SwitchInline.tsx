@@ -73,7 +73,7 @@ const SwitchInline = <
                                 {...rest}
                                 {...fieldProps}
                                 disabled={disabled}
-                                checked={fieldProps.value}
+                                checked={!!fieldProps.value}
                                 inputRef={ref}
                                 sx={{ ...switchSx, mb: 0 }}
                                 slotProps={{

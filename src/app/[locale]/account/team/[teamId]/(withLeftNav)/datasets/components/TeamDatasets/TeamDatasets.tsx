@@ -41,6 +41,7 @@ import {
 } from "@/consts/translation";
 import { loadDatasetActivation } from "@/utils/activation";
 import { capitalise } from "@/utils/general";
+import { useFeatures } from "@/providers/FeatureProvider";
 import DatasetTab from "../DatasetTab";
 
 interface CountStatus {
@@ -172,8 +173,10 @@ const TeamDatasets = ({
         window.scrollTo({ top: 0 });
     }, [queryParams.page]);
 
+    const { isSchemaOnboardingFormEnabled } = useFeatures();
+
     const handleStatusChange = async (id: number, status: DataStatus) => {
-        if (status === DataStatus.ACTIVE) {
+        if (status === DataStatus.ACTIVE && !isSchemaOnboardingFormEnabled) {
             const dataset = data?.list.find(item => item.id === id);
             const canActivate =
                 !!dataset &&
