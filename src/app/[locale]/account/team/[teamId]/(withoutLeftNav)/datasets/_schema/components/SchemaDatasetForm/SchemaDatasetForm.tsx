@@ -3,13 +3,12 @@
 import {
     ReactNode,
     useCallback,
-    useDeferredValue,
     useEffect,
     useMemo,
     useState,
     useTransition,
 } from "react";
-import { FieldErrors, FieldValues, useWatch } from "react-hook-form";
+import { FieldErrors, FieldValues } from "react-hook-form";
 import {
     FormTemplateMeta,
     fromFormValues,
@@ -175,8 +174,6 @@ const FormShell = ({
     const [serverErrors, setServerErrors] = useState<string[]>([]);
     const [submissionRequested, setSubmissionRequested] = useState(isEditing);
     const [navbarHeight, setNavbarHeight] = useState("0");
-    const values = useWatch({ control: methods.control });
-    const deferredValues = useDeferredValue(values);
     const { dirtyFields, isDirty } = methods.formState;
 
     useEffect(() => {
@@ -220,11 +217,12 @@ const FormShell = ({
                 padCustodianIdentifier(
                     coerceNumbers(
                         form.schema,
-                        fromFormValues(form.schema, deferredValues)
+                        fromFormValues(form.schema, methods.getValues())
                     )
                 )
             ).map(({ name }) => name),
-        [form.schema, deferredValues]
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+        [form.schema, methods, activeSection]
     );
 
     const steps = useMemo(
