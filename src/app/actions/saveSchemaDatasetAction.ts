@@ -14,12 +14,6 @@ interface SaveSchemaDatasetArgs {
     isCohortDiscovery?: boolean;
 }
 
-const messagesOf = ({ message, errors }: Record<string, unknown>): string[] =>
-    [
-        message,
-        ...(Array.isArray(errors) ? errors.map(error => error?.message) : []),
-    ].filter((text): text is string => typeof text === "string");
-
 export const saveSchemaDatasetAction = async ({
     teamId,
     datasetId,
@@ -51,8 +45,7 @@ export const saveSchemaDatasetAction = async ({
         });
 
         if (!res.ok) {
-            const errors = messagesOf(res.body);
-            return { ok: false, errors: errors.length ? errors : undefined };
+            return { ok: false, status: res.status, error: res.body };
         }
         return {
             ok: true,

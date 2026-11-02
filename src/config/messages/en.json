@@ -805,9 +805,7 @@
                             "switchSchemaTitle": "Switch metadata schema",
                             "switchSchemaConfirm": "Switching schema clears the answers you have entered. Are you sure you want to continue?",
                             "switchSchemaConfirmText": "Switch schema",
-                            "switchSchemaCancelText": "Cancel",
-                            "serverErrorsTag": "These answers don't meet the Gateway's requirements yet",
-                            "saveFailed": "The dataset could not be saved"
+                            "switchSchemaCancelText": "Cancel"
                         },
                         "CreateDataUse": {
                             "downloadTitle": "Download template",

@@ -1,5 +1,6 @@
 import type { JSONSchemaDocument } from "@hdruk/gwdm-view";
 import type { OnboardingSchema } from "@hdruk/metadata-onboard";
+import type { Error } from "@/interfaces/Error";
 
 export interface OnboardingForm extends OnboardingSchema {
     schemas: OnboardingSchema[];
@@ -18,5 +19,6 @@ export interface OnboardingFormQuery {
 export interface OnboardingSaveResult {
     ok: boolean;
     datasetId?: number;
-    errors?: string[];
+    status?: number;
+    error?: Error;
 }

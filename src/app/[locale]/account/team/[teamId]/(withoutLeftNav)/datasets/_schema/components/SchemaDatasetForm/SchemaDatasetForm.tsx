@@ -25,7 +25,7 @@ import {
     useMetadataForm,
     useMetadataFormContext,
 } from "@hdruk/metadata-onboard/client";
-import { Banner, Button } from "@hdruk/ui";
+import { Button } from "@hdruk/ui";
 import { get } from "lodash";
 import { useTranslations } from "next-intl";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
@@ -38,6 +38,7 @@ import FormLegend from "@/components/FormLegend";
 import { MarkDownSanitizedWithHtml } from "@/components/MarkDownSanitizedWithHTML";
 import Typography from "@/components/Typography";
 import useModal from "@/hooks/useModal";
+import { errorNotification } from "@/services/api/utils";
 import notificationService from "@/services/notification";
 import { DataStatus } from "@/consts/application";
 import { ArrowBackIosNewIcon, ArrowForwardIosIcon } from "@/consts/icons";
@@ -171,7 +172,6 @@ const FormShell = ({
     const activeField = useActiveField();
     const { sections, activeSection, setActiveSection } = useFormSections();
     const [isPending, startTransition] = useTransition();
-    const [serverErrors, setServerErrors] = useState<string[]>([]);
     const [submissionRequested, setSubmissionRequested] = useState(isEditing);
     const [navbarHeight, setNavbarHeight] = useState("0");
     const { dirtyFields, isDirty } = methods.formState;
@@ -316,7 +316,12 @@ const FormShell = ({
                 );
                 router.push(datasetsHref(teamId, status));
             } else {
-                setServerErrors(result.errors ?? [tSchema("saveFailed")]);
+                errorNotification({
+                    status: result.status,
+                    error: result.error,
+                    props: { t: tApi, itemName: "Dataset" },
+                    method: datasetId ? "put" : "post",
+                });
             }
         });
     };
@@ -341,16 +346,6 @@ const FormShell = ({
             onSuccess: () => switchSchema(schema),
         });
     };
-
-    const errorBanner = !!serverErrors.length && (
-        <Banner tag={tSchema("serverErrorsTag")}>
-            <ul>
-                {serverErrors.map(error => (
-                    <li key={error}>{error}</li>
-                ))}
-            </ul>
-        </Banner>
-    );
 
     return (
         <ShellGrid>
@@ -402,7 +397,6 @@ const FormShell = ({
 
                 {activeSection === INTRO_SECTION && (
                     <IntroPaper>
-                        {errorBanner}
                         <WelcomeHeader>
                             <Typography variant="h2" component="h1">
                                 {t("welcomeMessage")}
@@ -438,7 +432,6 @@ const FormShell = ({
 
                 {isSection && (
                     <MainColumn>
-                        {errorBanner}
                         <FormPaper>
                             <Typography variant="articleLead" component="h2">
                                 {capitalise(splitCamelcase(activeSection))}
