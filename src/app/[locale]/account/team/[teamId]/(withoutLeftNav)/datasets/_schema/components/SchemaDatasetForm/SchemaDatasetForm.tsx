@@ -3,6 +3,7 @@
 import {
     ReactNode,
     useCallback,
+    useDeferredValue,
     useEffect,
     useMemo,
     useState,
@@ -175,6 +176,7 @@ const FormShell = ({
     const [submissionRequested, setSubmissionRequested] = useState(isEditing);
     const [navbarHeight, setNavbarHeight] = useState("0");
     const values = useWatch({ control: methods.control });
+    const deferredValues = useDeferredValue(values);
     const { dirtyFields, isDirty } = methods.formState;
 
     useEffect(() => {
@@ -218,11 +220,11 @@ const FormShell = ({
                 padCustodianIdentifier(
                     coerceNumbers(
                         form.schema,
-                        fromFormValues(form.schema, values)
+                        fromFormValues(form.schema, deferredValues)
                     )
                 )
             ).map(({ name }) => name),
-        [form.schema, values]
+        [form.schema, deferredValues]
     );
 
     const steps = useMemo(

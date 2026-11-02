@@ -29,6 +29,9 @@ export const saveSchemaDatasetAction = async ({
     metadata,
     isCohortDiscovery,
 }: SaveSchemaDatasetArgs): Promise<OnboardingSaveResult> => {
+    if (!/^\d+$/.test(teamId) || (datasetId && !/^\d+$/.test(datasetId))) {
+        return { ok: false };
+    }
     try {
         const query = new URLSearchParams({
             input_schema: model,

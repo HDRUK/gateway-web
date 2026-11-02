@@ -57,6 +57,16 @@
                 }
             }
         },
+        "activateDataset": {
+            "error": {
+                "status": {
+                    "422": {
+                        "title": "Not quite ready",
+                        "message": "There are some required fields missing values. Please complete these fields on the form to make this metadata active."
+                    }
+                }
+            }
+        },
         "archiveDataUse": {
             "success": {
                 "delete": {

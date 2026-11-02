@@ -65,7 +65,6 @@ const TeamDatasets = ({
 }: TeamDatasetsProps) => {
     const t = useTranslations(TRANSLATION_PATH);
     const tStatus = useTranslations("components.StatusMenu");
-    const tActivation = useTranslations("hooks.UseActivationCheck");
     const { showDialog } = useDialog();
     const { user } = useAuth();
     const checkActivation = useActivationCheck();
@@ -166,8 +165,8 @@ const TeamDatasets = ({
     });
 
     const activateDataset = usePatch(baseDatasetsUrl, {
+        localeKey: "activateDataset",
         successNotificationsOn: false,
-        errorNotificationsOn: false,
     });
 
     const putDataset = usePut<{ is_cohort_discovery: boolean }>(
@@ -212,10 +211,6 @@ const TeamDatasets = ({
                     entity: t("actions.entityName"),
                 })
             );
-        } else if (isSchemaActivation) {
-            notificationService.apiError(tActivation("message"), {
-                title: tActivation("title"),
-            });
         }
     };
     const showAddNewButton = useMemo(
