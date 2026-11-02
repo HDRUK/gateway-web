@@ -533,7 +533,7 @@ const SchemaDatasetForm = ({
                     system={meta.system}
                     sections={meta.sections}
                     components={gatewayInputs}
-                    mode="onChange"
+                    mode="onTouched"
                     transformDocument={transformDocument}
                     localeText={{ addItem: t("add"), removeItem: t("remove") }}>
                     <FormShell

@@ -139,7 +139,7 @@ const GatewayAutocomplete = (props: InputProps) => {
 };
 
 const GatewayDate = (props: InputProps) => {
-    const { name, label, required, value, resolved, onChange } = props;
+    const { name, label, required, value, resolved, onChange, onBlur } = props;
     const dateTime = resolved.node.format === "date-time";
 
     return (
@@ -148,6 +148,7 @@ const GatewayDate = (props: InputProps) => {
             label={label}
             required={required}
             value={value ? dayjs(String(value)) : null}
+            slotProps={{ textField: { onBlur } }}
             onChange={date => {
                 if (!date || !date.isValid()) {
                     onChange(null);
