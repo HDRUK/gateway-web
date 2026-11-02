@@ -65,6 +65,7 @@ const TeamDatasets = ({
 }: TeamDatasetsProps) => {
     const t = useTranslations(TRANSLATION_PATH);
     const tStatus = useTranslations("components.StatusMenu");
+    const tActivation = useTranslations("hooks.UseActivationCheck");
     const { showDialog } = useDialog();
     const { user } = useAuth();
     const checkActivation = useActivationCheck();
@@ -164,6 +165,11 @@ const TeamDatasets = ({
         successNotificationsOn: false,
     });
 
+    const activateDataset = usePatch(baseDatasetsUrl, {
+        successNotificationsOn: false,
+        errorNotificationsOn: false,
+    });
+
     const putDataset = usePut<{ is_cohort_discovery: boolean }>(
         apis.datasetsV2Url,
         { itemName: "Dataset" }
@@ -193,7 +199,11 @@ const TeamDatasets = ({
             }
         }
 
-        const result = await patchDataset(id, { status });
+        const isSchemaActivation =
+            status === DataStatus.ACTIVE && isSchemaOnboardingFormEnabled;
+        const result = isSchemaActivation
+            ? await activateDataset(id, { status })
+            : await patchDataset(id, { status });
         await Promise.all([mutateDatasets(), mutateCount()]);
 
         if (result !== null) {
@@ -202,6 +212,10 @@ const TeamDatasets = ({
                     entity: t("actions.entityName"),
                 })
             );
+        } else if (isSchemaActivation) {
+            notificationService.apiError(tActivation("message"), {
+                title: tActivation("title"),
+            });
         }
     };
     const showAddNewButton = useMemo(
