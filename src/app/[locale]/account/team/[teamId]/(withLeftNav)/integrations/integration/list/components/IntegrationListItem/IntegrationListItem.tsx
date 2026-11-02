@@ -105,10 +105,10 @@ const IntegrationListItem = ({
                         <Typography sx={{ fontWeight: "bold", fontSize: 14 }}>
                             Integration {index}
                         </Typography>
-                        {integration.error ? (
-                            <Chip label="Disabled on error" color="error" />
-                        ) : integration.enabled ? (
+                        {integration.enabled ? (
                             <Chip label="Enabled" color="success" />
+                        ) : integration.error ? (
+                            <Chip label="Disabled on error" color="error" />
                         ) : (
                             <Chip label="Disabled" color="error" />
                         )}
