@@ -1,10 +1,10 @@
 "use client";
 
 import { useState } from "react";
+import { tokens } from "@hdruk/ui/theme";
 import { SxProps } from "@mui/material";
 import { useTranslations } from "next-intl";
 import { useParams } from "next/navigation";
-import { tokens } from "@hdruk/ui/theme";
 import { FederationRunStatus } from "@/interfaces/Federation";
 import { Integration } from "@/interfaces/Integration";
 import Box from "@/components/Box";
@@ -13,6 +13,7 @@ import Chip from "@/components/Chip";
 import KeyValueList from "@/components/KeyValueList";
 import Paper from "@/components/Paper";
 import Typography from "@/components/Typography";
+import apiService from "@/services/api";
 import apis from "@/config/apis";
 import {
     AutorenewIcon,
@@ -21,7 +22,6 @@ import {
     PlayArrowIcon,
 } from "@/consts/icons";
 import { RouteName } from "@/consts/routeName";
-import apiService from "@/services/api";
 import { formatDate } from "@/utils/date";
 import { toTitleCase } from "@/utils/string";
 
@@ -103,42 +103,51 @@ const IntegrationListItem = ({
                             mb: 1,
                         }}>
                         <Typography sx={{ fontWeight: "bold", fontSize: 14 }}>
-                            Integration {index}
+                            {listT("integrationTitle", { index })}
                         </Typography>
                         {integration.enabled ? (
-                            <Chip label="Enabled" color="success" />
+                            <Chip
+                                label={listT("statusEnabled")}
+                                color="success"
+                            />
                         ) : integration.error ? (
-                            <Chip label="Disabled on error" color="error" />
+                            <Chip
+                                label={listT("statusDisabledOnError")}
+                                color="error"
+                            />
                         ) : (
-                            <Chip label="Disabled" color="error" />
+                            <Chip
+                                label={listT("statusDisabled")}
+                                color="error"
+                            />
                         )}
                     </Box>
                     <KeyValueList
                         rows={[
                             {
-                                key: "Type",
+                                key: listT("type"),
                                 value: toTitleCase(integration.federation_type),
                             },
                             {
-                                key: "Created",
+                                key: listT("created"),
                                 value: formatDate(
                                     integration.created_at,
                                     "DD MMMM YYYY HH:mm"
                                 ),
                             },
                             {
-                                key: "Last run",
+                                key: listT("lastRun"),
                                 value: integration.last_run_at
                                     ? formatDate(
                                           integration.last_run_at,
                                           "DD MMMM YYYY HH:mm"
                                       )
-                                    : "Never",
+                                    : listT("lastRunNever"),
                             },
                             ...(integration.error
                                 ? [
                                       {
-                                          key: "Error",
+                                          key: listT("error"),
                                           value: integration.error_text,
                                           color: tokens.status.error,
                                       },

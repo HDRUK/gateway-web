@@ -986,7 +986,16 @@
                             "emptyAction": "Create one",
                             "runNow": "Run now",
                             "running": "Running",
-                            "runningTooltip": "Synchronisation in progress"
+                            "runningTooltip": "Synchronisation in progress",
+                            "integrationTitle": "Integration {index}",
+                            "statusEnabled": "Enabled",
+                            "statusDisabled": "Disabled",
+                            "statusDisabledOnError": "Disabled on error",
+                            "type": "Type",
+                            "created": "Created",
+                            "lastRun": "Last run",
+                            "lastRunNever": "Never",
+                            "error": "Error"
                         }
                     }
                 },
