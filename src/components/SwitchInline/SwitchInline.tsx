@@ -43,7 +43,7 @@ const SwitchInline = <
     } = props;
 
     const {
-        field: { ref, ...fieldProps },
+        field: { ref, value, ...fieldProps },
         fieldState: { error },
     } = useController({
         name,
@@ -73,7 +73,7 @@ const SwitchInline = <
                                 {...rest}
                                 {...fieldProps}
                                 disabled={disabled}
-                                checked={!!fieldProps.value}
+                                checked={!!value}
                                 inputRef={ref}
                                 sx={{ ...switchSx, mb: 0 }}
                                 slotProps={{
