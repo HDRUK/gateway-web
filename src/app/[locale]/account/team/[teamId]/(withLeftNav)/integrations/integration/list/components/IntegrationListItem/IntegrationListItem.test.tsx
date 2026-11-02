@@ -88,6 +88,28 @@ describe("IntegrationListItem", () => {
         expect(screen.getByText("Connection timed out")).toBeInTheDocument();
     });
 
+    it("should show an Enabled status and the failure reason when the integration is still enabled after an error", async () => {
+        render(
+            <IntegrationListItem
+                index={1}
+                integration={{
+                    ...integration,
+                    enabled: true,
+                    error: true,
+                    error_text: "1 of 110 jobs failed unexpectedly",
+                }}
+            />
+        );
+
+        expect(screen.getByText("Enabled")).toBeInTheDocument();
+        expect(
+            screen.queryByText("Disabled on error")
+        ).not.toBeInTheDocument();
+        expect(
+            screen.getByText("1 of 110 jobs failed unexpectedly")
+        ).toBeInTheDocument();
+    });
+
     it("should not show an Error row when the integration has not failed", async () => {
         render(
             <IntegrationListItem
