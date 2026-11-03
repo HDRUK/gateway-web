@@ -1,3 +1,4 @@
+import { FieldError } from "react-hook-form";
 import { SxProps } from "@mui/material";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import {
@@ -20,6 +21,7 @@ export interface DatePickerControlledProps
     horizontalForm?: boolean;
     isRow?: boolean;
     formControlSx?: SxProps;
+    error?: FieldError;
 }
 
 const DatePickerControlled = ({
@@ -31,6 +33,7 @@ const DatePickerControlled = ({
     info,
     extraInfo,
     required = false,
+    error,
     ...rest
 }: DatePickerControlledProps) => {
     return (
@@ -42,7 +45,8 @@ const DatePickerControlled = ({
             extraInfo={extraInfo}
             disabled={disabled}
             required={required}
-            formControlSx={formControlSx}>
+            formControlSx={formControlSx}
+            error={error}>
             <LocalizationProvider
                 dateAdapter={AdapterDayjs}
                 adapterLocale="en-gb">

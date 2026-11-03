@@ -18,16 +18,21 @@ const errorNotification = ({
     props,
 }: ErrorNotificationProps) => {
     const { t, ...notificationProps } = props;
+    const statusKey = `${props.localeKey}.error.status.${status}`;
+    const hasStatusOverride = !!get(messages, `api.${statusKey}`);
 
-    const title = get(messages, `api.common.error.status.${status}`)
+    const title = hasStatusOverride
+        ? t(`${statusKey}.title`)
+        : get(messages, `api.common.error.status.${status}`)
         ? t(`common.error.status.${status}`)
         : "There has been an error";
 
-    const messageTransformed =
-        error?.message ||
-        t(`common.error.${method}.message`, {
-            item: props.itemName || "item",
-        });
+    const messageTransformed = hasStatusOverride
+        ? t(`${statusKey}.message`)
+        : error?.message ||
+          t(`common.error.${method}.message`, {
+              item: props.itemName || "item",
+          });
 
     notificationService.apiError(messageTransformed, {
         title,

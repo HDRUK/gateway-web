@@ -3,7 +3,6 @@
 import { Button } from "@hdruk/ui";
 import { Typography } from "@mui/material";
 import { useTranslations } from "next-intl";
-import { colors } from "@/config/theme";
 import { SCHEMA_BRANCH, SCHEMA_VERSION } from "@/consts/schema";
 import DownloadExternalFile from "../DownloadExternalFile";
 import { Column, DetailBanner, Justify, Wrapper } from "./FormBanner.styles";
@@ -44,12 +43,7 @@ const FormBanner = ({
                         data-testid="btn-make-active"
                         variant="text"
                         onClick={makeActiveAction}
-                        disabled={!actionButtonsEnabled}
-                        sx={{
-                            "&.Mui-disabled": {
-                                color: colors.grey500,
-                            },
-                        }}>
+                        disabled={!actionButtonsEnabled}>
                         {t("makeActive")}
                     </Button>
                     |
@@ -57,12 +51,7 @@ const FormBanner = ({
                         data-testid="btn-save-draft"
                         variant="text"
                         onClick={saveAsDraftAction}
-                        disabled={!actionButtonsEnabled}
-                        sx={{
-                            "&.Mui-disabled": {
-                                color: colors.grey500,
-                            },
-                        }}>
+                        disabled={!actionButtonsEnabled}>
                         {t("saveDraft")}
                     </Button>
                 </Column>
