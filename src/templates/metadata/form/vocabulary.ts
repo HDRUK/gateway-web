@@ -8,7 +8,6 @@ import {
     DerivedFromObservations,
     GatewayForm,
     IntroAside,
-    PlainTextField,
     StructuralMetadataUpload,
     TeamPicker,
     UnionChoices,
@@ -25,7 +24,6 @@ export const formVocabulary = {
     TeamPicker,
     UnionChoices,
     UnionDetails,
-    PlainTextField,
     DerivedFromObservations,
     StructuralMetadataUpload,
 };

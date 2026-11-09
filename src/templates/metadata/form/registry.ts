@@ -4,12 +4,12 @@ import { generatedTemplates } from "./registry.generated";
 
 export const FALLBACK_TEMPLATE = "GENERIC";
 
-export const {
-    getMetadataTemplate: getFormTemplate,
-    listMetadataTemplates: listFormTemplates,
-} = createTemplateRegistry(generatedTemplates, {
-    fallbackPartner: FALLBACK_TEMPLATE,
-});
+export const { getMetadataTemplate: getFormTemplate } = createTemplateRegistry(
+    generatedTemplates,
+    {
+        fallbackPartner: FALLBACK_TEMPLATE,
+    }
+);
 
 const DEFAULT_META: Partial<FormTemplateMeta> = {
     system: ["identifier", "version", "revisions", "issued", "modified"],

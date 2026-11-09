@@ -212,27 +212,6 @@ export const UnionDetails = ({ path }: PathTagProps) => {
     );
 };
 
-export const PlainTextField = ({ path }: PathTagProps) => {
-    const { control } = useMetadataForm();
-    const { schema } = useGatewayForm();
-    const isActive = useActiveSectionIs(path);
-    const field = resolveField(schema, path);
-    if (!isActive || !field) {
-        return null;
-    }
-    return (
-        <Wrapper
-            control={control}
-            component={inputComponents.TextArea}
-            name={path}
-            label={field.label}
-            required={field.required}
-            limit={field.resolved.node.maxLength}
-            showClearButton={false}
-        />
-    );
-};
-
 export interface DerivedFromObservationsProps extends PathTagProps {
     observedNode: string;
     fallback?: number;

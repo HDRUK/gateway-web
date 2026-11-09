@@ -343,7 +343,7 @@ const GatewayUnionList = (props: InputProps) => (
     </>
 );
 
-export const makeGatewayInputs = (): MetadataFormComponents => ({
+export const gatewayInputs: MetadataFormComponents = {
     text: GatewayTextField,
     link: GatewayTextField,
     textArea: GatewayTextArea,
@@ -355,6 +355,4 @@ export const makeGatewayInputs = (): MetadataFormComponents => ({
     boolean: GatewayBoolean,
     objectGrid: GatewayGroup,
     nestedSection: GatewayGroup,
-});
-
-export const gatewayInputs = makeGatewayInputs();
+};
