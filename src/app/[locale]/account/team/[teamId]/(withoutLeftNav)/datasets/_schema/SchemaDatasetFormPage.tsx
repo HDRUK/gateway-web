@@ -1,5 +1,5 @@
 import { resolveField } from "@hdruk/metadata-onboard";
-import { get, merge, omit, set } from "lodash";
+import { get, mergeWith, omit, set } from "lodash";
 import ProtectedAccountRoute from "@/components/ProtectedAccountRoute";
 import {
     getOnboardingForm,
@@ -64,7 +64,13 @@ export default async function SchemaDatasetFormPage({
     if (typeof defaultLogo === "string" && defaultLogo) {
         set(form.defaultValues, CUSTODIAN_LOGO, encodeURI(defaultLogo));
     }
-    const values = merge({}, form.defaultValues, loaded);
+    const values = mergeWith(
+        {},
+        form.defaultValues,
+        loaded,
+        (_: unknown, saved: unknown) =>
+            Array.isArray(saved) ? saved : undefined
+    );
     const today = getToday();
     if (!datasetId) {
         const fallbacks: Record<string, unknown> = {

@@ -123,6 +123,7 @@ const GatewayAutocomplete = (props: InputProps) => {
             placeholder={placeholderOf(props)}
             options={shown}
             canCreate={!options.length}
+            freeSolo={!options.length}
             selectOnFocus
             clearOnBlur
             handleHomeEndKeys
