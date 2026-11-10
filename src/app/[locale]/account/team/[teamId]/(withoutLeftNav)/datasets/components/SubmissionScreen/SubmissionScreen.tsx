@@ -2,12 +2,12 @@
 
 import { useEffect, useState } from "react";
 import { FieldValues, FieldErrors, UseFormTrigger } from "react-hook-form";
+import { Button } from "@hdruk/ui";
 import { tokens } from "@hdruk/ui/theme";
 import { yellow } from "@mui/material/colors";
 import Markdown from "markdown-to-jsx";
 import { useTranslations } from "next-intl";
 import Box from "@/components/Box";
-import { Button } from "@hdruk/ui";
 import TooltipIcon from "@/components/TooltipIcon";
 import Typography from "@/components/Typography";
 import { colors } from "@/config/theme";
@@ -19,6 +19,7 @@ import {
     PAGES,
     TEAM,
 } from "@/consts/translation";
+import { ErrorItem, ErrorList } from "./SubmissionScreen.styles";
 
 const ICON_SIZE = "130px";
 
@@ -98,7 +99,17 @@ const SubmissionScreen = ({
                             t("submissionValid")
                         ) : (
                             <TooltipIcon
-                                content={<Markdown>{errorText}</Markdown>}
+                                content={
+                                    <Markdown
+                                        options={{
+                                            overrides: {
+                                                ul: { component: ErrorList },
+                                                li: { component: ErrorItem },
+                                            },
+                                        }}>
+                                        {errorText}
+                                    </Markdown>
+                                }
                                 label={t("submissionInvalid")}
                             />
                         )}

@@ -76,6 +76,27 @@ describe("Api Service - Utils", () => {
             errors: error.errors,
         });
     });
+    it("errorNotification - with custom title and message from locale file (based on the status)", () => {
+        const error = errorResponseV1();
+        errorNotification({
+            status: 422,
+            error,
+            method: "patch",
+            props: {
+                // eslint-disable-next-line @typescript-eslint/no-explicit-any
+                t: (str: any) => str,
+                localeKey: "activateDataset",
+            },
+        });
+        expect(notificationService.apiError).toBeCalledWith(
+            "activateDataset.error.status.422.message",
+            {
+                errors: error.errors,
+                title: "activateDataset.error.status.422.title",
+                localeKey: "activateDataset",
+            }
+        );
+    });
 
     it("successNotification with common message", () => {
         successNotification({

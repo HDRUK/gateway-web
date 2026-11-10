@@ -41,6 +41,7 @@ import {
 } from "@/consts/translation";
 import { loadDatasetActivation } from "@/utils/activation";
 import { capitalise } from "@/utils/general";
+import { useFeatures } from "@/providers/FeatureProvider";
 import DatasetTab from "../DatasetTab";
 
 interface CountStatus {
@@ -163,6 +164,11 @@ const TeamDatasets = ({
         successNotificationsOn: false,
     });
 
+    const activateDataset = usePatch(baseDatasetsUrl, {
+        localeKey: "activateDataset",
+        successNotificationsOn: false,
+    });
+
     const putDataset = usePut<{ is_cohort_discovery: boolean }>(
         apis.datasetsV2Url,
         { itemName: "Dataset" }
@@ -172,8 +178,10 @@ const TeamDatasets = ({
         window.scrollTo({ top: 0 });
     }, [queryParams.page]);
 
+    const { isSchemaOnboardingFormEnabled } = useFeatures();
+
     const handleStatusChange = async (id: number, status: DataStatus) => {
-        if (status === DataStatus.ACTIVE) {
+        if (status === DataStatus.ACTIVE && !isSchemaOnboardingFormEnabled) {
             const dataset = data?.list.find(item => item.id === id);
             const canActivate =
                 !!dataset &&
@@ -190,7 +198,11 @@ const TeamDatasets = ({
             }
         }
 
-        const result = await patchDataset(id, { status });
+        const isSchemaActivation =
+            status === DataStatus.ACTIVE && isSchemaOnboardingFormEnabled;
+        const result = isSchemaActivation
+            ? await activateDataset(id, { status })
+            : await patchDataset(id, { status });
         await Promise.all([mutateDatasets(), mutateCount()]);
 
         if (result !== null) {

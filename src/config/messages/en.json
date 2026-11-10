@@ -57,6 +57,16 @@
                 }
             }
         },
+        "activateDataset": {
+            "error": {
+                "status": {
+                    "422": {
+                        "title": "Not quite ready",
+                        "message": "There are some required fields missing values. Please complete these fields on the form to make this metadata active."
+                    }
+                }
+            }
+        },
         "archiveDataUse": {
             "success": {
                 "delete": {
@@ -730,6 +740,8 @@
                             "makeActive": "Make active",
                             "checkboxIntro": "Select all dataset themes relevant to your metadata, this determines the metadata form questions:",
                             "selectAll": "Select all that apply",
+                            "datasetThemes": "Select all dataset themes relevant to your metadata",
+                            "selectDatasetTypes": "Please select dataset types on Welcome and form builder",
                             "uploadSuccess": "Your data has been successfully uploaded",
                             "dataCustodian": "Data Custodian",
                             "checkboxes": {
@@ -786,6 +798,9 @@
                         "EditDataset": {
                             "editButton": "Update",
                             "duplicateButton": "Duplicate"
+                        },
+                        "SchemaDatasetForm": {
+                            "introStep": "Welcome and form builder"
                         },
                         "CreateDataUse": {
                             "downloadTitle": "Download template",

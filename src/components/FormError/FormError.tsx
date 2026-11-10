@@ -17,7 +17,7 @@ const ErrorMessage = ({ message }: { message?: string }) => {
 const FormError = ({ error }: FormErrorProps) => {
     if (Array.isArray(error)) {
         const messages = error.map(e => e.message);
-        const unique = messages.filter((x, i, a) => a.indexOf(x) === i);
+        const unique = messages.filter((x, i, a) => x && a.indexOf(x) === i);
 
         return (
             <>
