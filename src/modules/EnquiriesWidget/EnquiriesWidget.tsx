@@ -4,26 +4,24 @@ import { useTranslations } from "next-intl";
 import { DashboardEntityCount } from "@/interfaces/Dashboard";
 import CountTilesWidget from "@/components/CountTilesWidget/CountTilesWidget";
 import useGet from "@/hooks/useGet";
-import useGetTeam from "@/hooks/useGetTeam";
 import apis from "@/config/apis";
 
 const TRANSLATION_PATH = "pages.account.dashboard.enquiries";
 
 interface EnquiriesWidgetProps {
     teamId: string;
+    isDarEnabled: boolean;
     startDate: string;
     endDate: string;
 }
 
 const EnquiriesWidget = ({
     teamId,
+    isDarEnabled,
     startDate,
     endDate,
 }: EnquiriesWidgetProps) => {
     const t = useTranslations(TRANSLATION_PATH);
-
-    const { team } = useGetTeam(teamId);
-    const isDarEnabled = team?.is_question_bank ?? false;
 
     const params = new URLSearchParams({ startDate, endDate }).toString();
     const dashboardUrl = `${apis.teamsV3Url}/${teamId}/dashboard`;

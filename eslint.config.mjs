@@ -1,11 +1,10 @@
 // eslint.config.mjs
-import next from "eslint-config-next";
-import globals from "globals";
-
 import tseslint from "@typescript-eslint/eslint-plugin";
 import tsParser from "@typescript-eslint/parser";
+import next from "eslint-config-next";
 import importPlugin from "eslint-plugin-import";
 import storybook from "eslint-plugin-storybook";
+import globals from "globals";
 
 const config = [
     // Next.js base config (includes core-web-vitals etc.)
@@ -21,6 +20,7 @@ const config = [
             "**/node_modules/**",
             "**/coverage/**",
             "mocks/**",
+            "src/generated/**",
             "datasetsPageTester.ts",
             "datasetsSchemaTester.ts",
         ],
@@ -138,6 +138,9 @@ const config = [
                         "jest.config.js",
                         "jest.setup.js",
                         "**/testUtils.tsx",
+                        // Build and test tooling (codegen, Jest's MDX transform).
+                        "scripts/**",
+                        "jest/**",
                     ],
                 },
             ],

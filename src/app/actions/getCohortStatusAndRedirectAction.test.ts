@@ -37,6 +37,7 @@ describe("getCohortStatusAndRedirect", () => {
             requestStatus: "APPROVED",
             nhseSdeRequestStatus: null,
             requestExpiry: "07-07-2025 10:00:00",
+            nhseSdeRequestExpiry: null,
             redirectUrl: "",
             hasAccess: true,
         });
@@ -65,6 +66,7 @@ describe("getCohortStatusAndRedirect", () => {
             requestStatus: null,
             nhseSdeRequestStatus: null,
             requestExpiry: null,
+            nhseSdeRequestExpiry: null,
             redirectUrl: "",
             hasAccess: false,
         });

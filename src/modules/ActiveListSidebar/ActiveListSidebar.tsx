@@ -32,6 +32,11 @@ const ActiveListSidebar = ({
 }: {
     items: {
         label: string;
+        /**
+         * The id of the element to scroll to. Without one the item scrolls to
+         * the positional `#anchor{n}` wrapper the production dataset page uses.
+         */
+        anchorId?: string;
     }[];
     disableSticky?: boolean;
     sx?: SxProps<Theme>;
@@ -69,7 +74,8 @@ const ActiveListSidebar = ({
 
     const handleScroll = useCallback(
         (id: number) => {
-            const section = document.querySelector<HTMLElement>(`#anchor${id}`);
+            const anchorId = items[id - 1]?.anchorId ?? `anchor${id}`;
+            const section = document.getElementById(anchorId);
             const heading = section?.querySelector<HTMLElement>("h2");
 
             if (section) {
@@ -94,7 +100,7 @@ const ActiveListSidebar = ({
                 }
             }
         },
-        [isDatasetPage, isMobile]
+        [isDatasetPage, isMobile, items]
     );
 
     return (

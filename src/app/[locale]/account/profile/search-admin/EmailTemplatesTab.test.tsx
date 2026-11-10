@@ -1,7 +1,7 @@
 import useGet from "@/hooks/useGet";
 import usePatch from "@/hooks/usePatch";
-import { generateEmailTemplate } from "@/mocks/data/emailTemplates";
 import { render, screen, fireEvent } from "@/utils/testUtils";
+import { generateEmailTemplate } from "@/mocks/data/emailTemplates";
 import EmailTemplatesTab from "./EmailTemplatesTab";
 
 jest.mock("@/hooks/useGet");
@@ -58,10 +58,10 @@ describe("EmailTemplatesTab", () => {
 
         render(<EmailTemplatesTab />);
 
-        const enabledSwitch = screen.getByRole("checkbox", {
+        const enabledSwitch = screen.getByRole("switch", {
             name: "Toggle dar.status.researcher enabled",
         });
-        const disabledSwitch = screen.getByRole("checkbox", {
+        const disabledSwitch = screen.getByRole("switch", {
             name: "Toggle dar.submission.custodian enabled",
         });
 
@@ -76,7 +76,7 @@ describe("EmailTemplatesTab", () => {
         render(<EmailTemplatesTab />);
 
         fireEvent.click(
-            screen.getByRole("checkbox", {
+            screen.getByRole("switch", {
                 name: "Toggle dar.status.researcher enabled",
             })
         );
@@ -106,7 +106,7 @@ describe("EmailTemplatesTab", () => {
         render(<EmailTemplatesTab />);
 
         fireEvent.click(
-            screen.getByRole("checkbox", {
+            screen.getByRole("switch", {
                 name: "Toggle dar.status.researcher enabled",
             })
         );

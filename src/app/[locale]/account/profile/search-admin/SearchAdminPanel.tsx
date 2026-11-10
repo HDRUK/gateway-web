@@ -15,6 +15,7 @@ import {
     InsertLinkOutlinedIcon,
     EmailOutlinedIcon,
     PeopleAltOutlinedIcon,
+    LockIcon,
 } from "@/consts/icons";
 import { AdminSearchStatusResponse } from "@/interfaces/AdminSearch";
 import FeatureFlagsTable from "./FeatureFlagsTable";
@@ -24,6 +25,7 @@ import NightlyDatasetTestsTab from "./NightlyDatasetTestsTab";
 import DatasetLinkCheckResultsTab from "./DatasetLinkCheckResultsTab";
 import EmailTemplatesTab from "./EmailTemplatesTab";
 import UsersTab from "./UsersTab";
+import SessionsTab from "./SessionsTab";
 
 const TRANSLATION_PATH = "pages.account.profile.searchAdmin";
 
@@ -115,6 +117,16 @@ export default function SearchAdminPanel() {
                             content: (
                                 <Box sx={{ p: 0, pt: 2 }}>
                                     <UsersTab />
+                                </Box>
+                            ),
+                        },
+                        {
+                            label: t("sessionsTab"),
+                            value: "sessions",
+                            icon: <LockIcon />,
+                            content: (
+                                <Box sx={{ p: 0, pt: 2 }}>
+                                    <SessionsTab />
                                 </Box>
                             ),
                         },

@@ -122,7 +122,7 @@ export default async function DataCustodianItemPage({
                                             <Chip
                                                 label={alias.name}
                                                 key={alias.id}
-                                                color="alias"
+                                                color="archived"
                                             />
                                         ))}
                                     </Box>

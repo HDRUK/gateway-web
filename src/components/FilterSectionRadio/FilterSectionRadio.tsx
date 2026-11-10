@@ -43,7 +43,10 @@ const FilterSectionRadio = ({
                                     }}>
                                     {radio.label}
                                     {counts[radio.value] === null ? (
-                                        <CircularProgress size={14} />
+                                        <CircularProgress
+                                            size={14}
+                                            aria-hidden="true"
+                                        />
                                     ) : (
                                         <Typography>
                                             {counts[radio.value]}

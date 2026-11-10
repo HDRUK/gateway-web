@@ -6,6 +6,7 @@ export enum FieldType {
     LIST_TAG = "list-tag",
     LIST_DATASETTYPE = "dataset-type-list",
     OUTPUT_LIST = "output-list",
+    PUBLICATION_LIST = "publication-list",
     KEY_VALUE = "key-value",
     DATE = "date",
     TAG = "tag",

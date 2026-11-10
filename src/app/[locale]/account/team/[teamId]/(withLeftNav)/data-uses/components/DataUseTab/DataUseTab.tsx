@@ -14,6 +14,7 @@ import {
     sortField,
     toggleDirection,
 } from "@/config/forms/dataUseAccountSearch";
+import { DataStatus } from "@/consts/application";
 import {
     ACCOUNT,
     DATA_USES,
@@ -30,6 +31,8 @@ interface DataUseTabProps {
         action?: (id: number) => void;
         label: string;
     }[];
+    onStatusChange?: (id: number, status: DataStatus) => void;
+    disabledStatusOptions?: DataStatus[];
     lastPage?: number;
     from?: number;
     to?: number;
@@ -44,6 +47,8 @@ interface DataUseTabProps {
 
 const DataUseTab = ({
     actions,
+    onStatusChange,
+    disabledStatusOptions,
     list,
     label,
     lastPage,
@@ -104,6 +109,8 @@ const DataUseTab = ({
                 .map(dataUse => (
                     <DataUseCard
                         actions={actions}
+                        onStatusChange={onStatusChange}
+                        disabledStatusOptions={disabledStatusOptions}
                         key={dataUse.id}
                         dataUse={dataUse}
                     />

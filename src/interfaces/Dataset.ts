@@ -173,6 +173,17 @@ interface VersionItem {
     reduced_linked_dataset_versions: ReducedLinkedDatasetVersions[];
     shortTitle?: string;
     dataCustodian?: string;
+    /** The GWDM version this row is stored in - selects the API handler. */
+    gwdm_version?: string;
+}
+
+/**
+ * The format of `versions[].metadata`, as reported by the API. Native GWDM
+ * unless a translation was explicitly requested.
+ */
+interface DatasetSchemaInfo {
+    model: string;
+    version: string | null;
 }
 
 export interface ReducedDataset {
@@ -211,6 +222,14 @@ interface Dataset {
     name?: string;
     is_cohort_discovery: boolean;
     linkages?: Linkage[];
+    /** The partner context that owns this dataset, e.g. "HDRUK" or "CRUK". */
+    partner_context?: string;
+    schema?: DatasetSchemaInfo;
+    /**
+     * The schema the latest version was submitted in - its ingestion format,
+     * e.g. HDRUK 4.1.0 - or null when not recorded. Never GWDM's storage model.
+     */
+    source_schema?: DatasetSchemaInfo | null;
 }
 
 interface DataCustodianDataset {
@@ -231,6 +250,7 @@ interface NewDataset extends Omit<Dataset, "versions" | "id"> {
 export type {
     DataCustodianDataset,
     Dataset,
+    DatasetSchemaInfo,
     DatasetStatus,
     Metadata,
     MetadataMax,

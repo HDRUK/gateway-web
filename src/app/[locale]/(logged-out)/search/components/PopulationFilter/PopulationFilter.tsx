@@ -8,6 +8,7 @@ import Box from "@/components/Box";
 import CheckboxControlled from "@/components/CheckboxControlled";
 import Typography from "@/components/Typography";
 import { EXCLUDE_UNREPORTED } from "@/consts/filters";
+import { DEFAULT_FORMAT_LOCALE } from "@/consts/urls";
 
 const TRANSLATION_PATH = "pages.search.components.PopulationFilter";
 const UNREPORTED = "Unreported";
@@ -115,7 +116,7 @@ const PopulationFilter = ({
                 <Typography>
                     {formattedData?.[
                         formattedData.length - 1
-                    ]?.xValue?.[1]?.toLocaleString()}
+                    ]?.xValue?.[1]?.toLocaleString(DEFAULT_FORMAT_LOCALE)}
                     +
                 </Typography>
             </Box>

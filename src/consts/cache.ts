@@ -1,4 +1,5 @@
 export const DEFAULT_CACHE_REVALIDATE = 2 * 60 * 60; // 2 hours
+export const FILTERS_CACHE_REVALIDATE = 15 * 60;
 
 export const CACHE_DAR = "dar";
 export const CACHE_DAR_APPLICATION = "darApplication";

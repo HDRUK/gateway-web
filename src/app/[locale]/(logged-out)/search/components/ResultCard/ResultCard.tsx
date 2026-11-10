@@ -12,6 +12,7 @@ import Box from "@/components/Box";
 import CohortDiscoveryButton from "@/components/CohortDiscoveryButton";
 import Link from "@/components/Link";
 import MenuDropdown from "@/components/MenuDropdown";
+import PartnerProvenance from "@/components/PartnerProvenance";
 import Typography from "@/components/Typography";
 import DatasetQuickViewDialog from "@/modules/DatasetQuickViewDialog";
 import useAuth from "@/hooks/useAuth";
@@ -43,7 +44,7 @@ const ResultCard = ({ result, isCohortDiscoveryDisabled }: ResultCardProps) => {
 
     const highlight = get(result, "highlight");
     const { isLoggedIn } = useAuth();
-    const { _id: datasetId, metadata, team } = result;
+    const { _id: datasetId, metadata, team, partner_name: partnerName } = result;
     const showGeneralEnquiry = useGeneralEnquiry();
     const showFeasibilityEnquiry = useFeasibilityEnquiry();
     const { showDARApplicationModal } = useDataAccessRequest();
@@ -234,6 +235,7 @@ const ResultCard = ({ result, isCohortDiscoveryDisabled }: ResultCardProps) => {
                                         {team.name}
                                     </Typography>
                                 </Link>
+                                <PartnerProvenance partnerName={partnerName} />
                             </div>
                             <div
                                 style={{

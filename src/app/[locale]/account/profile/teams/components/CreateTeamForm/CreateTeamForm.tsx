@@ -349,7 +349,7 @@ const CreateTeamForm = () => {
                         ...field,
                         options: getOptions("aliases"),
                         isLoadingOptions: isLoadingAliases,
-                        chipColor: "alias",
+                        chipColor: "archived",
                     };
                 }
 

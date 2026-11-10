@@ -3,8 +3,8 @@ import { fireEvent, screen } from "@testing-library/react";
 import { rest } from "msw";
 import { StructuralMetadata } from "@/interfaces/Dataset";
 import apis from "@/config/apis";
-import { server } from "@/mocks/server";
 import { render } from "@/utils/testUtils";
+import { server } from "@/mocks/server";
 import StructuralMetadataSection from "./StructuralMetadata";
 
 const metadata: StructuralMetadata[] = [
@@ -72,10 +72,7 @@ describe("StructuralMetadata", () => {
     it("shows the uploaded filename once the file has been processed", async () => {
         server.use(
             rest.post(apis.fileUploadV1Url, (req, res, ctx) =>
-                res(
-                    ctx.status(200),
-                    ctx.json({ data: { uuid: "file-uuid" } })
-                )
+                res(ctx.status(200), ctx.json({ data: { uuid: "file-uuid" } }))
             ),
             rest.get(`${apis.fileUploadV1Url}/file-uuid`, (req, res, ctx) =>
                 res(
@@ -94,9 +91,9 @@ describe("StructuralMetadata", () => {
 
         render(<StatefulSection />);
 
-        const fileInput = screen
-            .getByLabelText("Select file")
-            .querySelector("input") as HTMLInputElement;
+        const fileInput = screen.getByLabelText(
+            "Select file"
+        ) as HTMLInputElement;
 
         fireEvent.change(fileInput, {
             target: { files: [new File(["test"], "dictionary.xlsx")] },

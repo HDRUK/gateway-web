@@ -85,7 +85,7 @@ const QuestionBankListItem = ({ data, actions }: QuestionCardProps) => {
                         }}>
                         <Typography
                             sx={{
-                                color: "#868E96",
+                                color: tokens.text.faded,
                             }}>
                             {`Question ID - ${data.question_id}   Version - ${
                                 data.version_id
@@ -94,7 +94,11 @@ const QuestionBankListItem = ({ data, actions }: QuestionCardProps) => {
                         <Typography component="span">{guidance}</Typography>
                     </Box>
                 </Box>
-                <Box sx={{ p: 0, borderLeft: `solid 1px ${tokens.status.faded}` }}>
+                <Box
+                    sx={{
+                        p: 0,
+                        borderLeft: `solid 1px ${tokens.status.faded}`,
+                    }}>
                     <CardActions
                         actions={hydratedActions}
                         id={data.question_id}

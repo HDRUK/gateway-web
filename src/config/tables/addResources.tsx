@@ -1,4 +1,4 @@
-import { IconButton } from "@mui/material";
+import { IconButton } from "@hdruk/ui";
 import { createColumnHelper } from "@tanstack/react-table";
 import { get } from "lodash";
 import {
@@ -153,6 +153,12 @@ const getColumns = ({
                             handleRemoveResource &&
                             handleRemoveResource(rowData, resourceType)
                         }
+                        aria-label={`${tableTranslations.remove} ${
+                            getTitleText(
+                                rowData as ResourceDataType,
+                                resourceType
+                            ) || EMPTY_VALUE
+                        }`}
                         color="primary">
                         <DeleteForeverIcon />
                     </IconButton>

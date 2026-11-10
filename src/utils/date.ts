@@ -31,6 +31,8 @@ const formatDate = (date: string | Date, formatStr = "DD MMM YYYY") => {
     return convertedDate1?.format(formatStr);
 };
 
+const formatYear = (date: string) => getTZDate(date, "UTC").format("YYYY");
+
 const differenceInDays = (date1: string | Date, date2: string | Date) => {
     const convertedDate1 = getDayjs(date1);
     const convertedDate2 = getDayjs(date2);
@@ -47,6 +49,7 @@ const yearToDayJsDate = (year: string) => {
 
 export {
     formatDate,
+    formatYear,
     differenceInDays,
     getYear,
     yearToDayJsDate,

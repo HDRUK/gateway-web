@@ -29,6 +29,13 @@ interface DatasetMindMapProps extends ReactFlowProps {
     hasStructuralMetadata: boolean;
     hasDemographics: boolean;
     linkageCounts: { [key: string]: number };
+    /**
+     * Maps a section's anchor onto the anchor to scroll to instead. The
+     * production page's own anchors are used for any not listed; the GWDM
+     * page maps them onto its sections. A plain object rather than a function
+     * so it can be passed from a server component.
+     */
+    scrollTargets?: Record<string, string>;
 }
 
 const DatasetMindMap = ({
@@ -45,6 +52,7 @@ const DatasetMindMap = ({
     nodesDraggable = false,
     hasStructuralMetadata,
     hasDemographics,
+    scrollTargets,
     ...rest
 }: DatasetMindMapProps) => {
     const t = useTranslations(TRANSLATION_PATH);
@@ -150,7 +158,11 @@ const DatasetMindMap = ({
                     if (canScrollToSection) {
                         href = null;
                         action = () =>
-                            scrollToSection(getSectionAnchorId(sectionName));
+                            scrollToSection(
+                                scrollTargets?.[
+                                    getSectionAnchorId(sectionName)
+                                ] ?? getSectionAnchorId(sectionName)
+                            );
                     } else {
                         hidden = true;
                         empty.push(node.id);
@@ -185,6 +197,7 @@ const DatasetMindMap = ({
         hasStructuralMetadata,
         hasDemographics,
         populatedSections,
+        scrollTargets,
     ]);
 
     return (

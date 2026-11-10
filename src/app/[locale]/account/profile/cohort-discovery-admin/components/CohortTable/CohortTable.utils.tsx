@@ -123,7 +123,7 @@ const getColumns = ({
                         {original.user.name}
                     </Link>
 
-                    <Typography color="GrayText">
+                    <Typography color="text.secondary">
                         {original.user.email}
                     </Typography>
                 </>
@@ -144,7 +144,7 @@ const getColumns = ({
                 </Box>
             ),
             cell: ({ row: { original } }) => (
-                <Typography color="GrayText">
+                <Typography color="text.secondary">
                     {original.user.secondary_email}
                 </Typography>
             ),
@@ -175,7 +175,7 @@ const getColumns = ({
                 </Box>
             ),
             cell: ({ row: { original } }) => (
-                <Typography color="GrayText">
+                <Typography color="text.secondary">
                     {original.user.sector?.name}
                 </Typography>
             ),
@@ -204,7 +204,7 @@ const getColumns = ({
                 </Box>
             ),
             cell: ({ row: { original } }) => (
-                <Typography color="GrayText">
+                <Typography color="text.secondary">
                     {original.user.organisation}
                 </Typography>
             ),
@@ -223,6 +223,7 @@ const getColumns = ({
                     Cohort Status
                     <FilterPopover
                         name="request_status"
+                        ariaLabel="Filter by Cohort Status"
                         radios={statusRadios}
                         setFilter={setRequestStatus}
                         filter={requestStatus}
@@ -235,7 +236,7 @@ const getColumns = ({
                         <Chip
                             size="small"
                             label={capitalise(original.request_status || "")}
-                            color={statusMapping[original.request_status]}
+                            {...statusMapping[original.request_status]}
                         />
                     </div>
                 ),
@@ -302,7 +303,7 @@ const getColumns = ({
                 </Box>
             ),
             cell: ({ row: { original } }) => (
-                <Typography color="GrayText">
+                <Typography color="text.secondary">
                     {original.access_to_env}
                 </Typography>
             ),
@@ -404,7 +405,7 @@ const getColumns = ({
                 </Box>
             ),
             cell: ({ row: { original } }) => (
-                <Typography color="GrayText">
+                <Typography color="text.secondary">
                     {formatDate(original.user.updated_at, "DD/MM/YYYY")}
                 </Typography>
             ),
@@ -440,11 +441,9 @@ const getColumns = ({
                                     " "
                                 )
                             )}
-                            color={
-                                NHSSDEStatusMapping[
-                                    original.nhse_sde_request_status
-                                ]
-                            }
+                            {...NHSSDEStatusMapping[
+                                original.nhse_sde_request_status
+                            ]}
                         />
                     </div>
                 ),
@@ -603,7 +602,9 @@ const getColumns = ({
                 </Box>
             ),
             cell: ({ row: { original } }) => (
-                <Typography color="GrayText">{original.user.domain}</Typography>
+                <Typography color="text.secondary">
+                    {original.user.domain}
+                </Typography>
             ),
         },
         {
@@ -621,7 +622,9 @@ const getColumns = ({
                 </Box>
             ),
             cell: ({ row: { original } }) => (
-                <Typography color="GrayText">{original.user.link}</Typography>
+                <Typography color="text.secondary">
+                    {original.user.link}
+                </Typography>
             ),
         },
         {
@@ -639,7 +642,9 @@ const getColumns = ({
                 </Box>
             ),
             cell: ({ row: { original } }) => (
-                <Typography color="GrayText">{original.user?.orcid}</Typography>
+                <Typography color="text.secondary">
+                    {original.user?.orcid}
+                </Typography>
             ),
         },
         {
@@ -657,7 +662,9 @@ const getColumns = ({
                 </Box>
             ),
             cell: ({ row: { original } }) => (
-                <Typography color="GrayText">{original.user.bio}</Typography>
+                <Typography color="text.secondary">
+                    {original.user.bio}
+                </Typography>
             ),
         },
     ];

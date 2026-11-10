@@ -17,19 +17,10 @@ const defaultProps = {
 
 const dashboardUrl = `${apis.teamsV3Url}/${TEAM_ID}/dashboard`;
 
-const teamHandler = (isQuestionBank: boolean) =>
-    rest.get(`${apis.teamsV1Url}/${TEAM_ID}`, (_req, res, ctx) =>
-        res(
-            ctx.status(200),
-            ctx.json({ data: { is_question_bank: isQuestionBank, users: [] } })
-        )
-    );
-
 describe("EnquiriesWidget", () => {
 
     it("renders the totals returned for each enquiry type", async () => {
         server.use(
-            teamHandler(true),
             rest.get(`${dashboardUrl}/general-enquires/count`, (_req, res, ctx) =>
                 res(
                     ctx.status(200),
@@ -66,7 +57,7 @@ describe("EnquiriesWidget", () => {
             )
         );
 
-        render(<EnquiriesWidget {...defaultProps} />);
+        render(<EnquiriesWidget {...defaultProps} isDarEnabled />);
 
         await waitFor(() => {
             expect(
@@ -83,7 +74,6 @@ describe("EnquiriesWidget", () => {
 
     it("falls back to 0 when an endpoint returns no count", async () => {
         server.use(
-            teamHandler(true),
             rest.get(`${dashboardUrl}/general-enquires/count`, (_req, res, ctx) =>
                 res(ctx.status(200), ctx.json({ data: { total_by_interval: null } }))
             ),
@@ -107,7 +97,7 @@ describe("EnquiriesWidget", () => {
             )
         );
 
-        render(<EnquiriesWidget {...defaultProps} />);
+        render(<EnquiriesWidget {...defaultProps} isDarEnabled />);
 
         await waitFor(() => {
             expect(
@@ -119,7 +109,6 @@ describe("EnquiriesWidget", () => {
 
     it("hides the Data Access Requests tile when the question bank is disabled", async () => {
         server.use(
-            teamHandler(false),
             rest.get(`${dashboardUrl}/general-enquires/count`, (_req, res, ctx) =>
                 res(
                     ctx.status(200),
@@ -143,7 +132,7 @@ describe("EnquiriesWidget", () => {
             )
         );
 
-        render(<EnquiriesWidget {...defaultProps} />);
+        render(<EnquiriesWidget {...defaultProps} isDarEnabled={false} />);
 
         await waitFor(() => {
             expect(

@@ -1,0 +1,23 @@
+{/**
+  * The Gateway's default rendering of a dataset - used for every partner
+  * without a template of its own, and for every GWDM version.
+  *
+  * Laid out exactly as the existing dataset page: the same sections, field
+  * labels, tooltips, order, nav and anchors, taken from that page's own
+  * `datasetFields` config and read from native GWDM (see
+  * production/productionLayout.ts for the HDRUK -> GWDM field map). Content
+  * only - the title, actions, stats, mind map, sources and linkages come from
+  * DatasetPageShell.
+  *
+  * @typedef {import("../../../baseComponents").BaseVocabulary} MDXProvidedComponents
+  */}
+
+export const meta = {
+  description:
+    "The existing dataset page's layout, rendered from native GWDM.",
+  layout: "production",
+  // Production layout builds its own nav from its sections.
+  sections: [],
+};
+
+<ProductionSections />

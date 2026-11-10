@@ -10,12 +10,13 @@ interface ShowMoreTooltipProps {
     showLimit?: number;
 }
 
-const linkWrapper = (title: string) => (children: ReactNode) => {
-    return (
-        <Tooltip title={title}>
+const linkWrapper = (title: string) => {
+    const LinkWrapper = (children: ReactNode) => (
+        <Tooltip title={title} describeChild>
             <span>{children}</span>
         </Tooltip>
     );
+    return LinkWrapper;
 };
 
 const ShowMoreTooltip = ({

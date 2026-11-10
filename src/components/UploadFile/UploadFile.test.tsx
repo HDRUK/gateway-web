@@ -119,9 +119,9 @@ describe("UploadFile Component", () => {
         const uploadButton = screen.getByText("Upload");
         expect(uploadButton).toBeDisabled();
 
-        const fileInput = screen
-            .getByLabelText("Select file")
-            .querySelector("input") as HTMLInputElement;
+        const fileInput = screen.getByLabelText(
+            "Select file"
+        ) as HTMLInputElement;
 
         fireEvent.change(fileInput, {
             target: { files: [new File(["test"], "test-file.png")] },

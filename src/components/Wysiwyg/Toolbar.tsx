@@ -1,4 +1,5 @@
 import { useCallback } from "react";
+import { IconButton } from "@hdruk/ui";
 import CodeIcon from "@mui/icons-material/Code";
 import FormatBoldIcon from "@mui/icons-material/FormatBold";
 import FormatItalicIcon from "@mui/icons-material/FormatItalic";
@@ -8,8 +9,8 @@ import FormatUnderlinedIcon from "@mui/icons-material/FormatUnderlined";
 import LinkIcon from "@mui/icons-material/Link";
 import RedoIcon from "@mui/icons-material/Redo";
 import UndoIcon from "@mui/icons-material/Undo";
-import { IconButton } from "@mui/material";
 import { Editor } from "@tiptap/react";
+import { useTranslations } from "next-intl";
 import { ButtonType } from "@/interfaces/Wysiwyg";
 import { StyledToolbar } from "./Wysiwyg.styles";
 
@@ -34,6 +35,8 @@ function Toolbar({
         ButtonType.LINK,
     ],
 }: ToolbarProps) {
+    const t = useTranslations("components.Wysiwyg");
+
     const toggleBold = useCallback(() => {
         editor.chain().focus().toggleBold().run();
     }, [editor]);
@@ -85,6 +88,7 @@ function Toolbar({
                 <li>
                     <IconButton
                         size="small"
+                        aria-label={t("undo")}
                         onClick={handleUndo}
                         disabled={!editor.can().undo()}>
                         <UndoIcon />
@@ -95,6 +99,7 @@ function Toolbar({
                 <li>
                     <IconButton
                         size="small"
+                        aria-label={t("redo")}
                         onClick={handleRedo}
                         disabled={!editor.can().redo()}>
                         <RedoIcon />
@@ -103,49 +108,70 @@ function Toolbar({
             )}
             {includeButtons.includes(ButtonType.BOLD) && (
                 <li>
-                    <IconButton size="small" onClick={toggleBold}>
+                    <IconButton
+                        size="small"
+                        aria-label={t("bold")}
+                        onClick={toggleBold}>
                         <FormatBoldIcon />
                     </IconButton>
                 </li>
             )}
             {includeButtons.includes(ButtonType.ITALIC) && (
                 <li>
-                    <IconButton size="small" onPointerDown={toggleItalic}>
+                    <IconButton
+                        size="small"
+                        aria-label={t("italic")}
+                        onClick={toggleItalic}>
                         <FormatItalicIcon />
                     </IconButton>
                 </li>
             )}
             {includeButtons.includes(ButtonType.UNDERLINE) && (
                 <li>
-                    <IconButton size="small" onPointerDown={toggleUnderline}>
+                    <IconButton
+                        size="small"
+                        aria-label={t("underline")}
+                        onClick={toggleUnderline}>
                         <FormatUnderlinedIcon />
                     </IconButton>
                 </li>
             )}
             {includeButtons.includes(ButtonType.CODE) && (
                 <li>
-                    <IconButton size="small" onPointerDown={toggleCode}>
+                    <IconButton
+                        size="small"
+                        aria-label={t("code")}
+                        onClick={toggleCode}>
                         <CodeIcon />
                     </IconButton>
                 </li>
             )}
             {includeButtons.includes(ButtonType.BULLETED_LIST) && (
                 <li>
-                    <IconButton size="small" onPointerDown={toggleBulletedList}>
+                    <IconButton
+                        size="small"
+                        aria-label={t("bulletedList")}
+                        onClick={toggleBulletedList}>
                         <FormatListBulletedIcon />
                     </IconButton>
                 </li>
             )}
             {includeButtons.includes(ButtonType.NUMBERED_LIST) && (
                 <li>
-                    <IconButton size="small" onPointerDown={toggleOrderedList}>
+                    <IconButton
+                        size="small"
+                        aria-label={t("numberedList")}
+                        onClick={toggleOrderedList}>
                         <FormatListNumberedIcon />
                     </IconButton>
                 </li>
             )}
             {includeButtons.includes(ButtonType.LINK) && (
                 <li>
-                    <IconButton size="small" onPointerDown={toggleLink}>
+                    <IconButton
+                        size="small"
+                        aria-label={t("link")}
+                        onClick={toggleLink}>
                         <LinkIcon />
                     </IconButton>
                 </li>

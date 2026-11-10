@@ -31,9 +31,9 @@ describe("Upload", () => {
             type: "text/plain",
         });
 
-        const fileInput = screen
-            .getByLabelText("Upload File")
-            .querySelector("input") as HTMLInputElement;
+        const fileInput = screen.getByLabelText(
+            "Upload File"
+        ) as HTMLInputElement;
 
         await userEvent.upload(fileInput, file);
 

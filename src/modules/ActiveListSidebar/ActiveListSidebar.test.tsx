@@ -78,4 +78,30 @@ describe("ActiveListSidebar", () => {
         });
         expect(section.scrollIntoView).not.toHaveBeenCalled();
     });
+
+    it("scrolls to an item's own anchorId when it has one", () => {
+        // The schema-driven dataset page anchors sections by key
+        // (section-provenance), not by position.
+        setScreenWidth(1440);
+        const keyed = document.createElement("div");
+        keyed.id = "section-provenance";
+        keyed.scrollIntoView = jest.fn();
+        document.body.appendChild(keyed);
+
+        render(
+            <ActiveListSidebar
+                items={[
+                    { label: "Summary", anchorId: "section-summary" },
+                    { label: "Provenance", anchorId: "section-provenance" },
+                ]}
+            />
+        );
+
+        fireEvent.click(screen.getByRole("button", { name: "Provenance" }));
+
+        expect(keyed.scrollIntoView).toHaveBeenCalled();
+        // Not the positional anchor that happens to sit at the same index.
+        expect(section.scrollIntoView).not.toHaveBeenCalled();
+        document.body.removeChild(keyed);
+    });
 });

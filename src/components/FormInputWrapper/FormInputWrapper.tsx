@@ -76,7 +76,7 @@ const FormInputWrapper = ({
                     <CharacterLimit count={characterCount} limit={limit} />
                 )}
                 {extraInfo && (
-                    <Typography fontSize={13} color={tokens.text.disabled}>
+                    <Typography fontSize={13} color={tokens.text.faded}>
                         {extraInfo}
                     </Typography>
                 )}

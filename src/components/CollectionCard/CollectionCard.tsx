@@ -1,5 +1,5 @@
-import { useTranslations } from "next-intl";
 import { tokens } from "@hdruk/ui/theme";
+import { useTranslations } from "next-intl";
 import { Collection } from "@/interfaces/Collection";
 import { IconType } from "@/interfaces/Ui";
 import Box from "@/components/Box";
@@ -10,8 +10,11 @@ import { DataStatus } from "@/consts/application";
 import { formatDate } from "@/utils/date";
 import CardActions from "../CardActions";
 import KeyValueList from "../KeyValueList";
+import StatusMenu from "../StatusMenu";
 
 interface CollectionCardProps {
+    onStatusChange?: (id: number, status: DataStatus) => void;
+    disabledStatusOptions?: DataStatus[];
     collection: Collection;
     actions: {
         icon: IconType;
@@ -23,7 +26,12 @@ interface CollectionCardProps {
 
 const TRANSLATION_PATH = "components.CollectionCard";
 
-const CollectionCard = ({ collection, actions }: CollectionCardProps) => {
+const CollectionCard = ({
+    collection,
+    actions,
+    onStatusChange,
+    disabledStatusOptions,
+}: CollectionCardProps) => {
     const t = useTranslations(TRANSLATION_PATH);
 
     const {
@@ -44,7 +52,9 @@ const CollectionCard = ({ collection, actions }: CollectionCardProps) => {
             <Box
                 sx={{
                     display: "grid",
-                    gridTemplateColumns: "repeat(1, 1fr 50px)",
+                    gridTemplateColumns: onStatusChange
+                        ? "1fr auto 50px"
+                        : "repeat(1, 1fr 50px)",
                     p: 0,
                 }}>
                 <Box
@@ -140,7 +150,22 @@ const CollectionCard = ({ collection, actions }: CollectionCardProps) => {
                         />
                     </Box>
                 </Box>
-                <Box sx={{ p: 0, borderLeft: `solid 1px ${tokens.status.faded}` }}>
+                {onStatusChange && (
+                    <Box>
+                        <StatusMenu
+                            status={collection.status as DataStatus}
+                            onChange={status =>
+                                onStatusChange(Number(collection.id), status)
+                            }
+                            disabledOptions={disabledStatusOptions}
+                        />
+                    </Box>
+                )}
+                <Box
+                    sx={{
+                        p: 0,
+                        borderLeft: `solid 1px ${tokens.status.faded}`,
+                    }}>
                     <CardActions
                         actions={actions}
                         id={collection.id}

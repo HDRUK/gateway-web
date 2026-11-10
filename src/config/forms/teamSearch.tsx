@@ -10,6 +10,7 @@ const searchFilter = {
     name: "search",
     placeholder: "Search by team name",
     label: "",
+    inputProps: { "aria-label": "Search by team name" },
     showClearButton: true,
 };
 

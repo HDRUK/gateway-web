@@ -1,0 +1,68 @@
+{/**
+  * CRUK's arrangement of a dataset's native GWDM. A demonstration that a
+  * partner template only changes *arrangement*: the data is the same GWDM the
+  * HDRUK default renders, every label still comes from the GWDM schema, and
+  * the Gateway chrome around it is unchanged. Nothing here is CRUK-schema
+  * specific - CRUK datasets are stored as GWDM like everyone else's.
+  *
+  * Leads with the research programme (institute, funders, grants) and the
+  * sample collections, then the rest of the record.
+  *
+  * `meta.sections` drives the section nav and must list the sections below,
+  * in the same order - the DatasetPageShell contract test checks it.
+  *
+  * @typedef {import("@/generated/schemas/GWDM/2.2").Gwdm22} Gwdm22
+  * @typedef {import("../../../baseComponents").BaseVocabulary<keyof Gwdm22>} MDXProvidedComponents
+  *
+  * @typedef Props
+  * @property {Gwdm22} data
+  * @property {string} [title]
+  */}
+
+export const meta = {
+  description:
+    "CRUK arrangement of native GWDM - research programme and samples first.",
+  sections: [
+    "summary",
+    "projectGrants",
+    "tissuesSampleCollection",
+    "datasetFilters",
+    "coverage",
+    "provenance",
+    "accessibility",
+    "observations",
+    "structuralMetadata",
+    "demographicFrequency",
+    "omics",
+    "linkage",
+    "erd",
+    "icons",
+  ],
+};
+
+{/* Research context first, as a strip above the summary. */}
+<FieldStrip path="summary" fields={["leadResearchInstitute", "funders", "inPipeline"]} />
+
+<DatasetSection
+  name="summary"
+  fields
+  exclude={["title", "abstract", "leadResearchInstitute", "funders", "inPipeline"]}
+>
+  <Prose field="abstract" />
+</DatasetSection>
+
+<DatasetSection name="projectGrants" />
+<DatasetSection name="tissuesSampleCollection" />
+<DatasetSection name="datasetFilters" />
+<DatasetSection name="coverage" />
+<DatasetSection name="provenance" />
+<DatasetSection name="accessibility" />
+<DatasetSection name="observations" />
+<DatasetSection name="structuralMetadata" />
+<DatasetSection name="demographicFrequency" />
+<DatasetSection name="omics" />
+<DatasetSection name="linkage" />
+<DatasetSection name="erd" />
+<DatasetSection name="icons" />
+
+<FieldStrip path="required" fields={["version", "issued", "modified"]} />

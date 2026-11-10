@@ -13,6 +13,7 @@ import {
     sortField,
     toggleDirection,
 } from "@/config/forms/toolAccountSearch";
+import { DataStatus } from "@/consts/application";
 
 interface ToolsTabProps {
     list?: Tool[];
@@ -22,6 +23,8 @@ interface ToolsTabProps {
         action?: (id: number) => void;
         label: string;
     }[];
+    onStatusChange?: (id: number, status: DataStatus) => void;
+    disabledStatusOptions?: DataStatus[];
     lastPage?: number;
     from?: number;
     to?: number;
@@ -36,6 +39,8 @@ interface ToolsTabProps {
 
 const ToolsTab = ({
     actions,
+    onStatusChange,
+    disabledStatusOptions,
     list,
     label,
     lastPage,
@@ -90,7 +95,13 @@ const ToolsTab = ({
 
             {(list || [])
                 .map(tool => (
-                    <ToolCard actions={actions} key={tool.id} tool={tool} />
+                    <ToolCard
+                        actions={actions}
+                        onStatusChange={onStatusChange}
+                        disabledStatusOptions={disabledStatusOptions}
+                        key={tool.id}
+                        tool={tool}
+                    />
                 ))
                 .filter(tool => !!tool)}
             {list?.length === 0 && (

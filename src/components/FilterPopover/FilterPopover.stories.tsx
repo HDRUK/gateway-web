@@ -21,6 +21,7 @@ const WrapperComponent = () => {
 
     return (
         <FilterPopover
+            ariaLabel="Filter"
             name="filter_status"
             radios={radios}
             setFilter={setFilter}

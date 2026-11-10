@@ -275,14 +275,14 @@ const DarMessages = ({
                                         justifyContent: "space-between",
                                     }}>
                                     <Typography
-                                        color={tokens.text.disabled}
+                                        color={tokens.text.faded}
                                         fontSize={13}>
                                         {review.user_id
                                             ? `${user?.firstname} ${user?.lastname}`
                                             : teamName}
                                     </Typography>
                                     <Typography
-                                        color={tokens.text.disabled}
+                                        color={tokens.text.faded}
                                         fontSize={13}>
                                         {formatDate(
                                             review.created_at,

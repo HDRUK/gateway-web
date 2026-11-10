@@ -60,6 +60,7 @@ const apis = {
     dataCustodianNetworkV2Url: `${apiV2IPUrl}/data_custodian_networks`,
     dataCustodianNetworkV2UrlIP: `${apiV2IPUrl}/data_custodian_networks`,
     adminDataCustodianNetworksV2Url: `${apiV2IPUrl}/admin/data_custodian_networks`,
+    adminRevokeAllTokensV2Url: `${apiV2IPUrl}/admin/tokens/revoke_all`,
     publicationsV1Url: `${apiV1Url}/publications`,
     publicationsV1UrlIP: `${apiV1IPUrl}/publications`,
     toolsV1Url: `${apiV1Url}/tools`,

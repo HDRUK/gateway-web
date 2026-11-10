@@ -1,0 +1,60 @@
+{/**
+  * PRUK's arrangement of a dataset's native GWDM. PRUK datasets are
+  * population studies and their waves, so the GWDM 2.3+ population section
+  * (study design, wave, recruitment, follow-up, eligibility) is lifted to sit
+  * straight after the summary. Linkage - including `waveOf`, the parent study
+  * a wave belongs to - renders with the rest of the record. Every label comes
+  * from the GWDM schema; sections a version does not have drop out.
+  *
+  * `meta.sections` drives the section nav and must list the sections below,
+  * in the same order - the DatasetPageShell contract test checks it.
+  *
+  * Not narrowed to a generated GWDM type: population is GWDM 2.3+, and
+  * src/generated/schemas/GWDM has no 2.3/2.4 types until schemata-2 publishes
+  * them.
+  *
+  * @typedef {import("../../../baseComponents").BaseVocabulary} MDXProvidedComponents
+  */}
+
+export const meta = {
+  description:
+    "PRUK arrangement of native GWDM - population detail straight after the summary.",
+  sections: [
+    "summary",
+    "population",
+    "coverage",
+    "provenance",
+    "accessibility",
+    "observations",
+    "structuralMetadata",
+    "demographicFrequency",
+    "tissuesSampleCollection",
+    "omics",
+    "linkage",
+    "projectGrants",
+    "datasetFilters",
+    "erd",
+    "icons",
+  ],
+};
+
+<DatasetSection name="summary" fields exclude={["title", "abstract"]}>
+  <Prose field="abstract" />
+</DatasetSection>
+
+<DatasetSection name="population" />
+<DatasetSection name="coverage" />
+<DatasetSection name="provenance" />
+<DatasetSection name="accessibility" />
+<DatasetSection name="observations" />
+<DatasetSection name="structuralMetadata" />
+<DatasetSection name="demographicFrequency" />
+<DatasetSection name="tissuesSampleCollection" />
+<DatasetSection name="omics" />
+<DatasetSection name="linkage" />
+<DatasetSection name="projectGrants" />
+<DatasetSection name="datasetFilters" />
+<DatasetSection name="erd" />
+<DatasetSection name="icons" />
+
+<FieldStrip path="required" fields={["version", "issued", "modified"]} />

@@ -1,77 +1,35 @@
 import { act } from "@testing-library/react";
 import { renderHook } from "@/utils/testUtils";
-import { STATIC_FILTER_DATA_SOURCE } from "../constants";
+import { STATIC_FILTER_DATA_SOURCE, STATIC_FILTER_SOURCE } from "../constants";
 import { useStaticFilterUpdate } from "./useStaticFilterUpdate";
 
 describe("useStaticFilterUpdate", () => {
-    const setQueryParams = jest.fn();
-    const updatePath = jest.fn();
-    const updatePathMultiple = jest.fn();
+    const setSearchParams = jest.fn();
 
     beforeEach(() => jest.clearAllMocks());
 
     const setup = () =>
-        renderHook(() =>
-            useStaticFilterUpdate({ setQueryParams, updatePath, updatePathMultiple })
-        );
+        renderHook(() => useStaticFilterUpdate(setSearchParams));
 
-    const getUpdater = () =>
-        setQueryParams.mock.calls[0][0] as (prev: object) => object;
+    it(`sets only the value for "${STATIC_FILTER_DATA_SOURCE}"`, () => {
+        const { result } = setup();
 
-    describe(`when filterName is "${STATIC_FILTER_DATA_SOURCE}"`, () => {
-        it("calls updatePathMultiple with the value and page reset", () => {
-            const { result } = setup();
-            act(() => result.current(STATIC_FILTER_DATA_SOURCE, "ARDC"));
-            expect(updatePathMultiple).toHaveBeenCalledWith({
-                [STATIC_FILTER_DATA_SOURCE]: "ARDC",
-                page: "1",
-            });
-        });
+        act(() => result.current(STATIC_FILTER_DATA_SOURCE, "ARDC"));
 
-        it("does not call updatePath", () => {
-            const { result } = setup();
-            act(() => result.current(STATIC_FILTER_DATA_SOURCE, "ARDC"));
-            expect(updatePath).not.toHaveBeenCalled();
-        });
-
-        it("sets the filter value and resets page in queryParams", () => {
-            const { result } = setup();
-            act(() => result.current(STATIC_FILTER_DATA_SOURCE, "ARDC"));
-            const prev = { dataSource: "HDRUK", page: "3", query: "cancer" };
-            expect(getUpdater()(prev)).toMatchObject({
-                dataSource: "ARDC",
-                page: "1",
-                query: "cancer",
-            });
+        expect(setSearchParams).toHaveBeenCalledWith({
+            [STATIC_FILTER_DATA_SOURCE]: "ARDC",
         });
     });
 
-    describe("when filterName is any other filter", () => {
-        it("calls updatePath with the filterName and value", () => {
-            const { result } = setup();
-            act(() => result.current("publisherName", "NHS"));
-            expect(updatePath).toHaveBeenCalledWith("publisherName", "NHS");
-        });
+    it("clears the query and dataset titles for other filters", () => {
+        const { result } = setup();
 
-        it("does not call updatePathMultiple", () => {
-            const { result } = setup();
-            act(() => result.current("publisherName", "NHS"));
-            expect(updatePathMultiple).not.toHaveBeenCalled();
-        });
+        act(() => result.current(STATIC_FILTER_SOURCE, "FED"));
 
-        it("sets the filter value, clears datasetTitles and query in queryParams", () => {
-            const { result } = setup();
-            act(() => result.current("publisherName", "NHS"));
-            const prev = {
-                publisherName: [],
-                datasetTitles: ["existing"],
-                query: "cancer",
-            };
-            expect(getUpdater()(prev)).toMatchObject({
-                publisherName: "NHS",
-                datasetTitles: undefined,
-                query: "",
-            });
+        expect(setSearchParams).toHaveBeenCalledWith({
+            [STATIC_FILTER_SOURCE]: "FED",
+            datasetTitles: undefined,
+            query: undefined,
         });
     });
 });

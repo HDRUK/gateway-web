@@ -44,6 +44,7 @@ const OtherViewsWidget = ({
             key: "dataCustodian",
             label: t("labels.dataCustodian"),
             count: dataCustodianViews?.[0]?.counter,
+            tooltip: t("tooltips.dataCustodian"),
         },
     ];
 

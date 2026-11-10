@@ -1,15 +1,15 @@
+import { Chip, ChipProps } from "@hdruk/ui";
 import { tokens } from "@hdruk/ui/theme";
 import { Box } from "@mui/material";
 import Link from "next/link";
 import BoxStacked from "@/components/BoxStacked";
 import { BoxStackedProps } from "@/components/BoxStacked/BoxStacked";
-import Chip, { ChipProps } from "@/components/Chip";
 import HTMLContent from "../HTMLContent";
 
 export interface CardStackedProps {
     href: string;
     imgUrl: string;
-    title: ChipProps["label"];
+    title: string;
     chipProps?: Omit<ChipProps, "label">;
     boxStackedProps?: BoxStackedProps;
 }
@@ -30,6 +30,7 @@ export default function CardStacked({
                 href={href}
                 sx={{
                     color: tokens.text.primaryWhite,
+                    textDecoration: "none",
                     px: 3,
                     py: 2,
                     display: "flex",
@@ -43,10 +44,9 @@ export default function CardStacked({
                 }}>
                 <Chip
                     size="small"
+                    color="archived"
                     label={<HTMLContent content={title} />}
                     sx={{
-                        backgroundColor: tokens.status.faded,
-                        color: tokens.text.primaryWhite,
                         maxWidth: "100%",
                         "& .MuiChip-label > div": {
                             overflow: "hidden",

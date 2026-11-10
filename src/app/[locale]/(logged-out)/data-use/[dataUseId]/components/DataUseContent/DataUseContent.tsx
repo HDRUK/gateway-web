@@ -37,7 +37,12 @@ const DataUseContent = ({
     const renderDataUseField = (
         path: string,
         type: FieldType,
-        value: string | string[] | DatasetWithTitle[] | DurOutput[]
+        value:
+            | string
+            | string[]
+            | DatasetWithTitle[]
+            | DurOutput[]
+            | DataUse["publications"]
     ) => {
         const val = value as string;
 
@@ -123,6 +128,19 @@ const DataUseContent = ({
                                 </Box>
                             );
                         })}
+                    </ListContainer>
+                );
+            }
+            case FieldType.PUBLICATION_LIST: {
+                return (
+                    <ListContainer>
+                        {(value as DataUse["publications"]).map(publication => (
+                            <Link
+                                key={publication.id}
+                                href={`/${RouteName.PUBLICATION}/${publication.id}`}>
+                                {publication.paper_title}
+                            </Link>
+                        ))}
                     </ListContainer>
                 );
             }

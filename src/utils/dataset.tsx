@@ -74,7 +74,8 @@ const getLatestVersions = (dataset_versions: VersionItem[]): VersionItem[] => {
 };
 
 const escapeMarkdownUnderscores = (text: string) =>
-    text.replace(/(\S)_(\S)/g, "$1\\_$2");
+    // Lookahead, so "0_0_0" escapes every underscore rather than every other.
+    text.replace(/(\S)_(?=\S)/g, "$1\\_");
 
 const formatTextWithLinks = (text: string | string[] | number) => {
     if (typeof text === "number") {

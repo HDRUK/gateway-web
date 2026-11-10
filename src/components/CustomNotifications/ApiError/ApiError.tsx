@@ -23,6 +23,7 @@ const ApiError = React.forwardRef<HTMLDivElement, ApiErrorProps>(
         return (
             <SnackbarContent ref={ref} role="alert">
                 <Card
+                    sx={{ maxWidth: "sm" }}
                     style={{
                         backgroundColor: tokens.background.error,
                         borderColor: tokens.status.error,
@@ -40,8 +41,8 @@ const ApiError = React.forwardRef<HTMLDivElement, ApiErrorProps>(
                         titleTypographyProps={{ fontSize: "18px" }}
                     />
                     {errors?.length && (
-                        <CardContent>
-                            <ul style={{ padding: "0 15px", marginTop: 0 }}>
+                        <CardContent sx={{ pt: 0 }}>
+                            <ul style={{ padding: "0 15px", margin: 0 }}>
                                 {errors.map(err => (
                                     <li key={err.message}>{err.message}</li>
                                 ))}

@@ -59,6 +59,9 @@ const isQueryEmpty = (filterQueries: {
     );
 };
 
+const getPopulationBound = (value?: string) =>
+    value && !Number.isNaN(Number(value)) ? value : undefined;
+
 const pickOnlyFilters = (type: string, allSearchQueries: SearchQueryParams) => {
     const filterQueries = pick(allSearchQueries, filtersList) as {
         [key: string]: string[] | undefined;
@@ -74,9 +77,7 @@ const pickOnlyFilters = (type: string, allSearchQueries: SearchQueryParams) => {
     const [rangeFrom, rangeTo] =
         populationFilters?.filter(item => item !== EXCLUDE_UNREPORTED) ?? [];
 
-    const populationFrom = !Number.isNaN(Number(rangeFrom))
-        ? rangeFrom
-        : undefined;
+    const populationFrom = getPopulationBound(rangeFrom);
 
     const formattedFilterQueries =
         type === "dataset"
@@ -86,7 +87,7 @@ const pickOnlyFilters = (type: string, allSearchQueries: SearchQueryParams) => {
                       from:
                           populationFrom ??
                           (excludeUnreported ? "0" : undefined),
-                      to: !Number.isNaN(Number(rangeTo)) ? rangeTo : undefined,
+                      to: getPopulationBound(rangeTo),
                       includeUnreported: !excludeUnreported,
                   },
                   ...(filterQueries?.[FILTER_CONTAINS_BIOSAMPLES]?.includes(

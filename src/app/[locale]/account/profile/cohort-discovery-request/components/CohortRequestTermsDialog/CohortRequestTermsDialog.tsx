@@ -3,8 +3,9 @@
 import { useCallback, useState } from "react";
 import { useForm } from "react-hook-form";
 import { InView } from "react-intersection-observer";
-import { yupResolver } from "@hookform/resolvers/yup";
+import { Button } from "@hdruk/ui";
 import { tokens } from "@hdruk/ui/theme";
+import { yupResolver } from "@hookform/resolvers/yup";
 import { Typography } from "@mui/material";
 import MuiDialogActions from "@mui/material/DialogActions";
 import MuiDialogContent from "@mui/material/DialogContent";
@@ -13,7 +14,6 @@ import { useRouter } from "next/navigation";
 import { templateRepeatFields } from "@/interfaces/Cms";
 import ActiveList from "@/components/ActiveList";
 import Box from "@/components/Box";
-import { Button } from "@hdruk/ui";
 import Dialog from "@/components/Dialog";
 import Form from "@/components/Form";
 import HTMLContent from "@/components/HTMLContent";
@@ -122,7 +122,9 @@ const CohortRequestTermsDialog = () => {
                                     sx={{ mb: 2, fontSize: 24 }}>
                                     {dialogProps?.cmsContent.title}
                                 </Typography>
-                                <Typography color="GrayText" sx={{ mb: 2 }}>
+                                <Typography
+                                    color="text.secondary"
+                                    sx={{ mb: 2 }}>
                                     {dialogProps?.cmsContent.subTitle}
                                 </Typography>
                             </Box>

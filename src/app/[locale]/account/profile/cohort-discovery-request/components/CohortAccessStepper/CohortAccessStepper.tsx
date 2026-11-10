@@ -1,14 +1,12 @@
 "use client";
 
 import { ReactNode, useRef, useState } from "react";
+import { Button, Chip, Loading } from "@hdruk/ui";
 import { tokens } from "@hdruk/ui/theme";
 import CheckCircleIcon from "@mui/icons-material/CheckCircle";
-import QueryBuilderIcon from "@mui/icons-material/QueryBuilder";
 import { Box } from "@mui/material";
 import { useTranslations } from "next-intl";
 import { templateRepeatFields } from "@/interfaces/Cms";
-import { Button, Loading } from "@hdruk/ui";
-import Chip from "@/components/Chip";
 import CohortDiscoveryButton from "@/components/CohortDiscoveryButton";
 import Link from "@/components/Link";
 import Paper from "@/components/Paper";
@@ -28,6 +26,7 @@ import {
 import { differenceInDays } from "@/utils/date";
 import { capitalise } from "@/utils/general";
 import ProfileForm from "@/app/[locale]/account/profile/components/ProfileForm";
+import AccessDaysRemaining from "../AccessDaysRemaining";
 import CohortRequestTermsDialog from "../CohortRequestTermsDialog";
 import CohortUserDeclaration from "../CohortUserDeclaration";
 import { CircleState, StepNode, StepTitle } from "../Stepper";
@@ -81,8 +80,6 @@ const CohortAccessStepper = ({
         hasAccess &&
         daysRemaining != null &&
         daysRemaining <= COHORT_EXPIRY_WARNING_DAYS;
-
-    const indicatorColour = expiringSoon ? tokens.text.warning : tokens.status.faded;
 
     /* a renewing user still holds their approved access until it lapses */
     const accessStatus = isRenewing ? COHORT_STATUS.APPROVED : requestStatus;
@@ -140,7 +137,7 @@ const CohortAccessStepper = ({
             </Typography>
         ),
         note: (chunks: ReactNode) => (
-            <Typography component="span" color={tokens.text.disabled}>
+            <Typography component="span" color={tokens.text.faded}>
                 {chunks}
             </Typography>
         ),
@@ -186,7 +183,7 @@ const CohortAccessStepper = ({
                                 mt: 1,
                             }}>
                             {isRenewing && (
-                                <Typography sx={{ color: tokens.text.disabled }}>
+                                <Typography sx={{ color: tokens.text.faded }}>
                                     {tCd("currentAccessLabel")}
                                 </Typography>
                             )}
@@ -199,38 +196,23 @@ const CohortAccessStepper = ({
                                 <Chip
                                     size="small"
                                     label={capitalise(accessStatus)}
-                                    color={
-                                        expiringSoon
-                                            ? "yellowCustom"
-                                            : statusMapping[accessStatus]
-                                    }
+                                    {...(expiringSoon
+                                        ? { color: "warning" }
+                                        : accessStatus === COHORT_STATUS.PENDING
+                                        ? { color: "archived" }
+                                        : statusMapping[accessStatus])}
                                 />
                                 {daysRemaining != null && (
-                                    <Box
-                                        sx={{
-                                            display: "flex",
-                                            alignItems: "center",
-                                            gap: 1,
-                                        }}>
-                                        <QueryBuilderIcon
-                                            sx={{ color: indicatorColour }}
-                                        />
-                                        <Typography
-                                            sx={{ color: indicatorColour }}>
-                                            {expiringSoon
-                                                ? tCd("accessExpiringIn", {
-                                                      days: daysRemaining,
-                                                  })
-                                                : `${daysRemaining} ${tCd(
-                                                      "daysRemaining"
-                                                  )}`}
-                                        </Typography>
-                                    </Box>
+                                    <AccessDaysRemaining
+                                        daysRemaining={daysRemaining}
+                                        expiringSoon={expiringSoon}
+                                    />
                                 )}
                             </Box>
                             {isRenewing && (
                                 <>
-                                    <Typography sx={{ color: tokens.text.disabled }}>
+                                    <Typography
+                                        sx={{ color: tokens.text.faded }}>
                                         {tCd("accessRenewalLabel")}
                                     </Typography>
                                     <Chip
@@ -238,7 +220,7 @@ const CohortAccessStepper = ({
                                         label={capitalise(
                                             COHORT_STATUS.PENDING
                                         )}
-                                        color="greyCustom"
+                                        color="archived"
                                     />
                                 </>
                             )}
@@ -266,7 +248,7 @@ const CohortAccessStepper = ({
                         </StepTitle>
                         {step1State !== STEP_STATE.COMPLETE && (
                             <>
-                                <Typography color={tokens.text.disabled}>
+                                <Typography color={tokens.text.faded}>
                                     {showReapplyCopy
                                         ? t("reapplyStepDescription")
                                         : t("applyStepDescription")}
@@ -377,7 +359,7 @@ const CohortAccessStepper = ({
                     <StepNode circleState={step2State} label="2">
                         <StepTitle>{t("reviewStepTitle")}</StepTitle>
                         {step2State !== STEP_STATE.COMPLETE && (
-                            <Typography color={tokens.text.disabled}>
+                            <Typography color={tokens.text.faded}>
                                 {t("reviewStepDescription")}
                             </Typography>
                         )}
@@ -386,7 +368,7 @@ const CohortAccessStepper = ({
                     <StepNode circleState={step3State} label="3" isLast>
                         <StepTitle>{t("decisionStepTitle")}</StepTitle>
                         {step3State !== STEP_STATE.COMPLETE && (
-                            <Typography color={tokens.text.disabled}>
+                            <Typography color={tokens.text.faded}>
                                 {t("decisionStepDescription")}
                             </Typography>
                         )}

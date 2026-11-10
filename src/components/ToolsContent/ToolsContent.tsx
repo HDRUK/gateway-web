@@ -40,7 +40,7 @@ export default function ToolsContent({
             )}
             {!!user && <div>{`${user.firstname} ${user.lastname}`}</div>}
             {!!created_at && (
-                <Typography color="GrayText">
+                <Typography color="text.secondary">
                     Created - {formatDate(created_at, "DD MMMM YYYY")}
                 </Typography>
             )}

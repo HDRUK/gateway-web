@@ -17,7 +17,7 @@ describe("ImageMediaCard", () => {
             />
         );
 
-        const image = screen.getByRole("img");
+        const image = screen.getByRole("presentation");
         expect(image).toBeInTheDocument();
         expect(image).toHaveAttribute("src", img);
 

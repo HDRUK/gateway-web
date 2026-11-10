@@ -85,3 +85,13 @@ export const isLoginRegistryEnabled = flag({
     key: "LoginRegistryEnabled",
     adapter,
 });
+
+/**
+ * Renders /dataset/[id] from native GWDM with the schema-driven templates
+ * instead of the HDRUK-translated page. Off by default; flip per environment,
+ * or per user via Pennant, with no deploy.
+ */
+export const isGwdmDatasetPageEnabled = flag({
+    key: "GwdmDatasetPage",
+    adapter,
+});

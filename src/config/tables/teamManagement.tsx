@@ -114,6 +114,7 @@ const getColumns = ({
                     {translations.questionBank}
                     <FilterPopover
                         name="is_question_bank"
+                        ariaLabel={translations.filterQuestionBank}
                         radios={[
                             { value: "", label: translations.all },
                             { value: "true", label: translations.enabled },

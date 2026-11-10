@@ -23,7 +23,7 @@ export default function Header({
             <Typography variant="h2">
                 {cohortRequest.user.name}
                 <Typography
-                    sx={{ ml: 1, color: "GrayText", fontSize: 18 }}
+                    sx={{ ml: 1, color: "text.secondary", fontSize: 18 }}
                     variant="body1"
                     component="span">
                     {cohortRequest.user.email}
@@ -50,7 +50,7 @@ export default function Header({
                         <Chip
                             size="small"
                             label={capitalise(cohortRequest?.request_status)}
-                            color={statusMapping[cohortRequest?.request_status]}
+                            {...statusMapping[cohortRequest?.request_status]}
                         />
                     </Box>
                 )}
@@ -69,11 +69,9 @@ export default function Header({
                             label={capitalise(
                                 cohortRequest?.nhse_sde_request_status
                             )}
-                            color={
-                                NHSSDEStatusMapping[
-                                    cohortRequest?.nhse_sde_request_status
-                                ]
-                            }
+                            {...NHSSDEStatusMapping[
+                                cohortRequest?.nhse_sde_request_status
+                            ]}
                         />
                     </Box>
                 )}

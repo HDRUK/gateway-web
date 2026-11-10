@@ -1,6 +1,7 @@
 "use client";
 
 import { Fragment, useMemo } from "react";
+import { Button } from "@hdruk/ui";
 import { tokens } from "@hdruk/ui/theme";
 import DownloadIcon from "@mui/icons-material/Download";
 import { Grid } from "@mui/material";
@@ -9,7 +10,6 @@ import { useParams, useRouter } from "next/navigation";
 import { DataAccessRequestApplication } from "@/interfaces/DataAccessRequestApplication";
 import Box from "@/components/Box";
 import BoxContainer from "@/components/BoxContainer";
-import { Button } from "@hdruk/ui";
 import CardActions from "@/components/CardActions";
 import Chip from "@/components/Chip";
 import DarStatusTracker from "@/components/DarStatusTracker";
@@ -362,7 +362,7 @@ export default function DarApplicationCard({
                                             },
                                             p: 0,
                                         }}>
-                                        <Typography color={tokens.text.disabled}>
+                                        <Typography color={tokens.text.faded}>
                                             {item.text}
                                         </Typography>
                                     </Box>
@@ -385,7 +385,7 @@ export default function DarApplicationCard({
                                     sx={{
                                         display: "flex",
                                         alignItems: "center",
-                                        color: tokens.text.disabled,
+                                        color: tokens.text.faded,
                                     }}>
                                     <QueryBuilderOutlinedIcon sx={{ mr: 1 }} />
                                     {application.days_since_submission}

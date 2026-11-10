@@ -1,14 +1,18 @@
 "use client";
 
+import { Chip } from "@hdruk/ui";
 import { tokens } from "@hdruk/ui/theme";
-import { Box, Chip, Link } from "@mui/material";
+import { Box, Link } from "@mui/material";
 import { CollectionItem, WidgetBranding } from "@/interfaces/Widget";
 import BoxStacked from "@/components/BoxStacked";
 import { FULL_GATEWAY_URL } from "@/consts/urls";
 
 const boxStackedSX = { aspectRatio: "1.9 / 1", minHeight: 130 } as const;
 
-type CollectionsGridProps = { items: CollectionItem[]; branding: WidgetBranding };
+type CollectionsGridProps = {
+    items: CollectionItem[];
+    branding: WidgetBranding;
+};
 
 export default function CollectionsGrid({ items }: CollectionsGridProps) {
     return (
@@ -47,11 +51,8 @@ export default function CollectionsGrid({ items }: CollectionsGridProps) {
                         <Chip
                             size="small"
                             label={result.name}
-                            sx={{
-                                backgroundColor: tokens.status.faded,
-                                color: tokens.text.primaryWhite,
-                                maxWidth: "220px",
-                            }}
+                            color="archived"
+                            sx={{ maxWidth: "220px" }}
                         />
                     </Box>
                 </BoxStacked>

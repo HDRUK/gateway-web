@@ -154,11 +154,9 @@ export default function DataCustodianNetworksTab() {
                                                 ? t("enabled")
                                                 : t("disabled")
                                         }
-                                        color={
-                                            network.enabled
-                                                ? "success"
-                                                : "greyCustom"
-                                        }
+                                        {...(network.enabled
+                                            ? { color: "success" }
+                                            : { variant: "outlined" })}
                                         size="small"
                                     />
                                     <ActionMenu

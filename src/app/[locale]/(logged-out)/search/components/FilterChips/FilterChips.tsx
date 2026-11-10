@@ -1,9 +1,9 @@
+import { Chip } from "@hdruk/ui";
 import { tokens } from "@hdruk/ui/theme";
 import { ChipProps, Tooltip } from "@mui/material";
 import { useTranslations } from "next-intl";
 import { SearchQueryParams } from "@/interfaces/Search";
 import Box from "@/components/Box";
-import Chip from "@/components/Chip";
 import ShowMore from "@/components/ShowMore";
 import { EXCLUDE_UNREPORTED } from "@/consts/filters";
 import { CloseIcon } from "@/consts/icons";
@@ -65,28 +65,12 @@ const FilterChips = ({
                                             )}`}
                                             placement="top">
                                             <Chip
-                                                variant="outlined"
                                                 sx={{
                                                     textOverflow: "ellipsis",
                                                     maxWidth: 200,
                                                     overflow: "hidden",
                                                     whiteSpace: "nowrap",
-                                                    color: tokens.text
-                                                        .primaryWhite,
-                                                    backgroundColor:
-                                                        tokens.status.success,
-                                                    borderColor:
-                                                        tokens.status.success,
                                                     marginBottom: "4px",
-                                                    "&:focus-visible": {
-                                                        borderColor:
-                                                            tokens.status
-                                                                .needsAction,
-                                                        borderWidth: 2,
-                                                        backgroundColor:
-                                                            tokens.status
-                                                                .success,
-                                                    },
                                                 }}
                                                 color={color}
                                                 size={size}

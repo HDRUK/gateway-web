@@ -45,6 +45,7 @@ const DEFAULT_SELECTED = [
 
 interface ResourceCountsProps {
     teamId: string;
+    teamName: string;
     startDate?: string;
     endDate?: string;
     initialCounts: Partial<Record<DashboardEntity, DashboardEntityCount>>;
@@ -52,6 +53,7 @@ interface ResourceCountsProps {
 
 const ResourceCounts = ({
     teamId,
+    teamName,
     startDate,
     endDate,
     initialCounts,
@@ -110,7 +112,7 @@ const ResourceCounts = ({
                     mb: 2,
                 }}>
                 <Typography variant="h2" sx={{ mb: 0 }}>
-                    {t("title")}
+                    {t("title", { teamName })}
                 </Typography>
                 <Select
                     multiple
@@ -154,7 +156,7 @@ const ResourceCounts = ({
                     ref={trackRef}
                     onScroll={updateScrollState}
                     tabIndex={0}
-                    aria-label={t("title")}>
+                    aria-label={t("title", { teamName })}>
                     {visibleResources.map(({ key, entity }) => (
                         <ResourceCard
                             key={key}

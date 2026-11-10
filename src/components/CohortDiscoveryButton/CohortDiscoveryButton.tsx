@@ -191,8 +191,7 @@ const CohortDiscoveryButton = ({
                     <Chip
                         size="small"
                         label={capitalise(requestStatus)}
-                        color={statusMapping[requestStatus]}
-                        sx={{ color: "white" }}
+                        {...statusMapping[requestStatus]}
                     />
                 </Stack>
 

@@ -10,6 +10,7 @@ const searchFilter = {
     name: "search",
     placeholder: "Search by user name or organisation",
     label: "",
+    inputProps: { "aria-label": "Search by user name or organisation" },
     showClearButton: true,
 };
 

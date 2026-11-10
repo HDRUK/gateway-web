@@ -1,6 +1,7 @@
 import { useMemo } from "react";
 import { Control, FieldValues, Path, useController } from "react-hook-form";
 import { MenuItem, Select, Stack } from "@mui/material";
+import { useTranslations } from "next-intl";
 import FormInputWrapper from "@/components/FormInputWrapper";
 import { hourOptions, minuteOptions } from "./TextTime.utils";
 
@@ -12,8 +13,8 @@ export interface TextTimeProps<TFieldValues extends FieldValues, TName> {
     required?: boolean;
     disabled?: boolean;
     label: string;
-    hourProps?: { disabled?: boolean, values?: number[], };
-    minProps?: { disabled?: boolean, values?: number[], };
+    hourProps?: { disabled?: boolean; values?: number[] };
+    minProps?: { disabled?: boolean; values?: number[] };
     horizontalForm?: boolean;
     control: Control<TFieldValues>;
 }
@@ -37,6 +38,7 @@ const TextTime = <
         name,
         horizontalForm,
     } = props;
+    const t = useTranslations("components.TextTime");
 
     const {
         fieldState: { error: hourError },
@@ -73,6 +75,7 @@ const TextTime = <
                     {...hourField}
                     size="small"
                     name={name.hour}
+                    inputProps={{ "aria-label": t("hour", { LABEL: label }) }}
                     type="number">
                     {hours.map(hour => (
                         <MenuItem key={hour} value={hour}>
@@ -86,6 +89,7 @@ const TextTime = <
                     {...minuteField}
                     size="small"
                     name={name.minute}
+                    inputProps={{ "aria-label": t("minute", { LABEL: label }) }}
                     type="number">
                     {mins.map(minute => (
                         <MenuItem key={minute} value={minute}>

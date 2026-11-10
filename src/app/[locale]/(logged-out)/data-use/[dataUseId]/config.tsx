@@ -170,6 +170,10 @@ const dataUseFields: DataUseSection[] = [
                 type: FieldType.OUTPUT_LIST,
                 alwaysRender: true,
             },
+            {
+                path: "publications",
+                type: FieldType.PUBLICATION_LIST,
+            },
         ],
     },
 ];

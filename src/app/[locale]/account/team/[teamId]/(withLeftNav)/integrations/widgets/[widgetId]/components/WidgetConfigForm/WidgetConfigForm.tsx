@@ -2,13 +2,13 @@
 
 import { useCallback } from "react";
 import { FormProvider, UseFormReturn, useWatch } from "react-hook-form";
+import { Button } from "@hdruk/ui";
 import { tokens } from "@hdruk/ui/theme";
 import { Typography } from "@mui/material";
 import { useTranslations } from "next-intl";
 import Link from "next/link";
 import { Unit, Widget } from "@/interfaces/Widget";
 import Box from "@/components/Box";
-import { Button } from "@hdruk/ui";
 import Form from "@/components/Form";
 import FormError from "@/components/FormError";
 import InputWrapper from "@/components/InputWrapper";
@@ -282,6 +282,7 @@ const WidgetConfigForm = ({
                 {
                     name: "permitted_domains",
                     label: "",
+                    ariaLabel: t("permittedDomains"),
                     intro: (
                         <>
                             <Typography variant="subtitle2">

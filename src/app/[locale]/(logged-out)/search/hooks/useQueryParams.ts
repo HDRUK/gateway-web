@@ -1,132 +1,63 @@
-import { useCallback, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef } from "react";
 import { FieldValues } from "react-hook-form";
+import { usePathname, useSearchParams } from "next/navigation";
+import { QUERY_FIELD, SORT_FIELD } from "@/config/forms/search";
 import {
-    ReadonlyURLSearchParams,
-    usePathname,
-    useRouter,
-    useSearchParams,
-} from "next/navigation";
-import { SearchCategory, SearchQueryParams } from "@/interfaces/Search";
-import searchFormConfig, {
-    PAGE_FIELD,
-    PMC_TYPE_FIELD,
-    QUERY_FIELD,
-    SORT_FIELD,
-    TYPE_FIELD,
-} from "@/config/forms/search";
-import { HDRUK_SOURCE_VALUE } from "@/consts/search";
-import {
-    ALLOW_EMPTY_FILTERS,
-    ARRAY_FILTERS,
-    SEARCH_PER_PAGE,
-    STATIC_FILTER_DATA_SOURCE,
-    STATIC_FILTER_SOURCE,
-} from "../constants";
-
-type ArrayFilters = Pick<SearchQueryParams, (typeof ARRAY_FILTERS)[number]>;
-
-const parseQueryParams = (
-    searchParams: ReadonlyURLSearchParams | null
-): SearchQueryParams => {
-    const str = (key: string) => searchParams?.get(key)?.toString();
-
-    return {
-        query: str(QUERY_FIELD) || searchFormConfig.defaultValues.query,
-        sort: str(SORT_FIELD) || searchFormConfig.defaultValues.sort,
-        page: str(PAGE_FIELD) || "1",
-        per_page: SEARCH_PER_PAGE,
-        type: (str(TYPE_FIELD) as SearchCategory) || SearchCategory.DATASETS,
-        [STATIC_FILTER_SOURCE]:
-            str(STATIC_FILTER_SOURCE) || searchFormConfig.defaultValues.source,
-        [STATIC_FILTER_DATA_SOURCE]:
-            str(STATIC_FILTER_DATA_SOURCE) || HDRUK_SOURCE_VALUE,
-        [PMC_TYPE_FIELD]: str(PMC_TYPE_FIELD),
-        ...(Object.fromEntries(
-            ARRAY_FILTERS.map(key => {
-                const values = searchParams?.get(key)?.split("|");
-                return [
-                    key,
-                    ALLOW_EMPTY_FILTERS.includes(key)
-                        ? values
-                        : values?.filter(Boolean),
-                ];
-            })
-        ) as ArrayFilters),
-    };
-};
+    buildSearchParams,
+    getSearchKey,
+    parseQueryParams,
+    SearchParamsPatch,
+} from "../utils/queryParams";
 
 export const useQueryParams = () => {
-    const router = useRouter();
     const pathname = usePathname();
     const searchParams = useSearchParams();
+    const urlKey = searchParams?.toString() ?? "";
+    const pendingQuery = useRef<{ from: string; query: string } | null>(null);
+
+    useEffect(() => {
+        if (pendingQuery.current && pendingQuery.current.from !== urlKey) {
+            pendingQuery.current = null;
+        }
+    }, [urlKey]);
+
+    const searchKey = getSearchKey(searchParams);
+    const queryParams = useMemo(
+        () => parseQueryParams(new URLSearchParams(searchKey)),
+        [searchKey]
+    );
 
     const getParamString = useCallback(
         (paramName: string) => searchParams?.get(paramName)?.toString(),
         [searchParams]
     );
 
-    const [queryParams, setQueryParams] = useState<SearchQueryParams>(() =>
-        parseQueryParams(searchParams)
-    );
+    const setSearchParams = useCallback(
+        (patch: SearchParamsPatch, { resetPage = true } = {}) => {
+            const base = pendingQuery.current?.query ?? urlKey;
+            const next = buildSearchParams(
+                new URLSearchParams(base),
+                patch,
+                resetPage
+            ).toString();
 
-    const urlType =
-        (searchParams?.get(TYPE_FIELD) as SearchCategory) ||
-        SearchCategory.DATASETS;
-    const [prevUrlType, setPrevUrlType] = useState(urlType);
+            if (next === base) {
+                return;
+            }
 
-    if (urlType !== prevUrlType) {
-        setPrevUrlType(urlType);
-        if (urlType !== queryParams.type) {
-            setQueryParams(parseQueryParams(searchParams));
-        }
-    }
-
-    const updatePath = useCallback(
-        (key: string, value: string) => {
-            const params = new URLSearchParams(searchParams?.toString());
-            params.set(key, value);
-            router.push(`${pathname}?${params.toString()}`, { scroll: false });
-        },
-        [pathname, router, searchParams]
-    );
-
-    const updatePathMultiple = useCallback(
-        (params: Record<string, string | undefined>) => {
-            const current = new URLSearchParams(searchParams?.toString());
-            Object.entries(params).forEach(([key, value]) => {
-                if (value === undefined) {
-                    current.delete(key);
-                } else {
-                    current.set(key, value);
-                }
-            });
-            router.push(`${pathname}?${current.toString()}`, { scroll: false });
-        },
-        [pathname, router, searchParams]
-    );
-
-    const removeArrayQueryAndPush = useCallback(
-        (paramKey: string, paramValue: string) => {
-            const params = new URLSearchParams(searchParams?.toString());
-            const filtered = [...params].filter(
-                ([key, value]) => !(key === paramKey && value === paramValue)
+            pendingQuery.current = { from: urlKey, query: next };
+            window.history.pushState(
+                null,
+                "",
+                next ? `${pathname}?${next}` : pathname
             );
-            router.push(`?${new URLSearchParams(filtered).toString()}`, {
-                scroll: false,
-            });
         },
-        [router, searchParams]
+        [pathname, urlKey]
     );
 
     const onQuerySubmit = useCallback(
-        (data: FieldValues) => {
-            setQueryParams(prev => ({ ...prev, ...data, [PAGE_FIELD]: "1" }));
-            updatePathMultiple({
-                [QUERY_FIELD]: data.query,
-                [PAGE_FIELD]: "1",
-            });
-        },
-        [updatePathMultiple]
+        (data: FieldValues) => setSearchParams({ [QUERY_FIELD]: data.query }),
+        [setSearchParams]
     );
 
     const onSortChange = useCallback(
@@ -134,31 +65,17 @@ export const useQueryParams = () => {
             if (selectedValue === queryParams.sort) {
                 return;
             }
-            setQueryParams(prev => ({ ...prev, sort: selectedValue }));
-            updatePath(SORT_FIELD, selectedValue);
+            setSearchParams({ [SORT_FIELD]: selectedValue });
         },
-        [queryParams.sort, updatePath]
+        [queryParams.sort, setSearchParams]
     );
-
-    const resetQueryParamState = useCallback((selectedType: SearchCategory) => {
-        setQueryParams(prev => ({
-            ...parseQueryParams(null),
-            query: prev.query,
-            type: selectedType,
-        }));
-    }, []);
 
     return {
         queryParams,
-        setQueryParams,
-        pathname,
         searchParams,
         getParamString,
-        updatePath,
-        updatePathMultiple,
-        removeArrayQueryAndPush,
+        setSearchParams,
         onQuerySubmit,
         onSortChange,
-        resetQueryParamState,
     };
 };

@@ -29,11 +29,20 @@ jest.mock("next/headers", () => ({
     cookies: jest.fn(),
 }));
 
+const mockIsGwdmDatasetPageEnabled = jest.fn().mockResolvedValue(false);
+jest.mock("@/flags", () => ({
+    isGwdmDatasetPageEnabled: () => mockIsGwdmDatasetPageEnabled(),
+}));
+
+const mockGwdmDatasetPage = jest.fn();
+jest.mock("./_gwdm/GwdmDatasetPage", () => ({
+    __esModule: true,
+    default: (props: { datasetId: string }) => mockGwdmDatasetPage(props),
+}));
+
 jest.mock("@/utils/api", () => ({
     getDataset: jest.fn().mockImplementation(() => getDataSetMock()),
-    getSchemaFromTraser: jest
-        .fn()
-        .mockResolvedValue({ schema: { $defs: {} } }),
+    getSchemaFromTraser: jest.fn().mockResolvedValue({ schema: { $defs: {} } }),
 }));
 
 const mockDataSet = generatePageDataSetV1();
@@ -95,6 +104,36 @@ describe("DataSetItemPage", () => {
 
         await setup({ datasetId: "123" }).catch(() => {
             expect(notFound).toHaveBeenCalled();
+        });
+    });
+
+    describe("GwdmDatasetPage feature flag", () => {
+        it("renders the existing page when the flag is off", async () => {
+            mockIsGwdmDatasetPageEnabled.mockResolvedValueOnce(false);
+            getDataSetMock.mockResolvedValue(mockDataSet);
+
+            await DatasetItemPage({
+                params: Promise.resolve({ datasetId: "7" }),
+            });
+
+            expect(mockGwdmDatasetPage).not.toHaveBeenCalled();
+        });
+
+        it("renders the GWDM page, at the same URL, when the flag is on", async () => {
+            mockIsGwdmDatasetPageEnabled.mockResolvedValueOnce(true);
+            mockGwdmDatasetPage.mockReturnValueOnce(<div>gwdm page</div>);
+
+            const JSX = await DatasetItemPage({
+                params: Promise.resolve({ datasetId: "7" }),
+            });
+
+            expect(mockGwdmDatasetPage).toHaveBeenCalledWith({
+                datasetId: "7",
+            });
+            render(JSX);
+            expect(screen.getByText("gwdm page")).toBeInTheDocument();
+            // The existing page's own data fetches are skipped.
+            expect(getDataSetMock).not.toHaveBeenCalled();
         });
     });
 });

@@ -36,7 +36,7 @@ export default function ReadOnly({
                         mb: 4,
                     }}>
                     <Typography>{row.label}</Typography>
-                    <Typography color="GrayText">{row.value}</Typography>
+                    <Typography color="text.secondary">{row.value}</Typography>
                 </Box>
             ))}
         </>

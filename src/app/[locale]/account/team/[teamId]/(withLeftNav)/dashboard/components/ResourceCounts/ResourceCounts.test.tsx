@@ -6,6 +6,7 @@ jest.mock("@/hooks/useGet");
 
 const defaultProps = {
     teamId: "42",
+    teamName: "Team",
     startDate: "2025-06-12",
     endDate: "2026-06-12",
     initialCounts: {},

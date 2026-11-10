@@ -5,7 +5,11 @@ import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { Typography } from "@mui/material";
 import { useTranslations } from "next-intl";
-import { DatasetEnquiry, Enquiry } from "@/interfaces/Enquiry";
+import {
+    DatasetEnquiry,
+    FeasibilityEnquiryFormValues,
+    FeasibilityEnquiryPayload,
+} from "@/interfaces/Enquiry";
 import Box from "@/components/Box";
 import BoxContainer from "@/components/BoxContainer";
 import { Button } from "@hdruk/ui";
@@ -34,27 +38,32 @@ const FeasibilityEnquirySidebar = ({
 
     const { user } = useAuth();
 
-    const sendEnquiry = usePost<Enquiry>(apis.enquiryThreadsV1Url, {
-        itemName: t("itemName"),
-    });
+    const sendEnquiry = usePost<FeasibilityEnquiryPayload>(
+        apis.enquiryThreadsV1Url,
+        {
+            itemName: t("itemName"),
+        }
+    );
 
     const emailValues = user ? getEmails(user) : [""];
 
     const defaultEmailValue = emailValues[0];
 
-    const { control, handleSubmit, reset } = useForm<Enquiry>({
-        mode: "onTouched",
-        resolver: yupResolver(feasibilityEnquiryValidationSchema),
-        defaultValues: {
-            ...feasibilityEnquiryDefaultValues,
-            ...user,
-            from: defaultEmailValue,
-            datasets: datasets.map(v => ({
-                value: v.datasetId,
-                label: v.name,
-            })),
-        },
-    });
+    const { control, handleSubmit, reset } =
+        useForm<FeasibilityEnquiryFormValues>({
+            mode: "onTouched",
+            resolver: yupResolver(feasibilityEnquiryValidationSchema),
+            defaultValues: {
+                ...feasibilityEnquiryDefaultValues,
+                name: user?.name ?? "",
+                organisation: user?.organisation ?? "",
+                from: defaultEmailValue,
+                datasets: datasets.map(v => ({
+                    value: v.datasetId,
+                    label: v.name,
+                })),
+            },
+        });
 
     const hydratedFormFields = useMemo(() => {
         return feasibilityEnquiryFormFields.map(field => {
@@ -86,21 +95,37 @@ const FeasibilityEnquirySidebar = ({
         });
     }, [feasibilityEnquiryFormFields, datasets]);
 
-    const submitForm = async (formData: Enquiry) => {
-        if (!user) return;
-        const minUser = { id: user.id };
+    const submitForm = async (formData: FeasibilityEnquiryFormValues) => {
+        if (!user) {
+            return;
+        }
+        const {
+            from,
+            organisation,
+            contact_number,
+            project_title,
+            research_aim,
+            other_datasets,
+            dataset_parts_known,
+            funding,
+            potential_research_benefit,
+        } = formData;
 
-        const payload = {
-            ...minUser,
-            ...formData,
-            contact_number: formData.contact_number || "", // If not provided, formData.contact_number is null, but we need a string
+        const payload: FeasibilityEnquiryPayload = {
+            from,
+            organisation,
+            project_title,
+            research_aim,
+            other_datasets,
+            dataset_parts_known,
+            funding,
+            potential_research_benefit,
+            contact_number: contact_number || "",
             datasets: datasets.map(item => ({
                 dataset_id: item.datasetId,
-                name: item.name,
                 team_id: item.teamId,
                 interest_type: "PRIMARY",
             })),
-            from: formData.from,
             is_dar_dialogue: false,
             is_dar_status: false,
             is_feasibility_enquiry: true,
@@ -120,7 +145,8 @@ const FeasibilityEnquirySidebar = ({
         }
         reset({
             ...feasibilityEnquiryDefaultValues,
-            ...user,
+            name: user.name,
+            organisation: user.organisation,
             from: defaultEmailValue,
             datasets: datasets.map(v => ({
                 value: v.datasetId,

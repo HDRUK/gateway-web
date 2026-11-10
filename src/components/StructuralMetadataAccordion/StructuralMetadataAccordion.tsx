@@ -41,8 +41,15 @@ const formatMetadata = (
 
         const { description } = items[0];
 
+        // GWDM marks `columns` required but nothing validates a stored record on
+        // read, so a table can arrive without it. The HDRUK-translated page never
+        // saw that - TRASER always emitted the key - and an unguarded access here
+        // throws inside the modal, which takes the whole page down with it.
         const rows = flatMap(items, item =>
-            (item.columns as StructuralMetadataColumn[]).flatMap(column => ({
+            (Array.isArray(item.columns)
+                ? (item.columns as StructuralMetadataColumn[])
+                : []
+            ).flatMap(column => ({
                 name: column.name,
                 description: column.description,
                 dataType: column.dataType,
@@ -127,7 +134,7 @@ const StructuralMetadataAccordion = ({
                                 </TableHead>
                                 <TableBody
                                     sx={{
-                                        color: tokens.text.disabled,
+                                        color: tokens.text.faded,
                                     }}>
                                     {item?.rows.map(row => (
                                         <TableRow key={row.name}>

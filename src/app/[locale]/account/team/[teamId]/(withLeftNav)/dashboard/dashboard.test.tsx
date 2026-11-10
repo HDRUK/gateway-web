@@ -22,18 +22,24 @@ const defaultCounts = {
 
 describe("Dashboard", () => {
     it("updates download URL when period is changed", async () => {
-        render(<Dashboard teamId="42" initialCounts={defaultCounts} />);
-
-        fireEvent.mouseDown(
-            screen.getByRole("combobox", { name: "Choose time period" })
+        render(
+            <Dashboard
+                teamId="42"
+                teamName="Team"
+                isDarEnabled
+                initialCounts={defaultCounts}
+            />
         );
-        fireEvent.click(screen.getByRole("option", { name: "Last 3 months" }));
+
+        fireEvent.click(screen.getByRole("button", { name: /^Choose range/ }));
+        fireEvent.click(screen.getByRole("button", { name: "Last month" }));
+        fireEvent.click(screen.getByRole("button", { name: "OK" }));
 
         await waitFor(() => {
             const link = screen.getByTestId("download-link");
             expect(link).toHaveAttribute(
                 "href",
-                expect.stringContaining("startDate=2025-03-12")
+                expect.stringContaining("startDate=2025-05-12")
             );
             expect(link).toHaveAttribute(
                 "href",

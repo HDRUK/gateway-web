@@ -12,7 +12,6 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { get, omit } from "lodash";
 import { useTranslations } from "next-intl";
 import { useParams, useRouter, useSearchParams } from "next/navigation";
-import { buildYup } from "schema-to-yup";
 import { AuthUser } from "@/interfaces/AuthUser";
 import {
     CreateOrigin,
@@ -64,6 +63,11 @@ import {
     PAGES,
     TEAM,
 } from "@/consts/translation";
+import {
+    getDatasetDefaultFormValues,
+    getDatasetMetadataPath,
+    withoutRevisionUrlValidation,
+} from "@/utils/datasetForm";
 import { getToday } from "@/utils/date";
 import {
     mapExistingDatasetToFormFields,
@@ -75,7 +79,7 @@ import {
     isLastSection,
     mapFormFieldsForSubmission,
     renderFormHydrationField,
-    generateValidationRules,
+    getDatasetValidationSchema,
 } from "@/utils/formHydration";
 import { capitalise, decodeHtmlEntity, splitCamelcase } from "@/utils/general";
 import IntroScreen from "../IntroScreen";
@@ -93,11 +97,6 @@ interface CreateDatasetProps {
 }
 
 type FormValues = Record<string, unknown>;
-
-const getMetadata = (isDraft: boolean) =>
-    isDraft
-        ? "versions[0].metadata.original_metadata"
-        : "versions[0].metadata.metadata";
 
 const today = getToday();
 
@@ -126,18 +125,10 @@ const CreateDataset = ({
 
     const currentFormJSON = useMemo(() => {
         const base = formJSONDynamic || formJSON;
-        // here be dragons
-        // the validation rule around urls is strict.
-        // as it should be, the below question is not a user visible question, one the api populates behind the scenes..
-        // localhost:3000 is not a valid url so we fail validation silently locally so we can't create datasets..
-        // also if some past data contains a // like produrl//datasets/ it fails validation and the user can do nothing..
-        // as this value is defaulted behind the scenes and the user has no control over it, remove the validation from the frontend.
 
         return {
             ...base,
-            validation:
-                base.validation?.filter(obj => obj.title !== "revision url") ||
-                [],
+            validation: withoutRevisionUrlValidation(base.validation),
         };
     }, [formJSON, formJSONDynamic]);
 
@@ -213,22 +204,10 @@ const CreateDataset = ({
 
     const schemaFields = currentFormJSON.schema_fields;
 
-    const defaultFormValues = {
-        ...currentFormJSON.defaultValues,
-        "Dataset identifier": "226fb3f1-4471-400a-8c39-2b66d46a39b6",
-        "Dataset Version": "1.0.0",
-        "revision version": "1.0.0",
-        "revision url": "http://www.example.com/",
-        identifier: defaultTeamId,
-        "Metadata Issued Datetime": today,
-        "Last Modified Datetime": today,
-        "Name of Data Custodian": "--",
-        "Dataset population size": -1,
-        "Follow-up": null,
-        "contact point":
-            currentFormJSON.defaultValues.contact_point || user?.email, // this is a hidden field and goes no where but it is summary.dataCustodian.contact_point
-        "Contact point": user?.email, // summary.contact_point
-    };
+    const defaultFormValues = getDatasetDefaultFormValues(
+        currentFormJSON.defaultValues,
+        { defaultTeamId, email: user?.email, today }
+    );
 
     useEffect(() => {
         if (isLoading || !isEditing) {
@@ -240,7 +219,7 @@ const CreateDataset = ({
             return;
         }
 
-        const metadataLocation = getMetadata(isDraft);
+        const metadataLocation = getDatasetMetadataPath(isDraft);
 
         let latestMetadata = get(dataset, metadataLocation);
 
@@ -284,19 +263,10 @@ const CreateDataset = ({
         itemName: "Dataset",
     });
 
-    const generatedYupValidation = useMemo(
-        () =>
-            currentFormJSON?.validation && {
-                title: "Metadata form",
-                type: "object",
-                properties: !isDraft
-                    ? generateValidationRules(currentFormJSON.validation)
-                    : {},
-            },
+    const yupSchema = useMemo(
+        () => getDatasetValidationSchema(currentFormJSON.validation, isDraft),
         [currentFormJSON.validation, isDraft]
     );
-
-    const yupSchema = buildYup(generatedYupValidation);
 
     const methods = useForm<FormValues>({
         mode: "onTouched",

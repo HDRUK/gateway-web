@@ -34,19 +34,11 @@ describe("CMSBanners", () => {
 
             await waitFor(() =>
                 expect(
-                    screen.getByText(
-                        item.node.homepageBanner.linkText as string
-                    )
-                ).toBeInTheDocument()
+                    screen.getByRole("link", {
+                        name: item.node.homepageBanner.linkText as string,
+                    })
+                ).toHaveAttribute("href", item.node.homepageBanner.linkUrl)
             );
-
-            await waitFor(() => {
-                const link = screen.getByText(
-                    item.node.homepageBanner.linkText as string
-                );
-
-                expect(link.getAttribute("href")).toBeTruthy();
-            });
         }
     );
 });
