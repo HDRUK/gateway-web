@@ -1,3 +1,34 @@
+## [2.50.0](https://github.com/HDRUK/gateway-web/compare/v2.49.1...v2.50.0) (2026-11-10)
+
+### ✨ Features
+
+* **GAT-7286:** Quick status change for DAR templates (#1723) ([f988426](https://github.com/HDRUK/gateway-web/commit/f988426ee49c87e0caca84d8207e7092d0f47339)), closes [GAT-7286](undefinedGAT-7286)
+* **GAT-8235:** Add 'make active' button to 'draft' entity management cards (#1717) ([3d38af9](https://github.com/HDRUK/gateway-web/commit/3d38af96853c83ff5ac3b1e52a0688a450f6b209)), closes [GAT-8235](undefinedGAT-8235)
+* **GAT-9262:** Show a progress bar during navigation and search (#1719) ([561ed82](https://github.com/HDRUK/gateway-web/commit/561ed82b8eb92d766831e45f25f41d1a8677fe9c)), closes [GAT-9262](undefinedGAT-9262) [navigation](undefinedgation)
+* **GAT-9481:** Add NHS SDE access counter (#1729) ([086dd3a](https://github.com/HDRUK/gateway-web/commit/086dd3a9a347a54bd072897a781c907cf35cabe9)), closes [GAT-9481](undefinedGAT-9481)
+* **GAT-9678:** Implement mechanism to revoke all user tokens (#1731) ([6e4ca7e](https://github.com/HDRUK/gateway-web/commit/6e4ca7e4baac484beb5a91a8737c42ee0e616ce0)), closes [GAT-9678](undefinedGAT-9678)
+* **GAT-9691:** Refactor search page into components (#1726) ([83f0a3a](https://github.com/HDRUK/gateway-web/commit/83f0a3a647865079863d51e16501c4798f724b67)), closes [GAT-9691](undefinedGAT-9691)
+* **GAT-9693:** Add dashboard beta banner (#1711) ([cdf0775](https://github.com/HDRUK/gateway-web/commit/cdf0775e1ba658a9981f4b82fc485d6f3ae2c260)), closes [GAT-9693](undefinedGAT-9693)
+* **GAT-9694:** Dashboard copy updates and view tooltip (#1712) ([4484bb4](https://github.com/HDRUK/gateway-web/commit/4484bb4258ba8ff9dbd88435ac95fcf7704e393c)), closes [GAT-9694](undefinedGAT-9694)
+* **GAT-9695:** Add dashboard date range picker (#1714) ([79c81f0](https://github.com/HDRUK/gateway-web/commit/79c81f0844f27bb9adbe202d103d03e122f5e64d)), closes [GAT-9695](undefinedGAT-9695)
+* **GAT-9712:** #2 - Fix structural metadata modal completely crashin… (#1718) ([574da4c](https://github.com/HDRUK/gateway-web/commit/574da4cd34737c562d96b384d165db81ddeef99d))
+* **GAT-9712:** adds in new gwdm 2.3 - adds overrides for PRUK and … (#1721) ([a63e2a1](https://github.com/HDRUK/gateway-web/commit/a63e2a17c102aceeef2090d52d2f2bf12193ea8b)), closes [GAT-9712](undefinedGAT-9712)
+* **GAT-9712:** Changes for natively rendering GWDM (#1716) ([deb2580](https://github.com/HDRUK/gateway-web/commit/deb2580e76e19fde9d1760561e3d299058ba91d4)), closes [GAT-9712](undefinedGAT-9712)
+* **GAT-9712:** Introduces partner context note into search results f… (#1725) ([d7dece7](https://github.com/HDRUK/gateway-web/commit/d7dece7e907d9e4b98a9e87bec461036a2bec501)), closes [GAT-9712](undefinedGAT-9712)
+* **GAT-9999:** Replaces GWDM rendering codes with abstracted npm pac… (#1735) ([8a2bb26](https://github.com/HDRUK/gateway-web/commit/8a2bb2671d6f98c2f9e33f5412677598482456ea)), closes [GAT-9999](undefinedGAT-9999)
+
+### 🐛 Bug Fixes
+
+* **GAT-8258:** Accessibility fixes (#1734) ([fbf93aa](https://github.com/HDRUK/gateway-web/commit/fbf93aa0462ace5ed0914e465041e6850b3a0d01))
+* **GAT-8584:** Correct enquiry form validation (#1694) ([078d57e](https://github.com/HDRUK/gateway-web/commit/078d57e6400aa9a8e42d100175567cc80fe2b17d)), closes [GAT-8584](undefinedGAT-8584)
+* **GAT-9080:** Show linked publications under Safe Outputs on the data use page ([ae18de9](https://github.com/HDRUK/gateway-web/commit/ae18de9d3ee8dc4218b19a1b3dd108818c63f94a)), closes [GAT-9080](undefinedGAT-9080)
+* **GAT-9533:** Correct Chip used for cohort progress (#1724) ([0aa8f8b](https://github.com/HDRUK/gateway-web/commit/0aa8f8b48dbe6b2ffcd7c41b3e07f8b352912308)), closes [GAT-9533](undefinedGAT-9533)
+* **GAT-9670:** keep Autocomplete value ([7b7f461](https://github.com/HDRUK/gateway-web/commit/7b7f46116fd5489d52385c9949c2cb7614e556cf)), closes [GAT-9670](undefinedGAT-9670)
+* **GAT-9703:** Fix cohort dataset table display (#1722) ([eb60786](https://github.com/HDRUK/gateway-web/commit/eb60786ffd89fd65347413e8a544e16eb1ba48a8))
+* **GAT-9719:** Update dompurify (#1720) ([7cbcda7](https://github.com/HDRUK/gateway-web/commit/7cbcda7b8cf5ce68212ce6ae0e2d8cc680672590)), closes [GAT-9719](undefinedGAT-9719)
+* **GAT-9736:** Show Enabled for integrations still enabled after an error ([c10ac0f](https://github.com/HDRUK/gateway-web/commit/c10ac0f6f2bb6cbde1cfed24a49eaca8088355a8)), closes [GAT-9736](undefinedGAT-9736) [whose](undefinedose)
+* **GAT-9736:** Translate integration list item labels ([90057e2](https://github.com/HDRUK/gateway-web/commit/90057e2f06be6573350f67a5e232f8ff7852502b)), closes [GAT-9736](undefinedGAT-9736)
+
 ## [2.49.1](https://github.com/HDRUK/gateway-web/compare/v2.49.0...v2.49.1) (2026-10-26)
 
 ### 🐛 Bug Fixes
