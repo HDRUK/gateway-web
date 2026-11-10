@@ -800,12 +800,7 @@
                             "duplicateButton": "Duplicate"
                         },
                         "SchemaDatasetForm": {
-                            "introStep": "Welcome and form builder",
-                            "schemaPicker": "Metadata schema",
-                            "switchSchemaTitle": "Switch metadata schema",
-                            "switchSchemaConfirm": "Switching schema clears the answers you have entered. Are you sure you want to continue?",
-                            "switchSchemaConfirmText": "Switch schema",
-                            "switchSchemaCancelText": "Cancel"
+                            "introStep": "Welcome and form builder"
                         },
                         "CreateDataUse": {
                             "downloadTitle": "Download template",
