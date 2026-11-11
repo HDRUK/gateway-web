@@ -423,6 +423,18 @@ const getGettingStarted = async () => {
     return substituteEnvLinks(data?.page);
 };
 
+const getDataCustodianDashboard = async () => {
+    const data: CMSPageResponse<PageTemplateDefault> = await fetchCMS(
+        GetContentPageQuery("getDataCustodianDashboardQuery", {
+            id: "data-custodian-dashboard",
+            idType: "URI",
+        }),
+        DEFAULT_OPTIONS
+    );
+
+    return substituteEnvLinks(data?.page);
+};
+
 const getMetadataOnboarding = async () => {
     const data: CMSPageResponse<PageTemplateDefault> = await fetchCMS(
         GetContentPageQuery("getMetadataOnboardingQuery", {
@@ -496,6 +508,7 @@ export {
     getContentPageQuery,
     getContentPostQuery,
     getCookieNotice,
+    getDataCustodianDashboard,
     getDataCustodians,
     getTechnologyEcosystem,
     getEvents,
