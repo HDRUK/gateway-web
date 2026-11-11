@@ -1,5 +1,5 @@
 import { notFound } from "next/navigation";
-import { getDataCustodianDashboard } from "@/utils/cms";
+import { getContentPageByParentQuery } from "@/utils/cms";
 import metaData from "@/utils/metadata";
 import "@/styles/wpStyles.css";
 import SupportPage from "../components/SupportPage";
@@ -10,7 +10,14 @@ export const metadata = metaData({
 });
 
 const DataCustodianDashboardPage = async () => {
-    const cmsPage = await getDataCustodianDashboard();
+    const cmsPage = await getContentPageByParentQuery(
+        "DataCustodianDashboard",
+        {
+            id: "data-custodian-dashboard",
+            idType: "URI",
+            parentId: "/data-custodian-support",
+        }
+    );
 
     if (!cmsPage) {
         notFound();
