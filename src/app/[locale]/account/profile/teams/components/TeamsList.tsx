@@ -25,6 +25,24 @@ const TRANSLATION_PATH_TEAMS =
     "pages.account.profile.teams.components.TeamsList";
 const TRANSLATION_PATH_COMMON = "common";
 
+const isModel = function (value: any): boolean {
+    return value && typeof value === "object" && value.hasOwnProperty("id");
+};
+
+const convertToList = function (value: any): any[] {
+    if (Array.isArray(value)) {
+        return value;
+    }
+    if (isModel(value)) {
+        return [value];
+    }
+    if (typeof value === 'object') {
+        return Object.values(value).filter(isModel);
+    }
+
+    return [];
+}
+
 const TeamsList = ({
     permissions,
 }: {
@@ -111,6 +129,8 @@ const TeamsList = ({
     }, [mutate, permissions, questionBankStatus, router, showDialog, sort, t]);
 
     const { lastPage, list } = data || {};
+    
+    const listData = convertToList(list);
 
     const handleUpdate = () => console.log("update");
 
@@ -127,7 +147,7 @@ const TeamsList = ({
                 <Table<Team>
                     columns={columns}
                     onUpdate={handleUpdate}
-                    rows={list || []}
+                    rows={listData || []}
                 />
             </Box>
             <Pagination
