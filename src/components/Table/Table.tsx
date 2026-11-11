@@ -1,5 +1,5 @@
 /** @jsxImportSource @emotion/react */
-import { CSSProperties, useCallback, useEffect, useState } from "react";
+import { CSSProperties, useCallback, useEffect, useMemo, useState } from "react";
 import { tokens } from "@hdruk/ui/theme";
 import {
     flexRender,
@@ -87,9 +87,10 @@ const Table = <T,>({
     style,
 }: TableProps<T>) => {
     const [autoResetPageIndex, skipAutoResetPageIndex] = useSkipper();
+    const newRows = useMemo<T[]>(() => (Array.isArray(rows) ? rows : [rows]), [rows]);
     const table = useReactTable(
         {
-            data: rows,
+            data: newRows,
             columns,
             defaultColumn,
             autoResetPageIndex,
@@ -105,10 +106,10 @@ const Table = <T,>({
                     // Skip page index reset until after next rerender
                     skipAutoResetPageIndex();
 
-                    const newData = rows.map((row, index) => {
+                    const newData = newRows.map((row, index) => {
                         if (index === rowIndex) {
                             return {
-                                ...rows[rowIndex],
+                                ...newRows[rowIndex],
                                 [columnId]: value,
                             };
                         }
