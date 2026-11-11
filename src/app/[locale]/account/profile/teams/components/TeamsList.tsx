@@ -25,22 +25,28 @@ const TRANSLATION_PATH_TEAMS =
     "pages.account.profile.teams.components.TeamsList";
 const TRANSLATION_PATH_COMMON = "common";
 
-const isModel = function (value: any): boolean {
-    return value && typeof value === "object" && value.hasOwnProperty("id");
+const isTeam = function (value: unknown): value is Team {
+    return value !== null && typeof value === "object" && Object.hasOwn(value, "id");
 };
 
-const convertToList = function (value: any): any[] {
-    if (Array.isArray(value)) {
-        return value;
-    }
-    if (isModel(value)) {
-        return [value];
-    }
-    if (typeof value === 'object') {
-        return Object.values(value).filter(isModel);
+const convertToList = function (value: unknown): Team[] {
+    if (value == null) {
+        return [];
     }
 
-    return [];
+    if (Array.isArray(value)) {
+        return value.filter(isTeam);
+    }
+
+    if (isTeam(value)) {
+        return [value];
+    }
+
+    if (typeof value !== "object") {
+        return [];
+    }
+
+    return Object.values(value).filter(isTeam);
 }
 
 const TeamsList = ({
@@ -129,7 +135,7 @@ const TeamsList = ({
     }, [mutate, permissions, questionBankStatus, router, showDialog, sort, t]);
 
     const { lastPage, list } = data || {};
-    
+
     const listData = convertToList(list);
 
     const handleUpdate = () => console.log("update");
