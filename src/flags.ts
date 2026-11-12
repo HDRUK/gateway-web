@@ -90,3 +90,8 @@ export const isSchemaOnboardingFormEnabled = flag({
     key: "SchemaOnboardingForm",
     adapter,
 });
+
+export const isSchemaOnboardingFormSelectorEnabled = flag({
+    key: "SchemaOnboardingFormSelector",
+    adapter,
+});

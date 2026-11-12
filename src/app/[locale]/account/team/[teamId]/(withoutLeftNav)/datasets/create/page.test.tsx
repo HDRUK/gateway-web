@@ -2,8 +2,13 @@ import { render, screen } from "@/utils/testUtils";
 import CreateDatasetPage from "./page";
 
 const mockIsSchemaOnboardingFormEnabled = jest.fn().mockResolvedValue(false);
+const mockIsSchemaOnboardingFormSelectorEnabled = jest
+    .fn()
+    .mockResolvedValue(false);
 jest.mock("@/flags", () => ({
     isSchemaOnboardingFormEnabled: () => mockIsSchemaOnboardingFormEnabled(),
+    isSchemaOnboardingFormSelectorEnabled: () =>
+        mockIsSchemaOnboardingFormSelectorEnabled(),
 }));
 
 const mockSchemaDatasetFormPage = jest.fn();
@@ -57,6 +62,45 @@ describe("CreateDatasetPage", () => {
 
             const JSX = await CreateDatasetPage({
                 params: Promise.resolve({ teamId: "1" }),
+            });
+
+            render(JSX);
+            expect(screen.getByText("schema form")).toBeInTheDocument();
+            expect(mockGetFormHydration).not.toHaveBeenCalled();
+        });
+    });
+
+    describe("SchemaOnboardingFormSelector feature flag", () => {
+        it("ignores the requested schema when the flag is off", async () => {
+            mockIsSchemaOnboardingFormEnabled.mockResolvedValueOnce(true);
+            mockIsSchemaOnboardingFormSelectorEnabled.mockResolvedValueOnce(
+                false
+            );
+
+            await CreateDatasetPage({
+                params: Promise.resolve({ teamId: "1" }),
+                searchParams: Promise.resolve({
+                    schema: "PRUK",
+                    version: "1.0.0",
+                }),
+            });
+
+            expect(mockSchemaDatasetFormPage).toHaveBeenCalledWith({
+                teamId: "1",
+                model: undefined,
+                version: undefined,
+                canChangeSchema: false,
+            });
+        });
+
+        it("loads the requested schema when the flag is on", async () => {
+            mockIsSchemaOnboardingFormEnabled.mockResolvedValueOnce(true);
+            mockIsSchemaOnboardingFormSelectorEnabled.mockResolvedValueOnce(
+                true
+            );
+
+            await CreateDatasetPage({
+                params: Promise.resolve({ teamId: "1" }),
                 searchParams: Promise.resolve({
                     schema: "PRUK",
                     version: "1.0.0",
@@ -67,10 +111,8 @@ describe("CreateDatasetPage", () => {
                 teamId: "1",
                 model: "PRUK",
                 version: "1.0.0",
+                canChangeSchema: true,
             });
-            render(JSX);
-            expect(screen.getByText("schema form")).toBeInTheDocument();
-            expect(mockGetFormHydration).not.toHaveBeenCalled();
         });
     });
 });

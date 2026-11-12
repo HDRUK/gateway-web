@@ -74,6 +74,8 @@ export default async function RootLayout(props: {
         isCustodianDashboardEnabled: rawFeatures.V3_CustodianDashboard ?? false,
         isSchemaOnboardingFormEnabled:
             rawFeatures.SchemaOnboardingForm ?? false,
+        isSchemaOnboardingFormSelectorEnabled:
+            rawFeatures.SchemaOnboardingFormSelector ?? false,
         isSafePeopleRegistrySSOEnabled:
             rawFeatures.SafePeopleRegistrySSOEnabled ?? false,
         isLoginDisabled: rawFeatures.LoginDisabled ?? false,
