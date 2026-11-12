@@ -71,10 +71,7 @@ export default async function RootLayout(props: {
         isCohortDiscoveryServiceEnabled:
             rawFeatures.CohortDiscoveryService ?? false,
         isRQuestEnabled: rawFeatures.RQuest ?? false,
-        isExternalSourcesEnabled: rawFeatures.V2_SearchAggregation ?? false,
-        isTypesenseSearchEnabled: rawFeatures.TypesenseSearch ?? false,
-        isCustodianDashboardEnabled:
-            rawFeatures.V3_CustodianDashboard ?? false,
+        isCustodianDashboardEnabled: rawFeatures.V3_CustodianDashboard ?? false,
         isSafePeopleRegistrySSOEnabled:
             rawFeatures.SafePeopleRegistrySSOEnabled ?? false,
         isLoginDisabled: rawFeatures.LoginDisabled ?? false,
