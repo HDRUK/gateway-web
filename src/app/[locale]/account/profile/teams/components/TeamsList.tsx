@@ -20,34 +20,12 @@ import {
 import { getColumns } from "@/config/tables/teamManagement";
 import { Routes } from "@/consts/routes";
 import { SortDirection } from "@/consts/sort";
+import {isTeam} from "@/utils/team";
+import { ensureList } from "@/utils/ensureList";
 
 const TRANSLATION_PATH_TEAMS =
     "pages.account.profile.teams.components.TeamsList";
 const TRANSLATION_PATH_COMMON = "common";
-
-const isTeam = function (value: unknown): value is Team {
-    return value !== null && typeof value === "object" && Object.hasOwn(value, "id");
-};
-
-const convertToList = function (value: unknown): Team[] {
-    if (value == null) {
-        return [];
-    }
-
-    if (Array.isArray(value)) {
-        return value.filter(isTeam);
-    }
-
-    if (isTeam(value)) {
-        return [value];
-    }
-
-    if (typeof value !== "object") {
-        return [];
-    }
-
-    return Object.values(value).filter(isTeam);
-}
 
 const TeamsList = ({
     permissions,
@@ -135,8 +113,8 @@ const TeamsList = ({
     }, [mutate, permissions, questionBankStatus, router, showDialog, sort, t]);
 
     const { lastPage, list } = data || {};
-
-    const listData = convertToList(list);
+    
+    const listData = ensureList<Team>(list, isTeam);
 
     const handleUpdate = () => console.log("update");
 
