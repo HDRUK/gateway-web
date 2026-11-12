@@ -7,7 +7,7 @@ import { render, screen, fireEvent } from "@/utils/testUtils";
 import FilterPanel from "./FilterPanel";
 
 jest.mock("@/providers/FeatureProvider", () => ({
-    useFeatures: jest.fn().mockReturnValue({ isExternalSourcesEnabled: false }),
+    useFeatures: jest.fn().mockReturnValue({}),
 }));
 
 jest.mock("next-intl", () => ({
@@ -142,9 +142,6 @@ describe("FilterPanel", () => {
     });
 
     it("reflects dataSource prop change by checking the ARDC radio", () => {
-        const { useFeatures } = require("@/providers/FeatureProvider");
-        useFeatures.mockReturnValue({ isExternalSourcesEnabled: true });
-
         const { rerender } = render(
             <FilterPanel
                 {...defaultProps}
@@ -167,9 +164,6 @@ describe("FilterPanel", () => {
     });
 
     it("hides all dataset filters except the data source toggle when ARDC is selected", () => {
-        const { useFeatures } = require("@/providers/FeatureProvider");
-        useFeatures.mockReturnValue({ isExternalSourcesEnabled: true });
-
         render(
             <FilterPanel
                 {...defaultProps}
@@ -188,9 +182,6 @@ describe("FilterPanel", () => {
     });
 
     it("still renders filters and Clear all after switching away from datasets while ARDC was selected", () => {
-        const { useFeatures } = require("@/providers/FeatureProvider");
-        useFeatures.mockReturnValue({ isExternalSourcesEnabled: true });
-
         const { rerender } = render(
             <FilterPanel
                 {...defaultProps}
