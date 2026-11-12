@@ -33,16 +33,6 @@ export const isRQuestEnabled = flag({
     adapter,
 });
 
-export const isExternalSourcesEnabled = flag({
-    key: "V2_SearchAggregation",
-    adapter,
-});
-
-export const isTypesenseSearchEnabled = flag({
-    key: "TypesenseSearch",
-    adapter,
-});
-
 export const isCustodianDashboardEnabled = flag({
     key: "V3_CustodianDashboard",
     adapter,
