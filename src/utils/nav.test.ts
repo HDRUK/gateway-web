@@ -136,5 +136,38 @@ describe("Nav utils", () => {
             expect(helpItem).toBeDefined();
             expect(helpItem?.href).toBe(RouteName.DATA_CUSTODIAN_SUPPORT);
         });
+
+        it("should include Dashboard item when enabled and permitted", () => {
+            const navItems = getTeamNav({ "dashboard.read": true }, teamId, {
+                isCustodianDashboardEnabled: true,
+            });
+            const dashboardItem = navItems.find(
+                item => item.label === "Dashboard"
+            );
+
+            expect(dashboardItem?.href).toBe(
+                `/${RouteName.ACCOUNT}/${RouteName.TEAM}/123/${RouteName.DASHBOARD}`
+            );
+        });
+
+        it("should not include Dashboard item without dashboard.read", () => {
+            const navItems = getTeamNav({ "datasets.read": true }, teamId, {
+                isCustodianDashboardEnabled: true,
+            });
+
+            expect(
+                navItems.find(item => item.label === "Dashboard")
+            ).toBeUndefined();
+        });
+
+        it("should not include Dashboard item when the dashboard is disabled", () => {
+            const navItems = getTeamNav({ "dashboard.read": true }, teamId, {
+                isCustodianDashboardEnabled: false,
+            });
+
+            expect(
+                navItems.find(item => item.label === "Dashboard")
+            ).toBeUndefined();
+        });
     });
 });

@@ -64,7 +64,7 @@ const DatasetViewsWidget = ({
     const { palette } = useTheme();
     const granularity = getGranularity(startDate, endDate);
 
-    const datasetViewsUrl = `${apis.teamsV3Url}/${teamId}/dashboard/datasets/views/360`;
+    const datasetViewsUrl = `${apis.teamsV3Url}/${teamId}/dashboard/datasets/views/timeline`;
 
     const { data, isLoading } = useGet<DatasetViewsPoint[]>(
         `${datasetViewsUrl}?${new URLSearchParams({

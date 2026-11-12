@@ -85,3 +85,8 @@ export const isGwdmDatasetPageEnabled = flag({
     key: "GwdmDatasetPage",
     adapter,
 });
+
+export const isSchemaOnboardingFormEnabled = flag({
+    key: "SchemaOnboardingForm",
+    adapter,
+});
