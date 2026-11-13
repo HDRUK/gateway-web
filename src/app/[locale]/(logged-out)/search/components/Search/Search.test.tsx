@@ -12,10 +12,7 @@ import { server } from "@/mocks/server";
 import Search from "./Search";
 
 jest.mock("@/providers/FeatureProvider", () => ({
-    useFeatures: () => ({
-        isExternalSourcesEnabled: true,
-        isTypesenseSearchEnabled: true,
-    }),
+    useFeatures: () => ({}),
 }));
 
 jest.mock("@/hooks/useCohortStatus", () => ({

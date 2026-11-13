@@ -10,20 +10,12 @@ import {
     STATIC_FILTER_SOURCE,
 } from "../constants";
 
-interface SearchFeatureFlags {
-    isExternalSourcesEnabled?: boolean;
-    isTypesenseSearchEnabled?: boolean;
-}
-
 type SearchMode = ReturnType<typeof getSearchMode>;
 
 const ARDC_SEARCH_URL =
     "https://researchdata.edu.au/health/search?filter-type=all-fields";
 
-const getSearchMode = (
-    queryParams: SearchQueryParams,
-    { isExternalSourcesEnabled, isTypesenseSearchEnabled }: SearchFeatureFlags
-) => {
+const getSearchMode = (queryParams: SearchQueryParams) => {
     const isDatasets = queryParams.type === SearchCategory.DATASETS;
     const isPublications = queryParams.type === SearchCategory.PUBLICATIONS;
     const dataSource = queryParams.dataSource || HDRUK_SOURCE_VALUE;
@@ -32,11 +24,9 @@ const getSearchMode = (
         isDatasets,
         isPublications,
         dataSource,
-        isExternalSourceSelected:
-            !!isExternalSourcesEnabled && dataSource !== HDRUK_SOURCE_VALUE,
-        externalSearchEnabled: isDatasets && !!isExternalSourcesEnabled,
+        isExternalSourceSelected: dataSource !== HDRUK_SOURCE_VALUE,
+        externalSearchEnabled: isDatasets,
         isTypesenseSearch:
-            !!isTypesenseSearchEnabled &&
             !isDatasets &&
             (!isPublications || queryParams.source === GATEWAY_SOURCE_FIELD),
     };

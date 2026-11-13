@@ -11,11 +11,6 @@ import {
     shouldFetchV1,
 } from "./searchRequest";
 
-const flags = {
-    isExternalSourcesEnabled: true,
-    isTypesenseSearchEnabled: true,
-};
-
 const params = (query: string) => parseQueryParams(new URLSearchParams(query));
 
 describe("searchRequest utils", () => {
@@ -28,7 +23,7 @@ describe("searchRequest utils", () => {
         ])(
             "%s uses external %s and typesense %s",
             (query, externalSearchEnabled, isTypesenseSearch) => {
-                expect(getSearchMode(params(query), flags)).toMatchObject({
+                expect(getSearchMode(params(query))).toMatchObject({
                     externalSearchEnabled,
                     isTypesenseSearch,
                 });
@@ -37,7 +32,7 @@ describe("searchRequest utils", () => {
 
         it("selects the external source from the url", () => {
             expect(
-                getSearchMode(params("type=datasets&dataSource=ARDC"), flags)
+                getSearchMode(params("type=datasets&dataSource=ARDC"))
                     .isExternalSourceSelected
             ).toBe(true);
         });
@@ -54,11 +49,7 @@ describe("searchRequest utils", () => {
         ])("%s forced %s fetches %s", (query, force, expected) => {
             const queryParams = params(query);
             expect(
-                shouldFetchV1(
-                    queryParams,
-                    getSearchMode(queryParams, flags),
-                    force
-                )
+                shouldFetchV1(queryParams, getSearchMode(queryParams), force)
             ).toBe(expected);
         });
     });
@@ -80,10 +71,7 @@ describe("searchRequest utils", () => {
 
         it("builds the v2 body with view_type for datasets only", () => {
             const v2Body = (query: string) =>
-                getV2SearchBody(
-                    params(query),
-                    getSearchMode(params(query), flags)
-                );
+                getV2SearchBody(params(query), getSearchMode(params(query)));
 
             expect(v2Body("type=datasets")).toMatchObject({
                 type: "datasets",

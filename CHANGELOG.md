@@ -1,3 +1,15 @@
+## [2.50.2](https://github.com/HDRUK/gateway-web/compare/v2.50.1...v2.50.2) (2026-11-13)
+
+### 🐛 Bug Fixes
+
+* **GAT-9851:** run the e2e tests against Typesense ([bca1a05](https://github.com/HDRUK/gateway-web/commit/bca1a0535c13704a3d9e4bf8807da6c377464091)), closes [GAT-9851](undefinedGAT-9851)
+
+## [2.50.1](https://github.com/HDRUK/gateway-web/compare/v2.50.0...v2.50.1) (2026-11-12)
+
+### 🐛 Bug Fixes
+
+* **GAT-9851:** remove the TypesenseSearch and V2_SearchAggregation flags (#1745) ([c34442e](https://github.com/HDRUK/gateway-web/commit/c34442ef87bd1a1c929874b4d44b524128b6c46b)), closes [GAT-9851](undefinedGAT-9851) [V2_SearchAggregation](undefinedgation)
+
 ## [2.50.0](https://github.com/HDRUK/gateway-web/compare/v2.49.1...v2.50.0) (2026-11-10)
 
 ### ✨ Features
