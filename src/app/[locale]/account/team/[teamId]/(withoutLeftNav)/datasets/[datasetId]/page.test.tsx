@@ -2,8 +2,13 @@ import { render, screen } from "@/utils/testUtils";
 import TeamDatasetPage from "./page";
 
 const mockIsSchemaOnboardingFormEnabled = jest.fn().mockResolvedValue(false);
+const mockIsSchemaOnboardingFormSelectorEnabled = jest
+    .fn()
+    .mockResolvedValue(false);
 jest.mock("@/flags", () => ({
     isSchemaOnboardingFormEnabled: () => mockIsSchemaOnboardingFormEnabled(),
+    isSchemaOnboardingFormSelectorEnabled: () =>
+        mockIsSchemaOnboardingFormSelectorEnabled(),
 }));
 
 const mockSchemaDatasetFormPage = jest.fn();
@@ -81,10 +86,67 @@ describe("TeamDatasetPage", () => {
                 version: undefined,
                 isDraft: true,
                 isDuplicate: true,
+                canChangeSchema: false,
             });
             render(JSX);
             expect(screen.getByText("schema form")).toBeInTheDocument();
             expect(mockGetTeamDataset).not.toHaveBeenCalled();
+        });
+    });
+
+    describe("SchemaOnboardingFormSelector feature flag", () => {
+        it("ignores the requested schema when the flag is off", async () => {
+            mockIsSchemaOnboardingFormEnabled.mockResolvedValueOnce(true);
+            mockIsSchemaOnboardingFormSelectorEnabled.mockResolvedValueOnce(
+                false
+            );
+
+            await TeamDatasetPage({
+                params: Promise.resolve({
+                    teamId: "1",
+                    datasetId: "7",
+                    status: "",
+                }),
+                searchParams: Promise.resolve({
+                    schema: "PRUK",
+                    version: "1.0.0",
+                }),
+            });
+
+            expect(mockSchemaDatasetFormPage).toHaveBeenCalledWith(
+                expect.objectContaining({
+                    model: undefined,
+                    version: undefined,
+                    canChangeSchema: false,
+                })
+            );
+        });
+
+        it("loads the requested schema when the flag is on", async () => {
+            mockIsSchemaOnboardingFormEnabled.mockResolvedValueOnce(true);
+            mockIsSchemaOnboardingFormSelectorEnabled.mockResolvedValueOnce(
+                true
+            );
+
+            await TeamDatasetPage({
+                params: Promise.resolve({
+                    teamId: "1",
+                    datasetId: "7",
+                    status: "",
+                }),
+                searchParams: Promise.resolve({
+                    schema: "PRUK",
+                    version: "1.0.0",
+                }),
+            });
+
+            expect(mockSchemaDatasetFormPage).toHaveBeenCalledWith(
+                expect.objectContaining({
+                    model: "PRUK",
+                    version: "1.0.0",
+                    canChangeSchema: true,
+                })
+            );
         });
     });
 });
