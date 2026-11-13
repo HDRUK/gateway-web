@@ -80,6 +80,7 @@ const apis = {
     adminUsersV1UrlIP: `${apiV1IPUrl}/admin/users`,
     wordPressApiUrl: `${process.env.NEXT_PUBLIC_WORDPRESS_API_URL}`,
     searchV1Url: `${apiV1Url}/search`,
+    searchV2Url: `${apiV2Url}/search`,
     searchV2AggregationUrl: `${apiV2Url}/search/aggregation`,
     searchV2AggregationResultsUrl: `${apiV2Url}/search/aggregation/results`,
     saveSearchesV1Url: `${apiV1Url}/saved_searches`,
