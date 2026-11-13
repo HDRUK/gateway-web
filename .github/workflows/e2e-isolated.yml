@@ -25,10 +25,6 @@ env:
   DB_PORT: "3306"
   DB_USERNAME: "root"
   DB_PASSWORD: "root"
-  ELASTICSEARCH_VERIFY_SSL: "false"
-  ELASTIC_SERVICE_URL: ${{ secrets.ELASTIC_SERVICE_URL }}
-  ELASTICSEARCH_USER: ${{ secrets.ELASTICSEARCH_USER }}
-  ELASTICSEARCH_PASS: ${{ secrets.ELASTICSEARCH_PASS }}
   FILESYSTEM_DISK: "local"
   FORM_HYDRATION_SCHEMA_URL: "https://raw.githubusercontent.com/HDRUK/schemata-2/master/docs/%s/%s.form.json"
   FORM_HYDRATION_SCHEMA_MODEL: "HDRUK"
@@ -61,7 +57,11 @@ env:
   REDIS_PASSWORD: "mypassword"
   REDIS_PORT: "6379"
   SEARCH_SERVICE_URL: ${{ secrets.SEARCH_SERVICE_URL }}
-  SCOUT_DRIVER: "null"
+  SCOUT_DRIVER: "typesense"
+  TYPESENSE_HOST: "localhost"
+  TYPESENSE_PORT: "8108"
+  TYPESENSE_PROTOCOL: "http"
+  TYPESENSE_API_KEY: "e2e-typesense-key"
   TED_ENABLED: "true"
   TED_SERVICE_URL: ${{ secrets.TED_SERVICE_URL }}
   TRASER_ENABLED: "true"
@@ -134,6 +134,19 @@ jobs:
         env:
           REDIS_PASSWORD: mypassword
 
+      typesense:
+        image: typesense/typesense:30.2
+        env:
+          TYPESENSE_API_KEY: e2e-typesense-key
+          TYPESENSE_DATA_DIR: /tmp
+        ports:
+          - 8108:8108
+        options: >-
+          --health-cmd="bash -c 'echo > /dev/tcp/127.0.0.1/8108'"
+          --health-interval=5s
+          --health-timeout=2s
+          --health-retries=10
+
     steps:
       - name: Install MailDev
         run: npm install -g maildev
@@ -195,8 +208,15 @@ jobs:
           sed -i 's/DB_PASSWORD=.*/DB_PASSWORD=root/' .env
           php artisan key:generate
           php artisan migrate --force
-          php artisan db:seed --force
-          php artisan db:seed --class=TestDevUsersSeeder
+          SCOUT_DRIVER=null php artisan db:seed --force
+          SCOUT_DRIVER=null php artisan db:seed --class=TestDevUsersSeeder
+
+      - name: Index the seeded data into Typesense
+        run: |
+          cd gateway-api
+          for entity in datasets tools collections dur publications data_custodian_networks data_custodians; do
+            php artisan typesense:reindex "$entity"
+          done
 
       - name: Start Laravel API and wait for readiness
         run: |
