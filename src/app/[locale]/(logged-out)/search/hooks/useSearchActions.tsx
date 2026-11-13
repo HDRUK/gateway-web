@@ -27,7 +27,7 @@ import { PostLoginActions } from "@/consts/postLoginActions";
 import { RouteName } from "@/consts/routeName";
 import { downloadFile } from "@/utils/download";
 import { getSavedSearchPayload } from "@/utils/search";
-import { getV1SearchBody } from "../utils/searchRequest";
+import { getExportRequest } from "../utils/searchRequest";
 import useAddLibraryModal from "./useAddLibraryModal";
 
 const TRANSLATION_PATH = "pages.search";
@@ -57,10 +57,11 @@ const useSearchActions = ({
 
     const mutateLibraries = () => mutate(LIBRARIES_KEY);
 
-    const submitDownload = usePost(
-        `${apis.searchV1Url}/${queryParams.type}?per_page=${queryParams.per_page}&page=${queryParams.page}&sort=${queryParams.sort}`,
-        { successNotificationsOn: false }
-    );
+    const exportRequest = getExportRequest(queryParams, resultsView);
+
+    const submitDownload = usePost(exportRequest.url, {
+        successNotificationsOn: false,
+    });
 
     const saveSearchQuery = usePost<SavedSearchPayload>(
         apis.saveSearchesV1Url,
@@ -78,11 +79,7 @@ const useSearchActions = ({
     const downloadSearchResults = async () => {
         setIsDownloading(true);
 
-        const csvData = await submitDownload({
-            ...getV1SearchBody(queryParams),
-            download: true,
-            download_type: resultsView,
-        });
+        const csvData = await submitDownload(exportRequest.body);
 
         if (csvData) {
             notificationService.apiSuccess(t("downloadStarted"));
