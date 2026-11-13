@@ -1,3 +1,9 @@
+## [2.50.3](https://github.com/HDRUK/gateway-web/compare/v2.50.2...v2.50.3) (2026-11-13)
+
+### 🐛 Bug Fixes
+
+* **GAT-9862:** list cohort discovery datasets from the v2 search ([26d05b6](https://github.com/HDRUK/gateway-web/commit/26d05b6d410cf8f4cd8bf4247db2e2265f3bad39)), closes [GAT-9862](undefinedGAT-9862) [api/v2/search/aggregation](undefinedgation)
+
 ## [2.50.2](https://github.com/HDRUK/gateway-web/compare/v2.50.1...v2.50.2) (2026-11-13)
 
 ### 🐛 Bug Fixes

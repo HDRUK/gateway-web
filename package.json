@@ -1,6 +1,6 @@
 {
   "name": "gateway-web-2",
-  "version": "2.50.2",
+  "version": "2.50.3",
   "private": true,
   "scripts": {
     "dev": "next dev",
