@@ -10,7 +10,6 @@ import useNavigationProgress from "@/hooks/useNavigationProgress";
 import usePostSwr from "@/hooks/usePostSwr";
 import apis from "@/config/apis";
 import { ARDC_SOURCE_VALUE } from "@/consts/search";
-import { useFeatures } from "@/providers/FeatureProvider";
 import {
     getSearchMode,
     getV1SearchBody,
@@ -22,9 +21,8 @@ import useLoadExternalData from "./useLoadExternalData";
 import { useSearchData } from "./useSearchData";
 
 const useSearchResults = (queryParams: SearchQueryParams) => {
-    const flags = useFeatures();
     const forceSearch = useSearchParams()?.get("force") !== null;
-    const searchMode = getSearchMode(queryParams, flags);
+    const searchMode = getSearchMode(queryParams);
     const {
         isDatasets,
         dataSource,
@@ -80,7 +78,6 @@ const useSearchResults = (queryParams: SearchQueryParams) => {
 
     const data = useSearchData({
         isDatasets,
-        isExternalSourcesEnabled: !!flags.isExternalSourcesEnabled,
         isTypesenseSearch,
         v1Data,
         v2Data: v2DataWithExternal,

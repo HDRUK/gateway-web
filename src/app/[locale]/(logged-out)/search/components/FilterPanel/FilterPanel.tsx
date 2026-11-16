@@ -54,7 +54,6 @@ import {
     transformQueryFiltersToForm,
 } from "@/utils/filters";
 import { getSubtypeOptionsFromSchema } from "@/utils/getSubtypeOptionsFromSchema";
-import { useFeatures } from "@/providers/FeatureProvider";
 import { ClearButton } from "../ClearFilterButton/ClearFilterButton.styles";
 import DateRangeFilter from "../DateRangeFilter";
 import FilterSectionInlineSwitch from "../FilterSectionInlineSwitch";
@@ -201,7 +200,6 @@ const FilterPanel = ({
 }) => {
     const t = useTranslations(`${TRANSLATION_PATH}.${filterCategory}`);
     const tRoot = useTranslations(TRANSLATION_PATH);
-    const { isExternalSourcesEnabled } = useFeatures();
 
     const searchParams = useSearchParams();
     const fireGTMEvent = useGTMEvent();
@@ -297,10 +295,7 @@ const FilterPanel = ({
             formattedFilters.unshift(STATIC_FILTER_SOURCE_OBJECT);
         }
 
-        if (
-            isExternalSourcesEnabled &&
-            filterCategory === FILTER_CATEGORY_DATASETS
-        ) {
+        if (filterCategory === FILTER_CATEGORY_DATASETS) {
             const dataSourceBuckets = [
                 {
                     value: HDRUK_SOURCE_VALUE,
@@ -327,7 +322,6 @@ const FilterPanel = ({
 
         // If 'External data portals' is selected, hide all dataset filters (ARDC has no aggregations)
         if (
-            isExternalSourcesEnabled &&
             filterCategory === FILTER_CATEGORY_DATASETS &&
             staticFilterValues[STATIC_FILTER_DATA_SOURCE]?.[ARDC_SOURCE_VALUE]
         ) {
@@ -392,7 +386,6 @@ const FilterPanel = ({
         filterSourceData,
         staticFilterValues,
         aggregations,
-        isExternalSourcesEnabled,
         schemadefs,
     ]);
     const [maximised, setMaximised] = useState<string[]>([]);

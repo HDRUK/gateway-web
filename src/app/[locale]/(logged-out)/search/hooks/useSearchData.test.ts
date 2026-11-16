@@ -4,7 +4,6 @@ import { useSearchData } from "./useSearchData";
 
 const baseProps = {
     isDatasets: true,
-    isExternalSourcesEnabled: true,
     v1Data: undefined,
     v2Data: undefined,
     dataSource: HDRUK_SOURCE_VALUE,
@@ -34,20 +33,13 @@ const makeV2Data = (
 
 describe("useSearchData", () => {
     describe("v1 fallback paths", () => {
-        it("returns v1Data when isDatasets is false", () => {
+        it("returns v1Data for a Europe PMC publication search", () => {
             const v1Data = { list: [], total: 5 } as never;
-            const { result } = renderHook(() =>
-                useSearchData({ ...baseProps, isDatasets: false, v1Data })
-            );
-            expect(result.current).toBe(v1Data);
-        });
-
-        it("returns v1Data when isExternalSourcesEnabled is false", () => {
-            const v1Data = { list: [], total: 3 } as never;
             const { result } = renderHook(() =>
                 useSearchData({
                     ...baseProps,
-                    isExternalSourcesEnabled: false,
+                    isDatasets: false,
+                    isTypesenseSearch: false,
                     v1Data,
                 })
             );
@@ -66,7 +58,6 @@ describe("useSearchData", () => {
         const publicationProps = {
             ...baseProps,
             isDatasets: false,
-            isExternalSourcesEnabled: false,
             isTypesenseSearch: true,
             type: "publications",
         };
@@ -109,7 +100,6 @@ describe("useSearchData", () => {
         const dataCustodianProps = {
             ...baseProps,
             isDatasets: false,
-            isExternalSourcesEnabled: false,
             isTypesenseSearch: true,
             type: "data_custodians",
         };
@@ -133,18 +123,6 @@ describe("useSearchData", () => {
                 useSearchData({ ...dataCustodianProps, v2Data: undefined })
             );
             expect(result.current).toBeUndefined();
-        });
-
-        it("returns v1Data when isTypesenseSearch is false", () => {
-            const v1Data = { list: [], total: 2 } as never;
-            const { result } = renderHook(() =>
-                useSearchData({
-                    ...dataCustodianProps,
-                    isTypesenseSearch: false,
-                    v1Data,
-                })
-            );
-            expect(result.current).toBe(v1Data);
         });
     });
 

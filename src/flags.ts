@@ -33,16 +33,6 @@ export const isRQuestEnabled = flag({
     adapter,
 });
 
-export const isExternalSourcesEnabled = flag({
-    key: "V2_SearchAggregation",
-    adapter,
-});
-
-export const isTypesenseSearchEnabled = flag({
-    key: "TypesenseSearch",
-    adapter,
-});
-
 export const isCustodianDashboardEnabled = flag({
     key: "V3_CustodianDashboard",
     adapter,
@@ -103,5 +93,10 @@ export const isGwdmDatasetPageEnabled = flag({
 
 export const isSchemaOnboardingFormEnabled = flag({
     key: "SchemaOnboardingForm",
+    adapter,
+});
+
+export const isSchemaOnboardingFormSelectorEnabled = flag({
+    key: "SchemaOnboardingFormSelector",
     adapter,
 });

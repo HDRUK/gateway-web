@@ -32,6 +32,7 @@ interface SchemaDatasetFormPageProps {
     version?: string;
     isDraft?: boolean;
     isDuplicate?: boolean;
+    canChangeSchema?: boolean;
 }
 
 export default async function SchemaDatasetFormPage({
@@ -41,6 +42,7 @@ export default async function SchemaDatasetFormPage({
     version,
     isDraft = false,
     isDuplicate = false,
+    canChangeSchema = false,
 }: SchemaDatasetFormPageProps) {
     const user = await getUser();
     const team = await getTeam(teamId);
@@ -110,7 +112,8 @@ export default async function SchemaDatasetFormPage({
                 meta={templateMeta}
                 defaultTeam={{ value: team.id, label: team.name }}
                 isDraft={isDraft}
-                isCohortDiscovery={dataset?.is_cohort_discovery}>
+                isCohortDiscovery={dataset?.is_cohort_discovery}
+                canChangeSchema={canChangeSchema}>
                 <Template components={formVocabulary} />
             </SchemaDatasetForm>
         </ProtectedAccountRoute>

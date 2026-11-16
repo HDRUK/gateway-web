@@ -10,7 +10,10 @@ import {
 import metaData, { noFollowRobots } from "@/utils/metadata";
 import { getPermissions } from "@/utils/permissions";
 import { getTeamUser } from "@/utils/user";
-import { isSchemaOnboardingFormEnabled } from "@/flags";
+import {
+    isSchemaOnboardingFormEnabled,
+    isSchemaOnboardingFormSelectorEnabled,
+} from "@/flags";
 import SchemaDatasetFormPage from "../_schema/SchemaDatasetFormPage";
 import CreateDataset from "../components/CreateDataset";
 
@@ -32,8 +35,16 @@ export default async function CreateDatasetPage({
     const { teamId } = await params;
 
     if (await isSchemaOnboardingFormEnabled()) {
-        const { schema, version } = (await searchParams) ?? {};
-        return SchemaDatasetFormPage({ teamId, model: schema, version });
+        const canChangeSchema = await isSchemaOnboardingFormSelectorEnabled();
+        const { schema, version } = canChangeSchema
+            ? (await searchParams) ?? {}
+            : {};
+        return SchemaDatasetFormPage({
+            teamId,
+            model: schema,
+            version,
+            canChangeSchema,
+        });
     }
 
     const user = await getUser();

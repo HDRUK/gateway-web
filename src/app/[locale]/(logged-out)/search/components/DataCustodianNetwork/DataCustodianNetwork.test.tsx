@@ -4,38 +4,8 @@ import { fireEvent, render, screen } from "@/utils/testUtils";
 import { server } from "@/mocks/server";
 import DataCustodianNetwork from "./DataCustodianNetwork";
 
-jest.mock("@/providers/FeatureProvider", () => ({
-    useFeatures: jest.fn().mockReturnValue({ isTypesenseSearchEnabled: false }),
-}));
-
-const DCN_URL = `${apis.searchV1Url}/data_custodian_networks`;
-
-const mockEndpoint = (requestQueries: string[], total = 1) => {
-    server.use(
-        rest.post(DCN_URL, async (req, res, ctx) => {
-            const body = await req.json();
-            requestQueries.push(body.query);
-            const page = Number(req.url.searchParams.get("page")) || 1;
-            return res(
-                ctx.status(200),
-                ctx.json({
-                    data: [
-                        {
-                            id: page,
-                            name: `Network for ${body.query} page ${page}`,
-                        },
-                    ],
-                    current_page: page,
-                    last_page: Math.ceil(total / 4),
-                    total,
-                })
-            );
-        })
-    );
-};
-
 const mockAggregationEndpoint = (
-    requestBodies: { page?: number }[],
+    requestBodies: { query?: string; page?: number }[],
     total = 1
 ) => {
     server.use(
@@ -71,20 +41,20 @@ const mockAggregationEndpoint = (
 
 describe("DataCustodianNetwork", () => {
     it("fetches results on mount and renders them", async () => {
-        const requestQueries: string[] = [];
-        mockEndpoint(requestQueries);
+        const requestBodies: { query?: string }[] = [];
+        mockAggregationEndpoint(requestBodies);
 
         render(<DataCustodianNetwork searchParams={{ query: "cancer" }} />);
 
         expect(
             await screen.findByText("Network for cancer page 1")
         ).toBeInTheDocument();
-        expect(requestQueries).toEqual(["cancer"]);
+        expect(requestBodies.map(body => body.query)).toEqual(["cancer"]);
     });
 
     it("issues a single request per search when the query changes", async () => {
-        const requestQueries: string[] = [];
-        mockEndpoint(requestQueries);
+        const requestBodies: { query?: string }[] = [];
+        mockAggregationEndpoint(requestBodies);
 
         const { rerender } = render(
             <DataCustodianNetwork searchParams={{ query: "cancer" }} />
@@ -98,13 +68,13 @@ describe("DataCustodianNetwork", () => {
             await screen.findByText("Network for diabetes page 1")
         ).toBeInTheDocument();
 
-        expect(requestQueries).toEqual(["cancer", "diabetes"]);
+        expect(requestBodies.map(body => body.query)).toEqual([
+            "cancer",
+            "diabetes",
+        ]);
     });
 
-    it("calls the v2 aggregation endpoint when TypesenseSearch is enabled", async () => {
-        const { useFeatures } = require("@/providers/FeatureProvider");
-        useFeatures.mockReturnValue({ isTypesenseSearchEnabled: true });
-
+    it("sends the network search to the v2 aggregation endpoint", async () => {
         const requestBodies: {
             type?: string;
             view_type?: string;
@@ -139,12 +109,9 @@ describe("DataCustodianNetwork", () => {
         });
     });
 
-    it("paginates through v1 results when there are more than fit on one page", async () => {
-        const { useFeatures } = require("@/providers/FeatureProvider");
-        useFeatures.mockReturnValue({ isTypesenseSearchEnabled: false });
-
-        const requestQueries: string[] = [];
-        mockEndpoint(requestQueries, 8);
+    it("paginates through results when there are more than fit on one page", async () => {
+        const requestBodies: { page?: number }[] = [];
+        mockAggregationEndpoint(requestBodies, 8);
 
         render(<DataCustodianNetwork searchParams={{ query: "cancer" }} />);
 
@@ -157,14 +124,14 @@ describe("DataCustodianNetwork", () => {
         expect(
             await screen.findByText("Network for cancer page 2")
         ).toBeInTheDocument();
+        expect(requestBodies[requestBodies.length - 1]).toMatchObject({
+            page: 2,
+        });
     });
 
     it("resets to page 1 when the query changes after paginating", async () => {
-        const { useFeatures } = require("@/providers/FeatureProvider");
-        useFeatures.mockReturnValue({ isTypesenseSearchEnabled: false });
-
-        const requestQueries: string[] = [];
-        mockEndpoint(requestQueries, 8);
+        const requestBodies: { page?: number }[] = [];
+        mockAggregationEndpoint(requestBodies, 8);
 
         const { rerender } = render(
             <DataCustodianNetwork searchParams={{ query: "cancer" }} />
@@ -183,28 +150,5 @@ describe("DataCustodianNetwork", () => {
         expect(
             await screen.findByText("Network for diabetes page 1")
         ).toBeInTheDocument();
-    });
-
-    it("paginates through v2 results when there are more than fit on one page", async () => {
-        const { useFeatures } = require("@/providers/FeatureProvider");
-        useFeatures.mockReturnValue({ isTypesenseSearchEnabled: true });
-
-        const requestBodies: { page?: number }[] = [];
-        mockAggregationEndpoint(requestBodies, 8);
-
-        render(<DataCustodianNetwork searchParams={{ query: "cancer" }} />);
-
-        expect(
-            await screen.findByText("Network for cancer page 1")
-        ).toBeInTheDocument();
-
-        fireEvent.click(screen.getByText("2"));
-
-        expect(
-            await screen.findByText("Network for cancer page 2")
-        ).toBeInTheDocument();
-        expect(requestBodies[requestBodies.length - 1]).toMatchObject({
-            page: 2,
-        });
     });
 });

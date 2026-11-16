@@ -18,7 +18,10 @@ import {
 import metaData, { noFollowRobots } from "@/utils/metadata";
 import { getPermissions } from "@/utils/permissions";
 import { getTeamUser } from "@/utils/user";
-import { isSchemaOnboardingFormEnabled } from "@/flags";
+import {
+    isSchemaOnboardingFormEnabled,
+    isSchemaOnboardingFormSelectorEnabled,
+} from "@/flags";
 import SchemaDatasetFormPage from "../_schema/SchemaDatasetFormPage";
 import EditDataset from "../components/CreateDataset";
 
@@ -45,13 +48,15 @@ export default async function TeamDatasetPage({
     } = await searchParams;
 
     if (await isSchemaOnboardingFormEnabled()) {
+        const canChangeSchema = await isSchemaOnboardingFormSelectorEnabled();
         return SchemaDatasetFormPage({
             teamId,
             datasetId,
-            model: schemaModel,
-            version,
+            model: canChangeSchema ? schemaModel : undefined,
+            version: canChangeSchema ? version : undefined,
             isDraft: status === DataStatus.DRAFT,
             isDuplicate: duplicate === "true",
+            canChangeSchema,
         });
     }
 

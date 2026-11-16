@@ -11,7 +11,6 @@ interface AdminSearchEntityStatus {
 
 interface AdminSearchStatusResponse {
     entities: AdminSearchEntityStatus[];
-    features: { [key: string]: boolean };
 }
 
 export type { AdminSearchEntityStatus, AdminSearchStatusResponse };

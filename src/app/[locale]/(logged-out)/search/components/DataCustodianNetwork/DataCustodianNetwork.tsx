@@ -2,7 +2,6 @@ import { useState } from "react";
 import { useTranslations } from "next-intl";
 import {
     SearchAggregationData,
-    SearchPaginationType,
     SearchResultDataCustodianCol,
 } from "@/interfaces/Search";
 import Box from "@/components/Box";
@@ -16,7 +15,6 @@ import apis from "@/config/apis";
 import { StaticImages } from "@/config/images";
 import { RouteName } from "@/consts/routeName";
 import { HDRUK_SOURCE_VALUE } from "@/consts/search";
-import { useFeatures } from "@/providers/FeatureProvider";
 import ResultsList from "../ResultsList";
 
 interface FiltersType {
@@ -47,7 +45,6 @@ const DataCustodianNetwork = ({
     searchParams = {},
 }: DataCustodianNetworkProps) => {
     const t = useTranslations(TRANSLATION_PATH);
-    const { isTypesenseSearchEnabled } = useFeatures();
     const [page, setPage] = useState(1);
 
     const generateDataCustodianFilters = ():
@@ -79,40 +76,24 @@ const DataCustodianNetwork = ({
         setPage(1);
     }
 
-    const { data: v1Data, isLoading: isV1Loading } = usePostSwr<
-        SearchPaginationType<SearchResultDataCustodianCol>
-    >(
-        `${apis.searchV1Url}/data_custodian_networks?view_type=mini&per_page=${SEARCH_PER_PAGE}&page=${page}`,
+    const { data: searchData, isLoading } = usePostSwr<SearchAggregationData>(
+        apis.searchV2AggregationUrl,
         {
+            type: "data_custodian_networks",
             query: searchParams.query,
-            filters: dataCustodianFilters,
-        },
-        { withPagination: true, shouldFetch: !isTypesenseSearchEnabled }
+            page,
+            per_page: SEARCH_PER_PAGE,
+            sort: "name:desc",
+            filters: dataCustodianFilters ?? {},
+            view_type: "mini",
+            dataSource: HDRUK_SOURCE_VALUE,
+        }
     );
 
-    const { data: v2Data, isLoading: isV2Loading } =
-        usePostSwr<SearchAggregationData>(
-            apis.searchV2AggregationUrl,
-            {
-                type: "data_custodian_networks",
-                query: searchParams.query,
-                page,
-                per_page: SEARCH_PER_PAGE,
-                sort: "name:desc",
-                filters: dataCustodianFilters ?? {},
-                view_type: "mini",
-                dataSource: HDRUK_SOURCE_VALUE,
-            },
-            { shouldFetch: !!isTypesenseSearchEnabled }
-        );
+    const result = searchData?.results?.[HDRUK_SOURCE_VALUE];
 
-    const v2Result = v2Data?.results?.[HDRUK_SOURCE_VALUE];
-
-    const data = isTypesenseSearchEnabled
-        ? (v2Result?.hits as SearchResultDataCustodianCol[] | undefined)
-        : v1Data?.list;
-    const isLoading = isTypesenseSearchEnabled ? isV2Loading : isV1Loading;
-    const total = isTypesenseSearchEnabled ? v2Result?.total : v1Data?.total;
+    const data = result?.hits as SearchResultDataCustodianCol[] | undefined;
+    const total = result?.total;
     const lastPage = total ? Math.ceil(total / SEARCH_PER_PAGE) : 1;
 
     return (

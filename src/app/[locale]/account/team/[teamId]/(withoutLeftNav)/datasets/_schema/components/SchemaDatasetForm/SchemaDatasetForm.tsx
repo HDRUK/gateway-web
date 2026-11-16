@@ -13,11 +13,13 @@ import {
     FormTemplateMeta,
     fromFormValues,
     INTRO_SECTION,
+    OnboardingSchema,
     validateDocument,
 } from "@hdruk/metadata-onboard";
 import {
     FormSectionSummary,
     MetadataFormProvider,
+    SchemaPicker,
     useActiveField,
     useFormSections,
     useMetadataForm,
@@ -26,7 +28,7 @@ import {
 import { Button } from "@hdruk/ui";
 import { get } from "lodash";
 import { useTranslations } from "next-intl";
-import { useRouter } from "next/navigation";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { LegendItem, LegendStatus } from "@/interfaces/FormLegend";
 import { OnboardingForm } from "@/interfaces/OnboardingForm";
 import { OptionsType } from "@/components/Autocomplete/Autocomplete";
@@ -35,6 +37,7 @@ import FormBanner, { NAVBAR_ID } from "@/components/FormBanner/FormBanner";
 import FormLegend from "@/components/FormLegend";
 import { MarkDownSanitizedWithHtml } from "@/components/MarkDownSanitizedWithHTML";
 import Typography from "@/components/Typography";
+import useModal from "@/hooks/useModal";
 import { errorNotification } from "@/services/api/utils";
 import notificationService from "@/services/notification";
 import { DataStatus } from "@/consts/application";
@@ -104,6 +107,7 @@ interface SchemaDatasetFormProps {
     defaultTeam: OptionsType;
     isDraft: boolean;
     isCohortDiscovery?: boolean;
+    canChangeSchema?: boolean;
     children: ReactNode;
 }
 
@@ -154,13 +158,17 @@ const FormShell = ({
     form,
     isDraft,
     isCohortDiscovery,
+    canChangeSchema,
     setIntroAside,
     children,
 }: FormShellProps) => {
     const t = useTranslations(CREATE_TRANSLATIONS);
     const tSchema = useTranslations(TRANSLATIONS);
     const tApi = useTranslations("api");
+    const { showModal } = useModal();
     const router = useRouter();
+    const pathname = usePathname();
+    const searchParams = useSearchParams();
     const methods = useMetadataForm();
     const { validate } = useMetadataFormContext();
     const activeField = useActiveField();
@@ -168,7 +176,7 @@ const FormShell = ({
     const [isPending, startTransition] = useTransition();
     const [submissionRequested, setSubmissionRequested] = useState(isEditing);
     const [navbarHeight, setNavbarHeight] = useState("0");
-    const { dirtyFields } = methods.formState;
+    const { dirtyFields, isDirty } = methods.formState;
 
     useEffect(() => {
         const handleResize = () => {
@@ -320,6 +328,27 @@ const FormShell = ({
         });
     };
 
+    const switchSchema = (schema: OnboardingSchema) => {
+        const params = new URLSearchParams(searchParams?.toString());
+        params.set("schema", schema.model);
+        params.set("version", schema.version);
+        router.replace(`${pathname}?${params.toString()}`);
+    };
+
+    const changeSchema = (schema: OnboardingSchema) => {
+        if (!isDirty && !isEditing) {
+            switchSchema(schema);
+            return;
+        }
+        showModal({
+            title: tSchema("switchSchemaTitle"),
+            content: tSchema("switchSchemaConfirm"),
+            confirmText: tSchema("switchSchemaConfirmText"),
+            cancelText: tSchema("switchSchemaCancelText"),
+            onSuccess: () => switchSchema(schema),
+        });
+    };
+
     return (
         <ShellGrid>
             <BackLink
@@ -384,6 +413,25 @@ const FormShell = ({
                             </Typography>
                             <FormLegend items={FORM_LEGEND_EXAMPLE} />
                         </Box>
+                        {canChangeSchema && (
+                            <Box>
+                                <Typography variant="h5" component="h2">
+                                    {tSchema("schemaPicker")}
+                                </Typography>
+                                <SchemaPicker
+                                    label=""
+                                    options={form.schemas}
+                                    value={{
+                                        model: form.model,
+                                        version: form.version,
+                                    }}
+                                    onChange={(_, schema) =>
+                                        changeSchema(schema)
+                                    }
+                                    disabled={isPending}
+                                />
+                            </Box>
+                        )}
                         <IntroFields>{children}</IntroFields>
                     </IntroPaper>
                 )}
@@ -455,6 +503,7 @@ const SchemaDatasetForm = ({
     defaultTeam,
     isDraft,
     isCohortDiscovery,
+    canChangeSchema,
     children,
 }: SchemaDatasetFormProps) => {
     const t = useTranslations(CREATE_TRANSLATIONS);
@@ -492,6 +541,7 @@ const SchemaDatasetForm = ({
                         form={form}
                         isDraft={isDraft}
                         isCohortDiscovery={isCohortDiscovery}
+                        canChangeSchema={canChangeSchema}
                         setIntroAside={setIntroAside}>
                         {children}
                     </FormShell>
