@@ -59,6 +59,7 @@ import {
     DEFAULT_CACHE_REVALIDATE,
     FILTERS_CACHE_REVALIDATE,
 } from "@/consts/cache";
+import { PARTNER_CONTEXT_HEADER } from "@/consts/schema";
 import { getUserFromToken } from "@/utils/cookies";
 import { getSessionCookie } from "./getSessionCookie";
 import { logger } from "./logger";
@@ -582,7 +583,8 @@ interface ApiResponse {
 async function sendTeamDataset(
     method: "POST" | "PUT",
     url: string,
-    payload: unknown
+    payload: unknown,
+    partnerContext?: string
 ): Promise<ApiResponse> {
     const cookieStore = await cookies();
     const jwt = cookieStore.get(config.JWT_COOKIE);
@@ -593,6 +595,7 @@ async function sendTeamDataset(
             Authorization: `Bearer ${jwt?.value}`,
             "Content-Type": "application/json",
             [sessionHeader]: sessionPrefix + session,
+            ...(partnerContext && { [PARTNER_CONTEXT_HEADER]: partnerContext }),
         },
         body: JSON.stringify(payload),
     });
@@ -617,12 +620,23 @@ async function saveTeamDataset(
     teamId: string,
     datasetId: string | undefined,
     query: string,
-    payload: unknown
+    payload: unknown,
+    partnerContext?: string
 ): Promise<ApiResponse> {
     const baseUrl = `${apis.teamsV2UrlIP}/${teamId}/datasets`;
     return datasetId
-        ? sendTeamDataset("PUT", `${baseUrl}/${datasetId}?${query}`, payload)
-        : sendTeamDataset("POST", `${baseUrl}?${query}`, payload);
+        ? sendTeamDataset(
+              "PUT",
+              `${baseUrl}/${datasetId}?${query}`,
+              payload,
+              partnerContext
+          )
+        : sendTeamDataset(
+              "POST",
+              `${baseUrl}?${query}`,
+              payload,
+              partnerContext
+          );
 }
 
 async function getDarSections(): Promise<QuestionBankSection[]> {

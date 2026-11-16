@@ -2,7 +2,9 @@
 
 import { OnboardingSaveResult } from "@/interfaces/OnboardingForm";
 import { DataStatus } from "@/consts/application";
+import { PARTNER_SCHEMAS } from "@/consts/schema";
 import { saveTeamDataset } from "@/utils/api";
+import { isSchemaOnboardingFormSelectorEnabled } from "@/flags";
 
 interface SaveSchemaDatasetArgs {
     teamId: string;
@@ -32,17 +34,29 @@ export const saveSchemaDatasetAction = async ({
             input_version: version,
         }).toString();
 
-        const res = await saveTeamDataset(teamId, datasetId, query, {
-            team_id: Number(teamId),
-            status,
-            create_origin: "MANUAL",
-            is_cohort_discovery: isCohortDiscovery,
-            metadata: {
-                schemaModel: model,
-                schemaVersion: version,
-                metadata,
+        const partnerContext =
+            PARTNER_SCHEMAS.includes(model) &&
+            (await isSchemaOnboardingFormSelectorEnabled())
+                ? model
+                : undefined;
+
+        const res = await saveTeamDataset(
+            teamId,
+            datasetId,
+            query,
+            {
+                team_id: Number(teamId),
+                status,
+                create_origin: "MANUAL",
+                is_cohort_discovery: isCohortDiscovery,
+                metadata: {
+                    schemaModel: model,
+                    schemaVersion: version,
+                    metadata,
+                },
             },
-        });
+            partnerContext
+        );
 
         if (!res.ok) {
             return { ok: false, status: res.status, error: res.body };
