@@ -2,6 +2,10 @@
 
 Super admins build feedback prompts and design reviews in **Profile → Search admin → Experiments**. A prompt can mix ratings, choices, free text, images and a Design A vs B pick, across several steps with branching. `<Experiments />` in the root layout shows prompts on the pages they target. The UI comes from the `@hdruk/experiments` package: `@hdruk/experiments` for types and validation, `@hdruk/experiments/client` for the prompt, and `@hdruk/experiments/builder` for the admin builder, so the builder stays out of the site-wide bundle. Gateway injects its translations (`modules.experimentBuilder` in `en.json`), the Wysiwyg rich-text editor and the image upload.
 
+## Feature flag
+
+The whole feature sits behind the `POC_FeedbackExperiments` flag (`isExperimentsEnabled` in `useFeatures()`), seeded **off**. While it is off, the web does not fetch or show prompts and hides the Experiments admin tab. The API also returns an empty list from `/experiments/active` (and `/active/me`) and a 404 for responses, so an older client can't show or submit a prompt either. The admin CRUD routes are not flagged. Turn the flag on in **Profile → Search admin → Features**. The web reads flags in the root layout, so reload the page to see the change.
+
 ## Theming
 
 The package depends only on MUI, not `@hdruk/ui`. It reads colours and `shape.borderRadius` from the surrounding MUI theme, and its focus ring uses `palette.status.keyboardFocus` when the theme has it (falling back to `primary.main`), so under the Gateway theme it matches `@hdruk/ui`'s `focusRing`. Every styled part is a named slot, so Gateway can restyle any of them from its theme with `@hdruk/ui` values:

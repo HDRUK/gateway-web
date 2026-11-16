@@ -5,11 +5,15 @@ import useGet from "@/hooks/useGet";
 import usePost from "@/hooks/usePost";
 import apis from "@/config/apis";
 import { render, screen } from "@/utils/testUtils";
+import { useFeatures } from "@/providers/FeatureProvider";
 import Experiments from "./Experiments";
 
 jest.mock("@/hooks/useAuth");
 jest.mock("@/hooks/useGet");
 jest.mock("@/hooks/usePost");
+jest.mock("@/providers/FeatureProvider", () => ({
+    useFeatures: jest.fn(),
+}));
 
 const experiment = {
     id: 7,
@@ -43,9 +47,26 @@ describe("Experiments", () => {
         jest.clearAllMocks();
         document.cookie = "hdruk-experiments=; max-age=0; path=/";
         mockRouter.setCurrentUrl("/en/search");
+        (useFeatures as jest.Mock).mockReturnValue({
+            isExperimentsEnabled: true,
+        });
         (useGet as jest.Mock).mockReturnValue({ data: [experiment] });
         (usePost as jest.Mock).mockReturnValue(post);
         post.mockResolvedValue(true);
+    });
+
+    it("does not fetch or show a prompt when the feature is off", () => {
+        (useFeatures as jest.Mock).mockReturnValue({
+            isExperimentsEnabled: false,
+        });
+        signIn();
+        render(<Experiments />);
+
+        expect(useGet).toHaveBeenCalledWith(
+            `${apis.experimentsV1Url}/active`,
+            expect.objectContaining({ shouldFetch: false })
+        );
+        expect(screen.queryByRole("dialog")).not.toBeInTheDocument();
     });
 
     it("sends an anonymous response with the typed email when they opt in", async () => {
