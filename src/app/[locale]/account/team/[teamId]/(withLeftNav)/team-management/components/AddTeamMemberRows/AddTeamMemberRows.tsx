@@ -14,9 +14,8 @@ import {
 } from "@/config/forms/addTeamMember";
 import { AddIcon, RemoveIcon, SearchRoundedIcon } from "@/consts/icons";
 import { getPermissions } from "@/utils/permissions";
-import { getTeamUser } from "@/utils/user";
+import { getAvailableUsers, getTeamUser } from "@/utils/user";
 import { useFeatures } from "@/providers/FeatureProvider";
-import { getAvailableUsers } from "../AddTeamMemberDialog/AddTeamMemberDialog.utils";
 
 interface AddTeamMemberRowsProps<TFieldValues extends FieldValues> {
     fields: FieldArrayWithId<AddTeamMember, "userAndRoles", "id">[];

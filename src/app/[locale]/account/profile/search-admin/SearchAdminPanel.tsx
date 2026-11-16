@@ -16,6 +16,7 @@ import {
     EmailOutlinedIcon,
     PeopleAltOutlinedIcon,
     LockIcon,
+    ScienceOutlinedIcon,
 } from "@/consts/icons";
 import { AdminSearchStatusResponse } from "@/interfaces/AdminSearch";
 import FeatureFlagsTable from "./FeatureFlagsTable";
@@ -24,6 +25,7 @@ import DataCustodianNetworksTab from "./DataCustodianNetworksTab";
 import NightlyDatasetTestsTab from "./NightlyDatasetTestsTab";
 import DatasetLinkCheckResultsTab from "./DatasetLinkCheckResultsTab";
 import EmailTemplatesTab from "./EmailTemplatesTab";
+import ExperimentsTab from "./ExperimentsTab";
 import UsersTab from "./UsersTab";
 import SessionsTab from "./SessionsTab";
 
@@ -107,6 +109,16 @@ export default function SearchAdminPanel() {
                             content: (
                                 <Box sx={{ p: 0, pt: 2 }}>
                                     <EmailTemplatesTab />
+                                </Box>
+                            ),
+                        },
+                        {
+                            label: t("experimentsTab"),
+                            value: "experiments",
+                            icon: <ScienceOutlinedIcon />,
+                            content: (
+                                <Box sx={{ p: 0, pt: 2 }}>
+                                    <ExperimentsTab />
                                 </Box>
                             ),
                         },
