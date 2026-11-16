@@ -8,6 +8,8 @@ export const PARTNER_SCHEMAS = ["CRUK", "PRUK", "CROCOD"];
 
 export const PARTNER_CONTEXT_HEADER = "x-partner-context";
 
+export const DEFAULT_PARTNER_CONTEXT = "HDRUK";
+
 /**
  * The Gateway's internal storage model. Requesting it as the output schema on a
  * dataset read means "no translation - return the stored GWDM"; omitting it

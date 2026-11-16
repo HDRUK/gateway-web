@@ -2,7 +2,7 @@
 
 import { OnboardingSaveResult } from "@/interfaces/OnboardingForm";
 import { DataStatus } from "@/consts/application";
-import { PARTNER_SCHEMAS } from "@/consts/schema";
+import { DEFAULT_PARTNER_CONTEXT, PARTNER_SCHEMAS } from "@/consts/schema";
 import { saveTeamDataset } from "@/utils/api";
 import { isSchemaOnboardingFormSelectorEnabled } from "@/flags";
 
@@ -34,11 +34,11 @@ export const saveSchemaDatasetAction = async ({
             input_version: version,
         }).toString();
 
-        const partnerContext =
-            PARTNER_SCHEMAS.includes(model) &&
-            (await isSchemaOnboardingFormSelectorEnabled())
+        const partnerContext = (await isSchemaOnboardingFormSelectorEnabled())
+            ? PARTNER_SCHEMAS.includes(model)
                 ? model
-                : undefined;
+                : DEFAULT_PARTNER_CONTEXT
+            : undefined;
 
         const res = await saveTeamDataset(
             teamId,

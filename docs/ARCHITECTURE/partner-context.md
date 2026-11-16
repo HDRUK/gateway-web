@@ -4,21 +4,17 @@ Every dataset is stored with a partner context (`partner_context`: `HDRUK`, `CRU
 
 The API stores the `x-partner-context` request header (`PARTNER_CONTEXT_HEADER`) as the partner context:
 
-- on create, through `POST /api/v2/teams/{id}/datasets`
-- on update, through `PUT /api/v2/teams/{id}/datasets/{id}`, while `SchemaOnboardingFormSelector` is on; no header stores the deployment default (`HDRUK` on the Gateway)
+- on create, through `POST /api/v2/teams/{id}/datasets` (no header stores the deployment default)
+- on update, through `PUT /api/v2/teams/{id}/datasets/{id}`, only when the header is sent; an unknown value is rejected with a 400
 
 ## What the form sends
 
-`saveSchemaDatasetAction` sends the header, set to the schema chosen in the schema picker, on create and on update, when:
+While `SchemaOnboardingFormSelector` is on, `saveSchemaDatasetAction` sends the header on create and update:
 
-- the schema is a partner's (`PARTNER_SCHEMAS` in `src/consts/schema.ts`)
-- `SchemaOnboardingFormSelector` is on
+- the chosen schema, when it is a partner's (`PARTNER_SCHEMAS` in `src/consts/schema.ts`)
+- `DEFAULT_PARTNER_CONTEXT` (`HDRUK`) for any other schema
 
-Switching a dataset's schema in the form therefore switches its partner context, and switching back to HDRUK restores `HDRUK`.
-
-## Flags
-
-Turn `SchemaOnboardingFormSelector` on only together with `SchemaOnboardingForm`. The legacy form, used while `SchemaOnboardingForm` is off, saves through the same update endpoint without the header, so it would reset partner datasets to `HDRUK`.
+Switching a dataset's schema in the form therefore switches its partner context, including back to `HDRUK`. With the flag off the form sends no header, so updates leave the partner context unchanged. The legacy form never sends it.
 
 A partner dataset is hidden from the Gateway's public pages while that partner's `RenderSchema<PARTNER>` flag is off.
 

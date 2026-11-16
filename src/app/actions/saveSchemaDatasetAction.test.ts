@@ -43,10 +43,10 @@ describe("saveSchemaDatasetAction", () => {
         expect(partnerContextSent()).toBe("PRUK");
     });
 
-    it("creates an HDRUK-schema dataset without a partner context", async () => {
-        await save("HDRUK");
+    it("saves an HDRUK-schema dataset in the HDRUK context", async () => {
+        await save("HDRUK", "5");
 
-        expect(partnerContextSent()).toBeUndefined();
+        expect(partnerContextSent()).toBe("HDRUK");
     });
 
     it("updates a partner-schema dataset in that partner's context", async () => {
