@@ -1,6 +1,7 @@
 import { AuthTeam } from "@/interfaces/AuthTeam";
 import { AuthUser } from "@/interfaces/AuthUser";
 import { User } from "@/interfaces/User";
+import { ValueType } from "@/components/Autocomplete/Autocomplete";
 import { ROLE_CUSTODIAN_TEAM_ADMIN } from "@/consts/roles";
 
 const getTeamById = (
@@ -20,6 +21,17 @@ const getRoleNamesByTeam = (team: AuthTeam | undefined | null) => {
 
 const getTeamUser = (teamUsers: User[], userId: number) =>
     teamUsers.find(teamUser => teamUser.id === userId);
+
+const getAvailableUsers = (teamUsers: User[], allUsers: User[]) => {
+    const teamUserIds = teamUsers.map(user => user.id);
+    return allUsers
+        .filter(user => ![...teamUserIds].includes(user.id))
+        .map(user => ({
+            value: user.id as ValueType,
+            label: `${user.name} (${user.email})`,
+        }))
+        .sort((a, b) => a.label.localeCompare(b.label));
+};
 
 const getPreferredEmail = (user: AuthUser) => {
     const { preferred_email, secondary_email, email } = user;
@@ -51,6 +63,7 @@ const getTeamAdmins = (users: User[]) => {
 };
 
 export {
+    getAvailableUsers,
     getTeamUser,
     getTeamById,
     getRoleNamesByTeam,

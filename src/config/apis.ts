@@ -116,6 +116,7 @@ const apis = {
     datasetLinkCheckResultsV2Url: `${apiV2IPUrl}/dataset_link_check_results`,
     emailTemplatesV1Url: `${apiV1IPUrl}/emailtemplates`,
     emailTemplatesPreviewV1Url: `${apiV1IPUrl}/emailtemplates/preview`,
+    experimentsV1Url: `${apiV1IPUrl}/experiments`,
 };
 
 export default apis;

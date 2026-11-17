@@ -10,6 +10,7 @@ import {
 } from "@/mocks/data";
 import { generateAuthTeamV1 } from "@/mocks/data/authTeam";
 import {
+    getAvailableUsers,
     getPreferredEmail,
     getRoleNamesByTeam,
     getTeamAdmins,
@@ -119,6 +120,22 @@ describe("User utils", () => {
 
             expect(result).toHaveLength(1);
             expect(mockUsers[0].name).toEqual(result[0]);
+        });
+    });
+
+    describe("getAvailableUsers", () => {
+        it("should not list existing team members", () => {
+            const user1 = generateUserV1({ id: 1 });
+            const user2 = generateUserV1({ id: 2 });
+            const existingTeamMembers = [user2];
+            const allUsers = [user1, user2];
+
+            const expectedResponse = [
+                { label: `${user1.name} (${user1.email})`, value: user1.id },
+            ];
+            expect(getAvailableUsers(existingTeamMembers, allUsers)).toEqual(
+                expectedResponse
+            );
         });
     });
 });

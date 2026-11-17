@@ -38,6 +38,11 @@ export const isCustodianDashboardEnabled = flag({
     adapter,
 });
 
+export const isExperimentsEnabled = flag({
+    key: "POC_FeedbackExperiments",
+    adapter,
+});
+
 export const isSafePeopleRegistrySSOEnabled = flag({
     key: "SafePeopleRegistrySSOEnabled",
     adapter,

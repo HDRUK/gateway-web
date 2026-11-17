@@ -46,6 +46,7 @@ import FilterAltIcon from "@mui/icons-material/FilterAlt";
 import FilterAltOffIcon from "@mui/icons-material/FilterAltOff";
 import FilterAltOutlinedIcon from "@mui/icons-material/FilterAltOutlined";
 import FlagOutlinedIcon from "@mui/icons-material/FlagOutlined";
+import ScienceOutlinedIcon from "@mui/icons-material/ScienceOutlined";
 import FolderSharedOutlinedIcon from "@mui/icons-material/FolderSharedOutlined";
 import GridViewOutlinedIcon from "@mui/icons-material/GridViewOutlined";
 import GroupRemoveIcon from "@mui/icons-material/GroupRemove";
@@ -184,6 +185,7 @@ export {
     PlayArrowIcon,
     EmailOutlinedIcon,
     FlagOutlinedIcon,
+    ScienceOutlinedIcon,
     HubOutlinedIcon,
     InsertLinkOutlinedIcon,
     NightsStayOutlinedIcon,
