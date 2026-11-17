@@ -24,6 +24,7 @@ export const loadRecaptcha = (siteKey: string): HTMLScriptElement => {
         siteKey
     )}`;
     script.async = true;
+    script.addEventListener("error", () => script.remove(), { once: true });
     document.head.appendChild(script);
 
     return script;

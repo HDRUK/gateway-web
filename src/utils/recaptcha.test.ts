@@ -41,4 +41,20 @@ describe("recaptcha", () => {
 
         await expect(token).rejects.toThrow();
     });
+
+    it("retries with a new script when an earlier load failed", async () => {
+        const failed = loadRecaptcha("site-key");
+        failed.dispatchEvent(new Event("error"));
+
+        const execute = jest.fn().mockResolvedValue("recaptcha-token");
+        const token = getRecaptchaToken("site-key", "experiment_response");
+
+        expect(scripts()).toHaveLength(1);
+        expect(scripts()[0]).not.toBe(failed);
+
+        window.grecaptcha = { ready: callback => callback(), execute };
+        scripts()[0].dispatchEvent(new Event("load"));
+
+        await expect(token).resolves.toBe("recaptcha-token");
+    });
 });
