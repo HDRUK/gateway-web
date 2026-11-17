@@ -3,6 +3,13 @@ export const SCHEMA_VERSION =
     process.env.NEXT_PUBLIC_SCHEMA_VERSION || "4.1.0";
 export const SCHEMA_BRANCH = process.env.NEXT_PUBLIC_SCHEMA_BRANCH || "master";
 
+/** Schemas whose datasets belong to that partner's context, not HDRUK's. */
+export const PARTNER_SCHEMAS = ["CRUK", "PRUK", "CROCOD"];
+
+export const PARTNER_CONTEXT_HEADER = "x-partner-context";
+
+export const DEFAULT_PARTNER_CONTEXT = "HDRUK";
+
 /**
  * The Gateway's internal storage model. Requesting it as the output schema on a
  * dataset read means "no translation - return the stored GWDM"; omitting it
