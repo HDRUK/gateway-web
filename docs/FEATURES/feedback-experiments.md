@@ -34,6 +34,19 @@ Answers and the opt-in go in one request to `POST /v1/experiments/{id}/responses
 
 The Gateway does not store responses or emails. The API passes the submission straight to an encrypted queued job (`ShouldBeEncrypted`) that raises the Helpdesk ticket, and only increments the experiment's response count.
 
+## Bot check (reCAPTCHA v3)
+
+Each response raises a Helpdesk ticket, so the API only accepts one with a Google reCAPTCHA v3 token. reCAPTCHA v3 is invisible: there is no checkbox or puzzle, Google scores the visit in the background.
+
+-   When a prompt opens, `<Experiments />` loads Google's script (`loadRecaptcha` in `src/utils/recaptcha.ts`), so pages without a prompt never load it.
+-   On submit it gets a token for the `experiment_response` action (`getRecaptchaToken`) and sends it as `recaptcha`. Tokens last 2 minutes and work once, so each attempt gets a new one.
+-   The API checks the token, the action and the score with Google and rejects anything below `RECAPTCHA_MIN_SCORE` (default 0.5). If the check fails, the prompt shows its retry error.
+-   The site key is `NEXT_PUBLIC_RECAPTCHA_SITE_KEY`. Without it, submitting fails. The API needs the matching `RECAPTCHA_SECRET_KEY`.
+-   Google's terms require its badge (or its notice text) to be visible in the user flow. Once loaded, the badge would otherwise stay on every page, behind the prompt's backdrop and the "Need support?" button. So `ThemeRegistry`'s global styles hide `.grecaptcha-badge`, and while a prompt is open `<Experiments />` adds `recaptchaBadgeOpen` (`Experiments.styles.ts`): the badge sits bottom-left above the backdrop, collapsed to the logo, and expands on hover. Hide it with `visibility`, never `display: none`, which stops reCAPTCHA working.
+-   The site key must list every domain it is used on, including `localhost`. Otherwise Google returns `browser-error` and the API rejects the response. The API logs Google's reason at debug level.
+
+The API also caps each experiment at 50 Helpdesk tickets an hour; see gateway-api's `docs/FEATURES/experiments.md`.
+
 ## When a prompt opens
 
 | Show                                        | Behaviour                                                                                                                     |
@@ -58,7 +71,7 @@ The prompt stores one first-party cookie, `hdruk-experiments`, holding `{id}:{st
 
 ## Data protection
 
-Responses can hold free text. The Gateway keeps neither the answers nor the email, nor a user or session ID: they go only to the Helpdesk ticket, so Jira's retention applies. The cookie is not strictly necessary, so the cookie policy should list it.
+Responses can hold free text. The Gateway keeps neither the answers nor the email, nor a user or session ID: they go only to the Helpdesk ticket, so Jira's retention applies. The cookie is not strictly necessary, so the cookie policy should list it. reCAPTCHA loads Google's script and sets Google's `_GRECAPTCHA` cookie on pages with an open prompt, and Google uses the data it collects under its own privacy policy, so the privacy notice and cookie policy should cover it too.
 
 ## Helpdesk tickets
 

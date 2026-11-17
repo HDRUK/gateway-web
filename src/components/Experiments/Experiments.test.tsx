@@ -4,6 +4,7 @@ import useAuth from "@/hooks/useAuth";
 import useGet from "@/hooks/useGet";
 import usePost from "@/hooks/usePost";
 import apis from "@/config/apis";
+import { getRecaptchaToken, loadRecaptcha } from "@/utils/recaptcha";
 import { render, screen } from "@/utils/testUtils";
 import { useFeatures } from "@/providers/FeatureProvider";
 import Experiments from "./Experiments";
@@ -14,6 +15,8 @@ jest.mock("@/hooks/usePost");
 jest.mock("@/providers/FeatureProvider", () => ({
     useFeatures: jest.fn(),
 }));
+
+jest.mock("@/utils/recaptcha");
 
 const experiment = {
     id: 7,
@@ -45,6 +48,8 @@ const signIn = (user?: object) =>
 describe("Experiments", () => {
     beforeEach(() => {
         jest.clearAllMocks();
+        process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY = "site-key";
+        (getRecaptchaToken as jest.Mock).mockResolvedValue("recaptcha-token");
         document.cookie = "hdruk-experiments=; max-age=0; path=/";
         mockRouter.setCurrentUrl("/en/search");
         (useFeatures as jest.Mock).mockReturnValue({
@@ -97,7 +102,13 @@ describe("Experiments", () => {
             variant: null,
             contact: true,
             email: "user@example.com",
+            recaptcha: "recaptcha-token",
         });
+        expect(loadRecaptcha).toHaveBeenCalledWith("site-key");
+        expect(getRecaptchaToken).toHaveBeenCalledWith(
+            "site-key",
+            "experiment_response"
+        );
     });
 
     it("uses the signed-in routes and does not send an email", async () => {
@@ -123,6 +134,7 @@ describe("Experiments", () => {
             path: "/en/search",
             variant: null,
             contact: true,
+            recaptcha: "recaptcha-token",
         });
     });
 });
