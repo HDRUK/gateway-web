@@ -1,5 +1,6 @@
-import { ARDC_SOURCE_VALUE, HDRUK_SOURCE_VALUE } from "@/consts/search";
+import { HDRUK_SOURCE_VALUE, PARTNERS_SOURCE_VALUE } from "@/consts/search";
 import { renderHook } from "@/utils/testUtils";
+import { generatePartnerPortalsResult } from "@/mocks/data/search";
 import { useSearchData } from "./useSearchData";
 
 const baseProps = {
@@ -139,38 +140,31 @@ describe("useSearchData", () => {
             expect(result.current?.path).toBe("search/datasets");
         });
 
-        it("returns data for the ARDC provider when dataSource is ARDC", () => {
+        it("returns partner hits with their portal when dataSource is partners", () => {
+            const partners = generatePartnerPortalsResult();
+            const [portal] = partners.portals;
             const v2Data = {
-                query: "test",
-                type: "datasets",
+                ...makeV2Data(HDRUK_SOURCE_VALUE),
                 results: {
-                    [ARDC_SOURCE_VALUE]: {
-                        hits: [{ id: "3", slug: "slug-3" }],
-                        total: 10,
-                        aggregations: [] as [],
-                        provider_logo: null,
-                        about: null,
-                        ids: [],
-                    },
-                    [HDRUK_SOURCE_VALUE]: {
-                        hits: [],
-                        total: 0,
-                        aggregations: [] as [],
-                        provider_logo: null,
-                        about: null,
-                        ids: [],
-                    },
+                    ...makeV2Data(HDRUK_SOURCE_VALUE).results,
+                    [PARTNERS_SOURCE_VALUE]: partners,
                 },
             };
             const { result } = renderHook(() =>
                 useSearchData({
                     ...baseProps,
                     v2Data,
-                    dataSource: ARDC_SOURCE_VALUE,
+                    dataSource: PARTNERS_SOURCE_VALUE,
                 })
             );
-            expect(result.current?.list).toHaveLength(1);
-            expect(result.current?.total).toBe(10);
+            expect(result.current?.list).toEqual([
+                {
+                    _id: portal.hits[0].id,
+                    hit: portal.hits[0],
+                    portal: { name: portal.name, logo: portal.logo },
+                },
+            ]);
+            expect(result.current?.total).toBe(partners.total);
         });
 
         it("returns an empty list when hits is missing", () => {

@@ -46,7 +46,7 @@ import {
 import { SOURCE_GAT } from "@/config/forms/search";
 import { colors } from "@/config/theme";
 import { EXCLUDE_UNREPORTED } from "@/consts/filters";
-import { ARDC_SOURCE_VALUE, HDRUK_SOURCE_VALUE } from "@/consts/search";
+import { HDRUK_SOURCE_VALUE, PARTNERS_SOURCE_VALUE } from "@/consts/search";
 import {
     formatBucketCounts,
     groupByType,
@@ -302,7 +302,7 @@ const FilterPanel = ({
                     label: "Health Data Research Gateway",
                 },
                 {
-                    value: ARDC_SOURCE_VALUE,
+                    value: PARTNERS_SOURCE_VALUE,
                     label: "Partner portals",
                 },
             ];
@@ -320,10 +320,12 @@ const FilterPanel = ({
             );
         }
 
-        // If 'External data portals' is selected, hide all dataset filters (ARDC has no aggregations)
+        // If 'Partner portals' is selected, hide all dataset filters (partner portals have no aggregations)
         if (
             filterCategory === FILTER_CATEGORY_DATASETS &&
-            staticFilterValues[STATIC_FILTER_DATA_SOURCE]?.[ARDC_SOURCE_VALUE]
+            staticFilterValues[STATIC_FILTER_DATA_SOURCE]?.[
+                PARTNERS_SOURCE_VALUE
+            ]
         ) {
             formattedFilters = formattedFilters.filter(
                 filterItem => filterItem.label === STATIC_FILTER_DATA_SOURCE
@@ -833,7 +835,7 @@ const FilterPanel = ({
 
                 {!isQueryEmpty(selectedFilters) &&
                     !staticFilterValues[STATIC_FILTER_DATA_SOURCE]?.[
-                        ARDC_SOURCE_VALUE
+                        PARTNERS_SOURCE_VALUE
                     ] && (
                         <ClearButton
                             purpose="link"

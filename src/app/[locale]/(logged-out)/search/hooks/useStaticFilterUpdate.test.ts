@@ -14,10 +14,10 @@ describe("useStaticFilterUpdate", () => {
     it(`sets only the value for "${STATIC_FILTER_DATA_SOURCE}"`, () => {
         const { result } = setup();
 
-        act(() => result.current(STATIC_FILTER_DATA_SOURCE, "ARDC"));
+        act(() => result.current(STATIC_FILTER_DATA_SOURCE, "partners"));
 
         expect(setSearchParams).toHaveBeenCalledWith({
-            [STATIC_FILTER_DATA_SOURCE]: "ARDC",
+            [STATIC_FILTER_DATA_SOURCE]: "partners",
         });
     });
 

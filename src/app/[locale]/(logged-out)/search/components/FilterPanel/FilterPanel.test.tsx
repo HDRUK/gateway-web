@@ -141,7 +141,7 @@ describe("FilterPanel", () => {
         ).not.toBeInTheDocument();
     });
 
-    it("reflects dataSource prop change by checking the ARDC radio", () => {
+    it("reflects dataSource prop change by checking the partner portals radio", () => {
         const { rerender } = render(
             <FilterPanel
                 {...defaultProps}
@@ -154,16 +154,18 @@ describe("FilterPanel", () => {
             <FilterPanel
                 {...defaultProps}
                 filterCategory="dataset"
-                dataSource="ARDC"
+                dataSource="partners"
             />
         );
 
         const radios = screen.getAllByRole("radio");
-        const ardcRadio = radios.find(r => r.getAttribute("value") === "ARDC");
-        expect(ardcRadio).toBeChecked();
+        const partnersRadio = radios.find(
+            r => r.getAttribute("value") === "partners"
+        );
+        expect(partnersRadio).toBeChecked();
     });
 
-    it("hides all dataset filters except the data source toggle when ARDC is selected", () => {
+    it("hides all dataset filters except the data source toggle when partner portals are selected", () => {
         render(
             <FilterPanel
                 {...defaultProps}
@@ -172,7 +174,7 @@ describe("FilterPanel", () => {
             />
         );
 
-        fireEvent.click(screen.getByDisplayValue("ARDC"));
+        fireEvent.click(screen.getByDisplayValue("partners"));
 
         // Only the dataSource accordion should remain
         const accordions = screen.queryAllByRole("button", {
@@ -181,12 +183,12 @@ describe("FilterPanel", () => {
         expect(accordions).toHaveLength(0);
     });
 
-    it("still renders filters and Clear all after switching away from datasets while ARDC was selected", () => {
+    it("still renders filters and Clear all after switching away from datasets while partner portals were selected", () => {
         const { rerender } = render(
             <FilterPanel
                 {...defaultProps}
                 filterCategory="dataset"
-                dataSource="ARDC"
+                dataSource="partners"
             />
         );
 

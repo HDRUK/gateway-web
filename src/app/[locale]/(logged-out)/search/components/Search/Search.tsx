@@ -16,7 +16,11 @@ import useGTMEvent from "@/hooks/useGTMEvent";
 import { filtersList } from "@/config/forms/filters";
 import { PAGE_FIELD, QUERY_FIELD, VIEW_FIELD } from "@/config/forms/search";
 import { FilterAltOutlinedIcon } from "@/consts/icons";
-import { ARDC_SOURCE_VALUE, FILTER_TYPE_MAPPING } from "@/consts/search";
+import {
+    FILTER_TYPE_MAPPING,
+    HDRUK_SOURCE_VALUE,
+    PARTNERS_SOURCE_VALUE,
+} from "@/consts/search";
 import { cleanSearchFilters, getAllSelectedFilters } from "@/utils/filters";
 import {
     DEFAULT_SORT_OPTIONS,
@@ -92,7 +96,7 @@ const Search = ({ filters, schema, initialView }: SearchProps) => {
         searchMode,
         isSearching,
         isExternalPolling,
-        ardcResult,
+        partnerResults,
         hdrukTotal,
     } = useSearchResults(queryParams);
     const {
@@ -183,8 +187,10 @@ const Search = ({ filters, schema, initialView }: SearchProps) => {
             aggregations={data?.aggregations}
             dataSource={dataSource}
             providerCounts={{
-                HDRUK: hdrukTotal ?? 0,
-                ARDC: isExternalPolling ? null : ardcResult?.total ?? 0,
+                [HDRUK_SOURCE_VALUE]: hdrukTotal ?? 0,
+                [PARTNERS_SOURCE_VALUE]: isExternalPolling
+                    ? null
+                    : partnerResults?.total ?? 0,
             }}
             updateStaticFilter={handleUpdateStaticFilter}
             getParamString={getParamString}
@@ -279,11 +285,10 @@ const Search = ({ filters, schema, initialView }: SearchProps) => {
                 <SearchResults
                     data={data}
                     type={queryParams.type}
-                    query={queryParams.query}
                     state={resultsState}
                     isExternalSourceSelected={isExternalSourceSelected}
                     showTable={showTable}
-                    ardcProviderLogo={ardcResult?.provider_logo ?? undefined}
+                    partnerPortals={partnerResults?.portals ?? []}
                     networkSearchParams={
                         {
                             query: queryParams.query,
@@ -308,19 +313,17 @@ const Search = ({ filters, schema, initialView }: SearchProps) => {
 
                 {externalSearchEnabled &&
                     !isExternalSourceSelected &&
-                    ((ardcResult?.total ?? 0) > 0 ||
+                    ((partnerResults?.total ?? 0) > 0 ||
                         isSearching ||
                         isExternalPolling) && (
                         <PartnerResourcesBanner
                             isLoading={isSearching || isExternalPolling}
-                            count={ardcResult?.total ?? 0}
-                            providerLogo={
-                                ardcResult?.provider_logo ?? undefined
-                            }
+                            count={partnerResults?.total ?? 0}
+                            portals={partnerResults?.portals ?? []}
                             onViewPartnerResources={() =>
                                 setSearchParams({
                                     [STATIC_FILTER_DATA_SOURCE]:
-                                        ARDC_SOURCE_VALUE,
+                                        PARTNERS_SOURCE_VALUE,
                                 })
                             }
                         />

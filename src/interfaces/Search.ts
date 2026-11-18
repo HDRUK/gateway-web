@@ -27,7 +27,7 @@ import {
     FILTER_LICENSE,
 } from "@/config/forms/filters";
 import { PMC_TYPE_FIELD } from "@/config/forms/search";
-import { DataSource } from "@/consts/search";
+import { HDRUK_SOURCE_VALUE, PARTNERS_SOURCE_VALUE } from "@/consts/search";
 import { Metadata } from "./Dataset";
 import { Bucket } from "./Filter";
 import { Highlight } from "./HighlightDataset";
@@ -185,7 +185,8 @@ export type SearchResult =
     | SearchResultCollection
     | SearchResultTool
     | SearchResultDataCustodian
-    | SearchResultDataCustodianCol;
+    | SearchResultDataCustodianCol
+    | SearchResultPartner;
 
 export interface SearchForm {
     query: string;
@@ -276,21 +277,37 @@ export interface SearchQueryParams {
 
 export type CountType = { [key: string]: number };
 
-export interface SearchResultARDC {
+export interface PartnerHit {
     id: string;
-    slug: string;
-    display_title?: string;
-    title?: string;
-    group?: string;
-    list_description?: string;
-    description?: string;
+    title: string;
+    description: string;
+    organisation: string | null;
+    url: string;
+}
+
+export interface PartnerPortal {
+    name: string;
+    logo: string;
+    search_url: string;
+    total: number;
+    hits: PartnerHit[];
+}
+
+export interface PartnerPortalsResult {
+    total: number;
+    portals: PartnerPortal[];
+}
+
+export interface SearchResultPartner {
+    _id: string;
+    hit: PartnerHit;
+    portal: Pick<PartnerPortal, "name" | "logo">;
 }
 
 export interface SearchAggregationProviderResult {
     provider_logo: string | null;
     about: string | null;
     hits:
-        | SearchResultARDC[]
         | SearchResultDataset[]
         | SearchResultDataCustodianCol[]
         | SearchResultPublication[];
@@ -299,17 +316,22 @@ export interface SearchAggregationProviderResult {
     ids: string[];
 }
 
+export interface SearchAggregationResults {
+    [HDRUK_SOURCE_VALUE]?: SearchAggregationProviderResult;
+    [PARTNERS_SOURCE_VALUE]?: PartnerPortalsResult;
+}
+
 export interface SearchAggregationData {
     query: string;
     type: string;
     pending?: string[];
     token?: string;
     token_ttl?: number;
-    results: Partial<Record<DataSource, SearchAggregationProviderResult>>;
+    results: SearchAggregationResults;
 }
 
 export interface SearchPollData {
-    results: Partial<Record<DataSource, SearchAggregationProviderResult>>;
+    results: SearchAggregationResults;
     pending?: string[];
 }
 

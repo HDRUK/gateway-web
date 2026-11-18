@@ -3,12 +3,11 @@
 import { useEffect, useRef, useState } from "react";
 import {
     SearchAggregationData,
-    SearchAggregationProviderResult,
+    SearchAggregationResults,
     SearchPollData,
 } from "@/interfaces/Search";
 import useGet from "@/hooks/useGet";
 import apis from "@/config/apis";
-import { DataSource } from "@/consts/search";
 
 const MAX_POLL_FAILURES = 3;
 
@@ -18,9 +17,7 @@ const useLoadExternalData = (
     isValidating = false,
     refreshAggregation?: () => unknown
 ): {
-    externalResults: Partial<
-        Record<DataSource, SearchAggregationProviderResult>
-    >;
+    externalResults: SearchAggregationResults;
     isPolling: boolean;
 } => {
     const token = v2Data?.token ?? null;
@@ -29,10 +26,7 @@ const useLoadExternalData = (
     const cacheKey = `${query}|${type}`;
 
     const [cache, setCache] = useState<
-        Record<
-            string,
-            Partial<Record<DataSource, SearchAggregationProviderResult>>
-        >
+        Record<string, SearchAggregationResults>
     >({});
     const [pollFailures, setPollFailures] = useState<{
         token: string | null;

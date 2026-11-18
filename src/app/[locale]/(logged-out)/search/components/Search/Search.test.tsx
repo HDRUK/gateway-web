@@ -6,8 +6,15 @@ import { Schema } from "@/interfaces/V4Schema";
 import apis from "@/config/apis";
 import messages from "@/config/messages/en.json";
 import { fireEvent, render, screen, waitFor, within } from "@/utils/testUtils";
-import { generateSearchV2Response } from "@/mocks/data/search";
-import { postSearchV2Aggregation, SearchBody } from "@/mocks/handlers/search";
+import {
+    generatePartnerPortalsResult,
+    generateSearchV2Response,
+} from "@/mocks/data/search";
+import {
+    getSearchV2AggregationResults,
+    postSearchV2Aggregation,
+    SearchBody,
+} from "@/mocks/handlers/search";
 import { server } from "@/mocks/server";
 import Search from "./Search";
 
@@ -170,5 +177,79 @@ describe("Search", () => {
         renderSearch("/search?query=nothing");
 
         expect(await screen.findByText(t.noResults)).toBeInTheDocument();
+    });
+
+    describe("partner portals", () => {
+        const partners = generatePartnerPortalsResult();
+        const [portal] = partners.portals;
+        const [hit] = portal.hits;
+
+        beforeEach(() => {
+            server.use(
+                postSearchV2Aggregation(
+                    body => ({
+                        ...generateSearchV2Response(
+                            body.type as SearchCategory
+                        ),
+                        pending: ["partners"],
+                        token: "srch_partner",
+                    }),
+                    requests
+                ),
+                getSearchV2AggregationResults({
+                    pending: [],
+                    results: { partners },
+                })
+            );
+        });
+
+        it("requests partner portals when they are selected", async () => {
+            renderSearch("/search?query=asthma&dataSource=partners");
+
+            await waitFor(() => expect(requests).toHaveLength(1));
+            expect(requests[0]).toMatchObject({ dataSource: "partners" });
+        });
+
+        it("falls back to the gateway for an unknown data source", async () => {
+            renderSearch("/search?query=asthma&dataSource=unknown");
+
+            await waitFor(() => expect(requests).toHaveLength(1));
+            expect(requests[0]).toMatchObject({ dataSource: "HDRUK" });
+        });
+
+        it("links each partner result to its partner portal", async () => {
+            renderSearch("/search?query=asthma&dataSource=partners");
+
+            const link = await screen.findByRole("link", { name: hit.title });
+            expect(link).toHaveAttribute("href", hit.url);
+            expect(link).toHaveAttribute("target", "_blank");
+            expect(link).toHaveAttribute(
+                "rel",
+                expect.stringContaining("noopener")
+            );
+            expect(
+                screen.getByText(hit.organisation as string)
+            ).toBeInTheDocument();
+            expect(
+                screen.getAllByRole("img", { name: portal.name })[0]
+            ).toHaveAttribute("src", portal.logo);
+        });
+
+        it("links to the full results on each partner portal", async () => {
+            renderSearch("/search?query=asthma&dataSource=partners");
+
+            const viewAll = await screen.findByRole("link", {
+                name: t.viewAllPartnerResults.replace("{name}", portal.name),
+            });
+            expect(viewAll).toHaveAttribute("href", portal.search_url);
+        });
+
+        it("shows the partner portal logos on the gateway results", async () => {
+            renderSearch("/search?query=asthma");
+
+            expect(
+                await screen.findByRole("img", { name: portal.name })
+            ).toHaveAttribute("src", portal.logo);
+        });
     });
 });

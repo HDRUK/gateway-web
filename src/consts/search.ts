@@ -11,8 +11,11 @@ export const SEARCH_CHAR_LIMIT = 3;
 export const SEARCH_FILTER_CHAR_LIMIT = 25;
 
 export const HDRUK_SOURCE_VALUE = "HDRUK";
-export const ARDC_SOURCE_VALUE = "ARDC";
+export const PARTNERS_SOURCE_VALUE = "partners";
 
 export type DataSource =
     | typeof HDRUK_SOURCE_VALUE
-    | typeof ARDC_SOURCE_VALUE;
+    | typeof PARTNERS_SOURCE_VALUE;
+
+export const isDataSource = (value: unknown): value is DataSource =>
+    value === HDRUK_SOURCE_VALUE || value === PARTNERS_SOURCE_VALUE;

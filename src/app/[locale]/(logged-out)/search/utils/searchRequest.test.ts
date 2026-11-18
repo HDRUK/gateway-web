@@ -1,7 +1,6 @@
 import apis from "@/config/apis";
 import { parseQueryParams } from "./queryParams";
 import {
-    getArdcSearchUrl,
     getExportRequest,
     getPmcDatasetNames,
     getSearchMode,
@@ -33,7 +32,7 @@ describe("searchRequest utils", () => {
 
         it("selects the external source from the url", () => {
             expect(
-                getSearchMode(params("type=datasets&dataSource=ARDC"))
+                getSearchMode(params("type=datasets&dataSource=partners"))
                     .isExternalSourceSelected
             ).toBe(true);
         });
@@ -121,20 +120,6 @@ describe("searchRequest utils", () => {
             expect(
                 getPmcDatasetNames(params(`type=publications&${query}`))
             ).toEqual(expected);
-        });
-    });
-
-    describe("getArdcSearchUrl", () => {
-        it("encodes the query", () => {
-            expect(getArdcSearchUrl("heart & lung")).toBe(
-                "https://researchdata.edu.au/health/search?filter-type=all-fields&q=heart%20%26%20lung"
-            );
-        });
-
-        it("omits the query when empty", () => {
-            expect(getArdcSearchUrl("")).toBe(
-                "https://researchdata.edu.au/health/search?filter-type=all-fields"
-            );
         });
     });
 });

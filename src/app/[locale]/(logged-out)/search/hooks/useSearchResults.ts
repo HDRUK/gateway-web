@@ -9,7 +9,7 @@ import {
 import useNavigationProgress from "@/hooks/useNavigationProgress";
 import usePostSwr from "@/hooks/usePostSwr";
 import apis from "@/config/apis";
-import { ARDC_SOURCE_VALUE } from "@/consts/search";
+import { PARTNERS_SOURCE_VALUE } from "@/consts/search";
 import {
     getSearchMode,
     getV1SearchBody,
@@ -92,7 +92,7 @@ const useSearchResults = (queryParams: SearchQueryParams) => {
         searchMode,
         isSearching,
         isExternalPolling,
-        ardcResult: externalResults[ARDC_SOURCE_VALUE] ?? null,
+        partnerResults: externalResults[PARTNERS_SOURCE_VALUE] ?? null,
         hdrukTotal: v2Data?.results?.HDRUK?.total,
     };
 };

@@ -6,9 +6,9 @@ import { Box, Typography, useTheme } from "@mui/material";
 import { visuallyHidden } from "@mui/utils";
 import { useTranslations } from "next-intl";
 import {
+    PartnerPortal,
     SearchCategory,
     SearchResult,
-    SearchResultARDC,
     SearchResultCollection,
     SearchResultDataCustodian,
     SearchResultDataUse,
@@ -22,13 +22,12 @@ import { useCohortStatus } from "@/hooks/useCohortStatus";
 import { isAwaitingCohortDecision } from "@/consts/cohortDiscovery";
 import { OpenInNewIcon } from "@/consts/icons";
 import { getResultsListLayout, getResultsState } from "../../utils/results";
-import { getArdcSearchUrl } from "../../utils/searchRequest";
 import DataCustodianNetwork from "../DataCustodianNetwork";
 import ResultCard from "../ResultCard";
-import ResultCardARDC from "../ResultCardARDC";
 import ResultCardCollection from "../ResultCardCollection";
 import ResultCardDataCustodian from "../ResultCardDataCustodian";
 import ResultCardDataUse from "../ResultCardDataUse";
+import ResultCardPartner from "../ResultCardPartner";
 import ResultCardPublication from "../ResultCardPublication/ResultCardPublication";
 import ResultCardTool from "../ResultCardTool/ResultCardTool";
 import ResultsList from "../ResultsList";
@@ -46,11 +45,10 @@ const TRANSLATION_PATH = "pages.search";
 interface SearchResultsProps {
     data?: { list: SearchResult[]; path?: string };
     type: SearchCategory;
-    query?: string;
     state: ReturnType<typeof getResultsState>;
     isExternalSourceSelected: boolean;
     showTable: boolean;
-    ardcProviderLogo?: string;
+    partnerPortals: PartnerPortal[];
     networkSearchParams: ComponentProps<
         typeof DataCustodianNetwork
     >["searchParams"];
@@ -60,11 +58,10 @@ interface SearchResultsProps {
 const SearchResults = ({
     data,
     type,
-    query,
     state,
     isExternalSourceSelected,
     showTable,
-    ardcProviderLogo,
+    partnerPortals,
     networkSearchParams,
     showLibraryModal,
 }: SearchResultsProps) => {
@@ -77,20 +74,14 @@ const SearchResults = ({
         isLoggedIn && isAwaitingCohortDecision(requestStatus, hasAccess);
 
     const renderResultCard = (result: SearchResult) => {
+        if ("portal" in result) {
+            return <ResultCardPartner result={result} key={result._id} />;
+        }
+
         const { _id: resultId } = result;
 
         switch (type) {
             case SearchCategory.DATASETS:
-                if (isExternalSourceSelected) {
-                    const ardcItem = result as unknown as SearchResultARDC;
-                    return (
-                        <ResultCardARDC
-                            result={ardcItem}
-                            key={ardcItem.id}
-                            providerLogo={ardcProviderLogo}
-                        />
-                    );
-                }
                 return (
                     <ResultCard
                         result={result as SearchResultDataset}
@@ -187,19 +178,24 @@ const SearchResults = ({
                             {data?.list.map(result => renderResultCard(result))}
                         </ResultsList>
                     )}
-                    {isExternalSourceSelected && (
-                        <Box sx={externalLink}>
-                            <Button
-                                component="a"
-                                purpose="secondary"
-                                href={getArdcSearchUrl(query)}
-                                target="_blank"
-                                rel="noopener noreferrer"
-                                endIcon={<OpenInNewIcon fontSize="small" />}>
-                                {t("viewAllPartnerResults")}
-                            </Button>
-                        </Box>
-                    )}
+                    {isExternalSourceSelected &&
+                        partnerPortals.map(portal => (
+                            <Box sx={externalLink} key={portal.name}>
+                                <Button
+                                    component="a"
+                                    purpose="secondary"
+                                    href={portal.search_url}
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    endIcon={
+                                        <OpenInNewIcon fontSize="small" />
+                                    }>
+                                    {t("viewAllPartnerResults", {
+                                        name: portal.name,
+                                    })}
+                                </Button>
+                            </Box>
+                        ))}
                 </Box>
             )}
         </>

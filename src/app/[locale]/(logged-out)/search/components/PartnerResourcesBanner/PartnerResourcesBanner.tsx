@@ -1,26 +1,25 @@
 "use client";
 
+import { Button } from "@hdruk/ui";
 import { tokens } from "@hdruk/ui/theme";
 import { Box, Typography } from "@mui/material";
 import { useTranslations } from "next-intl";
-import { Button } from "@hdruk/ui";
+import { PartnerPortal } from "@/interfaces/Search";
 import Paper from "@/components/Paper";
 
 const TRANSLATION_PATH = "pages.search.components.PartnerResourcesBanner";
-const ARDC_FALLBACK_LOGO =
-    "https://demo.researchdata.ardc.edu.au/hd-portal/images/ardc-logo.svg";
 
 interface PartnerResourcesBannerProps {
     count: number;
     isLoading?: boolean;
-    providerLogo?: string | null;
+    portals: Pick<PartnerPortal, "name" | "logo">[];
     onViewPartnerResources: () => void;
 }
 
 const PartnerResourcesBanner = ({
     count,
     isLoading,
-    providerLogo,
+    portals,
     onViewPartnerResources,
 }: PartnerResourcesBannerProps) => {
     const t = useTranslations(TRANSLATION_PATH);
@@ -54,12 +53,17 @@ const PartnerResourcesBanner = ({
                     sx={{ color: tokens.text.secondaryBlack, fontSize: 15 }}>
                     {t("partnerResourcesBanner")}
                 </Typography>
-                <Box
-                    component="img"
-                    src={providerLogo || ARDC_FALLBACK_LOGO}
-                    alt="ARDC"
-                    sx={{ height: 35 }}
-                />
+                <Box sx={{ display: "flex", flexWrap: "wrap", gap: 2 }}>
+                    {portals.map(portal => (
+                        <Box
+                            key={portal.name}
+                            component="img"
+                            src={portal.logo}
+                            alt={portal.name}
+                            sx={{ height: 35 }}
+                        />
+                    ))}
+                </Box>
             </Box>
             <Button
                 purpose="secondary"

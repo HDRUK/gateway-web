@@ -1,7 +1,11 @@
 import { SearchCategory, SearchQueryParams } from "@/interfaces/Search";
 import apis from "@/config/apis";
 import { PMC_TYPE_FIELD } from "@/config/forms/search";
-import { FILTER_TYPE_MAPPING, HDRUK_SOURCE_VALUE } from "@/consts/search";
+import {
+    FILTER_TYPE_MAPPING,
+    HDRUK_SOURCE_VALUE,
+    isDataSource,
+} from "@/consts/search";
 import { pickOnlyFilters } from "@/utils/filters";
 import {
     EUROPE_PMC_SOURCE_FIELD,
@@ -12,13 +16,12 @@ import {
 
 type SearchMode = ReturnType<typeof getSearchMode>;
 
-const ARDC_SEARCH_URL =
-    "https://researchdata.edu.au/health/search?filter-type=all-fields";
-
 const getSearchMode = (queryParams: SearchQueryParams) => {
     const isDatasets = queryParams.type === SearchCategory.DATASETS;
     const isPublications = queryParams.type === SearchCategory.PUBLICATIONS;
-    const dataSource = queryParams.dataSource || HDRUK_SOURCE_VALUE;
+    const dataSource = isDataSource(queryParams.dataSource)
+        ? queryParams.dataSource
+        : HDRUK_SOURCE_VALUE;
 
     return {
         isDatasets,
@@ -99,11 +102,7 @@ const getExportRequest = (
     },
 });
 
-const getArdcSearchUrl = (query?: string) =>
-    `${ARDC_SEARCH_URL}${query ? `&q=${encodeURIComponent(query)}` : ""}`;
-
 export {
-    getArdcSearchUrl,
     getExportRequest,
     getPmcDatasetNames,
     getSearchFilters,

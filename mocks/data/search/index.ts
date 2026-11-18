@@ -1,4 +1,5 @@
 import {
+    PartnerPortalsResult,
     SearchAggregationData,
     SearchCategory,
     SearchResultDataset,
@@ -30,4 +31,25 @@ const generateSearchV2Response = (
     },
 });
 
-export { generateSearchV2Response };
+const generatePartnerPortalsResult = (): PartnerPortalsResult => ({
+    total: 1,
+    portals: [
+        {
+            name: "Example Partner Portal",
+            logo: "https://partner.example.com/logo.svg",
+            search_url: "https://partner.example.com/search?q=asthma",
+            total: 1,
+            hits: [
+                {
+                    id: "123",
+                    title: "Partner Dataset",
+                    description: "A partner dataset description",
+                    organisation: "Example University",
+                    url: "https://partner.example.com/view/123",
+                },
+            ],
+        },
+    ],
+});
+
+export { generatePartnerPortalsResult, generateSearchV2Response };

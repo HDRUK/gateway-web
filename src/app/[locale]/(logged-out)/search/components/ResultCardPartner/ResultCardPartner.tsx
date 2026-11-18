@@ -1,5 +1,6 @@
 "use client";
 
+import { tokens } from "@hdruk/ui/theme";
 import {
     Box,
     ListItem,
@@ -7,27 +8,20 @@ import {
     useMediaQuery,
     useTheme,
 } from "@mui/material";
-import { tokens } from "@hdruk/ui/theme";
-import { SearchResultARDC } from "@/interfaces/Search";
+import { SearchResultPartner } from "@/interfaces/Search";
 import EllipsisLineLimit from "@/components/EllipsisLineLimit";
 import Link from "@/components/Link";
 import Typography from "@/components/Typography";
 
-const ARDC_BASE_URL = "https://researchdata.edu.au/health/view";
-
-interface ResultCardARDCProps {
-    result: SearchResultARDC;
-    providerLogo?: string;
+interface ResultCardPartnerProps {
+    result: SearchResultPartner;
 }
 
-const ResultCardARDC = ({ result, providerLogo }: ResultCardARDCProps) => {
+const ResultCardPartner = ({ result }: ResultCardPartnerProps) => {
     const theme = useTheme();
     const isMobileOrTablet = useMediaQuery(theme.breakpoints.down("md"));
 
-    const title = result.display_title || result.title || "";
-    const organisation = result.group;
-    const description = result.list_description || result.description || "";
-    const href = result.id ? `${ARDC_BASE_URL}/${result.id}` : ARDC_BASE_URL;
+    const { hit, portal } = result;
 
     return (
         <ListItem
@@ -55,25 +49,25 @@ const ResultCardARDC = ({ result, providerLogo }: ResultCardARDCProps) => {
                         <Box sx={{ flex: 1 }}>
                             <h3 style={{ margin: 0, marginBottom: 4 }}>
                                 <Link
-                                    href={href}
+                                    href={hit.url}
                                     target="_blank"
                                     rel="noopener noreferrer"
                                     fontSize={16}
                                     fontWeight={600}>
                                     <EllipsisLineLimit
-                                        text={title}
+                                        text={hit.title}
                                         showToolTip
                                         maxLine={isMobileOrTablet ? 2 : 1}
                                     />
                                 </Link>
                             </h3>
-                            {organisation && (
+                            {hit.organisation && (
                                 <Typography
                                     sx={{
                                         color: tokens.brand.secondary,
                                         mb: 2,
                                     }}>
-                                    {organisation}
+                                    {hit.organisation}
                                 </Typography>
                             )}
                             <Typography
@@ -83,24 +77,22 @@ const ResultCardARDC = ({ result, providerLogo }: ResultCardARDCProps) => {
                                     mt: 0.5,
                                 }}>
                                 <EllipsisLineLimit
-                                    text={description}
+                                    text={hit.description}
                                     maxLine={3}
                                 />
                             </Typography>
                         </Box>
-                        {providerLogo && (
-                            <Box
-                                component="img"
-                                src={providerLogo}
-                                alt="ARDC"
-                                sx={{
-                                    height: 40,
-                                    objectFit: "contain",
-                                    flexShrink: 0,
-                                    mt: 0.5,
-                                }}
-                            />
-                        )}
+                        <Box
+                            component="img"
+                            src={portal.logo}
+                            alt={portal.name}
+                            sx={{
+                                height: 40,
+                                objectFit: "contain",
+                                flexShrink: 0,
+                                mt: 0.5,
+                            }}
+                        />
                     </Box>
                 }
                 secondary={null}
@@ -109,4 +101,4 @@ const ResultCardARDC = ({ result, providerLogo }: ResultCardARDCProps) => {
     );
 };
 
-export default ResultCardARDC;
+export default ResultCardPartner;

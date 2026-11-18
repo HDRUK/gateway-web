@@ -1,5 +1,5 @@
 import { rest } from "msw";
-import { SearchAggregationData } from "@/interfaces/Search";
+import { SearchAggregationData, SearchPollData } from "@/interfaces/Search";
 import apis from "@/config/apis";
 
 type SearchBody = Record<string, unknown>;
@@ -18,5 +18,10 @@ const postSearchV2Aggregation = (
         );
     });
 
-export { postSearchV2Aggregation };
+const getSearchV2AggregationResults = (response: SearchPollData) =>
+    rest.get(`${apis.searchV2AggregationResultsUrl}/:token`, (_req, res, ctx) =>
+        res(ctx.status(200), ctx.json({ message: "success", data: response }))
+    );
+
+export { getSearchV2AggregationResults, postSearchV2Aggregation };
 export type { SearchBody };

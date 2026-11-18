@@ -1,12 +1,12 @@
 import { act } from "@testing-library/react";
-import { renderHook } from "@/utils/testUtils";
-import { ARDC_SOURCE_VALUE } from "@/consts/search";
 import { SearchAggregationData, SearchPollData } from "@/interfaces/Search";
+import useGet from "@/hooks/useGet";
+import { PARTNERS_SOURCE_VALUE } from "@/consts/search";
+import { renderHook } from "@/utils/testUtils";
+import { generatePartnerPortalsResult } from "@/mocks/data/search";
 import useLoadExternalData from "./useLoadExternalData";
 
 jest.mock("@/hooks/useGet");
-
-import useGet from "@/hooks/useGet";
 
 const mockUseGet = useGet as jest.Mock;
 
@@ -14,26 +14,19 @@ const baseV2Data: SearchAggregationData = {
     query: "asthma",
     type: "datasets",
     token: "tok-1",
-    pending: [ARDC_SOURCE_VALUE],
+    pending: [PARTNERS_SOURCE_VALUE],
     results: {},
 };
 
-const ardcResult = {
-    hits: [],
-    total: 5,
-    aggregations: [] as [],
-    provider_logo: null,
-    about: null,
-    ids: [],
-};
+const partnersResult = generatePartnerPortalsResult();
 
 const resolvedPollData: SearchPollData = {
     pending: [],
-    results: { [ARDC_SOURCE_VALUE]: ardcResult },
+    results: { [PARTNERS_SOURCE_VALUE]: partnersResult },
 };
 
 const pendingPollData: SearchPollData = {
-    pending: [ARDC_SOURCE_VALUE],
+    pending: [PARTNERS_SOURCE_VALUE],
     results: {},
 };
 
@@ -140,9 +133,9 @@ describe("useLoadExternalData", () => {
             rerender();
 
             expect(result.current.isPolling).toBe(false);
-            expect(result.current.externalResults[ARDC_SOURCE_VALUE]).toEqual(
-                ardcResult
-            );
+            expect(
+                result.current.externalResults[PARTNERS_SOURCE_VALUE]
+            ).toEqual(partnersResult);
         });
 
         it("continues polling when the poll response still lists pending providers", () => {
@@ -367,9 +360,9 @@ describe("useLoadExternalData", () => {
             rerender();
 
             expect(result.current.isPolling).toBe(false);
-            expect(result.current.externalResults[ARDC_SOURCE_VALUE]).toEqual(
-                ardcResult
-            );
+            expect(
+                result.current.externalResults[PARTNERS_SOURCE_VALUE]
+            ).toEqual(partnersResult);
         });
 
         it("clears cache and restarts polling when query changes", () => {
@@ -395,7 +388,7 @@ describe("useLoadExternalData", () => {
                 query: "",
                 type: "datasets",
                 token: "tok-empty",
-                pending: [ARDC_SOURCE_VALUE],
+                pending: [PARTNERS_SOURCE_VALUE],
                 results: {},
             };
             let v2Data: SearchAggregationData = emptyQueryV2Data;
@@ -420,9 +413,9 @@ describe("useLoadExternalData", () => {
             rerender();
 
             expect(result.current.isPolling).toBe(false);
-            expect(result.current.externalResults[ARDC_SOURCE_VALUE]).toEqual(
-                ardcResult
-            );
+            expect(
+                result.current.externalResults[PARTNERS_SOURCE_VALUE]
+            ).toEqual(partnersResult);
         });
     });
 
