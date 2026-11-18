@@ -44,6 +44,8 @@ export function useTranslations(namespace?: string) {
         return key;
     }) as any;
 
+    t.raw = (key: string) => resolvePath(makeFullPath(key));
+
     // Rich translator: t.rich("key", { componentName: chunks => <Component>{chunks}</Component> })
     t.rich = (
         key: string,

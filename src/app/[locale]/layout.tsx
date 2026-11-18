@@ -4,6 +4,7 @@ import { AbstractIntlMessages, NextIntlClientProvider } from "next-intl";
 import { notFound } from "next/navigation";
 import { HomepageBannerNode } from "@/interfaces/Homepage";
 import CustomerSurvey from "@/components/CustomerSurvey";
+import Experiments from "@/components/Experiments";
 import Footer from "@/components/Footer";
 import { HDRGlobals } from "@/components/HDRGlobals";
 import Header from "@/components/Header";
@@ -76,6 +77,7 @@ export default async function RootLayout(props: {
             rawFeatures.SchemaOnboardingForm ?? false,
         isSchemaOnboardingFormSelectorEnabled:
             rawFeatures.SchemaOnboardingFormSelector ?? false,
+        isExperimentsEnabled: rawFeatures.POC_FeedbackExperiments ?? false,
         isSafePeopleRegistrySSOEnabled:
             rawFeatures.SafePeopleRegistrySSOEnabled ?? false,
         isLoginDisabled: rawFeatures.LoginDisabled ?? false,
@@ -119,6 +121,7 @@ export default async function RootLayout(props: {
                                         {children}
                                         <Footer />
                                         <CustomerSurvey />
+                                        <Experiments />
                                         <Suspense fallback={null}>
                                             <NavigationEvents />
                                             <NavigationProgress />

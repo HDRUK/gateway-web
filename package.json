@@ -38,6 +38,7 @@
     "@emotion/server": "^11.10.0",
     "@emotion/styled": "^11.14.1",
     "@faker-js/faker": "^7.6.0",
+    "@hdruk/experiments": "^0.1.0",
     "@hdruk/gwdm-view": "^0.2.0",
     "@hdruk/metadata-onboard": "^0.1.0",
     "@hdruk/ui": "^1.9.1",

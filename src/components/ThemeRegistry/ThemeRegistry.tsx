@@ -36,6 +36,7 @@ export default function ThemeRegistry({
                                   }
                                 : {}),
                         },
+                        ".grecaptcha-badge": { visibility: "hidden" },
                     }}
                 />
                 {/* CssBaseline kickstart an elegant, consistent, and simple baseline to build upon. */}
