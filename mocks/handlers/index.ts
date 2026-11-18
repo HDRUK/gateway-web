@@ -5,7 +5,7 @@ import {
 } from "./application/v1";
 import { getAuthInternal } from "./auth";
 import { getCMSReleaseV1 } from "./cms";
-import { getCohortRequestsV1 } from "./cohortRequest";
+import { getCohortRequestsV1, postCohortRequestV1 } from "./cohortRequest";
 import { getDataUses } from "./dataUses";
 import {
     getDatasetsV2,
@@ -47,6 +47,7 @@ export const handlers = [
     postIntegrationV1({}),
     postFederationsTestV1({}),
     getCohortRequestsV1(),
+    postCohortRequestV1(),
     getCMSReleaseV1(),
     getDatasetV2(),
     getDatasetsV2(),

@@ -2444,15 +2444,6 @@
                 "cancelButton": "Cancel"
             }
         },
-        "CohortTermsSuccessDialog": {
-            "title": "Your access request for Cohort Discovery has been submitted!",
-            "reviewTime": "Your cohort access request has been submitted and will be reviewed within 5–7 working days.",
-            "nhsTitle": "Want access to additional NHS Research SDE datasets?",
-            "nhsInfo1": "Access to the NHS Research SDE Network datasets requires additional approval by the NHS Research SDE Network and is dependent on Cohort Discovery Data Access approval submitted above.",
-            "nhsInfo2": "To request this access, you will need to complete the external NHS Research SDE Network registration process and then return here to confirm that you have been approved.",
-            "maybeLater": "Maybe later",
-            "nhsButtonLabel": "Yes, take me to NHS site"
-        },
         "experimentBuilder": {
             "builder": {
                 "outline": "Outline",
