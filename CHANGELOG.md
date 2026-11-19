@@ -1,3 +1,19 @@
+## [2.51.0](https://github.com/HDRUK/gateway-web/compare/v2.50.3...v2.51.0) (2026-11-19)
+
+### ✨ Features
+
+* **GAT-9168:** Add Data Custodian Dashboard support page (#1742) ([dc48e9f](https://github.com/HDRUK/gateway-web/commit/dc48e9f3c8fa293e2225b12973c5b72090c99504)), closes [GAT-9168](undefinedGAT-9168)
+* **GAT-9744:** Schema-driven onboarding form (#1736) ([da99afa](https://github.com/HDRUK/gateway-web/commit/da99afaf3a8ccef3c4b54160ee9a904f08edc967)), closes [GAT-9744](undefinedGAT-9744)
+* **GAT-9853:** Add ability to select schema (#1744) ([9c66871](https://github.com/HDRUK/gateway-web/commit/9c668716b449df4269d77472aecb6bda0134106a)), closes [GAT-9853](undefinedGAT-9853)
+* **GAT-9857:** Add in-app feedback experiments (#1750) ([d3fe837](https://github.com/HDRUK/gateway-web/commit/d3fe8376fb1a29f4ed94638961c7dae959ccfb14)), closes [GAT-9857](undefinedGAT-9857)
+
+### 🐛 Bug Fixes
+
+* **GAT-9744:** set partner context from the onboarding form's schema pick (#1751) ([7bb9f60](https://github.com/HDRUK/gateway-web/commit/7bb9f606b1e377e0ac247e6b7747fa593aa209bd)), closes [GAT-9744](undefinedGAT-9744)
+* **GAT-9746:** call /timeline for the dashboard dataset views chart ([edbf392](https://github.com/HDRUK/gateway-web/commit/edbf3923b00155ff22ff8c6b2cb1bfe8dbef5cef)), closes [GAT-9746](undefinedGAT-9746)
+* **GAT-9746:** gate the team dashboard on dashboard.read ([61c45a7](https://github.com/HDRUK/gateway-web/commit/61c45a7d62cb6c11d539fe9706565eaed3c725eb)), closes [GAT-9746](undefinedGAT-9746) [gate](undefinedgate)
+* **GAT-9862:** download search results from the v2 export endpoint ([0bc2c6c](https://github.com/HDRUK/gateway-web/commit/0bc2c6c800c60f7add77f102d97874f48504d58a)), closes [GAT-9862](undefinedGAT-9862) [posted](undefinedosted) [POST](undefinedOST)
+
 ## [2.50.3](https://github.com/HDRUK/gateway-web/compare/v2.50.2...v2.50.3) (2026-11-13)
 
 ### 🐛 Bug Fixes
