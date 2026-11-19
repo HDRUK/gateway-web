@@ -295,12 +295,16 @@ const Autocomplete = <T extends FieldValues>(props: AutocompleteProps<T>) => {
                         size="small"
                     />
                 )}
-                renderOption={(optionProps, item, { selected }) => (
-                    <li {...optionProps} key={valueOf(item)}>
-                        <ListItemText>{labelOf(item)}</ListItemText>
-                        {clearIcon && selected && <ClearIcon />}
-                    </li>
-                )}
+                renderOption={(optionProps, item, { selected }) => {
+                    const { key, ...restOptionProps } = optionProps;
+
+                    return (
+                        <li key={valueOf(item)} {...restOptionProps}>
+                            <ListItemText>{labelOf(item)}</ListItemText>
+                            {clearIcon && selected && <ClearIcon />}
+                        </li>
+                    );
+                }}
                 noOptionsText={
                     isLoadingOptions ? <Loading size={30} /> : noOptionsText
                 }

@@ -38,6 +38,11 @@ export const isCustodianDashboardEnabled = flag({
     adapter,
 });
 
+export const isExperimentsEnabled = flag({
+    key: "POC_FeedbackExperiments",
+    adapter,
+});
+
 export const isSafePeopleRegistrySSOEnabled = flag({
     key: "SafePeopleRegistrySSOEnabled",
     adapter,
@@ -83,5 +88,15 @@ export const isLoginRegistryEnabled = flag({
  */
 export const isGwdmDatasetPageEnabled = flag({
     key: "GwdmDatasetPage",
+    adapter,
+});
+
+export const isSchemaOnboardingFormEnabled = flag({
+    key: "SchemaOnboardingForm",
+    adapter,
+});
+
+export const isSchemaOnboardingFormSelectorEnabled = flag({
+    key: "SchemaOnboardingFormSelector",
     adapter,
 });

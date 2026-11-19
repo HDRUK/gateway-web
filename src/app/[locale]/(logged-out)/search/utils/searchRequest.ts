@@ -87,11 +87,24 @@ const getV2SearchBody = (queryParams: SearchQueryParams, mode: SearchMode) => ({
     ...getSearchFilters(queryParams),
 });
 
+const getExportRequest = (
+    queryParams: SearchQueryParams,
+    resultsView: string
+) => ({
+    url: `${apis.searchV2Url}/${queryParams.type}/export`,
+    body: {
+        query: queryParams.query || undefined,
+        download_type: resultsView,
+        ...getSearchFilters(queryParams),
+    },
+});
+
 const getArdcSearchUrl = (query?: string) =>
     `${ARDC_SEARCH_URL}${query ? `&q=${encodeURIComponent(query)}` : ""}`;
 
 export {
     getArdcSearchUrl,
+    getExportRequest,
     getPmcDatasetNames,
     getSearchFilters,
     getSearchMode,

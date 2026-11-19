@@ -18,6 +18,11 @@ import {
 import metaData, { noFollowRobots } from "@/utils/metadata";
 import { getPermissions } from "@/utils/permissions";
 import { getTeamUser } from "@/utils/user";
+import {
+    isSchemaOnboardingFormEnabled,
+    isSchemaOnboardingFormSelectorEnabled,
+} from "@/flags";
+import SchemaDatasetFormPage from "../_schema/SchemaDatasetFormPage";
 import EditDataset from "../components/CreateDataset";
 
 export const metadata = metaData(
@@ -35,7 +40,26 @@ export default async function TeamDatasetPage({
     searchParams: Promise<{ [key: string]: string | undefined }>;
 }) {
     const { teamId, datasetId } = await params;
-    const { status } = await searchParams;
+    const {
+        status,
+        schema: schemaModel,
+        version,
+        duplicate,
+    } = await searchParams;
+
+    if (await isSchemaOnboardingFormEnabled()) {
+        const canChangeSchema = await isSchemaOnboardingFormSelectorEnabled();
+        return SchemaDatasetFormPage({
+            teamId,
+            datasetId,
+            model: canChangeSchema ? schemaModel : undefined,
+            version: canChangeSchema ? version : undefined,
+            isDraft: status === DataStatus.DRAFT,
+            isDuplicate: duplicate === "true",
+            canChangeSchema,
+        });
+    }
+
     const user = await getUser();
     const team = await getTeam(teamId);
     const teamUser = getTeamUser(team?.users, user?.id);

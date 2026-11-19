@@ -80,6 +80,7 @@ const apis = {
     adminUsersV1UrlIP: `${apiV1IPUrl}/admin/users`,
     wordPressApiUrl: `${process.env.NEXT_PUBLIC_WORDPRESS_API_URL}`,
     searchV1Url: `${apiV1Url}/search`,
+    searchV2Url: `${apiV2Url}/search`,
     searchV2AggregationUrl: `${apiV2Url}/search/aggregation`,
     searchV2AggregationResultsUrl: `${apiV2Url}/search/aggregation/results`,
     saveSearchesV1Url: `${apiV1Url}/saved_searches`,
@@ -115,6 +116,7 @@ const apis = {
     datasetLinkCheckResultsV2Url: `${apiV2IPUrl}/dataset_link_check_results`,
     emailTemplatesV1Url: `${apiV1IPUrl}/emailtemplates`,
     emailTemplatesPreviewV1Url: `${apiV1IPUrl}/emailtemplates/preview`,
+    experimentsV1Url: `${apiV1IPUrl}/experiments`,
 };
 
 export default apis;

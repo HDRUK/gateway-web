@@ -1,6 +1,7 @@
 "use client";
 
 import { WebAssetOutlined } from "@mui/icons-material";
+import QueryStatsIcon from "@mui/icons-material/QueryStats";
 import QuizOutlinedIcon from "@mui/icons-material/QuizOutlined";
 import { Box, Grid } from "@mui/material";
 import { useTranslations } from "next-intl";
@@ -86,6 +87,11 @@ export default function MeetTheTeam({
             heading: t("theAllianceTitle"),
             link: RouteName.DATA_CUSTODIAN_THE_ALLIANCE,
             icon: <TheAllianceIcon aria-hidden="true" focusable="false" />,
+        },
+        {
+            heading: t("dataCustodianDashboardTitle"),
+            link: RouteName.DATA_CUSTODIAN_DASHBOARD,
+            icon: <QueryStatsIcon aria-hidden="true" focusable="false" />,
         },
         {
             heading: t("faqsTitle"),

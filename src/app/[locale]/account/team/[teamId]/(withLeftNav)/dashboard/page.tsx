@@ -1,6 +1,9 @@
 import { notFound } from "next/navigation";
-import { getDashboardEntityCount, getTeam } from "@/utils/api";
+import ProtectedAccountRoute from "@/components/ProtectedAccountRoute";
+import { getDashboardEntityCount, getTeam, getUser } from "@/utils/api";
 import metaData, { noFollowRobots } from "@/utils/metadata";
+import { getPermissions } from "@/utils/permissions";
+import { getTeamUser } from "@/utils/user";
 import { isCustodianDashboardEnabled } from "@/flags";
 import Dashboard from "./dashboard";
 
@@ -23,9 +26,34 @@ export default async function DashboardPage({
         return notFound();
     }
 
-    const [team, datasets, datauses, tools, collections, publications] =
+    const [user, team] = await Promise.all([getUser(), getTeam(teamId)]);
+    const teamUser = getTeamUser(team?.users, user?.id);
+    const permissions = getPermissions(user.roles, teamUser?.roles);
+
+    return (
+        <ProtectedAccountRoute
+            permissions={permissions}
+            pagePermissions={["dashboard.read"]}>
+            <DashboardContent
+                teamId={teamId}
+                teamName={team.name}
+                isDarEnabled={team.is_question_bank}
+            />
+        </ProtectedAccountRoute>
+    );
+}
+
+async function DashboardContent({
+    teamId,
+    teamName,
+    isDarEnabled,
+}: {
+    teamId: string;
+    teamName: string;
+    isDarEnabled: boolean;
+}) {
+    const [datasets, datauses, tools, collections, publications] =
         await Promise.all([
-            getTeam(teamId),
             getDashboardEntityCount(teamId, "datasets"),
             getDashboardEntityCount(teamId, "datauses"),
             getDashboardEntityCount(teamId, "tools"),
@@ -36,9 +64,15 @@ export default async function DashboardPage({
     return (
         <Dashboard
             teamId={teamId}
-            teamName={team.name}
-            isDarEnabled={team.is_question_bank}
-            initialCounts={{ datasets, datauses, tools, collections, publications }}
+            teamName={teamName}
+            isDarEnabled={isDarEnabled}
+            initialCounts={{
+                datasets,
+                datauses,
+                tools,
+                collections,
+                publications,
+            }}
         />
     );
 }

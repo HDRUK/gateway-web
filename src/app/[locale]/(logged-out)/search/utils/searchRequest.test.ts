@@ -2,6 +2,7 @@ import apis from "@/config/apis";
 import { parseQueryParams } from "./queryParams";
 import {
     getArdcSearchUrl,
+    getExportRequest,
     getPmcDatasetNames,
     getSearchMode,
     getV1SearchBody,
@@ -78,6 +79,28 @@ describe("searchRequest utils", () => {
                 view_type: "mini",
             });
             expect(v2Body("type=tools")).not.toHaveProperty("view_type");
+        });
+    });
+
+    describe("getExportRequest", () => {
+        it("exports the current search from the v2 export endpoint", () => {
+            expect(
+                getExportRequest(params("type=tools&query=nlp"), "list")
+            ).toEqual({
+                url: `${apis.searchV2Url}/tools/export`,
+                body: { query: "nlp", download_type: "list" },
+            });
+        });
+
+        it("carries the active filters and results view", () => {
+            const queryParams = params(
+                "type=datasets&publisherName=Publisher%20A"
+            );
+
+            expect(getExportRequest(queryParams, "table").body).toMatchObject({
+                download_type: "table",
+                filters: { dataset: { publisherName: ["Publisher A"] } },
+            });
         });
     });
 

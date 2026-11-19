@@ -134,7 +134,7 @@ const getTeamNav = (
     const { isWidgetsEnabled, isCustodianDashboardEnabled } = features;
 
     return [
-        ...(isCustodianDashboardEnabled
+        ...(isCustodianDashboardEnabled && permissions["dashboard.read"]
             ? [
                   {
                       icon: navIcon(GridViewOutlinedIcon),
