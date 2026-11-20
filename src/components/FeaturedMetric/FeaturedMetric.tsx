@@ -140,18 +140,32 @@ const FeaturedMetric = ({ selectedButton }: FeatureMetricProps) => {
             }}>
             <Box sx={{ p: 0, display: "flex", gap: 1, alignItems: "center" }}>
                 <ArrowUpwardIcon fontSize="large" />
-                <Typography
-                    data-testid="stat-line-text"
-                    sx={{
-                        fontSize: "1.5rem",
-                        fontWeight: 600,
-                        lineHeight: 1.2,
-                        [theme.breakpoints.down("sm")]: {
-                            fontSize: "1.25rem",
-                        },
-                    }}>
-                    {stats[currentIndex]}
-                </Typography>
+                <Box sx={{ p: 0, display: "grid" }}>
+                    {stats.map((stat, index) => {
+                        const isCurrent = index === currentIndex;
+
+                        return (
+                            <Typography
+                                key={STAT_ID_ORDER[index]}
+                                aria-hidden={!isCurrent || undefined}
+                                data-testid={
+                                    isCurrent ? "stat-line-text" : undefined
+                                }
+                                sx={{
+                                    gridArea: "1 / 1",
+                                    fontSize: "1.5rem",
+                                    fontWeight: 600,
+                                    lineHeight: 1.2,
+                                    [theme.breakpoints.down("sm")]: {
+                                        fontSize: "1.25rem",
+                                    },
+                                    ...(!isCurrent && { visibility: "hidden" }),
+                                }}>
+                                {stat}
+                            </Typography>
+                        );
+                    })}
+                </Box>
             </Box>
             <Link
                 href={RouteName.STATISTICS}

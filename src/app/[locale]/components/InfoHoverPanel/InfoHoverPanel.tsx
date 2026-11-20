@@ -56,6 +56,14 @@ const InfoHoverPanel = ({
         href: string;
     } | null>();
 
+    const reservedContent = [
+        { title: t("welcomeTitle"), text: t("welcomeText") },
+        ...[...items, ...itemsResources].map(item => ({
+            title: t(`${item.id}.title`),
+            text: t(`${item.id}.text`),
+        })),
+    ];
+
     const renderItem = (item: HoverPanelItem) => {
         const handleMouseEnter = () => setSelected(item);
         const handleMouseLeave = () => setSelected(null);
@@ -109,6 +117,7 @@ const InfoHoverPanel = ({
                     selected ? t(`${selected?.id}.title`) : t("welcomeTitle")
                 }
                 id={selected ? selected.id : undefined}
+                reservedContent={reservedContent}
                 sx={{ mt: "2rem" }}
             />
             <Box

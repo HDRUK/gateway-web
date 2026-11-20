@@ -27,6 +27,26 @@ describe("Gateway homepage", () => {
         });
     });
 
+    it("keeps the buttons in place when the content changes", () => {
+        const documentTop = ($element: JQuery<HTMLElement>) =>
+            $element[0].getBoundingClientRect().top + window.scrollY;
+
+        cy.viewport(715, 900);
+        cy.get('[data-testid="stat-line-text"]').should("exist");
+
+        cy.get("main")
+            .find('[href="/about/cohort-discovery"]')
+            .then($button => {
+                const topBefore = documentTop($button);
+
+                cy.wrap($button).focus();
+                cy.get("h1").should("contain", "Cohort Discovery");
+                cy.wrap($button).should($focused => {
+                    expect(documentTop($focused)).to.equal(topBefore);
+                });
+            });
+    });
+
     // it("should have no detectable accessibility violations on load", () => {
     //     cy.visit("/");
     //     cy.injectAxe();
