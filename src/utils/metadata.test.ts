@@ -1,4 +1,4 @@
-import { SITE_DESCRIPTION, SITE_NAME } from "@/consts/application";
+import { EntityType, SITE_DESCRIPTION, SITE_NAME } from "@/consts/application";
 import metaData, {
     defaultMetadata,
     noFollowRobots,
@@ -38,7 +38,7 @@ describe("metaData", () => {
                 type: "website",
                 images: [
                     expect.objectContaining({
-                        url: "/api/og?title=Asthma%20cohort",
+                        url: "/api/og",
                         width: 1200,
                         height: 630,
                     }),
@@ -49,7 +49,7 @@ describe("metaData", () => {
             expect.objectContaining({
                 card: "summary_large_image",
                 title: `Asthma cohort - ${SITE_NAME}`,
-                images: ["/api/og?title=Asthma%20cohort"],
+                images: ["/api/og"],
             })
         );
     });
@@ -107,22 +107,17 @@ describe("metaData", () => {
         expect(metaData({ title: "CPRD__Aurum **linkage**" }).title).toBe(
             `CPRD__Aurum **linkage** - ${SITE_NAME}`
         );
-        expect(result.twitter).toEqual(
-            expect.objectContaining({
-                images: ["/api/og?title=BRCA1%20variants%20%26%20risk"],
-            })
-        );
     });
 
-    it("identifies the entity to the generated card", () => {
+    it("never puts the title in the card URL", () => {
         const result = metaData({
-            title: "DataLoch",
-            entity: { type: "collection", id: "80" },
+            title: "Your account is suspended",
+            entity: { type: EntityType.COLLECTION, id: "80" },
         });
 
         expect(result.twitter).toEqual(
             expect.objectContaining({
-                images: ["/api/og?title=DataLoch&type=collection&id=80"],
+                images: ["/api/og?type=collection&id=80"],
             })
         );
     });

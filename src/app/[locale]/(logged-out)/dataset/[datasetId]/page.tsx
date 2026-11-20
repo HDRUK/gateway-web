@@ -8,12 +8,12 @@ import HeaderActionBar from "@/components/HeaderActionBar";
 import Link from "@/components/Link";
 import Typography from "@/components/Typography";
 import ActiveListSidebar from "@/modules/ActiveListSidebar";
-import { DataStatus, PAGE_TITLE_FALLBACKS } from "@/consts/application";
+import { DataStatus, EntityType } from "@/consts/application";
 import { RouteName } from "@/consts/routeName";
 import { SCHEMA_NAME, SCHEMA_VERSION } from "@/consts/schema";
 import { getDataset, getSchemaFromTraser } from "@/utils/api";
 import { getLatestVersion } from "@/utils/dataset";
-import metaData from "@/utils/metadata";
+import { pageMetaData } from "@/utils/pageMetadata";
 import { isGwdmDatasetPageEnabled } from "@/flags";
 import GwdmDatasetPage from "./_gwdm/GwdmDatasetPage";
 import { toDuoCodeDetails } from "./_gwdm/lib/duoCodeDetails";
@@ -45,22 +45,8 @@ export async function generateMetadata({
     params: Promise<{ locale: string; datasetId: string }>;
 }) {
     const { locale, datasetId } = await params;
-    const googleRecommendedDataset = await getDataset(
-        datasetId,
-        "SchemaOrg",
-        "GoogleRecommended"
-    ).catch(() => undefined);
-    const latestVersion =
-        googleRecommendedDataset && getLatestVersion(googleRecommendedDataset);
 
-    return metaData({
-        title:
-            get(latestVersion, "metadata.metadata.name") ||
-            PAGE_TITLE_FALLBACKS.dataset,
-        description: get(latestVersion, "metadata.metadata.description"),
-        url: `/${locale}/${RouteName.DATASET_ITEM}/${datasetId}`,
-        entity: { type: "dataset", id: datasetId },
-    });
+    return pageMetaData(EntityType.DATASET, datasetId, locale);
 }
 
 const DATASET_STAT_PATHS = [

@@ -1,7 +1,7 @@
 import { Metadata } from "next";
 import { Robots } from "next/dist/lib/metadata/types/metadata-types";
 import apis from "@/config/apis";
-import { SITE_DESCRIPTION, SITE_NAME } from "@/consts/application";
+import { EntityType, SITE_DESCRIPTION, SITE_NAME } from "@/consts/application";
 import { decodeHtmlEntity } from "@/utils/general";
 
 const { BLOCK_ROBOTS } = process.env;
@@ -11,13 +11,6 @@ const DESCRIPTION_MAX_LENGTH = 160;
 
 export const OG_IMAGE_SIZE = { width: 1200, height: 630 };
 
-export type OgEntityType =
-    | "collection"
-    | "dataCustodian"
-    | "dataCustodianNetwork"
-    | "dataset"
-    | "dataUse";
-
 export interface MetaParams {
     title: string;
     isDefault?: boolean;
@@ -26,7 +19,7 @@ export interface MetaParams {
     image?: string;
     siteName?: string;
     ogType?: "website" | "article";
-    entity?: { type: OgEntityType; id: string };
+    entity?: { type: EntityType; id: string };
 }
 
 const followRobots: Robots = {
@@ -112,10 +105,12 @@ export function toMetaDescription(text?: string | null): string {
     return `${lastSpace > 0 ? cut.slice(0, lastSpace) : cut}…`;
 }
 
-const toOgImageUrl = (title: string, entity?: MetaParams["entity"]) =>
-    `${apis.ogImageInternalUrl}?${Object.entries({ title, ...entity })
-        .map(([key, value]) => `${key}=${encodeURIComponent(value)}`)
-        .join("&")}`;
+const toOgImageUrl = (entity?: MetaParams["entity"]) =>
+    entity
+        ? `${apis.ogImageInternalUrl}?type=${
+              entity.type
+          }&id=${encodeURIComponent(entity.id)}`
+        : apis.ogImageInternalUrl;
 
 export default function metaData(
     meta: MetaParams,
@@ -135,7 +130,7 @@ export default function metaData(
         return { ...page, openGraph: null, twitter: null };
     }
 
-    const image = meta.image ?? toOgImageUrl(pageTitle, meta.entity);
+    const image = meta.image ?? toOgImageUrl(meta.entity);
 
     return {
         ...page,

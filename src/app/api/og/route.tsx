@@ -1,20 +1,13 @@
 /* eslint-disable @next/next/no-img-element */
 import { tokens } from "@hdruk/ui/theme";
-import { get } from "lodash";
 import { hasRemoteMatch } from "next/dist/shared/lib/match-remote-pattern";
 import { ImageResponse } from "next/og";
 import { StaticImages } from "@/config/images";
 import remoteImagePatterns from "@/config/remoteImagePatterns";
 import { SITE_NAME } from "@/consts/application";
-import {
-    getDataUse,
-    getDataset,
-    getNetworkInfo,
-    getReducedCollection,
-    getTeamInfo,
-} from "@/utils/api";
 import { logger } from "@/utils/logger";
-import { OG_IMAGE_SIZE, OgEntityType } from "@/utils/metadata";
+import { OG_IMAGE_SIZE, toPlainText } from "@/utils/metadata";
+import { isPageType, loadPageCard } from "@/utils/pageMetadata";
 
 const TITLE_MAX_LENGTH = 100;
 const FETCH_TIMEOUT_MS = 3000;
@@ -25,7 +18,7 @@ const FONT_FAMILY = "Source Sans 3";
 const FONT_URL =
     "https://fonts.gstatic.com/s/sourcesans3/v20/nwpBtKy2OAdR1K-IwhWudF-R9QMylBJAV3Bo8Kxf7FEN.ttf";
 const LOG_LOCATION = "api/og";
-const PUBLIC_GET = { suppressError: true, isPublic: true };
+const ID_PATTERN = /^[a-z0-9-]+$/i;
 
 const fetchOk = async (url: string, init?: RequestInit) => {
     const response = await fetch(url, {
@@ -109,99 +102,63 @@ const fetchEntityImage = async (url: string) => {
     return toImageDataUri(response);
 };
 
-const requireEntity = <T,>(entity: T | undefined): T => {
-    if (!entity) {
-        throw new Error("Entity not returned");
-    }
-
-    return entity;
-};
-
-const ENTITY_IMAGE_URLS: Record<
-    OgEntityType,
-    (id: string) => Promise<string | null | undefined>
-> = {
-    collection: async id => {
-        const collection = requireEntity(
-            await getReducedCollection(id, PUBLIC_GET)
-        );
-
-        return collection.image_link || get(collection, "team.team_logo");
-    },
-    dataCustodian: async id =>
-        requireEntity(await getTeamInfo(id, PUBLIC_GET)).team_logo,
-    dataCustodianNetwork: async id =>
-        requireEntity(await getNetworkInfo(id, PUBLIC_GET)).img_url,
-    dataset: async id =>
-        get(
-            requireEntity(
-                await getDataset(
-                    id,
-                    "SchemaOrg",
-                    "GoogleRecommended",
-                    PUBLIC_GET
-                )
-            ),
-            "team.team_logo"
-        ),
-    dataUse: async id =>
-        get(requireEntity(await getDataUse(id, PUBLIC_GET)), "team.team_logo"),
-};
-
-const isEntityType = (type: string): type is OgEntityType =>
-    Object.hasOwn(ENTITY_IMAGE_URLS, type);
-
-interface EntityImage {
-    src?: string;
+interface Card {
+    title?: string;
+    image?: string;
     failed: boolean;
 }
 
-const NO_ENTITY_IMAGE: EntityImage = { failed: false };
+const SITE_CARD: Card = { failed: false };
 
-const getEntityImage = async (
+const clampTitle = (title: string) =>
+    title.length > TITLE_MAX_LENGTH
+        ? `${title.slice(0, TITLE_MAX_LENGTH - 1)}…`
+        : title;
+
+const getCard = async (
     type: string | null,
     id: string | null
-): Promise<EntityImage> => {
-    if (!type || !id || !/^\d+$/.test(id) || !isEntityType(type)) {
-        return NO_ENTITY_IMAGE;
+): Promise<Card> => {
+    if (!type || !id || !ID_PATTERN.test(id) || !isPageType(type)) {
+        return SITE_CARD;
+    }
+
+    const page = await loadPageCard(type, id).catch(error => {
+        logger.warn(`${type} ${id} card: ${error}`, "", LOG_LOCATION);
+        return undefined;
+    });
+
+    if (!page) {
+        return { failed: true };
+    }
+
+    const title = clampTitle(toPlainText(page.title));
+
+    if (!page.image) {
+        return { title, failed: false };
     }
 
     try {
-        const url = await ENTITY_IMAGE_URLS[type](id);
-
-        if (!url) {
-            return NO_ENTITY_IMAGE;
-        }
-
         return {
-            src: await fetchEntityImage(url),
+            title,
+            image: await fetchEntityImage(page.image),
             failed: false,
         };
     } catch (error) {
         logger.warn(`${type} ${id} image: ${error}`, "", LOG_LOCATION);
-        return { failed: true };
+        return { title, failed: true };
     }
 };
 
 export async function GET(request: Request) {
     const { searchParams } = new URL(request.url);
-    const rawTitle = searchParams.get("title")?.trim();
-    const title =
-        rawTitle && rawTitle.length > TITLE_MAX_LENGTH
-            ? `${rawTitle.slice(0, TITLE_MAX_LENGTH - 1)}…`
-            : rawTitle;
-    const isSiteCard = !title || title === SITE_NAME;
-    const [logo, font, { src: entityImage, failed: entityImageFailed }] =
-        await Promise.all([
-            getLogo(),
-            getFont(),
-            isSiteCard
-                ? NO_ENTITY_IMAGE
-                : getEntityImage(
-                      searchParams.get("type"),
-                      searchParams.get("id")
-                  ),
-        ]);
+    const [logo, font, card] = await Promise.all([
+        getLogo(),
+        getFont(),
+        getCard(searchParams.get("type"), searchParams.get("id")),
+    ]);
+    const { title, image: entityImage, failed } = card;
+    const isSiteCard = !title;
 
     const brand = logo ? (
         <img
@@ -284,9 +241,7 @@ export async function GET(request: Request) {
                 : undefined,
             headers: {
                 "Cache-Control":
-                    logo && font && !entityImageFailed
-                        ? CACHE_CONTROL
-                        : "no-store",
+                    logo && font && !failed ? CACHE_CONTROL : "no-store",
             },
         }
     );

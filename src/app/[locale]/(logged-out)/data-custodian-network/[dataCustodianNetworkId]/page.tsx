@@ -1,13 +1,12 @@
 import { notFound } from "next/navigation";
-import { PAGE_TITLE_FALLBACKS } from "@/consts/application";
-import { RouteName } from "@/consts/routeName";
+import { EntityType } from "@/consts/application";
 import {
     getNetworkCustodiansDatasets,
     getNetworkCustodiansEntities,
     getNetworkCustodiansSummary,
     getNetworkInfo,
 } from "@/utils/api";
-import metaData from "@/utils/metadata";
+import { pageMetaData } from "@/utils/pageMetadata";
 import DataCustodianNetworkPage from "./components/DataCustodianNetworkPage/DataCustodianNetworkPage";
 
 export async function generateMetadata({
@@ -16,19 +15,12 @@ export async function generateMetadata({
     params: Promise<{ locale: string; dataCustodianNetworkId: string }>;
 }) {
     const { locale, dataCustodianNetworkId } = await params;
-    const infoData = await getNetworkInfo(dataCustodianNetworkId, {
-        suppressError: true,
-    });
 
-    return metaData({
-        title: infoData?.name || PAGE_TITLE_FALLBACKS.dataCustodianNetwork,
-        description: infoData?.summary,
-        url: `/${locale}/${RouteName.DATA_CUSTODIAN_NETWORK_ITEM}/${dataCustodianNetworkId}`,
-        entity: {
-            type: "dataCustodianNetwork",
-            id: dataCustodianNetworkId,
-        },
-    });
+    return pageMetaData(
+        EntityType.DATA_CUSTODIAN_NETWORK,
+        dataCustodianNetworkId,
+        locale
+    );
 }
 
 export default async function Page({

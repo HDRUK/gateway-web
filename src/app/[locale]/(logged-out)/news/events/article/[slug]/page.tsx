@@ -1,11 +1,10 @@
-import { cache } from "react";
 import { notFound } from "next/navigation";
 import Banner from "@/components/Banner";
 import Container from "@/components/Container";
 import HTMLContent from "@/components/HTMLContent";
-import { RouteName } from "@/consts/routeName";
-import { getContentPostQuery, hasCategoryName } from "@/utils/cms";
-import metaData from "@/utils/metadata";
+import { EntityType } from "@/consts/application";
+import { hasCategoryName } from "@/utils/cms";
+import { getEventArticle, pageMetaData } from "@/utils/pageMetadata";
 
 interface ArticlePageProps {
     params: Promise<{
@@ -14,29 +13,16 @@ interface ArticlePageProps {
     }>;
 }
 
-const getArticle = cache((slug: string) =>
-    getContentPostQuery("getEventsArticle", {
-        id: slug,
-        idType: "SLUG",
-    })
-);
-
 export async function generateMetadata({ params }: ArticlePageProps) {
     const { locale, slug } = await params;
-    const cmsPost = await getArticle(slug);
 
-    return metaData({
-        title: `${cmsPost?.title || slug.replaceAll("-", " ")} - Events`,
-        description: cmsPost?.content,
-        url: `/${locale}/${RouteName.EVENT_ARTICLE}/${slug}`,
-        ogType: "article",
-    });
+    return pageMetaData(EntityType.EVENT_ARTICLE, slug, locale);
 }
 
 const ArticlePage = async ({ params }: ArticlePageProps) => {
     const { slug } = await params;
 
-    const cmsPost = await getArticle(slug);
+    const cmsPost = await getEventArticle(slug);
 
     if (!cmsPost || !hasCategoryName(cmsPost.categories, "Events")) {
         notFound();
