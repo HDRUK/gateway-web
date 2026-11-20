@@ -2,6 +2,7 @@
 
 import { Button } from "@hdruk/ui";
 import { tokens } from "@hdruk/ui/theme";
+import { Tooltip } from "@mui/material";
 import { createColumnHelper } from "@tanstack/react-table";
 import { get, isArray, isEmpty, isPlainObject, startCase } from "lodash";
 import { useTranslations } from "next-intl";
@@ -132,19 +133,24 @@ const DatasetContent = ({
                 return (
                     <DatasetFieldWrapper>
                         {tagList.map(tag => (
-                            <DatasetButtonItem
+                            <Tooltip
+                                describeChild
+                                placement="top"
                                 key={tag}
-                                color="success"
-                                size="small"
-                                onClick={() =>
-                                    router.push(
-                                        `/${RouteName.SEARCH}?type=${
-                                            SearchCategory.DATASETS
-                                        }&query=${encodeURIComponent(tag)}`
-                                    )
-                                }>
-                                {tag}
-                            </DatasetButtonItem>
+                                title={tag}>
+                                <DatasetButtonItem
+                                    color="success"
+                                    size="small"
+                                    onClick={() =>
+                                        router.push(
+                                            `/${RouteName.SEARCH}?type=${
+                                                SearchCategory.DATASETS
+                                            }&query=${encodeURIComponent(tag)}`
+                                        )
+                                    }>
+                                    {tag}
+                                </DatasetButtonItem>
+                            </Tooltip>
                         ))}
                     </DatasetFieldWrapper>
                 );

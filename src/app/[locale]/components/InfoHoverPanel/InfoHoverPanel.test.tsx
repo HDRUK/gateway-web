@@ -31,15 +31,17 @@ describe("InfoHoverPanel", () => {
                 itemsResources={itemResourcess}
             />
         );
-        expect(screen.getByText("Datasets & BioSamples")).toBeInTheDocument();
         expect(
-            screen.getByText("Data Uses / Research Projects")
+            screen.getByRole("link", { name: "Datasets & BioSamples" })
         ).toBeInTheDocument();
-        expect(screen.getByText("Welcome to the Gateway")).toBeInTheDocument();
         expect(
-            screen.getByText(
-                "The Gateway streamlines the end-to-end user journey to search, discover and request access to the wealth of health and associated Datasets, Analysis Scripts & Software, Publications and Research Projects from across the UK and beyond."
-            )
+            screen.getByRole("link", { name: "Data Uses / Research Projects" })
+        ).toBeInTheDocument();
+        expect(
+            screen.getByRole("heading", {
+                level: 1,
+                name: "Welcome to the Gateway",
+            })
         ).toBeInTheDocument();
     });
 
@@ -52,14 +54,17 @@ describe("InfoHoverPanel", () => {
             />
         );
 
-        const dur = screen.getByText("Data Uses / Research Projects");
+        const dur = screen.getByRole("link", {
+            name: "Data Uses / Research Projects",
+        });
         userEvent.hover(dur);
 
         await waitFor(() => {
             expect(
-                screen.getByText(
-                    "Find Data Uses / Research Projects: search and filter Data Uses / Research Projects related to specific Datasets and other features."
-                )
+                screen.getByRole("heading", {
+                    level: 1,
+                    name: "Data Uses / Research Projects",
+                })
             ).toBeInTheDocument();
         });
     });
