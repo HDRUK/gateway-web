@@ -26,6 +26,7 @@ import {
     NetworkCustodiansSummaryData,
 } from "@/interfaces/DataCustodianNetwork";
 import { DataUse } from "@/interfaces/DataUse";
+import { CollabDraft } from "@/interfaces/Collab";
 import { Dataset } from "@/interfaces/Dataset";
 import { Filter } from "@/interfaces/Filter";
 import { FormHydrationSchema } from "@/interfaces/FormHydration";
@@ -639,6 +640,78 @@ async function saveTeamDataset(
           );
 }
 
+// Public collaborative onboarding: authorised only by the share token in the
+// URL, so these never send the visitor's JWT or session.
+async function getCollabDraft(
+    token: string,
+    { model, version }: { model?: string; version?: string } = {}
+): Promise<CollabDraft | undefined> {
+    const params = new URLSearchParams();
+    if (model && version) {
+        params.append("model", model);
+        params.append("version", version);
+    }
+    const query = params.toString();
+    const url = `${apis.collabV2UrlIP}/${encodeURIComponent(token)}`;
+
+    // A dead link (unknown/expired/revoked token, or the feature switched
+    // off) is a 404 with no data, which the page renders as not found.
+    return get<CollabDraft | undefined>(query ? `${url}?${query}` : url, {
+        isPublic: true,
+        suppressError: true,
+    });
+}
+
+async function sendCollab(
+    method: "PUT" | "PATCH",
+    url: string,
+    payload: unknown
+): Promise<ApiResponse> {
+    const res = await fetch(url, {
+        method,
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload),
+    });
+
+    let body: Record<string, unknown> = {};
+    try {
+        body = await res.json();
+    } catch {
+        body = {};
+    }
+    if (!res.ok) {
+        // The URL carries the share token, which is a credential.
+        logger.error(
+            JSON.stringify(body, null, 2),
+            "",
+            `api.${method.toLowerCase()}:collab`
+        );
+    }
+    return { ok: res.ok, status: res.status, body };
+}
+
+async function saveCollabDraft(
+    token: string,
+    payload: unknown
+): Promise<ApiResponse> {
+    return sendCollab(
+        "PUT",
+        `${apis.collabV2UrlIP}/${encodeURIComponent(token)}`,
+        payload
+    );
+}
+
+async function markCollabReady(
+    token: string,
+    ready: boolean
+): Promise<ApiResponse> {
+    return sendCollab(
+        "PATCH",
+        `${apis.collabV2UrlIP}/${encodeURIComponent(token)}/ready`,
+        { ready }
+    );
+}
+
 async function getDarSections(): Promise<QuestionBankSection[]> {
     return get<QuestionBankSection[]>(apis.dataAccessSectionV1UrlIP, {
         cache: {
@@ -955,6 +1028,9 @@ export {
     getTeamDataset,
     getOnboardingForm,
     saveTeamDataset,
+    getCollabDraft,
+    saveCollabDraft,
+    markCollabReady,
     getDataUse,
     getFilters,
     getKeywords,

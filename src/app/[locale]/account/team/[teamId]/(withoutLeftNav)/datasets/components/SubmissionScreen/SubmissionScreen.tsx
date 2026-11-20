@@ -28,6 +28,8 @@ interface SubmissionScreenProps {
     trigger: UseFormTrigger<FieldValues>;
     errors?: FieldErrors<FieldValues>;
     makeActiveAction: () => void;
+    /** Overrides the "Make active" text, e.g. for collaborative onboarding. */
+    makeActiveLabel?: string;
 }
 
 const SubmissionScreen = ({
@@ -35,6 +37,7 @@ const SubmissionScreen = ({
     trigger,
     errors,
     makeActiveAction,
+    makeActiveLabel,
 }: SubmissionScreenProps) => {
     const t = useTranslations(
         `${PAGES}.${ACCOUNT}.${TEAM}.${DATASETS}.${COMPONENTS}.CreateDataset`
@@ -125,7 +128,7 @@ const SubmissionScreen = ({
                             onClick={makeActiveAction}
                             sx={{ mt: 2 }}
                             disabled={makeActiveDisabled}>
-                            {t("makeActive")}
+                            {makeActiveLabel ?? t("makeActive")}
                         </Button>
                     )}
                 </Box>

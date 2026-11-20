@@ -42,6 +42,8 @@ const customJestConfig = {
         "^next-intl$": "<rootDir>/mocks/next-intl.ts",
         "^@/mdx-components$": "<rootDir>/src/mdx-components.tsx",
         "^@/flags$": "<rootDir>/src/flags.ts",
+        "^@/app/(.*)$": "<rootDir>/src/app/$1",
+        "^@/templates/(.*)$": "<rootDir>/src/templates/$1",
     },
 
     testPathIgnorePatterns: [

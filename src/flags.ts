@@ -100,3 +100,8 @@ export const isSchemaOnboardingFormSelectorEnabled = flag({
     key: "SchemaOnboardingFormSelector",
     adapter,
 });
+
+export const isCollaborativeMetadataOnboardingEnabled = flag({
+    key: "CollaborativeMetadataOnboarding",
+    adapter,
+});

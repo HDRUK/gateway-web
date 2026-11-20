@@ -12,6 +12,8 @@ interface FormBannerProps {
     optionalPercentage?: number;
     actionButtonsEnabled?: boolean;
     makeActiveAction: () => void;
+    /** Overrides the "Make active" text, e.g. for collaborative onboarding. */
+    makeActiveLabel?: string;
     saveAsDraftAction: () => void;
 }
 
@@ -24,6 +26,7 @@ const FormBanner = ({
     optionalPercentage = 0,
     actionButtonsEnabled = true,
     makeActiveAction,
+    makeActiveLabel,
     saveAsDraftAction,
 }: FormBannerProps) => {
     const t = useTranslations(TRANSLATION_PATH);
@@ -44,7 +47,7 @@ const FormBanner = ({
                         variant="text"
                         onClick={makeActiveAction}
                         disabled={!actionButtonsEnabled}>
-                        {t("makeActive")}
+                        {makeActiveLabel ?? t("makeActive")}
                     </Button>
                     |
                     <Button
