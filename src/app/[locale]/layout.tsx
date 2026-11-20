@@ -14,6 +14,7 @@ import NavigationProgress from "@/components/NavigationProgress";
 import SupportPopOut from "@/components/SupportPopOut";
 import ThemeRegistry from "@/components/ThemeRegistry/ThemeRegistry";
 import ProvidersDialog from "@/modules/ProvidersDialog";
+import { SITE_NAME } from "@/consts/application";
 import { getHomePageBanner } from "@/utils/cms";
 import { getFeatures } from "@/utils/gatewayFlagAdapter";
 import metaData from "@/utils/metadata";
@@ -29,10 +30,8 @@ import PageTracker from "./components/PageTracker";
 import Organization from "./components/RichResults/Organization";
 
 export const metadata = metaData({
-    title: "Health Data Research Gateway",
+    title: SITE_NAME,
     isDefault: true,
-    description:
-        "The Health Data Research Gateway is a portal enabling researchers and innovators in academia, industry and the NHS to search for and request access to UK health research data.",
 });
 
 export default async function RootLayout(props: {

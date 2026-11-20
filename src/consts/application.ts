@@ -1,3 +1,15 @@
+export const SITE_NAME = "Health Data Research Gateway";
+export const PAGE_TITLE_FALLBACKS = {
+    collection: "Collection",
+    dataCustodian: "Data Custodian",
+    dataCustodianNetwork: "Data Custodian Network",
+    dataUse: "Data Use",
+    dataset: "Dataset",
+    publication: "Publication",
+    tool: "Tool",
+} as const;
+export const SITE_DESCRIPTION =
+    "The Health Data Research Gateway is a portal enabling researchers and innovators in academia, industry and the NHS to search for and request access to UK health research data.";
 export const CONTACT_EMAIL_ADDRESS = "gateway@hdruk.ac.uk";
 export const SUPPORT_METADATA_ONBOARDING_URL =
     "https://hdruk.github.io/gateway-2-integrations-testing/";

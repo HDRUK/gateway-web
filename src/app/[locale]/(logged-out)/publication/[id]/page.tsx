@@ -12,7 +12,7 @@ import { MarkDownSanitizedWithHtml } from "@/components/MarkDownSanitizedWithHTM
 import ToolsContent from "@/components/ToolsContent";
 import Typography from "@/components/Typography";
 import ActiveListSidebar from "@/modules/ActiveListSidebar";
-import { DataStatus } from "@/consts/application";
+import { DataStatus, PAGE_TITLE_FALLBACKS } from "@/consts/application";
 import { RouteName } from "@/consts/routeName";
 import { getPublication } from "@/utils/api";
 import metaData from "@/utils/metadata";
@@ -21,10 +21,22 @@ import { publicationFields, relatedContentAccordions } from "./config";
 
 const TRANSLATION_PATH = "pages.publication";
 
-export const metadata = metaData({
-    title: "Publication",
-    description: "",
-});
+export async function generateMetadata({
+    params,
+}: {
+    params: Promise<{ locale: string; id: string }>;
+}) {
+    const { locale, id } = await params;
+    const data = await getPublication(id, {
+        suppressError: true,
+    });
+
+    return metaData({
+        title: data?.paper_title || PAGE_TITLE_FALLBACKS.publication,
+        description: data?.abstract,
+        url: `/${locale}/${RouteName.PUBLICATION}/${id}`,
+    });
+}
 
 export default async function PublicationItemPage({
     params,

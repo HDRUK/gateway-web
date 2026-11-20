@@ -11,7 +11,9 @@ import { DataCustodianEntitiesSkeleton } from "@/components/Skeletons/Skeletons"
 import Typography from "@/components/Typography";
 import ActiveListSidebar from "@/modules/ActiveListSidebar";
 import apis from "@/config/apis";
+import { PAGE_TITLE_FALLBACKS } from "@/consts/application";
 import { DEFAULT_CACHE_REVALIDATE } from "@/consts/cache";
+import { RouteName } from "@/consts/routeName";
 import { getTeamInfo, getTeamSummary } from "@/utils/api";
 import metaData from "@/utils/metadata";
 import ActionBar from "./components/ActionBar";
@@ -22,10 +24,23 @@ import { accordions, dataCustodianFields } from "./config";
 
 const TRANSLATION_PATH = "pages.dataCustodian";
 
-export const metadata = metaData({
-    title: "Data Custodian",
-    description: "",
-});
+export async function generateMetadata({
+    params,
+}: {
+    params: Promise<{ locale: string; dataCustodianId: string }>;
+}) {
+    const { locale, dataCustodianId } = await params;
+    const infoData = await getTeamInfo(dataCustodianId, {
+        suppressError: true,
+    });
+
+    return metaData({
+        title: infoData?.name || PAGE_TITLE_FALLBACKS.dataCustodian,
+        description: infoData?.introduction,
+        url: `/${locale}/${RouteName.DATA_CUSTODIANS_ITEM}/${dataCustodianId}`,
+        entity: { type: "dataCustodian", id: dataCustodianId },
+    });
+}
 export default async function DataCustodianItemPage({
     params,
 }: {

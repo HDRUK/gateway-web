@@ -8,7 +8,7 @@ import HeaderActionBar from "@/components/HeaderActionBar";
 import Link from "@/components/Link";
 import Typography from "@/components/Typography";
 import ActiveListSidebar from "@/modules/ActiveListSidebar";
-import { DataStatus } from "@/consts/application";
+import { DataStatus, PAGE_TITLE_FALLBACKS } from "@/consts/application";
 import { RouteName } from "@/consts/routeName";
 import { SCHEMA_NAME, SCHEMA_VERSION } from "@/consts/schema";
 import { getDataset, getSchemaFromTraser } from "@/utils/api";
@@ -39,10 +39,29 @@ import {
 
 const TRANSLATION_PATH = "pages.dataset.components.ActionBar";
 
-export const metadata = metaData({
-    title: "Dataset",
-    description: "",
-});
+export async function generateMetadata({
+    params,
+}: {
+    params: Promise<{ locale: string; datasetId: string }>;
+}) {
+    const { locale, datasetId } = await params;
+    const googleRecommendedDataset = await getDataset(
+        datasetId,
+        "SchemaOrg",
+        "GoogleRecommended"
+    ).catch(() => undefined);
+    const latestVersion =
+        googleRecommendedDataset && getLatestVersion(googleRecommendedDataset);
+
+    return metaData({
+        title:
+            get(latestVersion, "metadata.metadata.name") ||
+            PAGE_TITLE_FALLBACKS.dataset,
+        description: get(latestVersion, "metadata.metadata.description"),
+        url: `/${locale}/${RouteName.DATASET_ITEM}/${datasetId}`,
+        entity: { type: "dataset", id: datasetId },
+    });
+}
 
 const DATASET_STAT_PATHS = [
     "metadata.metadata.summary.populationSize",

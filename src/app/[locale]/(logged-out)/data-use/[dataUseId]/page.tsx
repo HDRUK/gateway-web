@@ -5,7 +5,8 @@ import Box from "@/components/Box";
 import LayoutDataItemPage from "@/components/LayoutDataItemPage";
 import Typography from "@/components/Typography";
 import ActiveListSidebar from "@/modules/ActiveListSidebar";
-import { DataStatus } from "@/consts/application";
+import { DataStatus, PAGE_TITLE_FALLBACKS } from "@/consts/application";
+import { RouteName } from "@/consts/routeName";
 import { getDataUse } from "@/utils/api";
 import metaData from "@/utils/metadata";
 import ActionBar from "./components/ActionBar";
@@ -14,10 +15,23 @@ import { dataUseFields } from "./config";
 
 const TRANSLATION_PATH = "pages.dataUse";
 
-export const metadata = metaData({
-    title: "Data Use",
-    description: "",
-});
+export async function generateMetadata({
+    params,
+}: {
+    params: Promise<{ locale: string; dataUseId: string }>;
+}) {
+    const { locale, dataUseId } = await params;
+    const data = await getDataUse(dataUseId, {
+        suppressError: true,
+    });
+
+    return metaData({
+        title: data?.project_title || PAGE_TITLE_FALLBACKS.dataUse,
+        description: data?.lay_summary,
+        url: `/${locale}/${RouteName.DATA_USE_ITEM}/${dataUseId}`,
+        entity: { type: "dataUse", id: dataUseId },
+    });
+}
 export default async function DataUseItemPage({
     params,
 }: {

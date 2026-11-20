@@ -10,7 +10,7 @@ import LayoutDataItemPage from "@/components/LayoutDataItemPage";
 import PublicationsContent from "@/components/PublicationsContent";
 import Typography from "@/components/Typography";
 import ActiveListSidebar from "@/modules/ActiveListSidebar";
-import { DataStatus } from "@/consts/application";
+import { DataStatus, PAGE_TITLE_FALLBACKS } from "@/consts/application";
 import { RouteName } from "@/consts/routeName";
 import { getReducedTool } from "@/utils/api";
 import metaData from "@/utils/metadata";
@@ -19,10 +19,22 @@ import ToolContent from "./components/ToolContent";
 import { toolFields, accordions } from "./config";
 
 const TRANSLATION_PATH = "pages.tool";
-export const metadata = metaData({
-    title: "Tool",
-    description: "",
-});
+export async function generateMetadata({
+    params,
+}: {
+    params: Promise<{ locale: string; toolId: string }>;
+}) {
+    const { locale, toolId } = await params;
+    const data = await getReducedTool(toolId, {
+        suppressError: true,
+    });
+
+    return metaData({
+        title: data?.name || PAGE_TITLE_FALLBACKS.tool,
+        description: data?.description,
+        url: `/${locale}/${RouteName.TOOL_ITEM}/${toolId}`,
+    });
+}
 export default async function ToolPage({
     params,
 }: {
