@@ -90,6 +90,34 @@ describe("ShareTokensManager", () => {
         });
     });
 
+    // Regression (review): a double click created two live links, each with
+    // its own draft dataset.
+    it("creates only one link when create is clicked twice quickly", async () => {
+        let posts = 0;
+        server.use(
+            rest.get(baseUrl, (req, res, ctx) =>
+                res(ctx.status(200), ctx.json({ data: [] }))
+            ),
+            rest.post(baseUrl, (req, res, ctx) => {
+                posts += 1;
+                return res(
+                    ctx.delay(50),
+                    ctx.status(201),
+                    ctx.json({ data: mockToken })
+                );
+            })
+        );
+
+        renderManager();
+
+        const button = await screen.findByTestId("btn-create-share-token");
+        fireEvent.click(button);
+        fireEvent.click(button);
+
+        await waitFor(() => expect(button).not.toBeDisabled());
+        expect(posts).toBe(1);
+    });
+
     it("creates a new share token and refreshes the list", async () => {
         let listCallCount = 0;
         server.use(

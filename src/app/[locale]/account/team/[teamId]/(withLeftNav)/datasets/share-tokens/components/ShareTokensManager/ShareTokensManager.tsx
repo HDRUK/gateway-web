@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo } from "react";
+import { useMemo, useRef, useState } from "react";
 import { Button, Loading } from "@hdruk/ui";
 import { useTranslations } from "next-intl";
 import { ShareToken, ShareTokenStatus } from "@/interfaces/Collab";
@@ -119,11 +119,26 @@ const ShareTokensManager = ({
         [tokens]
     );
 
+    // Each create mints a live link and a draft dataset, so ignore further
+    // clicks until the request finishes.
+    // The ref guards clicks in the same tick, before the disabled state renders.
+    const [isCreating, setIsCreating] = useState(false);
+    const creating = useRef(false);
     const handleCreate = async () => {
-        const created = await createToken({});
+        if (creating.current) {
+            return;
+        }
+        creating.current = true;
+        setIsCreating(true);
+        try {
+            const created = await createToken({});
 
-        if (created) {
-            mutate();
+            if (created) {
+                mutate();
+            }
+        } finally {
+            creating.current = false;
+            setIsCreating(false);
         }
     };
 
@@ -256,6 +271,7 @@ const ShareTokensManager = ({
                     <Button
                         data-testid="btn-create-share-token"
                         onClick={handleCreate}
+                        disabled={isCreating}
                         startIcon={<AddIcon />}
                         sx={{ flexShrink: 0 }}>
                         {t("create")}
