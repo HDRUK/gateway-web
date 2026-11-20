@@ -1,5 +1,6 @@
 "use client";
 
+import { Tooltip } from "@mui/material";
 import { useRouter } from "next/navigation";
 import { SearchCategory } from "@/interfaces/Search";
 import { RouteName } from "@/consts/routeName";
@@ -21,19 +22,24 @@ const SearchTags = ({ tags }: { tags: string[] }) => {
             {tags.map(tag => {
                 const label = decodeHtmlEntity(tag);
                 return (
-                    <DatasetButtonItem
+                    <Tooltip
+                        describeChild
+                        placement="top"
                         key={label}
-                        color="success"
-                        size="small"
-                        onClick={() =>
-                            router.push(
-                                `/${RouteName.SEARCH}?type=${
-                                    SearchCategory.DATASETS
-                                }&query=${encodeURIComponent(label)}`
-                            )
-                        }>
-                        {label}
-                    </DatasetButtonItem>
+                        title={label}>
+                        <DatasetButtonItem
+                            color="success"
+                            size="small"
+                            onClick={() =>
+                                router.push(
+                                    `/${RouteName.SEARCH}?type=${
+                                        SearchCategory.DATASETS
+                                    }&query=${encodeURIComponent(label)}`
+                                )
+                            }>
+                            {label}
+                        </DatasetButtonItem>
+                    </Tooltip>
                 );
             })}
         </DatasetFieldWrapper>

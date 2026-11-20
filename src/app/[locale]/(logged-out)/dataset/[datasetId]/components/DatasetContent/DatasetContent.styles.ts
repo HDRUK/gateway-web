@@ -25,6 +25,7 @@ export const DatasetFieldItem = styled(Chip)(() => ({
 }));
 
 export const DatasetButtonItem = styled(Button)(() => ({
+    display: "block",
     textOverflow: "ellipsis",
     maxWidth: 200,
     overflow: "hidden",
