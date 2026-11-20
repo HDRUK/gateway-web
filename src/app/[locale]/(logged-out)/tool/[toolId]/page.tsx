@@ -10,19 +10,24 @@ import LayoutDataItemPage from "@/components/LayoutDataItemPage";
 import PublicationsContent from "@/components/PublicationsContent";
 import Typography from "@/components/Typography";
 import ActiveListSidebar from "@/modules/ActiveListSidebar";
-import { DataStatus } from "@/consts/application";
+import { DataStatus, EntityType } from "@/consts/application";
 import { RouteName } from "@/consts/routeName";
 import { getReducedTool } from "@/utils/api";
-import metaData from "@/utils/metadata";
+import { pageMetaData } from "@/utils/pageMetadata";
 import DatasetsContent from "./components/DatasetsContent";
 import ToolContent from "./components/ToolContent";
 import { toolFields, accordions } from "./config";
 
 const TRANSLATION_PATH = "pages.tool";
-export const metadata = metaData({
-    title: "Tool",
-    description: "",
-});
+export async function generateMetadata({
+    params,
+}: {
+    params: Promise<{ locale: string; toolId: string }>;
+}) {
+    const { locale, toolId } = await params;
+
+    return pageMetaData(EntityType.TOOL, toolId, locale);
+}
 export default async function ToolPage({
     params,
 }: {

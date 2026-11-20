@@ -11,9 +11,10 @@ import { DataCustodianEntitiesSkeleton } from "@/components/Skeletons/Skeletons"
 import Typography from "@/components/Typography";
 import ActiveListSidebar from "@/modules/ActiveListSidebar";
 import apis from "@/config/apis";
+import { EntityType } from "@/consts/application";
 import { DEFAULT_CACHE_REVALIDATE } from "@/consts/cache";
 import { getTeamInfo, getTeamSummary } from "@/utils/api";
-import metaData from "@/utils/metadata";
+import { pageMetaData } from "@/utils/pageMetadata";
 import ActionBar from "./components/ActionBar";
 import DataCustodianContent from "./components/DataCustodianContent";
 import { DatasetsOuter } from "./components/DatasetsOuter";
@@ -22,10 +23,15 @@ import { accordions, dataCustodianFields } from "./config";
 
 const TRANSLATION_PATH = "pages.dataCustodian";
 
-export const metadata = metaData({
-    title: "Data Custodian",
-    description: "",
-});
+export async function generateMetadata({
+    params,
+}: {
+    params: Promise<{ locale: string; dataCustodianId: string }>;
+}) {
+    const { locale, dataCustodianId } = await params;
+
+    return pageMetaData(EntityType.DATA_CUSTODIAN, dataCustodianId, locale);
+}
 export default async function DataCustodianItemPage({
     params,
 }: {

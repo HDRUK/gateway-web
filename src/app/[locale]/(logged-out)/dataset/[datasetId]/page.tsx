@@ -8,12 +8,12 @@ import HeaderActionBar from "@/components/HeaderActionBar";
 import Link from "@/components/Link";
 import Typography from "@/components/Typography";
 import ActiveListSidebar from "@/modules/ActiveListSidebar";
-import { DataStatus } from "@/consts/application";
+import { DataStatus, EntityType } from "@/consts/application";
 import { RouteName } from "@/consts/routeName";
 import { SCHEMA_NAME, SCHEMA_VERSION } from "@/consts/schema";
 import { getDataset, getSchemaFromTraser } from "@/utils/api";
 import { getLatestVersion } from "@/utils/dataset";
-import metaData from "@/utils/metadata";
+import { pageMetaData } from "@/utils/pageMetadata";
 import { isGwdmDatasetPageEnabled } from "@/flags";
 import GwdmDatasetPage from "./_gwdm/GwdmDatasetPage";
 import { toDuoCodeDetails } from "./_gwdm/lib/duoCodeDetails";
@@ -39,10 +39,15 @@ import {
 
 const TRANSLATION_PATH = "pages.dataset.components.ActionBar";
 
-export const metadata = metaData({
-    title: "Dataset",
-    description: "",
-});
+export async function generateMetadata({
+    params,
+}: {
+    params: Promise<{ locale: string; datasetId: string }>;
+}) {
+    const { locale, datasetId } = await params;
+
+    return pageMetaData(EntityType.DATASET, datasetId, locale);
+}
 
 const DATASET_STAT_PATHS = [
     "metadata.metadata.summary.populationSize",

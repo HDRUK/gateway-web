@@ -1,5 +1,6 @@
 import { render, screen } from "@testing-library/react";
 import fetchMock from "jest-fetch-mock";
+import { metadata as rootLayoutMetadata } from "../../layout";
 import Widget from "./page";
 
 const mockHeaders = new Map<string, string>();
@@ -127,6 +128,16 @@ describe("Widget embed contract: hosted page /widgets/[slug]", () => {
 
         await expect(renderPage()).rejects.toThrow("NEXT_NOT_FOUND");
         expect(mockNotFound).toHaveBeenCalled();
+    });
+
+    it("carries no share or canonical metadata into the embed", async () => {
+        const widgetPage = await import("./page");
+
+        expect(widgetPage).not.toHaveProperty("metadata");
+        expect(widgetPage).not.toHaveProperty("generateMetadata");
+        expect(rootLayoutMetadata).not.toHaveProperty("openGraph");
+        expect(rootLayoutMetadata).not.toHaveProperty("twitter");
+        expect(rootLayoutMetadata).not.toHaveProperty("alternates");
     });
 
     it("shows the unavailable message when the Widgets feature flag is off", async () => {

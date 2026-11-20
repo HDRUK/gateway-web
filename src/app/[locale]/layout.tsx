@@ -16,7 +16,7 @@ import ThemeRegistry from "@/components/ThemeRegistry/ThemeRegistry";
 import ProvidersDialog from "@/modules/ProvidersDialog";
 import { getHomePageBanner } from "@/utils/cms";
 import { getFeatures } from "@/utils/gatewayFlagAdapter";
-import metaData from "@/utils/metadata";
+import { defaultMetadata } from "@/utils/metadata";
 import packageJson from "@/../package.json";
 import ActionBarProvider from "@/providers/ActionBarProvider";
 import CohortRedirectProvider from "@/providers/CohortRedirectProvider";
@@ -28,12 +28,7 @@ import CMSBanners from "./components/CMSBanners";
 import PageTracker from "./components/PageTracker";
 import Organization from "./components/RichResults/Organization";
 
-export const metadata = metaData({
-    title: "Health Data Research Gateway",
-    isDefault: true,
-    description:
-        "The Health Data Research Gateway is a portal enabling researchers and innovators in academia, industry and the NHS to search for and request access to UK health research data.",
-});
+export const metadata = defaultMetadata;
 
 export default async function RootLayout(props: {
     params: Promise<{ locale: string }>;

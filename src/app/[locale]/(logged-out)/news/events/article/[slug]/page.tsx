@@ -2,31 +2,27 @@ import { notFound } from "next/navigation";
 import Banner from "@/components/Banner";
 import Container from "@/components/Container";
 import HTMLContent from "@/components/HTMLContent";
-import { getContentPostQuery, hasCategoryName } from "@/utils/cms";
-import metaData from "@/utils/metadata";
+import { EntityType } from "@/consts/application";
+import { hasCategoryName } from "@/utils/cms";
+import { getEventArticle, pageMetaData } from "@/utils/pageMetadata";
 
 interface ArticlePageProps {
     params: Promise<{
+        locale: string;
         slug: string;
     }>;
 }
 
 export async function generateMetadata({ params }: ArticlePageProps) {
-    const { slug } = await params;
+    const { locale, slug } = await params;
 
-    return metaData({
-        title: `${slug.replaceAll("-", " ")} - Events`,
-        description: "",
-    });
+    return pageMetaData(EntityType.EVENT_ARTICLE, slug, locale);
 }
 
 const ArticlePage = async ({ params }: ArticlePageProps) => {
     const { slug } = await params;
 
-    const cmsPost = await getContentPostQuery("getEventsArticle", {
-        id: slug,
-        idType: "SLUG",
-    });
+    const cmsPost = await getEventArticle(slug);
 
     if (!cmsPost || !hasCategoryName(cmsPost.categories, "Events")) {
         notFound();
