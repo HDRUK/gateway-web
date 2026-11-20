@@ -811,7 +811,9 @@
                             "discardChanges": "Discard changes",
                             "saveAsDraft": "Save changes as draft",
                             "confirmSave": "Do you want to save changes as draft before exiting?",
-                            "backToManagementPage": "Back to dataset metadata management page"
+                            "backToManagementPage": "Back to dataset metadata management page",
+                            "collabCustodianFixed": "The data custodian is set by the team that shared this form.",
+                            "collabStructuralMetadata": "Once you've finished, the team can add structural metadata when they review your submission."
                         },
                         "EditDataset": {
                             "editButton": "Update",
@@ -823,7 +825,12 @@
                             "switchSchemaTitle": "Switch metadata schema",
                             "switchSchemaConfirm": "Switching schema clears the answers you have entered. Are you sure you want to continue?",
                             "switchSchemaConfirmText": "Switch schema",
-                            "switchSchemaCancelText": "Cancel"
+                            "switchSchemaCancelText": "Cancel",
+                            "markReadyForReview": "Mark ready for review",
+                            "unmarkReadyForReview": "Unmark ready for review",
+                            "collabDraftSaved": "Your progress has been saved",
+                            "collabMarkedReady": "Marked ready for review. The team will see it's ready when they next check their drafts.",
+                            "collabUnmarkedReady": "No longer marked ready for review. You can keep editing."
                         },
                         "CreateDataUse": {
                             "downloadTitle": "Download template",
@@ -867,7 +874,8 @@
                                     "exclude": "Exclude from Cohort Discovery"
                                 },
                                 "entityName": "dataset"
-                            }
+                            },
+                            "shareTokens": "Collaborative onboarding links"
                         },
                         "UploadDataset": {
                             "downloadTitle": "Download template",
@@ -878,6 +886,38 @@
                             "returnButtonText": "View dataset in 'Drafts' tab",
                             "errorNoMatchingPid": "The summary.dataCustodian.identifier is: {dataCustodianId} which does not match your team's identifier: {teamPid}.",
                             "errorNoPid": "Missing summary.dataCustodian.identifier. Your team's identifier is: {teamPid}. Please add in this identifier before uploading."
+                        },
+                        "ShareTokensManager": {
+                            "backToDatasets": "Back to datasets",
+                            "title": "Collaborative dataset onboarding links",
+                            "text": "Create a link to share with a collaborator so they can fill in dataset metadata without needing a Gateway account. Once they mark it as ready, review and activate the draft from your team's dataset list.",
+                            "create": "Create collaboration link",
+                            "noTokens": "No collaboration links have been created for this team yet.",
+                            "noTokensHint": "Create one to let a collaborator fill in dataset metadata without needing a Gateway account.",
+                            "summaryActive": "{count} awaiting collaborator",
+                            "summaryReady": "{count} ready for review",
+                            "summaryCompleted": "{count} completed",
+                            "summaryRevoked": "{count} revoked",
+                            "summaryExpired": "{count} expired",
+                            "datasetId": "Draft dataset ID: {id}",
+                            "openDatasetTooltip": "Open this draft in the dataset editor",
+                            "createdAt": "Created {date}",
+                            "expiresAt": "Expires {date}",
+                            "lastSubmittedAt": "Last submitted {date}",
+                            "statusActive": "Awaiting collaborator",
+                            "statusCompleted": "Completed",
+                            "statusExpired": "Expired",
+                            "revoked": "Revoked",
+                            "readyForReview": "Ready for review",
+                            "copyLink": "Copy link",
+                            "copiedToClipboard": "Link copied to clipboard",
+                            "copyFailed": "Unable to copy link",
+                            "revoke": "Revoke",
+                            "revokeModal": {
+                                "title": "Revoke this share link?",
+                                "confirmButton": "Revoke",
+                                "cancelButton": "Cancel"
+                            }
                         }
                     }
                 },
@@ -1972,6 +2012,10 @@
             "publications": "Publications",
             "custodianNetworks": "Data Custodian Networks",
             "collections": "Collections"
+        },
+        "collab": {
+            "invalidLinkTitle": "This link is no longer valid",
+            "invalidLinkText": "It may have expired or been withdrawn. Please contact the team that shared it with you for a new link."
         }
     },
     "components": {

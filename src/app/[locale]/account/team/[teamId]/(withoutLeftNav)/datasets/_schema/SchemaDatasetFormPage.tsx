@@ -1,5 +1,5 @@
 import { resolveField } from "@hdruk/metadata-onboard";
-import { get, mergeWith, omit, set } from "lodash";
+import { get, omit, set } from "lodash";
 import ProtectedAccountRoute from "@/components/ProtectedAccountRoute";
 import {
     getOnboardingForm,
@@ -16,8 +16,7 @@ import {
 } from "@/templates/metadata/form/registry";
 import { formVocabulary } from "@/templates/metadata/form/vocabulary";
 import SchemaDatasetForm from "./components/SchemaDatasetForm";
-
-const CUSTODIAN_LOGO = "summary.dataCustodian.logo";
+import { hydrateFormValues } from "./utils/hydrateFormValues";
 
 const isBlank = (value: unknown): boolean =>
     value === undefined ||
@@ -59,19 +58,9 @@ export default async function SchemaDatasetFormPage({
     });
     const templateMeta = formTemplateMeta(meta);
 
-    const loaded = isDuplicate
-        ? omit(form.metadata ?? {}, templateMeta.clearOnDuplicate ?? [])
-        : form.metadata;
-    const defaultLogo = get(form.defaultValues, CUSTODIAN_LOGO);
-    if (typeof defaultLogo === "string" && defaultLogo) {
-        set(form.defaultValues, CUSTODIAN_LOGO, encodeURI(defaultLogo));
-    }
-    const values = mergeWith(
-        {},
-        form.defaultValues,
-        loaded,
-        (_: unknown, saved: unknown) =>
-            Array.isArray(saved) ? saved : undefined
+    const values = hydrateFormValues(
+        form,
+        isDuplicate ? templateMeta.clearOnDuplicate ?? [] : undefined
     );
     const today = getToday();
     if (!datasetId) {

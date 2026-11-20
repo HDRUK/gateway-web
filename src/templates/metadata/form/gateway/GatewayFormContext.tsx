@@ -10,6 +10,8 @@ export interface GatewayFormContextValue extends OnboardingSchema {
     teamId: string;
     defaultTeam?: OptionsType;
     introAside?: HTMLElement | null;
+    /** Anonymous share-link collaborator: no team-only calls or controls. */
+    isCollab?: boolean;
 }
 
 export const GatewayFormContext = createContext<

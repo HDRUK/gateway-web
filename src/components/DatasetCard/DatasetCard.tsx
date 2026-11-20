@@ -55,8 +55,15 @@ const DatasetCard = ({
 
     const version = get(latestMetadata, "required.version");
 
+    // Collab drafts are ordinary team drafts once submitted - the team edits
+    // and activates them like manual ones (activation revokes the link).
+    const isTeamManaged =
+        dataset.create_origin === "MANUAL" ||
+        dataset.create_origin === "COLLAB";
+
     const originMapping = {
         MANUAL: "Manually",
+        COLLAB: "Collaborative onboarding",
         API: "API",
         GMI: "Predefined Integration",
     };
@@ -69,7 +76,7 @@ const DatasetCard = ({
                 sx={{
                     display: "grid",
                     gridTemplateColumns:
-                        onStatusChange && dataset.create_origin === "MANUAL"
+                        onStatusChange && isTeamManaged
                             ? "1fr auto 50px"
                             : "repeat(1, 1fr 50px)",
                     p: 0,
@@ -133,7 +140,7 @@ const DatasetCard = ({
                         />
                     </Box>
                 </Box>
-                {onStatusChange && dataset.create_origin === "MANUAL" && (
+                {onStatusChange && isTeamManaged && (
                     <Box>
                         <StatusMenu
                             status={dataset.status as DataStatus}
@@ -151,7 +158,7 @@ const DatasetCard = ({
                     }}>
                     <CardActions
                         actions={
-                            dataset.create_origin === "MANUAL"
+                            isTeamManaged
                                 ? actions
                                 : nonManualDatasetCardActions
                         }

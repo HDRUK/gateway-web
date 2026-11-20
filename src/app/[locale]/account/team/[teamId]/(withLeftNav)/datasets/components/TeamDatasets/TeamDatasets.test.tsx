@@ -13,6 +13,12 @@ jest.mock("notistack", () => ({
     __esModule: true,
 }));
 
+const mockUseFeatures = jest.fn(() => ({}));
+jest.mock("@/providers/FeatureProvider", () => ({
+    __esModule: true,
+    useFeatures: () => mockUseFeatures(),
+}));
+
 mockRouter.query = { teamId: "1", tab: "ACTIVE" };
 window.scrollTo = jest.fn();
 
@@ -345,5 +351,43 @@ describe("TeamDatasets", () => {
         expect(
             await screen.findByRole("menuitemradio", { name: "Archived" })
         ).toHaveAttribute("aria-disabled", "true");
+    });
+
+    describe("collaborative onboarding links", () => {
+        const renderWithCreate = () =>
+            render(
+                <TeamDatasets
+                    permissions={{ "datasets.create": true }}
+                    teamId="1"
+                    isSuperAdmin={false}
+                />
+            );
+
+        it("links to the team's share links when the feature is on", async () => {
+            mockUseFeatures.mockReturnValue({
+                isCollaborativeMetadataOnboardingEnabled: true,
+            });
+            server.use(getTeamDatasetsV2([]));
+            renderWithCreate();
+
+            const link = await screen.findByTestId("btn-share-tokens");
+            expect(link).toHaveAttribute(
+                "href",
+                "/account/team/1/datasets/share-tokens"
+            );
+        });
+
+        it("offers no way into collaborative onboarding while it's off", async () => {
+            mockUseFeatures.mockReturnValue({
+                isCollaborativeMetadataOnboardingEnabled: false,
+            });
+            server.use(getTeamDatasetsV2([]));
+            renderWithCreate();
+
+            await screen.findByRole("button", { name: "Add new dataset" });
+            expect(
+                screen.queryByTestId("btn-share-tokens")
+            ).not.toBeInTheDocument();
+        });
     });
 });

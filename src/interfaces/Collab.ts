@@ -8,6 +8,8 @@ interface CollabDraft {
     // Anonymous collaborators can't call the authenticated GET /teams/{id}
     // endpoint, so the one team field the form needs is surfaced here.
     team_contact_point: string | null;
+    // Shown read-only as the data custodian, which the API forces on save.
+    team_name: string;
     // The same hydrated form the authenticated form_hydration endpoint
     // returns, for the requested (or default) schema.
     form: OnboardingForm;
