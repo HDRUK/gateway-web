@@ -14,10 +14,9 @@ import NavigationProgress from "@/components/NavigationProgress";
 import SupportPopOut from "@/components/SupportPopOut";
 import ThemeRegistry from "@/components/ThemeRegistry/ThemeRegistry";
 import ProvidersDialog from "@/modules/ProvidersDialog";
-import { SITE_NAME } from "@/consts/application";
 import { getHomePageBanner } from "@/utils/cms";
 import { getFeatures } from "@/utils/gatewayFlagAdapter";
-import metaData from "@/utils/metadata";
+import { defaultMetadata } from "@/utils/metadata";
 import packageJson from "@/../package.json";
 import ActionBarProvider from "@/providers/ActionBarProvider";
 import CohortRedirectProvider from "@/providers/CohortRedirectProvider";
@@ -29,10 +28,7 @@ import CMSBanners from "./components/CMSBanners";
 import PageTracker from "./components/PageTracker";
 import Organization from "./components/RichResults/Organization";
 
-export const metadata = metaData({
-    title: SITE_NAME,
-    isDefault: true,
-});
+export const metadata = defaultMetadata;
 
 export default async function RootLayout(props: {
     params: Promise<{ locale: string }>;

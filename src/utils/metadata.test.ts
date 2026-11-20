@@ -1,7 +1,29 @@
 import { SITE_DESCRIPTION, SITE_NAME } from "@/consts/application";
-import metaData, { toMetaDescription } from "./metadata";
+import metaData, {
+    defaultMetadata,
+    noFollowRobots,
+    toMetaDescription,
+} from "./metadata";
 
 describe("metaData", () => {
+    it("keeps share tags off pages hidden from crawlers", () => {
+        const result = metaData({ title: "Library" }, noFollowRobots);
+
+        expect(result.openGraph).toBeNull();
+        expect(result.twitter).toBeNull();
+    });
+
+    it("gives layouts defaults that carry no share tags", () => {
+        expect(defaultMetadata).toEqual(
+            expect.objectContaining({
+                title: SITE_NAME,
+                description: SITE_DESCRIPTION,
+            })
+        );
+        expect(defaultMetadata).not.toHaveProperty("openGraph");
+        expect(defaultMetadata).not.toHaveProperty("twitter");
+    });
+
     it("emits Open Graph and Twitter card tags", () => {
         const result = metaData({
             title: "Asthma cohort",

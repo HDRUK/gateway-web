@@ -13,13 +13,24 @@ Every page exports its metadata through `metaData()` in `src/utils/metadata.ts`.
 | `entity`      | `{ type, id }` of the page's entity. The generated card looks up the entity's image (see below).                                                                                                       |
 | `ogType`      | `og:type`; defaults to `website`. News and event articles pass `article`.                                                                                                                              |
 | `siteName`    | Overrides `og:site_name`.                                                                                                                                                                              |
-| `crawlers`    | Robots rules; pass `noFollowRobots` for pages that must not be indexed.                                                                                                                                |
+| `crawlers`    | Robots rules; pass `noFollowRobots` for pages that must not be indexed. Those pages also get no share tags (see below).                                                                                |
 
 `toPlainText` (titles) reads text out of rich-text editor (TipTap) JSON, strips HTML tags, decodes HTML entities and collapses whitespace. `toMetaDescription` does the same and also reduces Markdown to its text, because collection descriptions, custodian introductions and network summaries are Markdown: links keep their text, images are dropped, `#` heading markers go, and `**`/`__` are removed only when they wrap text, so names like `CPRD__Aurum` survive. Titles are entity names, not Markdown, so they keep those characters. A tag is `<` followed by a letter up to the next `>`, so `<16` survives but text such as `a<b and c>d` loses `<b and c>`.
 
-An empty description falls back to `SITE_DESCRIPTION` (`src/consts/application.ts`), so a page or entity with no description still gets a description and a full share preview. The root layout relies on this rather than passing its own, so the site description is never truncated.
+An empty description falls back to `SITE_DESCRIPTION` (`src/consts/application.ts`), so a page or entity with no description still gets a description and a full share preview.
 
 `metadataBase` is set once in `src/app/layout.tsx` from `NEXT_PUBLIC_GATEWAY_URL`, so relative image and canonical URLs are emitted as absolute URLs, which link-preview crawlers require.
+
+### Which pages get share tags
+
+Open Graph and Twitter tags are opt-in per page, never inherited from a layout:
+
+-   **Public pages** that call `metaData()` with the default robots get them. That includes the homepage (`src/app/[locale]/page.tsx`).
+-   **Hidden pages** that pass `noFollowRobots` (account and team pages, search, verification) get `openGraph: null` and `twitter: null`. Setting `null` also blocks anything a parent layout might add.
+-   **The `[locale]` layout** exports `defaultMetadata`: title, `SITE_DESCRIPTION` and robots only. Error pages (`/error/*`), `error.tsx` boundaries and 404s inherit only those, so they get no share tags.
+-   **Widget routes** (`/widgets/[slug]`, the iframe embedded on third-party sites) sit outside `[locale]` and inherit only the root layout (`metadataBase` and icons). `src/app/widgets/[slug]/page.contract.test.tsx` fails if the widget page or the root layout ever gains share, canonical or page metadata.
+
+The check is `crawlers === followRobots`, a reference comparison, not the `index` value. In environments with `BLOCK_ROBOTS=true` every page is `noindex`, but public pages still get share tags, so cards can be tested on dev and preprod.
 
 ## Share image: `/api/og`
 

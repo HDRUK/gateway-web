@@ -47,6 +47,12 @@ export const noFollowRobots: Robots = {
     },
 };
 
+export const defaultMetadata: Metadata = {
+    title: SITE_NAME,
+    description: SITE_DESCRIPTION,
+    robots: followRobots,
+};
+
 interface RichTextNode {
     type?: string;
     text?: string;
@@ -118,13 +124,21 @@ export default function metaData(
     const pageTitle = toPlainText(meta.title);
     const title = meta.isDefault ? pageTitle : `${pageTitle} - ${SITE_NAME}`;
     const description = toMetaDescription(meta.description) || SITE_DESCRIPTION;
-    const image = meta.image ?? toOgImageUrl(pageTitle, meta.entity);
-
-    return {
+    const page: Metadata = {
         title,
         description,
         robots: crawlers,
         ...(meta.url && { alternates: { canonical: meta.url } }),
+    };
+
+    if (crawlers !== followRobots) {
+        return { ...page, openGraph: null, twitter: null };
+    }
+
+    const image = meta.image ?? toOgImageUrl(pageTitle, meta.entity);
+
+    return {
+        ...page,
         openGraph: {
             title,
             description,
