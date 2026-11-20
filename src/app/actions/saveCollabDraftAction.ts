@@ -38,8 +38,7 @@ export const saveCollabDraftAction = async ({
             return { ok: false, status: res.status, error: res.body };
         }
         return { ok: true };
-    } catch (e) {
-        console.error(e);
+    } catch {
         return { ok: false };
     }
 };

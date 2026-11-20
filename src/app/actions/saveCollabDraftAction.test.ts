@@ -48,10 +48,13 @@ describe("saveCollabDraftAction", () => {
         ["too short", "abc"],
         ["path traversal", `${"a".repeat(60)}/../`],
         ["query smuggling", `${"a".repeat(60)}?x=1`],
-    ])("rejects a malformed token (%s) without calling the API", async (_, token) => {
-        await expect(save(token)).resolves.toEqual({ ok: false });
-        expect(saveCollabDraft).not.toHaveBeenCalled();
-    });
+    ])(
+        "rejects a malformed token (%s) without calling the API",
+        async (_, token) => {
+            await expect(save(token)).resolves.toEqual({ ok: false });
+            expect(saveCollabDraft).not.toHaveBeenCalled();
+        }
+    );
 
     it("passes an API failure back with its status and body", async () => {
         (saveCollabDraft as jest.Mock).mockResolvedValue({
@@ -68,7 +71,6 @@ describe("saveCollabDraftAction", () => {
     });
 
     it("reports failure rather than throwing when the request errors", async () => {
-        jest.spyOn(console, "error").mockImplementation(() => {});
         (saveCollabDraft as jest.Mock).mockRejectedValue(new Error("down"));
 
         await expect(save()).resolves.toEqual({ ok: false });

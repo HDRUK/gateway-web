@@ -31,9 +31,11 @@ export const markCollabReadyAction = async (
         const data = res.body.data as
             | { ready_for_review_at?: string | null }
             | undefined;
-        return { ok: true, readyForReviewAt: data?.ready_for_review_at ?? null };
-    } catch (e) {
-        console.error(e);
+        return {
+            ok: true,
+            readyForReviewAt: data?.ready_for_review_at ?? null,
+        };
+    } catch {
         return { ok: false };
     }
 };
