@@ -399,6 +399,18 @@ const getPatientsAndPublic = async () => {
     return substituteEnvLinks(data?.page);
 };
 
+const getPartners = async () => {
+    const data: CMSPageResponse<PageTemplateDefault> = await fetchCMS(
+        GetContentPageQuery("getPartnersQuery", {
+            id: "partners",
+            idType: "URI",
+        }),
+        DEFAULT_OPTIONS
+    );
+
+    return substituteEnvLinks(data?.page);
+};
+
 const getGlossary = async () => {
     const data: CMSPageResponse<PageTemplateDefault> = await fetchCMS(
         GetContentPageQuery("getGlossaryQuery", {
@@ -509,6 +521,7 @@ export {
     getMissionAndPurposes,
     getNews,
     getOpenSourceDevelopment,
+    getPartners,
     getPatientsAndPublic,
     getPrivacyPolicy,
     getReleaseNotes,
