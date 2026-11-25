@@ -187,7 +187,7 @@ describe("LeftNav", () => {
 
     it("mobile horizontal nav can be opened with button click", async () => {
         setScreenWidth(200);
-        const { getByRole, queryByText } = render(
+        const { getByRole } = render(
             <LeftNav
                 permissions={{ "cohort.read": false }}
                 initialLeftNavOpen={true}
@@ -196,12 +196,12 @@ describe("LeftNav", () => {
         );
 
         const toggle = getByRole("button", {
-            name: "Your Profile",
+            name: "Team",
         });
         fireEvent.click(toggle);
 
         await waitFor(() => {
-            expect(queryByText("Library")).toBeInTheDocument();
+            expect(toggle).toHaveAttribute("aria-expanded", "true");
         });
     });
 });

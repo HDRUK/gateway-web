@@ -1,4 +1,5 @@
 import { ReactNode, Suspense } from "react";
+import "@material-symbols/font-300/rounded.css";
 import { GoogleTagManager } from "@next/third-parties/google";
 import { AbstractIntlMessages, NextIntlClientProvider } from "next-intl";
 import { notFound } from "next/navigation";
