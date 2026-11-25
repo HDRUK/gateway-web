@@ -63,7 +63,7 @@ const BarLabelInsideEnd = ({
             textAnchor="end"
             dominantBaseline="central"
             pointerEvents="none"
-            fill={isHighlighted ? tokens.text.primaryWhite : tokens.status.information}
+            fill={isHighlighted ? tokens.text.primaryInverse : tokens.status.information}
             opacity={isFaded ? 0.3 : 1}
             fontSize={typography.caption.fontSize}>
             {children}

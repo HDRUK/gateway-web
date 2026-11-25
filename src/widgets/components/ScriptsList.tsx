@@ -13,13 +13,13 @@ type ScriptsListProps = { items: ScriptItem[]; branding: WidgetBranding };
 
 export default function ScriptsList({ items }: ScriptsListProps) {
     return (
-        <List sx={{ background: tokens.background.white, p: 0, m: 0 }}>
+        <List sx={{ background: tokens.background.default, p: 0, m: 0 }}>
             {items.map(result => (
                 <ListItem
                     key={result.id}
                     alignItems="flex-start"
                     sx={{
-                        borderBottom: `1px solid ${tokens.status.grey}`,
+                        borderBottom: `1px solid ${tokens.status.neutral}`,
                         "&:last-of-type": { borderBottom: "none", pb: 0 },
                     }}>
                     <ListItemText
@@ -54,7 +54,7 @@ export default function ScriptsList({ items }: ScriptsListProps) {
                                     margin: `${theme.spacing(
                                         2
                                     )} 0 ${theme.spacing(1.5)}`,
-                                    color: tokens.text.secondaryBlack,
+                                    color: tokens.text.secondaryDefault,
                                 }}
                                 text={
                                     result?.description ? (

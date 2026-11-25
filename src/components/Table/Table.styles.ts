@@ -10,8 +10,8 @@ export const table = css({
 
 export const th = css({
     padding: 10,
-    borderBottom: `1px solid ${tokens.status.grey}`,
-    borderRight: `1px solid ${tokens.status.grey}`,
+    borderBottom: `1px solid ${tokens.status.neutral}`,
+    borderRight: `1px solid ${tokens.status.neutral}`,
     ":last-child": {
         borderRight: 0,
     },
@@ -19,8 +19,8 @@ export const th = css({
 
 export const td = css({
     padding: "5px 10px",
-    borderBottom: `1px solid ${tokens.status.grey}`,
-    borderRight: `1px solid ${tokens.status.grey}`,
+    borderBottom: `1px solid ${tokens.status.neutral}`,
+    borderRight: `1px solid ${tokens.status.neutral}`,
     ":last-child": {
         borderRight: 0,
     },

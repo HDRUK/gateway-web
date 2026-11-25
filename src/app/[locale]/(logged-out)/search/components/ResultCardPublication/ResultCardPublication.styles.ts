@@ -18,14 +18,14 @@ export const PublicationYear = styled(Typography)(({ theme }) => ({
 }));
 
 export const PublicationText = styled(Typography)(({ theme }) => ({
-    color: tokens.text.secondaryBlack,
+    color: tokens.text.secondaryDefault,
     fontWeight: 400,
     marginBottom: theme.spacing(2),
 }));
 
 export const PublicationAbstract = styled(EllipsisLineLimit)(({ theme }) => ({
     margin: `${theme.spacing(2)} 0 ${theme.spacing(1.5)}`,
-    color: tokens.text.secondaryBlack,
+    color: tokens.text.secondaryDefault,
 }));
 
 export const PublicationWrapper = styled(ListItemText)(({ theme }) => ({

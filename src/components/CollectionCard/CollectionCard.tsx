@@ -75,7 +75,7 @@ const CollectionCard = ({
                             justifyContent: "center",
                             alignItems: "center",
                             textAlign: "center",
-                            color: tokens.text.primaryWhite,
+                            color: tokens.text.primaryInverse,
                             ...(hasImage
                                 ? { backgroundImage: `url("${image_link}")` }
                                 : {}),

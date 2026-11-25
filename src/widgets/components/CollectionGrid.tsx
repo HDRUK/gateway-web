@@ -33,7 +33,7 @@ export default function CollectionsGrid({ items }: CollectionsGridProps) {
                         href={`${FULL_GATEWAY_URL}/collection/${result.id}`}
                         target="_blank"
                         sx={{
-                            color: tokens.text.primaryWhite,
+                            color: tokens.text.primaryInverse,
                             px: 3,
                             py: 2,
                             display: "flex",
@@ -42,7 +42,7 @@ export default function CollectionsGrid({ items }: CollectionsGridProps) {
                                 result?.image_link ||
                                 "https://media.prod.hdruk.cloud/static/default_placeholder.png"
                             })`,
-                            backgroundColor: tokens.background.white,
+                            backgroundColor: tokens.background.default,
                             backgroundRepeat: "no-repeat",
                             backgroundSize: "contain",
                             backgroundPosition: "center",

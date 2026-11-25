@@ -73,7 +73,7 @@ function MenuDropdown({
                                 maxWidth: 250,
                                 color: theme.palette.primary.main,
                                 textWrap: "initial",
-                                borderBottom: `${tokens.status.grey} 1px solid`,
+                                borderBottom: `${tokens.status.neutral} 1px solid`,
                             }}
                             key={subItem.label}
                             onClick={() => {
@@ -125,7 +125,7 @@ function MenuDropdown({
                             maxWidth: 250,
                             color: theme.palette.primary.main,
                             textWrap: "initial",
-                            borderBottom: `${tokens.status.grey} 1px solid`,
+                            borderBottom: `${tokens.status.neutral} 1px solid`,
                         }}
                         onClick={onClick}
                         aria-label={ariaLabel}

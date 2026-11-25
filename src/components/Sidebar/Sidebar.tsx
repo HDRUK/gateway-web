@@ -68,7 +68,7 @@ const Sidebar = () => {
                         height: 60,
                         display: "flex",
                         WebkitAlignItems: "center",
-                        color: tokens.text.primaryWhite,
+                        color: tokens.text.primaryInverse,
                     }}>
                     <MuiDialogTitle>{title}</MuiDialogTitle>
                     <IconButton
@@ -79,7 +79,7 @@ const Sidebar = () => {
                             position: "absolute",
                             right: 8,
                             top: 8,
-                            color: tokens.text.primaryWhite,
+                            color: tokens.text.primaryInverse,
                         }}>
                         <CloseIcon />
                     </IconButton>

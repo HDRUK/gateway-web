@@ -55,10 +55,10 @@ const AccountNav = () => {
                         alignItems: "center",
                         gap: 1,
                         minWidth: 0,
-                        color: tokens.text.primaryWhite,
+                        color: tokens.text.primaryInverse,
 
                         "&:focus&.Mui-focusVisible": {
-                            outlineColor: tokens.background.white,
+                            outlineColor: tokens.background.default,
                             borderRadius: 0,
                             textDecoration: "underline",
                         },
@@ -94,7 +94,7 @@ const AccountNav = () => {
             // The homepage header sits on the dark hero, so the label is forced
             // white there. Elsewhere `tertiary` supplies its own colour and
             // overriding it would put white text on a light fill.
-            sx={isHomePage ? { color: tokens.text.primaryWhite } : undefined}
+            sx={isHomePage ? { color: tokens.text.primaryInverse } : undefined}
             onClick={() =>
                 showDialog(ProvidersDialog, { isProvidersDialog: true })
             }>

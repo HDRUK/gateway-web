@@ -283,7 +283,7 @@ const TeamTools = ({ permissions, teamId, userId }: TeamToolsProps) => {
             <Tabs
                 centered
                 tabs={tabsList}
-                tabBoxSx={{ padding: 0, background: tokens.background.white }}
+                tabBoxSx={{ padding: 0, background: tokens.background.default }}
                 rootBoxSx={{ padding: 0 }}
             />
         </>

@@ -40,11 +40,11 @@ type DataUsesListProps = { items: DataUseItem[]; branding: WidgetBranding };
 
 export default function DataUsesList({ items }: DataUsesListProps) {
     return (
-        <List sx={{ background: tokens.background.white, p: 0, m: 0 }}>
+        <List sx={{ background: tokens.background.default, p: 0, m: 0 }}>
             {items.map(result => (
                 <ListItem
                     key={result.id}
-                    sx={{ p: 0, borderBottom: `1px solid ${tokens.status.grey}` }}
+                    sx={{ p: 0, borderBottom: `1px solid ${tokens.status.neutral}` }}
                     alignItems="flex-start">
                     <ListItemText
                         disableTypography

@@ -23,7 +23,7 @@ const headerSx = {
     width: "auto%",
     py: 2,
     px: 1,
-    backgroundColor: tokens.background.white,
+    backgroundColor: tokens.background.default,
     borderBottom: `1px solid ${theme.palette.grey[300]}`,
 };
 

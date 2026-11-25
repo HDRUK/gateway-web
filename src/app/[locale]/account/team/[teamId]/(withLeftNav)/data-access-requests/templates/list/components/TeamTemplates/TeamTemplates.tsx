@@ -215,7 +215,7 @@ const TeamTemplates = ({
             <Tabs
                 centered
                 tabs={tabsList}
-                tabBoxSx={{ padding: 0, background: tokens.background.white }}
+                tabBoxSx={{ padding: 0, background: tokens.background.default }}
                 rootBoxSx={{ padding: 0 }}
                 paramName="published"
                 defaultSelectedTab={t("active")}

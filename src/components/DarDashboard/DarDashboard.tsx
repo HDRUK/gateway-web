@@ -259,7 +259,7 @@ export default function DarDashboard({
                             tabs={approvalTab}
                             tabBoxSx={{
                                 padding: 0,
-                                background: tokens.background.white,
+                                background: tokens.background.default,
                             }}
                             rootBoxSx={{
                                 padding: 0,
@@ -345,7 +345,7 @@ export default function DarDashboard({
 
             <Tabs
                 tabs={tabList}
-                tabBoxSx={{ padding: 0, background: tokens.background.white }}
+                tabBoxSx={{ padding: 0, background: tokens.background.default }}
                 rootBoxSx={{
                     padding: 0,
                     borderTop: `1px solid ${tokens.status.hovered}`,

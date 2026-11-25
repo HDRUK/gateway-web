@@ -39,8 +39,8 @@ export default function DatasetsList({ items, branding }: DatasetsListProps) {
                     sx={{
                         p: 0,
                         mb: 1,
-                        borderBottom: `1px solid ${branding?.neutral ?? tokens.status.grey}`,
-                        background: tokens.background.white,
+                        borderBottom: `1px solid ${branding?.neutral ?? tokens.status.neutral}`,
+                        background: tokens.background.default,
                     }}>
                     <ListItemText
                         disableTypography

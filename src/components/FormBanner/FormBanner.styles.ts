@@ -25,7 +25,7 @@ export const DetailBanner = styled(Box)(() => ({
     justifyContent: "space-between",
     gap: 4,
     backgroundColor: tokens.status.information,
-    color: tokens.text.primaryWhite,
+    color: tokens.text.primaryInverse,
     padding: `${theme.spacing(1)} ${theme.spacing(2)}`,
     [theme.breakpoints.up("md")]: {
         flexDirection: "row",
@@ -40,10 +40,10 @@ export const Column = styled("div")<ColumnProps>(({ emphasis, justify }) => ({
     gap: emphasis ? theme.spacing(0.5) : "initial",
     "> p": { fontWeight: emphasis ? 600 : "inherit" },
     "> .MuiButton-text, .MuiButton-link": {
-        color: tokens.text.primaryWhite,
+        color: tokens.text.primaryInverse,
         "&.Mui-disabled": {
             backgroundColor: "transparent",
-            color: tokens.text.primaryWhite,
+            color: tokens.text.primaryInverse,
             opacity: theme.palette.action.disabledOpacity,
         },
     },

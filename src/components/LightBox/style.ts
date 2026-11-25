@@ -17,7 +17,7 @@ export const galleryStyle = {
         right: "-1em",
         top: "-1em",
     },
-    closeIcon: { color: tokens.text.primaryWhite, fontSize: "2em" },
+    closeIcon: { color: tokens.text.primaryInverse, fontSize: "2em" },
     arrow: {
         position: "absolute",
         top: "50%",

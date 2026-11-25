@@ -8,7 +8,7 @@ export const badge = css({
     justifyContent: "center",
     width: tokens.iconSize.large,
     height: tokens.iconSize.large,
-    background: tokens.background.white,
+    background: tokens.background.default,
     borderRadius: "50%",
     color: tokens.brand.secondary,
 });

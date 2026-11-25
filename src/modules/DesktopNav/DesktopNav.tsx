@@ -51,18 +51,18 @@ function DesktopNav() {
                             disableRipple
                             key={item.label}
                             sx={{
-                                color: tokens.text.primaryWhite,
+                                color: tokens.text.primaryInverse,
                                 "&:focus&.Mui-focusVisible": {
-                                    outlineColor: `${tokens.background.white} !important`,
+                                    outlineColor: `${tokens.background.default} !important`,
                                     borderRadius: 0,
                                     textDecoration: "underline",
                                     svg: {
-                                        color: tokens.text.primaryWhite,
+                                        color: tokens.text.primaryInverse,
                                     },
                                 },
                             }}
                             endIcon={
-                                <ExpandMoreIcon sx={{ color: tokens.text.primaryWhite }} />
+                                <ExpandMoreIcon sx={{ color: tokens.text.primaryInverse }} />
                             }
                             onClick={(event: React.MouseEvent<HTMLElement>) =>
                                 handleOpenNav(
@@ -78,7 +78,7 @@ function DesktopNav() {
                         sx={{
                             color: "white",
                             "&:focus&.Mui-focusVisible": {
-                                outlineColor: tokens.background.white,
+                                outlineColor: tokens.background.default,
                                 outlineOffset: "3px",
                                 borderRadius: 0,
                                 textDecoration: "underline",

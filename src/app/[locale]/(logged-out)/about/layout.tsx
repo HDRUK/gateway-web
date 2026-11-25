@@ -7,8 +7,8 @@ export default function AboutLayout({ children }: { children: ReactNode }) {
         <Box
             sx={{
                 flexGrow: 1,
-                backgroundColor: tokens.background.white,
-                color: tokens.text.secondaryBlack,
+                backgroundColor: tokens.background.default,
+                color: tokens.text.secondaryDefault,
             }}>
             {children}
         </Box>

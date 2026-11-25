@@ -35,7 +35,7 @@ const FilterSectionInlineSwitch = ({
                 display: "flex",
                 justifyContent: "space-between",
                 alignItems: "center",
-                background: tokens.background.white,
+                background: tokens.background.default,
                 p: 0,
                 pl: 3,
                 ...containerSx,

@@ -38,7 +38,7 @@ export default function DarApplicationGroup({
                 pb: 1,
                 transition: "background-color 0.1s ease-in",
                 ...(expanded.includes(item.id) && {
-                    backgroundColor: tokens.status.grey,
+                    backgroundColor: tokens.status.neutral,
                 }),
             }}>
             <Box>

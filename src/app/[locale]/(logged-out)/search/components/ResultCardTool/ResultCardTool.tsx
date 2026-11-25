@@ -34,7 +34,7 @@ const ResultCardTool = ({ result }: ResultCardToolProps) => {
         <ListItem
             alignItems="flex-start"
             sx={{
-                borderBottom: `1px solid ${tokens.status.grey}`,
+                borderBottom: `1px solid ${tokens.status.neutral}`,
                 "&:last-of-type": {
                     borderBottom: "none",
                     pb: 0,

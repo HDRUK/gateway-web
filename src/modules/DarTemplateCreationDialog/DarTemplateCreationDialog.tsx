@@ -20,7 +20,7 @@ interface DarTemplateCreationDialogProps {
 }
 
 const BUTTON_SX = {
-    backgroundColor: tokens.background.white,
+    backgroundColor: tokens.background.default,
     display: "flex",
     flexDirection: "column",
     gap: 2,
@@ -38,9 +38,9 @@ const BUTTON_SX = {
         "&:hover, &:focus": {
             backgroundColor: tokens.brand.primary,
             h2: {
-                color: tokens.text.primaryWhite,
+                color: tokens.text.primaryInverse,
             },
-            color: tokens.status.grey,
+            color: tokens.status.neutral,
         },
     },
 };

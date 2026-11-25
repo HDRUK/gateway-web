@@ -26,8 +26,8 @@ const Container = ({ children }: { children: ReactNode }) => {
         <Box
             sx={{
                 height: "100%",
-                background: tokens.text.primaryBlack,
-                color: tokens.text.primaryWhite,
+                background: tokens.text.primaryDefault,
+                color: tokens.text.primaryInverse,
                 p: 3,
             }}>
             {children}
@@ -62,7 +62,7 @@ const RunFederationTest = ({
                         flexDirection: "column",
                     }}>
                     <div>
-                        <Typography fontSize={10} color={tokens.text.secondaryWhite}>
+                        <Typography fontSize={10} color={tokens.text.secondaryInverse}>
                             Complete
                         </Typography>
                         <Box

@@ -31,8 +31,8 @@ interface InfoHoverPanelProps {
 // NOTE: 19px has no typography variant (body1 is 14px), so it stays literal.
 const BUTTON_STYLES = {
     height: "100%",
-    background: tokens.background.white,
-    borderColor: tokens.background.white,
+    background: tokens.background.default,
+    borderColor: tokens.background.default,
     fontSize: { xs: 14, sm: 19 },
     "&:hover, &:focus-visible": {
         backgroundColor: "primary.main",
@@ -139,7 +139,7 @@ const InfoHoverPanel = ({
                 component="h2"
                 sx={{
                     color: {
-                        xs: tokens.text.primaryWhite,
+                        xs: tokens.text.primaryInverse,
                         sm: tokens.brand.secondary,
                     },
                     mt: 3,

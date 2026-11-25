@@ -25,11 +25,11 @@ export const mobileNav = {
 
 export const mobileNavButton = {
     width: "100%",
-    color: tokens.text.secondaryBlack,
-    backgroundColor: tokens.background.white,
+    color: tokens.text.secondaryDefault,
+    backgroundColor: tokens.background.default,
     fontSize: "15px",
     fontWeight: 600,
-    "&:hover": { backgroundColor: tokens.background.white },
+    "&:hover": { backgroundColor: tokens.background.default },
     "& .MuiButton-endIcon": {
         position: "absolute",
         right: (theme: Theme) => theme.spacing(2),

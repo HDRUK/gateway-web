@@ -29,7 +29,7 @@ export default function CardStacked({
                 component={Link}
                 href={href}
                 sx={{
-                    color: tokens.text.primaryWhite,
+                    color: tokens.text.primaryInverse,
                     textDecoration: "none",
                     px: 3,
                     py: 2,
@@ -37,7 +37,7 @@ export default function CardStacked({
                     alignItems: "flex-end",
                     overflow: "hidden",
                     backgroundImage: `url(${imgUrl})`,
-                    backgroundColor: tokens.background.white,
+                    backgroundColor: tokens.background.default,
                     backgroundRepeat: "no-repeat",
                     backgroundSize: "contain",
                     backgroundPosition: "center",

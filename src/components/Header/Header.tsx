@@ -51,7 +51,7 @@ function Header() {
                             mr: 1,
                             "&:focus&.Mui-focusVisible": {
                                 borderRadius: 0,
-                                outline: `2px solid ${tokens.background.white}`,
+                                outline: `2px solid ${tokens.background.default}`,
                                 outlineOffset: "3px",
                             },
                         }}>
@@ -90,13 +90,13 @@ function Header() {
                                 onClick={handleOpenNavMenu}
                                 color="inherit"
                                 sx={{
-                                    color: tokens.text.primaryWhite,
+                                    color: tokens.text.primaryInverse,
                                     "&:hover, &:focus-visible": {
                                         color: "primary.main",
                                     },
                                     "&:focus&.Mui-focusVisible": {
                                         borderRadius: 0,
-                                        outline: `2px solid ${tokens.background.white}`,
+                                        outline: `2px solid ${tokens.background.default}`,
                                         outlineOffset: "3px",
                                     },
                                 }}>

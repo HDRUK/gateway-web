@@ -17,12 +17,12 @@ const circleColors: Record<
 > = {
     [STEP_STATE.COMPLETE]: {
         bg: colors.green400,
-        color: tokens.text.primaryWhite,
+        color: tokens.text.primaryInverse,
         border: "none",
     },
     [STEP_STATE.ACTIVE]: {
-        bg: tokens.text.primaryBlack,
-        color: tokens.text.primaryWhite,
+        bg: tokens.text.primaryDefault,
+        color: tokens.text.primaryInverse,
         border: "none",
     },
     [STEP_STATE.LOCKED]: {
@@ -31,7 +31,7 @@ const circleColors: Record<
         border: "none",
     },
     [STEP_STATE.PENDING]: {
-        bg: tokens.background.white,
+        bg: tokens.background.default,
         color: colors.grey500,
         border: `2px solid ${colors.grey400}`,
     },
@@ -59,7 +59,7 @@ export const getCircleSx = (
 export const connectorSx: SxProps<Theme> = theme => ({
     flexGrow: 1,
     width: 2,
-    bgcolor: tokens.status.grey,
+    bgcolor: tokens.status.neutral,
     my: 0.75,
     minHeight: theme.spacing(2.5),
 });

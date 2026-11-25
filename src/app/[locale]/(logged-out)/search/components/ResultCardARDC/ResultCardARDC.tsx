@@ -31,7 +31,7 @@ const ResultCardARDC = ({ result, providerLogo }: ResultCardARDCProps) => {
 
     return (
         <ListItem
-            sx={{ p: 0, borderBottom: `1px solid ${tokens.status.grey}` }}
+            sx={{ p: 0, borderBottom: `1px solid ${tokens.status.neutral}` }}
             alignItems="flex-start">
             <ListItemText
                 sx={{
@@ -79,7 +79,7 @@ const ResultCardARDC = ({ result, providerLogo }: ResultCardARDCProps) => {
                             <Typography
                                 component="div"
                                 sx={{
-                                    color: tokens.text.secondaryBlack,
+                                    color: tokens.text.secondaryDefault,
                                     mt: 0.5,
                                 }}>
                                 <EllipsisLineLimit

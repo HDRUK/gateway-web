@@ -51,7 +51,7 @@ const PartnerResourcesBanner = ({
             <Box sx={{ flex: 1 }}>
                 <Typography
                     mb={1.5}
-                    sx={{ color: tokens.text.secondaryBlack, fontSize: 15 }}>
+                    sx={{ color: tokens.text.secondaryDefault, fontSize: 15 }}>
                     {t("partnerResourcesBanner")}
                 </Typography>
                 <Box

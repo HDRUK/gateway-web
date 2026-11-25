@@ -47,7 +47,7 @@ const DynamicInputWrapper = ({
                             <Box
                                 key={name ? `${name}.${key}` : key}
                                 sx={{
-                                    borderBottom: `1px solid ${tokens.status.grey}`,
+                                    borderBottom: `1px solid ${tokens.status.neutral}`,
                                     mb: 2,
                                 }}>
                                 <Typography fontWeight="bold" sx={{ mb: 2 }}>
