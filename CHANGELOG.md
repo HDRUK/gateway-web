@@ -1,3 +1,17 @@
+## [2.52.0](https://github.com/HDRUK/gateway-web/compare/v2.51.0...v2.52.0) (2026-11-26)
+
+### ✨ Features
+
+* **GAT-5649:** Add generated opengraph metadata (#1758) ([c7ffb0c](https://github.com/HDRUK/gateway-web/commit/c7ffb0c0b30afc53d04ec12f8f8d472f0b513634)), closes [GAT-5649](undefinedGAT-5649)
+* **GAT-8366:** Add partners page (#1761) ([cc2cee6](https://github.com/HDRUK/gateway-web/commit/cc2cee6061c80f9237f8937e0af630bcacd9ff60)), closes [GAT-8366](undefinedGAT-8366)
+* **GAT-9868:** Remove NHS SDE Modal after submission of CDS application (#1756) ([d6bd4f2](https://github.com/HDRUK/gateway-web/commit/d6bd4f22dfd6493c3c9fea2681a29cfaed3b5643)), closes [GAT-9868](undefinedGAT-9868)
+* **GAT-9906:** Collaborative dataset onboarding on the schema-driven form (#1757) ([661acce](https://github.com/HDRUK/gateway-web/commit/661acce850d8b5df7bf137668b790480670096ee)), closes [GAT-9906](undefinedGAT-9906)
+
+### 🐛 Bug Fixes
+
+* **GAT-9719:** pin dompurify version (#1760) ([6a07be4](https://github.com/HDRUK/gateway-web/commit/6a07be4709b901a3c55cd448562cbe6d4e910448)), closes [GAT-9719](undefinedGAT-9719)
+* **GAT-9883:** Stop homepage hover panel resizing on hover (#1759) ([4beae7d](https://github.com/HDRUK/gateway-web/commit/4beae7d27a5d5c8dfb568497677d88717bfaa9ee)), closes [GAT-9883](undefinedGAT-9883)
+
 ## [2.51.0](https://github.com/HDRUK/gateway-web/compare/v2.50.3...v2.51.0) (2026-11-19)
 
 ### ✨ Features
