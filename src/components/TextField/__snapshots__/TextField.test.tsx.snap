@@ -22,7 +22,7 @@ exports[`TextField should render icon 1`] = `
       class="MuiBox-root mui-style-ve6emg"
     >
       <div
-        class="MuiInputBase-root MuiOutlinedInput-root MuiInputBase-colorPrimary MuiInputBase-fullWidth MuiInputBase-sizeSmall MuiInputBase-adornedStart mui-style-108aqsv-MuiInputBase-root-MuiOutlinedInput-root"
+        class="MuiInputBase-root MuiOutlinedInput-root MuiInputBase-colorPrimary MuiInputBase-fullWidth MuiInputBase-sizeSmall MuiInputBase-adornedStart mui-style-1nx3i9o-MuiInputBase-root-MuiOutlinedInput-root"
       >
         <div
           class="MuiInputAdornment-root MuiInputAdornment-positionStart mui-style-1nowbqt-MuiInputAdornment-root"
@@ -47,7 +47,7 @@ exports[`TextField should render icon 1`] = `
         </div>
         <input
           aria-invalid="false"
-          class="MuiInputBase-input MuiOutlinedInput-input MuiInputBase-inputSizeSmall MuiInputBase-inputAdornedStart mui-style-1b17i47-MuiInputBase-input-MuiOutlinedInput-input"
+          class="MuiInputBase-input MuiOutlinedInput-input MuiInputBase-inputSizeSmall MuiInputBase-inputAdornedStart mui-style-svw9ml-MuiInputBase-input-MuiOutlinedInput-input"
           id="fieldName"
           name="fieldName"
           type="text"
@@ -55,7 +55,7 @@ exports[`TextField should render icon 1`] = `
         />
         <fieldset
           aria-hidden="true"
-          class="MuiOutlinedInput-notchedOutline mui-style-18p5xg2-MuiNotchedOutlined-root-MuiOutlinedInput-notchedOutline"
+          class="MuiOutlinedInput-notchedOutline mui-style-lm3v05-MuiNotchedOutlined-root-MuiOutlinedInput-notchedOutline"
         >
           <legend
             class="mui-style-1nf2c5d-MuiNotchedOutlined-root"

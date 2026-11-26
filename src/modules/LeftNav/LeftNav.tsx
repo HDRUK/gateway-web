@@ -70,16 +70,16 @@ const LeftNav = ({
                     );
                 }
 
+                const holdsCurrentPage = item.subItems.some(subItem =>
+                    trimmedPathname.includes(subItem.matchPath ?? subItem.href)
+                );
+
                 return (
                     <MenuDropdown
-                        key={item.label}
+                        key={`${item.label}-${holdsCurrentPage}`}
                         label={item.label}
                         icon={item.icon}
-                        defaultExpanded={item.subItems.some(subItem =>
-                            trimmedPathname.includes(
-                                subItem.matchPath ?? subItem.href
-                            )
-                        )}>
+                        defaultExpanded={holdsCurrentPage}>
                         {item.subItems.map(subItem => {
                             const selected = subNavItemSelected(
                                 subItem.matchPath ?? subItem.href

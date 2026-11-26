@@ -3,7 +3,7 @@ import Cookies from "js-cookie";
 import mockRouter from "next-router-mock";
 import config from "@/config/config";
 import { RouteName } from "@/consts/routeName";
-import { fireEvent, render, waitFor, within } from "@/utils/testUtils";
+import { act, fireEvent, render, waitFor, within } from "@/utils/testUtils";
 import LeftNav from "./LeftNav";
 
 jest.mock("js-cookie", () => ({
@@ -123,6 +123,41 @@ describe("LeftNav", () => {
         expect(
             getByRole("link", { name: "Custom Integrations" })
         ).toHaveAttribute("aria-current", "page");
+    });
+
+    it("opens a section when navigation moves into one of its pages", () => {
+        const teamNav = (
+            <LeftNav
+                teamId="1"
+                permissions={{
+                    "roles.read": true,
+                    "applications.read": true,
+                    "integrations.metadata": true,
+                    "integrations.dar": true,
+                }}
+                initialLeftNavOpen={true}
+            />
+        );
+        mockRouter.push(`/en/${RouteName.ACCOUNT}/${RouteName.TEAM}/1/help`);
+        mockRouter.query = { ...mockRouter.query, locale: "en" };
+
+        const { getByRole, rerender } = render(teamNav);
+        expect(getByRole("button", { name: "Integrations" })).toHaveAttribute(
+            "aria-expanded",
+            "false"
+        );
+
+        act(() => {
+            mockRouter.push(
+                `/en/${RouteName.ACCOUNT}/${RouteName.TEAM}/1/${RouteName.INTEGRATIONS}/${RouteName.API_MANAGEMENT}/${RouteName.LIST}`
+            );
+        });
+        rerender(teamNav);
+
+        expect(getByRole("button", { name: "Integrations" })).toHaveAttribute(
+            "aria-expanded",
+            "true"
+        );
     });
 
     it("closes the profile navigation and creates cookie", () => {

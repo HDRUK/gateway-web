@@ -17,7 +17,7 @@ The account and team pages (`account/profile/layout.tsx`, `account/team/[teamId]
 -   A top-level link is current when its `href` equals the path without the locale.
 -   A sub-link is current when the path equals its `matchPath ?? href`, or sits below it. `matchPath` lets one link stay current across several routes (Integrations › Custom Integrations is current on every `api-management/*` page).
 -   The current link gets `selected` (green bar and bold label) and `aria-current="page"`.
--   A section starts open when the current page is one of its sub-links. Sections open and close independently after that.
+-   A section opens whenever the current page becomes one of its sub-links, on first load or after client-side navigation (each `MenuDropdown` is keyed on whether it holds the current page, so it remounts open). Sections open and close independently after that, and moving between pages of the same section keeps the user's choice.
 
 ## Rail and persistence
 
@@ -27,7 +27,7 @@ Below the `sm` breakpoint the rail does not apply. The heading row becomes a tog
 
 ## Icons
 
-Item icons come from `src/consts/icons` and size to 24px in the item's icon slot. The chevrons and the rail toggle use the library's `Icon`, which renders with the Material Symbols Rounded font. The locale layout (`src/app/[locale]/layout.tsx`) imports `@material-symbols/font-300/rounded.css`, which self-hosts the weight-300 face (matching `tokens.iconWeight`) and defines the `.material-symbols-rounded` class the `Icon` uses. It is served first-party, so visitors' browsers make no request to Google, and with `font-display: block` icons never flash as their ligature names. The browser only downloads the font on pages that render an icon. If `tokens.iconWeight` changes, swap the package for the matching `@material-symbols/font-<weight>`. Below the `sm` breakpoint the open mobile toggle is a selected horizontal `MenuItem`, so it shows the green bottom bar.
+Item icons are `@hdruk/ui` `Icon` elements (Material Symbols names) set in `src/utils/nav.tsx` and size to 24px in the item's icon slot. The chevrons and the rail toggle use the library's `Icon`, which renders with the Material Symbols Rounded font. The locale layout (`src/app/[locale]/layout.tsx`) imports `@material-symbols/font-300/rounded.css`, which self-hosts the weight-300 face (matching `tokens.iconWeight`) and defines the `.material-symbols-rounded` class the `Icon` uses. It is served first-party, so visitors' browsers make no request to Google, and with `font-display: block` icons never flash as their ligature names. The browser only downloads the font on pages that render an icon. If `tokens.iconWeight` changes, swap the package for the matching `@material-symbols/font-<weight>`. Below the `sm` breakpoint the open mobile toggle is a selected horizontal `MenuItem`, so it shows the green bottom bar.
 
 ## Styling
 
