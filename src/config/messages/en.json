@@ -163,7 +163,7 @@
             "unsavedChangesWarning": "Changes to your profile account are not automatically saved."
         },
         "emailVerification": {
-            "title": "Email verifcation",
+            "title": "Email verification",
             "fail": "Verification expired or invalid.",
             "pass": "Email verified."
         },
