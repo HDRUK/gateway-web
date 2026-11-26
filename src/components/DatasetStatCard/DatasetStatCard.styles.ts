@@ -6,8 +6,8 @@ import { colors } from "@/config/theme";
 export const StatCard = styled(Card)(() => ({
     display: "flex",
     flexDirection: "column",
-    background: `linear-gradient(90deg,${colors.purple400} 100%, ${tokens.background.white} 13px)`,
-    color: tokens.text.primaryWhite,
+    background: `linear-gradient(90deg,${colors.purple400} 100%, ${tokens.background.default} 13px)`,
+    color: tokens.text.primaryInverse,
     borderRadius: 5,
     boxShadow: "3px 3px 6px 0px rgba(0,0,0,.09)",
     paddingRight: "13px",

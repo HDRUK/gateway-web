@@ -60,7 +60,7 @@ const ResultCardDataUse = ({ result }: ResultCardProps) => {
 
     return (
         <ListItem
-            sx={{ p: 0, borderBottom: `1px solid ${tokens.status.grey}` }}
+            sx={{ p: 0, borderBottom: `1px solid ${tokens.status.neutral}` }}
             alignItems="flex-start">
             <ListItemText
                 disableTypography

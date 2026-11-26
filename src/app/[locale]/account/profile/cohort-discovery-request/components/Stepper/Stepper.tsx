@@ -56,7 +56,7 @@ export const StepTitle = ({
         sx={{
             fontWeight: 600,
             fontSize: small ? 16 : 18,
-            color: muted ? colors.grey500 : tokens.text.primaryBlack,
+            color: muted ? colors.grey500 : tokens.text.primaryDefault,
             mb: 0.5,
         }}>
         {children}

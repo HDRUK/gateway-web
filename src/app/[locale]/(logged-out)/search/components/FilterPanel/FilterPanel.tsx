@@ -160,7 +160,7 @@ const filterCountStyles = {
     width: "25px",
     height: "25px",
     flexShrink: 0,
-    color: tokens.text.primaryWhite,
+    color: tokens.text.primaryInverse,
     display: "flex",
     alignItems: "center",
     justifyContent: "center",
@@ -908,7 +908,7 @@ const FilterPanel = ({
                         key={label}
                         id={`filter-${label}`}
                         sx={{
-                            background: tokens.background.white,
+                            background: tokens.background.default,
                             boxShadow: "none",
                             mt: 0.5,
                             mb: 0.5,

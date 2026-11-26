@@ -1,10 +1,12 @@
 "use client";
 
+import { useState } from "react";
 import { LeftNav as HdrukLeftNav, MenuDropdown, MenuItem } from "@hdruk/ui";
 import Cookies from "js-cookie";
 import Link from "next/link";
 import { usePathname, useParams } from "next/navigation";
 import { Role } from "@/interfaces/Role";
+import { LeftNavItem } from "@/interfaces/Ui";
 import EllipsisCharacterLimit from "@/components/EllipsisCharacterLimit";
 import config from "@/config/config";
 import { getTrimmedpathname } from "@/utils/general";
@@ -39,6 +41,26 @@ const LeftNav = ({
     const subNavItemSelected = (href: string) =>
         trimmedPathname === href || trimmedPathname.startsWith(`${href}/`);
 
+    const holdsCurrentPage = (item: LeftNavItem) =>
+        !!item.subItems?.some(subItem =>
+            trimmedPathname.includes(subItem.matchPath ?? subItem.href)
+        );
+
+    const currentSection = navItems.find(holdsCurrentPage)?.label;
+
+    const [openSections, setOpenSections] = useState<Record<string, boolean>>(
+        currentSection ? { [currentSection]: true } : {}
+    );
+    const [openedFor, setOpenedFor] = useState(currentSection);
+
+    if (openedFor !== currentSection) {
+        setOpenedFor(currentSection);
+        setOpenSections(previous => ({
+            ...previous,
+            ...(currentSection && { [currentSection]: true }),
+        }));
+    }
+
     return (
         <HdrukLeftNav
             heading={
@@ -70,16 +92,18 @@ const LeftNav = ({
                     );
                 }
 
-                const holdsCurrentPage = item.subItems.some(subItem =>
-                    trimmedPathname.includes(subItem.matchPath ?? subItem.href)
-                );
-
                 return (
                     <MenuDropdown
-                        key={`${item.label}-${holdsCurrentPage}`}
+                        key={item.label}
                         label={item.label}
                         icon={item.icon}
-                        defaultExpanded={holdsCurrentPage}>
+                        expanded={!!openSections[item.label]}
+                        onChange={(_event, expanded) =>
+                            setOpenSections(previous => ({
+                                ...previous,
+                                [item.label]: expanded,
+                            }))
+                        }>
                         {item.subItems.map(subItem => {
                             const selected = subNavItemSelected(
                                 subItem.matchPath ?? subItem.href

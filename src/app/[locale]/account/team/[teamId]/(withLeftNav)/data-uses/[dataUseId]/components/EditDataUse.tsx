@@ -339,11 +339,11 @@ const EditDataUse = () => {
                                 sx={{
                                     ".MuiAccordionSummary-root": {
                                         background: colors.purple400,
-                                        color: tokens.text.primaryWhite,
+                                        color: tokens.text.primaryInverse,
                                     },
                                     ".MuiSvgIcon-root.MuiSvgIcon-colorPrimary":
                                         {
-                                            color: tokens.text.primaryWhite,
+                                            color: tokens.text.primaryInverse,
                                         },
                                 }}
                                 heading={

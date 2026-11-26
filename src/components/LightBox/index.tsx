@@ -61,7 +61,7 @@ export const LightBox = () => {
                                     component="figcaption">
                                     <Typography
                                         variant="body1"
-                                        color={tokens.text.primaryWhite}>
+                                        color={tokens.text.primaryInverse}>
                                         {lightBoxImage.title}
                                     </Typography>
                                 </Box>

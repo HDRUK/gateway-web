@@ -226,7 +226,7 @@ const ActionDropdown = ({
     return (
         <>
             <Button
-                endIcon={<ArrowDropDownIcon style={{ color: tokens.text.primaryWhite }} />}
+                endIcon={<ArrowDropDownIcon style={{ color: tokens.text.primaryInverse }} />}
                 sx={{ py: 0.5 }}
                 onClick={handleOpenDropdownMenu}
                 aria-label={title ? `${t("actions")} for ${title}` : undefined}>

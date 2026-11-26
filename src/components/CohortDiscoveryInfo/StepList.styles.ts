@@ -58,7 +58,7 @@ export const StepCircle = styled("span")(({ theme }) => ({
     justifyContent: "center",
     border: `${theme.spacing(0.25)} solid ${colors.grey400}`,
     background: tokens.status.hovered,
-    color: tokens.text.secondaryBlack,
+    color: tokens.text.secondaryDefault,
     fontWeight: 600,
     marginTop: -MARKER_RAISE,
 }));
@@ -72,7 +72,7 @@ export const StepMarkerIcon = styled("span")(({ theme }) => ({
     alignItems: "center",
     justifyContent: "center",
     background: theme.palette.common.white,
-    color: tokens.text.secondaryBlack,
+    color: tokens.text.secondaryDefault,
     marginTop: -(MARKER_RAISE + 2),
     "& svg": {
         fontSize: theme.spacing(3.75),

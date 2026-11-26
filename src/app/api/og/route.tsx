@@ -187,7 +187,7 @@ export async function GET(request: Request) {
                     fontFamily: FONT_FAMILY,
                     fontWeight: 700,
                     backgroundColor: tokens.brand.primary,
-                    color: tokens.text.primaryWhite,
+                    color: tokens.text.primaryInverse,
                 }}>
                 {isSiteCard ? (
                     brand
@@ -221,7 +221,7 @@ export async function GET(request: Request) {
                             justifyContent: "center",
                             padding: 32,
                             borderRadius: 16,
-                            backgroundColor: tokens.background.white,
+                            backgroundColor: tokens.background.default,
                         }}>
                         <img
                             src={entityImage}

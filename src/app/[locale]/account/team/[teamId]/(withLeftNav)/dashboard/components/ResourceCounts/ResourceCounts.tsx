@@ -145,9 +145,9 @@ const ResourceCounts = ({
                             top: "50%",
                             transform: "translate(-50%, -50%)",
                             zIndex: 1,
-                            bgcolor: tokens.background.white,
+                            bgcolor: tokens.background.default,
                             boxShadow: 2,
-                            "&:hover": { bgcolor: tokens.background.white },
+                            "&:hover": { bgcolor: tokens.background.default },
                         }}>
                         <ArrowBackIosNewIcon fontSize="small" />
                     </IconButton>
@@ -181,9 +181,9 @@ const ResourceCounts = ({
                             top: "50%",
                             transform: "translate(50%, -50%)",
                             zIndex: 1,
-                            bgcolor: tokens.background.white,
+                            bgcolor: tokens.background.default,
                             boxShadow: 2,
-                            "&:hover": { bgcolor: tokens.background.white },
+                            "&:hover": { bgcolor: tokens.background.default },
                         }}>
                         <ArrowForwardIosIcon fontSize="small" />
                     </IconButton>

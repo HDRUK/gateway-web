@@ -148,8 +148,8 @@ const IntegrationHistoryTable = () => {
                 data-testid="integration-history-detail"
                 sx={{
                     p: 3,
-                    background: tokens.text.primaryBlack,
-                    color: tokens.text.primaryWhite,
+                    background: tokens.text.primaryDefault,
+                    color: tokens.text.primaryInverse,
                 }}>
                 {!selected ? (
                     <Typography sx={{ textAlign: "center" }}>
@@ -157,7 +157,7 @@ const IntegrationHistoryTable = () => {
                     </Typography>
                 ) : (
                     <>
-                        <Typography fontSize={10} color={tokens.text.secondaryWhite}>
+                        <Typography fontSize={10} color={tokens.text.secondaryInverse}>
                             {formatDate(selected.started_at, "DD MMM YYYY HH:mm")}
                         </Typography>
                         <Box

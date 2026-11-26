@@ -145,7 +145,7 @@ export default function WidgetDisplay({
                 height: `${size_height}${unit}`,
                 overflow: "hidden",
                 backgroundColor: branding_neutral ?? theme.palette.grey[100],
-                color: tokens.text.primaryBlack,
+                color: tokens.text.primaryDefault,
             }}
             ref={widgetContainer}>
             <Box
@@ -206,7 +206,7 @@ export default function WidgetDisplay({
                             target="_blank"
                             rel="noopener noreferrer"
                             sx={{
-                                backgroundColor: tokens.background.white,
+                                backgroundColor: tokens.background.default,
                                 flexShrink: 0,
                             }}
                             color="greyCustom"

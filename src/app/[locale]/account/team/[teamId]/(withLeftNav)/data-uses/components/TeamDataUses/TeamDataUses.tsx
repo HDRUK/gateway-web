@@ -275,7 +275,7 @@ const TeamDataUses = ({ permissions, teamId }: TeamDataUsesProps) => {
             <Tabs
                 centered
                 tabs={tabsList}
-                tabBoxSx={{ padding: 0, background: tokens.background.white }}
+                tabBoxSx={{ padding: 0, background: tokens.background.default }}
                 rootBoxSx={{ padding: 0 }}
             />
         </>

@@ -78,7 +78,7 @@ const ApplicationList = () => {
                 tabs={tabsList}
                 renderTabContent={false}
                 defaultSelectedTab={ApplicationStatus.ALL}
-                tabBoxSx={{ padding: 0, background: tokens.background.white }}
+                tabBoxSx={{ padding: 0, background: tokens.background.default }}
                 rootBoxSx={{ padding: 0 }}
             />
 

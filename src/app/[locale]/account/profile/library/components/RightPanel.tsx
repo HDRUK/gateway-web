@@ -168,7 +168,7 @@ const RightPanel = ({ selected, handleRemove }: RightPanelProps) => {
                                 useFlexGap
                                 sx={{
                                     justifyContent: "space-between",
-                                    borderBottom: `1px solid ${tokens.status.grey}`,
+                                    borderBottom: `1px solid ${tokens.status.neutral}`,
                                     pb: 1,
                                 }}>
                                 <Stack direction="row" sx={{ p: 0, gap: 1 }}>

@@ -40,7 +40,7 @@ const ResultCardPublication = ({ result }: ResultCardPublicationProps) => {
 
     return (
         <ListItem
-            sx={{ p: 0, borderBottom: `1px solid ${tokens.status.grey}` }}
+            sx={{ p: 0, borderBottom: `1px solid ${tokens.status.neutral}` }}
             alignItems="flex-start">
             <ListItem component="div">
                 <PublicationWrapper

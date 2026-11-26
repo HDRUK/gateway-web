@@ -34,7 +34,7 @@ const KeyValueList = ({ rows }: KeyValueListProps) => {
                         component="div"
                         sx={{
                             fontSize: 13,
-                            color: row.color || tokens.text.secondaryBlack,
+                            color: row.color || tokens.text.secondaryDefault,
                         }}>
                         {row.value}
                     </Typography>

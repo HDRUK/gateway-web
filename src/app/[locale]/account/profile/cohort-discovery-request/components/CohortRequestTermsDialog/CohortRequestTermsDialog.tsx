@@ -95,7 +95,7 @@ const CohortRequestTermsDialog = () => {
                             sx={{
                                 width: 240,
                                 pl: 0,
-                                borderRight: `1px solid ${tokens.status.grey}`,
+                                borderRight: `1px solid ${tokens.status.neutral}`,
                             }}>
                             <ActiveList
                                 handleClick={handleScroll}
@@ -108,7 +108,7 @@ const CohortRequestTermsDialog = () => {
                                 sx={{
                                     p: 0,
                                     mb: 2,
-                                    borderBottom: `1px solid ${tokens.status.grey}`,
+                                    borderBottom: `1px solid ${tokens.status.neutral}`,
                                 }}>
                                 <Typography
                                     variant="h2"
@@ -169,7 +169,7 @@ const CohortRequestTermsDialog = () => {
                     sx={{
                         justifyContent: "space-between",
                         p: 2,
-                        borderTop: `1px solid ${tokens.status.grey}`,
+                        borderTop: `1px solid ${tokens.status.neutral}`,
                     }}>
                     <InputWrapper
                         control={control}

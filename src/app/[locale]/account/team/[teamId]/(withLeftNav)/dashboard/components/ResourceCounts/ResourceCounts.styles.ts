@@ -34,7 +34,7 @@ export const ResourceCardItem = styled("li")(({ theme }) => ({
     alignItems: "center",
     gap: theme.spacing(1),
     background: tokens.background.primary,
-    border: `1px solid ${tokens.status.grey}`,
+    border: `1px solid ${tokens.status.neutral}`,
     borderRadius: theme.shape.borderRadius,
     padding: theme.spacing(3, 2),
     textAlign: "center",

@@ -3,7 +3,7 @@ import { styled } from "@mui/material";
 
 export const StyledNewsletterSignup = styled("div")(({ theme }) => ({
     p: 0,
-    color: tokens.text.secondaryBlack,
+    color: tokens.text.secondaryDefault,
     backgroundColor: "#fff",
     zIndex: 1,
     display: "flex",

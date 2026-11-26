@@ -109,7 +109,7 @@ export default function DarStatusTracker({
                                             : isFuture
                                             ? colors.grey500
                                             : isActive
-                                            ? tokens.background.white
+                                            ? tokens.background.default
                                             : colors.green400,
                                 }}>
                                 <Box
@@ -119,7 +119,7 @@ export default function DarStatusTracker({
                                         borderRadius: "50%",
                                         bgcolor: isActive
                                             ? colors.green400
-                                            : tokens.background.white,
+                                            : tokens.background.default,
                                         p: 0,
                                     }}
                                 />

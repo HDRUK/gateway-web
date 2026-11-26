@@ -63,14 +63,14 @@ export const filterSidebarToggle = (theme: Theme, open: boolean) => ({
     position: "absolute",
     zIndex: theme.zIndex.modal,
     borderRadius: "50%",
-    backgroundColor: tokens.background.white,
+    backgroundColor: tokens.background.default,
     width: "48px",
     height: "48px",
     top: 20,
     m: 0,
     left: open ? 290 : 20,
     "&:hover": {
-        backgroundColor: tokens.status.grey,
+        backgroundColor: tokens.status.neutral,
     },
     transition: theme.transitions.create(
         "left",

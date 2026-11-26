@@ -94,16 +94,16 @@ const palette = {
     // `main` is the resting fill and `dark` the hover: MUI derives every
     // button state from these, so the shades carry the whole colour.
     greyCustom: {
-        light: tokens.status.grey,
+        light: tokens.status.neutral,
         main: colors.grey400,
         dark: colors.grey500,
-        contrastText: tokens.text.secondaryBlack,
+        contrastText: tokens.text.secondaryDefault,
     },
     yellowCustom: {
         main: colors.yellow400,
         light: "#E9DB5D",
         dark: "#A29415",
-        contrastText: tokens.text.secondaryBlack,
+        contrastText: tokens.text.secondaryDefault,
     },
 };
 
@@ -150,7 +150,7 @@ const theme = createHdrukTheme({
                     background: tokens.status.hovered,
 
                     "&.Mui-selected": {
-                        background: tokens.background.white,
+                        background: tokens.background.default,
                     },
                     border: "none",
                 },
@@ -191,9 +191,6 @@ const theme = createHdrukTheme({
             styleOverrides: {
                 root: {
                     marginTop: 3,
-                    "& fieldset": {
-                        borderWidth: 2,
-                    },
                     "&.MuiOutlinedInput-root.Mui-error .MuiOutlinedInput-notchedOutline":
                         {
                             borderColor: tokens.status.error,
@@ -442,7 +439,7 @@ const theme = createHdrukTheme({
                             "& .MuiSwitch-input": {
                                 left: "-220%",
                             },
-                            color: tokens.background.white,
+                            color: tokens.background.default,
                             "& + .MuiSwitch-track": {
                                 backgroundColor: tokens.brand.secondary,
                                 opacity: 1,
