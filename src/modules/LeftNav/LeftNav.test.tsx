@@ -160,6 +160,35 @@ describe("LeftNav", () => {
         );
     });
 
+    it("keeps focus on a followed sub-link when its section becomes current", () => {
+        const teamNav = (
+            <LeftNav
+                teamId="1"
+                permissions={{
+                    "roles.read": true,
+                    "applications.read": true,
+                    "integrations.metadata": true,
+                    "integrations.dar": true,
+                }}
+                initialLeftNavOpen={true}
+            />
+        );
+        mockRouter.push(`/en/${RouteName.ACCOUNT}/${RouteName.TEAM}/1/help`);
+        mockRouter.query = { ...mockRouter.query, locale: "en" };
+
+        const { getByRole, rerender } = render(teamNav);
+        fireEvent.click(getByRole("button", { name: "Integrations" }));
+        const link = getByRole("link", { name: "Custom Integrations" });
+        link.focus();
+
+        act(() => {
+            mockRouter.push(`/en${link.getAttribute("href")}`);
+        });
+        rerender(teamNav);
+        expect(link).toBeInTheDocument();
+        expect(link).toHaveFocus();
+    });
+
     it("closes the profile navigation and creates cookie", () => {
         const { getByRole } = render(
             <LeftNav

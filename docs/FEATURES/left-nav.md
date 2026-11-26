@@ -17,7 +17,7 @@ The account and team pages (`account/profile/layout.tsx`, `account/team/[teamId]
 -   A top-level link is current when its `href` equals the path without the locale.
 -   A sub-link is current when the path equals its `matchPath ?? href`, or sits below it. `matchPath` lets one link stay current across several routes (Integrations › Custom Integrations is current on every `api-management/*` page).
 -   The current link gets `selected` (green bar and bold label) and `aria-current="page"`.
--   A section opens whenever the current page becomes one of its sub-links, on first load or after client-side navigation (each `MenuDropdown` is keyed on whether it holds the current page, so it remounts open). Sections open and close independently after that, and moving between pages of the same section keeps the user's choice.
+-   A section opens whenever the current page becomes one of its sub-links, on first load or after client-side navigation. Gateway controls each `MenuDropdown` (`expanded` / `onChange`) and opens the sections holding the current page when the pathname changes, without remounting, so a followed sub-link keeps keyboard focus. Sections open and close independently otherwise, and a section the user opened stays open when they navigate out of it.
 
 ## Rail and persistence
 
