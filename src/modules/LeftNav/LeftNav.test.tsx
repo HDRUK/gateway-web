@@ -3,7 +3,7 @@ import Cookies from "js-cookie";
 import mockRouter from "next-router-mock";
 import config from "@/config/config";
 import { RouteName } from "@/consts/routeName";
-import { fireEvent, render, waitFor, within } from "@/utils/testUtils";
+import { act, fireEvent, render, waitFor, within } from "@/utils/testUtils";
 import LeftNav from "./LeftNav";
 
 jest.mock("js-cookie", () => ({
@@ -125,6 +125,41 @@ describe("LeftNav", () => {
         ).toHaveAttribute("aria-current", "page");
     });
 
+    it("opens a section when navigation moves into one of its pages", () => {
+        const teamNav = (
+            <LeftNav
+                teamId="1"
+                permissions={{
+                    "roles.read": true,
+                    "applications.read": true,
+                    "integrations.metadata": true,
+                    "integrations.dar": true,
+                }}
+                initialLeftNavOpen={true}
+            />
+        );
+        mockRouter.push(`/en/${RouteName.ACCOUNT}/${RouteName.TEAM}/1/help`);
+        mockRouter.query = { ...mockRouter.query, locale: "en" };
+
+        const { getByRole, rerender } = render(teamNav);
+        expect(getByRole("button", { name: "Integrations" })).toHaveAttribute(
+            "aria-expanded",
+            "false"
+        );
+
+        act(() => {
+            mockRouter.push(
+                `/en/${RouteName.ACCOUNT}/${RouteName.TEAM}/1/${RouteName.INTEGRATIONS}/${RouteName.API_MANAGEMENT}/${RouteName.LIST}`
+            );
+        });
+        rerender(teamNav);
+
+        expect(getByRole("button", { name: "Integrations" })).toHaveAttribute(
+            "aria-expanded",
+            "true"
+        );
+    });
+
     it("closes the profile navigation and creates cookie", () => {
         const { getByRole } = render(
             <LeftNav
@@ -187,7 +222,7 @@ describe("LeftNav", () => {
 
     it("mobile horizontal nav can be opened with button click", async () => {
         setScreenWidth(200);
-        const { getByRole, queryByText } = render(
+        const { getByRole } = render(
             <LeftNav
                 permissions={{ "cohort.read": false }}
                 initialLeftNavOpen={true}
@@ -196,12 +231,12 @@ describe("LeftNav", () => {
         );
 
         const toggle = getByRole("button", {
-            name: "Your Profile",
+            name: "Team",
         });
         fireEvent.click(toggle);
 
         await waitFor(() => {
-            expect(queryByText("Library")).toBeInTheDocument();
+            expect(toggle).toHaveAttribute("aria-expanded", "true");
         });
     });
 });

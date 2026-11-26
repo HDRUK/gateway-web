@@ -1,28 +1,8 @@
+import { Icon } from "@hdruk/ui";
 import { Role } from "@/interfaces/Role";
 import { LeftNavItem } from "@/interfaces/Ui";
-import {
-    ControlPointIcon,
-    ToolIcon,
-    HelpOutlineOutlinedIcon,
-    DataUseIcon,
-    DatabaseIcon, // CloudUploadIcon,
-    BookmarkBorderIcon,
-    BookmarkIcon,
-    BookmarksOutlinedIcon,
-    PublicationIcon,
-    PersonOutlineOutlinedIcon,
-    CohortIcon,
-    CloudUploadIcon,
-    TeamMembersIcon,
-    DarIcon,
-    EmailIcon,
-    GridViewOutlinedIcon,
-    AdminPanelSettingsIcon,
-} from "@/consts/icons";
 import { RouteName } from "@/consts/routeName";
 import { isSuperAdmin } from "@/utils/permissions";
-
-const navIcon = (Icon: React.ElementType) => <Icon fontSize="inherit" />;
 
 const getProfileNav = (
     permissions: {
@@ -32,24 +12,24 @@ const getProfileNav = (
 ): LeftNavItem[] => {
     return [
         {
-            icon: navIcon(PersonOutlineOutlinedIcon),
+            icon: <Icon name="person" />,
             label: "Your Profile",
             href: `/${RouteName.ACCOUNT}/${RouteName.PROFILE}`,
         },
         {
-            icon: navIcon(BookmarkBorderIcon),
+            icon: <Icon name="bookmark" />,
             label: "Library",
             href: `/${RouteName.ACCOUNT}/${RouteName.PROFILE}/${RouteName.LIBRARY}`,
         },
         {
-            icon: navIcon(BookmarkIcon),
+            icon: <Icon name="saved_search" />,
             label: "Saved searches",
             href: `/${RouteName.ACCOUNT}/${RouteName.PROFILE}/${RouteName.SAVED_SEARCHES}`,
         },
         ...(isSuperAdmin(roles)
             ? [
                   {
-                      icon: navIcon(AdminPanelSettingsIcon),
+                      icon: <Icon name="admin_panel_settings" />,
                       label: "Admin Panel",
                       href: `/${RouteName.ACCOUNT}/${RouteName.PROFILE}/${RouteName.SEARCH_ADMIN}`,
                   },
@@ -58,7 +38,7 @@ const getProfileNav = (
         ...(permissions["custodians.read"]
             ? [
                   {
-                      icon: navIcon(ControlPointIcon),
+                      icon: <Icon name="add_circle" />,
                       label: "Teams",
                       href: `/${RouteName.ACCOUNT}/${RouteName.PROFILE}/${RouteName.TEAMS}`,
                   },
@@ -67,14 +47,14 @@ const getProfileNav = (
         ...(permissions["cohort.read"]
             ? [
                   {
-                      icon: navIcon(CohortIcon),
+                      icon: <Icon name="person_search" />,
                       label: "Cohort Discovery Admin",
                       href: `/${RouteName.ACCOUNT}/${RouteName.PROFILE}/${RouteName.COHORT_DISCOVERY_ADMIN}`,
                   },
               ]
             : []),
         {
-            icon: navIcon(CohortIcon),
+            icon: <Icon name="person_search" />,
             label: "Cohort Discovery",
             subItems: [
                 {
@@ -88,7 +68,7 @@ const getProfileNav = (
             ],
         },
         {
-            icon: navIcon(DarIcon),
+            icon: <Icon name="conversion_path" />,
             label: "Data Access Requests",
             subItems: [
                 {
@@ -107,17 +87,17 @@ const getProfileNav = (
         },
 
         {
-            icon: navIcon(ToolIcon),
+            icon: <Icon name="handyman" />,
             label: "Analysis Scripts & Software",
             href: `/${RouteName.ACCOUNT}/${RouteName.PROFILE}/${RouteName.TOOLS}`,
         },
         {
-            icon: navIcon(PublicationIcon),
+            icon: <Icon name="description" />,
             label: "Publications",
             href: `/${RouteName.ACCOUNT}/${RouteName.PROFILE}/${RouteName.PUBLICATIONS}`,
         },
         {
-            icon: navIcon(BookmarksOutlinedIcon),
+            icon: <Icon name="bookmarks" />,
             label: "Collections",
             href: `/${RouteName.ACCOUNT}/${RouteName.PROFILE}/${RouteName.COLLECTIONS}`,
         },
@@ -137,7 +117,7 @@ const getTeamNav = (
         ...(isCustodianDashboardEnabled && permissions["dashboard.read"]
             ? [
                   {
-                      icon: navIcon(GridViewOutlinedIcon),
+                      icon: <Icon name="dashboard" />,
                       label: "Dashboard",
                       href: `/${RouteName.ACCOUNT}/${RouteName.TEAM}/${teamId}/${RouteName.DASHBOARD}`,
                   },
@@ -146,7 +126,7 @@ const getTeamNav = (
         ...(permissions["roles.read"]
             ? [
                   {
-                      icon: navIcon(TeamMembersIcon),
+                      icon: <Icon name="groups" />,
                       label: "Team members",
                       href: `/${RouteName.ACCOUNT}/${RouteName.TEAM}/${teamId}/${RouteName.TEAM_MANAGEMENT}`,
                   },
@@ -155,7 +135,7 @@ const getTeamNav = (
         ...(permissions["roles.read"]
             ? [
                   {
-                      icon: navIcon(EmailIcon),
+                      icon: <Icon name="mail" />,
                       label: "Notifications",
                       href: `/${RouteName.ACCOUNT}/${RouteName.TEAM}/${teamId}/${RouteName.NOTIFICATIONS}`,
                   },
@@ -168,7 +148,7 @@ const getTeamNav = (
         ].some(isTrue => isTrue)
             ? [
                   {
-                      icon: navIcon(CloudUploadIcon),
+                      icon: <Icon name="cloud_upload" />,
                       label: "Integrations",
                       subItems: [
                           ...(permissions["applications.read"]
@@ -207,7 +187,7 @@ const getTeamNav = (
         ...(permissions["datasets.read"]
             ? [
                   {
-                      icon: navIcon(DatabaseIcon),
+                      icon: <Icon name="database" />,
                       label: "Datasets",
                       href: `/${RouteName.ACCOUNT}/${RouteName.TEAM}/${teamId}/${RouteName.DATASETS}`,
                   },
@@ -220,7 +200,7 @@ const getTeamNav = (
         ].some(isTrue => isTrue)
             ? [
                   {
-                      icon: navIcon(DarIcon),
+                      icon: <Icon name="conversion_path" />,
                       label: "Data Access Requests",
                       subItems: [
                           ...(permissions["data-access-template.read"]
@@ -253,7 +233,7 @@ const getTeamNav = (
         ...(permissions["papers.read"]
             ? [
                   {
-                      icon: navIcon(PublicationIcon),
+                      icon: <Icon name="description" />,
                       label: "Publications",
                       href: `/${RouteName.ACCOUNT}/${RouteName.TEAM}/${teamId}/${RouteName.PUBLICATIONS}`,
                   },
@@ -262,7 +242,7 @@ const getTeamNav = (
         ...(permissions["tools.read"]
             ? [
                   {
-                      icon: navIcon(ToolIcon),
+                      icon: <Icon name="handyman" />,
                       label: "Analysis Scripts & Software",
                       href: `/${RouteName.ACCOUNT}/${RouteName.TEAM}/${teamId}/${RouteName.TOOLS}`,
                   },
@@ -271,7 +251,7 @@ const getTeamNav = (
         ...(permissions["collections.read"]
             ? [
                   {
-                      icon: navIcon(BookmarksOutlinedIcon),
+                      icon: <Icon name="bookmarks" />,
                       label: "Collections",
                       href: `/${RouteName.ACCOUNT}/${RouteName.TEAM}/${teamId}/${RouteName.COLLECTIONS}`,
                   },
@@ -280,14 +260,14 @@ const getTeamNav = (
         ...(permissions["dur.update"]
             ? [
                   {
-                      icon: navIcon(DataUseIcon),
+                      icon: <Icon name="atr" />,
                       label: "Data Uses",
                       href: `/${RouteName.ACCOUNT}/${RouteName.TEAM}/${teamId}/${RouteName.DATA_USES}`,
                   },
               ]
             : []),
         {
-            icon: navIcon(HelpOutlineOutlinedIcon),
+            icon: <Icon name="help" />,
             label: "Help",
             href: RouteName.DATA_CUSTODIAN_SUPPORT,
         },
