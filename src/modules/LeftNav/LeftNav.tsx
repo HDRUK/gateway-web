@@ -46,18 +46,19 @@ const LeftNav = ({
             trimmedPathname.includes(subItem.matchPath ?? subItem.href)
         );
 
-    const currentSections = () =>
-        Object.fromEntries(
-            navItems.filter(holdsCurrentPage).map(item => [item.label, true])
-        );
+    const currentSection = navItems.find(holdsCurrentPage)?.label;
 
-    const [openSections, setOpenSections] =
-        useState<Record<string, boolean>>(currentSections);
-    const [openedFor, setOpenedFor] = useState(trimmedPathname);
+    const [openSections, setOpenSections] = useState<Record<string, boolean>>(
+        currentSection ? { [currentSection]: true } : {}
+    );
+    const [openedFor, setOpenedFor] = useState(currentSection);
 
-    if (openedFor !== trimmedPathname) {
-        setOpenedFor(trimmedPathname);
-        setOpenSections(previous => ({ ...previous, ...currentSections() }));
+    if (openedFor !== currentSection) {
+        setOpenedFor(currentSection);
+        setOpenSections(previous => ({
+            ...previous,
+            ...(currentSection && { [currentSection]: true }),
+        }));
     }
 
     return (

@@ -160,6 +160,73 @@ describe("LeftNav", () => {
         );
     });
 
+    it("keeps a closed section closed when navigation stays within it", () => {
+        const teamNav = (
+            <LeftNav
+                teamId="1"
+                permissions={{
+                    "roles.read": true,
+                    "applications.read": true,
+                    "integrations.metadata": true,
+                    "integrations.dar": true,
+                }}
+                initialLeftNavOpen={true}
+            />
+        );
+        mockRouter.push(
+            `/en/${RouteName.ACCOUNT}/${RouteName.TEAM}/1/${RouteName.INTEGRATIONS}/${RouteName.API_MANAGEMENT}/${RouteName.LIST}`
+        );
+        mockRouter.query = { ...mockRouter.query, locale: "en" };
+
+        const { getByRole, rerender } = render(teamNav);
+        fireEvent.click(getByRole("button", { name: "Integrations" }));
+
+        act(() => {
+            mockRouter.push(
+                `/en/${RouteName.ACCOUNT}/${RouteName.TEAM}/1/${RouteName.INTEGRATIONS}/${RouteName.API_MANAGEMENT}/${RouteName.CREATE}`
+            );
+        });
+        rerender(teamNav);
+
+        expect(getByRole("button", { name: "Integrations" })).toHaveAttribute(
+            "aria-expanded",
+            "false"
+        );
+    });
+
+    it("keeps a section open when navigation leaves it", () => {
+        const teamNav = (
+            <LeftNav
+                teamId="1"
+                permissions={{
+                    "roles.read": true,
+                    "applications.read": true,
+                    "integrations.metadata": true,
+                    "integrations.dar": true,
+                }}
+                initialLeftNavOpen={true}
+            />
+        );
+        mockRouter.push(
+            `/en/${RouteName.ACCOUNT}/${RouteName.TEAM}/1/${RouteName.INTEGRATIONS}/${RouteName.API_MANAGEMENT}/${RouteName.LIST}`
+        );
+        mockRouter.query = { ...mockRouter.query, locale: "en" };
+
+        const { getByRole, rerender } = render(teamNav);
+
+        act(() => {
+            mockRouter.push(
+                `/en/${RouteName.ACCOUNT}/${RouteName.TEAM}/1/help`
+            );
+        });
+        rerender(teamNav);
+
+        expect(getByRole("button", { name: "Integrations" })).toHaveAttribute(
+            "aria-expanded",
+            "true"
+        );
+    });
+
     it("keeps focus on a followed sub-link when its section becomes current", () => {
         const teamNav = (
             <LeftNav
