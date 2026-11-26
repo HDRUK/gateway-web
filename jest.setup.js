@@ -17,6 +17,12 @@ if (!global.TextDecoder) {
     global.TextDecoder = TextDecoder;
 }
 
+const React = require("react");
+
+if (!React.cache) {
+    React.cache = fn => fn;
+}
+
 global.ResizeObserver = jest.fn().mockImplementation(() => ({
     observe: jest.fn(),
     unobserve: jest.fn(),

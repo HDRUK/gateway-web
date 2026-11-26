@@ -2,6 +2,7 @@ const createNextIntlPlugin = require("next-intl/plugin");
 const path = require("path");
 const createMDX = require("@next/mdx");
 const { generateTemplateRegistry } = require("@hdruk/gwdm-view/registry");
+const remoteImagePatterns = require("./src/config/remoteImagePatterns");
 
 const withNextIntl = createNextIntlPlugin();
 // Metadata view templates (src/templates/metadata/view/overrides/**/index.mdx)
@@ -35,42 +36,7 @@ const nextConfig = {
         API_VERSION: process.env.NEXT_PUBLIC_API_VERSION,
     },
     images: {
-        remotePatterns: [
-            {
-                protocol: "https",
-                hostname: "*.hdruk.cloud",
-                pathname: "/**",
-            },
-            {
-                protocol: "http",
-                hostname: "*.hdruk.cloud",
-                pathname: "/**",
-            },
-            {
-                protocol: "https",
-                hostname: "storage.googleapis.com",
-                pathname: "/hdr-gw-wordpress-dev/**",
-            },
-            {
-                protocol: "https",
-                hostname: "storage.googleapis.com",
-                pathname: "/hdr-gw-wordpress-preprod/**",
-            },
-            {
-                protocol: "https",
-                hostname: "storage.googleapis.com",
-                pathname: "/hdr-gw-wordpress-prod/**",
-            },
-            ...(process.env.NODE_ENV === "development"
-                ? [
-                      {
-                          protocol: "http",
-                          hostname: "localhost",
-                          pathname: "/**",
-                      },
-                  ]
-                : []),
-        ],
+        remotePatterns: remoteImagePatterns,
     },
     async headers() {
         return [

@@ -51,12 +51,18 @@ import {
     TEAM,
 } from "@/consts/translation";
 import { capitalise, splitCamelcase } from "@/utils/general";
+import { markCollabReadyAction } from "@/app/actions/markCollabReadyAction";
+import { saveCollabDraftAction } from "@/app/actions/saveCollabDraftAction";
 import { saveSchemaDatasetAction } from "@/app/actions/saveSchemaDatasetAction";
 import { GatewayFormContext } from "@/templates/metadata/form/gateway/GatewayFormContext";
 import { gatewayInputs } from "@/templates/metadata/form/gateway/gatewayInputs";
 import SubmissionScreen from "../../../components/SubmissionScreen";
 import { coerceNumbers } from "../../utils/coerceNumbers";
 import { padCustodianIdentifier } from "../../utils/padCustodianIdentifier";
+import {
+    COLLAB_SERVER_OWNED,
+    withoutServerOwned,
+} from "../../utils/withoutServerOwned";
 import {
     AsideSlot,
     BackLink,
@@ -108,7 +114,18 @@ interface SchemaDatasetFormProps {
     isDraft: boolean;
     isCohortDiscovery?: boolean;
     canChangeSchema?: boolean;
+    /**
+     * Collaborative onboarding via a share link: an anonymous collaborator
+     * saves drafts through the token and can only mark the draft ready for
+     * the team to review - never make it active, or leave for team pages.
+     */
+    collab?: CollabMode;
     children: ReactNode;
+}
+
+interface CollabMode {
+    token: string;
+    readyForReviewAt: string | null;
 }
 
 type FormShellProps = Omit<
@@ -159,6 +176,7 @@ const FormShell = ({
     isDraft,
     isCohortDiscovery,
     canChangeSchema,
+    collab,
     setIntroAside,
     children,
 }: FormShellProps) => {
@@ -170,11 +188,20 @@ const FormShell = ({
     const pathname = usePathname();
     const searchParams = useSearchParams();
     const methods = useMetadataForm();
-    const { validate } = useMetadataFormContext();
+    // In collab mode this omits server-owned fields (see withoutServerOwned).
+    const { validate, schema: validationSchema } = useMetadataFormContext();
     const activeField = useActiveField();
     const { sections, activeSection, setActiveSection } = useFormSections();
     const [isPending, startTransition] = useTransition();
     const [submissionRequested, setSubmissionRequested] = useState(isEditing);
+    const [readyForReviewAt, setReadyForReviewAt] = useState(
+        collab?.readyForReviewAt ?? null
+    );
+    const primaryLabel = !collab
+        ? t("makeActive")
+        : readyForReviewAt
+        ? tSchema("unmarkReadyForReview")
+        : tSchema("markReadyForReview");
     const [navbarHeight, setNavbarHeight] = useState("0");
     const { dirtyFields, isDirty } = methods.formState;
 
@@ -215,7 +242,7 @@ const FormShell = ({
     const errorNames = useMemo(
         () =>
             validateDocument(
-                form.schema,
+                validationSchema,
                 padCustodianIdentifier(
                     coerceNumbers(
                         form.schema,
@@ -224,7 +251,7 @@ const FormShell = ({
                 )
             ).map(({ name }) => name),
         // eslint-disable-next-line react-hooks/exhaustive-deps
-        [form.schema, methods, activeSection]
+        [form.schema, validationSchema, methods, activeSection]
     );
 
     const steps = useMemo(
@@ -270,7 +297,7 @@ const FormShell = ({
             ),
         })),
         {
-            name: t("makeActive"),
+            name: primaryLabel,
             status:
                 activeSection === SUBMISSION_SECTION
                     ? LegendStatus.ACTIVE
@@ -281,20 +308,88 @@ const FormShell = ({
     const isSection =
         activeSection !== INTRO_SECTION && activeSection !== SUBMISSION_SECTION;
 
-    const save = (status: DataStatus.ACTIVE | DataStatus.DRAFT) => {
-        const document = padCustodianIdentifier(
+    const buildDocument = () =>
+        padCustodianIdentifier(
             coerceNumbers(
                 form.schema,
                 fromFormValues(form.schema, methods.getValues())
             )
         );
 
-        if (status === DataStatus.ACTIVE) {
-            setSubmissionRequested(true);
-            if (!validate()) {
-                setActiveSection(SUBMISSION_SECTION);
+    // Shared with "Make active": request submission and validate, jumping
+    // to the submission screen to show what's missing.
+    const requestSubmission = () => {
+        setSubmissionRequested(true);
+        if (!validate()) {
+            setActiveSection(SUBMISSION_SECTION);
+            return false;
+        }
+        return true;
+    };
+
+    const saveCollabDraft = async (token: string) => {
+        const result = await saveCollabDraftAction({
+            token,
+            model: form.model,
+            version: form.version,
+            metadata: buildDocument(),
+        });
+        if (!result.ok) {
+            errorNotification({
+                status: result.status,
+                error: result.error,
+                props: { t: tApi, itemName: "Dataset" },
+                method: "put",
+            });
+        }
+        return result.ok;
+    };
+
+    const collabSaveDraft = (token: string) =>
+        startTransition(async () => {
+            if (await saveCollabDraft(token)) {
+                notificationService.apiSuccess(tSchema("collabDraftSaved"));
+            }
+        });
+
+    // Marking ready saves first, so the team reviews what's on screen.
+    // Unmarking needs neither validation nor a save.
+    const collabToggleReady = (token: string) => {
+        const ready = !readyForReviewAt;
+        if (ready && !requestSubmission()) {
+            return;
+        }
+        startTransition(async () => {
+            if (ready && !(await saveCollabDraft(token))) {
                 return;
             }
+            const result = await markCollabReadyAction(token, ready);
+            if (!result.ok) {
+                errorNotification({
+                    status: result.status,
+                    error: result.error,
+                    props: { t: tApi, itemName: "Dataset" },
+                    method: "patch",
+                });
+                return;
+            }
+            setReadyForReviewAt(result.readyForReviewAt ?? null);
+            notificationService.apiSuccess(
+                tSchema(ready ? "collabMarkedReady" : "collabUnmarkedReady")
+            );
+        });
+    };
+
+    const primaryAction = () =>
+        collab ? collabToggleReady(collab.token) : save(DataStatus.ACTIVE);
+    const saveDraftAction = () =>
+        collab ? collabSaveDraft(collab.token) : save(DataStatus.DRAFT);
+
+    const save = (status: DataStatus.ACTIVE | DataStatus.DRAFT) => {
+        const document = buildDocument();
+
+        if (status === DataStatus.ACTIVE && !requestSubmission()) {
+            return;
         }
 
         startTransition(async () => {
@@ -351,19 +446,22 @@ const FormShell = ({
 
     return (
         <ShellGrid>
-            <BackLink
-                href={datasetsHref(
-                    teamId,
-                    isDraft ? DataStatus.DRAFT : DataStatus.ACTIVE
-                )}
-                underline="hover">
-                <ArrowBackIosNewIcon fontSize="small" />
-                {t("backToManagementPage")}
-            </BackLink>
+            {!collab && (
+                <BackLink
+                    href={datasetsHref(
+                        teamId,
+                        isDraft ? DataStatus.DRAFT : DataStatus.ACTIVE
+                    )}
+                    underline="hover">
+                    <ArrowBackIosNewIcon fontSize="small" />
+                    {t("backToManagementPage")}
+                </BackLink>
+            )}
 
             <FormBanner
-                makeActiveAction={() => save(DataStatus.ACTIVE)}
-                saveAsDraftAction={() => save(DataStatus.DRAFT)}
+                makeActiveAction={primaryAction}
+                makeActiveLabel={primaryLabel}
+                saveAsDraftAction={saveDraftAction}
                 completionPercentage={percentage(
                     totals.required.done,
                     totals.required.total
@@ -391,7 +489,8 @@ const FormShell = ({
                         <SubmissionScreen
                             trigger={methods.trigger}
                             errors={submissionErrors}
-                            makeActiveAction={() => save(DataStatus.ACTIVE)}
+                            makeActiveAction={primaryAction}
+                            makeActiveLabel={primaryLabel}
                             makeActiveDisabled={isPending}
                         />
                     </SubmissionColumn>
@@ -504,10 +603,21 @@ const SchemaDatasetForm = ({
     isDraft,
     isCohortDiscovery,
     canChangeSchema,
+    collab,
     children,
 }: SchemaDatasetFormProps) => {
     const t = useTranslations(CREATE_TRANSLATIONS);
     const [introAside, setIntroAside] = useState<HTMLDivElement | null>(null);
+    // The collaborator can't see or change what the API forces on save, so
+    // their form validates (and counts progress) without it. Documents are
+    // still built against the full schema.
+    const validationSchema = useMemo(
+        () =>
+            collab
+                ? withoutServerOwned(form.schema, COLLAB_SERVER_OWNED)
+                : form.schema,
+        [collab, form.schema]
+    );
     const transformDocument = useCallback(
         (document: Record<string, unknown>) =>
             padCustodianIdentifier(coerceNumbers(form.schema, document)),
@@ -524,9 +634,10 @@ const SchemaDatasetForm = ({
                     teamId,
                     defaultTeam,
                     introAside,
+                    isCollab: !!collab,
                 }}>
                 <MetadataFormProvider
-                    schema={form.schema}
+                    schema={validationSchema}
                     values={values}
                     system={meta.system}
                     sections={meta.sections}
@@ -542,6 +653,7 @@ const SchemaDatasetForm = ({
                         isDraft={isDraft}
                         isCohortDiscovery={isCohortDiscovery}
                         canChangeSchema={canChangeSchema}
+                        collab={collab}
                         setIntroAside={setIntroAside}>
                         {children}
                     </FormShell>

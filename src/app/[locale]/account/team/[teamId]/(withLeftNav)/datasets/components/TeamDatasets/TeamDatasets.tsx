@@ -178,7 +178,10 @@ const TeamDatasets = ({
         window.scrollTo({ top: 0 });
     }, [queryParams.page]);
 
-    const { isSchemaOnboardingFormEnabled } = useFeatures();
+    const {
+        isSchemaOnboardingFormEnabled,
+        isCollaborativeMetadataOnboardingEnabled,
+    } = useFeatures();
 
     const handleStatusChange = async (id: number, status: DataStatus) => {
         if (status === DataStatus.ACTIVE && !isSchemaOnboardingFormEnabled) {
@@ -341,6 +344,16 @@ const TeamDatasets = ({
                         <Typography>{t(TEXT)}</Typography>
                     </Box>
 
+                    {showAddNewButton &&
+                        isCollaborativeMetadataOnboardingEnabled && (
+                            <Button
+                                data-testid="btn-share-tokens"
+                                variant="outlined"
+                                href={`/${RouteName.ACCOUNT}/${RouteName.TEAM}/${params?.teamId}/${RouteName.DATASETS}/${RouteName.SHARE_TOKENS}`}
+                                sx={{ mr: 1 }}>
+                                {t("shareTokens")}
+                            </Button>
+                        )}
                     {showAddNewButton && (
                         <Button onClick={handleAdd} startIcon={<AddIcon />}>
                             {t("create")}

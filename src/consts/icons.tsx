@@ -73,6 +73,7 @@ import PersonOutlineOutlinedIcon from "@mui/icons-material/PersonOutlineOutlined
 import PlayArrowIcon from "@mui/icons-material/PlayArrow";
 import PriorityHighIcon from "@mui/icons-material/PriorityHigh";
 import QueryBuilderOutlinedIcon from "@mui/icons-material/QueryBuilderOutlined";
+import CalendarMonthOutlinedIcon from "@mui/icons-material/CalendarMonthOutlined";
 import QuestionAnswerIcon from "@mui/icons-material/QuestionAnswer";
 import RemoveIcon from "@mui/icons-material/Remove";
 import RemoveCircleIcon from "@mui/icons-material/RemoveCircle";
@@ -177,6 +178,7 @@ export {
     ControlPointIcon,
     AccessTimeIcon,
     QueryBuilderOutlinedIcon,
+    CalendarMonthOutlinedIcon,
     VisibilityOutlinedIcon,
     ErrorIcon,
     ArrowUpwardIcon,

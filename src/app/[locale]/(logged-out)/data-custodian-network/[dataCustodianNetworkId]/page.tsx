@@ -1,17 +1,27 @@
 import { notFound } from "next/navigation";
+import { EntityType } from "@/consts/application";
 import {
     getNetworkCustodiansDatasets,
     getNetworkCustodiansEntities,
     getNetworkCustodiansSummary,
     getNetworkInfo,
 } from "@/utils/api";
-import metaData from "@/utils/metadata";
+import { pageMetaData } from "@/utils/pageMetadata";
 import DataCustodianNetworkPage from "./components/DataCustodianNetworkPage/DataCustodianNetworkPage";
 
-export const metadata = metaData({
-    title: "Data Custodian Network",
-    description: "",
-});
+export async function generateMetadata({
+    params,
+}: {
+    params: Promise<{ locale: string; dataCustodianNetworkId: string }>;
+}) {
+    const { locale, dataCustodianNetworkId } = await params;
+
+    return pageMetaData(
+        EntityType.DATA_CUSTODIAN_NETWORK,
+        dataCustodianNetworkId,
+        locale
+    );
+}
 
 export default async function Page({
     params,

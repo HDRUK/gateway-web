@@ -100,6 +100,10 @@ const navItems = [
                 label: "The Technology Team",
                 href: RouteName.MEET_THE_TEAM,
             },
+            {
+                label: "Partners",
+                href: RouteName.PARTNERS,
+            },
         ],
     },
     {

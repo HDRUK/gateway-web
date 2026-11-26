@@ -20,6 +20,7 @@ import { HomepageBannerNode } from "@/interfaces/Homepage";
 import { MeetTheTeamNode } from "@/interfaces/MeetTheTeam";
 import { MissionAndPurposesNode } from "@/interfaces/MissionAndPurposes";
 import { NewsNode } from "@/interfaces/News";
+import { PartnersPage } from "@/interfaces/Partners";
 import { ReleaseNode } from "@/interfaces/Releases";
 import { SupportCohortDiscoveryPage } from "@/interfaces/Support";
 import apis from "@/config/apis";
@@ -399,6 +400,33 @@ const getPatientsAndPublic = async () => {
     return substituteEnvLinks(data?.page);
 };
 
+const getPartners = async () => {
+    const data: CMSPageResponse<PartnersPage> = await fetchCMS(
+        GetContentPageQuery(
+            "getPartnersQuery",
+            {
+                id: "partners",
+                idType: "URI",
+            },
+            `partners {
+                partnerList {
+                    title
+                    description
+                    image {
+                        node {
+                            sourceUrl
+                            altText
+                        }
+                    }
+                }
+            }`
+        ),
+        DEFAULT_OPTIONS
+    );
+
+    return substituteEnvLinks(data?.page);
+};
+
 const getGlossary = async () => {
     const data: CMSPageResponse<PageTemplateDefault> = await fetchCMS(
         GetContentPageQuery("getGlossaryQuery", {
@@ -509,6 +537,7 @@ export {
     getMissionAndPurposes,
     getNews,
     getOpenSourceDevelopment,
+    getPartners,
     getPatientsAndPublic,
     getPrivacyPolicy,
     getReleaseNotes,

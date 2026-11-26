@@ -73,7 +73,7 @@ const CUSTODIAN_FIELDS = {
     memberOf: "Organisation Membership",
 };
 
-export const TeamPicker = ({ path }: PathTagProps) => {
+const TeamSearchPicker = ({ path }: PathTagProps) => {
     const t = useTranslations(TRANSLATIONS);
     const methods = useMetadataForm();
     const { schema, defaultTeam } = useGatewayForm();
@@ -163,6 +163,31 @@ export const TeamPicker = ({ path }: PathTagProps) => {
     );
 };
 
+// A share-link collaborator can't search teams (or change the custodian - the
+// API forces it to the draft's team), so they're shown the team, read-only.
+const FixedCustodian = () => {
+    const t = useTranslations(TRANSLATIONS);
+    const { defaultTeam } = useGatewayForm();
+
+    return (
+        <>
+            <Typography variant="h5" component="h2">
+                {t("dataCustodian")}
+            </Typography>
+            <Typography>{defaultTeam?.label}</Typography>
+            <Typography variant="caption">
+                {t("collabCustodianFixed")}
+            </Typography>
+        </>
+    );
+};
+
+export const TeamPicker = (props: PathTagProps) => {
+    const { isCollab } = useGatewayForm();
+
+    return isCollab ? <FixedCustodian /> : <TeamSearchPicker {...props} />;
+};
+
 const useUnionInput = (path: string): UnionInputProps => {
     const methods = useMetadataForm();
     const { schema } = useGatewayForm();
@@ -250,11 +275,16 @@ export const DerivedFromObservations = ({
 export const StructuralMetadataUpload = ({ path }: PathTagProps) => {
     const t = useTranslations(TRANSLATIONS);
     const { control, setValue } = useMetadataForm();
+    const { isCollab } = useGatewayForm();
     const isActive = useActiveSectionIs(path);
     const tables = useWatch({ control, name: `${path}.tables` });
 
     if (!isActive) {
         return null;
+    }
+    // Uploading needs a Gateway login, which share-link collaborators don't have.
+    if (isCollab) {
+        return <Typography>{t("collabStructuralMetadata")}</Typography>;
     }
     return (
         <StructuralMetadataSection

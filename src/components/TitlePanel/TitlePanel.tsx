@@ -6,14 +6,60 @@ import Typography from "@/components/Typography";
 import FeaturedMetric from "../FeaturedMetric";
 import TitleWithBg from "../TitleWithBg";
 
+interface TitlePanelContent {
+    title: string;
+    text: string;
+}
+
 interface TitlePanelProps extends TypographyProps {
     image: string;
     text: string;
     title: string;
     id?: string;
+    reservedContent?: TitlePanelContent[];
 }
 
-const TitlePanel = ({ image, text, title, id }: TitlePanelProps) => {
+const TitlePanel = ({
+    image,
+    text,
+    title,
+    id,
+    reservedContent = [],
+}: TitlePanelProps) => {
+    const renderContent = (content: TitlePanelContent, isReserved: boolean) => (
+        <Box
+            key={content.title}
+            aria-hidden={isReserved || undefined}
+            sx={{
+                p: 0,
+                gridArea: "1 / 1",
+                ...(isReserved && {
+                    visibility: "hidden",
+                    "@media (hover: none)": { display: "none" },
+                }),
+            }}>
+            <TitleWithBg
+                variant="h3"
+                component={isReserved ? "div" : "h1"}
+                mb={2}
+                title={content.title}
+                bgcolor={tokens.brand.secondary}
+            />
+            <Box
+                sx={{
+                    minHeight: {
+                        sm: 210,
+                        lg: 200,
+                    },
+                    p: 0,
+                }}>
+                <Typography color="white" fontSize={{ xs: 14, sm: 18, lg: 24 }}>
+                    {content.text}
+                </Typography>
+            </Box>
+        </Box>
+    );
+
     return (
         <Box sx={{ p: 0, display: "flex" }}>
             <Box
@@ -28,26 +74,11 @@ const TitlePanel = ({ image, text, title, id }: TitlePanelProps) => {
                         lg: 360,
                     },
                 }}>
-                <TitleWithBg
-                    variant="h3"
-                    component="h1"
-                    mb={2}
-                    title={title}
-                    bgcolor={tokens.brand.secondary}
-                />
-                <Box
-                    sx={{
-                        minHeight: {
-                            sm: 210,
-                            lg: 200,
-                        },
-                        p: 0,
-                    }}>
-                    <Typography
-                        color="white"
-                        fontSize={{ xs: 14, sm: 18, lg: 24 }}>
-                        {text}
-                    </Typography>
+                <Box sx={{ p: 0, display: "grid" }}>
+                    {reservedContent.map(content =>
+                        renderContent(content, true)
+                    )}
+                    {renderContent({ title, text }, false)}
                 </Box>
                 <FeaturedMetric selectedButton={id} />
             </Box>

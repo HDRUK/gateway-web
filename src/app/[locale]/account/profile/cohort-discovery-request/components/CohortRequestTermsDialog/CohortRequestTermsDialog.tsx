@@ -19,7 +19,6 @@ import Form from "@/components/Form";
 import HTMLContent from "@/components/HTMLContent";
 import InputWrapper from "@/components/InputWrapper";
 import ScrollContent from "@/components/ScrollContent";
-import CohortTermsSuccessDialog from "@/modules/CohortTermsSuccessDialog";
 import useDialog from "@/hooks/useDialog";
 import usePost from "@/hooks/usePost";
 import apis from "@/config/apis";
@@ -53,8 +52,6 @@ const CohortRequestTermsDialog = () => {
 
     const hasAcceptedTerms = watch("hasAccepted");
 
-    const { showDialog } = useDialog();
-
     const t = useTranslations("modules");
 
     const submitRequest = usePost(apis.cohortRequestsV1Url, {
@@ -63,17 +60,13 @@ const CohortRequestTermsDialog = () => {
 
     const handleSuccess = () => {
         hideDialog();
-        showDialog(CohortTermsSuccessDialog, {
-            onClose: () => {
-                if (dialogProps?.onSubmitted) {
-                    dialogProps.onSubmitted();
-                } else {
-                    push(
-                        `/${RouteName.ACCOUNT}/${RouteName.PROFILE}/${RouteName.COHORT_DISCOVERY_REQUEST}`
-                    );
-                }
-            },
-        });
+        if (dialogProps?.onSubmitted) {
+            dialogProps.onSubmitted();
+        } else {
+            push(
+                `/${RouteName.ACCOUNT}/${RouteName.PROFILE}/${RouteName.COHORT_DISCOVERY_REQUEST}`
+            );
+        }
     };
 
     const onFormSubmit = async () => {
@@ -188,7 +181,8 @@ const CohortRequestTermsDialog = () => {
                             display: "flex",
                             flexDirection: "row",
                             gap: 2,
-                            alignItems: "flex-end",
+                            alignItems: "center",
+                            flexShrink: 0,
                         }}>
                         <Button
                             purpose="secondary"

@@ -5,19 +5,24 @@ import Box from "@/components/Box";
 import LayoutDataItemPage from "@/components/LayoutDataItemPage";
 import Typography from "@/components/Typography";
 import ActiveListSidebar from "@/modules/ActiveListSidebar";
-import { DataStatus } from "@/consts/application";
+import { DataStatus, EntityType } from "@/consts/application";
 import { getDataUse } from "@/utils/api";
-import metaData from "@/utils/metadata";
+import { pageMetaData } from "@/utils/pageMetadata";
 import ActionBar from "./components/ActionBar";
 import DataUseContent from "./components/DataUseContent";
 import { dataUseFields } from "./config";
 
 const TRANSLATION_PATH = "pages.dataUse";
 
-export const metadata = metaData({
-    title: "Data Use",
-    description: "",
-});
+export async function generateMetadata({
+    params,
+}: {
+    params: Promise<{ locale: string; dataUseId: string }>;
+}) {
+    const { locale, dataUseId } = await params;
+
+    return pageMetaData(EntityType.DATA_USE, dataUseId, locale);
+}
 export default async function DataUseItemPage({
     params,
 }: {

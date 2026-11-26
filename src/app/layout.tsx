@@ -9,7 +9,12 @@ const Layout = ({ children }: LayoutProps) => {
     return children;
 };
 
+const { NEXT_PUBLIC_GATEWAY_URL } = process.env;
+
 export const metadata: Metadata = {
+    ...(NEXT_PUBLIC_GATEWAY_URL && {
+        metadataBase: new URL(NEXT_PUBLIC_GATEWAY_URL),
+    }),
     icons: {
         icon: [
             {

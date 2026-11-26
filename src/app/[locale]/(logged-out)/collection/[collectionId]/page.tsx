@@ -14,19 +14,24 @@ import ToolsContent from "@/components/ToolsContent";
 import Typography from "@/components/Typography";
 import ActiveListSidebar from "@/modules/ActiveListSidebar";
 import { StaticImages } from "@/config/images";
-import { DataStatus } from "@/consts/application";
+import { DataStatus, EntityType } from "@/consts/application";
 import { LogoImage } from "@/consts/image";
 import { RouteName } from "@/consts/routeName";
 import { getReducedCollection } from "@/utils/api";
-import metaData from "@/utils/metadata";
+import { pageMetaData } from "@/utils/pageMetadata";
 import { toTitleCase } from "@/utils/string";
 import DatasetsContent from "./components/DatasetsContent";
 import { collectionSections } from "./config";
 
-export const metadata = metaData({
-    title: "Collection",
-    description: "",
-});
+export async function generateMetadata({
+    params,
+}: {
+    params: Promise<{ locale: string; collectionId: string }>;
+}) {
+    const { locale, collectionId } = await params;
+
+    return pageMetaData(EntityType.COLLECTION, collectionId, locale);
+}
 
 const TRANSLATION_PATH = "pages.collection";
 

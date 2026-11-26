@@ -12,19 +12,24 @@ import { MarkDownSanitizedWithHtml } from "@/components/MarkDownSanitizedWithHTM
 import ToolsContent from "@/components/ToolsContent";
 import Typography from "@/components/Typography";
 import ActiveListSidebar from "@/modules/ActiveListSidebar";
-import { DataStatus } from "@/consts/application";
+import { DataStatus, EntityType } from "@/consts/application";
 import { RouteName } from "@/consts/routeName";
 import { getPublication } from "@/utils/api";
-import metaData from "@/utils/metadata";
+import { pageMetaData } from "@/utils/pageMetadata";
 import PublicationContent from "./components/PublicationContent";
 import { publicationFields, relatedContentAccordions } from "./config";
 
 const TRANSLATION_PATH = "pages.publication";
 
-export const metadata = metaData({
-    title: "Publication",
-    description: "",
-});
+export async function generateMetadata({
+    params,
+}: {
+    params: Promise<{ locale: string; id: string }>;
+}) {
+    const { locale, id } = await params;
+
+    return pageMetaData(EntityType.PUBLICATION, id, locale);
+}
 
 export default async function PublicationItemPage({
     params,
